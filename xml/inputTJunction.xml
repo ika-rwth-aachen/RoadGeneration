@@ -1,4 +1,4 @@
-<RoadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/home/geller/Dokumente/ika_hiwi/streckenGenerierung/inputNew.xsd">
+<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/home/geller/Dokumente/ika_hiwi/streckenGenerierung/inputNew.xsd">
 	<segments>
         <junctions>
             <tjunction id="1" type="M1A">

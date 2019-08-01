@@ -1,39 +1,36 @@
-#pragma once
 #include <iostream>
 #include <fstream>
 #include <string>
+
+
+// TODO remove
 #include "Reader.cpp"
 #include "Printer.cpp"
 #include "RoadNetwork.h"
+// TODO remove
+
+
+#include "pugixml.hpp"
+#include "interface.h"
+#include "helper.h"
+#include "io.h"
+#include "buildOpenDriveData.h"
 
 using namespace std;
 
-#include "pugixml.hpp"
 
 int main() 
 {
-	pugi::xml_document doc;
-	//pugi::xml_parse_result result = doc.load_string("<node attr='3'></node>");
-	pugi::xml_parse_result result = doc.load_file("../xml/test.xml");
-	
-	std::cout << "Load result: " << result.description() << ", mesh name: " << doc.child("RoadNetwork").child("segments").child("tJunction").child("mainRoad").attribute("id").value() << std::endl;
-	
-	pugi::xml_node tool = doc.child("RoadNetwork");
+	pugi::xml_document in;
+	pugi::xml_document out;
+	roadNetwork data;
 
-	if(tool) cout << "test"  << endl;
-	else cout << "test2" << endl; 
-
-	tool.set_name("rea");
-	tool.attribute("test").set_value("6");
-
-	tool.append_child("node");
-
-	doc.save(std::cout);
-	doc.save_file("s.opdr");
-	cout << "kjK" <<endl;
+	parseXML(in);	
+	buildOpenDriveData(in, data);
+	createXML(out, data);
 
 	// -------------------------------------------------------------------------
-	
+	// TODO remove
 	RoadNetwork roadNetwork;
 	RoadSegment roadSegment;
 	ifstream myInputfile("../russ/inputRuss.xml");
@@ -41,6 +38,8 @@ int main()
 	
 	parseRoadNetwork(myInputfile, roadNetwork, myOutputfile, roadSegment);
 	printRN(myOutputfile, roadSegment);
+	// TODO remove
+	// -------------------------------------------------------------------------
 
 	return 0;
 } 
