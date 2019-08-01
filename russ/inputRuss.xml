@@ -1,0 +1,79 @@
+<RoadNetwork test="5">
+	<segments>
+		<tJunction>
+			<mainRoad id="M1" idStart="M1S" idEnd="M1E">	
+				<road id="1" length="340">
+					<planView>
+						<referenceLine>
+							<geometry id="1" length="120" connectToEndOf="0" connectToStartOf="0">
+								<line/>
+							</geometry>
+						</referenceLine>
+					</planView>
+					<lanes>
+						<laneSection s="0">
+							<leftLanes>
+								<lane LaneId="1" type="driving">
+									<laneWidth w="3.75"/>
+									<roadMark sOffset="0" tOffset="0" type="solid" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
+								</lane>
+							</leftLanes>
+							<centerLine>
+								<lane LaneId="0" type="driving">
+									<roadMark sOffset="0" tOffset="0" type="broken" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
+								</lane>
+							</centerLine>
+							<rightLanes>
+								<lane LaneId="-1" type="driving">
+									<laneWidth w="3.75"/>
+									<roadMark sOffset="0" tOffset="0" type="solid" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
+								</lane>
+							</rightLanes>
+						</laneSection>
+					</lanes>
+				</road>
+			</mainRoad>
+			<accessRoad id="A1" idStart="A1S" idEnd="A1E">	
+				<road id="2" length="2000">
+					<planView>
+						<referenceLine>
+							<geometry id="1" length="60" connectToEndOf="0" connectToStartOf="0">
+								<line/>
+							</geometry>
+						</referenceLine>
+					</planView>
+					<lanes>
+						<laneSection s="0">
+							<leftLanes>
+								<lane LaneId="1" type="driving">
+									<laneWidth w="3.75"/>
+									<roadMark sOffset="0" tOffset="0" type="solid" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
+								</lane>
+							</leftLanes>
+							<centerLine>
+								<lane LaneId="0" type="driving">
+									<roadMark sOffset="0" tOffset="0" type="broken" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
+								</lane>
+							</centerLine>
+							<rightLanes>
+								<lane LaneId="-1" type="driving">
+									<laneWidth w="3.75"/>
+									<roadMark sOffset="0" tOffset="0" type="solid" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
+								</lane>
+							</rightLanes>
+						</laneSection>
+					</lanes>
+				</road>
+			</accessRoad>
+		</tJunction>
+	</segments>
+	<intersectionPoint  setReferenceRoad="M1" adRoadId="A1"	angleToReferenceRoad="0.95708" iPOnMainRoad="60" iPOnAccessRoad="0"/>
+	<coupler id="1">
+		<couplerArea type="sym" sOffset="15">
+		</couplerArea>
+		<connection type="all">
+		</connection>
+	</coupler>
+</RoadNetwork>
+
+

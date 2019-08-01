@@ -1,0 +1,562 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+elementFormDefault="qualified">
+
+    <xs:element name="roadNetwork">
+        <xs:complexType mixed="true"> 
+            <xs:sequence>
+                <xs:element name="segments" type="segmentsType"/>
+                <xs:element name="interfaces" type="interfacesType"/>
+                <xs:element name="closeRoadNetwork" type="closeRoadNetworkType"/>
+            </xs:sequence>
+            <xs:attribute name="lang" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="segmentsType">
+        <xs:sequence>
+            <xs:element name="junctions" type="junctionsType"/>
+            <xs:element name="roundabout" type="roundaboutType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="connectingRoad" type="connectingRoadType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="junctionsType">
+        <xs:sequence>
+            <xs:element name="tjunctions" type="tjunctionsType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="xjunctions" type="xjunctionsType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="njunctions" type="njunctionsType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="tjunctionsType">
+        <xs:sequence>
+            <xs:element name="mainRoad" type="mainRoadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="accessRoad" type="accessRoadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="intersectionPoint" type="intersectionPointType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="coupler" type="couplerType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="objects" type="objectsType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="type" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="xjunctionsType">
+        <xs:sequence>
+            <xs:element name="mainRoad" type="mainRoadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="accessRoad" type="accessRoadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="intersectionPoint" type="intersectionPointType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="coupler" type="couplerType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="objects" type="objectsType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>        
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="type" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="njunctionsType">
+        <xs:sequence>
+            <xs:element name="mainRoad" type="mainRoadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="accessRoad" type="accessRoadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="intersectionPoint" type="intersectionPointType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="coupler" type="couplerType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="objects" type="objectsType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="roundaboutType">
+        <xs:sequence>
+            <xs:element name="mainRoad" type="mainRoadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="accessRoad" type="accessRoadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="intersectionPoint" type="intersectionPointType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="coupler" type="couplerType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="objects" type="objectsType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="type" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="connectingRoadType">
+        <xs:sequence>
+            <xs:element name="mainRoad" type="mainRoadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="accessRoad" type="accessRoadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="objects" type="objectsType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="mainRoadType">
+        <xs:sequence>
+            <xs:element name="road" type="roadType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="idStart" type="xs:string" use="required"/>
+        <xs:attribute name="idEnd" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="accessRoadType">
+        <xs:sequence>
+            <xs:element name="road" type="roadType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="idStart" type="xs:string" use="required"/>
+        <xs:attribute name="idEnd" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="roadType">
+        <xs:sequence>
+            <xs:element name="type" type="typeType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="planView" type="planViewType"/>
+            <xs:element name="elevationProfile"    type="elevationProfileType"  minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="lateralProfile"    type="lateralProfileType"  minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="lanes"    type="lanesType"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="length" type="xs:double" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="typeType">
+        <xs:attribute name="sOffset" type="xs:double" use="required"/>
+        <xs:attribute name="type" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="planViewType">
+        <xs:sequence>
+            <xs:element name="referenceLine" type="referenceLineType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="referenceLineType">
+        <xs:sequence>
+            <xs:element name="geometry" type="geometryType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="geometryType">
+        <xs:sequence>
+            <xs:element name="line" type="lineType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="arc" type="arcType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="spiral" type="spiralType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="length" type="xs:double" use="required"/>
+        <xs:attribute name="connectToEndOf" type="xs:string" use="required"/>
+        <xs:attribute name="connectToStartOf" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="lineType">
+    </xs:complexType>
+
+    <xs:complexType name="arcType">
+        <xs:attribute name="R" type="xs:double" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="spiralType">
+        <xs:attribute name="Rs" type="xs:double" use="required"/>
+        <xs:attribute name="Re" type="xs:double" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="elevationProfileType">
+        <xs:sequence>
+            <xs:element name="elevationPoint" type="elevationPointType"    minOccurs="2" maxOccurs="unbounded"/>
+            <xs:element name="elevationRadius" type="elevationRadiusType"    minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="elevationPointType">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="s" type="xs:double" use="required"/>
+        <xs:attribute name="z" type="xs:double" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="elevationRadiusType">
+        <xs:attribute name="pointId" type="xs:string" use="required"/>
+        <xs:attribute name="R" type="xs:double" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="lateralProfileType">
+        <xs:sequence>
+            <xs:element name="lateralPoint" type="lateralPointType"          minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="s" type="xs:double" use="required"/>
+        <xs:attribute name="degree" type="xs:int" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="lateralPointType">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="t" type="xs:double" use="required"/>
+        <xs:attribute name="h" type="xs:double" use="required"/>
+        <xs:attribute name="gradient" type="xs:double" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="lanesType">
+        <xs:sequence>
+            <xs:element name="laneSection" type="laneSectionType"           minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="laneSectionType">
+        <xs:sequence>
+            <xs:element name="leftLanes" type="leftLanesType"           minOccurs="0" maxOccurs="1"/>
+            <xs:element name="centerLine" type="centerLineType"           minOccurs="0" maxOccurs="1"/>
+            <xs:element name="rightLanes" type="rightLanesType"           minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="s" type="xs:double" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="leftLanesType">
+        <xs:sequence>
+            <xs:element name="lane" type="laneType"           minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="laneType">
+        <xs:sequence>
+            <xs:element name="laneWidth" type="laneWidthType"/>
+            <xs:element name="roadMark" type="roadMarkType"/>
+            <xs:element name="material" type="materialType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="laneId" type="xs:string" use="required"/>
+        <xs:attribute name="type" type="xs:string" use="required"/>        
+    </xs:complexType>
+
+    <xs:complexType name="laneWidthType">
+        <xs:sequence>
+            <xs:element name="constantWidth" type="constantWidthType"/>
+            <xs:element name="laneWidening" type="laneWideningType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="laneDrop" type="laneDropType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="constantWidthType">
+        <xs:attribute name="sOffset" type="xs:double" use="required"/>      
+        <xs:attribute name="w" type="xs:double" use="required"/> 
+    </xs:complexType>
+
+    <xs:complexType name="laneWideningType">
+        <xs:sequence>
+            <xs:element name="restrictedArea" type="restrictedAreaType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="sOffset" type="xs:double" use="required"/>      
+        <xs:attribute name="ds1" type="xs:double" use="required"/>        
+    </xs:complexType>
+
+    <xs:complexType name="restrictedAreaType">
+        <xs:sequence>
+            <xs:element name="changeMark" type="changeMarkType"/>
+        </xs:sequence>
+        <xs:attribute name="signNumber" type="xs:int" use="required"/>        
+        <xs:attribute name="sOffset" type="xs:double" use="required"/>        
+        <xs:attribute name="ds2" type="xs:double" use="required"/>  
+    </xs:complexType>
+
+    <xs:complexType name="changeMarkType">
+        <xs:attribute name="angle" type="xs:double" use="required"/>        
+        <xs:attribute name="color" type="xs:string" use="required"/>        
+        <xs:attribute name="width" type="xs:double" use="required"/>        
+        <xs:attribute name="spaceBetweeen" type="xs:double" use="required"/>   
+        <xs:attribute name="spaceToSolid" type="xs:double" use="required"/>    
+    </xs:complexType>
+
+    <xs:complexType name="laneDropType">
+        <xs:sequence>
+            <xs:element name="restrictedArea" type="restrictedAreaType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="sOffset" type="xs:double" use="required"/>    
+        <xs:attribute name="ds1" type="xs:double" use="required"/>    
+    </xs:complexType>
+
+    <xs:complexType name="roadMarkType">
+        <xs:attribute name="sOffset" type="xs:double" use="required"/>    
+        <xs:attribute name="tOffset" type="xs:double" use="required"/>    
+        <xs:attribute name="type" type="xs:string" use="required"/>    
+        <xs:attribute name="color" type="xs:string" use="required"/>    
+        <xs:attribute name="width" type="xs:double" use="required"/>    
+        <xs:attribute name="lengthOfMark" type="xs:double" use="required"/>    
+    </xs:complexType>
+
+    <xs:complexType name="materialType">
+        <xs:attribute name="sOffset" type="xs:double" use="required"/>    
+        <xs:attribute name="surface" type="xs:string" use="required"/>    
+        <xs:attribute name="friction" type="xs:double" use="required"/>    
+        <xs:attribute name="roughness" type="xs:double" use="required"/>    
+    </xs:complexType>
+
+    <xs:complexType name="centerLineType">
+        <xs:sequence>
+            <xs:element name="lane" type="laneType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="rightLanesType">
+        <xs:sequence>
+            <xs:element name="lane" type="laneType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="intersectionPointType">
+        <xs:attribute name="setReferenceRoad" type="xs:string" use="required"/>
+        <xs:attribute name="adRoadId" type="xs:string" use="required"/>    
+        <xs:attribute name="angleToReferenceRoad" type="xs:double" use="required"/>    
+        <xs:attribute name="iPOnMainRoad" type="xs:double" use="required"/>    
+        <xs:attribute name="iPOnAccessRoad" type="xs:double" use="required"/>    
+    </xs:complexType>
+
+    <xs:complexType name="couplerType">
+        <xs:sequence>
+            <xs:element name="couplerArea" type="couplerAreaType"/>
+            <xs:element name="connection" type="connectionType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="couplerAreaType">
+        <xs:sequence>
+            <xs:element name="streetBorder" type="streetBorderType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="type" type="xs:string" use="required"/>   
+        <xs:attribute name="sOffset" type="xs:double" use="required"/>   
+    </xs:complexType>
+
+    <xs:complexType name="streetBorderType">
+        <xs:sequence>
+            <xs:element name="laneBorder" type="laneBorderType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="roadId" type="xs:string" use="required"/>   
+        <xs:attribute name="sOffset" type="xs:double" use="required"/>   
+    </xs:complexType>
+
+    <xs:complexType name="laneBorderType">
+        <xs:attribute name="laneId" type="xs:string" use="required"/>   
+        <xs:attribute name="sOffset" type="xs:double" use="required"/>   
+    </xs:complexType>
+
+    <xs:complexType name="connectionType">
+        <xs:sequence>
+            <xs:element name="roadLink" type="roadLinkType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="type" type="xs:string" use="required"/>   
+    </xs:complexType>
+
+    <xs:complexType name="roadLinkType">
+        <xs:sequence>
+            <xs:element name="laneLink" type="laneLinkType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+            <xs:attribute name="fromId" type="xs:string" use="required"/>
+            <xs:attribute name="toId"  type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="laneLinkType">
+        <xs:attribute name="fromId" type="xs:string" use="required"/>
+        <xs:attribute name="toId" type="xs:string" use="required"/>
+        <xs:attribute name="minR" type="xs:double" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="objectsType">
+        <xs:sequence>
+            <xs:element name="signals" type="signalsType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="busStops" type="busStopsType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="parkingSpace" type="parkingSpaceType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="trafficIsland" type="trafficIslandType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="others" type="othersType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="signalsType">
+        <xs:sequence>
+            <xs:element name="markings" type="markingsType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="streetLighting" type="streetLightingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="roadworks" type="roadworksType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="trafficRules" type="trafficRulesType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="markingsType">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="signNumber" type="xs:int" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="positionType">
+        <xs:sequence>
+            <xs:element name="absolute" type="absoluteType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="relative" type="relativeType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="repeat" type="repeatType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="absoluteType">
+        <xs:attribute name="xOffset" type="xs:double" use="required"/>
+        <xs:attribute name="yOffset" type="xs:double" use="required"/>
+        <xs:attribute name="zOffset" type="xs:double" use="required"/>
+        <xs:attribute name="hdg" type="xs:double" use="required"/>
+        <xs:attribute name="roll" type="xs:double" use="required"/>
+        <xs:attribute name="pitch" type="xs:double" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="relativeType">
+        <xs:attribute name="relativeObject" type="xs:string" use="required"/>
+        <xs:attribute name="idOfStartPoint" type="xs:string" use="required"/>
+        <xs:attribute name="sOffset" type="xs:double" use="required"/>
+        <xs:attribute name="tOffset" type="xs:double" use="required"/>
+        <xs:attribute name="zOffset" type="xs:double" use="required"/>
+        <xs:attribute name="hdg" type="xs:double" use="required"/>
+        <xs:attribute name="roll" type="xs:double" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="repeatType">
+        <xs:attribute name="objectId" type="xs:string" use="required"/>
+        <xs:attribute name="number" type="xs:int" use="required"/>
+        <xs:attribute name="distance" type="xs:double" use="required"/>
+        <xs:attribute name="orientationS" type="xs:double" use="required"/>
+        <xs:attribute name="orientationT" type="xs:double" use="required"/>
+        <xs:attribute name="orientationZ" type="xs:double" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="trafficRulesType">
+        <xs:sequence>
+            <xs:element name="roadSigns" type="roadSignsType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="trafficLights" type="trafficLightsType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="controller" type="controllerType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="type" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="roadSignsType">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="signNumber" type="xs:int" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="trafficLightsType">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="signNumber" type="xs:int" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="controllerType">
+        <xs:sequence>
+            <xs:element name="control" type="controlType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="controlType">
+        <xs:attribute name="signalId" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="streetLightingType">
+    </xs:complexType>
+
+    <xs:complexType name="roadworksType">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="signNumber" type="xs:int" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="busStopsType">
+        <xs:sequence>
+            <xs:element name="onTheStreet" type="onTheStreetType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="busCape" type="onTheStreetType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="busStopBay" type="onTheStreetType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="onTheStreetType">
+    </xs:complexType>
+
+    <xs:complexType name="busCapeType">
+    </xs:complexType>
+
+    <xs:complexType name="busStopBayType">
+    </xs:complexType>
+
+    <xs:complexType name="parkingSpaceType">
+        <xs:sequence>
+            <xs:element name="alongLine" type="alongLineType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="angleToLine" type="angleToLineType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="width" type="xs:double" use="required"/>
+        <xs:attribute name="length" type="xs:double" use="required"/>
+        <xs:attribute name="markings" type="xs:boolean" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="alongLineType">
+    </xs:complexType>
+
+    <xs:complexType name="angleToLineType">
+    </xs:complexType>
+
+    <xs:complexType name="trafficIslandType">
+        <xs:sequence>
+            <xs:element name="mitVerschwenkung" type="mitVerschwenkungType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="ohneVerschwenkung" type="ohneVerschwenkungType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="mitVerschwenkungType">
+    </xs:complexType>
+
+    <xs:complexType name="ohneVerschwenkungType">
+    </xs:complexType>
+
+    <xs:complexType name="othersType">
+        <xs:sequence>
+            <xs:element name="area" type="areaType"/>
+         </xs:sequence>
+         <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="areaType">
+        <xs:sequence>
+            <xs:element name="outerPoint" type="outerPointType" minOccurs="2" maxOccurs="unbounded"/>
+            <xs:element name="connectingRadius" type="connectingRadiusType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="zOffset" type="xs:double" use="required"/>
+        <xs:attribute name="hight" type="xs:double" use="required"/>
+        <xs:attribute name="color" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="outerPointType">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="connectingRadiusType">
+        <xs:attribute name="fromId" type="xs:string" use="required"/>
+        <xs:attribute name="toId" type="xs:string" use="required"/>
+        <xs:attribute name="R" type="xs:double" use="required"/>
+        <xs:attribute name="length" type="xs:double" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="interfacesType">
+        <xs:sequence>
+            <xs:element name="segmentLink" type="segmentLinkType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="setReferenceSegment" type="xs:string" use="required"/>
+        <xs:attribute name="angleOffset" type="xs:double" use="required"/>
+        <xs:attribute name="xOffset" type="xs:double" use="required"/>
+        <xs:attribute name="yOffset" type="xs:double" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="segmentLinkType">
+        <xs:sequence>
+            <xs:element name="roadLink" type="roadLinkType"/>
+        </xs:sequence>
+        <xs:attribute name="fromId" type="xs:string" use="required"/>
+        <xs:attribute name="toId"  type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="closeRoadNetworkType">
+        <xs:sequence>
+            <xs:element name="connectingPoints" type="connectingPointsType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="connectingPointsType">
+        <xs:attribute name="segmentId1" type="xs:string" use="required"/>
+        <xs:attribute name="roadId1" type="xs:string" use="required"/>
+        <xs:attribute name="segmentId2" type="xs:string" use="required"/>
+        <xs:attribute name="roadId2" type="xs:string" use="required"/>
+    </xs:complexType>    
+</xs:schema>
