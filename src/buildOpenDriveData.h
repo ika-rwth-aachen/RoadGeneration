@@ -1,19 +1,50 @@
 // file buildOpenDriveData.h
 
-int buildOpenDriveData(pugi::xml_document &doc, roadNetwork data)
+std::string::size_type sz;
+
+#include "tjunction.h"
+
+int buildOpenDriveData(pugi::xml_document &doc, roadNetwork &data)
 {
 	
-	pugi::xml_node root = doc.child("roadNetwork");
+	pugi::xml_node segments = doc.child("roadNetwork").child("segments");
 
-	if(!root) cout << "ERR: 'roadNetwork' not found in input file."  << endl;
+	if(!segments) cout << "ERR: 'segments' not found in input file."  << endl;
 
-    // TODO remove
-	root.set_name("rea");
-	root.attribute("test").set_value("6");
-	root.append_child("node");
+	for (pugi::xml_node_iterator it = segments.begin(); it != segments.end(); ++it)
+	{
+		if ((string)it->name() == "junctions")
+			{
+			for (pugi::xml_node_iterator itt = it->begin(); itt != it->end(); ++itt)
+			{
+				if ((string)itt->name() == "tjunction")
+				{
+					cout << "Processing tjunction" << endl;
+					tjunction(*itt, data);
+				}
 
-    // output
-	doc.save(std::cout);
+				if ((string)itt->name() == "xjunction")
+				{
+					cout << "Processing xjunction" << endl;
+				}
+
+				if ((string)itt->name() == "njunction")
+				{
+					cout << "Processing njunction" << endl;
+				}
+			}
+		}
+
+		if ((string)it->name() == "roundabout")
+		{
+			cout << "Processing roundabout" << endl;
+		}
+
+		if ((string)it->name() == "connectingRoad")
+		{
+			cout << "Processing rounconnectingRoaddabout" << endl;
+		}
+	}
 
     return 0;
 }

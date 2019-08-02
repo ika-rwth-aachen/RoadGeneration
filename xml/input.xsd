@@ -31,8 +31,8 @@ elementFormDefault="qualified">
 
     <xs:complexType name="tjunctionType">
         <xs:sequence>
-            <xs:element name="mainRoad" type="mainRoadType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="accessRoad" type="accessRoadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="road" type="roadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="road" type="roadType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="intersectionPoint" type="intersectionPointType"/>
             <xs:element name="coupler" type="couplerType"/>
             <xs:element name="objects" type="objectsType" minOccurs="0" maxOccurs="1"/>
@@ -43,8 +43,8 @@ elementFormDefault="qualified">
 
     <xs:complexType name="xjunctionType">
         <xs:sequence>
-            <xs:element name="mainRoad" type="mainRoadType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="accessRoad" type="accessRoadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="road" type="roadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="road" type="roadType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="intersectionPoint" type="intersectionPointType"/>
             <xs:element name="coupler" type="couplerType"/>
             <xs:element name="objects" type="objectsType" minOccurs="0" maxOccurs="1"/>
@@ -55,8 +55,8 @@ elementFormDefault="qualified">
 
     <xs:complexType name="njunctionType">
         <xs:sequence>
-            <xs:element name="mainRoad" type="mainRoadType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="accessRoad" type="accessRoadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="road" type="roadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="road" type="roadType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="intersectionPoint" type="intersectionPointType" minOccurs="1" maxOccurs="unbounded"/>
             <xs:element name="coupler" type="couplerType" minOccurs="1" maxOccurs="unbounded"/>
             <xs:element name="objects" type="objectsType" minOccurs="0" maxOccurs="1"/>
@@ -66,8 +66,8 @@ elementFormDefault="qualified">
 
     <xs:complexType name="roundaboutType">
         <xs:sequence>
-            <xs:element name="mainRoad" type="mainRoadType"/>
-            <xs:element name="accessRoad" type="accessRoadType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="road" type="roadType"/>
+            <xs:element name="road" type="roadType" minOccurs="1" maxOccurs="unbounded"/>
             <xs:element name="intersectionPoint" type="intersectionPointType" minOccurs="1" maxOccurs="unbounded"/>
             <xs:element name="coupler" type="couplerType" minOccurs="1" maxOccurs="unbounded"/>
             <xs:element name="objects" type="objectsType" minOccurs="0" maxOccurs="1"/>
@@ -78,29 +78,14 @@ elementFormDefault="qualified">
 
     <xs:complexType name="connectingRoadType">
         <xs:sequence>
-            <xs:element name="mainRoad" type="mainRoadType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="accessRoad" type="accessRoadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="road" type="roadType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="road" type="roadType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="objects" type="objectsType" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:string" use="required"/>
     </xs:complexType>
 
-    <xs:complexType name="mainRoadType">
-        <xs:sequence>
-            <xs:element name="referenceLine" type="referenceLineType"/>
-            <xs:element name="elevationProfile" type="elevationProfileType" minOccurs="0"/>
-            <xs:element name="lateralProfile" type="lateralProfileType" minOccurs="0"/>
-            <xs:element name="lanes" type="lanesType" minOccurs="0"/>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:string" use="required"/>
-        <xs:attribute name="length" type="xs:double" use="required"/>
-        <xs:attribute name="sOffset" type="xs:double" use="required"/>
-        <xs:attribute name="type" type="xs:string" use="required"/>
-        <xs:attribute name="idStart" type="xs:string" use="required"/>
-        <xs:attribute name="idEnd" type="xs:string" use="required"/>
-    </xs:complexType>
-
-    <xs:complexType name="accessRoadType">
+    <xs:complexType name="roadType">
         <xs:sequence>
             <xs:element name="referenceLine" type="referenceLineType"/>
             <xs:element name="elevationProfile" type="elevationProfileType" minOccurs="0"/>
@@ -253,8 +238,8 @@ elementFormDefault="qualified">
         <xs:attribute name="setReferenceRoad" type="xs:string" use="required"/>
         <xs:attribute name="adRoadId" type="xs:string" use="required"/>    
         <xs:attribute name="angleToReferenceRoad" type="xs:double" use="required"/>    
-        <xs:attribute name="iPOnMainRoad" type="xs:double" use="required"/>    
-        <xs:attribute name="iPOnAccessRoad" type="xs:double" use="required"/>
+        <xs:attribute name="iPOnroad" type="xs:double" use="required"/>    
+        <xs:attribute name="iPOnroad" type="xs:double" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="couplerType">

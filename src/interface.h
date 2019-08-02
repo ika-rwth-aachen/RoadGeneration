@@ -11,6 +11,7 @@ struct connection
     int id;
     int from;
     int to;
+    string contactPoint = "start";
     vector<laneLink> laneLinks;
 };
 
@@ -22,27 +23,27 @@ struct junction
 
 struct roadmark
 {
-    double s;
-    int type;
-    int weight;
-    int color;
-    double width;
+    double s = 0;
+    string type = "solid";
+    string weight = "standard";
+    string color = "white";
+    double width = 0.2;
 };
 
 struct width
 {
-    double s;
-    double a;
-    double b;
-    double c;
-    double d;
+    double s = 0;
+    double a = 3.25;
+    double b = 0;
+    double c = 0;
+    double d = 0;
 };
 
 struct lane
 {
     int id;
-    int type;
-    int level;
+    string type = "driving";
+    int level = 0;
     int predecessor;
     int successor;
     width w;
@@ -51,6 +52,7 @@ struct lane
 
 struct laneSection
 {
+    int id;
     double s;
     vector<lane> lanes;
 };
@@ -70,15 +72,17 @@ struct geometry
 
 struct link
 {
-    int type;
-    int id;
-    int contactPoint;
+    string elementType = "road";
+    int elementId;
+    string contactPoint = "start";
 };
 
 struct road
 {
-    double s;
-    int type;
+    double length = 0;
+    int id;
+    int junction;
+    string type = "town";
 
     link predecessor;
     link successor;
