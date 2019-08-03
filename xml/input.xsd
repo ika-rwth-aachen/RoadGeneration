@@ -109,8 +109,8 @@ elementFormDefault="qualified">
     <xs:complexType name="geometryType">
         <xs:attribute name="id" type="xs:string" use="required"/>
         <xs:attribute name="length" type="xs:double" use="required"/>
-        <xs:attribute name="connectToEndOf" type="xs:string" use="required"/>
-        <xs:attribute name="connectToStartOf" type="xs:string" use="required"/>
+        <xs:attribute name="connectToEndOf" type="xs:string" use="optional"/>
+        <xs:attribute name="connectToStartOf" type="xs:string" use="optional"/>
         <xs:attribute name="type" type="xs:string" use="required"/>
         <xs:attribute name="R" type="xs:double"/>
         <xs:attribute name="Rs" type="xs:double"/>
@@ -171,7 +171,7 @@ elementFormDefault="qualified">
             <xs:element name="roadMark" type="roadMarkType" minOccurs="0"/>
             <xs:element name="material" type="materialType" minOccurs="0"/>
         </xs:sequence>
-        <xs:attribute name="laneId" type="xs:string" use="required"/>
+        <xs:attribute name="id" type="xs:string" use="required"/>
         <xs:attribute name="type" type="xs:string" use="required"/>        
     </xs:complexType>
 
@@ -235,11 +235,17 @@ elementFormDefault="qualified">
     </xs:complexType>
 
     <xs:complexType name="intersectionPointType">
-        <xs:attribute name="setReferenceRoad" type="xs:string" use="required"/>
-        <xs:attribute name="adRoadId" type="xs:string" use="required"/>    
-        <xs:attribute name="angleToReferenceRoad" type="xs:double" use="required"/>    
-        <xs:attribute name="iPOnroad" type="xs:double" use="required"/>    
-        <xs:attribute name="iPOnroad" type="xs:double" use="required"/>
+        <xs:sequence>
+            <xs:element name="adRoad" type="adRoadType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="refId" type="xs:int" use="required"/>
+        <xs:attribute name="s" type="xs:double" use="required"/>    
+    </xs:complexType>
+
+    <xs:complexType name="adRoadType">
+        <xs:attribute name="id" type="xs:int" use="required"/>
+        <xs:attribute name="s" type="xs:double" use="required"/>
+        <xs:attribute name="angle" type="xs:double" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="couplerType">

@@ -8,15 +8,15 @@
                     </referenceLine>
                     <lanes>
                         <laneSection id="1" s="0">
-                            <lane laneId="1" type="driving">
+                            <lane id="1" type="driving">
                                 <laneWidth sOffset="0" w="3.75"/>
                                 <roadMark sOffset="0" tOffset="0" type="solid" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
                             </lane>
-                            <lane laneId="0" type="driving">
+                            <lane id="0" type="driving">
                                 <laneWidth sOffset="0" w="0"/>
                                 <roadMark sOffset="0" tOffset="0" type="broken" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
                             </lane>
-                            <lane laneId="-1" type="driving">
+                            <lane id="-1" type="driving">
                                 <laneWidth sOffset="0" w="3.75"/>
                                 <roadMark sOffset="0" tOffset="0" type="solid" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
                             </lane>
@@ -29,22 +29,24 @@
                     </referenceLine>
                     <lanes>
                         <laneSection id="1" s="0">
-                            <lane laneId="1" type="driving">
+                            <lane id="1" type="driving">
                                 <laneWidth sOffset="0" w="3.75"/>
                                 <roadMark sOffset="0" tOffset="0" type="solid" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
                             </lane>
-                            <lane laneId="0" type="driving">
+                            <lane id="0" type="driving">
                                 <laneWidth sOffset="0" w="0"/>
                                 <roadMark sOffset="0" tOffset="0" type="broken" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
                             </lane>
-                            <lane laneId="-1" type="driving">
+                            <lane id="-1" type="driving">
                                 <laneWidth sOffset="0" w="3.75"/>
                                 <roadMark sOffset="0" tOffset="0" type="solid" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
                             </lane>
                         </laneSection>
                     </lanes>
                 </road>
-                <intersectionPoint setReferenceRoad="1" adRoadId="2"	angleToReferenceRoad="0.95708" iPOnMainRoad="125" iPOnAccessRoad="0"/>
+                <intersectionPoint refId="1" s="125">
+                    <adRoad id="2" s="0" angle="0.95798"/>
+                </intersectionPoint>a
                 <coupler id="1">
                     <couplerArea type="sym" sOffset="15"/>
                     <connection type="all"/>

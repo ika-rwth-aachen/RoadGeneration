@@ -2,7 +2,10 @@
 
 std::string::size_type sz;
 
+#include "generateRoad.h"
+#include "createRoadConnections.h"
 #include "tjunction.h"
+#include "xjunction.h"
 
 int buildOpenDriveData(pugi::xml_document &doc, roadNetwork &data)
 {
@@ -26,6 +29,8 @@ int buildOpenDriveData(pugi::xml_document &doc, roadNetwork &data)
 				if ((string)itt->name() == "xjunction")
 				{
 					cout << "Processing xjunction" << endl;
+					xjunction(*itt, data);
+
 				}
 
 				if ((string)itt->name() == "njunction")

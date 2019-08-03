@@ -53,7 +53,7 @@ struct lane
 struct laneSection
 {
     int id;
-    double s;
+    double s = 0;
     vector<lane> lanes;
 };
 

@@ -31,6 +31,7 @@ int main()
 
 	// -------------------------------------------------------------------------
 	// TODO remove
+	/*
 	RoadNetwork roadNetwork;
 	RoadSegment roadSegment;
 	ifstream myInputfile("../russ/inputRuss.xml");
@@ -38,6 +39,7 @@ int main()
 	
 	parseRoadNetwork(myInputfile, roadNetwork, myOutputfile, roadSegment);
 	printRN(myOutputfile, roadSegment);
+	*/
 	// TODO remove
 	// -------------------------------------------------------------------------
 

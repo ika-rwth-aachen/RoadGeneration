@@ -3,7 +3,7 @@
 int parseXML(pugi::xml_document &doc)
 {   
 	//if (doc.load_file("../xml/test.xml")) return 0;
-	if (doc.load_file("test.xml")) return 0;
+	if (doc.load_file("testX.xml")) return 0;
     else return -1;
 
 }
