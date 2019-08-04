@@ -83,7 +83,6 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     }
     data.roads.push_back(r1);
 
-
     cout << "Road 2" << endl;
     road r2;
     r2.id = 100*junc.id + 2;
@@ -131,8 +130,8 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     if (mode == 1) 
     {
         int laneId;
-        if (phi1 > M_PI) laneId = r1.laneSections.back().lanes.back().id;
-        if (phi1 < M_PI) laneId = r1.laneSections.back().lanes.front().id;
+        if (phi1 > M_PI) laneId = findMaxLaneId(r1.laneSections.back());
+        if (phi1 < M_PI) laneId = findMinLaneId(r1.laneSections.back());
         createRoadConnection(r1,r2,r4,junc,2,laneId);
     }
     if (mode == 2) 

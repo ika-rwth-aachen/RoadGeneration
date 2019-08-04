@@ -22,18 +22,21 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
     for (pugi::xml_node_iterator it = geos.child("referenceLine").begin(); it != geos.child("referenceLine").end(); ++it)
     {
         int type;
-        double c = 0;
-        double c1 = 0;
-        double c2 = 0;
+        double c = 0, c1 = 0, c2 = 0;
+        double R = 0, R1 = 0, R2 = 0;
 
         if((string)it->attribute("type").value() == "line") type = 1;
         if((string)it->attribute("type").value() == "arc") type = 2;
         if((string)it->attribute("type").value() == "spiral") type = 3;
 
         double length = stod(it->attribute("length").value(),&sz);
-        if (it->attribute("R"))   c = 1 / stod(it->attribute("R").value(),&sz);
-        if (it->attribute("Rs")) c1 = 1 / stod(it->attribute("Rs").value(),&sz);
-        if (it->attribute("Re")) c2 = 1 / stod(it->attribute("Re").value(),&sz);
+        if (it->attribute("R"))  R = stod(it->attribute("R").value(),&sz);
+        if (it->attribute("Rs")) R1 = stod(it->attribute("Rs").value(),&sz);
+        if (it->attribute("Re")) R2 = stod(it->attribute("Re").value(),&sz);
+
+        if (R != 0) c = 1/R; 
+        if (R1 != 0) c1 = 1 / R1; 
+        if (R2 != 0) c2 = 1 / R2; 
 
         double actualLength = length;
         bool complicatedCut = false;
@@ -65,40 +68,49 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
         geo.x = x;
         geo.y = y;
         geo.hdg = hdg;
-        geo.length = actualLength;
+        geo.length = length;
         geo.c = c;
         geo.c1 = c1;
         geo.c2 = c2;  
         geo.type = type;
+        
 
         if(!complicatedCut)
-            curve(actualLength, c, c1, c2, x, y, hdg);
+            curve(actualLength, geo, x, y, hdg,1);
 
         // if complicated cut
         if(complicatedCut)
         {
             if (mode == 1)
             {
-                curve(actualLength - sOffset, c, c1, c2, x, y, hdg);
+                curve(actualLength - sOffset, geo, x, y, hdg,1);
                 dx = x0 - x;
                 dy = y0 - y;
+
+                // update second curvature
+                geo.c2 = geo.c1 + (actualLength) * (geo.c2 - geo.c1) / length;
+                // update length
+                geo.length = actualLength;
             }
             if (mode == 2)
             {
                 geo.s = 0;
                 s = 0;
-                curve(length-actualLength, c, c1, c2, geo.x, geo.y, geo.hdg);
+                curve(length-actualLength, geo, geo.x, geo.y, geo.hdg,1);
 
                 double tmpX = x;
                 double tmpY = y;
                 double tmpHdg = hdg;
-                curve(length-actualLength-sOffset, c, c1, c2, tmpX, tmpY,tmpHdg);
-                curve(length, c, c1, c2, x, y,hdg);
-                
+                curve(length-actualLength-sOffset, geo, tmpX, tmpY,tmpHdg,1);
                 dx = x0 - tmpX;
                 dy = y0 - tmpY;
                 
-                curve(length, c, c1, c2, x, y,hdg);
+                curve(length, geo, x, y,hdg,1);
+
+                // update first curvature
+                geo.c1 += (s0 + sOffset) * (geo.c2 - geo.c1) / length; 
+                // update length
+                geo.length = actualLength;
             }
         }
         if (save) 
@@ -106,6 +118,7 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
             r.length = s + actualLength;
             r.geometries.push_back(geo);
         }
+
         s += length;
     }
 

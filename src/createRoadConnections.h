@@ -26,7 +26,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneType
         x1 = g1.x; 
         y1 = g1.y; 
         hdg1 = g1.hdg; 
-        curve(g1.length,g1.c,g1.c1,g1.c2,x1,y1,hdg1);
+        curve(g1.length,g1,x1,y1,hdg1,1);
     }
 
     connection con1;
@@ -52,7 +52,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneType
         x2 = g2.x; 
         y2 = g2.y; 
         hdg2 = g2.hdg; 
-        curve(g2.length,g2.c,g2.c1,g2.c2,x2,y2,hdg2);
+        curve(g2.length,g2,x2,y2,hdg2,1);
 
         hdg2 = hdg2 + M_PI; 
         fixAngle(hdg2);
@@ -95,7 +95,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneType
     double xx = x1;
     double yy = y1; 
     double phiphi = hdg1;
-    curve(g.length,g.c,g.c1,g.c2,xx,yy,phiphi);
+    curve(g.length,g,xx,yy,phiphi,1);
 
     r.geometries.push_back(g);
     r.length = g.length;
