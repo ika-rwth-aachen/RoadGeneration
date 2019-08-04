@@ -18,6 +18,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
 
     pugi::xml_node iP = node.child("intersectionPoint");
     pugi::xml_node cA = node.child("coupler").child("couplerArea");
+    pugi::xml_node con = node.child("coupler").child("connection");
 
     // define junction roads
     pugi::xml_node mainRoad;
@@ -138,42 +139,74 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
 
     cout << "Generating Connecting Roads" << endl;
     
-    cout << "Road 4" << endl;
-    road r4; 
-    r4.id = 100*junc.id + 4;
-    r4.junction = junc.id;
-    r4.predecessor.elementId = r1.id;
-    r4.successor.elementId   = r2.id;
-    if (mode == 1) 
+    if((string)con.attribute("type").value() == "all")
     {
-        int laneId;
-        if (phi1 > M_PI) laneId = findMaxLaneId(r1.laneSections.back());
-        if (phi1 < M_PI) laneId = findMinLaneId(r1.laneSections.back());
-        createRoadConnection(r1,r2,r4,junc,2,laneId);
+        cout << "Road 4" << endl;
+        road r4; 
+        r4.id = 100*junc.id + 4;
+        r4.junction = junc.id;
+        r4.predecessor.elementId = r1.id;
+        r4.successor.elementId   = r2.id;
+        if (mode == 1) 
+        {
+            int laneId;
+            if (phi1 > M_PI) laneId = findMaxLaneId(r1.laneSections.back());
+            if (phi1 < M_PI) laneId = findMinLaneId(r1.laneSections.back());
+            createRoadConnection(r1,r2,r4,junc,100,2,laneId);
+        }
+        if (mode == 2) 
+        {
+            createRoadConnection(r1,r2,r4,junc,100,2,0);        
+        }
+        data.roads.push_back(r4);
+
+        cout << "Road 5" << endl;
+        road r5; 
+        r5.id = 100*junc.id + 5;
+        r5.junction = junc.id;
+        r5.predecessor.elementId = r3.id;
+        r5.successor.elementId   = r2.id;
+        createRoadConnection(r3,r2,r5,junc,100,2,0);     
+        data.roads.push_back(r5);
+
+        cout << "Road 6" << endl;
+        road r6; 
+        r6.id = 100*junc.id + 6;
+        r6.junction = junc.id;
+        r6.predecessor.elementId = r1.id;
+        r6.successor.elementId   = r3.id;
+        createRoadConnection(r1,r3,r6,junc,100,2,0);
+        data.roads.push_back(r6);
     }
-    if (mode == 2) 
+    else if((string)con.attribute("type").value() == "single")
     {
-        createRoadConnection(r1,r2,r4,junc,2,0);        
+        for (pugi::xml_node roadLink: con.children("roadLink"))
+        {
+            int fromId = roadLink.attribute("fromId").as_int();
+            int toId = roadLink.attribute("toId").as_int();
+
+            road r1,r2;
+            for (int i = 0; i < data.roads.size(); i++)
+            {
+                if (data.roads[i].id == fromId) r1 = data.roads[i];
+                if (data.roads[i].id == toId)   r2 = data.roads[i];
+            }
+
+            for (pugi::xml_node laneLink: roadLink.children("laneLink"))
+            {
+                int laneId = laneLink.attribute("laneId").as_int();
+
+                cout << "Road " << data.roads.size() + 1 << endl;
+                road r;
+                r.id = 100*junc.id + data.roads.size() + 1;
+                r.junction = junc.id;
+                r.predecessor.elementId = fromId;
+                r.successor.elementId   = toId;
+                createRoadConnection(r1,r2,r,junc,laneId,0,0);
+                data.roads.push_back(r);
+            }
+        }
     }
-    data.roads.push_back(r4);
-
-    cout << "Road 5" << endl;
-    road r5; 
-    r5.id = 100*junc.id + 5;
-    r5.junction = junc.id;
-    r5.predecessor.elementId = r3.id;
-    r5.successor.elementId   = r2.id;
-    createRoadConnection(r3,r2,r5,junc,2,0);     
-    data.roads.push_back(r5);
-
-    cout << "Road 6" << endl;
-    road r6; 
-    r6.id = 100*junc.id + 6;
-    r6.junction = junc.id;
-    r6.predecessor.elementId = r1.id;
-    r6.successor.elementId   = r3.id;
-    createRoadConnection(r1,r3,r6,junc,2,0);
-    data.roads.push_back(r6);
 
     data.junctions.push_back(junc);     
 

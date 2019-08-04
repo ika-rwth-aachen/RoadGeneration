@@ -1,6 +1,6 @@
 // file createRoadConnections.h
 
-int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneType, int laneId)
+int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneId, int laneType, int laneMarkId)
 {
     // connect r1 with r2   
 
@@ -104,47 +104,71 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneType
     laneSection laneSec;
     
     if (lS1.lanes.size() != lS2.lanes.size()) 
-        cout << "ERR: not implemented" << endl; 
-
-    for (int i = 0; i < lS1.lanes.size(); i++)
     {
+        cout << "ERR: not implemented" << endl; 
+        exit(0);
+    }
+
+    if (laneId == 100) // connect all
+    {
+        for (int i = 0; i < lS1.lanes.size(); i++)
+        {
+            lane l;
+            l.id = -ceil(lS1.lanes.size()/2) + i;
+            l.rm.type = "none";
+            l.w.a = (lS1.lanes[i].w.a + lS1.lanes[i].w.a) / 2;
+            
+            laneSec.lanes.push_back(l);
+        }
+
+        // create solid lines
+        if (laneType == 1 && laneMarkId == 0)
+        {
+            if (g.c >  0.005) laneSec.lanes.back().rm.type = "broken";
+            if (g.c < -0.005) laneSec.lanes.front().rm.type ="solbrokenid";
+        }
+
+        if (laneType == 1 && laneMarkId == 100)
+            for (int i = 0; i < lS1.lanes.size(); i++)
+                laneSec.lanes[i].rm.type = "broken";
+
+        if (laneType == 1 && laneMarkId != 100 && laneMarkId > -100 && laneMarkId < 100)
+            laneSec.lanes[laneMarkId].rm.type = "broken";
+
+        // create dashed lines
+        if (laneType == 2 && laneMarkId == 0)
+        {
+            if (g.c >  0.005) laneSec.lanes.back().rm.type = "solid";
+            if (g.c < -0.005) laneSec.lanes.front().rm.type ="solid";
+        }
+
+        if (laneType == 2 && laneMarkId == 100)
+            for (int i = 0; i < lS1.lanes.size(); i++)
+                laneSec.lanes[i].rm.type = "solid";
+
+        if (laneType == 2 && laneMarkId != 100 && laneMarkId != 0 && laneMarkId > -100 && laneMarkId < 100)
+            for (int i = 0; i < lS1.lanes.size(); i++)
+                if (laneSec.lanes[i].id == laneMarkId)
+                    laneSec.lanes[i].rm.type = "solid";
+    }
+    else
+    {
+        if (laneId > 0)
+        {
+            lane l; 
+            l.id = 0; l.rm.type = "none"; l.w.a = 0;
+            laneSec.lanes.push_back(l);
+        }
         lane l;
-        l.id = -ceil(lS1.lanes.size()/2) + i;
+        l.id = laneId;
         l.rm.type = "none";
-        l.w.a = (lS1.lanes[i].w.a + lS1.lanes[i].w.a) / 2;
-        
+        for (int i = 0; i < lS1.lanes.size(); i++)
+        {
+            if (lS1.lanes[i].id == laneId)
+                l.w.a = lS1.lanes[i].w.a;
+        }
         laneSec.lanes.push_back(l);
     }
-
-    // create solid lines
-    if (laneType == 1 && laneId == 0)
-    {
-        if (g.c >  0.005) laneSec.lanes.back().rm.type = "broken";
-        if (g.c < -0.005) laneSec.lanes.front().rm.type ="solbrokenid";
-    }
-
-    if (laneType == 1 && laneId == 100)
-        for (int i = 0; i < lS1.lanes.size(); i++)
-            laneSec.lanes[i].rm.type = "broken";
-
-    if (laneType == 1 && laneId != 100 && laneId > -100 && laneId < 100)
-        laneSec.lanes[laneId].rm.type = "broken";
-
-    // create dashed lines
-    if (laneType == 2 && laneId == 0)
-    {
-        if (g.c >  0.005) laneSec.lanes.back().rm.type = "solid";
-        if (g.c < -0.005) laneSec.lanes.front().rm.type ="solid";
-    }
-
-    if (laneType == 2 && laneId == 100)
-        for (int i = 0; i < lS1.lanes.size(); i++)
-            laneSec.lanes[i].rm.type = "solid";
-
-    if (laneType == 2 && laneId != 100 && laneId != 0 && laneId > -100 && laneId < 100)
-        for (int i = 0; i < lS1.lanes.size(); i++)
-            if (laneSec.lanes[i].id == laneId)
-                laneSec.lanes[i].rm.type = "solid";
 
     r.laneSections.push_back(laneSec);
 
