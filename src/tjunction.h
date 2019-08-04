@@ -6,7 +6,11 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     int mode = 0; 
     if ((string)node.attribute("type").value() == "M1A") mode = 1;
     if ((string)node.attribute("type").value() == "3A")  mode = 2;
-    if (mode == 0) cout << "ERR:" << endl;
+    if (mode == 0) 
+    {
+        cout << "ERR: wrong type" << endl;
+        exit(0);
+    }
 
     // create junction
     junction junc;
@@ -16,7 +20,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     pugi::xml_node cA = node.child("coupler").child("couplerArea");
 
     // define junction roads
-    pugi::xml_node referenceRoad;
+    pugi::xml_node mainRoad;
     pugi::xml_node additionalRoad1;
     pugi::xml_node additionalRoad2; 
 
@@ -25,7 +29,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     for (pugi::xml_node road: node.children("road"))
     {
         if(road.attribute("id").as_int() == iP.attribute("refId").as_int())
-            referenceRoad = road;
+            mainRoad = road;
 
         if(mode >= 1 &&  road.attribute("id").as_int() == tmpNode.attribute("id").as_int())
             additionalRoad1 = road;
@@ -34,52 +38,65 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             additionalRoad2= road;
     }   
 
-    if(!referenceRoad || !additionalRoad1 || (mode == 2 && !additionalRoad2)) 
+    if(!mainRoad || !additionalRoad1 || (mode == 2 && !additionalRoad2)) 
         cout << "ERR: no corresponding roads are found" << endl;
 
-    // cut original roads
-    double sOffset = stod(cA.attribute("sOffset").value(),&sz);
+    double sMain, sAdd1, sAdd2, sOffMain, sOffAdd1, sOffAdd2, phi1, phi2;
 
-    double sMain, sAccess1, sAccess2, phi1, phi2;
+    // calculate offsets
+    double sOffset = stod(cA.attribute("sOffset").value(),&sz);
+    sOffMain = sOffset;
+    sOffAdd1 = sOffset;
+    sOffAdd2 = sOffset;
+    for (pugi::xml_node_iterator sB = cA.begin(); sB != cA.end(); ++sB)
+    {
+        if (sB->attribute("id").as_int() == mainRoad.attribute("id").as_int()) sOffMain = stod(sB->attribute("sOffset").value(),&sz);
+        
+        if (sB->attribute("id").as_int() == additionalRoad1.attribute("id").as_int()) sOffAdd1 = stod(sB->attribute("sOffset").value(),&sz);
+        
+        if (sB->attribute("id").as_int() == additionalRoad2.attribute("id").as_int()) sOffAdd2 = stod(sB->attribute("sOffset").value(),&sz);
+    }
     
+    // calculate s and phi at intersection
     sMain = stod(iP.attribute("s").value(),&sz);
 
     if(mode >= 1)
     {
         tmpNode = iP.child("adRoad");
-        sAccess1 = stod(tmpNode.attribute("s").value(),&sz);
+        sAdd1 = stod(tmpNode.attribute("s").value(),&sz);
         phi1 = stod(tmpNode.attribute("angle").value(),&sz);
     }
 
     if(mode >= 2)
     {
-        sAccess2 = stod(tmpNode.next_sibling("adRoad").attribute("s").value(),&sz);
+        sAdd2 = stod(tmpNode.next_sibling("adRoad").attribute("s").value(),&sz);
         phi2 = stod(tmpNode.next_sibling("adRoad").attribute("angle").value(),&sz);
     }
 
     // calculate intersectionPoint
     road helperRoad;
-    generateRoad(referenceRoad, helperRoad, sMain, 0, 0, 0, 0);
+    generateRoad(mainRoad, helperRoad, sMain, 0, 0, 0, 0);
     double iPx = helperRoad.geometries.back().x;
     double iPy = helperRoad.geometries.back().y;
     double iPhdg = helperRoad.geometries.back().hdg;
 
     cout << "Generating Roads" << endl;
+
     cout << "Road 1" << endl;
     road r1;
     r1.id = 100*junc.id + 1;
     r1.junction = junc.id;
     if (mode == 1)
     {
-        r1.predecessor.elementId =referenceRoad.attribute("idStart").as_int();
+        r1.predecessor.elementId =mainRoad.attribute("idStart").as_int();
         r1.successor.elementId = 100*junc.id + 4;
-        generateRoad(referenceRoad, r1, sMain, -sOffset, 0, 0, 0);
+        generateRoad(mainRoad, r1, sMain, -sOffMain, 0, 0, 0);
     }
     if (mode == 2)
     {
         r1.predecessor.elementId = 100*junc.id + 4;
-        r1.successor.elementId = referenceRoad.attribute("idEnd").as_int();
-        generateRoad(referenceRoad, r1, sMain, sOffset, 0, 0, 0);
+        r1.successor.elementId = mainRoad.attribute("idEnd").as_int();
+        generateRoad(mainRoad, r1, sMain, sOffMain, 0, 0, 0);
     }
     data.roads.push_back(r1);
 
@@ -90,14 +107,14 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     if (mode == 1)
     {
         r2.predecessor.elementId = 100*junc.id + 4;
-        r2.successor.elementId = referenceRoad.attribute("idEnd").as_int();
-        generateRoad(referenceRoad, r2, sMain, sOffset, 0, 0, 0);
+        r2.successor.elementId = mainRoad.attribute("idEnd").as_int();
+        generateRoad(mainRoad, r2, sMain, sOffMain, 0, 0, 0);
     }
     if (mode == 2)
     {
         r2.predecessor.elementId = 100*junc.id + 4;
         r2.successor.elementId = additionalRoad1.attribute("idEnd").as_int();
-        generateRoad(additionalRoad1, r2, sAccess1, sOffset, iPhdg+phi1, iPx, iPy);
+        generateRoad(additionalRoad1, r2, sAdd1, sOffAdd1, iPhdg+phi1, iPx, iPy);
     }
     data.roads.push_back(r2);
 
@@ -109,13 +126,13 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     {
         r3.predecessor.elementId = 100*junc.id + 6;
         r3.successor.elementId = additionalRoad1.attribute("idEnd").as_int();
-        generateRoad(additionalRoad1, r3, sAccess1, sOffset, iPhdg+phi1, iPx, iPy);
+        generateRoad(additionalRoad1, r3, sAdd1, sOffAdd1, iPhdg+phi1, iPx, iPy);
     }
     if (mode == 2)
     {
         r3.predecessor.elementId = 100*junc.id + 6;
         r3.successor.elementId = additionalRoad2.attribute("idEnd").as_int();
-        generateRoad(additionalRoad2, r3, sAccess2, sOffset, iPhdg+phi2, iPx, iPy);
+        generateRoad(additionalRoad2, r3, sAdd2, sOffAdd2, iPhdg+phi2, iPx, iPy);
     }
     data.roads.push_back(r3);
 

@@ -93,6 +93,7 @@ struct road
 
 struct roadNetwork
 {
+    string file;
     vector<road> roads;
     vector<junction> junctions;
 };

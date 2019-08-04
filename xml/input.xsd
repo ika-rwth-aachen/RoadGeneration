@@ -260,7 +260,6 @@ elementFormDefault="qualified">
         <xs:sequence>
             <xs:element name="streetBorder" type="streetBorderType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="type" type="xs:string" use="required"/>   
         <xs:attribute name="sOffset" type="xs:double" use="required"/>   
     </xs:complexType>
 
@@ -268,7 +267,7 @@ elementFormDefault="qualified">
         <xs:sequence>
             <xs:element name="laneBorder" type="laneBorderType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="roadId" type="xs:string" use="required"/>   
+        <xs:attribute name="id" type="xs:int" use="required"/>   
         <xs:attribute name="sOffset" type="xs:double" use="required"/>   
     </xs:complexType>
 
@@ -295,7 +294,7 @@ elementFormDefault="qualified">
     <xs:complexType name="laneLinkType">
         <xs:attribute name="fromId" type="xs:string" use="required"/>
         <xs:attribute name="toId" type="xs:string" use="required"/>
-        <xs:attribute name="minR" type="xs:double" use="required"/>
+        <xs:attribute name="minR" type="xs:double" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="objectsType">

@@ -1,14 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
+#include <cmath>
 
-
-// TODO remove
-#include "Reader.cpp"
-#include "Printer.cpp"
-#include "RoadNetwork.h"
-// TODO remove
-
+using namespace std;
 
 #include "pugixml.hpp"
 #include "interface.h"
@@ -16,32 +12,19 @@
 #include "io.h"
 #include "buildOpenDriveData.h"
 
-using namespace std;
+int main(int argc,  char** argv)
+{   
+    if (argc < 2) {
+        cerr << "ERR: no input file provided." << endl; return -1;
+    }
 
-
-int main() 
-{
 	pugi::xml_document in;
 	pugi::xml_document out;
 	roadNetwork data;
 
-	parseXML(in);	
+	parseXML(in, data, argv[1]);	
 	buildOpenDriveData(in, data);
 	createXML(out, data);
-
-	// -------------------------------------------------------------------------
-	// TODO remove
-	/*
-	RoadNetwork roadNetwork;
-	RoadSegment roadSegment;
-	ifstream myInputfile("../russ/inputRuss.xml");
-	ofstream myOutputfile("Output.xodr");
-	
-	parseRoadNetwork(myInputfile, roadNetwork, myOutputfile, roadSegment);
-	printRN(myOutputfile, roadSegment);
-	*/
-	// TODO remove
-	// -------------------------------------------------------------------------
 
 	return 0;
 } 

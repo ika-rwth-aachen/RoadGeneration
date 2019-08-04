@@ -100,9 +100,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneType
     r.geometries.push_back(g);
     r.length = g.length;
 
-    // add lanes // TODO: consider values in input file
-
-    // TODO lanemarkings in crossing section
+    // lanemarkings in crossing section
     laneSection laneSec;
     
     if (lS1.lanes.size() != lS2.lanes.size()) 

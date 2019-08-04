@@ -1,11 +1,14 @@
 // file io.h
 
-int parseXML(pugi::xml_document &doc)
+int parseXML(pugi::xml_document &doc, roadNetwork &data, char * file)
 {   
-	//if (doc.load_file("../xml/test.xml")) return 0;
-	if (doc.load_file("spiralX.xml")) return 0;
-    else return -1;
+    data.file = file;
 
+	if (doc.load_file(file)) return 0;
+    else {
+        cout << "InputFile not found" << endl;
+        return -1;
+    }
 }
 
 int createXML(pugi::xml_document &doc, roadNetwork data)
@@ -106,34 +109,8 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
                 roadmark.append_attribute("width") = ittt->rm.width;
             }
         }
-
-/*
-        pugi::xml_node laneSection = road.append_child("lanes").append_child("laneSection");
-        laneSection.append_attribute("s") = 0;
-
-        pugi::xml_node lane = laneSection.append_child("center").append_child("lane");
-
-        lane.append_attribute("id") = 0;
-        lane.append_attribute("type") = "driving";
-        lane.append_attribute("level") = 0;
-
-        pugi::xml_node width = lane.append_child("width");
-
-        width.append_attribute("sOffset") = 0;
-        width.append_attribute("a") = 3.5;
-        width.append_attribute("b") = 0;
-        width.append_attribute("c") = 0;
-        width.append_attribute("d") = 0;
-
-        pugi::xml_node roadMark = lane.append_child("roadMark");
-        roadMark.append_attribute("sOffset") = 0;
-        roadMark.append_attribute("type") = "solid";
-        roadMark.append_attribute("weight") = "standard";
-        roadMark.append_attribute("color") = "white";
-        roadMark.append_attribute("width") = "0.2";*/
     }
         
-
     for (std::vector<junction>::iterator it = data.junctions.begin() ; it != data.junctions.end(); ++it)
     {
         pugi::xml_node junc = root.append_child("junction");
@@ -151,10 +128,12 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         }
     }
 
-    // TODO remove
+    // PRINT: 
     doc.print(std::cout);
 
-    //if (doc.save_file("../xml/output.xodr")) return 0;
-    if (doc.save_file("output.xodr")) return 0;
+    string file = data.file.substr(0,data.file.find(".xml"));
+    file.append(".xodr");
+
+    if (doc.save_file(file.c_str())) return 0;
     else return -1;
 }
