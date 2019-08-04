@@ -70,12 +70,13 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
 
     // calculate intersectionPoint
     road helperRoad;
-    generateRoad(referenceRoad, helperRoad, 2, sMain, 0, 0, 0);
+    generateRoad(referenceRoad, helperRoad, sMain, 0, 0, 0, 0);
     double iPx = helperRoad.geometries.back().x;
     double iPy = helperRoad.geometries.back().y;
     double iPhdg = helperRoad.geometries.back().hdg;
 
     cout << "Generating Roads" << endl;
+
     cout << "Road 1" << endl;
     road r1;
     r1.id = 100*junc.id + 1;
@@ -102,7 +103,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     {
         r2.predecessor.elementId = additionalRoad1.attribute("idStart").as_int();
         r2.successor.elementId = 100*junc.id + 6;
-        generateRoad(additionalRoad1, r2, sAdd1, -sOffset, 0, 0, 0);
+        generateRoad(additionalRoad1, r2, sAdd1, -sOffset, iPhdg+phi1, iPx, iPy);
     }
     if (mode == 2 || mode == 3)
     {
@@ -120,7 +121,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     {
         r3.predecessor.elementId = 100*junc.id + 5;
         r3.successor.elementId = referenceRoad.attribute("idEnd").as_int();
-        generateRoad(additionalRoad1, r3, sMain, sOffset, 0, 0, 0);
+        generateRoad(referenceRoad, r3, sMain, sOffset, 0, 0, 0);
     }
     if (mode == 3)
     {
@@ -138,7 +139,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     {
         r4.predecessor.elementId = 100*junc.id + 6;
         r4.successor.elementId = additionalRoad1.attribute("idEnd").as_int();
-        generateRoad(additionalRoad1, r4, sAdd1, sOffset, 0, 0, 0);
+        generateRoad(additionalRoad1, r4, sAdd1, sOffset, iPhdg+phi1, iPx, iPy);
     }
     if (mode == 2)
     {
@@ -155,6 +156,9 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     data.roads.push_back(r4);
 
     // create connecting lanes
+    cout << "Create Connecting Lanes" << endl;
+
+    cout << "Road 5" << endl;
     road r5; 
     r5.id = 100*junc.id + 5;
     r5.junction = junc.id;
@@ -163,6 +167,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     createRoadConnection(r1,r3,r5,junc);
     data.roads.push_back(r5);
 
+    cout << "Road 6" << endl;
     road r6; 
     r6.id = 100*junc.id + 6;
     r6.junction = junc.id;
@@ -171,6 +176,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     createRoadConnection(r2,r4,r6,junc);
     data.roads.push_back(r6);
 
+    cout << "Road 7" << endl;
     road r7; 
     r7.id = 100*junc.id + 7;
     r7.junction = junc.id;
@@ -179,6 +185,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     createRoadConnection(r1,r2,r7,junc);
     data.roads.push_back(r7);
 
+    cout << "Road 8" << endl;
     road r8; 
     r8.id = 100*junc.id + 8;
     r8.junction = junc.id;
@@ -187,6 +194,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     createRoadConnection(r2,r3,r8,junc);
     data.roads.push_back(r8);
 
+    cout << "Road 9" << endl;
     road r9; 
     r9.id = 100*junc.id + 9;
     r9.junction = junc.id;
@@ -195,6 +203,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     createRoadConnection(r3,r4,r9,junc);
     data.roads.push_back(r9);
 
+    cout << "Road 10" << endl;
     road r10; 
     r10.id = 100*junc.id + 10;
     r10.junction = junc.id;

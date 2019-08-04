@@ -28,12 +28,12 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc)
         hdg1 = g1.hdg; 
         curve(g1.length,g1.c,g1.c1,g1.c2,x1,y1,hdg1);
     }
+
     connection con1;
     con1.id = junc.connections.size() + 1;
     con1.from = r1.id;
     con1.to = r.id;
     junc.connections.push_back(con1);
-
 
     // compute ending point
     if (r2.predecessor.elementId > 100)
@@ -51,9 +51,11 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc)
         lS2 = r2.laneSections.back();
         x2 = g2.x; 
         y2 = g2.y; 
-        hdg2 = g2.hdg + M_PI; 
-        fixAngle(hdg2);
+        hdg2 = g2.hdg; 
         curve(g2.length,g2.c,g2.c1,g2.c2,x2,y2,hdg2);
+
+        hdg2 = hdg2 + M_PI; 
+        fixAngle(hdg2);
     }
 
     connection con2;

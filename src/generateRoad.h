@@ -8,7 +8,7 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
     // mode = 2 -> save part after  s0
     int mode;
     if (sOffset < 0) mode = 1;
-    if (sOffset > 0) mode = 2;
+    if (sOffset >= 0) mode = 2;
 
     double dx, dy;
 
