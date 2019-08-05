@@ -19,7 +19,7 @@ int connectingRoad(pugi::xml_node &node, roadNetwork &data)
     r.junction = -1;
     r.predecessor.elementId = mainRoad.attribute("idStart").as_int();
     r.successor.elementId = mainRoad.attribute("idEnd").as_int();
-    generateRoad(mainRoad, r, 0, 0, 0, 0, 0);
+    generateRoad(mainRoad, r, 0, 0, 0, 0, 0, 0);
     data.roads.push_back(r);
 
     return 0;

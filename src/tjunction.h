@@ -81,7 +81,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
 
     // calculate intersectionPoint
     road helperRoad;
-    generateRoad(mainRoad, helperRoad, sMain, 0, 0, 0, 0);
+    generateRoad(mainRoad, helperRoad, sMain, 0, 0, 0, 0, 0);
     double iPx = helperRoad.geometries.back().x;
     double iPy = helperRoad.geometries.back().y;
     double iPhdg = helperRoad.geometries.back().hdg;
@@ -96,13 +96,13 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     {
         r1.predecessor.elementId =mainRoad.attribute("idStart").as_int();
         r1.successor.elementId = 100*junc.id + 4;
-        generateRoad(mainRoad, r1, sMain, -sOffMain, 0, 0, 0);
+        generateRoad(mainRoad, r1, sMain, -sOffMain, 50, 0, 0, 0);
     }
     if (mode == 2)
     {
         r1.predecessor.elementId = 100*junc.id + 4;
         r1.successor.elementId = mainRoad.attribute("idEnd").as_int();
-        generateRoad(mainRoad, r1, sMain, sOffMain, 0, 0, 0);
+        generateRoad(mainRoad, r1, sMain, sOffMain, 0, 0, 0, 0);
     }
     data.roads.push_back(r1);
 
@@ -114,13 +114,13 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     {
         r2.predecessor.elementId = 100*junc.id + 4;
         r2.successor.elementId = mainRoad.attribute("idEnd").as_int();
-        generateRoad(mainRoad, r2, sMain, sOffMain, 0, 0, 0);
+        generateRoad(mainRoad, r2, sMain, sOffMain, 50, 0, 0, 0);
     }
     if (mode == 2)
     {
         r2.predecessor.elementId = 100*junc.id + 4;
         r2.successor.elementId = additionalRoad1.attribute("idEnd").as_int();
-        generateRoad(additionalRoad1, r2, sAdd1, sOffAdd1, iPhdg+phi1, iPx, iPy);
+        generateRoad(additionalRoad1, r2, sAdd1, sOffAdd1, 0, iPhdg+phi1, iPx, iPy);
     }
     data.roads.push_back(r2);
 
@@ -132,13 +132,13 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     {
         r3.predecessor.elementId = 100*junc.id + 6;
         r3.successor.elementId = additionalRoad1.attribute("idEnd").as_int();
-        generateRoad(additionalRoad1, r3, sAdd1, sOffAdd1, iPhdg+phi1, iPx, iPy);
+        generateRoad(additionalRoad1, r3, sAdd1, sOffAdd1, 0, iPhdg+phi1, iPx, iPy);
     }
     if (mode == 2)
     {
         r3.predecessor.elementId = 100*junc.id + 6;
         r3.successor.elementId = additionalRoad2.attribute("idEnd").as_int();
-        generateRoad(additionalRoad2, r3, sAdd2, sOffAdd2, iPhdg+phi2, iPx, iPy);
+        generateRoad(additionalRoad2, r3, sAdd2, sOffAdd2, 0, iPhdg+phi2, iPx, iPy);
     }
     data.roads.push_back(r3);
 

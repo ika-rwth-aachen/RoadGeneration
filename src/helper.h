@@ -40,10 +40,11 @@ bool isBoundary(laneSection sec, int id)
     return res;
 }
 
-lane findLane(laneSection sec, int id)
+int findLane(laneSection sec, lane &l, int id)
 {
-    lane l;
-    for (int i = 0; i < sec.lanes.size(); i++)
+    int i = -100;
+
+    for (i = 0; i < sec.lanes.size(); i++)
     {
         if (sec.lanes[i].id == id) 
         {
@@ -51,7 +52,7 @@ lane findLane(laneSection sec, int id)
             break;
         }
     }
-    return l;
+    return i;
 }
 
 double laneWidth(lane l, double s)
@@ -70,7 +71,8 @@ double findTOffset(laneSection sec, int id, double s)
 
     while (cur != id)
     {
-        lane l = findLane(sec,cur);
+        lane l;
+        int err = findLane(sec, l, cur);
         s += l.w.s;
         tOffset += dir * laneWidth(l,s);
         cur += dir;
@@ -87,3 +89,24 @@ int sgn(double d)
 
     return r;
 }
+
+int shiftLanes(laneSection &sec, int id)
+{
+    int dir = sgn(id);
+    
+    if (id > 0) id = findMaxLaneId(sec);
+    else if (id < 0) id = findMinLaneId(sec);
+
+    while(id != 0)
+    {
+        for (int i = 0; i < sec.lanes.size(); i++)
+        {
+            if (sec.lanes[i].id == id) 
+            {
+                sec.lanes[i].id += dir;
+            }
+        }
+        id -= dir;
+    }
+}
+

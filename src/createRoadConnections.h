@@ -251,7 +251,6 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
 
             string left = laneMarkLeft;
             string right = laneMarkRight;
-
             createLaneConnection(r, lS1,lS2,from,to,left,right);
         }        
     }

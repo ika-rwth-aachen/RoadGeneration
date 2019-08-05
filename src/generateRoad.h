@@ -2,7 +2,7 @@
 
 #include "curve.h"
 
-int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double phi0, double x0, double y0)
+int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double sLeftLane, double phi0, double x0, double y0)
 {
     // mode = 1 -> save part before s0
     // mode = 2 -> save part after  s0
@@ -161,6 +161,64 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
             laneSec.lanes.push_back(l);
         }
         r.laneSections.push_back(laneSec);
+    }
+
+    if (sLeftLane > 0) 
+    {
+        laneSection adLaneSec = r.laneSections.back();
+
+        if (mode == 1)
+        {
+            adLaneSec.s = r.length - sLeftLane;
+            adLaneSec.id += 1;
+            
+            lane l;
+            findLane(adLaneSec, l, -1);
+            double w = laneWidth(l,0);
+
+            l.w.d = -2 * w / pow(sLeftLane,3);
+            l.w.c =  3 * w / pow(sLeftLane,2);
+            l.w.b = 0;
+            l.w.a = 0;
+            l.rm.type = "broken";
+            
+            lane lTmp;
+            int id = findLane(adLaneSec, lTmp, 0);
+            adLaneSec.lanes[id].rm.type = "solid";
+
+            shiftLanes(adLaneSec,-1);
+            adLaneSec.lanes.push_back(l);  
+            
+            r.laneSections.push_back(adLaneSec);
+        }
+        if (mode == 2)
+        {
+            adLaneSec.s = 0;
+            r.laneSections.back().s = sLeftLane;
+            adLaneSec.id += 1;
+
+            lane l;
+            findLane(adLaneSec, l, 1);
+            double w = laneWidth(l,0);
+
+            l.w.d = 2 * w / pow(sLeftLane,3);
+            l.w.c = - 3 * w / pow(sLeftLane,2);
+            l.w.b = 0;
+            l.w.a = w;
+            l.rm.type = "broken";
+
+            lane lTmp;
+            int id = findLane(adLaneSec, lTmp, 0);
+            adLaneSec.lanes[id].rm.type = "solid";
+
+            shiftLanes(adLaneSec,1);
+            adLaneSec.lanes.push_back(l);     
+
+            laneSection tmp = r.laneSections.back();
+            r.laneSections.back() = adLaneSec;
+            r.laneSections.push_back(tmp);
+
+        }
     }
 
     /*
