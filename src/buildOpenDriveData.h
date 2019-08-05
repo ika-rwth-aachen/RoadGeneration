@@ -6,6 +6,7 @@ std::string::size_type sz;
 #include "createRoadConnections.h"
 #include "tjunction.h"
 #include "xjunction.h"
+#include "connectingRoad.h"
 
 int buildOpenDriveData(pugi::xml_document &doc, roadNetwork &data)
 {
@@ -47,7 +48,8 @@ int buildOpenDriveData(pugi::xml_document &doc, roadNetwork &data)
 
 		if ((string)it->name() == "connectingRoad")
 		{
-			cout << "Processing rounconnectingRoaddabout" << endl;
+			cout << "Processing connectingRoad" << endl;
+			connectingRoad(*it, data);
 		}
 	}
 
