@@ -4,13 +4,16 @@
 #include <vector>
 #include <cmath>
 
+std::string::size_type sz;
+
 using namespace std;
 
 #include "pugixml.hpp"
 #include "interface.h"
 #include "helper.h"
 #include "io.h"
-#include "buildOpenDriveData.h"
+#include "buildSegments.h"
+#include "linkSegments.h"
 
 int main(int argc,  char** argv)
 {   
@@ -23,7 +26,8 @@ int main(int argc,  char** argv)
 	roadNetwork data;
 
 	parseXML(in, data, argv[1]);	
-	buildOpenDriveData(in, data);
+	buildSegments(in, data);
+	linkSegments(in, data);
 	createXML(out, data);
 
 	return 0;

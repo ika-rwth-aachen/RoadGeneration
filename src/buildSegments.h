@@ -1,14 +1,13 @@
-// file buildOpenDriveData.h
-
-std::string::size_type sz;
+// file buildSegments.h
 
 #include "generateRoad.h"
 #include "createRoadConnections.h"
 #include "tjunction.h"
 #include "xjunction.h"
+#include "roundAbout.h"
 #include "connectingRoad.h"
 
-int buildOpenDriveData(pugi::xml_document &doc, roadNetwork &data)
+int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 {
 	
 	pugi::xml_node segments = doc.child("roadNetwork").child("segments");
@@ -44,6 +43,7 @@ int buildOpenDriveData(pugi::xml_document &doc, roadNetwork &data)
 		if ((string)it->name() == "roundabout")
 		{
 			cout << "Processing roundabout" << endl;
+			roundAbout(*it, data);
 		}
 
 		if ((string)it->name() == "connectingRoad")

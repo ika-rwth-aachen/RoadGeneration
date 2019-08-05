@@ -65,40 +65,108 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneId, 
     junc.connections.push_back(con2);
 
     // compute connecting road
-    double d = sqrt(pow(x2-x1,2)+pow(y2-y1,2));
     double a = hdg2-hdg1;
     fixAngle(a);
 
-    geometry g;
-
-    g.s = 0;
-    g.c = 0;
-    g.c1 = 0;
-    g.c2 = 0;
-    g.x = x1;
-    g.y = y1;
-    g.hdg = hdg1;
-
     if (a == 0) 
     {
-        g.length = d;
+        geometry g;
+        g.s = 0;
+        g.c = 0;
+        g.c1 = 0;
+        g.c2 = 0;
+        g.x = x1;
+        g.y = y1;
+        g.hdg = hdg1;
+
+        g.length = sqrt(pow(x2-x1,2)+pow(y2-y1,2));
         g.type = 1;
+
+        r.geometries.push_back(g);
+        r.length = g.length;
     }
     else 
     {
+        double m1 = tan(hdg1);
+        double b1 = y1 - m1 * x1;
+
+        double m2 = tan(hdg2);
+        double b2 = y2 - m2 * x2;
+
+        double ipX = (b2-b1)/(m1-m2);
+        double ipY = m1*(b2-b1)/(m1-m2) + b1;
+
+        double d1 = sqrt(pow(ipX-x1,2)+pow(ipY-y1,2));
+        double d2 = sqrt(pow(ipX-x2,2)+pow(ipY-y2,2));
+
+        // line
+        geometry g1;
+        g1.s = 0;
+        g1.c = 0;
+        g1.c1 = 0;
+        g1.c2 = 0;
+        g1.type = 1;
+
+        // line at beginning
+        if (d1 > d2)
+        {
+            g1.x = x1;
+            g1.y = y1;
+            g1.hdg = hdg1;
+            g1.length = d1 - d2;
+
+            x1 = g1.x + cos(hdg1) * (d1-d2);
+            y1 = g1.y + sin(hdg1) * (d1-d2);
+        }
+        if (d1 < d2)
+        {
+            g1.x = x2 - cos(hdg2) * (d2-d1);
+            g1.y = y2 - sin(hdg2) * (d2-d1);
+            g1.hdg = hdg2;
+            g1.length = d2 - d1;
+
+            x2 = g1.x;
+            y2 = g1.y;
+        }
+
+        geometry g2;
+
+        g2.s = 0;
+        g2.c = 0;
+        g2.c1 = 0;
+        g2.c2 = 0;
+        g2.x = x1;
+        g2.y = y1;
+        g2.hdg = hdg1;
+
+        double d = sqrt(pow(x2-x1,2)+pow(y2-y1,2));
         double R = (d / 2) / sin(a / 2);
-        g.c = 1/R;
-        g.length = abs(R * a);
-        g.type = 2;
+
+        g2.c = 1/R;
+        g2.length = abs(R * a);
+        g2.type = 2;
+
+        if (d1 > d2) 
+        {
+            g2.s = g1.length; 
+            r.geometries.push_back(g1);    
+            r.geometries.push_back(g2);    
+
+        }
+        else if (d1 < d2) 
+        {
+            g1.s = g2.length;
+            r.geometries.push_back(g2);    
+            r.geometries.push_back(g1);    
+        }
+        else
+        {
+            r.geometries.push_back(g2);    
+        }
+        
+        if (d1 != d2) r.length += g1.length;
+        r.length += g2.length;
     }
-
-    double xx = x1;
-    double yy = y1; 
-    double phiphi = hdg1;
-    curve(g.length,g,xx,yy,phiphi,1);
-
-    r.geometries.push_back(g);
-    r.length = g.length;
 
     // lanemarkings in crossing section
     laneSection laneSec;
@@ -124,8 +192,8 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneId, 
         // create solid lines
         if (laneType == 1 && laneMarkId == 0)
         {
-            if (g.c >  0.005) laneSec.lanes.back().rm.type = "broken";
-            if (g.c < -0.005) laneSec.lanes.front().rm.type ="solbrokenid";
+            if (a >  0.1) laneSec.lanes.back().rm.type = "broken";
+            if (a < -0.1) laneSec.lanes.front().rm.type ="broken";
         }
 
         if (laneType == 1 && laneMarkId == 100)
@@ -138,8 +206,8 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneId, 
         // create dashed lines
         if (laneType == 2 && laneMarkId == 0)
         {
-            if (g.c >  0.005) laneSec.lanes.back().rm.type = "solid";
-            if (g.c < -0.005) laneSec.lanes.front().rm.type ="solid";
+            if (a >  0.1) laneSec.lanes.back().rm.type = "solid";
+            if (a < -0.1) laneSec.lanes.front().rm.type ="solid";
         }
 
         if (laneType == 2 && laneMarkId == 100)
