@@ -180,59 +180,59 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     cout << "Create Connecting Lanes" << endl;
 
     if((string)con.attribute("type").value() == "all")
-    {
+    {   
+        double phi;
+
         cout << "Road 5" << endl;
         road r5; 
         r5.id = 100*junc.id + 5;
-        r5.junction = junc.id;
-        r5.predecessor.elementId = r1.id;
-        r5.successor.elementId   = r3.id;
-        createRoadConnection(r1,r3,r5,junc,100,1,100);
+        createRoadConnection(r1,r3,r5,junc,all,all,d,d,d);
         data.roads.push_back(r5);
 
         cout << "Road 6" << endl;
         road r6; 
         r6.id = 100*junc.id + 6;
-        r6.junction = junc.id;
-        r6.predecessor.elementId = r2.id;
-        r6.successor.elementId   = r4.id;
-        createRoadConnection(r2,r4,r6,junc,100,0,0);
+        createRoadConnection(r2,r4,r6,junc,all,all,n,n,n);
         data.roads.push_back(r6);
 
         cout << "Road 7" << endl;
         road r7; 
         r7.id = 100*junc.id + 7;
-        r7.junction = junc.id;
-        r7.predecessor.elementId = r1.id;
-        r7.successor.elementId   = r2.id;
-        createRoadConnection(r1,r2,r7,junc,100,2,0);
+        phi = r2.geometries.front().hdg - r1.geometries.front().hdg;
+        if (mode == 1) phi += M_PI;
+        if (mode == 3) phi += M_PI;
+        fixAngle(phi);
+        if (phi > M_PI) createRoadConnection(r1,r2,r7,junc,all,all,n,s,n);
+        if (phi < M_PI) createRoadConnection(r1,r2,r7,junc,all,all,s,n,n);
         data.roads.push_back(r7);
 
         cout << "Road 8" << endl;
         road r8; 
         r8.id = 100*junc.id + 8;
-        r8.junction = junc.id;
-        r8.predecessor.elementId = r2.id;
-        r8.successor.elementId   = r3.id;
-        createRoadConnection(r2,r3,r8,junc,100,2,0);
+        phi = r3.geometries.front().hdg - r2.geometries.front().hdg;
+        if (mode != 1) phi += M_PI;
+        fixAngle(phi);
+        if (phi > M_PI) createRoadConnection(r2,r3,r8,junc,all,all,n,s,n);
+        if (phi < M_PI) createRoadConnection(r2,r3,r8,junc,all,all,s,n,n);
         data.roads.push_back(r8);
 
         cout << "Road 9" << endl;
         road r9; 
         r9.id = 100*junc.id + 9;
-        r9.junction = junc.id;
-        r9.predecessor.elementId = r3.id;
-        r9.successor.elementId   = r4.id;
-        createRoadConnection(r3,r4,r9,junc,100,2,0);
+        phi = r4.geometries.front().hdg - r2.geometries.front().hdg + M_PI;
+        fixAngle(phi);
+        if (phi > M_PI) createRoadConnection(r3,r4,r9,junc,all,all,n,s,n);
+        if (phi < M_PI) createRoadConnection(r3,r4,r9,junc,all,all,s,n,n);
         data.roads.push_back(r9);
 
         cout << "Road 10" << endl;
         road r10; 
         r10.id = 100*junc.id + 10;
-        r10.junction = junc.id;
-        r10.predecessor.elementId = r4.id;
-        r10.successor.elementId   = r1.id;
-        createRoadConnection(r4,r1,r10,junc,100,2,0);
+        phi = r1.geometries.front().hdg - r4.geometries.front().hdg;
+        if (mode == 3) phi += M_PI;
+        fixAngle(phi);
+        if (phi > M_PI) createRoadConnection(r4,r1,r10,junc,all,all,n,s,n);
+        if (phi < M_PI) createRoadConnection(r4,r1,r10,junc,all,all,s,n,n);
         data.roads.push_back(r10);
     }
     else if((string)con.attribute("type").value() == "single")
@@ -249,18 +249,27 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
                 if (data.roads[i].id == toId)   r2 = data.roads[i];
             }
 
-            cout << data.roads[0].geometries.size() << endl;
             for (pugi::xml_node laneLink: roadLink.children("laneLink"))
             {
-                int laneId = laneLink.attribute("laneId").as_int();
+                int from = laneLink.attribute("fromId").as_int();
+                int to = laneLink.attribute("toId").as_int();
 
+                string left = n;
+                string right = n;
+                string middle = n;
+
+                if (laneLink.attribute("left")) 
+                    left = laneLink.attribute("left").value();
+
+                if (laneLink.attribute("right")) 
+                    right = laneLink.attribute("right").value();
+
+                cout << left << endl;
+                cout << right << endl;
                 cout << "Road " << data.roads.size() + 1 << endl;
                 road r;
                 r.id = 100*junc.id + data.roads.size() + 1;
-                r.junction = junc.id;
-                r.predecessor.elementId = fromId;
-                r.successor.elementId   = toId;
-                createRoadConnection(r1,r2,r,junc,laneId,0,0);
+                createRoadConnection(r1,r2,r,junc,from,to,left,right,middle);
                 data.roads.push_back(r);
             }
         }

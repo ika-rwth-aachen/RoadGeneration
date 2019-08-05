@@ -98,7 +98,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
                 width.append_attribute("a") = ittt->w.a;
                 width.append_attribute("b") = ittt->w.b;
                 width.append_attribute("c") = ittt->w.c;
-                width.append_attribute("s") = ittt->w.d;
+                width.append_attribute("d") = ittt->w.d;
 
                 pugi::xml_node roadmark = lane.append_child("roadMark");
 

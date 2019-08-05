@@ -1,9 +1,15 @@
 // file createRoadConnections.h
 
-int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneId, int laneType, int laneMarkId)
+int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, int toId, string laneMarkLeft, string laneMarkRight, string laneMarkMiddle)
 {
-    // connect r1 with r2   
+    laneSection lS;
 
+    r.junction = junc.id;
+    r.predecessor.elementId = r1.id;
+    r.successor.elementId   = r2.id;
+    if (r.laneSections.size() == 0) r.laneSections.push_back(lS);
+
+    // connect r1 with r2 at reference points  
     double x1,y1,hdg1,x2,y2,hdg2;
     geometry g1, g2;
     laneSection lS1, lS2;
@@ -64,10 +70,11 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneId, 
     con2.to = r2.id;
     junc.connections.push_back(con2);
 
-    // compute connecting road
+    // --- compute connecting road ---------------------------------------------
     double a = hdg2-hdg1;
     fixAngle(a);
 
+    // simple line
     if (a == 0) 
     {
         geometry g;
@@ -85,6 +92,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneId, 
         r.geometries.push_back(g);
         r.length = g.length;
     }
+    // curv
     else 
     {
         double m1 = tan(hdg1);
@@ -93,13 +101,14 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneId, 
         double m2 = tan(hdg2);
         double b2 = y2 - m2 * x2;
 
+        // intersection point of lines
         double ipX = (b2-b1)/(m1-m2);
         double ipY = m1*(b2-b1)/(m1-m2) + b1;
 
         double d1 = sqrt(pow(ipX-x1,2)+pow(ipY-y1,2));
         double d2 = sqrt(pow(ipX-x2,2)+pow(ipY-y2,2));
 
-        // line
+        // additional line
         geometry g1;
         g1.s = 0;
         g1.c = 0;
@@ -107,7 +116,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneId, 
         g1.c2 = 0;
         g1.type = 1;
 
-        // line at beginning
+        // line at start
         if (d1 > d2)
         {
             g1.x = x1;
@@ -118,6 +127,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneId, 
             x1 = g1.x + cos(hdg1) * (d1-d2);
             y1 = g1.y + sin(hdg1) * (d1-d2);
         }
+        // line at end
         if (d1 < d2)
         {
             g1.x = x2 - cos(hdg2) * (d2-d1);
@@ -129,8 +139,8 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneId, 
             y2 = g1.y;
         }
 
+        // arc
         geometry g2;
-
         g2.s = 0;
         g2.c = 0;
         g2.c1 = 0;
@@ -168,77 +178,83 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int laneId, 
         r.length += g2.length;
     }
 
-    // lanemarkings in crossing section
+    // --- lanemarkings in crossing section ------------------------------------
     laneSection laneSec;
-    
-    if (lS1.lanes.size() != lS2.lanes.size()) 
-    {
-        cout << "ERR: not implemented" << endl; 
-        exit(0);
-    }
 
-    if (laneId == 100) // connect all
-    {
+    string left = "none";
+    string right = "none";
+
+    if (fromId == 0){
+
         for (int i = 0; i < lS1.lanes.size(); i++)
         {
-            lane l;
-            l.id = -ceil(lS1.lanes.size()/2) + i;
-            l.rm.type = "none";
-            l.w.a = (lS1.lanes[i].w.a + lS1.lanes[i].w.a) / 2;
-            
-            laneSec.lanes.push_back(l);
+            int from = lS1.lanes[i].id;
+
+            if (toId == 0){
+                for (int j = 0; j < lS2.lanes.size(); j++)
+                {
+                    int to = lS2.lanes[j].id;
+
+                    string left = laneMarkMiddle;
+                    string right = laneMarkMiddle;
+
+                    if (sgn(from) == -sgn(to) && isBoundary(lS1,from) && isBoundary(lS2,to)) 
+                    {
+                        if (to > 0) left = laneMarkLeft;
+                        if (to < 0) right = laneMarkRight;
+                    }          
+
+                    createLaneConnection(r, lS1,lS2,from,to,left,right);
+                }
+            }
+            else{
+                int to = toId;
+
+                string left = laneMarkMiddle;
+                string right = laneMarkMiddle;
+
+                if (sgn(from) == -sgn(to) && isBoundary(lS1,from) && isBoundary(lS2,to)) 
+                {
+                    if (to > 0) left = laneMarkLeft;
+                    if (to < 0) right = laneMarkRight;
+                }     
+
+                createLaneConnection(r, lS1,lS2,from,to,left,right);
+            }
         }
-
-        // create solid lines
-        if (laneType == 1 && laneMarkId == 0)
-        {
-            if (a >  0.1) laneSec.lanes.back().rm.type = "broken";
-            if (a < -0.1) laneSec.lanes.front().rm.type ="broken";
-        }
-
-        if (laneType == 1 && laneMarkId == 100)
-            for (int i = 0; i < lS1.lanes.size(); i++)
-                laneSec.lanes[i].rm.type = "broken";
-
-        if (laneType == 1 && laneMarkId != 100 && laneMarkId > -100 && laneMarkId < 100)
-            laneSec.lanes[laneMarkId].rm.type = "broken";
-
-        // create dashed lines
-        if (laneType == 2 && laneMarkId == 0)
-        {
-            if (a >  0.1) laneSec.lanes.back().rm.type = "solid";
-            if (a < -0.1) laneSec.lanes.front().rm.type ="solid";
-        }
-
-        if (laneType == 2 && laneMarkId == 100)
-            for (int i = 0; i < lS1.lanes.size(); i++)
-                laneSec.lanes[i].rm.type = "solid";
-
-        if (laneType == 2 && laneMarkId != 100 && laneMarkId != 0 && laneMarkId > -100 && laneMarkId < 100)
-            for (int i = 0; i < lS1.lanes.size(); i++)
-                if (laneSec.lanes[i].id == laneMarkId)
-                    laneSec.lanes[i].rm.type = "solid";
     }
     else
-    {
-        if (laneId > 0)
+    {   
+        int from = fromId;
+
+        if (toId == 0)
         {
-            lane l; 
-            l.id = 0; l.rm.type = "none"; l.w.a = 0;
-            laneSec.lanes.push_back(l);
+            for (int j = 0; j < lS2.lanes.size(); j++)
+            {
+                int to = lS2.lanes[j].id;
+
+                string left = laneMarkMiddle;
+                string right = laneMarkMiddle;
+
+                if (sgn(from) == -sgn(to) && isBoundary(lS1,from) && isBoundary(lS2,to)) 
+                {
+                    if (to > 0) left = laneMarkLeft;
+                    if (to < 0) right = laneMarkRight;
+                }       
+
+                createLaneConnection(r, lS1,lS2,from,to,left,right);
+            }
         }
-        lane l;
-        l.id = laneId;
-        l.rm.type = "none";
-        for (int i = 0; i < lS1.lanes.size(); i++)
+        else
         {
-            if (lS1.lanes[i].id == laneId)
-                l.w.a = lS1.lanes[i].w.a;
-        }
-        laneSec.lanes.push_back(l);
+            int to = toId;
+
+            string left = laneMarkLeft;
+            string right = laneMarkRight;
+
+            createLaneConnection(r, lS1,lS2,from,to,left,right);
+        }        
     }
-
-    r.laneSections.push_back(laneSec);
-
+        
     return 0;
 }

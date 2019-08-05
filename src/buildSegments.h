@@ -1,6 +1,7 @@
 // file buildSegments.h
 
 #include "generateRoad.h"
+#include "createLaneConnection.h"
 #include "createRoadConnections.h"
 #include "tjunction.h"
 #include "xjunction.h"

@@ -282,14 +282,17 @@ elementFormDefault="qualified">
         <xs:sequence>
             <xs:element name="laneLink" type="laneLinkType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
-            <xs:attribute name="fromId" type="xs:string" use="required"/>
-            <xs:attribute name="toId"  type="xs:string" use="required"/>
+            <xs:attribute name="fromId" type="xs:int" use="required"/>
+            <xs:attribute name="toId"  type="xs:int" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="laneLinkType">
-        <xs:attribute name="fromId" type="xs:string" use="required"/>
-        <xs:attribute name="toId" type="xs:string" use="required"/>
+        <xs:attribute name="fromId" type="xs:int" use="required"/>
+        <xs:attribute name="toId" type="xs:int" use="required"/>
         <xs:attribute name="minR" type="xs:double" use="optional"/>
+        <xs:attribute name="left" type="xs:string" use="optional"/>
+        <xs:attribute name="right" type="xs:string" use="optional"/>
+        <xs:attribute name="middle" type="xs:string" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="objectsType">

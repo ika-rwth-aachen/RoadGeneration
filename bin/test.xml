@@ -2,7 +2,7 @@
 	<segments>
         <junctions>
             <xjunction id="1" type="M2A">
-                <road id="1" length="200" sOffset="0" type="0" idStart="0" idEnd="0">	
+                <road id="1" length="200" sOffset="0" type="0" idStart="0" idEnd="0">
                     <referenceLine>
                         <geometry id="1" length="200" connectToEndOf="0" connectToStartOf="0" type="line"/>
                     </referenceLine>
@@ -23,7 +23,7 @@
                         </laneSection>
                     </lanes>
                 </road>
-                <road id="2" length="100" sOffset="0" type="0" idStart="0" idEnd="0">	
+                <road id="2" length="100" sOffset="0" type="0" idStart="0" idEnd="0">
                     <referenceLine>
                         <geometry id="1" length="100" connectToEndOf="0" connectToStartOf="0" R="-100" type="arc"/>
                     </referenceLine>
@@ -44,7 +44,7 @@
                         </laneSection>
                     </lanes>
                 </road>
-                <road id="3" length="100" sOffset="0" type="0" idStart="0" idEnd="0">	
+                <road id="3" length="100" sOffset="0" type="0" idStart="0" idEnd="0">
                     <referenceLine>
                         <geometry id="1" length="100" connectToEndOf="0" connectToStartOf="0" type="line"/>
                     </referenceLine>
@@ -76,17 +76,17 @@
                     </couplerArea>>
                     <connection type="single">
                         <roadLink fromId="101" toId="102">
-                            <laneLink laneId="1"/>
+													<laneLink fromId="-1" toId="1" left="solid" right="solid" />
                         </roadLink>
                         <roadLink fromId="102" toId="103">
-                            <laneLink laneId="1"/>
+													<laneLink fromId="-1" toId="1" left="solid" right="solid"/>
                         </roadLink>
                         <roadLink fromId="103" toId="104">
-                            <laneLink laneId="-1"/>
+													<laneLink fromId="-1" toId="1" left="solid" right="solid"/>
                         </roadLink>
                         <roadLink fromId="104" toId="101">
-                            <laneLink laneId="1"/>
-                            <laneLink laneId="-1"/>
+													<laneLink fromId="-1" toId="1" left="solid" right="broken"/>
+													<laneLink fromId="1" toId="-1" left="broken" right="broken"/>
                         </roadLink>
                     </connection>/>
                 </coupler>
@@ -94,5 +94,3 @@
         </junctions>
 	</segments>
 </roadNetwork>
-
-
