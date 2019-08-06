@@ -108,5 +108,7 @@ int shiftLanes(laneSection &sec, int id)
         }
         id -= dir;
     }
+
+    return 0;
 }
 

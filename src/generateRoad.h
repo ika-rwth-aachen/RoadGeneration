@@ -129,6 +129,36 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
         r.geometries[i].y += dy;
     }
 
+    // flip geometries
+    if (mode == 1)
+    {
+        road rNew = r;
+        rNew.geometries.clear();
+
+        for (int i = r.geometries.size()-1; i >= 0; i--)
+        {
+            geometry g = r.geometries[i];
+
+            curve(g.length,g,g.x,g.y,g.hdg,1);
+
+            g.hdg += M_PI;
+            fixAngle(g.hdg);
+
+            double c1 = g.c1;
+            double c2 = g.c2;
+
+            if (g.type == 2) g.c *= -1;
+            if (g.type == 3) 
+            {
+                g.c1 = -c2;
+                g.c2 = -c1;
+            }
+            rNew.geometries.push_back(g);
+        }
+        r.geometries.clear();
+        r.geometries = rNew.geometries;
+    }
+
     for (pugi::xml_node_iterator it = geos.child("lanes").begin(); it != geos.child("lanes").end(); ++it)
     {
         laneSection laneSec;
@@ -140,6 +170,8 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
             lane l; 
 
             l.id = itt->attribute("id").as_int();
+            if (mode == 1) l.id *= -1;
+
             l.type = itt->attribute("type").value();
         
             pugi::xml_node w = itt->child("laneWidth");
@@ -165,81 +197,41 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
 
     if (sLeftLane > 0) 
     {
-        laneSection adLaneSec = r.laneSections.back();
+        laneSection tmp = r.laneSections.back();
+        laneSection adLaneSec = tmp;
 
-        if (mode == 1)
-        {
-            adLaneSec.s = r.length - sLeftLane;
-            adLaneSec.id += 1;
-            
-            lane l;
-            findLane(adLaneSec, l, -1);
-            double w = laneWidth(l,0);
+        tmp.s = sLeftLane + 50;
+        adLaneSec.s = 0;
+        adLaneSec.id = tmp.id + 1;
 
-            l.w.d = -2 * w / pow(sLeftLane,3);
-            l.w.c =  3 * w / pow(sLeftLane,2);
-            l.w.b = 0;
-            l.w.a = 0;
-            l.rm.type = "broken";
-            
-            lane lTmp;
-            int id = findLane(adLaneSec, lTmp, 0);
-            adLaneSec.lanes[id].rm.type = "solid";
+        // additional road
+        lane l;
+        findLane(adLaneSec, l, 1);
+        double w = laneWidth(l,0);
+        l.w.a = w;
+        l.rm.type = "broken";
 
-            shiftLanes(adLaneSec,-1);
-            adLaneSec.lanes.push_back(l);  
-            
-            r.laneSections.push_back(adLaneSec);
-        }
-        if (mode == 2)
-        {
-            adLaneSec.s = 0;
-            r.laneSections.back().s = sLeftLane;
-            adLaneSec.id += 1;
+        // solid center line
+        lane lTmp;
+        int id = findLane(adLaneSec, lTmp, 0);
+        adLaneSec.lanes[id].rm.type = "solid";
 
-            lane l;
-            findLane(adLaneSec, l, 1);
-            double w = laneWidth(l,0);
+        shiftLanes(adLaneSec,1);
+        adLaneSec.lanes.push_back(l);     
+        r.laneSections.back() = adLaneSec;
 
-            l.w.d = 2 * w / pow(sLeftLane,3);
-            l.w.c = - 3 * w / pow(sLeftLane,2);
-            l.w.b = 0;
-            l.w.a = w;
-            l.rm.type = "broken";
+        // add half laneSection
+        l.w.d = 2 * w / pow(sLeftLane,3);
+        l.w.c = - 3 * w / pow(sLeftLane,2);
+        l.w.b = 0;
 
-            lane lTmp;
-            int id = findLane(adLaneSec, lTmp, 0);
-            adLaneSec.lanes[id].rm.type = "solid";
+        adLaneSec.s = 50;
+        id = findLane(adLaneSec, lTmp, 1);
+        adLaneSec.lanes[id] = l;
 
-            shiftLanes(adLaneSec,1);
-            adLaneSec.lanes.push_back(l);     
-
-            laneSection tmp = r.laneSections.back();
-            r.laneSections.back() = adLaneSec;
-            r.laneSections.push_back(tmp);
-
-        }
+        r.laneSections.push_back(adLaneSec);
+        r.laneSections.push_back(tmp);
     }
-
-    /*
-    // add lanes // TODO: consider values in input file
-    laneSection laneSec;
-    
-    lane llane;
-    llane.id = 1;
-    laneSec.lanes.push_back(llane);
-
-    lane clane;
-    clane.id = 0;
-    clane.rm.type = "broken";
-    clane.w.a = 0;
-    laneSec.lanes.push_back(clane);
-
-    lane rlane;
-    rlane.id = -1;
-    laneSec.lanes.push_back(rlane);
-
-    r.laneSections.push_back(laneSec);*/
 
     return 0;
 }

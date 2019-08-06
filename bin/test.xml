@@ -75,21 +75,21 @@
                         <streetBorder id="2" sOffset="30"/>
                     </couplerArea>>
                     <connection type="single">
-												<roadLink fromId="104" toId="103">
-													<laneLink fromId="1" toId="-1" left="broken" right="broken" />
-												</roadLink>
-												<roadLink fromId="104" toId="102">
-													<laneLink fromId="1" toId="-1" left="broken" right="broken" />
-													<laneLink fromId="-1" toId="1" left="broken" right="broken" />
-												</roadLink>
-												<roadLink fromId="102" toId="103">
-													<laneLink fromId="1" toId="-1" left="broken" right="broken" />
-												</roadLink>
-                        <roadLink fromId="103" toId="102">
-													<laneLink fromId="2" toId="-1" left="broken" right="broken" />
+                        <roadLink fromId="104" toId="103">
+                            <laneLink fromId="1" toId="-1" left="broken" right="broken" />
                         </roadLink>
-												<roadLink fromId="103" toId="104">
-													<laneLink fromId="1" toId="-1" left="broken" right="broken" />
+                        <roadLink fromId="104" toId="102">
+                            <laneLink fromId="1" toId="-1" left="broken" right="broken" />
+                            <laneLink fromId="-1" toId="1" left="broken" right="broken" />
+                        </roadLink>
+                        <roadLink fromId="102" toId="103">
+                            <laneLink fromId="1" toId="-1" left="broken" right="broken" />
+                        </roadLink>
+                        <roadLink fromId="103" toId="102">
+                            <laneLink fromId="2" toId="-1" left="broken" right="broken" />
+                        </roadLink>
+                        <roadLink fromId="103" toId="104">
+                            <laneLink fromId="1" toId="-1" left="broken" right="broken" />
                         </roadLink>
                     </connection>/>
                 </coupler>

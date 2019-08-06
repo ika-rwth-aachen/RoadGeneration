@@ -71,8 +71,8 @@
                 </intersectionPoint>a
                 <coupler id="1">
                     <couplerArea sOffset="15">
-                        <streetBorder id="1" sOffset="30"/>
-                        <streetBorder id="2" sOffset="30"/>
+                        <streetBorder id="2" sOffset="20"/>
+                        <streetBorder id="3" sOffset="20"/>
                     </couplerArea>>
                     <connection type="all"/>
                 </coupler>

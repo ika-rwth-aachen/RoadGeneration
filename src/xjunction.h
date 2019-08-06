@@ -104,8 +104,8 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r1.junction = junc.id;
     if (mode == 1 || mode == 2)
     {
-        r1.predecessor.elementId =mainRoad.attribute("idStart").as_int();
-        r1.successor.elementId = 100*junc.id + 5;
+        r1.predecessor.elementId = 100*junc.id + 5;
+        r1.successor.elementId = mainRoad.attribute("idStart").as_int();
         generateRoad(mainRoad, r1, sMain, -sOffMain, 50, 0, 0, 0);
     }
     if (mode == 3)
@@ -122,8 +122,8 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r2.junction = junc.id;
     if (mode == 1)
     {
-        r2.predecessor.elementId = additionalRoad1.attribute("idStart").as_int();
-        r2.successor.elementId = 100*junc.id + 6;
+        r2.predecessor.elementId = 199*junc.id + 6;
+        r2.successor.elementId = additionalRoad1.attribute("idStart").as_int();
         generateRoad(additionalRoad1, r2, sAdd1, -sOffAdd1, 0, iPhdg+phi1, iPx, iPy);
     }
     if (mode == 2 || mode == 3)
@@ -186,54 +186,82 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         cout << "Road 5" << endl;
         road r5; 
         r5.id = 100*junc.id + 5;
-        createRoadConnection(r1,r3,r5,junc,all,all,d,d,d);
+        createRoadConnection(r1,r3,r5,junc,2,-1,d,d,d);
         data.roads.push_back(r5);
 
         cout << "Road 6" << endl;
         road r6; 
         r6.id = 100*junc.id + 6;
-        createRoadConnection(r2,r4,r6,junc,all,all,n,n,n);
+        createRoadConnection(r3,r1,r6,junc,2,-1,d,d,d);
         data.roads.push_back(r6);
+
+        cout << "Road 11" << endl;
+        road r11; 
+        r11.id = 100*junc.id + 11;
+        createRoadConnection(r2,r4,r11,junc,1,-1,n,n,n);
+        data.roads.push_back(r11);
+
+        cout << "Road 16" << endl;
+        road r16; 
+        r16.id = 100*junc.id + 16;
+        createRoadConnection(r2,r4,r16,junc,-1,1,n,n,n);
+        data.roads.push_back(r16);
 
         cout << "Road 7" << endl;
         road r7; 
-        r7.id = 100*junc.id + 7;
-        phi = r2.geometries.front().hdg - r1.geometries.front().hdg;
-        if (mode == 1) phi += M_PI;
-        if (mode == 3) phi += M_PI;
-        fixAngle(phi);
-        if (phi > M_PI) createRoadConnection(r1,r2,r7,junc,all,all,n,s,n);
-        if (phi < M_PI) createRoadConnection(r1,r2,r7,junc,all,all,s,n,n);
-        data.roads.push_back(r7);
-
-        cout << "Road 8" << endl;
         road r8; 
+        r7.id = 100*junc.id + 7;
         r8.id = 100*junc.id + 8;
-        phi = r3.geometries.front().hdg - r2.geometries.front().hdg;
-        if (mode != 1) phi += M_PI;
+        phi = r2.geometries.front().hdg - r1.geometries.front().hdg + M_PI;
         fixAngle(phi);
-        if (phi > M_PI) createRoadConnection(r2,r3,r8,junc,all,all,n,s,n);
-        if (phi < M_PI) createRoadConnection(r2,r3,r8,junc,all,all,s,n,n);
+        if (phi < 0) createRoadConnection(r1,r2,r7,junc,1,-1,n,n,n);
+        if (phi < 0) createRoadConnection(r1,r2,r8,junc,-1,1,n,s,n);
+        if (phi > 0) createRoadConnection(r1,r2,r7,junc,1,-1,n,n,n);
+        if (phi > 0) createRoadConnection(r1,r2,r8,junc,-1,1,s,n,n);
+        data.roads.push_back(r7);
         data.roads.push_back(r8);
 
         cout << "Road 9" << endl;
         road r9; 
-        r9.id = 100*junc.id + 9;
-        phi = r4.geometries.front().hdg - r2.geometries.front().hdg + M_PI;
-        fixAngle(phi);
-        if (phi > M_PI) createRoadConnection(r3,r4,r9,junc,all,all,n,s,n);
-        if (phi < M_PI) createRoadConnection(r3,r4,r9,junc,all,all,s,n,n);
-        data.roads.push_back(r9);
-
-        cout << "Road 10" << endl;
         road r10; 
+        r9.id = 100*junc.id + 9;
         r10.id = 100*junc.id + 10;
-        phi = r1.geometries.front().hdg - r4.geometries.front().hdg;
-        if (mode == 3) phi += M_PI;
+        phi = r3.geometries.front().hdg - r2.geometries.front().hdg + M_PI;
         fixAngle(phi);
-        if (phi > M_PI) createRoadConnection(r4,r1,r10,junc,all,all,n,s,n);
-        if (phi < M_PI) createRoadConnection(r4,r1,r10,junc,all,all,s,n,n);
+        if (phi < 0) createRoadConnection(r2,r3,r9,junc,1,-1,n,n,n);
+        if (phi < 0) createRoadConnection(r2,r3,r10,junc,-1,2,n,s,n);
+        if (phi > 0) createRoadConnection(r2,r3,r9,junc,1,-1,n,n,n);
+        if (phi > 0) createRoadConnection(r2,r3,r10,junc,-1,2,s,n,n);
+        data.roads.push_back(r9);
         data.roads.push_back(r10);
+
+        cout << "Road 12" << endl;
+        road r12; 
+        road r13; 
+        r12.id = 100*junc.id + 12;
+        r13.id = 100*junc.id + 13;
+        phi = r4.geometries.front().hdg - r3.geometries.front().hdg + M_PI;
+        fixAngle(phi);
+        if (phi < 0) createRoadConnection(r3,r4,r12,junc,1,-1,n,n,n);
+        if (phi < 0) createRoadConnection(r3,r4,r13,junc,-1,1,n,s,n);
+        if (phi > 0) createRoadConnection(r3,r4,r12,junc,1,-1,n,n,n);
+        if (phi > 0) createRoadConnection(r3,r4,r13,junc,-1,1,s,n,n);
+        data.roads.push_back(r12);
+        data.roads.push_back(r13);
+
+        cout << "Road 14" << endl;
+        road r14; 
+        road r15; 
+        r14.id = 100*junc.id + 14;
+        r15.id = 100*junc.id + 15;
+        phi = r1.geometries.front().hdg - r4.geometries.front().hdg + M_PI;
+        fixAngle(phi);
+        if (phi < 0) createRoadConnection(r4,r1,r14,junc,1,-1,n,n,n);
+        if (phi < 0) createRoadConnection(r4,r1,r15,junc,-1,2,n,s,n);
+        if (phi > 0) createRoadConnection(r4,r1,r14,junc,1,-1,n,n,n);
+        if (phi > 0) createRoadConnection(r4,r1,r15,junc,-1,2,s,n,n);
+        data.roads.push_back(r14);
+        data.roads.push_back(r15);
     }
     else if((string)con.attribute("type").value() == "single")
     {
