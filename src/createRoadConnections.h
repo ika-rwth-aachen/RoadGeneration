@@ -75,7 +75,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     fixAngle(a);
 
     // simple line
-    if (a == 0) 
+    if (abs(a) < 0.1) 
     {
         geometry g;
         g.s = 0;
@@ -84,7 +84,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         g.c2 = 0;
         g.x = x1;
         g.y = y1;
-        g.hdg = hdg1;
+        g.hdg = atan2(y2-y1,x2-x1);
 
         g.length = sqrt(pow(x2-x1,2)+pow(y2-y1,2));
         g.type = 1;

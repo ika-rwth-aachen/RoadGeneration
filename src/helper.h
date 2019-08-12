@@ -112,3 +112,30 @@ int shiftLanes(laneSection &sec, int id)
     return 0;
 }
 
+int findLeftLane(int i){
+    if (i > 0)
+        return 1;
+    else if (i < 0)
+        return -1;
+    else 
+        return 0;
+}
+
+int findRightLane(int i){
+    if (i > 0)
+        return i;
+    else if (i < 0)
+        return i;
+    else 
+        return 0;
+}
+
+int findMiddleLane(int i){
+    if (i > 0)
+        return floor(i/2+1);
+    else if (i < 0)
+        return ceil(i/2-1);
+    else 
+        return 0;
+}
+

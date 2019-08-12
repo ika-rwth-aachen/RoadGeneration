@@ -94,15 +94,15 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     r1.junction = junc.id;
     if (mode == 1)
     {
-        r1.predecessor.elementId =mainRoad.attribute("idStart").as_int();
-        r1.successor.elementId = 100*junc.id + 4;
-        generateRoad(mainRoad, r1, sMain, -sOffMain, 50, 0, 0, 0);
+        r1.predecessor.elementId = 100*junc.id + 4;
+        r1.successor.elementId = mainRoad.attribute("idStart").as_int();
+        generateRoad(mainRoad, r1, sMain, -sOffMain, 50, 0, iPx, iPy);
     }
     if (mode == 2)
     {
         r1.predecessor.elementId = 100*junc.id + 4;
         r1.successor.elementId = mainRoad.attribute("idEnd").as_int();
-        generateRoad(mainRoad, r1, sMain, sOffMain, 0, 0, 0, 0);
+        generateRoad(mainRoad, r1, sMain, sOffMain, 0, 0, iPx, iPy);
     }
     data.roads.push_back(r1);
 
@@ -114,7 +114,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     {
         r2.predecessor.elementId = 100*junc.id + 4;
         r2.successor.elementId = mainRoad.attribute("idEnd").as_int();
-        generateRoad(mainRoad, r2, sMain, sOffMain, 50, 0, 0, 0);
+        generateRoad(mainRoad, r2, sMain, sOffMain, 50, 0, iPx, iPy);
     }
     if (mode == 2)
     {
@@ -148,40 +148,115 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     {
         double phi;
 
+        phi1 = r2.geometries.front().hdg - r1.geometries.front().hdg + M_PI;
+        phi2 = r3.geometries.front().hdg - r1.geometries.front().hdg + M_PI;
+        fixAngle(phi1);
+        fixAngle(phi2);
+
+        if (phi1 < phi2)
+        {
+            // nothing TODO
+        }
+        else if (phi2 < phi1)
+        {
+            road tmp = r3;
+            r3 = r2;
+            r2 = tmp;
+        }
+        else 
+        {
+            cout << "ERR: both additional lanes on same side";
+            exit(0);
+        }
+        
+        int from, to;
+
+        int max1 = findMaxLaneId(r1.laneSections.front());
+        int min1 = findMinLaneId(r1.laneSections.front());
+
+        int max2 = findMaxLaneId(r2.laneSections.front());
+        int min2 = findMinLaneId(r2.laneSections.front());
+
+        int max3 = findMaxLaneId(r3.laneSections.front());
+        int min3 = findMinLaneId(r3.laneSections.front());
+
         cout << "Road 4" << endl;
         road r4; 
         r4.id = 100*junc.id + 4;
-
-        phi = r2.geometries.front().hdg - r1.geometries.front().hdg;
-        fixAngle(phi);
-        fixAngle(phi1);
-        if (mode == 1 && phi1 > 0) 
-            createRoadConnection(r1,r2,r4,junc,all,all,d,s,d);
-        if (mode == 1 && phi1 < 0) 
-            createRoadConnection(r1,r2,r4,junc,all,all,s,d,d);
-        if (mode == 2 && phi < 0) 
-            createRoadConnection(r1,r2,r4,junc,all,all,n,s,n);
-        if (mode == 2 && phi > 0) 
-            createRoadConnection(r1,r2,r4,junc,all,all,s,n,n);
+        from = findRightLane(max1);
+        to = findRightLane(min2);
+        if (mode == 1 && phi1 < phi2) 
+            createRoadConnection(r1,r2,r4,junc,from,to,d,s,d);
+        if (mode == 1 && phi2 < phi1) 
+            createRoadConnection(r1,r2,r4,junc,from,to,n,s,n);
+        if (mode == 2) 
+            createRoadConnection(r1,r2,r4,junc,from,to,n,s,n);
         data.roads.push_back(r4);
 
         cout << "Road 5" << endl;
         road r5; 
         r5.id = 100*junc.id + 5;
-        phi = r3.geometries.front().hdg - r2.geometries.front().hdg - M_PI;
-        fixAngle(phi);
-        if (phi < 0) createRoadConnection(r2,r3,r5,junc,all,all,n,s,n);
-        if (phi > 0) createRoadConnection(r2,r3,r5,junc,all,all,s,n,n);
+        from = findLeftLane(min1);
+        to = findLeftLane(max2);
+        if (mode == 1 && phi1 < phi2) 
+            createRoadConnection(r1,r2,r5,junc,from,to,d,d,d);
+        if (mode == 1 && phi2 < phi1) 
+            createRoadConnection(r1,r2,r5,junc,from,to,n,n,n);
+        if (mode == 2) 
+            createRoadConnection(r1,r2,r5,junc,from,to,n,n,n);
         data.roads.push_back(r5);
 
         cout << "Road 6" << endl;
         road r6; 
         r6.id = 100*junc.id + 6;
-        phi = r1.geometries.front().hdg - r3.geometries.front().hdg;
-        fixAngle(phi);
-        if (phi < 0) createRoadConnection(r3,r1,r6,junc,all,all,n,s,n);
-        if (phi > 0) createRoadConnection(r3,r1,r6,junc,all,all,s,n,n);
+        from = findRightLane(max2);
+        to = findRightLane(min3);
+        if (mode == 1 && phi1 < phi2) 
+            createRoadConnection(r2,r3,r6,junc,from,to,n,s,n);
+        if (mode == 1 && phi2 < phi1) 
+            createRoadConnection(r2,r3,r6,junc,from,to,n,s,n);
+        if (mode == 2) 
+            createRoadConnection(r2,r3,r6,junc,from,to,n,s,n);
         data.roads.push_back(r6);
+
+        cout << "Road7 " << endl;
+        road r7; 
+        r7.id = 100*junc.id + 7;
+        from = findLeftLane(min2);
+        to = findLeftLane(max3);
+        if (mode == 1 && phi1 < phi2) 
+            createRoadConnection(r2,r3,r7,junc,from,to,n,n,n);
+        if (mode == 1 && phi2 < phi1) 
+            createRoadConnection(r2,r3,r7,junc,from,to,n,n,n);
+        if (mode == 2) 
+            createRoadConnection(r2,r3,r7,junc,from,to,n,n,n);
+        data.roads.push_back(r7);
+
+        cout << "Road 8" << endl;
+        road r8; 
+        r8.id = 100*junc.id + 8;
+        from = findRightLane(max3);
+        to = findRightLane(min1);
+        if (mode == 1 && phi1 < phi2) 
+            createRoadConnection(r3,r1,r8,junc,from,to,n,s,n);
+        if (mode == 1 && phi2 < phi1) 
+            createRoadConnection(r3,r1,r8,junc,from,to,d,s,d);
+        if (mode == 2) 
+            createRoadConnection(r3,r1,r8,junc,from,to,n,s,n);
+        data.roads.push_back(r8);
+
+        cout << "Road 9" << endl;
+        road r9; 
+        r9.id = 100*junc.id + 9;
+        from = findLeftLane(min3);
+        to = findLeftLane(max1);
+        if (mode == 1 && phi1 < phi2) 
+            createRoadConnection(r3,r1,r9,junc,from,to,n,n,n);
+        if (mode == 1 && phi2 < phi1) 
+            createRoadConnection(r3,r1,r9,junc,from,to,d,d,d);
+        if (mode == 2) 
+            createRoadConnection(r3,r1,r9,junc,from,to,n,n,n);
+        data.roads.push_back(r9);
     }
     else if((string)con.attribute("type").value() == "single")
     {

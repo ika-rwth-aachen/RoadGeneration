@@ -2,7 +2,7 @@
 
 #include "curve.h"
 
-int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double sLeftLane, double phi0, double x0, double y0)
+int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double sLaneWidening, double phi0, double x0, double y0)
 {
     // mode = 1 -> save part before s0
     // mode = 2 -> save part after  s0
@@ -21,6 +21,7 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
 
     for (pugi::xml_node_iterator it = geos.child("referenceLine").begin(); it != geos.child("referenceLine").end(); ++it)
     {
+        cout << "TEST" << endl;
         int type;
         double c = 0, c1 = 0, c2 = 0;
         double R = 0, R1 = 0, R2 = 0;
@@ -195,12 +196,13 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
         r.laneSections.push_back(laneSec);
     }
 
-    if (sLeftLane > 0) 
+    // Lane Widening
+    if (sLaneWidening > 0) 
     {
         laneSection tmp = r.laneSections.back();
         laneSection adLaneSec = tmp;
 
-        tmp.s = sLeftLane + 50;
+        tmp.s = sLaneWidening + 50;
         adLaneSec.s = 0;
         adLaneSec.id = tmp.id + 1;
 
@@ -221,11 +223,11 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
         r.laneSections.back() = adLaneSec;
 
         // add half laneSection
-        l.w.d = 2 * w / pow(sLeftLane,3);
-        l.w.c = - 3 * w / pow(sLeftLane,2);
+        l.w.d = 2 * w / pow(50,3);
+        l.w.c = - 3 * w / pow(50,2);
         l.w.b = 0;
 
-        adLaneSec.s = 50;
+        adLaneSec.s = sLaneWidening;
         id = findLane(adLaneSec, lTmp, 1);
         adLaneSec.lanes[id] = l;
 

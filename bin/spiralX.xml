@@ -66,13 +66,13 @@
                     </lanes>
                 </road>
                 <intersectionPoint refId="1" s="100">
-                    <adRoad id="2" s="0" angle="1.5708"/>
-                    <adRoad id="3" s="0" angle="4.5708"/>
+                    <adRoad id="2" s="0" angle="-1.08"/>
+                    <adRoad id="3" s="0" angle="2.11"/>
                 </intersectionPoint>a
                 <coupler id="1">
-                    <couplerArea sOffset="15">
-                        <streetBorder id="2" sOffset="20"/>
-                        <streetBorder id="3" sOffset="20"/>
+                    <couplerArea sOffset="50">
+                        <streetBorder id="1" sOffset="50"/>
+                        <streetBorder id="3" sOffset="50"/>
                     </couplerArea>>
                     <connection type="all"/>
                 </coupler>
