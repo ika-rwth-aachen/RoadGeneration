@@ -1,6 +1,7 @@
 // file generateRoad.h
 
 #include "curve.h"
+#include "laneSectionChange.h"
 
 int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double sLaneWidening, double phi0, double x0, double y0)
 {
@@ -21,7 +22,6 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
 
     for (pugi::xml_node_iterator it = geos.child("referenceLine").begin(); it != geos.child("referenceLine").end(); ++it)
     {
-        cout << "TEST" << endl;
         int type;
         double c = 0, c1 = 0, c2 = 0;
         double R = 0, R1 = 0, R2 = 0;
@@ -74,7 +74,6 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
         geo.c1 = c1;
         geo.c2 = c2;  
         geo.type = type;
-        
 
         if(!complicatedCut)
             curve(actualLength, geo, x, y, hdg,1);
@@ -162,6 +161,8 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
 
     for (pugi::xml_node_iterator it = geos.child("lanes").begin(); it != geos.child("lanes").end(); ++it)
     {
+        if ((string)it->name() != "laneSection") continue;
+
         laneSection laneSec;
         laneSec.id = it->attribute("id").as_int();
         laneSec.s = stod(it->attribute("s").value(),&sz);
@@ -194,6 +195,28 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
             laneSec.lanes.push_back(l);
         }
         r.laneSections.push_back(laneSec);
+    }
+
+       
+
+    // consider lanedrops and lanewidenings
+    for (pugi::xml_node_iterator itt = geos.child("lanes").begin(); itt != geos.child("lanes").end(); ++itt)
+    {   
+        if ((string)itt->name() == "laneWidening")
+        {
+            int lane = itt->attribute("lane").as_int();
+            double s = itt->attribute("sOffset").as_double();
+            double ds = itt->attribute("ds1").as_double();
+
+            addLaneWidening(r.laneSections, lane, s, ds);
+        }
+        if ((string)itt->name() == "laneDrop")
+        {
+            int lane = itt->attribute("lane").as_int();
+            double s = itt->attribute("sOffset").as_double();
+            double ds = itt->attribute("ds1").as_double();
+            addLaneDrop(r.laneSections, lane, s, ds);                
+        }
     }
 
     // Lane Widening

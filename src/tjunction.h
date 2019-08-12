@@ -45,7 +45,10 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     }   
 
     if(!mainRoad || !additionalRoad1 || (mode == 2 && !additionalRoad2)) 
+    {
         cout << "ERR: no corresponding roads are found" << endl;
+        exit(0);
+    }
 
     double sMain, sAdd1, sAdd2, sOffMain, sOffAdd1, sOffAdd2, phi1, phi2;
 

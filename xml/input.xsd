@@ -147,7 +147,9 @@ elementFormDefault="qualified">
 
     <xs:complexType name="lanesType">
         <xs:sequence>
-            <xs:element name="laneSection" type="laneSectionType"           maxOccurs="unbounded"/>
+            <xs:element name="laneSection" type="laneSectionType" maxOccurs="unbounded"/>
+            <xs:element name="laneWidening" type="laneWideningType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="laneDrop" type="laneDropType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -170,10 +172,6 @@ elementFormDefault="qualified">
     </xs:complexType>
 
     <xs:complexType name="laneWidthType">
-        <xs:sequence>
-            <xs:element name="laneWidening" type="laneWideningType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="laneDrop" type="laneDropType" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
         <xs:attribute name="sOffset" type="xs:double" use="required"/>      
         <xs:attribute name="w" type="xs:double" use="required"/> 
     </xs:complexType>
