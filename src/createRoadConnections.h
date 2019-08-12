@@ -74,7 +74,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     double a = hdg2-hdg1;
     fixAngle(a);
 
-    // simple line
+    // simple line if angles are almost the same
     if (abs(a) < 0.1) 
     {
         geometry g;
@@ -92,7 +92,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         r.geometries.push_back(g);
         r.length = g.length;
     }
-    // curv
+    // combine an arc with a line to connect both points
     else 
     {
         double m1 = tan(hdg1);
@@ -181,79 +181,9 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     // --- lanemarkings in crossing section ------------------------------------
     laneSection laneSec;
 
-    string left = "none";
-    string right = "none";
-
-    if (fromId == 0){
-
-        for (int i = 0; i < lS1.lanes.size(); i++)
-        {
-            int from = lS1.lanes[i].id;
-
-            if (toId == 0){
-                for (int j = 0; j < lS2.lanes.size(); j++)
-                {
-                    int to = lS2.lanes[j].id;
-
-                    string left = laneMarkMiddle;
-                    string right = laneMarkMiddle;
-
-                    if (sgn(from) == -sgn(to) && isBoundary(lS1,from) && isBoundary(lS2,to)) 
-                    {
-                        if (to > 0) left = laneMarkLeft;
-                        if (to < 0) right = laneMarkRight;
-                    }          
-
-                    createLaneConnection(r, lS1,lS2,from,to,left,right);
-                }
-            }
-            else{
-                int to = toId;
-
-                string left = laneMarkMiddle;
-                string right = laneMarkMiddle;
-
-                if (sgn(from) == -sgn(to) && isBoundary(lS1,from) && isBoundary(lS2,to)) 
-                {
-                    if (to > 0) left = laneMarkLeft;
-                    if (to < 0) right = laneMarkRight;
-                }     
-
-                createLaneConnection(r, lS1,lS2,from,to,left,right);
-            }
-        }
-    }
-    else
-    {   
-        int from = fromId;
-
-        if (toId == 0)
-        {
-            for (int j = 0; j < lS2.lanes.size(); j++)
-            {
-                int to = lS2.lanes[j].id;
-
-                string left = laneMarkMiddle;
-                string right = laneMarkMiddle;
-
-                if (sgn(from) == -sgn(to) && isBoundary(lS1,from) && isBoundary(lS2,to)) 
-                {
-                    if (to > 0) left = laneMarkLeft;
-                    if (to < 0) right = laneMarkRight;
-                }       
-
-                createLaneConnection(r, lS1,lS2,from,to,left,right);
-            }
-        }
-        else
-        {
-            int to = toId;
-
-            string left = laneMarkLeft;
-            string right = laneMarkRight;
-            createLaneConnection(r, lS1,lS2,from,to,left,right);
-        }        
-    }
-        
+    string left = laneMarkLeft;
+    string right = laneMarkRight;
+    createLaneConnection(r,lS1,lS2,fromId,toId,left,right);
+               
     return 0;
 }

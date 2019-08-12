@@ -5,6 +5,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
     cout << "Begin LaneWidening" << endl;
     std::vector<laneSection>::iterator it;
 
+    // search corresponding lane Section
     int i = 0;
     bool found = false;
     for (i = 0; i < secs.size()-1; i++)
@@ -41,6 +42,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
     it = secs.insert(it, adLaneSec);
     it++;
 
+    // part after laneWiding
     l.w.d = 0;
     l.w.c = 0;
     l.w.a = w;
@@ -49,9 +51,10 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
 
     it = secs.insert(it, adLaneSec);
     it++;
-
     i += 2;
-    for (it; it != secs.end(); ++it)
+
+    // shift all lanes in following lane sections
+    for (; it != secs.end(); ++it)
     {
         shiftLanes(secs[i], laneId);
         it->lanes.push_back(l); 
@@ -65,6 +68,7 @@ int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
     cout << "Begin LaneDrop" << endl;
     std::vector<laneSection>::iterator it;
 
+    // search corresponding lane Section
     int i = 0;
     bool found = false;
     for (i = 0; i < secs.size()-1; i++)
@@ -99,6 +103,7 @@ int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
     it = secs.insert(it, adLaneSec);
     it++;
 
+    // part after laneDrop
     l.w.d = 0;
     l.w.c = 0;
     l.w.a = 0;
@@ -107,10 +112,12 @@ int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
 
     it = secs.insert(it, adLaneSec);
     it++;
-
     i += 2;
-    for (it; it != secs.end(); ++it)
+
+    // shift all lanes in following lane sections
+    for (; it != secs.end(); ++it)
     {        
+        int id = findLane(*it, l, laneId);
         it->lanes[id] = l; 
     }
 

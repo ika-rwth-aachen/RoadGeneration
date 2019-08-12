@@ -84,7 +84,7 @@ int fresnel(double s, double &x, double &y)
     return 0;
 }
 
-int curve(double s, geometry geo, double &x, double &y, double &phi, int t)
+int curve(double s, geometry geo, double &x, double &y, double &phi, int fd)
 {
     int type;
     double c = geo.c;
@@ -92,9 +92,9 @@ int curve(double s, geometry geo, double &x, double &y, double &phi, int t)
     double c2 = geo.c2;
     double ds = geo.length;
     
-    if (c == 0 && c1 == 0 && c2 == 0)   type = 1;
-    if (c != 0 && c1 == 0 && c2 == 0)   type = 2;
-    if (c == 0 && (c1 != 0 || c2 != 0)) type = 3;
+    if (c == 0 && c1 == 0 && c2 == 0)   type = 1;   // line
+    if (c != 0 && c1 == 0 && c2 == 0)   type = 2;   // arc
+    if (c == 0 && (c1 != 0 || c2 != 0)) type = 3;   // circle
     
     if (type == 1)
     {
@@ -126,10 +126,9 @@ int curve(double s, geometry geo, double &x, double &y, double &phi, int t)
         fresnel(s2/a, x2, y2);
 
         double tau = 0.5 * s1 * sigma * s1;
-        int sgn = (sigma > 0) - (sigma < 0);
 
-        y1 *= sgn;
-        y2 *= sgn;
+        y1 *= sgn(sigma);
+        y2 *= sgn(sigma);
         
         x2 -= x1;
         y2 -= y1;
@@ -137,11 +136,8 @@ int curve(double s, geometry geo, double &x, double &y, double &phi, int t)
         x += a * (cos(phi-tau) * x2 - sin(phi-tau) * y2);
         y += a * (sin(phi-tau) * x2 + cos(phi-tau) * y2);
         
-        
-        // calculate angle
-        //phi += c1 * s  + 1/2 * (c2 - c1) / ds * s * s;
-
-        if (t)
+        // calculate angle with finite differences -> TODO
+        if (fd)
         {
             double xTmp1 = 0;
             double xTmp2 = 0;

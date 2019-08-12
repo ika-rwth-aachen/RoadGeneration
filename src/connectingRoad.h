@@ -8,7 +8,10 @@ int connectingRoad(pugi::xml_node &node, roadNetwork &data)
     pugi::xml_node mainRoad = node.child("road");
 
     if(!mainRoad)
-        cout << "ERR: no corresponding roads are found" << endl;
+    {
+        cout << "ERR: no corresponding roads are found." << endl;
+        exit(0);
+    }
     
     cout << "Generating Roads" << endl;
 

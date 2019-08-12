@@ -2,7 +2,6 @@
 
 int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 {
-	
 	pugi::xml_node interfaces = doc.child("roadNetwork").child("interfaces");
 
 	if(!interfaces) cout << "ERR: 'interfaces' not found in input file."  << endl;
@@ -22,6 +21,9 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 		int toRoad = segmentLink.attribute("toRoad").as_int();	
 		double fromPos = segmentLink.attribute("fromPos").as_double();
 		double toPos = segmentLink.attribute("toPos").as_double();
+
+		// TODO
 	}
+
     return 0;
 }

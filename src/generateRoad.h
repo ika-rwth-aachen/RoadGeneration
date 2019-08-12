@@ -78,7 +78,7 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
         if(!complicatedCut)
             curve(actualLength, geo, x, y, hdg,1);
 
-        // if complicated cut
+        // if complicated cut (cut inside of current geometry)
         if(complicatedCut)
         {
             if (mode == 1)
@@ -122,14 +122,14 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
         s += length;
     }
 
-    // shift geometries -> endpoint is at x0 y0
+    // shift geometries -> endpoint is at x0 / y0
     for (int i = 0; i < r.geometries.size(); i++)
     {
         r.geometries[i].x += dx;
         r.geometries[i].y += dy;
     }
 
-    // flip geometries
+    // flip geometries (convention: all roads point away from junction)
     if (mode == 1)
     {
         road rNew = r;
@@ -159,6 +159,7 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
         r.geometries = rNew.geometries;
     }
 
+    // add lanes to road
     for (pugi::xml_node_iterator it = geos.child("lanes").begin(); it != geos.child("lanes").end(); ++it)
     {
         if ((string)it->name() != "laneSection") continue;
@@ -172,7 +173,7 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
             lane l; 
 
             l.id = itt->attribute("id").as_int();
-            if (mode == 1) l.id *= -1;
+            if (mode == 1) l.id *= -1;  // flip lanes for mode 1
 
             l.type = itt->attribute("type").value();
         
@@ -197,8 +198,6 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
         r.laneSections.push_back(laneSec);
     }
 
-       
-
     // consider lanedrops and lanewidenings
     for (pugi::xml_node_iterator itt = geos.child("lanes").begin(); itt != geos.child("lanes").end(); ++itt)
     {   
@@ -208,6 +207,9 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
             double s = itt->attribute("sOffset").as_double();
             double ds = itt->attribute("ds1").as_double();
 
+            // only perform drop if not close to junction
+            if (s < sLaneWidening + 50) continue;
+            if (s > r.length) continue;       
             addLaneWidening(r.laneSections, lane, s, ds);
         }
         if ((string)itt->name() == "laneDrop")
@@ -215,47 +217,51 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
             int lane = itt->attribute("lane").as_int();
             double s = itt->attribute("sOffset").as_double();
             double ds = itt->attribute("ds1").as_double();
+
+            // only perform drop if not close to junction
+            if (s < sLaneWidening + 50) continue;       
+            if (s > r.length) continue;       
             addLaneDrop(r.laneSections, lane, s, ds);                
         }
     }
 
-    // Lane Widening
+    // add laneWidening at junction
     if (sLaneWidening > 0) 
     {
-        laneSection tmp = r.laneSections.back();
-        laneSection adLaneSec = tmp;
+        r.laneSections.front().s = sLaneWidening + 50;
 
-        tmp.s = sLaneWidening + 50;
+        laneSection adLaneSec = r.laneSections.front();
         adLaneSec.s = 0;
-        adLaneSec.id = tmp.id + 1;
+        adLaneSec.id++;
 
-        // additional road
+        // additional lane
         lane l;
         findLane(adLaneSec, l, 1);
         double w = laneWidth(l,0);
         l.w.a = w;
         l.rm.type = "broken";
+        shiftLanes(adLaneSec,1);
+        adLaneSec.lanes.push_back(l);   
 
         // solid center line
         lane lTmp;
         int id = findLane(adLaneSec, lTmp, 0);
         adLaneSec.lanes[id].rm.type = "solid";
 
-        shiftLanes(adLaneSec,1);
-        adLaneSec.lanes.push_back(l);     
-        r.laneSections.back() = adLaneSec;
+        vector<laneSection>::iterator it = r.laneSections.begin();
+        it = r.laneSections.insert(it, adLaneSec);
+        it++;
 
-        // add half laneSection
+        // widening part
         l.w.d = 2 * w / pow(50,3);
         l.w.c = - 3 * w / pow(50,2);
         l.w.b = 0;
 
+        adLaneSec.id++;
         adLaneSec.s = sLaneWidening;
         id = findLane(adLaneSec, lTmp, 1);
         adLaneSec.lanes[id] = l;
-
-        r.laneSections.push_back(adLaneSec);
-        r.laneSections.push_back(tmp);
+        it = r.laneSections.insert(it, adLaneSec);
     }
 
     return 0;
