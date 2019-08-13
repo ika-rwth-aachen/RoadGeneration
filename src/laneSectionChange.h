@@ -12,6 +12,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
     {
         if (secs[i].s < s && secs[i+1].s >= s) {
             found = true;
+            it = secs.begin() + i;
             break; 
         }
     }
@@ -75,6 +76,7 @@ int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
     {
         if (secs[i].s < s && secs[i+1].s >= s) {
             found = true;
+            it = secs.begin() + i;
             break; 
         }
     }
