@@ -164,6 +164,7 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
             curve(length, geo, x, y, hdg,1);           
         }
         
+        fixAngle(geo.hdg);
         r.length = s + actuallength;
         r.geometries.push_back(geo);
 
