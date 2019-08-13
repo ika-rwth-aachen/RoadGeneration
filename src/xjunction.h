@@ -94,7 +94,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
 
     // calculate intersectionPoint
     road helperRoad;
-    generateRoad(mainRoad, helperRoad, sMain, 0, 0, 0, 0, 0);
+    generateRoad(mainRoad, helperRoad, sMain, INFINITY, 0, sMain, 0, 0, 0);
     double iPx = helperRoad.geometries.back().x;
     double iPy = helperRoad.geometries.back().y;
     double iPhdg = helperRoad.geometries.back().hdg;
@@ -109,13 +109,13 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     {
         r1.predecessor.elementId = 100*junc.id + 5;
         r1.successor.elementId = mainRoad.attribute("idStart").as_int();
-        generateRoad(mainRoad, r1, sMain, -sOffMain, 50, 0, iPx, iPy);
+        generateRoad(mainRoad, r1, sMain-sOffMain, 0, 50, sMain, iPx, iPy, iPhdg);
     }
     if (mode == 3)
     {
         r1.predecessor.elementId = 100*junc.id + 5;
         r1.successor.elementId = mainRoad.attribute("idEnd").as_int();
-        generateRoad(mainRoad, r1, sMain, sOffMain, 0, 0, iPx, iPy);
+        generateRoad(mainRoad, r1, sMain+sOffMain, INFINITY, 0, sMain,iPx, iPy, iPhdg);
     }
     data.roads.push_back(r1);
 
@@ -127,13 +127,13 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     {
         r2.predecessor.elementId = 100*junc.id + 6;
         r2.successor.elementId = additionalRoad1.attribute("idStart").as_int();
-        generateRoad(additionalRoad1, r2, sAdd1, -sOffAdd1, 50, iPhdg+phi1, iPx, iPy);
+        generateRoad(additionalRoad1, r2, sAdd1-sOffAdd1, 0, 50, sAdd1, iPx, iPy, iPhdg+phi1);
     }
     if (mode == 2 || mode == 3)
     {
         r2.predecessor.elementId = 100*junc.id + 6;
         r2.successor.elementId = additionalRoad1.attribute("idEnd").as_int();
-        generateRoad(additionalRoad1, r2, sAdd1, sOffAdd1, 0, iPhdg+phi1, iPx, iPy);
+        generateRoad(additionalRoad1, r2, sAdd1+sOffAdd1, INFINITY, 0, sAdd1, iPx, iPy, iPhdg+phi1);
     }
     data.roads.push_back(r2);
 
@@ -145,13 +145,13 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     {
         r3.predecessor.elementId = 100*junc.id + 5;
         r3.successor.elementId = mainRoad.attribute("idEnd").as_int();
-        generateRoad(mainRoad, r3, sMain, sOffMain, 50, 0, iPx, iPy);
+        generateRoad(mainRoad, r3, sMain+sOffMain, INFINITY, 50, sMain,iPx, iPy,iPhdg);
     }
     if (mode == 3)
     {
         r3.predecessor.elementId = 100*junc.id + 5;
         r3.successor.elementId = additionalRoad2.attribute("idEnd").as_int();
-        generateRoad(additionalRoad2, r3, sAdd2, sOffAdd2, 0, iPhdg+phi2, iPx, iPy);
+        generateRoad(additionalRoad2, r3, sAdd2+sOffAdd2, INFINITY, 0, sAdd2, iPx, iPy, iPhdg+phi2);
     }
     data.roads.push_back(r3);
 
@@ -163,19 +163,19 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     {
         r4.predecessor.elementId = 100*junc.id + 6;
         r4.successor.elementId = additionalRoad1.attribute("idEnd").as_int();
-        generateRoad(additionalRoad1, r4, sAdd1, sOffAdd1, 50, iPhdg+phi1, iPx, iPy);
+        generateRoad(additionalRoad1, r4, sAdd1+sOffAdd1, INFINITY, 50,sAdd1, iPx, iPy, iPhdg+phi1);
     }
     if (mode == 2)
     {
         r4.predecessor.elementId = 100*junc.id + 6;
         r4.successor.elementId = additionalRoad2.attribute("idEnd").as_int();
-        generateRoad(additionalRoad2, r4, sAdd2, sOffAdd2, 0, iPhdg+phi2, iPx, iPy);
+        generateRoad(additionalRoad2, r4, sAdd2+sOffAdd2, INFINITY, 0, sAdd2, iPx, iPy, iPhdg+phi2);
     }
     if (mode == 3)
     {
         r4.predecessor.elementId = 100*junc.id + 6;
         r4.successor.elementId = additionalRoad3.attribute("idEnd").as_int();
-        generateRoad(additionalRoad3, r4, sAdd3, sOffAdd3, 0, iPhdg+phi3, iPx, iPy);
+        generateRoad(additionalRoad3, r4, sAdd3+sOffAdd3, INFINITY, 0, sAdd3, iPx, iPy, iPhdg+phi3);
     }
     data.roads.push_back(r4);
 

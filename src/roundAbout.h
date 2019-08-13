@@ -16,6 +16,8 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
             mainRoad = road;
     }
 
+    double sOld = node.last_child().child("couplerArea").attribute("sOffset").as_double();
+
     // iteration over all additonalRoads defined by separate intersectionPoints
     for (pugi::xml_node iP: node.children("intersectionPoint"))
     {
@@ -62,7 +64,6 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         double sAdd = iP.child("adRoad").attribute("s").as_double();
         double phi = iP.child("adRoad").attribute("angle").as_double();
 
-
         // calculate intersectionPoint
         double R = mainRoad.child("referenceLine").child("geometry").attribute("R").as_double();
 
@@ -74,16 +75,16 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         road r;
         r.id = 100*junc.id + iP.attribute("id").as_int();
         r.junction = junc.id;
-        generateRoad(mainRoad, r, sMain, -sOffMain, 0, 0, iPx, iPy);        
+        generateRoad(mainRoad, r, sOld, sMain-sOffMain, 0, sMain, iPx, iPy,iPhdg);        
         data.roads.push_back(r);
 
         road r2;
         r2.id = -(100*junc.id + iP.attribute("id").as_int());
         r2.junction = junc.id;
-        generateRoad(additionalRoad, r2, sAdd, sOffAdd, 0, 0, iPx, iPy);        
+        generateRoad(additionalRoad, r2, sAdd+sOffAdd, INFINITY, 0, sAdd, iPx, iPy, iPhdg+phi);        
         data.roads.push_back(r2);
 
-
+        sOld = sMain + sOffMain;
     }
 
 

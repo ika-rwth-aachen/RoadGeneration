@@ -3,23 +3,67 @@
 #include "curve.h"
 #include "laneSectionChange.h"
 
-int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double sLaneWidening, double phi0, double x0, double y0)
+int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, double sLaneWidening, double s0, double x0, double y0, double phi0)
 {
-    // mode = 1 -> save part before s0
-    // mode = 2 -> save part after  s0
+    // save geos from sStart - sEnd whereas s0 is located at phi0 
+    // mode = 1 -> in s direction
+    // mode = 2 -> in opposite s direction
     int mode;
-    if (sOffset < 0) mode = 1;
-    if (sOffset >= 0) mode = 2;
 
-    double dx, dy;
+    if (sEnd > sStart)
+    {   
+        mode = 1;
+    }
+    if (sEnd < sStart)
+    {   
+        double tmp = sStart;
+        sStart = sEnd;
+        sEnd = tmp;
+        mode = 2;
+    }
 
+    // s0case
+    // s0case 0 normal
+    // s0case 1: s0 before sStart 
+    // s0case 2: s0 after sEnd
+    // -> road geometry at end is also considered for s0 
+    // (only valid for small offsets)
+    int s0case = 0;
+    if (s0 < sStart) s0case = 1;
+    if (s0 > sEnd)   s0case = 2;
+    
+    int foundfirst = -1;
+    int foundlast = -1;
+
+    // search first and last relevant geometry
+    int cc = 0;
     double s = 0;
+    
+
+    for (pugi::xml_node_iterator it = geos.child("referenceLine").begin(); it != geos.child("referenceLine").end(); ++it)
+    {
+        double length = it->attribute("length").as_double();
+        
+        if (s + length > sStart && foundfirst == -1) foundfirst = cc;
+        
+        if (s + length >= sEnd  && foundlast == -1) foundlast = cc;
+
+        cc++;
+        s += length;
+    }
+
+    if (sEnd == INFINITY) 
+    {
+        foundlast = cc - 1;
+        sEnd = s;
+    }
+
+    s = 0;
     double x = 0;
     double y = 0;
-    double hdg = phi0;
+    double hdg = 0;
 
-    bool save = true;
-
+    cc = 0;
     for (pugi::xml_node_iterator it = geos.child("referenceLine").begin(); it != geos.child("referenceLine").end(); ++it)
     {
         int type;
@@ -38,31 +82,7 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
         if (R != 0) c = 1/R; 
         if (R1 != 0) c1 = 1 / R1; 
         if (R2 != 0) c2 = 1 / R2; 
-
-        double actualLength = length;
-        bool complicatedCut = false;
-
-        if (mode == 1)
-        {
-            if (s + length > s0 + sOffset) 
-            {
-                complicatedCut = true;
-                actualLength = s0 + sOffset - s;
-            }
-            if (actualLength <= 0) break;
-        } 
-        if (mode == 2)
-        {
-            if (s + length < s0 + sOffset) save = false;
-            
-            if (s < s0 + sOffset && s + length > s0 + sOffset) 
-            {
-                save = true;
-                complicatedCut = true;
-                actualLength = s + length - s0 - sOffset;
-            }
-        } 
-
+           
         // create new geometry
         geometry geo;
         geo.s = s;
@@ -75,62 +95,149 @@ int generateRoad(pugi::xml_node geos, road &r, double s0, double sOffset, double
         geo.c2 = c2;  
         geo.type = type;
 
-        if(!complicatedCut)
-            curve(actualLength, geo, x, y, hdg,1);
+        double actuallength = length;
 
-        // if complicated cut (cut inside of current geometry)
-        if(complicatedCut)
+        if (cc < foundfirst)
         {
-            if (mode == 1)
-            {
-                curve(actualLength - sOffset, geo, x, y, hdg,1);
-                dx = x0 - x;
-                dy = y0 - y;
-
-                // update second curvature
-                geo.c2 = geo.c1 + (actualLength) * (geo.c2 - geo.c1) / length;
-                // update length
-                geo.length = actualLength;
-            }
-            if (mode == 2)
-            {
-                geo.s = 0;
-                s = 0;
-                curve(length-actualLength, geo, geo.x, geo.y, geo.hdg,1);
-
-                double tmpX = x;
-                double tmpY = y;
-                double tmpHdg = hdg;
-                curve(length-actualLength-sOffset, geo, tmpX, tmpY,tmpHdg,1);
-                dx = x0 - tmpX;
-                dy = y0 - tmpY;
-                
-                curve(length, geo, x, y,hdg,1);
-
-                // update first curvature
-                geo.c1 += (s0 + sOffset) * (geo.c2 - geo.c1) / length; 
-                // update length
-                geo.length = actualLength;
-            }
-        }
-        if (save) 
+            curve(length, geo, x, y, hdg,1);
+            s += length;            
+            continue;
+        } 
+        if (cc > foundlast)
         {
-            r.length = s + actualLength;
-            r.geometries.push_back(geo);
+            break;
         }
+
+        // |-------sStart--------|  sEnd
+        if (cc == foundfirst && cc != foundlast)
+        {
+            actuallength = length - (sStart-s);
+
+            // reset s to zero
+            geo.s = 0;
+            s = 0;
+
+            // calculate new start point of geometry
+            curve(sStart - s, geo, geo.x, geo.y, geo.hdg,1);
+
+            // update first curvature
+            geo.c1 += (sStart - s) * (geo.c2 - geo.c1) / length; 
+            // update length
+            geo.length = actuallength;
+
+            // normal calculation of full length
+            curve(length, geo, x, y,hdg,1);
+        }
+
+        // sStart   |-------sEnd--------|
+        if (cc != foundfirst && cc == foundlast)
+        {
+            actuallength = sEnd - s;
+            curve(actuallength, geo, x, y, hdg, 1);
+
+            // update second curvature
+            geo.c2 = geo.c1 + (actuallength) * (geo.c2 - geo.c1) / length;
+            // update length
+            geo.length = actuallength;            
+        }
+
+        // |-----sStart------sEnd--------|   
+        if (cc == foundfirst && cc == foundlast)
+        {
+            actuallength = sEnd - sStart;
+
+            // reset s to zero
+            geo.s = 0;
+            s = 0;
+
+            // calculate new start point of geometry
+            curve(sStart - s, geo, geo.x, geo.y, geo.hdg,1);
+
+            // update first curvature
+            geo.c1 += (sStart - s) * (geo.c2 - geo.c1) / length; 
+            // update length
+            geo.length = actuallength;            
+        }
+        //   sStart |------------| sEnd
+        if (cc != foundfirst && cc != foundlast)
+        {
+            curve(length, geo, x, y, hdg,1);           
+        }
+        
+        r.length = s + actuallength;
+        r.geometries.push_back(geo);
 
         s += length;
+        cc++;;
     }
 
-    // shift geometries -> endpoint is at x0 / y0
+    // calculate x, y, phi at s0
+    double dphi;
+    
+    if (s0case == 0 || s0case == 2)
+    {
+        for (int i = 0; i < r.geometries.size(); i++)
+        {
+            geometry g = r.geometries[i];
+
+            if (s0 >= g.s)
+            {
+                x = g.x;
+                y = g.y;
+                hdg = g.hdg;
+                curve(s0-sStart-g.s,g,x,y,hdg,1);
+
+                dphi = phi0-hdg;
+                break;
+            }
+        }
+    }
+    else if (s0case == 1)
+    {
+        geometry g = r.geometries.front();
+
+        // update angle and curvatures
+        g.hdg += M_PI;
+        fixAngle(g.hdg);
+
+        double c1 = g.c1;
+        double c2 = g.c2;
+
+        if (g.type == 2) g.c *= -1;
+        if (g.type == 3) 
+        {
+            g.c1 = -c2;
+            g.c2 = -c1;
+        }
+
+        x = g.x;
+        y = g.y;
+        hdg = g.hdg;
+
+        curve(sStart-s0,g,x,y,hdg,1);
+        dphi = phi0-hdg+M_PI;
+    }
+
+    // shift x,y,phi according to x0, y0, phi0
     for (int i = 0; i < r.geometries.size(); i++)
     {
-        r.geometries[i].x += dx;
-        r.geometries[i].y += dy;
+        // shift in origin
+        double xtemp = r.geometries[i].x - x;
+        double ytemp = r.geometries[i].y - y;
+
+        // rotate with dphi
+        r.geometries[i].hdg += dphi;
+        r.geometries[i].x = xtemp * cos(dphi) - ytemp * sin(dphi);
+        r.geometries[i].y = xtemp * sin(dphi) + ytemp * cos(dphi);
+
+        // shift back with x0, y0 
+        r.geometries[i].x += x0;
+        r.geometries[i].y += y0;
+
     }
 
     // flip geometries (convention: all roads point away from junction)
-    if (mode == 1)
+    if (mode == 2)
     {
         road rNew = r;
         rNew.geometries.clear();
