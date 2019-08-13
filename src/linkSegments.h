@@ -116,14 +116,20 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 			dx = fromX - toX;
 			dy = fromY - toY;
 
-			for (auto&& g : r.geometries)
+			for(auto&& r2 : data.roads)
 			{
-				double x = g.x * cos(dPhi) - g.y * sin(dPhi);
-				double y = g.x * sin(dPhi) + g.y * cos(dPhi);
+				if (r2.junction != toSegment) continue;
+			
+				for (auto&& g : r2.geometries)
+				{
+					double x = g.x * cos(dPhi) - g.y * sin(dPhi);
+					double y = g.x * sin(dPhi) + g.y * cos(dPhi);
 
-				g.x = x + dx;
-				g.y = y + dy;
-				g.hdg = g.hdg + dPhi;
+					g.x = x + dx;
+					g.y = y + dy;
+					g.hdg = g.hdg + dPhi;
+					fixAngle(g.hdg);
+				}	
 			}
 		}
 
