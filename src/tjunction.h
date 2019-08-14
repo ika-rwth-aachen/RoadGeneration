@@ -193,9 +193,9 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         r4.id = 100*junc.id + 50 + 1;
         from = findRightLane(max1);
         to = findRightLane(min2);
-        if (mode == 1 && phi1 < phi2) 
+        if (mode == 1 && phi1 > 0) 
             createRoadConnection(r1,r2,r4,junc,from,to,bro,sol,bro);
-        if (mode == 1 && phi2 < phi1) 
+        if (mode == 1 && phi1 < 0) 
             createRoadConnection(r1,r2,r4,junc,from,to,non,sol,non);
         if (mode == 2) 
             createRoadConnection(r1,r2,r4,junc,from,to,non,sol,non);
@@ -205,9 +205,9 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         r5.id = 100*junc.id + 50 + 2;
         from = findLeftLane(min1);
         to = findLeftLane(max2);
-        if (mode == 1 && phi1 < phi2) 
+        if (mode == 1 && phi1 > 0) 
             createRoadConnection(r1,r2,r5,junc,from,to,bro,bro,bro);
-        if (mode == 1 && phi2 < phi1) 
+        if (mode == 1 && phi1 < 0) 
             createRoadConnection(r1,r2,r5,junc,from,to,non,non,non);
         if (mode == 2) 
             createRoadConnection(r1,r2,r5,junc,from,to,non,non,non);
@@ -231,9 +231,9 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         r8.id = 100*junc.id + 50 + 5;
         from = findRightLane(max3);
         to = findRightLane(min1);
-        if (mode == 1 && phi1 < phi2) 
+        if (mode == 1 && phi1 > 0) 
             createRoadConnection(r3,r1,r8,junc,from,to,non,sol,non);
-        if (mode == 1 && phi2 < phi1) 
+        if (mode == 1 && phi1 < 0) 
             createRoadConnection(r3,r1,r8,junc,from,to,bro,sol,bro);
         if (mode == 2) 
             createRoadConnection(r3,r1,r8,junc,from,to,non,sol,non);
@@ -243,9 +243,9 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         r9.id = 100*junc.id + 50 + 6;
         from = findLeftLane(min3);
         to = findLeftLane(max1);
-        if (mode == 1 && phi1 < phi2) 
+        if (mode == 1 && phi1 > 0) 
             createRoadConnection(r3,r1,r9,junc,from,to,non,non,non);
-        if (mode == 1 && phi2 < phi1) 
+        if (mode == 1 && phi1 < 0) 
             createRoadConnection(r3,r1,r9,junc,from,to,bro,bro,bro);
         if (mode == 2) 
             createRoadConnection(r3,r1,r9,junc,from,to,non,non,non);

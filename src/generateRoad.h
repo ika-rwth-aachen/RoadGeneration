@@ -378,7 +378,7 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
         double w = laneWidth(l,0);
         l.w.a = w;
         l.rm.type = "broken";
-        shiftLanes(adLaneSec,1);
+        shiftLanes(adLaneSec,1,1);
         adLaneSec.lanes.push_back(l);   
 
         // solid center line

@@ -188,7 +188,7 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
         (type1 == 0 && type2 == n) ||
         (type1 == 0 && type2 == p))
     {
-        double alpha = atan2(y2-y1,x2-x1);
+        double alpha = atan2(y2-y1,x2-x1)-phi1;
         fixAngle(alpha);
         if (alpha > 0) alpha =  M_PI/4;
         if (alpha < 0) alpha = -M_PI/4;

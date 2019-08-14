@@ -121,20 +121,58 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
             return 1;
         }
 
-		// --- add correct lane ------------------------------------------------
-		laneSection sec; 
-		lane l;
-		l.id = 0;
-		sec.lanes.push_back(l);
-
-    	rConnection.laneSections.push_back(sec);
-		
-		// --- compute length --------------------------------------------------
+        // --- compute length --------------------------------------------------
     	for (int j = 0; j < rConnection.geometries.size(); j++)
         {
         	rConnection.length += rConnection.geometries[j].length;
         }
-        
+
+		// --- add correct lane ------------------------------------------------
+		vector<laneSection> secs;
+
+        // flip lanes if in false direction 
+        if (fromPos == "start") 
+        for (int j = 0; j < lS1.lanes.size(); j++)
+            lS1.lanes[j].id *= -1;
+
+        if (toPos == "end") 
+        for (int j = 0; j < lS2.lanes.size(); j++)
+            lS2.lanes[j].id *= -1;
+
+        lS1.s = 0;
+        secs.push_back(lS1);
+
+        double dPos = findMaxLaneId(lS1) - findMaxLaneId(lS2);
+        double dNeg = findMinLaneId(lS1) - findMinLaneId(lS2);
+    
+        double sNeeded = 0;
+        while (dPos < 0) 
+        {   
+            addLaneWidening(secs, findMaxLaneId(lS1), sNeeded, 0);
+            sNeeded += 50;
+            dPos++;
+        }
+        while (dNeg < 0) 
+        {   
+            addLaneWidening(secs, findMinLaneId(lS1), sNeeded, 0);
+            sNeeded += 50;
+            dNeg++;
+        }
+        while (dPos > 0) 
+        {   
+            addLaneDrop(secs, findMaxLaneId(lS1), sNeeded, 0);
+            sNeeded += 50;
+            dPos--;
+        }
+        while (dNeg > 0) 
+        {   
+            addLaneDrop(secs, findMinLaneId(lS1), sNeeded, 0);
+            sNeeded += 50;
+            dNeg--;
+        }
+
+    	rConnection.laneSections = secs;
+		
         data.roads.push_back(rConnection);
 	}
     return 0;

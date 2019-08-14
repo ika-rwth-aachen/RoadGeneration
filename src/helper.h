@@ -152,14 +152,20 @@ int sgn(double d)
  * @param id    lane which is the start of the shift; all outer lanes are shifted one
  * @return int  errorcode 
  */
-int shiftLanes(laneSection &sec, int id)
+int shiftLanes(laneSection &sec, int id, int dir2)
 {
-    int dir = sgn(id);
+    int dir = sgn(id) * sgn(dir2);
     
-    if (id > 0) id = findMaxLaneId(sec);
-    else if (id < 0) id = findMinLaneId(sec);
+    if (id > 0 && dir2 > 0) id = findMaxLaneId(sec);
+    else if (id < 0 && dir2 > 0) id = findMinLaneId(sec);
 
-    while(id != 0)
+    if (id > 0 && dir2 < 0) id = sgn(id);
+    else if (id < 0 && dir2 < 0) id = sgn(id);
+
+    int search = 0;
+    if (dir2 < 0 && id > 0) search = findMaxLaneId(sec)+sgn(id);
+    if (dir2 < 0 && id < 0) search = findMinLaneId(sec)+sgn(id);
+    while(id != search)
     {
         for (int i = 0; i < sec.lanes.size(); i++)
         {

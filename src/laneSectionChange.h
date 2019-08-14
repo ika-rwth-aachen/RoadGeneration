@@ -45,7 +45,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
     l.rm.type = "broken";
 
     // shift other lanes and add lane
-    shiftLanes(adLaneSec, laneId);
+    shiftLanes(adLaneSec, laneId, 1);
     adLaneSec.lanes.push_back(l);  
 
     it++;
@@ -66,7 +66,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
     // shift all lanes in following lane sections
     for (; it != secs.end(); ++it)
     {
-        shiftLanes(secs[i], laneId);
+        shiftLanes(secs[i], laneId, 1);
         it->lanes.push_back(l); 
     }
 
@@ -85,6 +85,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
 int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
 {
     std::vector<laneSection>::iterator it;
+    std::vector<lane>::iterator itt;
 
     // search corresponding lane Section
     int i = 0;
@@ -121,23 +122,19 @@ int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
     it++;
     it = secs.insert(it, adLaneSec);
     it++;
-
-    // adjust the sections after the laneDrop
-    l.w.d = 0;
-    l.w.c = 0;
-    l.w.a = 0;
-    adLaneSec.lanes[id] = l;
     adLaneSec.s += ds;
-
     it = secs.insert(it, adLaneSec);
-    it++;
-    i += 2;
 
     // shift all lanes in following lane sections
     for (; it != secs.end(); ++it)
     {        
         int id = findLane(*it, l, laneId);
-        it->lanes[id] = l; 
+
+        shiftLanes(*it, laneId, -1);
+
+        itt = it->lanes.begin() + id;
+        it->lanes.erase(itt); 
+
     }
 
     return 0;
