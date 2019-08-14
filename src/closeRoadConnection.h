@@ -19,7 +19,7 @@
  * @param phi2  angle of end point
  * @return int  errorcode
  */
-int closeRoadConnection(vector<geometry> geo, double x1, double y1, double phi1, double x2, double y2, double phi2)
+int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1, double x2, double y2, double phi2)
 {
     // goal: compute new road from point 1 into point 2, preserving angles
 
@@ -167,7 +167,7 @@ int closeRoadConnection(vector<geometry> geo, double x1, double y1, double phi1,
         {
             double xTmp = x2 - cos(phi2) * (d2-d1);
             double yTmp = y2 - sin(phi2) * (d2-d1);
-            addArc(geo, x1, x2, phi1, xTmp, yTmp, phi1);
+            addArc(geo, x1, y1, phi1, xTmp, yTmp, phi2);
             addLine(geo, xTmp, yTmp, phi2, x2, y2, phi2);
         }
 
