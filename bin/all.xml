@@ -278,10 +278,10 @@
         </connectingRoad>
 	</segments>
     <interfaces referenceId="1" angleOffset="0.14" xOffset="300" yOffset="5">
-        <segmentLink fromSegment="1" toSegment="2" fromRoad="104" toRoad="201" fromPos="2" toPos="2" />
-        <segmentLink fromSegment="2" toSegment="4" fromRoad="203" toRoad="401" fromPos="2" toPos="2" />
-        <segmentLink fromSegment="1" toSegment="5" fromRoad="102" toRoad="501" fromPos="2" toPos="1" />
-        <segmentLink fromSegment="4" toSegment="3" fromRoad="401" toRoad="312" fromPos="1" toPos="2" />
+        <segmentLink fromSegment="1" toSegment="2" fromRoad="104" toRoad="201" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="2" toSegment="4" fromRoad="203" toRoad="401" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="1" toSegment="5" fromRoad="102" toRoad="501" fromPos="end" toPos="start" />
+        <segmentLink fromSegment="4" toSegment="3" fromRoad="401" toRoad="312" fromPos="start" toPos="end" />
     </interfaces>
 </roadNetwork>
 

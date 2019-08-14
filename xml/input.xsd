@@ -439,8 +439,8 @@ elementFormDefault="qualified">
         <xs:attribute name="toSegment"  type="xs:int" use="required"/>
         <xs:attribute name="fromRoad"  type="xs:int" use="required"/>
         <xs:attribute name="toRoad"  type="xs:int" use="required"/>
-        <xs:attribute name="fromPos"  type="xs:double" use="required"/>
-        <xs:attribute name="toPos"  type="xs:double" use="required"/>
+        <xs:attribute name="fromPos"  type="xs:string" use="required"/>
+        <xs:attribute name="toPos"  type="xs:string" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="closeRoadNetworkType">

@@ -1,5 +1,12 @@
-// tjunction.h
+// roundAbout.h
 
+/**
+ * @brief function generates the roads and junctions for a roundabout which is specified in the input file
+ *  
+ * @param node  input data from the input file for the roundAbout
+ * @param data  roadNetwork structure where the generated roads and junctions are stored
+ * @return int  errorcode
+ */
 int roundAbout(pugi::xml_node &node, roadNetwork &data)
 {
     // create junction
@@ -15,7 +22,13 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         if(road.attribute("id").as_int() == refId)
             mainRoad = road;
     }
+    if (!mainRoad)
+    {
+        cerr << "ERR: mainRoad is not found.";
+        return 1;
+    }
 
+    // store properties of mainRoad
     double R = mainRoad.child("referenceLine").child("geometry").attribute("R").as_double();
     double sOld = node.last_child().child("couplerArea").attribute("sOffset").as_double();
     road rOld;
@@ -23,15 +36,20 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
     bool clockwise;
     if (R > 0) clockwise = false;
     if (R < 0) clockwise = true;
-    if (R == 0) exit(0);
+    if (abs(R) < 10)
+    {
+        cerr << "ERR: radius of reference road in a roundabout have to be larger than 10.";
+        return 1;
+    }
 
     // count intersectionPoints
-    int cc = 0;
-    for (pugi::xml_node iP: node.children("intersectionPoint")) cc++;
-    int nIp = cc;
+    int nIp = 0;
+    for (pugi::xml_node iP: node.children("intersectionPoint")) nIp++;
+   
 
-    cc = 0;
-    // iteration over all additonalRoads defined by separate intersectionPoints
+    int cc = 0;
+    // iterate over all additonalRoads defined by separate intersectionPoints 
+    // sMain of intersection points have to increase
     for (pugi::xml_node iP: node.children("intersectionPoint"))
     {   
         cc++;
@@ -42,6 +60,11 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         {
             if (c.attribute("id").as_int() == iP.attribute("id").as_int())
                 coupler = c;
+        }
+        if (!coupler)
+        {
+            cerr << "ERR: coupler with Id " << iP.attribute("id").as_int() << " is not defined.";
+            return 1;
         }
 
         // find additionalRoad
@@ -55,8 +78,8 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
 
         if (!additionalRoad)
         {
-            cout << "ERR: no corresponding roads are found." << endl;
-            exit(0);
+            cerr << "ERR: specified road in intersection" << cc << " is not found.";
+            return 1;
         }
 
         // calculate offsets
@@ -64,7 +87,6 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
 
         double sOffMain = sOffset;
         double sOffAdd = sOffset;
-
         for (pugi::xml_node sB: coupler.child("couplerArea").children("streetBorder"))
         {
             if (sB.attribute("id").as_int() == refId) 
@@ -79,13 +101,14 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         double sAdd = iP.child("adRoad").attribute("s").as_double();
         double phi = iP.child("adRoad").attribute("angle").as_double();
 
-        // calculate intersectionPoint
-        double R = mainRoad.child("referenceLine").child("geometry").attribute("R").as_double();
-
+        // calculate coordinates of intersectionPoint
         double curPhi = sMain / (2*M_PI*R) * 2 * M_PI; 
         double iPx = R * cos(curPhi-M_PI/2);
         double iPy = R * sin(curPhi-M_PI/2);
         double iPhdg = curPhi;
+    
+        // --- generate roads --------------------------------------------------
+        cout << "\t Generating Roads" << endl;
 
         road r1;
         r1.id = 100*junc.id + cc * 10 + 1;
@@ -106,7 +129,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         helper.junction = junc.id;
         if (cc < nIp)
             generateRoad(mainRoad, helper, sMain+sOffMain, sMain+2*sOffMain, 0, sMain, iPx, iPy,iPhdg);  
-        else 
+        else // last segment
         {
             helper = rOld;
             helper.successor.elementType = "road";
@@ -115,7 +138,8 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         helper.predecessor.elementId = junc.id;
         helper.predecessor.elementType = "junction";
 
-        // --- add connecting lanes --------------------------------------------
+        // --- generate connecting lanes ---------------------------------------
+        cout << "\t Generate Connecting Lanes" << endl;
 
         // max and min id's of laneSections
         int max1 = findMaxLaneId(r1.laneSections.back());
@@ -173,7 +197,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
             createRoadConnection(r2,helper,r6,junc,from,to,n,s,n);
         }
 
-        // adjust precessor of first element
+        // adjust precessor of first element, due to loop
         r1.predecessor.elementId = junc.id;
         r1.predecessor.elementType = "junction";
 
@@ -187,8 +211,8 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         // update for next step
         sOld = sMain + sOffMain;
         if (cc == 1) rOld = r1;
-        
     }
+
     data.junctions.push_back(junc);     
 
     return 0;

@@ -1,16 +1,41 @@
 // file io.h
 
+/**
+ * @brief function parses the input xml file with the external tool pugi_xml
+ *  input in then accessable in a pugi::xml_document tree structure 
+ * 
+ * @param doc   tree structure which contains the data of the xml input file
+ * @param data  roadNetwork data which will be stored as openDrive format
+ * @param file  xml input file
+ * @return int  errorcode
+ */
 int parseXML(pugi::xml_document &doc, roadNetwork &data, char * file)
 {   
-    data.file = file;
+    if (false)
+    {
+        data.file = "bin/roundabout.xml";
+        doc.load_file("bin/roundabout.xml");
+        return 0;
+    }
 
-	if (doc.load_file(file)) return 0;
+    data.file = file;
+	if (doc.load_file(file)) 
+    {
+        return 0;
+    }
     else {
-        cout << "ERR: InputFile not found" << endl;
-        exit(0);
+        cerr << "ERR: InputFile not found" << endl;
+        return 1;
     }
 }
 
+/**
+ * @brief function stores the generated structure of type roadNetwork as a openDrive format
+ * 
+ * @param doc   tree structure which contains the generated data in openDrive format
+ * @param data  generated data by the tool
+ * @return int  errorcode
+ */
 int createXML(pugi::xml_document &doc, roadNetwork data)
 {   
     pugi::xml_node root = doc.append_child("OpenDRIVE");
@@ -138,9 +163,12 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     string file = data.file.substr(0,data.file.find(".xml"));
     file.append(".xodr");
 
-    if (doc.save_file(file.c_str())) return 0;
+    if (doc.save_file(file.c_str())) 
+    {
+        return 0;
+    }
     else {
-        cout << "ERR: file could not be saved." << endl;
-        exit(0);
+        cerr << "ERR: file could not be saved." << endl;
+        return 1;
     }
 }

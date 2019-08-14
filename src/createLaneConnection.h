@@ -1,5 +1,17 @@
 // file createLaneConnection.h
 
+/**
+ * @brief function creates a new lane connection
+ * 
+ * @param r         connecting road which contains reference line
+ * @param lS1       lanesection at start 
+ * @param lS2       lanesection at end
+ * @param from      start lane Id
+ * @param to        end lane Id
+ * @param left      left roadmarking 
+ * @param right     right roadmarking
+ * @return int      errorcode
+ */
 int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, int to, string left, string right)
 {
        
@@ -14,6 +26,7 @@ int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, in
     findLane(lS1, l1, from);
     findLane(lS2, l2, to);
 
+    // calculate tOffsets and widths
     double tOffSet1 = abs(findTOffset(lS1,from,0));
     double tOffSet2 = abs(findTOffset(lS2,to,0));
 
@@ -69,6 +82,7 @@ int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, in
     newLane.w.b = 0;
     newLane.w.a = w1;
 
+    // add lanes to laneSection
     if (!foundCenter) 
     {
         r.laneSections.back().lanes.push_back(center);

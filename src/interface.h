@@ -79,7 +79,7 @@ struct link
 struct road
 {
     double length = 0;
-    int id;
+    int id = -1;
     int junction;
     string type = "town";
 

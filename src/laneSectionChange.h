@@ -1,8 +1,16 @@
 // file laneSectionChange.h
 
+/**
+ * @brief function adds a laneSection with laneWiding  to a given lanesection set
+ * 
+ * @param secs      vector of all lanesections of a road
+ * @param laneId    laneId of the lane where the laneWiding should be performed
+ * @param s         position of lane widing
+ * @param ds        length of lane widing
+ * @return int      errorcode
+ */
 int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
 { 
-    cout << "Begin LaneWidening" << endl;
     std::vector<laneSection>::iterator it;
 
     // search corresponding lane Section
@@ -36,6 +44,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
     l.w.a = 0;
     l.rm.type = "broken";
 
+    // shift other lanes and add lane
     shiftLanes(adLaneSec, laneId);
     adLaneSec.lanes.push_back(l);  
 
@@ -43,7 +52,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
     it = secs.insert(it, adLaneSec);
     it++;
 
-    // part after laneWiding
+    // adjust the sections after the laneWiding
     l.w.d = 0;
     l.w.c = 0;
     l.w.a = w;
@@ -64,9 +73,17 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
     return 0;
 }
 
+/**
+ * @brief function adds a laneSection with laneDrop  to a given lanesection set
+ * 
+ * @param secs      vector of all lanesections of a road
+ * @param laneId    laneId of the lane where the laneDrop should be performed
+ * @param s         position of laneDrop
+ * @param ds        length of laneDrop
+ * @return int      errorcode
+ */
 int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
 {
-    cout << "Begin LaneDrop" << endl;
     std::vector<laneSection>::iterator it;
 
     // search corresponding lane Section
@@ -105,7 +122,7 @@ int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
     it = secs.insert(it, adLaneSec);
     it++;
 
-    // part after laneDrop
+    // adjust the sections after the laneDrop
     l.w.d = 0;
     l.w.c = 0;
     l.w.a = 0;

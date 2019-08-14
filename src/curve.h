@@ -2,6 +2,14 @@
 
 #include <math.h>       /* atan2 */
 
+/**
+ * @brief function computes the fresnel integral
+ * 
+ * @param s     position s of spiral
+ * @param x     result for x component
+ * @param y     result for y component
+ * @return int  errorcode
+ */
 int fresnel(double s, double &x, double &y)
 {
     int sgn = (s > 0) - (s < 0);
@@ -84,6 +92,17 @@ int fresnel(double s, double &x, double &y)
     return 0;
 }
 
+/**
+ * @brief function computes the x,y,phi value for a given geometry at position s
+ * 
+ * @param s     position where x,y,phi should be computed
+ * @param geo   given geometry
+ * @param x     start value of geometry and holds resulting value for x
+ * @param y     start value of geometry and holds resulting value for y
+ * @param phi   start value of geometry and holds resulting value for phi
+ * @param fd    determines if finite differences should be used for derivation
+ * @return int  errorcode
+ */
 int curve(double s, geometry geo, double &x, double &y, double &phi, int fd)
 {
     int type;
@@ -144,8 +163,8 @@ int curve(double s, geometry geo, double &x, double &y, double &phi, int fd)
             double yTmp1 = 0;
             double yTmp2 = 0;
             double phiTmp = 0;
-            curve(s-0.001, geo, xTmp1, yTmp1, phiTmp, 0); 
-            curve(s+0.001, geo, xTmp2, yTmp2, phiTmp, 0); 
+            curve(s - 0.001, geo, xTmp1, yTmp1, phiTmp, 0); 
+            curve(s + 0.001, geo, xTmp2, yTmp2, phiTmp, 0); 
 
             phi += atan2((yTmp2-yTmp1), (xTmp2-xTmp1));
         }

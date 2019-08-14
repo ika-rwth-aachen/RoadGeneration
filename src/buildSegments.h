@@ -14,6 +14,13 @@
 #include "roundAbout.h"
 #include "connectingRoad.h"
 
+/**
+ * @brief function creates all specified segments which can be either a junction, roundabout or connectingroad
+ * 
+ * @param doc 	tree structure which contains the input data
+ * @param data 	roadNetwork data where the openDrive structure should be generated
+ * @return int 	errorcode
+ */
 int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 {
 	pugi::xml_node segments = doc.child("roadNetwork").child("segments");
@@ -29,20 +36,32 @@ int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 				if ((string)itt->name() == "tjunction")
 				{
 					cout << "Processing tjunction" << endl;
-					tjunction(*itt, data);
+					if (tjunction(*itt, data))
+					{
+						cerr << "ERR: error in tjunction." << endl;
+						return 1;
+					}
 				}
 
 				if ((string)itt->name() == "xjunction")
 				{
 					cout << "Processing xjunction" << endl;
-					xjunction(*itt, data);
+					if (xjunction(*itt, data))
+					{
+						cerr << "ERR: error in xjunction." << endl;
+						return 1;
+					}
 
 				}
 
 				if ((string)itt->name() == "njunction")
 				{
 					cout << "Processing njunction" << endl;
-					// TODO
+					if (false)
+					{
+						cerr << "ERR: error in njunction." << endl;
+						return 1;
+					}
 				}
 			}
 		}
@@ -50,13 +69,21 @@ int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 		if ((string)it->name() == "roundabout")
 		{
 			cout << "Processing roundabout" << endl;
-			roundAbout(*it, data);
+			if (roundAbout(*it, data))
+			{
+				cerr << "ERR: error in roundabout." << endl;
+				return 1;
+			}
 		}
 
 		if ((string)it->name() == "connectingRoad")
 		{
 			cout << "Processing connectingRoad" << endl;
-			connectingRoad(*it, data);
+			if (connectingRoad(*it, data))
+			{
+				cerr << "ERR: error in connectingRoad." << endl;
+				return 1;
+			}
 		}
 	}
 

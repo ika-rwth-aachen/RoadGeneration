@@ -1,5 +1,19 @@
 // file createRoadConnections.h
 
+/**
+ * @brief function creates a new road connection 
+ * 
+ * @param r1                road at start point
+ * @param r2                road at end point
+ * @param r                 resulting road which is the connection from r1 to r2
+ * @param junc              current junction in which the connecting road lies 
+ * @param fromId            start lane Id
+ * @param toId              end lane Id
+ * @param laneMarkLeft      left roadmarking
+ * @param laneMarkRight     right roadmarking
+ * @param laneMarkMiddle    middle roadmarking
+ * @return int              errorcode
+ */
 int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, int toId, string laneMarkLeft, string laneMarkRight, string laneMarkMiddle)
 {
     laneSection lS;
@@ -37,12 +51,13 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         curve(g1.length,g1,x1,y1,hdg1,1);
     }
 
+    // connection beteen starting road and current road
     connection con1;
     con1.id = junc.connections.size() + 1;
     con1.from = r1.id;
     con1.to = r.id;
     con1.fromLane = fromId;
-    con1.toLane = sgn(fromId)*2;    //1 is helperLane
+    con1.toLane = sgn(fromId) * 2;    // 1 is helperLane
     junc.connections.push_back(con1);
 
     // compute ending point
@@ -68,12 +83,13 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         fixAngle(hdg2);
     }
 
+    // connection beteen current road and ending road
     connection con2;
     con2.id = junc.connections.size() + 1;
     con2.contactPoint = "end";
     con2.from = r.id;
     con2.to = r2.id;
-    con2.fromLane = sgn(fromId)*2;
+    con2.fromLane = sgn(fromId) * 2;    // 1 is helperLane
     con2.toLane = toId;
     junc.connections.push_back(con2);
 
@@ -156,6 +172,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         g2.y = y1;
         g2.hdg = hdg1;
 
+        // compute curvature and length of arc
         double d = sqrt(pow(x2-x1,2)+pow(y2-y1,2));
         double R = (d / 2) / sin(a / 2);
 
@@ -163,6 +180,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         g2.length = abs(R * a);
         g2.type = 2;
 
+        // first line then arc
         if (d1 > d2) 
         {
             g2.s = g1.length; 
@@ -170,12 +188,14 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
             r.geometries.push_back(g2);    
 
         }
+        // first arc then line
         else if (d1 < d2) 
         {
             g1.s = g2.length;
             r.geometries.push_back(g2);    
             r.geometries.push_back(g1);    
         }
+        // only arc is necessary
         else
         {
             r.geometries.push_back(g2);    
@@ -186,11 +206,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     }
 
     // --- lanemarkings in crossing section ------------------------------------
-    laneSection laneSec;
-
-    string left = laneMarkLeft;
-    string right = laneMarkRight;
-    createLaneConnection(r,lS1,lS2,fromId,toId,left,right);
+    createLaneConnection(r,lS1,lS2,fromId,toId,laneMarkLeft,laneMarkRight);
                
     return 0;
 }

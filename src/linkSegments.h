@@ -1,10 +1,24 @@
 // file buildSegments.h
 
+/**
+ * @brief function links all specified segments 
+ *  the reference frame has to be specified in the input file
+ * 	each segment can be linked by determine two connecting roads in the input file 
+ * 
+ * @param doc 	tree structure which contains the input data
+ * @param data 	roadNetwork data where the openDrive structure should be generated
+ * @return int 	errorcode
+ */
 int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 {
 	pugi::xml_node interfaces = doc.child("roadNetwork").child("interfaces");
 
-	if(!interfaces) cout << "ERR: 'interfaces' not found in input file."  << endl;
+	if(!interfaces) 
+	{
+		cerr << "ERR: 'interfaces' are not specified in input file."  << endl;
+		cerr << "\t -> skip segment linking."  << endl;
+		return 0;
+	}
 
 	// define reference system
 	int referenceId = interfaces.attribute("referenceId").as_int();
@@ -27,20 +41,17 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 		}
 	}
 
-	// add further segments
+	// add other specified segments
 	for (pugi::xml_node segmentLink : interfaces.children("segmentLink"))
 	{
 		int fromSegment = segmentLink.attribute("fromSegment").as_int();
 		int toSegment = segmentLink.attribute("toSegment").as_int();
 		int fromRoad = segmentLink.attribute("fromRoad").as_int();
 		int toRoad = segmentLink.attribute("toRoad").as_int();	
-		double fromPos = segmentLink.attribute("fromPos").as_double();
-		double toPos = segmentLink.attribute("toPos").as_double();
+		string fromPos = (string)segmentLink.attribute("fromPos").value();
+		string toPos = (string)segmentLink.attribute("toPos").value();
 
-		//fromPos == 1 -> start of Road (s=0)
-		//fromPos == 2 -> end of Road (s=length)
-
-		// we assume that fromSegement was already linked to referenceframe
+		// we assume that "fromSegement" was already linked to referenceframe
 
 		double fromX,fromY,fromHdg;
 		double toX,toY,toHdg;
@@ -52,13 +63,13 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 
 			r.successor.elementId = toRoad;
 
-			if (fromPos == 1)
+			if (fromPos == "start")
 			{
 				fromX = r.geometries.front().x;
 				fromY = r.geometries.front().y;
 				fromHdg = r.geometries.front().hdg;
 			}
-			else if (fromPos == 2)
+			else if (fromPos == "end")
 			{
 				geometry g = r.geometries.back();
 				curve(g.length,g, g.x, g.y, g.hdg, 1);
@@ -68,8 +79,9 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 			}
 			else
 			{
-				cout << "ERR: wrong position." << endl;
-				exit(0);
+				cerr << "ERR: wrong position for fromPos is specified." << endl;
+				cerr << "\t -> use 'start' or 'end'" << endl;
+				return 1;
 			}
 		}
 
@@ -80,13 +92,13 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 
 			r.predecessor.elementId = fromRoad;
 
-			if (toPos == 1)
+			if (toPos == "start")
 			{
 				toX = r.geometries.front().x;
 				toY = r.geometries.front().y;
 				toHdg = r.geometries.front().hdg;
 			}
-			else if (toPos == 2)
+			else if (toPos == "end")
 			{
 				geometry g = r.geometries.back();
 				toX = g.x;
@@ -96,19 +108,21 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 			}
 			else
 			{
-				cout << "ERR: wrong position." << endl;
-				exit(0);
+				cerr << "ERR: wrong position for toPos is specified." << endl;
+				cerr << "\t -> use 'start' or 'end'" << endl;
+				return 1;
 			}
 			
 			// rotate and shift current road according to from position
 			double dx,dy;
 			
+			// compute angleOffset between the two segments
 			double dPhi = fromHdg - toHdg + M_PI;
-			if (fromPos == 1) dPhi += M_PI;
-			if (toPos == 1) dPhi += M_PI;
+			if (fromPos == "start") dPhi += M_PI;
+			if (toPos == "start") dPhi += M_PI;
 			fixAngle(dPhi);
 
-			if (toPos == 2)
+			if (toPos == "end")
 			{
 				geometry g = r.geometries.back();
 				toX = g.x * cos(dPhi) - g.y * sin(dPhi);
@@ -117,9 +131,12 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 				curve(g.length,g, toX, toY, toHdg, 1);	
 			}
 			
+			// compute x/y offset between the two segments
 			dx = fromX - toX;
 			dy = fromY - toY;
 
+			
+			// shift all geometries which belong to the toSegment according two the offsets determined above
 			for(auto&& r2 : data.roads)
 			{
 				if (r2.junction != toSegment) continue;
@@ -137,6 +154,5 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 			}
 		}
 	}
-
     return 0;
 }

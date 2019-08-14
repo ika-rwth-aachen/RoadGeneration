@@ -2,20 +2,18 @@
 
 int connectingRoad(pugi::xml_node &node, roadNetwork &data)
 {
-    // check type (all roads start in intersection point)
-   
     // define junction roads
     pugi::xml_node mainRoad = node.child("road");
 
     if(!mainRoad)
     {
-        cout << "ERR: no corresponding roads are found." << endl;
-        exit(0);
+        cerr << "ERR: specified road is not found.";
+        return 1;
     }
     
-    cout << "Generating Roads" << endl;
+    // --- generate roads ------------------------------------------------------
+    cout << "\t Generating Roads" << endl;
 
-    cout << "Road 1" << endl;
     road r;
     int id = mainRoad.attribute("id").as_int();
     r.id = 100 * node.attribute("id").as_int() + id;
