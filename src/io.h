@@ -91,9 +91,6 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
 
                 pugi::xml_node link = lane.append_child("link");
 
-                link.append_child("predecessor").append_attribute("id") = ittt->predecessor;
-                link.append_child("successor").append_attribute("id") = ittt->successor;
-
                 pugi::xml_node width = lane.append_child("width");
 
                 width.append_attribute("sOffset") = ittt->w.s;
@@ -128,6 +125,10 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
             con.append_attribute("incomingRoad") = itt->from;
             con.append_attribute("connetingRoad") = itt->to;
             con.append_attribute("contactPoint") = itt->contactPoint.c_str();
+
+            pugi::xml_node lL = con.append_child("laneLink");
+            lL.append_attribute("from") = itt->fromLane;
+            lL.append_attribute("to") = itt->toLane;
         }
     }
 

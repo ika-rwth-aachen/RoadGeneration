@@ -105,16 +105,14 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     road r1;
     r1.id = 100*junc.id + 1;
     r1.junction = junc.id;
+    r1.predecessor.elementId = junc.id;
+    r1.predecessor.elementType = "junction";
     if (mode == 1 || mode == 2)
     {
-        r1.predecessor.elementId = 100*junc.id + 5;
-        r1.successor.elementId = mainRoad.attribute("idStart").as_int();
         generateRoad(mainRoad, r1, sMain-sOffMain, 0, 50, sMain, iPx, iPy, iPhdg);
     }
     if (mode == 3)
     {
-        r1.predecessor.elementId = 100*junc.id + 5;
-        r1.successor.elementId = mainRoad.attribute("idEnd").as_int();
         generateRoad(mainRoad, r1, sMain+sOffMain, INFINITY, 0, sMain,iPx, iPy, iPhdg);
     }
     data.roads.push_back(r1);
@@ -123,16 +121,14 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     road r2;
     r2.id = 100*junc.id + 2;
     r2.junction = junc.id;
+    r2.predecessor.elementId = junc.id;
+    r2.predecessor.elementType = "junction";
     if (mode == 1)
     {
-        r2.predecessor.elementId = 100*junc.id + 6;
-        r2.successor.elementId = additionalRoad1.attribute("idStart").as_int();
         generateRoad(additionalRoad1, r2, sAdd1-sOffAdd1, 0, 50, sAdd1, iPx, iPy, iPhdg+phi1);
     }
     if (mode == 2 || mode == 3)
     {
-        r2.predecessor.elementId = 100*junc.id + 6;
-        r2.successor.elementId = additionalRoad1.attribute("idEnd").as_int();
         generateRoad(additionalRoad1, r2, sAdd1+sOffAdd1, INFINITY, 0, sAdd1, iPx, iPy, iPhdg+phi1);
     }
     data.roads.push_back(r2);
@@ -141,16 +137,14 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     road r3; 
     r3.id = 100*junc.id + 3;
     r3.junction = junc.id;
+    r3.predecessor.elementId = junc.id;
+    r3.predecessor.elementType = "junction";
     if (mode == 1 || mode == 2)
     {
-        r3.predecessor.elementId = 100*junc.id + 5;
-        r3.successor.elementId = mainRoad.attribute("idEnd").as_int();
         generateRoad(mainRoad, r3, sMain+sOffMain, INFINITY, 50, sMain,iPx, iPy,iPhdg);
     }
     if (mode == 3)
     {
-        r3.predecessor.elementId = 100*junc.id + 5;
-        r3.successor.elementId = additionalRoad2.attribute("idEnd").as_int();
         generateRoad(additionalRoad2, r3, sAdd2+sOffAdd2, INFINITY, 0, sAdd2, iPx, iPy, iPhdg+phi2);
     }
     data.roads.push_back(r3);
@@ -159,22 +153,18 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     road r4; 
     r4.id = 100*junc.id + 4;
     r4.junction = junc.id;
+    r4.predecessor.elementId = junc.id;
+    r4.predecessor.elementType = "junction";
     if (mode == 1)
     {
-        r4.predecessor.elementId = 100*junc.id + 6;
-        r4.successor.elementId = additionalRoad1.attribute("idEnd").as_int();
         generateRoad(additionalRoad1, r4, sAdd1+sOffAdd1, INFINITY, 50,sAdd1, iPx, iPy, iPhdg+phi1);
     }
     if (mode == 2)
     {
-        r4.predecessor.elementId = 100*junc.id + 6;
-        r4.successor.elementId = additionalRoad2.attribute("idEnd").as_int();
         generateRoad(additionalRoad2, r4, sAdd2+sOffAdd2, INFINITY, 0, sAdd2, iPx, iPy, iPhdg+phi2);
     }
     if (mode == 3)
     {
-        r4.predecessor.elementId = 100*junc.id + 6;
-        r4.successor.elementId = additionalRoad3.attribute("idEnd").as_int();
         generateRoad(additionalRoad3, r4, sAdd3+sOffAdd3, INFINITY, 0, sAdd3, iPx, iPy, iPhdg+phi3);
     }
     data.roads.push_back(r4);
@@ -257,9 +247,9 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         int max4 = findMaxLaneId(r4.laneSections.front());
         int min4 = findMinLaneId(r4.laneSections.front());
 
-        cout << "Road 5" << endl;
+        cout << "Road 1" << endl;
         road r5; 
-        r5.id = 100*junc.id + 5;
+        r5.id = 100*junc.id + 50 + 1;
         from = findMiddleLane(max1);
         to = findMiddleLane(min3);
         if (mode == 1 || mode == 2)
@@ -268,9 +258,9 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
             createRoadConnection(r1,r3,r5,junc,from,to,n,n,n);
         data.roads.push_back(r5);
 
-        cout << "Road 6" << endl;
+        cout << "Road 2" << endl;
         road r6; 
-        r6.id = 100*junc.id + 6;
+        r6.id = 100*junc.id + 50 + 2;
         from = findMiddleLane(max3);
         to = findMiddleLane(min1);
         if (mode == 1 || mode == 2)
@@ -279,86 +269,86 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         createRoadConnection(r3,r1,r6,junc,from,to,n,n,n);
         data.roads.push_back(r6);
 
-        cout << "Road 15" << endl;
-        road r15; 
-        r15.id = 100*junc.id + 15;
+        cout << "Road 3" << endl;
+        road r7; 
+        r7.id = 100*junc.id + 50 + 3;
         from = findMiddleLane(max2);
         to = findMiddleLane(min4);
-        createRoadConnection(r2,r4,r15,junc,from,to,n,n,n);
-        data.roads.push_back(r15);
-
-        cout << "Road 16" << endl;
-        road r16; 
-        r16.id = 100*junc.id + 16;
-        from = findMiddleLane(max4);
-        to = findMiddleLane(min2);
-        createRoadConnection(r4,r2,r16,junc,from,to,n,n,n);
-        data.roads.push_back(r16);
-
-        // --- more complicated junctions ---
-        cout << "Road 7" << endl;
-        road r7; 
-        r7.id = 100*junc.id + 7;
-        from = findRightLane(max1);
-        to = findRightLane(min2);
-        createRoadConnection(r1,r2,r7,junc,from,to,n,s,n);
+        createRoadConnection(r2,r4,r7,junc,from,to,n,n,n);
         data.roads.push_back(r7);
 
-        cout << "Road 8" << endl;
+        cout << "Road 4" << endl;
         road r8; 
-        r8.id = 100*junc.id + 8;
-        from = findLeftLane(min1);
-        to = findLeftLane(max2);
-        createRoadConnection(r1,r2,r8,junc,from,to,n,n,n);
+        r8.id = 100*junc.id + 50 + 4;
+        from = findMiddleLane(max4);
+        to = findMiddleLane(min2);
+        createRoadConnection(r4,r2,r8,junc,from,to,n,n,n);
         data.roads.push_back(r8);
 
-        cout << "Road 9" << endl;
+        // --- more complicated junctions ---
+        cout << "Road 5" << endl;
         road r9; 
-        r9.id = 100*junc.id + 9;
-        from = findRightLane(max2);
-        to = findRightLane(min3);
-        createRoadConnection(r2,r3,r9,junc,from,to,n,s,n);
+        r9.id = 100*junc.id + 50 + 5;
+        from = findRightLane(max1);
+        to = findRightLane(min2);
+        createRoadConnection(r1,r2,r9,junc,from,to,n,s,n);
         data.roads.push_back(r9);
 
-        cout << "Road 10" << endl;
+        cout << "Road 6" << endl;
         road r10; 
-        r10.id = 100*junc.id + 10;
-        from = findLeftLane(min2);
-        to = findLeftLane(max3);
-        createRoadConnection(r2,r3,r10,junc,from,to,n,n,n);
+        r10.id = 100*junc.id + 50 + 6;
+        from = findLeftLane(min1);
+        to = findLeftLane(max2);
+        createRoadConnection(r1,r2,r10,junc,from,to,n,n,n);
         data.roads.push_back(r10);
 
-        cout << "Road 11" << endl;
+        cout << "Road 7" << endl;
         road r11; 
-        r11.id = 100*junc.id + 11;
-        from = findRightLane(max3);
-        to = findRightLane(min4);
-        createRoadConnection(r3,r4,r11,junc,from,to,n,s,n);
+        r11.id = 100*junc.id + 50 + 7;
+        from = findRightLane(max2);
+        to = findRightLane(min3);
+        createRoadConnection(r2,r3,r11,junc,from,to,n,s,n);
         data.roads.push_back(r11);
-        
-        cout << "Road 12" << endl;
+
+        cout << "Road 8" << endl;
         road r12; 
-        r12.id = 100*junc.id + 12;
-        from = findLeftLane(min3);
-        to = findLeftLane(max4);
-        createRoadConnection(r3,r4,r12,junc,from,to,n,n,n);
+        r12.id = 100*junc.id + 50 + 8;
+        from = findLeftLane(min2);
+        to = findLeftLane(max3);
+        createRoadConnection(r2,r3,r12,junc,from,to,n,n,n);
         data.roads.push_back(r12);
 
-        cout << "Road 13" << endl;
+        cout << "Road 9" << endl;
         road r13; 
-        r13.id = 100*junc.id + 13;
+        r13.id = 100*junc.id + 50 + 9;
+        from = findRightLane(max3);
+        to = findRightLane(min4);
+        createRoadConnection(r3,r4,r13,junc,from,to,n,s,n);
+        data.roads.push_back(r13);
+        
+        cout << "Road 11" << endl;
+        road r14; 
+        r14.id = 100*junc.id + 50 + 10;
+        from = findLeftLane(min3);
+        to = findLeftLane(max4);
+        createRoadConnection(r3,r4,r14,junc,from,to,n,n,n);
+        data.roads.push_back(r14);
+
+        cout << "Road 12" << endl;
+        road r15; 
+        r15.id = 100*junc.id + 50 + 11;
         from = findRightLane(max4);
         to = findRightLane(min1);
-        createRoadConnection(r4,r1,r13,junc,from,to,n,s,n);
-        data.roads.push_back(r13);
+        createRoadConnection(r4,r1,r15,junc,from,to,n,s,n);
+        data.roads.push_back(r15);
 
-        cout << "Road 14" << endl;
-        road r14; 
-        r14.id = 100*junc.id + 14;
+        cout << "Road 13" << endl;
+        road r16; 
+        r16.id = 100*junc.id + 50 + 12;
         from = findLeftLane(min4);
         to = findLeftLane(max1);
-        createRoadConnection(r4,r1,r14,junc,from,to,n,n,n);
-        data.roads.push_back(r14);
+        createRoadConnection(r4,r1,r16,junc,from,to,n,n,n);
+        data.roads.push_back(r16);
     }
     // user defined lane connections
     else if((string)con.attribute("type").value() == "single")

@@ -2,7 +2,7 @@
     <segments>
         <junctions>
             <xjunction id="1" type="M2A">
-                <road id="1" length="200" sOffset="0" type="0" idStart="0" idEnd="0">	
+                <road id="1" length="200" sOffset="0" type="0" >	
                     <referenceLine>
                         <geometry id="1" length="200" connectToEndOf="0" connectToStartOf="0" Rs="-100" Re="0" type="spiral"/>
                     </referenceLine>
@@ -23,7 +23,7 @@
                         </laneSection>
                     </lanes>
                 </road>
-                <road id="2" length="100" sOffset="0" type="0" idStart="0" idEnd="0">	
+                <road id="2" length="100" sOffset="0" type="0" >	
                     <referenceLine>
                         <geometry id="1" length="100" connectToEndOf="0" connectToStartOf="0" R="100" type="arc"/>
                     </referenceLine>
@@ -44,7 +44,7 @@
                         </laneSection>
                     </lanes>
                 </road>
-                <road id="3" length="100" sOffset="0" type="0" idStart="0" idEnd="0">	
+                <road id="3" length="100" sOffset="0" type="0" >	
                     <referenceLine>
                         <geometry id="1" length="100" connectToEndOf="0" connectToStartOf="0" type="line"/>
                     </referenceLine>
@@ -78,7 +78,7 @@
                 </coupler>
             </xjunction>
             <tjunction id="2" type="MA">
-                <road id="4" length="400" sOffset="0" type="0" idStart="0" idEnd="0">	
+                <road id="4" length="400" sOffset="0" type="0" >	
                     <referenceLine>
                         <geometry id="1" length="400" connectToEndOf="0" connectToStartOf="0" Rs="-100" Re="0" type="spiral"/>
                     </referenceLine>
@@ -99,7 +99,7 @@
                         </laneSection>
                     </lanes>
                 </road>
-                <road id="5" length="100" sOffset="0" type="0" idStart="0" idEnd="0">	
+                <road id="5" length="100" sOffset="0" type="0" >	
                     <referenceLine>
                         <geometry id="1" length="100" connectToEndOf="0" connectToStartOf="0" R="100" type="arc"/>
                     </referenceLine>
@@ -132,7 +132,7 @@
             </tjunction>
         </junctions>
         <roundabout id="3" refId="6">
-            <road id="6" length="62.83185" sOffset="0" type="0" idStart="0" idEnd="0">	
+            <road id="6" length="62.83185" sOffset="0" type="0" >	
                 <referenceLine>
                     <geometry id="1" length="62.83185" connectToEndOf="0" connectToStartOf="0" R="10" type="arc"/>
                 </referenceLine>
@@ -153,7 +153,7 @@
                     </laneSection>
                 </lanes>
             </road>
-            <road id="7" length="100" sOffset="0" type="0" idStart="0" idEnd="0">	
+            <road id="7" length="100" sOffset="0" type="0" >	
                 <referenceLine>
                     <geometry id="1" length="100" connectToEndOf="0" connectToStartOf="0" type="line"/>
                 </referenceLine>
@@ -174,7 +174,7 @@
                     </laneSection>
                 </lanes>
             </road>
-            <road id="8" length="100" sOffset="0" type="0" idStart="0" idEnd="0">	
+            <road id="8" length="100" sOffset="0" type="0" >	
                 <referenceLine>
                     <geometry id="1" length="100" connectToEndOf="0" connectToStartOf="0" R="100" type="arc"/>
                 </referenceLine>
@@ -225,7 +225,7 @@
             </coupler>
         </roundabout>
         <connectingRoad id="4">
-            <road id="1" length="800" sOffset="0" type="0" idStart="0" idEnd="0">	
+            <road id="1" length="800" sOffset="0" type="0" >	
                 <referenceLine>
                     <geometry id="1" length="800" connectToEndOf="0" connectToStartOf="0" Rs="-100" Re="0" type="spiral"/>
                 </referenceLine>
@@ -251,7 +251,7 @@
             </road>
         </connectingRoad> 
         <connectingRoad id="5">
-            <road id="1" length="800" sOffset="0" type="0" idStart="0" idEnd="0">	
+            <road id="1" length="800" sOffset="0" type="0" >	
                 <referenceLine>
                     <geometry id="1" length="800" connectToEndOf="0" connectToStartOf="0" Rs="-100" Re="0" type="spiral"/>
                 </referenceLine>
@@ -279,9 +279,9 @@
 	</segments>
     <interfaces referenceId="1" angleOffset="0.14" xOffset="300" yOffset="5">
         <segmentLink fromSegment="1" toSegment="2" fromRoad="104" toRoad="201" fromPos="2" toPos="2" />
-        <segmentLink fromSegment="2" toSegment="3" fromRoad="203" toRoad="351" fromPos="2" toPos="2" />
-        <segmentLink fromSegment="3" toSegment="4" fromRoad="354" toRoad="401" fromPos="2" toPos="1" />
+        <segmentLink fromSegment="2" toSegment="4" fromRoad="203" toRoad="401" fromPos="2" toPos="2" />
         <segmentLink fromSegment="1" toSegment="5" fromRoad="102" toRoad="501" fromPos="2" toPos="1" />
+        <segmentLink fromSegment="4" toSegment="3" fromRoad="401" toRoad="312" fromPos="1" toPos="2" />
     </interfaces>
 </roadNetwork>
 

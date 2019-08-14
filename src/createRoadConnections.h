@@ -3,11 +3,13 @@
 int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, int toId, string laneMarkLeft, string laneMarkRight, string laneMarkMiddle)
 {
     laneSection lS;
+    if (r.laneSections.size() == 0) r.laneSections.push_back(lS);
 
     r.junction = junc.id;
-    r.predecessor.elementId = r1.id;
-    r.successor.elementId   = r2.id;
-    if (r.laneSections.size() == 0) r.laneSections.push_back(lS);
+    r.predecessor.elementId = junc.id;
+    r.successor.elementId   = junc.id;
+    r.predecessor.elementType = "junction";
+    r.successor.elementType   = "junction";
 
     // connect r1 with r2 at reference points  
     double x1,y1,hdg1,x2,y2,hdg2;
@@ -15,7 +17,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     laneSection lS1, lS2;
 
     // compute starting point
-    if (r1.predecessor.elementId > 100) 
+    if (r1.predecessor.elementType == "junction") 
     {
         g1 = r1.geometries.front(); 
         lS1 = r1.laneSections.front();
@@ -25,7 +27,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         fixAngle(hdg1);
     }
 
-    if (r1.successor.elementId > 100) 
+    if (r1.successor.elementType == "junction") 
     {
         g1 = r1.geometries.back(); 
         lS1 = r1.laneSections.back();
@@ -39,10 +41,12 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     con1.id = junc.connections.size() + 1;
     con1.from = r1.id;
     con1.to = r.id;
+    con1.fromLane = fromId;
+    con1.toLane = sgn(fromId)*2;    //1 is helperLane
     junc.connections.push_back(con1);
 
     // compute ending point
-    if (r2.predecessor.elementId > 100)
+    if (r2.predecessor.elementType == "junction")
     {
         g2 = r2.geometries.front(); 
         lS2 = r2.laneSections.front();
@@ -51,7 +55,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         hdg2 = g2.hdg; 
     }
 
-    if (r2.successor.elementId > 100) 
+    if (r2.successor.elementType == "junction") 
     {
         g2 = r2.geometries.back(); 
         lS2 = r2.laneSections.back();
@@ -66,8 +70,11 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
 
     connection con2;
     con2.id = junc.connections.size() + 1;
+    con2.contactPoint = "end";
     con2.from = r.id;
     con2.to = r2.id;
+    con2.fromLane = sgn(fromId)*2;
+    con2.toLane = toId;
     junc.connections.push_back(con2);
 
     // --- compute connecting road ---------------------------------------------

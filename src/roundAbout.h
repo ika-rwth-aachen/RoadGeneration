@@ -35,6 +35,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
     for (pugi::xml_node iP: node.children("intersectionPoint"))
     {   
         cc++;
+
         // corresponding coupler
         pugi::xml_node coupler;
         for (pugi::xml_node c: node.children("coupler"))
@@ -87,30 +88,32 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         double iPhdg = curPhi;
 
         road r1;
-        r1.id = 100*junc.id + cc;
+        r1.id = 100*junc.id + cc * 10 + 1;
         r1.junction = junc.id;
-        r1.predecessor.elementId = -101;
-        r1.successor.elementId = 100*junc.id + 100 + cc*10 + 1;
+        r1.successor.elementId = junc.id;
+        r1.successor.elementType = "junction";
         generateRoad(mainRoad, r1, sOld, sMain-sOffMain, 0, sMain, iPx, iPy,iPhdg);        
-        data.roads.push_back(r1);
 
         road r2;
-        r2.id = 100*junc.id + 50 + cc;
+        r2.id = 100*junc.id + cc * 10 + 2;
         r2.junction = junc.id;
+        r2.predecessor.elementId = junc.id;
+        r2.predecessor.elementType = "junction";
         generateRoad(additionalRoad, r2, sAdd+sOffAdd, INFINITY, 0, sAdd, iPx, iPy, iPhdg+phi);        
-        r2.predecessor.elementId = 100*junc.id + 100 + cc*10 + 3;
-        r2.successor.elementId = additionalRoad.attribute("idEnd").as_int();
-        data.roads.push_back(r2);
 
         road helper;
-        helper.id = r1.id + 1; 
+        helper.id = r1.id + cc * 10 + 3; 
         helper.junction = junc.id;
         if (cc < nIp)
             generateRoad(mainRoad, helper, sMain+sOffMain, sMain+2*sOffMain, 0, sMain, iPx, iPy,iPhdg);  
         else 
+        {
             helper = rOld;
-        helper.predecessor.elementId = 101;
-        helper.successor.elementId =  -101;
+            helper.successor.elementType = "road";
+            helper.successor.elementId = -101;
+        }
+        helper.predecessor.elementId = junc.id;
+        helper.predecessor.elementType = "junction";
 
         // --- add connecting lanes --------------------------------------------
 
@@ -127,27 +130,25 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         int from, to;
 
         road r3; 
-        r3.id = 100*junc.id + 100 + cc*10 + 1;
+        r3.id = 100*junc.id + cc * 10 + 4;
         from = findRightLane(max1);
         to = findRightLane(max3);
         if (clockwise)
             createRoadConnection(r1,helper,r3,junc,from,to,d,d,d);
         if (!clockwise)
             createRoadConnection(r1,helper,r3,junc,from,to,s,d,d);
-        data.roads.push_back(r3);
 
         road r4; 
-        r4.id = 100*junc.id + 100 + cc*10 + 2;
+        r4.id = 100*junc.id + cc * 10 + 5;
         from = findRightLane(min1);
         to = findRightLane(min3);
         if (clockwise)
             createRoadConnection(r1,helper,r4,junc,from,to,d,s,d);
         if (!clockwise)
             createRoadConnection(r1,helper,r4,junc,from,to,d,d,d);
-        data.roads.push_back(r4);
 
         road r5; 
-        r5.id = 100*junc.id + 100 + cc*10 + 3;
+        r5.id = 100*junc.id + cc * 10 + 6;
         if (clockwise){
             from = findLeftLane(max1);
             to = findLeftLane(max2);
@@ -158,10 +159,9 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
             to = findRightLane(min2);
             createRoadConnection(r1,r2,r5,junc,from,to,n,s,n);
         }
-        data.roads.push_back(r5);
 
         road r6; 
-        r6.id = 100*junc.id + 100 + cc*10 + 4;
+        r6.id = 100*junc.id + cc * 10 + 7;
         if (clockwise){
             from = findLeftLane(min2);
             to = findLeftLane(max3);
@@ -172,13 +172,23 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
             to = findRightLane(min3);
             createRoadConnection(r2,helper,r6,junc,from,to,n,s,n);
         }
+
+        // adjust precessor of first element
+        r1.predecessor.elementId = junc.id;
+        r1.predecessor.elementType = "junction";
+
+        data.roads.push_back(r1);
+        data.roads.push_back(r2);
+        data.roads.push_back(r3);
+        data.roads.push_back(r4);
+        data.roads.push_back(r5);
         data.roads.push_back(r6);
 
-        // save properties
+        // update for next step
         sOld = sMain + sOffMain;
         if (cc == 1) rOld = r1;
+        
     }
-
     data.junctions.push_back(junc);     
 
     return 0;

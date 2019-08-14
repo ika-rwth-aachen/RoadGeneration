@@ -12,7 +12,8 @@ struct connection
     int from;
     int to;
     string contactPoint = "start";
-    vector<laneLink> laneLinks;
+    int fromLane;
+    int toLane;
 };
 
 struct junction
@@ -44,8 +45,6 @@ struct lane
     int id;
     string type = "driving";
     int level = 0;
-    int predecessor;
-    int successor;
     width w;
     roadmark rm;
 };
@@ -73,7 +72,7 @@ struct geometry
 struct link
 {
     string elementType = "road";
-    int elementId;
+    int elementId = -1;
     string contactPoint = "start";
 };
 

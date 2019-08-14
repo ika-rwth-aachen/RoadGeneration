@@ -50,6 +50,8 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 		{
 			if (r.junction != fromSegment || r.id != fromRoad) continue;
 
+			r.successor.elementId = toRoad;
+
 			if (fromPos == 1)
 			{
 				fromX = r.geometries.front().x;
@@ -76,6 +78,8 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 		{
 			if (r.junction != toSegment || r.id != toRoad) continue;
 
+			r.predecessor.elementId = fromRoad;
+
 			if (toPos == 1)
 			{
 				toX = r.geometries.front().x;
@@ -95,7 +99,7 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 				cout << "ERR: wrong position." << endl;
 				exit(0);
 			}
-
+			
 			// rotate and shift current road according to from position
 			double dx,dy;
 			
@@ -132,7 +136,6 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 				}	
 			}
 		}
-
 	}
 
     return 0;

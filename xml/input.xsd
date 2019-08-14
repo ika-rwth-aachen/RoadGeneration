@@ -90,8 +90,6 @@ elementFormDefault="qualified">
         <xs:attribute name="length" type="xs:double" use="required"/>
         <xs:attribute name="sOffset" type="xs:double" use="required"/>
         <xs:attribute name="type" type="xs:string" use="required"/>
-        <xs:attribute name="idStart" type="xs:string" use="required"/>
-        <xs:attribute name="idEnd" type="xs:string" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="referenceLineType">
