@@ -11,10 +11,10 @@
  */
 int parseXML(pugi::xml_document &doc, roadNetwork &data, char * file)
 {   
-    if (false)
+    if (true)
     {
-        data.file = "bin/roundabout.xml";
-        doc.load_file("bin/roundabout.xml");
+        data.file = "bin/all.xml";
+        doc.load_file("bin/all.xml");
         return 0;
     }
 

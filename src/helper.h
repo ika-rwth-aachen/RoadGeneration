@@ -323,3 +323,23 @@ int sortRoads(road r1, road &r2, road &r3)
     }
     return 0;
 }
+
+int computeIP(double x1,double y1,double phi1,double x2,double y2,double phi2,int &type, int &type1, int &type2,double &iPx,double &iPy)
+{
+    double t2 = (y1-y2+tan(phi1)*(x2-x1)) / (sin(phi2)-tan(phi1)*cos(phi2));
+    double t1 = (x2 - x1 + cos(phi2) * t2) / cos(phi1);
+
+    if (t1 > 0)  type1 = 1;
+    if (t1 == 0) type1 = 0;
+    if (t1 < 0)  type1 = -1;
+
+    if (t2 > 0)  type2 = 1;
+    if (t2 == 0) type2 = 0;
+    if (t2 < 0)  type2 = -1;
+
+        
+    iPx = x1 + t1 * cos(phi1);
+    iPy = y1 + t1 * sin(phi1);
+
+    return 0;
+}

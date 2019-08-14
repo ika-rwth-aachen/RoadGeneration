@@ -14,6 +14,7 @@ using namespace std;
 #include "io.h"
 #include "buildSegments.h"
 #include "linkSegments.h"
+#include "closeRoadNetwork.h"
 
 /**
  * @brief main function for the tool roadGeneration
@@ -46,6 +47,11 @@ int main(int argc,  char** argv)
 	if (linkSegments(in, data)) 
 	{
 		cerr << "ERR: error in linkSegments" << endl;
+		return -1;
+	}
+	if (closeRoadNetwork(in, data)) 
+	{
+		cerr << "ERR: error in closeRoadNetwork" << endl;
 		return -1;
 	}
 	if (createXML(out, data)) 

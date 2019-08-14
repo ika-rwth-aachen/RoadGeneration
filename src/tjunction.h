@@ -194,11 +194,11 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         from = findRightLane(max1);
         to = findRightLane(min2);
         if (mode == 1 && phi1 < phi2) 
-            createRoadConnection(r1,r2,r4,junc,from,to,d,s,d);
+            createRoadConnection(r1,r2,r4,junc,from,to,bro,sol,bro);
         if (mode == 1 && phi2 < phi1) 
-            createRoadConnection(r1,r2,r4,junc,from,to,n,s,n);
+            createRoadConnection(r1,r2,r4,junc,from,to,non,sol,non);
         if (mode == 2) 
-            createRoadConnection(r1,r2,r4,junc,from,to,n,s,n);
+            createRoadConnection(r1,r2,r4,junc,from,to,non,sol,non);
         data.roads.push_back(r4);
 
         road r5; 
@@ -206,25 +206,25 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         from = findLeftLane(min1);
         to = findLeftLane(max2);
         if (mode == 1 && phi1 < phi2) 
-            createRoadConnection(r1,r2,r5,junc,from,to,d,d,d);
+            createRoadConnection(r1,r2,r5,junc,from,to,bro,bro,bro);
         if (mode == 1 && phi2 < phi1) 
-            createRoadConnection(r1,r2,r5,junc,from,to,n,n,n);
+            createRoadConnection(r1,r2,r5,junc,from,to,non,non,non);
         if (mode == 2) 
-            createRoadConnection(r1,r2,r5,junc,from,to,n,n,n);
+            createRoadConnection(r1,r2,r5,junc,from,to,non,non,non);
         data.roads.push_back(r5);
 
         road r6; 
         r6.id = 100*junc.id + 50 + 3;
         from = findRightLane(max2);
         to = findRightLane(min3);
-        createRoadConnection(r2,r3,r6,junc,from,to,n,s,n);
+        createRoadConnection(r2,r3,r6,junc,from,to,non,sol,non);
         data.roads.push_back(r6);
 
         road r7; 
         r7.id = 100*junc.id + 50 + 4;
         from = findLeftLane(min2);
         to = findLeftLane(max3);
-        createRoadConnection(r2,r3,r7,junc,from,to,n,n,n);
+        createRoadConnection(r2,r3,r7,junc,from,to,non,non,non);
         data.roads.push_back(r7);
 
         road r8; 
@@ -232,11 +232,11 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         from = findRightLane(max3);
         to = findRightLane(min1);
         if (mode == 1 && phi1 < phi2) 
-            createRoadConnection(r3,r1,r8,junc,from,to,n,s,n);
+            createRoadConnection(r3,r1,r8,junc,from,to,non,sol,non);
         if (mode == 1 && phi2 < phi1) 
-            createRoadConnection(r3,r1,r8,junc,from,to,d,s,d);
+            createRoadConnection(r3,r1,r8,junc,from,to,bro,sol,bro);
         if (mode == 2) 
-            createRoadConnection(r3,r1,r8,junc,from,to,n,s,n);
+            createRoadConnection(r3,r1,r8,junc,from,to,non,sol,non);
         data.roads.push_back(r8);
 
         road r9; 
@@ -244,11 +244,11 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         from = findLeftLane(min3);
         to = findLeftLane(max1);
         if (mode == 1 && phi1 < phi2) 
-            createRoadConnection(r3,r1,r9,junc,from,to,n,n,n);
+            createRoadConnection(r3,r1,r9,junc,from,to,non,non,non);
         if (mode == 1 && phi2 < phi1) 
-            createRoadConnection(r3,r1,r9,junc,from,to,d,d,d);
+            createRoadConnection(r3,r1,r9,junc,from,to,bro,bro,bro);
         if (mode == 2) 
-            createRoadConnection(r3,r1,r9,junc,from,to,n,n,n);
+            createRoadConnection(r3,r1,r9,junc,from,to,non,non,non);
         data.roads.push_back(r9);
     }
     // --- generate user-defined connecting lanes
@@ -277,9 +277,9 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
                 int from = laneLink.attribute("fromId").as_int();
                 int to = laneLink.attribute("toId").as_int();
 
-                string left = n;
-                string right = n;
-                string middle = n;
+                string left = non;
+                string right = non;
+                string middle = non;
 
                 if (laneLink.attribute("left")) 
                     left = laneLink.attribute("left").value();

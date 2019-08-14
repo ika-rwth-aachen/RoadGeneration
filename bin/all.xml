@@ -174,9 +174,9 @@
                     </laneSection>
                 </lanes>
             </road>
-            <road id="8" length="100" sOffset="0" type="0" >	
+            <road id="8" length="250" sOffset="0" type="0" >	
                 <referenceLine>
-                    <geometry id="1" length="100" connectToEndOf="0" connectToStartOf="0" R="100" type="arc"/>
+                    <geometry id="1" length="250" connectToEndOf="0" connectToStartOf="0" R="-100" type="arc"/>
                 </referenceLine>
                 <lanes>
                     <laneSection id="1" s="0">
@@ -283,6 +283,9 @@
         <segmentLink fromSegment="1" toSegment="5" fromRoad="102" toRoad="501" fromPos="end" toPos="start" />
         <segmentLink fromSegment="4" toSegment="3" fromRoad="401" toRoad="312" fromPos="start" toPos="end" />
     </interfaces>
+    <closeRoadNetwork>
+        <segmentLink fromSegment="3" toSegment="3" fromRoad="332" toRoad="342" fromPos="end" toPos="end" />
+    </closeRoadNetwork>
 </roadNetwork>
 
 

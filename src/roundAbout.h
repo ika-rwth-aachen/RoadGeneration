@@ -46,7 +46,6 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
     int nIp = 0;
     for (pugi::xml_node iP: node.children("intersectionPoint")) nIp++;
    
-
     int cc = 0;
     // iterate over all additonalRoads defined by separate intersectionPoints 
     // sMain of intersection points have to increase
@@ -158,30 +157,30 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         from = findRightLane(max1);
         to = findRightLane(max3);
         if (clockwise)
-            createRoadConnection(r1,helper,r3,junc,from,to,d,d,d);
+            createRoadConnection(r1,helper,r3,junc,from,to,bro,bro,bro);
         if (!clockwise)
-            createRoadConnection(r1,helper,r3,junc,from,to,s,d,d);
+            createRoadConnection(r1,helper,r3,junc,from,to,sol,bro,bro);
 
         road r4; 
         r4.id = 100*junc.id + cc * 10 + 5;
         from = findRightLane(min1);
         to = findRightLane(min3);
         if (clockwise)
-            createRoadConnection(r1,helper,r4,junc,from,to,d,s,d);
+            createRoadConnection(r1,helper,r4,junc,from,to,bro,sol,bro);
         if (!clockwise)
-            createRoadConnection(r1,helper,r4,junc,from,to,d,d,d);
+            createRoadConnection(r1,helper,r4,junc,from,to,bro,bro,bro);
 
         road r5; 
         r5.id = 100*junc.id + cc * 10 + 6;
         if (clockwise){
             from = findLeftLane(max1);
             to = findLeftLane(max2);
-            createRoadConnection(r1,r2,r5,junc,from,to,s,n,n);
+            createRoadConnection(r1,r2,r5,junc,from,to,sol,non,non);
         }
         if (!clockwise){
             from = findRightLane(min1);
             to = findRightLane(min2);
-            createRoadConnection(r1,r2,r5,junc,from,to,n,s,n);
+            createRoadConnection(r1,r2,r5,junc,from,to,non,sol,non);
         }
 
         road r6; 
@@ -189,12 +188,12 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         if (clockwise){
             from = findLeftLane(min2);
             to = findLeftLane(max3);
-            createRoadConnection(r2,helper,r6,junc,from,to,s,n,n);
+            createRoadConnection(r2,helper,r6,junc,from,to,sol,non,non);
         }
         if (!clockwise){
             from = findRightLane(max2);
             to = findRightLane(min3);
-            createRoadConnection(r2,helper,r6,junc,from,to,n,s,n);
+            createRoadConnection(r2,helper,r6,junc,from,to,non,sol,non);
         }
 
         // adjust precessor of first element, due to loop

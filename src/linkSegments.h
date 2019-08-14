@@ -11,12 +11,14 @@
  */
 int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 {
+    cout << "Processing linkSegments" << endl;
+
 	pugi::xml_node interfaces = doc.child("roadNetwork").child("interfaces");
 
 	if(!interfaces) 
 	{
 		cerr << "ERR: 'interfaces' are not specified in input file."  << endl;
-		cerr << "\t -> skip segment linking."  << endl;
+		cerr << "\t -> skip segment linking"  << endl;
 		return 0;
 	}
 

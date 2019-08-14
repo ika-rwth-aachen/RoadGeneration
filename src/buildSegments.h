@@ -5,9 +5,9 @@
 #include "createRoadConnections.h"
 
 #define all 0 
-#define n "none" 
-#define d "broken" 
-#define s "solid" 
+#define non "none" 
+#define bro "broken" 
+#define sol "solid" 
 
 #include "tjunction.h"
 #include "xjunction.h"
