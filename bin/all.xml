@@ -1,4 +1,4 @@
-<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/home/geller/Dokumente/ika_hiwi/streckenGenerierung/inputNew.xsd">
+<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/home/geller/Dokumente/roadgeneration/xml/input.xsd">
     <segments>
         <junctions>
             <xjunction id="1" type="M2A">
@@ -9,7 +9,7 @@
                     <lanes>
                         <laneSection id="1" s="0">
                             <lane id="1" type="driving">
-                                <laneWidth sOffset="0" w="3.75"/>
+                                <laneWidth sOffset="0" w="10.75"/>
                                 <roadMark sOffset="0" tOffset="0" type="solid" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
                             </lane>
                             <lane id="0" type="driving">
@@ -65,10 +65,10 @@
                         </laneSection>
                     </lanes>
                 </road>
-                <intersectionPoint refId="1" s="200">
+                <intersectionPoint id="1" refId="1" s="200">
                     <adRoad id="2" s="0" angle="-1.08"/>
                     <adRoad id="3" s="0" angle="2.11"/>
-                </intersectionPoint>a
+                </intersectionPoint>
                 <coupler id="1">
                     <couplerArea sOffset="50">
                         <streetBorder id="1" sOffset="50"/>
@@ -78,7 +78,7 @@
                 </coupler>
             </xjunction>
             <tjunction id="2" type="MA">
-                <road id="4" length="400" sOffset="0" type="0" >	
+                <road id="1" length="400" sOffset="0" type="0" >	
                     <referenceLine>
                         <geometry id="1" length="400" connectToEndOf="0" connectToStartOf="0" Rs="-100" Re="0" type="spiral"/>
                     </referenceLine>
@@ -99,7 +99,7 @@
                         </laneSection>
                     </lanes>
                 </road>
-                <road id="5" length="150" sOffset="0" type="0" >	
+                <road id="2" length="150" sOffset="0" type="0" >	
                     <referenceLine>
                         <geometry id="1" length="200" connectToEndOf="0" connectToStartOf="0" R="150" type="arc"/>
                     </referenceLine>
@@ -120,18 +120,18 @@
                         </laneSection>
                     </lanes>
                 </road>
-                <intersectionPoint refId="4" s="200">
-                    <adRoad id="5" s="0" angle="1.0"/>
-                </intersectionPoint>a
+                <intersectionPoint id="1" refId="1" s="200">
+                    <adRoad id="2" s="0" angle="1.0"/>
+                </intersectionPoint>
                 <coupler id="1">
                     <couplerArea sOffset="15">
                         <streetBorder id="2" sOffset="15"/>
-                    </couplerArea>>
+                    </couplerArea>
                     <connection type="all"/>
                 </coupler>
             </tjunction>
             <tjunction id="6" type="3A">
-                <road id="4" length="200" sOffset="0" type="0" >	
+                <road id="1" length="200" sOffset="0" type="0" >	
                     <referenceLine>
                         <geometry id="1" length="200" connectToEndOf="0" connectToStartOf="0" Rs="-100" Re="0" type="spiral"/>
                     </referenceLine>
@@ -152,7 +152,7 @@
                         </laneSection>
                     </lanes>
                 </road>
-                <road id="5" length="100" sOffset="0" type="0" >	
+                <road id="2" length="100" sOffset="0" type="0" >	
                     <referenceLine>
                         <geometry id="1" length="100" connectToEndOf="0" connectToStartOf="0" R="100" type="arc"/>
                     </referenceLine>
@@ -173,7 +173,7 @@
                         </laneSection>
                     </lanes>
                 </road>
-                <road id="6" length="300" sOffset="0" type="0" >	
+                <road id="3" length="300" sOffset="0" type="0" >	
                     <referenceLine>
                         <geometry id="1" length="300" connectToEndOf="0" connectToStartOf="0" R="250" type="arc"/>
                     </referenceLine>
@@ -194,20 +194,20 @@
                         </laneSection>
                     </lanes>
                 </road>
-                <intersectionPoint refId="4" s="100">
-                    <adRoad id="5" s="0" angle="1.0"/>
-                    <adRoad id="6" s="0" angle="3.0"/>
+                <intersectionPoint id="1" refId="1" s="100">
+                    <adRoad id="2" s="0" angle="1.0"/>
+                    <adRoad id="3" s="0" angle="3.0"/>
                 </intersectionPoint>
                 <coupler id="1">
                     <couplerArea sOffset="15">
                         <streetBorder id="2" sOffset="15"/>
-                    </couplerArea>>
+                    </couplerArea>
                     <connection type="all"/>
                 </coupler>
             </tjunction>
         </junctions>
-        <roundabout id="3" refId="6">
-            <road id="6" length="200" sOffset="0" type="0" >	
+        <roundabout id="3" refId="1">
+            <road id="1" length="200" sOffset="0" type="0" >	
                 <referenceLine>
                     <geometry id="1" length="200" connectToEndOf="0" connectToStartOf="0" R="31.830988618" type="arc"/>
                 </referenceLine>
@@ -228,7 +228,7 @@
                     </laneSection>
                 </lanes>
             </road>
-            <road id="7" length="100" sOffset="0" type="0" >	
+            <road id="2" length="100" sOffset="0" type="0" >	
                 <referenceLine>
                     <geometry id="1" length="100" connectToEndOf="0" connectToStartOf="0" type="line"/>
                 </referenceLine>
@@ -249,7 +249,7 @@
                     </laneSection>
                 </lanes>
             </road>
-            <road id="8" length="250" sOffset="0" type="0" >	
+            <road id="3" length="250" sOffset="0" type="0" >	
                 <referenceLine>
                     <geometry id="1" length="250" connectToEndOf="0" connectToStartOf="0" R="-100" type="arc"/>
                 </referenceLine>
@@ -270,33 +270,29 @@
                     </laneSection>
                 </lanes>
             </road>
-            <intersectionPoint id="1" refId="6" s="50">
-                <adRoad id="7" s="0" angle="-1.56"/>
+            <intersectionPoint id="1" refId="1" s="50">
+                <adRoad id="2" s="0" angle="-1.56"/>
             </intersectionPoint>
             <coupler id="1">
                 <couplerArea sOffset="5" />
-                <connection type="all"/>
             </coupler>
-            <intersectionPoint id="2" refId="6" s="100">
-                <adRoad id="7" s="0" angle="-1.56"/>
+            <intersectionPoint id="2" refId="1" s="100">
+                <adRoad id="2" s="0" angle="-1.56"/>
             </intersectionPoint>
             <coupler id="2">
                 <couplerArea sOffset="5" />
-                <connection type="all"/>
             </coupler>
-            <intersectionPoint id="3" refId="6" s="150">
-                <adRoad id="7" s="0" angle="-1.56"/>
+            <intersectionPoint id="3" refId="1" s="150">
+                <adRoad id="2" s="0" angle="-1.56"/>
             </intersectionPoint>
             <coupler id="3">
                 <couplerArea sOffset="5" />
-                <connection type="all"/>
             </coupler>
-            <intersectionPoint id="4" refId="6" s="200">
-                <adRoad id="8" s="10" angle="-1.56"/>
+            <intersectionPoint id="4" refId="1" s="200">
+                <adRoad id="3" s="10" angle="-1.56"/>
             </intersectionPoint>
             <coupler id="4">
                 <couplerArea sOffset="5" />
-                <connection type="all"/>
             </coupler>
         </roundabout>
         <connectingRoad id="4">
@@ -307,8 +303,7 @@
                 <lanes>
                     <laneSection id="1" s="0">
                         <lane id="1" type="driving">
-                            <laneWidth sOffset="0" w="3.75">
-                            </laneWidth>
+                            <laneWidth sOffset="0" w="3.75" />
                             <roadMark sOffset="0" tOffset="0" type="solid" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
                         </lane>
                         <lane id="0" type="driving">
@@ -333,8 +328,7 @@
                 <lanes>
                     <laneSection id="1" s="0">
                         <lane id="1" type="driving">
-                            <laneWidth sOffset="0" w="3.75">
-                            </laneWidth>
+                            <laneWidth sOffset="0" w="3.75" />
                             <roadMark sOffset="0" tOffset="0" type="solid" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
                         </lane>
                         <lane id="0" type="driving">
@@ -347,7 +341,6 @@
                         </lane>
                     </laneSection>
                     <laneWidening lane="1" sOffset="110" ds1="40" />
-                    <laneDrop lane="1" sOffset="300" ds1="30" />
                 </lanes>
             </road>
         </connectingRoad>

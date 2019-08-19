@@ -1,8 +1,8 @@
-<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/home/geller/Dokumente/ika_hiwi/streckenGenerierung/inputNew.xsd">
+<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/home/geller/Dokumente/roadgeneration/xml/input.xsd">
 	<segments>
         <junctions>
             <xjunction id="1" type="4A">
-                <road id="1" length="200" sOffset="0" type="0" idStart="0" idEnd="0">	
+                <road id="1" length="200" sOffset="0" type="0">	
                     <referenceLine>
                         <geometry id="1" length="200" connectToEndOf="0" connectToStartOf="0" Rs="-100" Re="0" type="spiral"/>
                     </referenceLine>
@@ -23,7 +23,7 @@
                         </laneSection>
                     </lanes>
                 </road>
-                <road id="2" length="100" sOffset="0" type="0" idStart="0" idEnd="0">	
+                <road id="2" length="100" sOffset="0" type="0">	
                     <referenceLine>
                         <geometry id="1" length="100" connectToEndOf="0" connectToStartOf="0" R="100" type="arc"/>
                     </referenceLine>
@@ -44,7 +44,7 @@
                         </laneSection>
                     </lanes>
                 </road>
-                <road id="3" length="100" sOffset="0" type="0" idStart="0" idEnd="0">	
+                <road id="3" length="100" sOffset="0" type="0">	
                     <referenceLine>
                         <geometry id="1" length="100" connectToEndOf="0" connectToStartOf="0" type="line"/>
                     </referenceLine>
@@ -65,17 +65,17 @@
                         </laneSection>
                     </lanes>
                 </road>
-                <intersectionPoint refId="1" s="100">
+                <intersectionPoint id="1" refId="1" s="100">
                     <adRoad id="1" s="50" angle="1.508"/>
                     <adRoad id="2" s="50" angle="2.508"/>
                     <adRoad id="3" s="50" angle="3.508"/>
-                </intersectionPoint>a
+                </intersectionPoint>
                 <coupler id="1">
                     <couplerArea sOffset="0">
                         <streetBorder id="1" sOffset="15"/>     
                         <streetBorder id="2" sOffset="15"/>
                         <streetBorder id="3" sOffset="15"/>
-                    </couplerArea>>
+                    </couplerArea>
                     <connection type="all"/>
                 </coupler>
             </xjunction>

@@ -50,8 +50,6 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
         d1 = sqrt(pow(x1-iPx,2) + pow(y1-iPy,2));
         d2 = sqrt(pow(x2-iPx,2) + pow(y2-iPy,2));
         d  = sqrt(pow(x2-x1,2) + pow(y2-y1,2));
-
-        cout << "Type is now defined" << endl;
     }
     // --- case i -------------------------------------------------------------
     if (type == i)
