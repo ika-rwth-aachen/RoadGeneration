@@ -11,7 +11,7 @@
  */
 int parseXML(pugi::xml_document &doc, roadNetwork &data, char * file)
 {   
-    if (true)
+    if (false)
     {
         data.file = "bin/all.xml";
         doc.load_file("bin/all.xml");
@@ -39,6 +39,14 @@ int parseXML(pugi::xml_document &doc, roadNetwork &data, char * file)
 int createXML(pugi::xml_document &doc, roadNetwork data)
 {   
     pugi::xml_node root = doc.append_child("OpenDRIVE");
+
+    root.append_attribute("xmlns:xsi") = "http://www.w3.org/2001/XMLSchema-instance";
+    root.append_attribute("xsi:noNamespaceSchemaLocation") = "../xml/output.xsd";
+    
+    // write header
+    pugi::xml_node header = root.append_child("header");
+    header.append_attribute("revMajor") = 1;
+    header.append_attribute("revMinor") = 5;
 
     // write roads
     for (std::vector<road>::iterator it = data.roads.begin() ; it != data.roads.end(); ++it)
@@ -100,30 +108,45 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
             pugi::xml_node laneSection = lanes.append_child("laneSection");
             laneSection.append_attribute("s") = itt->s;
 
+            pugi::xml_node left;
+            pugi::xml_node center;
+            pugi::xml_node right;
+
+            if(findMaxLaneId(*itt) > 0) left = laneSection.append_child("left");
+            center = laneSection.append_child("center");
+            if(findMinLaneId(*itt) < 0) right = laneSection.append_child("right");
+
             for (std::vector<lane>::iterator ittt = itt->lanes.begin() ; ittt != itt->lanes.end(); ++ittt)
             {
                 pugi::xml_node lane;
-                if (ittt->id > 0)  
-                lane = laneSection.append_child("left").append_child("lane");
+
+                if (ittt->id > 0)
+                {
+                    lane = left.append_child("lane");
+                }  
                 if (ittt->id < 0)  
-                lane = laneSection.append_child("right").append_child("lane");
+                {
+                    lane = right.append_child("lane");
+                } 
                 if (ittt->id == 0) 
-                lane = laneSection.append_child("center").append_child("lane");
+                {
+                    lane = center.append_child("lane");
+                }
                 
                 lane.append_attribute("id") = ittt->id;
                 lane.append_attribute("type") = ittt->type.c_str();
-                lane.append_attribute("level") = ittt->level;
 
-                pugi::xml_node link = lane.append_child("link");
+                //pugi::xml_node link = lane.append_child("link");
 
-                pugi::xml_node width = lane.append_child("width");
-
-                width.append_attribute("sOffset") = ittt->w.s;
-                width.append_attribute("a") = ittt->w.a;
-                width.append_attribute("b") = ittt->w.b;
-                width.append_attribute("c") = ittt->w.c;
-                width.append_attribute("d") = ittt->w.d;
-
+                if (ittt->id != 0)
+                {
+                    pugi::xml_node width = lane.append_child("width");
+                    width.append_attribute("sOffset") = ittt->w.s;
+                    width.append_attribute("a") = ittt->w.a;
+                    width.append_attribute("b") = ittt->w.b;
+                    width.append_attribute("c") = ittt->w.c;
+                    width.append_attribute("d") = ittt->w.d;
+                }
                 pugi::xml_node roadmark = lane.append_child("roadMark");
 
                 roadmark.append_attribute("sOffset") = ittt->rm.s;
@@ -148,7 +171,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
 
             con.append_attribute("id") = itt->id;
             con.append_attribute("incomingRoad") = itt->from;
-            con.append_attribute("connetingRoad") = itt->to;
+            con.append_attribute("connectingRoad") = itt->to;
             con.append_attribute("contactPoint") = itt->contactPoint.c_str();
 
             pugi::xml_node lL = con.append_child("laneLink");
