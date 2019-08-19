@@ -150,32 +150,31 @@ int sgn(double d)
  * 
  * @param sec   lanesection which should be shifted
  * @param id    lane which is the start of the shift; all outer lanes are shifted one
+ * @param dir   dir = 1 shift to outer side, die = -1 shift to inner side
  * @return int  errorcode 
  */
-int shiftLanes(laneSection &sec, int id, int dir2)
+int shiftLanes(laneSection &sec, int id, int dir)
 {
-    int dir = sgn(id) * sgn(dir2);
-    
-    if (id > 0 && dir2 > 0) id = findMaxLaneId(sec);
-    else if (id < 0 && dir2 > 0) id = findMinLaneId(sec);
+    int side = sgn(id);
+    int start, end;
 
-    if (id > 0 && dir2 < 0) id = sgn(id);
-    else if (id < 0 && dir2 < 0) id = sgn(id);
+    // start point definition
+    if (dir ==  1 && side == -1) {start = findMinLaneId(sec); end = id - side;}
+    if (dir ==  1 && side ==  1) {start = findMaxLaneId(sec); end = id - side;}
+    if (dir == -1 && side == -1) {start = id; end = findMinLaneId(sec) + side;}
+    if (dir == -1 && side ==  1) {start = id; end = findMaxLaneId(sec) + side;}
 
-    int search = 0;
-    if (dir2 < 0 && id > 0) search = findMaxLaneId(sec)+sgn(id);
-    if (dir2 < 0 && id < 0) search = findMinLaneId(sec)+sgn(id);
-    while(id != search)
+    while (start != end)
     {
         for (int i = 0; i < sec.lanes.size(); i++)
         {
-            if (sec.lanes[i].id == id) 
+            if (sec.lanes[i].id == start) 
             {
-                sec.lanes[i].id += dir;
+                sec.lanes[i].id += dir * side;
             }
         }
-        id -= dir;
-    }
+        start -= dir * side;
+    } 
 
     return 0;
 }

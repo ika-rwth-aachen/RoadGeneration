@@ -142,35 +142,59 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
         lS1.s = 0;
         secs.push_back(lS1);
 
-        double dPos = findMaxLaneId(lS1) - findMaxLaneId(lS2);
-        double dNeg = findMinLaneId(lS1) - findMinLaneId(lS2);
+        double dPos = abs(findMaxLaneId(lS2)) - abs(findMaxLaneId(lS1));
+        double dNeg = abs(findMinLaneId(lS2)) - abs(findMinLaneId(lS1));
     
         double sNeeded = 0;
-        while (dPos < 0) 
-        {   
-            addLaneWidening(secs, findMaxLaneId(lS1), sNeeded, 0);
-            sNeeded += 50;
-            dPos++;
-        }
-        while (dNeg < 0) 
-        {   
-            addLaneWidening(secs, findMinLaneId(lS1), sNeeded, 0);
-            sNeeded += 50;
-            dNeg++;
-        }
         while (dPos > 0) 
         {   
-            addLaneDrop(secs, findMaxLaneId(lS1), sNeeded, 0);
+            addLaneWidening(secs, findMaxLaneId(lS1), sNeeded, 50);
             sNeeded += 50;
             dPos--;
         }
         while (dNeg > 0) 
         {   
-            addLaneDrop(secs, findMinLaneId(lS1), sNeeded, 0);
+            addLaneWidening(secs, findMinLaneId(lS1), sNeeded, 50);
             sNeeded += 50;
             dNeg--;
         }
+        while (dPos < 0) 
+        {   
+            addLaneDrop(secs, findMaxLaneId(lS1), sNeeded, 50);
+            sNeeded += 50;
+            dPos++;
+        }
+        while (dNeg < 0) 
+        {   
+            addLaneDrop(secs, findMinLaneId(lS1), sNeeded, 50);
+            sNeeded += 50;
+            dNeg++;
+        }
 
+		// adjust lanewidth of last section to be equal to lS2
+
+		for (int j = 0; j < secs.back().lanes.size(); j++)
+		{
+			lane curLane = secs.back().lanes[j];
+			int id = curLane.id;
+			
+			lane refLane;
+			findLane(lS2,refLane,id);
+
+			double w1 = curLane.w.a;
+			double w2 = refLane.w.a;
+			if (w1 == w2) continue;
+
+			double length = rConnection.length - sNeeded; 
+
+			curLane.w.d = -2 * (w2 - w1) / pow(length,3);
+    		curLane.w.c =  3 * (w2 - w1) / pow(length,2);
+    		curLane.w.b = 0;
+    		curLane.w.a = w1;
+
+			secs.back().lanes[j] = curLane;
+		}
+		
     	rConnection.laneSections = secs;
 		
         data.roads.push_back(rConnection);

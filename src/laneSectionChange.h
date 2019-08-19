@@ -48,6 +48,11 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
     shiftLanes(adLaneSec, laneId, 1);
     adLaneSec.lanes.push_back(l);  
 
+    // center line solid
+    lane tmp;
+    int id = findLane(adLaneSec, tmp, 0);
+    adLaneSec.lanes[id].rm.type = "solid";
+
     it++;
     it = secs.insert(it, adLaneSec);
     it++;
@@ -58,6 +63,10 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
     l.w.a = w;
     adLaneSec.lanes.back() = l;
     adLaneSec.s += ds;
+
+    // center line broken
+    id = findLane(adLaneSec, tmp, 0);
+    adLaneSec.lanes[id].rm.type = "broken";
 
     it = secs.insert(it, adLaneSec);
     it++;
@@ -116,13 +125,18 @@ int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
     l.w.c = - 3 * w / pow(ds,2);
     l.w.b = 0;
     l.w.a = w;
-    l.rm.type = "broken";
     adLaneSec.lanes[id] = l;
+
+    // center line solid
+    id = findLane(adLaneSec, l, 0);
+    adLaneSec.lanes[id].rm.type = "solid";
 
     it++;
     it = secs.insert(it, adLaneSec);
     it++;
     adLaneSec.s += ds;
+    adLaneSec.lanes[id].rm.type = "broken";
+
     it = secs.insert(it, adLaneSec);
 
     // shift all lanes in following lane sections
@@ -134,7 +148,6 @@ int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
 
         itt = it->lanes.begin() + id;
         it->lanes.erase(itt); 
-
     }
 
     return 0;
