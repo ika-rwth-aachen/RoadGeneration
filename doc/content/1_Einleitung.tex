@@ -1,0 +1,38 @@
+%!TEX root = ../main.tex
+\chapter{Einleitung}
+%\thispagestyle{ika}
+
+In der Automobilindustrie geht der Trend in den vergangenen Jahren verstärkt zu der Entwicklung und Realisierung von autonomen Fahrfunktionen. Um diese automatisierten Fahrmanöver validieren zu können werden Simulationen als Abbild der Realität herangezogen. Ausgangspunkt jeder Simulation ist eine vorhandene Streckenbeschreibung, die sich grundsätzlich zerlegen lässt in die Strasse als solche, die Verkehrsinfrastruktur wie Beschilderungen oder Ampelanlagen und temporären Veränderungen wie zum Beispiel Baustellen. Zum einen können solche Strecken anhand der Realität erzeugt werden, was jedoch einen hohen detaillierungsgrad vorrausetzt und sich als sehr aufwendig gestaltet. Eine weitere Möglichkeit zur erzeugung von Strecken ist ein logisch, varierbarer Ansatz der als Grundlage für diese Seminararbeit herangezogen wird. Es gilt hierbei nicht die Realität sondern Vorschriften und Grenzen einzuhalten und durch einfache und parametrisierte Angaben ein komplexes und vorallem valides Streckennetz generieren zu können.
+
+Die Grundidee hierbei ist die Implementierung eines Tools mit Hilfe dessen der Benutzer ein vereinfachtes Eingabeformat füllt und als Resultat ein komplexes aber in sich valides Streckennetz erhält. Das Eingabeformat wurde als solches im Rahmen einer Masterarbeit klar definiert und ausgearbeitet. Die Hauptaufgabe dieser Seminararbeit besteht nun also in der Validierung und Absicherung des vorhanden Formates und einem Übersetzungstool dass die abstrakte Strecke in einem industriell gängigem Format liefert.
+
+\chapter{OpenDrive Standard}
+OpenDrive ist ein Format zur Darstellung von logischen Strassennetzwerken, welches seit 2006 existiert und mittlerweile als Standard für Fahrzeugsimulationen angesehen werden kann. Das Format enthält nicht nur Strassen und Fahrbahninformationen sondern auch komplexere Beschilderung, Fahrbahnmarkierungen und sogar Ampelsignale. Definiert wird die openDrive Datenstruktur im XML-Format in welcher grundsätzlich zwischen Strassen ('roads') und Kreuzungen ('junctions') unterschieden wird. Die logische Beschreibung der Strasse erfolgt anhand von einer analytischen Beschreibung, bestehend aus Geraden, Kreisbögen und Spiralen. Zudem kann die laterale Position und Ausrichtung sowie ihr Höhenprofil definiert werden. Die Geometrie einer Strasse wird immer über die Referenzlinie definiert, hinzugefügt werden dann einzelne Fahrbahnen ('lanes') mit unterschiedlicher Markierung, Breite, Beschafftenheit etc. An komplexen Kreuzungen werden die Fahrbahnverbindungen, welche ebenfalls als eigene Strasse im openDrive Format definiert sind über 'junctions' miteinander verbunden. Zudem lassen sich unbegrenzt Objekte definieren. Dies sichert eine eindeutige und korrekte Beschreibung der gewünschten Strecke, macht das XML-Format allerdings auch sehr komplex.  
+
+\chapter{Annahmen und Vereinfachungen des ika Konzepts}
+Wie im vorherigen Abschnitt gezeigt ist das openDrive Format zwar eindeutig und lässt quasi jede Art von Beschreibung der Strecke zu, allerdings ist die Generierung oder Befüllung des Formats sehr aufwendig und von Hand kaum zu realisieren. Deshalb existieren Tools mit denen man grafisch eine Strecke im geannten openDrive Format erzeugen kann. Um die Realtität abbilden möglichst gut abbilden zu können reicht dies zwar aus, alledings ist die varierbarkeit von Strecken ein grosser Vorteil bei der Simulation von Fahrmanövern zur Absicherung. So können mit wenigen Parameteränderungen beliebig viele, voneinander unterschiedliche aber valide Strecken generiert werden. Daher bedarf es ein Tool dass anhand eines einfachen, benutzerfreundlichen Eingangsformat das komplexe, detaillreiche openDrive Format generiert.
+
+Im Unterschied zum openDrive Format werden von Nutzer nicht alle Strassen und Fahrbahnsegmente einzeln angegeben, sondern jede Kreuzung oder Verbindungsstrasse zunächst einzeln und unabhängig in einem eigenen Koordinatensystem definiert. Vorgegben durch den Nutzer werden nur die Geometrien der Haupt und Nebenstrassen. Am Beispiel einer Kreuzung werden diese dann benutzt um im Kreuzungsbereich zusätzlich und automatisiert Verbindungsstrassen zu generieren. Dazu wird lediglich der Kreuzungsschnittpunkt und der Winkel zwischen den zwei aufeinandertreffenden Strassen definiert. 
+
+Die einzlenen Kreuzungssegmente werden in einem späteren Schritt dann aneinandergefügt. Der Nutzer spezifiziert dafür lediglich zwei Strassenpunkte auf den beiden Segmenten die übereinstimmen sollen. Mithilfe des Strassenwinkels und der Position ist die Lage dementsprechend eindeutig definiert. Das Koordinatensystem des einen Segments kann dementsprechend transformiert werden, sodass über eine einfache Beschreibung mehrere Kreuzungs oder Strassensegmente miteinander verbunden werden.
+
+Um ein Strassennetzwerk schliessen zu können bedarf es einer sehr genauen konstuktion des letzten Segmentes, welches sich in einem überbestimmten Problem wiederspiegelt. Deshalb wird zum Schliessen eines Netzwerks eine separate Funktion entwickelt, die zwei Punkte unter entsprechendem Winkel miteinander verbindet.
+
+Für den Nutzer sind also nur vereinfachte Angaben wie Krezungstyp, Strassengeometrie, Schnittwinkel oder Fahrbahnanzahl gefragt. Die Aufgabe des Tools ist nun die übersetzung in ein detaillreiches Strassennetzwerk im gängigen openDrive-Format.
+
+\chapter{Umsetzung und Implementierung des Tools}
+\section{Ein - und Ausgabeformat}
+Die Definition im vereinfachten Eingabeformat geschieht ebenfalls wie die Darstellung des openDrive Formats im XML Format. Dies erlaubt eine Übersichtliche defintion der Datenstruktur mit Hilfe von 'Attributen' und 'Elementen'. Das Tool zur Generierung des openDrive-Formats wird in c++ geschrieben sodass eine kompatible Bibliothek zum parsen und schreiben der XML Dateien verwendet wird. Die Bibliothek 'pugi_xml' ermöglicht das einlesen der Eingabedatei und speichert die XML Struktur ähnlich einer Baumstruktur zur Laufzeit ab. Dies ermöglicht eine effiziente und übersichtliche Verwendung des Eingabeformats. Ebenso wird eine solche XML Stuktur zur Laufzeit des Tools erzeugt, die dann mit den openDrive Dateien gefüllt werden kann. 
+
+Ein weiterer Vorteil bei der Benutzung von XML Datenstrukturen ist die Möglichkeit von XML Schemata (XSD). Eine .xsd Datei beschreibt die Struktur eines XML Dokumentes. So kann das Vorkommen von Attributen und Elementen eingeschränkt werden. So besteht die Möglichkeit die Anzahl von Elementen einzuschränken, die Anordnung von Elementen innerhalb des XML Dokuments vorzuschreiben oder Attribute nur optional vorzuschreiben. So wurde im Rahmen der Seminararbeit ein XML-Schema Dokument zur absicherung von falschen Benutzereingaben erstellt. Der gängige Standard openDrive besitzt ebenfalls eine solche Schemadatei, sodass sowohl Eingabe als auch Ausgabedokument mit Hilfe eines XML/XSD Validierungstools abgesichtert werden können.
+ 
+\section{Implementierung}
+
+\chapter{Beispiele und Tests}
+\section{T-Kreuzung}
+\section{X-Kruzung}
+\section{Kreisverkehr}
+
+\chapter{Ausblick}
+
+

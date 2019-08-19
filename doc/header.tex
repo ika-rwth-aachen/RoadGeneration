@@ -1,0 +1,285 @@
+%!TEX root = main.tex
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[scaled=1]{uarial} % set default font to arial
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{bm} 
+%\usepackage{multirow}
+\usepackage{float}
+
+% enable hyperlinks in pdf documennt
+\usepackage[hidelinks]{hyperref}
+%\usepackage[colorinlistoftodos]{todonotes}\reversemarginpar
+
+% Import the stuff for the glossary
+\usepackage[numberedsection,nonumberlist,acronym,toc,nopostdot,nomain]{glossaries}
+\newglossary[slg]{symbolslist}{syi}{syg}{Formelzeichen und Indizes} % create add. symbolslist
+\makeglossaries
+\setacronymstyle{long-short}
+\loadglsentries[acronyms]{acronym_entries.tex}
+\loadglsentries[symbolslist]{symbol_entries.tex}
+
+%% the following commands are needed for some matlab2tikz features
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{arrows.meta}
+
+\usepackage{graphicx}
+\usepackage{tkz-euclide}
+\usetkzobj{all}
+\usepackage{pgfplots}
+\usepackage{tikzscale}
+\pgfplotsset{
+    every tick label/.append style = {/pgf/number format/assume math mode=true,font=\sffamily},
+}
+\pgfplotsset{max space between ticks=50}
+\pgfplotsset{compat=newest}
+
+
+\usepackage{grffile}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{rotating}
+\usepackage{cleveref}
+%\crefname{equation}{eq.}{eqs.}
+%\Crefname{equation}{Eq.}{Eqs.}
+\crefformat{equation}{Gl.~#2#1#3}
+\Crefformat{equation}{Gl.~#2#1#3}
+%\crefformat{subfigure}{Fig.~#2(#1)#3}
+\crefname{table}{Abb.}{Tab.}
+\crefname{figure}{Abb.}{Abb.}
+\Crefname{table}{Tab.}{Tab.}
+\crefname{chapter}{Kap.}{Kap.}
+\Crefname{chapter}{Kap.}{Kap.}
+\crefname{appendix}{Anhang}{}
+\crefname{section}{Kap.}{Kap.}
+\Crefname{section}{Kap.}{Kap.}
+\crefname{subsection}{Kap.}{Kap.}
+\Crefname{subsection}{Kap.}{Kap.}
+\crefname{subsubsection}{Kap.}{Kap.}
+\Crefname{subsubsection}{Kap.}{Kap.}
+
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{tensor}
+\usepackage{pdfpages}
+\usepackage{bm}
+\usepackage[section]{placeins}
+
+% set page margins etc.
+\usepackage[
+	headheight=1.25cm,
+	headsep=1.25cm,
+	left=3.0cm,
+	right=2.0cm,
+	top=3.0cm,
+	bottom=2.5cm]{geometry}
+	
+\usepackage[labelformat=simple]{subcaption}
+\usepackage[onehalfspacing]{setspace}
+\AtBeginEnvironment{tabular}{\onehalfspacing}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{siunitx}
+\usepackage{tabto}
+\usepackage{pbox}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% IKA - format	        %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% labelin
+%\newcommand{\reffig}[1]{Fig.~\ref{#1}}
+%\newcommand{\refsec}[1]{Chapter~\ref{#1}}
+%\newcommand{\refapp}[1]{Appendix~\ref{#1}}
+%\newcommand{\refeq}[1]{Eq.~\ref{#1}}
+
+% Anpassung der Gleichungsbeschriftung an das IKA-Layout, e.g. "Gl. 1-1"
+\makeatletter
+	\def\@eqnnum{{\normalfont \normalcolor Gl.\quad \theequation}}
+	\def\tagform@#1{\maketag@@@{Gl.\quad\ignorespaces#1\unskip\@@italiccorr}}
+\makeatother
+
+% Anpassung der Tabellen- und Bildbeschriftung an das IKA-Layout, e.g. "Abb. 1-1:	" (Teil 2)
+\usepackage[titles]{tocloft}
+\renewcaptionname{ngerman}{\figurename}{Abb.}
+\renewcommand{\cftfigpresnum}{Abb. }
+\renewcommand{\cftfigaftersnum}{:}
+\settowidth{\cftfignumwidth}{Abb. 10\quad}
+\renewcaptionname{ngerman}{\tablename}{Tab.}
+\renewcommand{\thefigure}{{\thechapter-\arabic{figure}}}
+\renewcommand{\thetable}{{\thechapter-\arabic{figure}}}
+\renewcommand{\theequation}{{\thechapter-\arabic{equation}}}
+
+% Durchgehende Nummerierung f�r Abbildungen und Tabellen: IKA fordert Tabllen mit Abb-Caption: Abb. X-Y
+\makeatletter
+\let\c@table\c@figure
+\makeatother
+
+
+% Anpassung der Beschriftungen
+\usepackage[
+	style=base,
+	font=onehalfspacing,
+	format=hang,
+	margin=0cm,
+	singlelinecheck=false,
+	skip=6pt
+	]{caption}
+
+% Anpassung der Abs�tze vor und nach einer figure Umgebung
+\setlength{\intextsep}{12pt}
+
+\renewcommand{\thesubfigure}{(\roman{subfigure})}
+
+
+% Kopf- und Fu�zeile
+%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage[
+%	headsepline=0.75pt,
+%	plainheadsepline=true,
+%	footsepline=false,
+%	plainfootsepline
+%	]{scrlayer-scrpage} % F�r die Kopf- und Fu�zeile inkl. Trennlinie und Titel gro� geschrieben
+%
+
+%
+%\ihead*[\thechapter \tabto{1cm}{\leftmark}]{\thechapter \tabto{1cm}{\leftmark}}
+%\cohead*[]{}
+%\rohead*[\thepage]{\thepage}
+%\ifoot*[]{}
+%\cofoot*[]{}
+%\rofoot*[]{}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+
+\fancypagestyle{ika}{%
+    \fancyhf{}
+    \lhead{\thechapter \tabto{1cm} \leftmark}
+    \rhead{\thepage}
+    \fancyfoot[]{}
+}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \lhead{\leftmark}
+    \rhead{\thepage}
+    \fancyfoot[]{}
+}
+\fancypagestyle{apx}{%
+    \fancyhf{}
+    \lhead{Appendix - \leftmark}
+    \rhead{\thepage}
+    \fancyfoot[]{}
+}
+\renewcommand{\headrulewidth}{0.75pt}
+
+
+% XML Listing
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+
+\lstset{
+    basicstyle=\ttfamily,
+    columns=fullflexible,
+    frame = single, 
+    numbers = left,
+    showstringspaces=false,
+    commentstyle=\color{gray}\upshape
+}
+
+\lstdefinelanguage{XML}
+{
+    morestring=[b]",
+    morestring=[s]{>}{<},
+    morecomment=[s]{<?}{?>},
+    stringstyle=\color{black},
+    identifierstyle=\color{darkblue},
+    keywordstyle=\color{cyan},
+    morekeywords={}% list your attributes here
+}
+\pgfkeys{/pgf/number format/.cd,1000 sep={}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatierung der �berschriften
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Kapitel�berschrift
+\RedeclareSectionCommands[
+  afterskip=4pt,
+  beforeskip=4pt
+]{chapter}
+
+% Unterkapitel
+\RedeclareSectionCommands[
+  afterskip=4pt,
+  beforeskip=4pt
+]{section}
+
+\RedeclareSectionCommands[
+  afterskip=4pt,
+  beforeskip=4pt
+]{subsection}
+
+% Unterkapitel
+\RedeclareSectionCommands[
+  afterskip=4pt,
+  beforeskip=4pt
+]{subsubsection}
+
+\RedeclareSectionCommands[
+  tocindent=0.3cm
+]{section}
+
+\RedeclareSectionCommands[
+  tocindent=0.6cm
+]{subsection}
+
+\RedeclareSectionCommands[
+  tocindent=0.9cm
+]{subsubsection}
+
+\RedeclareSectionCommands[
+  tocbeforeskip=5pt
+]{section,subsection,subsubsection}
+
+% Tabstopp f�r �berschriften auf 1cm setzen
+\renewcommand*{\chapterformat}{%
+	\makebox[1cm][l]{\chapappifchapterprefix{\nobreakspace}\thechapter
+	\IfUsePrefixLine{}}}
+\renewcommand*{\sectionformat}{%
+	\makebox[2cm][l]{\thesection}}
+\renewcommand*{\subsectionformat}{%
+	\makebox[2cm][l]{\thesubsection}}
+\renewcommand*{\subsubsectionformat}{%
+	\makebox[2cm][l]{\thesubsubsection}}
+
+% Schriftarten
+\setkomafont{chapter}{\normalfont\bfseries}
+\setkomafont{section}{\normalfont\bfseries}
+\setkomafont{subsection}{\normalfont\bfseries}
+\setkomafont{subsubsection}{\normalfont\bfseries}
+\setkomafont{pagehead}{\normalfont}
+\setkomafont{chapterentry}{\normalfont}
+
+
+% RWTH Farbdefinitionen
+\definecolor{blueRWTH}{cmyk}{1.0,0.5,0,0}
+\definecolor{blueLightRWTH}{cmyk}{0.75,0.38,0,0}
+\definecolor{blueLighterRWTH}{cmyk}{0.45,0.14,0,0}
+
+\definecolor{greenRWTH}{cmyk}{0.7,0.0,1.0,0}
+\definecolor{greenLightRWTH}{cmyk}{0.525,0,0.75,0}
+\definecolor{greenLighterRWTH}{cmyk}{0.35,0,0.5,0}
+
+\definecolor{orangeRWTH}{cmyk}{0,0.4,1.0,0}
+\definecolor{orangeLightRWTH}{cmyk}{0,0.3,0.75,0}
+\definecolor{orangeLighterRWTH}{cmyk}{0,0.2,0.5,0}
+
+\definecolor{redRWTH}{cmyk}{0.15,1,1,0}
+\definecolor{redLightRWTH}{cmyk}{0.1125,0.75,0.75,0}
+\definecolor{redLighterRWTH}{cmyk}{0.075,0.5,0.5,0}
+\definecolor{rwthLight}{cmyk}{0.0,0.0,0.0,0.5}

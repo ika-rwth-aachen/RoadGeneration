@@ -1,0 +1,17 @@
+[
+    {
+    "name": "pdflatex ➞ bibtex ➞ pdflatex`×2",
+    "tools": [
+        "pdflatex",
+        "bibtex",
+        "pdflatex",
+        "pdflatex"
+    ]
+    },
+    {
+    "name": "latexmk",
+    "tools": [
+        "latexmk"
+    ]
+    }
+]
