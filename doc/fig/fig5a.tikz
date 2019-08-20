@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+
+    \coordinate[] (A) at (0,0);
+    \coordinate[] (B) at (4,2);
+    \coordinate[] (C) at (2,0);
+    \coordinate[] (D) at (2.707,0.707);
+
+    \draw[->] (A) -- (0.5,0);
+    \draw[->] (B) -- (4.35,2.35);
+    \fill[red] (A) circle (0.05);
+    \fill[red] (B) circle (0.05);
+    \fill[blue] (C) circle (0.05);
+    \fill[yellow] (D) circle (0.05);
+
+    \draw[dashed] (-1,0) -- (5,0);
+    \draw[dashed] (5,3) -- (1,-1);
+
+\end{tikzpicture}
