@@ -1,8 +1,8 @@
 %!TEX root = ../main.tex
+\thispagestyle{ika}
 
 % --- EINLEITUNG ---------------------------------------------------------------
 \chapter{Einleitung}
-%\thispagestyle{ika}
 
 In der Automobilindustrie geht der Trend in den vergangenen Jahren verstärkt hin zur Entwicklung und Realisierung von autonomen Fahrfunktionen. Um diese automatisierten Fahrmanöver zu validieren und abzusichern werden Testfahrten mit vielen tausend Testkilometern benötigt. Als kostengünstige Alternative zur realen Testfahrt können diese auch mit Hilfe von Simulationen als Abbild der Realität durchgeführt werden. Ausgangspunkt jeder Simulation ist eine vorhandene Streckenbeschreibung auf der die entsprechende Simulation durchgeführt wird. Zum einen können solche Strecken anhand der Realität erzeugt werden, was jedoch einen hohen Detaillierungsgrad vorraus setzt und aktuell nicht automatisiert geschieht. Eine weitere Möglichkeit zur Erzeugung von Strecken ist ein logisch, varierbarer Ansatz der als Grundlage für diese Seminararbeit herangezogen wird. Hierbei ist nicht das Abbild der Realtität das Ziel, sondern Vorschriften und Grenzen einzuhalten und durch einfache und parametrisierte Angaben ein komplexes und vorallem in sich valides Streckennetz generieren zu können.
 
@@ -10,10 +10,10 @@ Die Grundidee hierbei ist die Implementierung eines Tools mit Hilfe dessen der B
 
 % --- ALLGEMEINE STRECKENBESCHREIBUNG ------------------------------------------
 \chapter{Allgemeine Streckenbeschreibung}
-%\thispagestyle{ika}
+
 Grundsätzlich lässt sich eine Strecke in verschiedene Ebenen teilen, wie in Abbildung \ref{abb1} sichtbar. Ausgangspunkt ist die Straße als solche mit Fahrbahnen und Fahrbahnmarkierungen. Ein weiterer Bestandteil sind Verkehrsführende Elemente wie beispielsweise Beschilderungen, Ampelanlagen oder Bushaltestellen. Ein letzter für die Streckenbeschreibung notwendiger Aspekt sind temporäre Veränderungen wie zum Beispiel Baustellen. Alle weiteren Ebenen des gezeigten Modells finden in der Streckenbeschreibung -und Generierung keine Anwendung.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\flushleft
 	\includegraphics[width=0.95\textwidth]{fig/fig1.png}
 	\caption{Test \cite{Donges.1982,Werling.2017}}
@@ -22,7 +22,7 @@ Grundsätzlich lässt sich eine Strecke in verschiedene Ebenen teilen, wie in Ab
 
 Im Allegemeinen gibt es zwei relevante Koordinatensysteme für Strecken. Neben dem globalen x-y Koordinatensystem existiert das der Referenzlinie mitbewegte s-t Koordinatensystem, wie auch Abbildung \ref{abb2} verdeutlicht. Jede Straße besitzt eine Referenzlinie, deren Beschreibung analytisch durch das Verbinden von Gerade, Kreisbögen und Spiralsegmenten möglich ist. Diese im Straßenbau standardisierte Methode ermöglicht eine kontinuierliche Beschreibung ohne Krümmungssprung, ebenfalls in Abbildung \ref{abb2} zu entnehmen. Eine Gerade mit Krümmung Null und ein Kreisbogen mit konstanter Krümmung können durch ein Sprialsegment mit linearem Krümmungsanstieg verbunden werden.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\flushleft
 	\includegraphics[width=0.95\textwidth]{fig/fig2.png}
 	\caption{Test \cite{Donges.1982,Werling.2017}}
@@ -33,11 +33,10 @@ An die definierte Referenzlinie können im Anschluss dann Fahrbahnen hinzugefüg
 
 % --- OPEN DRIVE STANDARD ------------------------------------------------------
 \chapter{OpenDrive Standard}
-%\thispagestyle{ika}
 
 OpenDrive ist ein 2006 entwickeltes Format zur Darstellung von logischen Straßennetzwerken und mittlerweile ein Standard für Strecken für Fahrzeugsimulationen. Das Format enthält nicht nur Straßen und Fahrbahninformationen sondern ermöglicht auch die Definition komplexerer Beschilderungen, Fahrbahnmarkierungen oder Ampelsignale. Definiert wird die openDrive Datenstruktur im XML-Format in welcher grundsätzlich zwischen Straßen (\texttt{roads}) und Kreuzungen (\texttt{junctions}) unterschieden wird. Eine vereinfachte Übersicht der openDrive Struktur lässt sich in Abbildung\ref{abb3} finden. Die Refenzlinie wird wie erläutert mit Segmenten analytisch beschrieben, wobei zusätzlich die laterale Position und Ausrichtung sowie das Höhenprofil der Straße definiert werden können. Hinzugefügt werden dann einzelne Fahrbahnen (\texttt{lanes}). An Kreuzungen werden die Fahrbahnverbindungen zwischen unterschiedlichen Straßen als eigene Straßen definiert. Diese können dann im openDrive Format über \texttt{junctions} miteinander verbunden werden. Zudem lassen sich unbegrenzt Objekte definieren. Dies sichert eine eindeutige und korrekte Beschreibung der gewünschten Strecke, macht das XML-Format allerdings auch sehr komplex und für einen Nutzer von Hand kaum generierbar.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\flushleft
 	\includegraphics[width=0.95\textwidth]{fig/fig3.png}
 	\caption{Test \cite{Donges.1982,Werling.2017}}
@@ -48,7 +47,6 @@ Deshalb existieren Tools mit denen ermöglicht wird eine Strecke über eine graf
 
 % --- ANNAHMEN UND VEREINFACHUNGEN IM IKA KONZEPT ------------------------------
 \chapter{Annahmen und Vereinfachungen im ika Konzept}
-%\thispagestyle{ika}
 
 Um eine logisch varierbare Straße im openDrive Format zu erzeugen, bedarf es ein Tool dass anhand eines vereinfachten, benutzerfreundlichem Eingabeformat das komplexe, detailreiche openDrive Format generiert. Das Konzept dieses Eingabeformats und die dazugehörigen Vereinfachungen werden in diesem Abschnitt erläutert.
 
@@ -62,7 +60,6 @@ Für den Nutzer sind also nur vereinfachte Angaben wie der Krezungstyp, die Stra
 
 % --- UMSETZUNG UND IMPLEMENTIERUNG DES TOOLS ----------------------------------
 \chapter{Umsetzung und Implementierung des Tools}
-%\thispagestyle{ika}
 
 \section{Ein - und Ausgabeformat}
 Die Definition im vereinfachten Eingabeformat geschieht ebenfalls wie die Darstellung des openDrive Formats in einer XML-Struktur. Dies erlaubt eine übersichtliche Defintion der Datenstruktur mit Hilfe von Attributen und Elementen. Das Tool zur Generierung des openDrive-Formats wird in c++ geschrieben, sodass eine kompatible Bibliothek zum einlesen und schreiben der XML-Dateien verwendet wird. Die Bibliothek \texttt{pugi\_xml} ermöglicht das Einlesen der Eingabedatei und speichert die XML Struktur ähnlich einer Baumstruktur zur Laufzeit, was entsprechend eine effiziente und übersichtliche Verwendung der Eingaben innerhalb des Tools ermöglicht. Ebenso wird eine solche XML-Stuktur zur Laufzeit des Tools erzeugt, die dann mit den generierten openDrive Obejekten gefüllt werden kann. 
@@ -77,10 +74,10 @@ Die Eingabedaten werden zur Laufzeit eingelesen und sind so global als Baumstruk
 
 Für eine X-Kreuzungen existieren drei verschiedene Fälle wie in Abbildung \ref{abb4} dargestellt, welche sich in Anzahl und Anordnung der definierten Eingangsstraßen unterscheiden.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\flushleft
 	\includegraphics[width=0.95\textwidth]{fig/fig1.png}
-	\caption{Test \cite{Donges.1982,Werling.2017}}
+	\caption{Test}
 	\label{abb4}
 \end{figure}
 
@@ -106,19 +103,17 @@ Zum einen ist dies möglich falls beide Vektoren in die gleiche Richtung und der
 
 Für den Fall, dass der Schnittpunkt in positiver Richtung des Startvektors und in negativer Richtung des Endvektors liegt lässt sich die Strecke ebenfalls verbinden. Dazu wird das der Abstand von Start und Endpunkt zum Schnittpunkt verglichen und das längere Stück soweit mit einer Geraden verlängert, bis Start und Endpunkt gleichweit entfernt liegen. Nun lässt sich das fehlende Stück mit Hilfe eines Kreisbogens schliessen. Für kleine Geschwindigkeiten wird hierbei der Krümmungssprung zwischen Gerade und Kreisbogen toleriert. Die Berechnung des Kreisbogens erfolgt mit Konstruktion eines Gleichschenkligem Dreieck wie in Abbildung \ref{abb5} dargstellt. 
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\flushleft
 	\includegraphics[width=0.95\textwidth]{example-image}
-	\caption{Test \cite{Donges.1982,Werling.2017}}
+	\caption{Test}
 	\label{abb5}
 \end{figure}
 
 Daraus lässt sich über die Beziehung 
 
 \begin{align}
-    \begin{equation}
-        sin(\frac{\alpha}{2) = \frac{\frac{d}{2}}{R}
-    \end{equation}
+        sin(\frac{\alpha}{2}) = \frac{\frac{d}{2}}{R}
 \end{align}
 
 der Kreisradius und mit dem Winkel \(\alpha\) ebenfalls die Länge des Kreissegments berechnen. Somit ist der Kreis, welcher die fehlende Lücke schliesst klar definiert und das Strassensegment geschlossen.
@@ -129,17 +124,16 @@ Das vorgehen gewährleistet einen kontinuierlichen Übergang vom Starpunkt in de
 
 % --- BEISPIELE UND TESTS ------------------------------------------------------
 \chapter{Beispiele und Tests}
-%\thispagestyle{ika}
 
 Im folgenden Abschnitt finden sich einige beispielhafte generierte Kreuzungen. Zudem wurden im letzten Schritt einige zuvor generierte Strassen zusammengefügt und durch Verbindungsstrassen mit Hilfe der Funktion \texttt{closeRoadConnection} geschlossen. 
 
 \section{X-Kreuzung}
 Wie schon erläutert gibt es für Kreuzungen verschiedene Typen. Der hier beispielhaft gezeigte Typ besteht aus einer durchgehenden Hauptstrasse und zwei aneinandergrenzenden Nebenstrassen. Verbunden werden sollen alle Fahrstreifen im Kreuzungsbereich und die Kreuzungsbereichgröße wird auf 15m in alle Richtungen gesetzt. Per Definition befindet sich der Kreizungsmittelpunkt im Ursprung des xy Koordinatensystems. Eine Darstellung der beispielhaften Krezung befindet sich in Abbildung \ref{abb6}.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\flushleft
-	\includegraphics[width=0.95\textwidth]{example-image}
-	\caption{Test \cite{Donges.1982,Werling.2017}}
+	\includegraphics[width=0.95\textwidth]{fig6.png}
+	\caption{X Kreuzung im openDRIVE Viewer}
 	\label{abb6}
 \end{figure}
 
@@ -148,10 +142,10 @@ Annahme innerhab des Tools ist, dass Hauptstrassen eine zusätzliche Linksabbieg
 \section{Kreisverkehr}
 Analog zur X-Kreuzung kann ein Kreisverkehrsegment erstellt werden. Ausgangspunkt ist die Definition des Kreises, der angrenzenden Strassen und jweils die Position und der Winkel des Schnittpunkts. Daraus generiert das Tool alle Kreuzungsbereiche des Kreisverkehrs eigenständig, schneidet die das Kreissegment an den entsorechenden Stellen und erstellt die Verbindungsstraßen der einzelnen Kreuzungen. Eine Visualisierung der Straßen lässt sich in Abbuldung \ref{abb7} finden.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\flushleft
-	\includegraphics[width=0.95\textwidth]{example-image}
-	\caption{Test \cite{Donges.1982,Werling.2017}}
+	\includegraphics[width=0.95\textwidth]{fig7.png}
+	\caption{Kreisverkehr im openDRIVE Viewer}
 	\label{abb6}
 \end{figure}
 
@@ -161,10 +155,10 @@ Angrenzend an eine ringförmige Straße treten vier Nebenstraßen auf, die zsamm
 
 Diese und weitere parametrisierte Segmente lassen sich mitHilfe des erstellen Tools generieren. Das zugrundeliegende Beispiel zeigt nun, dass die Segmente aneinander gefügt werden können und ferner zwei Straßenenden mit einer neu generierten Straße automatisiert miteinander Verbunden werden können. Zwar ist die erstellte Verbindungsstrasse nicht immer die kürzeste Möglichkeit zur Verbindung der Strassen, jedoch wird der genaue Verlauf der Verbindungsstraße hierbei auch vernachlässigt.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\flushleft
-	\includegraphics[width=0.95\textwidth]{example-image}
-	\caption{Test \cite{Donges.1982,Werling.2017}}
+	\includegraphics[width=0.95\textwidth]{fig8.png}
+	\caption{Streckennetzwerk im openDRIVE Viewer}
 	\label{abb7}
 \end{figure}
 
@@ -174,7 +168,6 @@ Insgesamt zeigen die dargstellten Beispiele, dass das Tool die vereinfachten Ein
 
 % --- AUSBLICK -----------------------------------------------------------------
 \chapter{Ausblick}
-%\thispagestyle{ika}
 
 Das in dieser Seminararbeit entwickelte Tool ermöglicht es mit Hilfte einer vereinfachten Streckenbeschreibung ein vollständiges Streckennetz im standardisierten openDrive Format zu generieren. Dies erlaubt Benutzern durch einfache Paramteränderungen komplett unterschiedliche, aber valide Strecken zu erhalten. So ist es möglich grosse Strecken mit wenigen Eingaben zu generireren und für eine anschliessende Simulation zu benutzen.
 
