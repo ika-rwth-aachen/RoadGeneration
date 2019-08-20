@@ -16,7 +16,7 @@
 \input{header}
 
 % literature and biber settings
-%\input{biberHeader}
+\input{biberHeader}
 
 %\pagestyle{scrheadings}
 \setcounter{secnumdepth}{4} % sections numbered until 4th layer
@@ -40,16 +40,11 @@
 \renewcommand{\contentsname}{Inhalt}
 \tableofcontents
 \newpage
-%\pagestyle{ika}
+\pagestyle{ika}
 \include{content/1_Einleitung}
-%\include{content/2_StandDerTechnik}
-%\include{content/3_Forschungsansatz}
-%\include{content/4_Umsetzung}
-%\include{content/5_Ergebnisse}
-%\include{content/6_Zusammenfassung}
 
 \setlength\LTleft{-6pt}
-\setlength\LTright{0pt}
+\setlength\LTright{0pt} 
 %\printglossary[type=symbolslist,style=long,title=Formelzeichen und Indizes,toctitle=Formelzeichen und Indizes]
 %\printglossary[type=acronym,style=long,title=Abkürzungen,toctitle=Abkürzungen]
 
@@ -66,6 +61,6 @@
 ]
 \newpage
 \pagestyle{apx}
-\include{content/Anhang}
+%\include{content/Anhang}
 
 \end{document}
