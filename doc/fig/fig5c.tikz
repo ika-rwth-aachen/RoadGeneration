@@ -1,18 +1,17 @@
 \begin{tikzpicture}
+ 
+    \coordinate[label=above:$A$] (A) at (0,0);
+    \coordinate[label=135:$B$] (B) at (4,2);
+    \coordinate[] (H) at (3.41421,1.41421);
 
-    \coordinate[] (A) at (0,0);
-    \coordinate[] (B) at (4,2);
-    \coordinate[] (C) at (2,0);
-    \coordinate[] (D) at (2.707,0.707);
+    \draw[dashed, line width=0.2] (-1,0) -- (5,0);
+    \draw[dashed, line width=0.2] (5,3) -- (1,-1);
 
-    \draw[->] (A) -- (0.5,0);
-    \draw[->] (B) -- (4.35,2.35);
-    \fill[red] (A) circle (0.05);
-    \fill[red] (B) circle (0.05);
-    \fill[blue] (C) circle (0.05);
-    \fill[yellow] (D) circle (0.05);
+    \draw[blue, line width=1] (H) -- (B);
+    \draw[blue, line width=1] (A) arc (-90:-45:4.8284);
 
-    \draw[dashed] (-1,0) -- (5,0);
-    \draw[dashed] (5,3) -- (1,-1);
+    \fill[red] (A) circle (0.075);
+    \fill[red] (B) circle (0.075);
+    \fill[orange] (H) circle (0.075);
 
 \end{tikzpicture}

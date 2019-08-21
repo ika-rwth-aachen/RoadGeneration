@@ -112,19 +112,21 @@ Für den Fall, dass der Schnittpunkt in positiver Richtung des Startvektors und 
     \includegraphics[width=0.95\textwidth]{fig/fig5b.tikz}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
-    \includegraphics[width=0.95\textwidth]{fig/fig5b.tikz}
+    \includegraphics[width=0.95\textwidth]{fig/fig5c.tikz}
 \end{subfigure}
 \caption{Verbindung durch Gerade und Kreissegment}
 \label{abb5}
 \end{figure}
 
-Daraus lässt sich über die Beziehung
+Der Radius des Kreises lässt sich nun über folgende Beziehung herleiten.
 
 \begin{align}
-sin(\frac{\alpha}{2}) = \frac{\frac{d}{2}}{R}
+\text{sin}(\frac{\alpha}{2}) &= \frac{\frac{d}{2}}{R} \\
+&\Rightarrow \hspace{2cm} R = \frac{d}{2 \cdot \text{sin}(\frac{\alpha}{2})} \\
+&\Rightarrow \hspace{2cm} l = R \cdot \alpha
 \end{align}
 
-der Kreisradius und mit dem Winkel \(\alpha\) ebenfalls die Länge des Kreissegments berechnen. Somit ist der Kreis, welcher die fehlende Lücke schließt klar definiert und das Straßensegment geschlossen.
+Mit berechnetem Kreisradius und dem zu überbrückenden Winkel \(\alpha\), kann  ebenfalls die Länge des Kreissegments bestimmt werden. Somit ist der Kreis, welcher die fehlende Lücke schließt klar definiert und das Straßensegment geschlossen.
 
 Für den Fall, dass die Straße an Start oder Endpunkt eine Krümmung besitzt, wird automatisch ein Spiralsegment eingefügt, welches den Krümmungssprung überbrückt. Ähnliches gilt, falls die Anzahl der Spuren oder die Breite von Start und Endpunkt variiert.
 
