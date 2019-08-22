@@ -7,6 +7,14 @@ Makefile
 CMakeCache.txt
 
 *.synctex.gz
+*.synctex(busy)
+*.aux
+*.acn
+*.bbl
+*.blg
+*.toc
+*.ist
+*.out
 *.log
 *.bcf
 *.dvi
