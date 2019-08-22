@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 2.6)
 project(roadGeneration)
 
+find_package (XercesC REQUIRED)
+
+
 # Find cmake scripts
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
@@ -12,6 +15,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 # source code
 include_directories(src)
 include_directories(${CMAKE_SOURCE_DIR}/libs/pugixml-1.9/src)
+include_directories (${XercesC_INCLUDE_DIR})
 
 set(BIN_DIR ${CMAKE_SOURCE_DIR}/bin CACHE PATH "BIN_DIR")
 set(CMAKE_CXX_STANDARD 11)
@@ -30,4 +34,6 @@ add_executable(roadGeneration
     )
 
 add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})
+
+target_link_libraries(roadGeneration xerces-c)
 

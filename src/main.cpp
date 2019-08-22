@@ -9,12 +9,16 @@ std::string::size_type sz;
 using namespace std;
 
 #include "pugixml.hpp"
+#include <xercesc/util/PlatformUtils.hpp>
+
 #include "interface.h"
 #include "helper.h"
 #include "io.h"
 #include "buildSegments.h"
 #include "linkSegments.h"
 #include "closeRoadNetwork.h"
+
+using namespace xercesc;
 
 /**
  * @brief main function for the tool roadGeneration
