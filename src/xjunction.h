@@ -153,6 +153,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     {
         generateRoad(mainRoad, r1, sMain+sOffMain, INFINITY, 0, sMain,iPx, iPy, iPhdg);
     }
+    addObjects(mainRoad,r1,data);
     data.roads.push_back(r1);
 
     road r2;
@@ -168,6 +169,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     {
         generateRoad(additionalRoad1, r2, sAdd1+sOffAdd1, INFINITY, 0, sAdd1, iPx, iPy, iPhdg+phi1);
     }
+    addObjects(additionalRoad1,r2,data);
     data.roads.push_back(r2);
 
     road r3; 
@@ -178,10 +180,12 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     if (mode == 1 || mode == 2)
     {
         generateRoad(mainRoad, r3, sMain+sOffMain, INFINITY, 50, sMain,iPx, iPy,iPhdg);
+        addObjects(mainRoad,r3,data);
     }
     if (mode == 3)
     {
         generateRoad(additionalRoad2, r3, sAdd2+sOffAdd2, INFINITY, 0, sAdd2, iPx, iPy, iPhdg+phi2);
+        addObjects(additionalRoad2,r3,data);
     }
     data.roads.push_back(r3);
 
@@ -193,14 +197,17 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     if (mode == 1)
     {
         generateRoad(additionalRoad1, r4, sAdd1+sOffAdd1, INFINITY, 50,sAdd1, iPx, iPy, iPhdg+phi1);
+        addObjects(additionalRoad1,r4,data);
     }
     if (mode == 2)
     {
         generateRoad(additionalRoad2, r4, sAdd2+sOffAdd2, INFINITY, 0, sAdd2, iPx, iPy, iPhdg+phi2);
+        addObjects(additionalRoad2,r4,data);
     }
     if (mode == 3)
     {
         generateRoad(additionalRoad3, r4, sAdd3+sOffAdd3, INFINITY, 0, sAdd3, iPx, iPy, iPhdg+phi3);
+        addObjects(additionalRoad3,r4,data);
     }
     data.roads.push_back(r4);
 

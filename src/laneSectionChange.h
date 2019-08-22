@@ -9,7 +9,7 @@
  * @param ds        length of lane widing
  * @return int      errorcode
  */
-int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
+int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds, bool busStop)
 { 
     std::vector<laneSection>::iterator it;
 
@@ -45,8 +45,18 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
     l.rm.type = "broken";
 
     // shift other lanes and add lane
-    shiftLanes(adLaneSec, laneId, 1);
-    adLaneSec.lanes.push_back(l);  
+    if (busStop)
+    {
+        l.type = "bus";
+        l.rm.type = "solid";
+        l.id = laneId + sgn(laneId);
+        adLaneSec.lanes.push_back(l);  
+    }
+    else
+    {
+        shiftLanes(adLaneSec, laneId, 1);
+        adLaneSec.lanes.push_back(l);  
+    }
 
     // center line solid
     lane tmp;
@@ -56,6 +66,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
     it++;
     it = secs.insert(it, adLaneSec);
     it++;
+
 
     // adjust the sections after the laneWiding
     l.w.d = 0;
@@ -75,8 +86,11 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
     // shift all lanes in following lane sections
     for (; it != secs.end(); ++it)
     {
-        shiftLanes(secs[i], laneId, 1);
-        it->lanes.push_back(l); 
+        if(!busStop)
+        {
+            shiftLanes(secs[i], laneId, 1);
+            it->lanes.push_back(l); 
+        }
     }
 
     return 0;
@@ -91,7 +105,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds)
  * @param ds        length of laneDrop
  * @return int      errorcode
  */
-int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
+int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds, bool busStop)
 {
     std::vector<laneSection>::iterator it;
     std::vector<lane>::iterator itt;
@@ -138,6 +152,15 @@ int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
     adLaneSec.lanes[id].rm.type = "broken";
 
     it = secs.insert(it, adLaneSec);
+
+    if (busStop)
+    {
+        int id = findLane(*it, l, laneId);
+        itt = it->lanes.begin() + id;
+        it->lanes.erase(itt); 
+
+        return 0;
+    }
 
     // shift all lanes in following lane sections
     for (; it != secs.end(); ++it)

@@ -11,7 +11,7 @@
  */
 int parseXML(pugi::xml_document &doc, roadNetwork &data, char * file)
 {   
-    if (false)
+    if (true)
     {
         data.file = "bin/all.xml";
         doc.load_file("bin/all.xml");
@@ -156,6 +156,69 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
                 roadmark.append_attribute("width") = ittt->rm.width;
             }
         }
+
+        pugi::xml_node objects = road.append_child("objects");
+        // write objects        
+        for (std::vector<object>::iterator itt = it->objects.begin() ; itt != it->objects.end(); ++itt)
+        {
+            object o = *itt;
+            pugi::xml_node obj = objects.append_child("object");
+            
+            obj.append_attribute("type") = o.type.c_str();
+            obj.append_attribute("name") = o.type.c_str();
+            obj.append_attribute("dynamic") = "no";
+            obj.append_attribute("id") = o.id;
+            obj.append_attribute("s") = o.s;
+            obj.append_attribute("t") = o.t;
+            obj.append_attribute("zOffset") = o.z;
+            obj.append_attribute("hdg") = o.hdg;
+            obj.append_attribute("pitch") = 0;
+            obj.append_attribute("roll") = 0;
+            obj.append_attribute("validLength") = 0;
+            obj.append_attribute("orientation") = o.orientation.c_str();
+            obj.append_attribute("length") = o.length;
+            obj.append_attribute("width") = o.width;
+            obj.append_attribute("height") = o.height;
+
+            if (o.repeat)
+            {
+                obj = obj.append_child("repeat");
+                obj.append_attribute("s") = o.s;
+                obj.append_attribute("length") = o.len;
+                obj.append_attribute("distance") = o.distance;
+                obj.append_attribute("tStart") = o.t;
+                obj.append_attribute("tEnd") = o.t;
+                obj.append_attribute("widthStart") = o.width;
+                obj.append_attribute("widthEnd") = o.width;
+                obj.append_attribute("heightStart") = o.height;
+                obj.append_attribute("heightEnd") = o.height;
+                obj.append_attribute("zOffsetStart") = o.z;
+                obj.append_attribute("zOffsetEnd") = o.z;
+                obj.append_attribute("lengthStart") = o.length;
+                obj.append_attribute("lengthEnd") = o.length;  
+            }
+        }
+
+        pugi::xml_node signals = road.append_child("signals");
+        // write signals        
+        for (std::vector<signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
+        {
+            signal s = *itt;
+            pugi::xml_node sig = signals.append_child("signal");
+            
+            sig.append_attribute("id") = s.id;
+            sig.append_attribute("type") = s.type.c_str();
+            sig.append_attribute("subtype") = "-";
+            sig.append_attribute("s") = s.s;
+            sig.append_attribute("t") = s.t;
+            sig.append_attribute("zOffset") = s.z;
+            sig.append_attribute("orientation") = s.orientation.c_str();
+            if (s.dynamic) sig.append_attribute("dynamic") = "yes";
+            else sig.append_attribute("dynamic") = "no";
+            sig.append_attribute("value") = s.value;
+            sig.append_attribute("width") = s.width;
+            sig.append_attribute("height") = s.height;
+        }
     }
         
     // write junctions
@@ -177,6 +240,21 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
             pugi::xml_node lL = con.append_child("laneLink");
             lL.append_attribute("from") = itt->fromLane;
             lL.append_attribute("to") = itt->toLane;
+        }
+    }
+
+    // write controllers
+    for (std::vector<control>::iterator it = data.controller.begin() ; it != data.controller.end(); ++it)
+    {
+        pugi::xml_node controller = root.append_child("controller");
+
+        controller.append_attribute("id") = it->id;
+
+        for (std::vector<signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
+        {
+            pugi::xml_node con = controller.append_child("control");
+
+            con.append_attribute("signalId") = itt->id;
         }
     }
 

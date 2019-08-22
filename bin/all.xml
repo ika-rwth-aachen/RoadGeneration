@@ -318,6 +318,30 @@
                     <laneWidening lane="1" sOffset="110" ds1="40" />
                     <laneDrop lane="1" sOffset="300" ds1="30" />
                 </lanes>
+                <objects>
+                    <trafficRule id="1">
+                        <signal id="1" type="1.000.001" value="0" dynamic="true">
+                            <relativePosition s="50" t="7" z="0" hdg="0" />
+                        </signal>
+                    </trafficRule>
+                    <marking id="1" signNumber="1">
+                        <relativePosition s="100" t="0" z="0" hdg="0" />
+                    </marking>
+                    <streetLamp id="1">
+                        <repeatPosition s="10" t="5" z="0" hdg="0" length="100" />
+                    </streetLamp>
+                    <roadWork id="2" s="200" length="100" laneId="-1" />
+                    <busStop id="1" type="bay">
+                            <relativePosition s="50" t="7" z="0" hdg="0" />
+                    </busStop>
+                    <parkingSpace id="2" width="2.5" length="5">
+                        <relativePosition s="5" t="5" z="0" hdg="1.05707" />
+                    </parkingSpace>
+                    <parkingSpace id="3" width="2.5" length="5">
+                        <repeatPosition s="5" t="-5" z="0" hdg="1" length="100" /> 
+                    </parkingSpace>
+                    <trafficIsland id="4" s="4" length="5" width="2" />
+                </objects>
             </road>
         </connectingRoad> 
         <connectingRoad id="5">

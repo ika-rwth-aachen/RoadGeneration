@@ -121,7 +121,9 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         r2.junction = junc.id;
         r2.predecessor.elementId = junc.id;
         r2.predecessor.elementType = "junction";
-        generateRoad(additionalRoad, r2, sAdd+sOffAdd, INFINITY, 0, sAdd, iPx, iPy, iPhdg+phi);        
+        generateRoad(additionalRoad, r2, sAdd+sOffAdd, INFINITY, 0, sAdd, iPx, iPy, iPhdg+phi); 
+        addObjects(additionalRoad, r2, data);
+
 
         road helper;
         helper.id = r1.id + cc * 10 + 3; 

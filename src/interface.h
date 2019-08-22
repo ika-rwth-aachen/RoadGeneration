@@ -76,6 +76,45 @@ struct link
     string contactPoint = "start";
 };
 
+struct object
+{
+    int id = -1;
+    string type;
+    double s = 0;
+    double t = 0;
+    double z = 0;
+    double hdg = 0;
+    string orientation = "none";
+    double length = 0;
+    double width = 0;
+    double height = 0;
+
+    bool repeat = false;
+    double len = 0;
+    double distance = 0;
+};
+
+struct signal
+{
+    int id = -1;
+    int rule = -1;
+    string type;
+    double value;
+    double s = 0;
+    double t = 0;
+    double z = 0;
+    string orientation = "none";
+    double width = 0;
+    double height = 0;
+    bool dynamic;
+};
+
+struct control
+{
+    vector<signal> signals;
+    int id = -1;
+};
+
 struct road
 {
     double length = 0;
@@ -88,6 +127,8 @@ struct road
 
     vector<geometry> geometries;
     vector<laneSection> laneSections;
+    vector<object> objects;
+    vector<signal> signals;
 };
 
 struct roadNetwork
@@ -95,4 +136,5 @@ struct roadNetwork
     string file;
     vector<road> roads;
     vector<junction> junctions;
+    vector<control> controller;
 };

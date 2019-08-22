@@ -347,7 +347,7 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
             // only perform drop if not close to junction
             if (s < sLaneWidening + 50) continue;
             if (s > r.length) continue;       
-            addLaneWidening(r.laneSections, lane, s, ds);
+            addLaneWidening(r.laneSections, lane, s, ds, false);
         }
         if ((string)itt->name() == "laneDrop")
         {
@@ -358,7 +358,7 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
             // only perform drop if not close to junction
             if (s < sLaneWidening + 50) continue;       
             if (s > r.length) continue;       
-            addLaneDrop(r.laneSections, lane, s, ds);                
+            addLaneDrop(r.laneSections, lane, s, ds, false);                
         }
     }
 
