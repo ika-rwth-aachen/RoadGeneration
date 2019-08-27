@@ -51,7 +51,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         curve(g1.length,g1,x1,y1,hdg1,1);
     }
 
-    // connection beteen starting road and current road
+    // connection between starting road and current road
     connection con1;
     con1.id = junc.connections.size() + 1;
     con1.from = r1.id;
@@ -83,7 +83,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         fixAngle(hdg2);
     }
 
-    // connection beteen current road and ending road
+    // connection between current road and ending road
     connection con2;
     con2.id = junc.connections.size() + 1;
     con2.contactPoint = "end";
@@ -96,6 +96,34 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     // --- compute connecting road ---------------------------------------------
     double a = hdg2-hdg1;
     fixAngle(a);
+
+    // --- type ----------------------------------------------------------------
+    int type;
+    // strong corner
+    if (abs(a) >= M_PI / 2) 
+    {
+        // update start end endpoint according to lane
+        double phi1, phi2;
+        double t1 = findTOffset(lS1,fromId-sgn(fromId),0);
+        double t2 = findTOffset(lS2,toId-sgn(toId),0);
+        
+        if(t1 > 0) phi1 = g1.hdg + M_PI/2; 
+        if(t1 < 0) phi1 = g1.hdg - M_PI/2; 
+        fixAngle(phi1);
+        
+        if(t2 > 0) phi2 = g2.hdg + M_PI/2; 
+        if(t2 < 0) phi2 = g2.hdg - M_PI/2; 
+        fixAngle(phi2);
+        
+        x1 += cos(phi1) * fabs(t1);
+        y1 += sin(phi1) * fabs(t1);
+
+        x2 += cos(phi2) * fabs(t2);
+        y2 += sin(phi2) * fabs(t2);
+        type = 1;
+    } 
+    // weak corner
+    if (abs(a) <  M_PI / 2) type = 2;
 
     // simple line if angles are almost the same
     if (abs(a) < 0.1) 
@@ -206,7 +234,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     }
 
     // --- lanemarkings in crossing section ------------------------------------
-    createLaneConnection(r,lS1,lS2,fromId,toId,laneMarkLeft,laneMarkRight);
+    createLaneConnection(r,lS1,lS2,fromId,toId,laneMarkLeft,laneMarkRight,type);
                
     return 0;
 }

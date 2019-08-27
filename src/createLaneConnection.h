@@ -12,7 +12,7 @@
  * @param right     right roadmarking
  * @return int      errorcode
  */
-int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, int to, string left, string right)
+int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, int to, string left, string right, int type)
 {
        
     if (from == 0 || to == 0) {
@@ -55,17 +55,19 @@ int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, in
     helpLane.type = "none";
     
     lane newLane;
-    newLane.id = 2 * dir;
+    newLane.id = type * dir;
 
     if (dir > 0)
     {
-        center.rm.type = "none";
+        if (type == 1) center.rm.type = right;
+        if (type == 2) center.rm.type = "none";
         helpLane.rm.type = right;
         newLane.rm.type = left;
     }
     else if (dir < 0)
     {
-        center.rm.type = "none";
+        if (type == 1) center.rm.type = left;
+        if (type == 2) center.rm.type = "none";
         helpLane.rm.type = left;
         newLane.rm.type = right;
     }
@@ -88,7 +90,8 @@ int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, in
         r.laneSections.back().lanes.push_back(center);
     }
 
-    r.laneSections.back().lanes.push_back(helpLane);
+    if (type == 2)
+        r.laneSections.back().lanes.push_back(helpLane);
     
     r.laneSections.back().lanes.push_back(newLane);
 
