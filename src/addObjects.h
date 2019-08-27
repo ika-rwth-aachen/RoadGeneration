@@ -185,9 +185,88 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
             o.type = type;
             o.s = obj.attribute("s").as_double();
             o.t = 0;
+            
             o.length = obj.attribute("length").as_double();
             o.width = obj.attribute("width").as_double();
+            
             r.objects.push_back(o);
+            
+            // find laneSection and lane
+            int i;
+            for (i = r.laneSections.size()-1; i >= 0; i--)
+                if (r.laneSections[i].s < o.s) break;
+            laneSection lS = r.laneSections[i];
+
+            lane l;
+            findLane(lS,l,1);
+
+            double w = o.width / 2;
+            double ds = o.length / 2;
+            
+            laneSection sec;
+
+            // --- part 1
+            sec = r.laneSections[i];
+            sec.s = o.s - o.length;
+
+            l.w.d = -2 * w / pow(ds,3);
+            l.w.c =  3 * w / pow(ds,2);
+            l.w.b = 0;
+            l.w.a = 0;
+            l.rm.type = "none";
+            l.type = "driving";
+
+            shiftLanes(sec, 1, 1);
+            shiftLanes(sec, -1, 1);
+            
+            l.id = 1; sec.lanes.push_back(l);
+            l.id = -1; sec.lanes.push_back(l);
+
+            r.laneSections.push_back(sec);
+
+            // --- part 2
+            sec = r.laneSections[i];
+            sec.s = o.s - o.length/2;
+
+            l.w.d = 0;
+            l.w.c = 0;
+            l.w.b = 0;
+            l.w.a = w;
+            l.rm.type = "none";
+            l.type = "none";
+
+            shiftLanes(sec, 1, 1);
+            shiftLanes(sec, -1, 1);
+
+            l.id = 1; sec.lanes.push_back(l);
+            l.id = -1; sec.lanes.push_back(l);
+
+            r.laneSections.push_back(sec);
+
+            // --- part 3
+            sec = r.laneSections[i];
+            sec.s = o.s + o.length/2;
+
+            l.w.d = 2 * w / pow(ds,3);
+            l.w.c = - 3 * w / pow(ds,2);
+            l.w.b = 0;
+            l.w.a = w;
+            l.rm.type = "none";
+            l.type = "driving";
+
+            shiftLanes(sec, 1, 1);
+            shiftLanes(sec, -1, 1);
+
+            l.id = 1; sec.lanes.push_back(l);
+            l.id = -1; sec.lanes.push_back(l);
+
+            r.laneSections.push_back(sec);
+
+            // --- part 4
+            sec = r.laneSections[i];
+            sec.s = o.s + o.length;
+
+            r.laneSections.push_back(sec);
         }
 
         if (type == "marking")

@@ -304,7 +304,7 @@
                 </lanes>
                 <objects>
                     <trafficRule id="1">
-                        <signal id="1" type="1.000.001" value="0" dynamic="true">
+                        <signal id="1" type="busStop" value="0" dynamic="true">
                             <relativePosition s="50" t="7" z="0" hdg="0" />
                         </signal>
                     </trafficRule>
@@ -319,12 +319,12 @@
                             <relativePosition s="50" t="7" z="0" hdg="0" />
                     </busStop>
                     <parkingSpace id="2" width="2.5" length="5">
-                        <relativePosition s="5" t="5" z="0" hdg="1.05707" />
+                        <relativePosition s="5" t="5" z="0" hdg="0" />
                     </parkingSpace>
                     <parkingSpace id="3" width="2.5" length="5">
                         <repeatPosition s="5" t="-5" z="0" hdg="1" length="100" /> 
                     </parkingSpace>
-                    <trafficIsland id="4" s="4" length="5" width="2" />
+                    <trafficIsland id="4" s="400" length="5" width="2" />
                 </objects>
             </road>
         </connectingRoad> 
