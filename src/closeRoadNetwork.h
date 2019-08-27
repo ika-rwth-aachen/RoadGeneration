@@ -160,13 +160,13 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
         }
         while (dPos < 0) 
         {   
-            addLaneDrop(secs, findMaxLaneId(lS1), sNeeded, 50, false);
+            addLaneDrop(secs, findMaxLaneId(lS1), sNeeded, 50);
             sNeeded += 50;
             dPos++;
         }
         while (dNeg < 0) 
         {   
-            addLaneDrop(secs, findMinLaneId(lS1), sNeeded, 50, false);
+            addLaneDrop(secs, findMinLaneId(lS1), sNeeded, 50);
             sNeeded += 50;
             dNeg++;
         }

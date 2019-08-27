@@ -101,13 +101,13 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
             {
                 int laneId = findMaxLaneId(lS);
                 addLaneWidening(r.laneSections, laneId, o.s-12.5, 7.5,true);
-                addLaneDrop (r.laneSections, laneId+1, o.s+5, 7.5, true);
+                addLaneDrop (r.laneSections, laneId+1, o.s+5, 7.5);
             }
             if (o.t < 0) 
             {
                 int laneId = findMinLaneId(lS);
                 addLaneWidening(r.laneSections, laneId, o.s-12.5, 7.5,true);
-                addLaneDrop (r.laneSections, laneId-1, o.s+5, 7.5, true);
+                addLaneDrop (r.laneSections, laneId-1, o.s+5, 7.5);
             }
         }
 
