@@ -1,6 +1,76 @@
 // file addObjects.h
-#include <cassert>
 
+/**
+ * @brief function generates a roadwork
+ * 
+ * @param o         object containing length and position of roadwork   
+ * @param r         road which contains the roadwork
+ * @param laneId    lane which contains the roadwork
+ * @return int      errorcode
+ */
+int addRoadWork(object o, road &r, int laneId)
+{
+    std::vector<laneSection>::iterator it;
+    
+    // search corresponding lane Section
+    int i = 0;
+    bool found = false;
+    for (i = 0; i < r.laneSections.size()-1; i++)
+    {
+        if (r.laneSections[i].s <= o.s && r.laneSections[i+1].s > o.s) {
+            found = true;
+            it = r.laneSections.begin() + i;
+            break; 
+        }
+    }
+    if (!found) {
+        it = r.laneSections.begin() + r.laneSections.size()-1;
+        i = r.laneSections.size()-1;
+    }
+
+    if (i == r.laneSections.size()-1 || r.laneSections[i+1].s-it->s > o.len)
+    {
+        laneSection adLaneSec = *it;
+        adLaneSec.id++;
+        adLaneSec.s = o.s;
+
+        it++;
+        i++;
+        r.laneSections.insert(it, adLaneSec);
+
+        lane l;
+        int id = findLane(r.laneSections[i], l, laneId);
+        r.laneSections[i].lanes[id].type = "roadWorks";
+
+        adLaneSec.id++;
+        adLaneSec.s += o.len;
+
+        it++;
+        i++;
+        r.laneSections.insert(it, adLaneSec);
+    }
+    else
+    {
+        cerr << "Length of roadwork is longer than  laneSection." << endl;
+        return 1;
+    }
+    
+    // shift remaining sections
+    i++;
+    for (; i < r.laneSections.size(); i++)
+    {
+        r.laneSections[i].id++;
+    }
+}
+
+/**
+ * @brief function creates objects like parking spots, traffic signs or markings
+ * 
+ * @param inRoad    road data from input file
+ * @param r         resulting road with additional objects
+ * @param data      roadNetwork structure where the generated roads and junctions are stored
+ * @return int      errorcode
+ */
 int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
 {
     for (pugi::xml_node obj: inRoad.child("objects").children())
@@ -13,6 +83,8 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
         if (obj.child("absolutePosition")) 
         {
             pugi::xml_node position = obj.child("absolutePosition");
+            cerr << "Absolute Position is not implemented." << endl;
+            return 1;
         }
         if (obj.child("relativePosition")) 
         {
@@ -32,15 +104,16 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
             o.len = position.attribute("length").as_double();
         }
         
-        // consider different cases
+        // --- consider different object cases ---------------------------------
         if (type == "parkingSpace")
         {
+
             o.type = type;
             o.length = obj.attribute("length").as_double();
             o.width = obj.attribute("width").as_double();
             o.height = 4;
 
-             // find laneSection
+            // find laneSection
             int i;
             for (i = r.laneSections.size()-1; i >= 0; i--)
                 if (r.laneSections[i].s < o.s) break;
@@ -48,8 +121,8 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
             laneSection lS = r.laneSections[i];
 
             int laneId;
-            if (o.t > 0) laneId = findMaxLaneId(lS)+1;
-            if (o.t < 0) laneId = findMinLaneId(lS)-1;
+            if (o.t > 0) laneId = findMaxLaneId(lS);
+            if (o.t < 0) laneId = findMinLaneId(lS);
             double t = findTOffset(lS,laneId,o.s);
             fixAngle(o.hdg);
 
@@ -76,17 +149,10 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
         if (type == "roadWork")
         {
             o.s = obj.attribute("s").as_double();
+            o.len = obj.attribute("length").as_double();
+            int laneId = obj.attribute("laneId").as_int();
 
-            // find laneSection
-            int i;
-            for (i = r.laneSections.size()-1; i >= 0; i--)
-                if (r.laneSections[i].s < o.s) break;
-
-            lane l;
-            laneSection lS = r.laneSections[i];
-            int id = findLane(lS, l, obj.attribute("laneId").as_int());
-
-            r.laneSections[i].lanes[id].type = "roadWorks";
+            addRoadWork(o, r, laneId);
         }
 
         if (type == "busStop")
@@ -97,18 +163,21 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
                 if (r.laneSections[i].s < o.s) break;
             laneSection lS = r.laneSections[i];
 
-            if (o.t > 0) 
-            {
-                int laneId = findMaxLaneId(lS);
-                addLaneWidening(r.laneSections, laneId, o.s-12.5, 7.5,true);
-                addLaneDrop (r.laneSections, laneId+1, o.s+5, 7.5);
-            }
-            if (o.t < 0) 
-            {
-                int laneId = findMinLaneId(lS);
-                addLaneWidening(r.laneSections, laneId, o.s-12.5, 7.5,true);
-                addLaneDrop (r.laneSections, laneId-1, o.s+5, 7.5);
-            }
+            int laneId;
+            if (o.t > 0) laneId = findMaxLaneId(lS);
+            if (o.t < 0) laneId = findMinLaneId(lS);
+
+            addLaneWidening(r.laneSections, laneId, o.s-12.5, 7.5, true);
+            addLaneDrop (r.laneSections, laneId+sgn(laneId), o.s+5, 7.5);
+
+            lane l;
+            int id; 
+            id = findLane(r.laneSections[i+1],l,laneId+sgn(laneId));
+            r.laneSections[i+1].lanes[id].type = "bus";
+            id = findLane(r.laneSections[i+2],l,laneId+sgn(laneId));
+            r.laneSections[i+2].lanes[id].type = "bus";
+            id = findLane(r.laneSections[i+3],l,laneId+sgn(laneId));
+            r.laneSections[i+3].lanes[id].type = "bus";
         }
 
         if (type == "trafficIsland")
@@ -152,6 +221,48 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
         }
         data.controller.push_back(c);
     }
-    
+    return 0;
+}
+
+int addSignal(road &r, roadNetwork &data, double s, double t, string type, string ori)
+{
+    bool found = false;
+    int i; 
+    for (i = 0; i < data.controller.size(); i++)
+    {
+        if (data.controller[i].id == 1000) 
+        {
+            found = true; 
+            break;
+        }
+    }
+    if (!found) 
+    {
+        control c; 
+        c.id = 1000;
+        data.controller.push_back(c);
+        i = data.controller.size()-1;
+    }
+
+    signal sig; 
+    sig.id = data.controller[i].signals.size();
+    sig.s = s;
+    sig.t = t;
+    sig.z = 0;
+    sig.type = type;
+    sig.height = 2;
+    sig.width = 0.5;
+    sig.orientation = ori;
+    sig.rule = 1000;
+
+    if (type == "100.0.0.1")
+    {
+        sig.dynamic = true;
+        sig.value = 0;
+    }
+
+    r.signals.push_back(sig);
+    data.controller[i].signals.push_back(sig);
+
     return 0;
 }

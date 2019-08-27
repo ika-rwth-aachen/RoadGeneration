@@ -294,71 +294,97 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
     }
 
     // --- add lanes to road ---------------------------------------------------
-    for (pugi::xml_node_iterator it = geos.child("lanes").begin(); it != geos.child("lanes").end(); ++it)
+
+    if (!geos.child("lanes"))
     {
-        if ((string)it->name() != "laneSection") continue;
-
         laneSection laneSec;
-        laneSec.id = it->attribute("id").as_int();
-        laneSec.s = it->attribute("s").as_double();
+        laneSec.id = 1;
+        laneSec.s = 0;
 
-        for (pugi::xml_node_iterator itt = it->begin(); itt != it->end(); ++itt)
-        {
-            lane l; 
-
-            l.id = itt->attribute("id").as_int();
-
-            // flip lanes for mode 1
-            if (mode == 1) l.id *= -1;  
-
-            l.type = itt->attribute("type").value();
+        lane l1;
+        l1.id = 1;
+        laneSec.lanes.push_back(l1);
         
-            pugi::xml_node w = itt->child("laneWidth");
-            if (w)
-            {
-                l.w.s = w.attribute("sOffset").as_double();
-                l.w.a = w.attribute("w").as_double();
-            }
-
-            pugi::xml_node rm = itt->child("roadMark");
-            if (rm)
-            {
-                l.rm.s = rm.attribute("sOffset").as_double();
-                l.rm.type = rm.attribute("type").value();
-                l.rm.color = rm.attribute("color").value();
-                l.rm.width = rm.attribute("width").as_double();
-            }
-
-            laneSec.lanes.push_back(l);
-        }
+        lane l2;
+        l2.id = 0;
+        l2.rm.type = "broken";
+        l2.w.a = 0.0;
+        laneSec.lanes.push_back(l2);
+        
+        lane l3;
+        l3.id = -1;
+        laneSec.lanes.push_back(l3);
+        
         r.laneSections.push_back(laneSec);
     }
-
-    // consider lanedrops and lanewidenings 
-    //      -> have to be defined in increasing s order
-    for (pugi::xml_node_iterator itt = geos.child("lanes").begin(); itt != geos.child("lanes").end(); ++itt)
-    {   
-        if ((string)itt->name() == "laneWidening")
+    else 
+    {
+        for (pugi::xml_node_iterator it = geos.child("lanes").begin(); it != geos.child("lanes").end(); ++it)
         {
-            int lane = itt->attribute("lane").as_int();
-            double s = itt->attribute("sOffset").as_double();
-            double ds = itt->attribute("ds1").as_double();
+            if ((string)it->name() != "laneSection") continue;
 
-            // only perform drop if not close to junction
-            if (s < sLaneWidening + 50) continue;
-            if (s > r.length) continue;       
-            addLaneWidening(r.laneSections, lane, s, ds, false);
+            laneSection laneSec;
+            laneSec.id = it->attribute("id").as_int();
+            laneSec.s = it->attribute("s").as_double();
+
+            for (pugi::xml_node_iterator itt = it->begin(); itt != it->end(); ++itt)
+            {
+                lane l; 
+
+                l.id = itt->attribute("id").as_int();
+
+                // flip lanes for mode 1
+                if (mode == 1) l.id *= -1;  
+
+                l.type = itt->attribute("type").value();
+            
+                pugi::xml_node w = itt->child("laneWidth");
+                if (w)
+                {
+                    l.w.s = w.attribute("sOffset").as_double();
+                    l.w.a = w.attribute("w").as_double();
+                }
+
+                pugi::xml_node rm = itt->child("roadMark");
+                if (rm)
+                {
+                    l.rm.s = rm.attribute("sOffset").as_double();
+                    l.rm.type = rm.attribute("type").value();
+                    l.rm.color = rm.attribute("color").value();
+                    l.rm.width = rm.attribute("width").as_double();
+                }
+
+                laneSec.lanes.push_back(l);
+            }
+            r.laneSections.push_back(laneSec);
         }
-        if ((string)itt->name() == "laneDrop")
-        {
-            int lane = itt->attribute("lane").as_int();
-            double s = itt->attribute("sOffset").as_double();
-            double ds = itt->attribute("ds1").as_double();
+        
+        // consider lanedrops and lanewidenings 
+        //      -> have to be defined in increasing s order
+        for (pugi::xml_node_iterator itt = geos.child("lanes").begin(); itt != geos.child("lanes").end(); ++itt)
+        {   
+            if ((string)itt->name() == "laneWidening")
+            {
+                int lane = itt->attribute("lane").as_int();
+                double s = itt->attribute("sOffset").as_double();
+                double ds = itt->attribute("ds1").as_double();
 
-            // only perform drop if not close to junction
-            if (s < sLaneWidening + 50) continue;       
-            if (s > r.length) continue;       
-            addLaneDrop(r.laneSections, lane, s, ds);                
+                // only perform drop if not close to junction
+                if (s < sLaneWidening + 50) continue;
+                if (s > r.length) continue;       
+                addLaneWidening(r.laneSections, lane, s, ds, false);
+            }
+            if ((string)itt->name() == "laneDrop")
+            {
+                int lane = itt->attribute("lane").as_int();
+                double s = itt->attribute("sOffset").as_double();
+                double ds = itt->attribute("ds1").as_double();
+
+                // only perform drop if not close to junction
+                if (s < sLaneWidening + 50) continue;       
+                if (s > r.length) continue;       
+                addLaneDrop(r.laneSections, lane, s, ds);                
+            }
         }
     }
 

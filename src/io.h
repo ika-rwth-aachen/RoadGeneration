@@ -204,10 +204,14 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         for (std::vector<signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
         {
             signal s = *itt;
-            pugi::xml_node sig = signals.append_child("signal");
+            //pugi::xml_node sig = signals.append_child("signal");
+            pugi::xml_node sig = objects.append_child("object");
             
             sig.append_attribute("id") = s.id;
-            sig.append_attribute("type") = s.type.c_str();
+            
+            sig.append_attribute("name") = s.type.c_str();
+            //sig.append_attribute("type") = s.type.c_str();
+            
             sig.append_attribute("subtype") = "-";
             sig.append_attribute("s") = s.s;
             sig.append_attribute("t") = s.t;

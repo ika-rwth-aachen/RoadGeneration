@@ -124,6 +124,9 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         generateRoad(additionalRoad, r2, sAdd+sOffAdd, INFINITY, 0, sAdd, iPx, iPy, iPhdg+phi); 
         addObjects(additionalRoad, r2, data);
 
+        // add signal at roads
+        laneSection lS = r2.laneSections.front();
+        addSignal(r2, data, 1, findTOffset(lS, findMaxLaneId(lS), 1) + 1, "1.000.001", "-");
 
         road helper;
         helper.id = r1.id + cc * 10 + 3; 

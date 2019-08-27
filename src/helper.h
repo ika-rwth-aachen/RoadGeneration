@@ -1,6 +1,21 @@
 // file helper.h
 
 /**
+ * @brief signum function
+ * 
+ * @param d         input 
+ * @return int      -1, 0, 1
+ */
+int sgn(double d)
+{
+    int r = 0;
+    if (d > 0) r = 1;
+    if (d < 0) r = -1;
+
+    return r;
+}
+
+/**
  * @brief function fixes the input angle in the range of [-M_PI, M_PI]
  * 
  * @param a     angle which should be fixed
@@ -112,37 +127,19 @@ double laneWidth(lane l, double s)
 double findTOffset(laneSection sec, int id, double s)
 {
     double tOffset = 0;
-    int dir = 0;
     int cur = 0;
+    int search = sgn(id) + id;
 
-    if (id < 0) dir = -1;
-    if (id > 0) dir =  1;
-
-    while (cur != id)
+    while (cur != search)
     {
         lane l;
         int err = findLane(sec, l, cur);
         s += l.w.s;
-        tOffset += dir * laneWidth(l,s);
-        cur += dir;
+        tOffset += sgn(id) * laneWidth(l,s);
+        cur += sgn(id);
     }
 
     return tOffset;
-}
-
-/**
- * @brief signum function
- * 
- * @param d         input 
- * @return int      -1, 0, 1
- */
-int sgn(double d)
-{
-    int r = 0;
-    if (d > 0) r = 1;
-    if (d < 0) r = -1;
-
-    return r;
 }
 
 /**

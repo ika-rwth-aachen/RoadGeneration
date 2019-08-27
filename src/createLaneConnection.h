@@ -27,8 +27,8 @@ int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, in
     findLane(lS2, l2, to);
 
     // calculate tOffsets and widths
-    double tOffSet1 = abs(findTOffset(lS1,from,0));
-    double tOffSet2 = abs(findTOffset(lS2,to,0));
+    double tOffSet1 = abs(findTOffset(lS1,from-sgn(from),0));
+    double tOffSet2 = abs(findTOffset(lS2,to-sgn(to),0));
 
     double w1 = laneWidth(l1,0);
     double w2 = laneWidth(l2,0);
