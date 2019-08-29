@@ -7,6 +7,7 @@
  * @param laneId    laneId of the lane where the laneWiding should be performed
  * @param s         position of lane widing
  * @param ds        length of lane widing
+ * @param addouterLane  specifies if additional lane is on the outer side or not
  * @return int      errorcode
  */
 int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds, bool addOuterLane)

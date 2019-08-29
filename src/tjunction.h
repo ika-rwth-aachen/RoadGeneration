@@ -118,7 +118,15 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     double iPhdg = helperRoad.geometries.back().hdg;
     
     // --- generate roads ------------------------------------------------------
+    /*            |      |
+                  | id:3 |
+        __________|      |___________
+        id: 1               id: 2
+        __________        ___________    
+     */
     cout << "\t Generating Roads" << endl;
+    laneSection lS;
+    double t;
 
     road r1;
     r1.id = 100*junc.id + 1;
@@ -134,6 +142,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         generateRoad(mainRoad, r1, sMain+sOffMain, INFINITY, 0, sMain, iPx, iPy, iPhdg);
     }
     addObjects(mainRoad,r1,data);
+    addSignal(r1, data, 1, INFINITY, "1.000.001", "-");
     data.roads.push_back(r1);
 
     road r2;
@@ -151,6 +160,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         generateRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, 0, sAdd1,iPx, iPy, iPhdg+phi1);
         addObjects(additionalRoad1,r2,data);
     }
+    addSignal(r2, data, 1, INFINITY, "1.000.001", "-");
     data.roads.push_back(r2);
 
     road r3; 
@@ -168,6 +178,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         generateRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, 0, sAdd2, iPx, iPy, iPhdg+phi2);
         addObjects(additionalRoad2,r3,data);
     }
+    addSignal(r3, data, 1, INFINITY, "1.000.001", "-");
     data.roads.push_back(r3);
 
     // --- generate connecting lanes -------------------------------------------

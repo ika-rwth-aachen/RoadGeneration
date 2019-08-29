@@ -108,6 +108,14 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
     
         // --- generate roads --------------------------------------------------
         cout << "\t Generating Roads" << endl;
+            /*           
+                    \___       ____/
+                 id: 1         id: helper
+               \_______        _______/    
+                       |      |
+                       | id:2 |
+                       |      |
+        */
 
         road r1;
         r1.id = 100*junc.id + cc * 10 + 1;
@@ -124,9 +132,8 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         generateRoad(additionalRoad, r2, sAdd+sOffAdd, INFINITY, 0, sAdd, iPx, iPy, iPhdg+phi); 
         addObjects(additionalRoad, r2, data);
 
-        // add signal at roads
-        laneSection lS = r2.laneSections.front();
-        addSignal(r2, data, 1, findTOffset(lS, findMaxLaneId(lS), 1) + 1, "1.000.001", "-");
+        // add signal to outgoing roads
+        addSignal(r2, data, 1, INFINITY, "1.000.001", "-");
 
         road helper;
         helper.id = r1.id + cc * 10 + 3; 

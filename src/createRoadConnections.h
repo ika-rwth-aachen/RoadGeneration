@@ -98,8 +98,19 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     fixAngle(a);
 
     // --- type ----------------------------------------------------------------
+    /*
+        if the angle between the two points is 
+        
+        larger than 90 degree:
+            create the new center line between the two lanes directly
+        
+        smaller than 90 degree; 
+            create the new center line between the two center lines 
+            add helper lane to compensate t offset in lanes
+    */
+    
     int type;
-    // strong corner
+    // strong corner (more than 90 deg)
     if (abs(a) >= M_PI / 2) 
     {
         // update start end endpoint according to lane
@@ -122,7 +133,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         y2 += sin(phi2) * fabs(t2);
         type = 1;
     } 
-    // weak corner
+    // weak corner (less than 90 deg)
     if (abs(a) <  M_PI / 2) type = 2;
 
     // simple line if angles are almost the same

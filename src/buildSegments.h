@@ -25,7 +25,6 @@
 int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 {
 	pugi::xml_node segments = doc.child("roadNetwork").child("segments");
-
 	if(!segments) cout << "ERR: 'segments' not found in input file."  << endl;
 
 	for (pugi::xml_node_iterator it = segments.begin(); it != segments.end(); ++it)

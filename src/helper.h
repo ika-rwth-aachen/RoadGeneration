@@ -326,6 +326,22 @@ int sortRoads(road r1, road &r2, road &r3)
     return 0;
 }
 
+/**
+ * @brief function computes intersection point and its type
+ *      
+ * @param x1        x position of first point 
+ * @param y1        y position of first point 
+ * @param phi1      angle of first point 
+ * @param x2        x position of second point       
+ * @param y2        y position of second point 
+ * @param phi2      angle of second point        
+ * @param type      type (parallel, identical, other)
+ * @param type1     type of first point (p,n,0)
+ * @param type2     type of second point (p,n,0)
+ * @param iPx       x position of intersection point
+ * @param iPy       y position of intersection point
+ * @return int      errorcode
+ */
 int computeIP(double x1,double y1,double phi1,double x2,double y2,double phi2,int &type, int &type1, int &type2,double &iPx,double &iPy)
 {
     double t2 = (y1-y2+tan(phi1)*(x2-x1)) / (sin(phi2)-tan(phi1)*cos(phi2));

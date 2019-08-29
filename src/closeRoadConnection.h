@@ -8,7 +8,7 @@
 #include "geometries.h"
 
 /**
- * @brief function generates a geometry (maybe recursivly) so that the two points are closed
+ * @brief function generates geometries (maybe recursivly) so that the two points are connected with a feasible connection road
  * 
  * @param geo   vector which contains all geometries
  * @param x1    x component of start point
@@ -23,20 +23,21 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
 {
     // goal: compute new road from point 1 into point 2, preserving angles
 
-    // compute intersection point
-
+    // compute m and b of points for line equation
     double m1 = tan(phi1);
     double b1 = y1 - m1 * x1;
 
     double m2 = tan(phi2);
     double b2 = y2 - m2 * x2;
 
+    // type is general type (p, i, 0);      
+    // type1/type2 is type how point1/point2 lies to the intersetion point
     int type1, type2, type = 0;
 
     double d1,d2,d;
     double iPx,iPy;
 
-    // intersection point of lines
+    // determine type and compute intersection point if it exists
     if (m1 ==  m2)
     {
         if (b1 != b2) type = p;
@@ -44,13 +45,15 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
     }
     else
     {    
-        // compute intersection point and determin type
+        // compute intersection point and determine type
         computeIP(x1,y1,phi1,x2,y2,phi2,type,type1,type2,iPx,iPy);
                 
         d1 = sqrt(pow(x1-iPx,2) + pow(y1-iPy,2));
         d2 = sqrt(pow(x2-iPx,2) + pow(y2-iPy,2));
         d  = sqrt(pow(x2-x1,2) + pow(y2-y1,2));
     }
+
+
     // --- case i -------------------------------------------------------------
     if (type == i)
     {
@@ -60,6 +63,7 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
         // case: -> <-    or  <-  -> 
         if (beta == M_PI)
         {
+            // create helping point at Tmp position
             double xTmp = x1 + cos(phi1 + M_PI/4) * d/4;
             double yTmp = y1 + sin(phi1 + M_PI/4) * d/4;
             double phiTmp = phi1 + M_PI/2;
@@ -70,12 +74,14 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
         // case: ->  -> 
         if (beta == 0)
         {
+            // rotate start point around 90 degree and test IP again 
             int t, t1, t2;
             computeIP(x1,y1,phi1+M_PI/2,x2,y2,phi2,t,t1,t2,iPx,iPy);
 
             // if end points to start
             if(t2 == p)
             {
+                // create helping point at Tmp position
                 double xTmp = x1 + cos(phi1 + M_PI/4) * d/4;
                 double yTmp = y1 + sin(phi1 + M_PI/4) * d/4;
                 double phiTmp = phi1 + M_PI/2;
@@ -98,6 +104,7 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
         // case: -> <-    or  <-  -> 
         if (beta == M_PI)
         {
+            // rotate start point around 90 degree and test IP again 
             int t, t1, t2;
             computeIP(x1,y1,phi1+M_PI/2,x2,y2,phi2,t,t1,t2,iPx,iPy);
 
@@ -127,6 +134,7 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
         // case: ->  -> 
         if (beta == 0)
         {
+            // rotate start point around 90 degree and test IP again 
             int t, t1, t2;
             computeIP(x1,y1,phi1+M_PI/2,x2,y2,phi2,t,t1,t2,iPx,iPy);
 
@@ -152,7 +160,8 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
     }
     // --- case pn -------------------------------------------------------------
     if (type1 == p && type2 == n)
-    {
+    {   
+        // in this case the two point can be connected instantly
         if (d1 > d2)
         {
             double xTmp = x1 + cos(phi1) * (d1-d2);
@@ -177,6 +186,7 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
     // --- case oo -------------------------------------------------------------
     if (type1 == o && type2 == o)
     {
+        // almost nothing to be done
         addLine(geo, x1, y1, phi1, x2, y2, phi2);
     }
     // --- case np pp nn 0p 0n -------------------------------------------------
@@ -190,6 +200,8 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
         fixAngle(alpha);
         if (alpha > 0) alpha =  M_PI/4;
         if (alpha < 0) alpha = -M_PI/4;
+
+        // create helping point at Tmp position
         double xTmp = x1 + cos(phi1 + alpha) * d/4;
         double yTmp = y1 + sin(phi1 + alpha) * d/4;
         double phiTmp = phi1 + 2 * alpha;
@@ -202,9 +214,10 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
     {
         double beta = phi1-phi2;
         fixAngle(beta);
-
         if (beta > 0) beta = -M_PI/4;
         if (beta < 0) beta =  M_PI/4;
+
+        // create helping point at Tmp position
         double xTmp = x1 + cos(phi1 + beta) * d/4;
         double yTmp = y1 + sin(phi1 + beta) * d/4;
         double phiTmp = phi1 + 2 * beta;

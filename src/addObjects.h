@@ -1,7 +1,7 @@
 // file addObjects.h
 
 /**
- * @brief function generates a roadwork
+ * @brief function generates a roadwork at given position
  * 
  * @param o         object containing length and position of roadwork   
  * @param r         road which contains the roadwork
@@ -12,7 +12,7 @@ int addRoadWork(object o, road &r, int laneId)
 {
     std::vector<laneSection>::iterator it;
     
-    // search corresponding lane Section
+    // find lane section of starting point
     int i = 0;
     bool found = false;
     for (i = 0; i < r.laneSections.size()-1; i++)
@@ -28,6 +28,7 @@ int addRoadWork(object o, road &r, int laneId)
         i = r.laneSections.size()-1;
     }
 
+    // if laneSection does not end before end of roadwork
     if (i == r.laneSections.size()-1 || r.laneSections[i+1].s-it->s > o.len)
     {
         laneSection adLaneSec = *it;
@@ -66,7 +67,7 @@ int addRoadWork(object o, road &r, int laneId)
 /**
  * @brief function creates objects like parking spots, traffic signs or markings
  * 
- * @param inRoad    road data from input file
+ * @param inRoad    road data from input file, containing the specified objects
  * @param r         resulting road with additional objects
  * @param data      roadNetwork structure where the generated roads and junctions are stored
  * @return int      errorcode
@@ -80,6 +81,7 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
 
         o.id = obj.attribute("id").as_double();
 
+        // read position of objects, can be either in xy or st coordinates
         if (obj.child("absolutePosition")) 
         {
             pugi::xml_node position = obj.child("absolutePosition");
@@ -107,7 +109,6 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
         // --- consider different object cases ---------------------------------
         if (type == "parkingSpace")
         {
-
             o.type = type;
             o.length = obj.attribute("length").as_double();
             o.width = obj.attribute("width").as_double();
@@ -157,7 +158,7 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
 
         if (type == "busStop")
         {
-            // find laneSection
+            // find starting laneSection
             int i;
             for (i = r.laneSections.size()-1; i >= 0; i--)
                 if (r.laneSections[i].s < o.s) break;
@@ -172,6 +173,7 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
 
             lane l;
             int id; 
+            // set type of additional lanes to "bus"
             id = findLane(r.laneSections[i+1],l,laneId+sgn(laneId));
             r.laneSections[i+1].lanes[id].type = "bus";
             id = findLane(r.laneSections[i+2],l,laneId+sgn(laneId));
@@ -182,6 +184,14 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
 
         if (type == "trafficIsland")
         {
+            /*  design of a trafficIsland
+                __________
+            ___/    __    \___
+                   |  |
+            ___    |__|    ___
+               \__________/
+            */
+
             o.type = type;
             o.s = obj.attribute("s").as_double();
             o.t = 0;
@@ -205,7 +215,7 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
             
             laneSection sec;
 
-            // --- part 1
+            // --- part 1 (opening)
             sec = r.laneSections[i];
             sec.s = o.s - o.length;
 
@@ -224,7 +234,7 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
 
             r.laneSections.push_back(sec);
 
-            // --- part 2
+            // --- part 2 (straight)
             sec = r.laneSections[i];
             sec.s = o.s - o.length/2;
 
@@ -243,7 +253,7 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
 
             r.laneSections.push_back(sec);
 
-            // --- part 3
+            // --- part 3 (closing)
             sec = r.laneSections[i];
             sec.s = o.s + o.length/2;
 
@@ -262,7 +272,7 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
 
             r.laneSections.push_back(sec);
 
-            // --- part 4
+            // --- part 4 (after trafficIsland)
             sec = r.laneSections[i];
             sec.s = o.s + o.length;
 
@@ -303,22 +313,39 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
     return 0;
 }
 
+/**
+ * @brief function creates a signal which is automatically generated
+ * 
+ * @param r         road which contains the signal
+ * @param data      roadNetwork data, which holds the controls
+ * @param s         s position of signal
+ * @param t         t position of signal
+ * @param type      type of signal
+ * @param ori       orientation of signal
+ * @return int      errorcode
+ */
 int addSignal(road &r, roadNetwork &data, double s, double t, string type, string ori)
 {
+    laneSection lS = r.laneSections.front();
+    if (t ==  INFINITY) t = findTOffset(lS, findMaxLaneId(lS), s) + 1;
+    if (t == -INFINITY) t = findTOffset(lS, findMinLaneId(lS), s) - 1;
+
+    // search controller for given junction
     bool found = false;
     int i; 
     for (i = 0; i < data.controller.size(); i++)
     {
-        if (data.controller[i].id == 1000) 
+        if (data.controller[i].id == 1000+r.junction*100) 
         {
             found = true; 
             break;
         }
     }
+    // if controller does not exist -> create one
     if (!found) 
     {
         control c; 
-        c.id = 1000;
+        c.id = +r.junction*100;
         data.controller.push_back(c);
         i = data.controller.size()-1;
     }
@@ -334,6 +361,7 @@ int addSignal(road &r, roadNetwork &data, double s, double t, string type, strin
     sig.orientation = ori;
     sig.rule = 1000;
 
+    // basic traffic light
     if (type == "100.0.0.1")
     {
         sig.dynamic = true;

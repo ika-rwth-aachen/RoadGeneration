@@ -2,7 +2,7 @@
 
 /**
  * @brief function parses the input xml file with the external tool pugi_xml
- *  input in then accessable in a pugi::xml_document tree structure 
+ *  input is then accessable in a pugi::xml_document tree structure 
  * 
  * @param doc   tree structure which contains the data of the xml input file
  * @param data  roadNetwork data which will be stored as openDrive format
@@ -11,6 +11,7 @@
  */
 int parseXML(pugi::xml_document &doc, roadNetwork &data, char * file)
 {   
+    // TODO: only debugging purposes
     if (true)
     {
         data.file = "bin/all.xml";
@@ -23,7 +24,8 @@ int parseXML(pugi::xml_document &doc, roadNetwork &data, char * file)
     {
         return 0;
     }
-    else {
+    else 
+    {
         cerr << "ERR: InputFile not found" << endl;
         return 1;
     }
@@ -33,13 +35,14 @@ int parseXML(pugi::xml_document &doc, roadNetwork &data, char * file)
  * @brief function stores the generated structure of type roadNetwork as a openDrive format
  * 
  * @param doc   tree structure which contains the generated data in openDrive format
- * @param data  generated data by the tool
+ * @param data  generated data by this tool
  * @return int  errorcode
  */
 int createXML(pugi::xml_document &doc, roadNetwork data)
 {   
     pugi::xml_node root = doc.append_child("OpenDRIVE");
 
+    // specify location of .xsd file
     root.append_attribute("xmlns:xsi") = "http://www.w3.org/2001/XMLSchema-instance";
     root.append_attribute("xsi:noNamespaceSchemaLocation") = "../xml/output.xsd";
     
@@ -48,7 +51,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     header.append_attribute("revMajor") = 1;
     header.append_attribute("revMinor") = 5;
 
-    // write roads
+    // --- write roads ---------------------------------------------------------
     for (std::vector<road>::iterator it = data.roads.begin() ; it != data.roads.end(); ++it)
     {
         pugi::xml_node road = root.append_child("road");
@@ -56,7 +59,6 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         road.append_attribute("length") = it->length;
         road.append_attribute("id") = it->id;
         road.append_attribute("junction") = it->junction;
-
     
         pugi::xml_node pre = road.append_child("link").append_child("predecessor");
         pre.append_attribute("elementType") = it->predecessor.elementType.c_str();
@@ -69,11 +71,12 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         suc.append_attribute("contactPoint") = it->successor.contactPoint.c_str();
         
         road.append_child("type").append_attribute("s") = "0";
-        road.child("type").append_attribute("type") = "town";
+        road.child("type").append_attribute("type") = it->type.c_str();
 
+
+        // --- write geometries ------------------------------------------------
         pugi::xml_node planView = road.append_child("planView");
 
-        // write geometries
         for (std::vector<geometry>::iterator itt = it->geometries.begin() ; itt != it->geometries.end(); ++itt)
         {
             pugi::xml_node geo = planView.append_child("geometry");
@@ -100,9 +103,10 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
             }
         }
         
+
+        // --- write lanes -----------------------------------------------------
         pugi::xml_node lanes = road.append_child("lanes");
 
-        // write lanes        
         for (std::vector<laneSection>::iterator itt = it->laneSections.begin() ; itt != it->laneSections.end(); ++itt)
         {
             pugi::xml_node laneSection = lanes.append_child("laneSection");
@@ -157,8 +161,10 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
             }
         }
 
+
+        // --- write objects ---------------------------------------------------
         pugi::xml_node objects = road.append_child("objects");
-        // write objects        
+
         for (std::vector<object>::iterator itt = it->objects.begin() ; itt != it->objects.end(); ++itt)
         {
             object o = *itt;
@@ -199,8 +205,10 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
             }
         }
 
+
+        // --- write signals ---------------------------------------------------
         pugi::xml_node signals = road.append_child("signals");
-        // write signals        
+
         for (std::vector<signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
         {
             signal s = *itt;
@@ -225,7 +233,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         }
     }
         
-    // write junctions
+    // --- write junctions -----------------------------------------------------
     for (std::vector<junction>::iterator it = data.junctions.begin() ; it != data.junctions.end(); ++it)
     {
         pugi::xml_node junc = root.append_child("junction");
@@ -247,7 +255,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         }
     }
 
-    // write controllers
+    // --- write controllers ---------------------------------------------------
     for (std::vector<control>::iterator it = data.controller.begin() ; it != data.controller.end(); ++it)
     {
         pugi::xml_node controller = root.append_child("controller");
@@ -262,9 +270,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         }
     }
 
-    // PRINT: doc.print(std::cout);
-
-    // write doc to file
+    // --- write doc structure to file -----------------------------------------
     string file = data.file.substr(0,data.file.find(".xml"));
     file.append(".xodr");
 
@@ -272,7 +278,8 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     {
         return 0;
     }
-    else {
+    else 
+    {
         cerr << "ERR: file could not be saved." << endl;
         return 1;
     }

@@ -21,8 +21,9 @@ using namespace std;
 using namespace xercesc;
 
 /**
- * @brief main function for the tool roadGeneration
- * an input xml file with given structure (input.xsd) is converted in a valid openDrive format
+ * @brief main function for the tool 'roadGeneration'
+ * an input xml file with given structure (defined in input.xsd) is converted 
+ * into a valid openDrive format (defined in output.xsd)
  * 
  * @param argc amount of parameter calls
  * @param argv argv[1] is the specified input file <file>.xml which will be converted to <file>.xodr
@@ -30,8 +31,10 @@ using namespace xercesc;
  */
 int main(int argc,  char** argv)
 {   
-    if (argc == 2) {
-        //cerr << "ERR: no input file provided." << endl; return -1;
+    if (argc < 2) 
+	{
+        cerr << "ERR: no input file provided." << endl; 
+		//return -1;
     }
 
 	pugi::xml_document in;

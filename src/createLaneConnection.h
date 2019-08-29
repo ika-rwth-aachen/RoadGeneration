@@ -14,7 +14,14 @@
  */
 int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, int to, string left, string right, int type)
 {
-       
+    /*  if type = 1
+            simply add a lane left or right from the roads centerline
+
+        if type = 2
+            centerline is not parallel to lane: 
+            additional helperlane which compensates tOffset is necessary
+     */
+
     if (from == 0 || to == 0) {
         cout << "ERR: cannot connect lane Id 0." << endl;
     }
@@ -26,10 +33,11 @@ int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, in
     findLane(lS1, l1, from);
     findLane(lS2, l2, to);
 
-    // calculate tOffsets and widths
+    // calculate tOffsets
     double tOffSet1 = abs(findTOffset(lS1,from-sgn(from),0));
     double tOffSet2 = abs(findTOffset(lS2,to-sgn(to),0));
-
+  
+    // calculate widths
     double w1 = laneWidth(l1,0);
     double w2 = laneWidth(l2,0);
 

@@ -31,7 +31,7 @@ int addLine(vector<geometry> &geo, double x1, double y1, double phi1, double x2,
 }
 
 /**
- * @brief function adds a geometry which is here an arc -> TODO: Verbundskurve
+ * @brief function adds a geometry which is here an arc
  * 
  * @param geo   vector of all geometries
  * @param x1    x component of start point
@@ -64,4 +64,21 @@ int addArc(vector<geometry> &geo, double x1, double y1, double phi1, double x2, 
     g.length = abs(R * a);
 
     geo.push_back(g);
+}
+
+/**
+ * @brief function adds a geometry which is here an composite curve
+ * 
+ * @param geo   vector of all geometries
+ * @param x1    x component of start point
+ * @param y1    y component of start point
+ * @param phi1  angle of start point
+ * @param x2    x component of end point
+ * @param y2    y component of end point
+ * @param phi2  angle of end point
+ * @return int  errorcode
+ */
+int addCompositeCurve(vector<geometry> &geo, double x1, double y1, double phi1, double x2, double y2, double phi2)
+{
+    return 0;
 }
