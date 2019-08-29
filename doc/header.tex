@@ -242,9 +242,9 @@
   tocindent=0.9cm
 ]{subsubsection}
 
-\RedeclareSectionCommands[
-  tocbeforeskip=5pt
-]{section,subsection,subsubsection}
+%\RedeclareSectionCommands[
+%  tocbeforeskip=5pt
+%]{section,subsection,subsubsection}
 
 % Tabstopp f�r �berschriften auf 1cm setzen
 \renewcommand*{\chapterformat}{%
@@ -283,3 +283,9 @@
 \definecolor{redLightRWTH}{cmyk}{0.1125,0.75,0.75,0}
 \definecolor{redLighterRWTH}{cmyk}{0.075,0.5,0.5,0}
 \definecolor{rwthLight}{cmyk}{0.0,0.0,0.0,0.5}
+
+% no pagebreak
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\scr@startchapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
+\makeatother
