@@ -350,6 +350,14 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
                     l.rm.width = rm.attribute("width").as_double();
                 }
 
+                pugi::xml_node m = itt->child("material");
+                if (m)
+                {
+                    l.m.surface = m.attribute("surface").value();
+                    l.m.friction = m.attribute("friction").as_double();
+                    l.m.roughness = m.attribute("roughness").as_double();
+                }
+
                 laneSec.lanes.push_back(l);
             }
             r.laneSections.push_back(laneSec);

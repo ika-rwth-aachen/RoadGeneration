@@ -13,20 +13,20 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 {
     cout << "Processing linkSegments" << endl;
 
-	pugi::xml_node interfaces = doc.child("roadNetwork").child("interfaces");
+	pugi::xml_node links = doc.child("roadNetwork").child("links");
 
-	if(!interfaces) 
+	if(!links) 
 	{
-		cerr << "ERR: 'interfaces' are not specified in input file."  << endl;
+		cerr << "ERR: 'links' are not specified in input file."  << endl;
 		cerr << "\t -> skip segment linking"  << endl;
 		return 0;
 	}
 
 	// define reference system
-	int referenceId = interfaces.attribute("referenceId").as_int();
-	int angleOffset = interfaces.attribute("angleOffset").as_int();
-	int xOffset = interfaces.attribute("xOffset").as_int();
-	int yOffset = interfaces.attribute("yOffset").as_int();
+	int referenceId = links.attribute("referenceId").as_int();
+	int angleOffset = links.attribute("angleOffset").as_int();
+	int xOffset = links.attribute("xOffset").as_int();
+	int yOffset = links.attribute("yOffset").as_int();
 
 	for(auto&& r : data.roads)
 	{
@@ -44,7 +44,7 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 	}
 
 	// --- add other specified segments ----------------------------------------
-	for (pugi::xml_node segmentLink : interfaces.children("segmentLink"))
+	for (pugi::xml_node segmentLink : links.children("segmentLink"))
 	{
 		int fromSegment = segmentLink.attribute("fromSegment").as_int();
 		int toSegment = segmentLink.attribute("toSegment").as_int();

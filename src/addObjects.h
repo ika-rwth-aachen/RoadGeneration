@@ -81,13 +81,7 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
 
         o.id = obj.attribute("id").as_double();
 
-        // read position of objects, can be either in xy or st coordinates
-        if (obj.child("absolutePosition")) 
-        {
-            pugi::xml_node position = obj.child("absolutePosition");
-            cerr << "Absolute Position is not implemented." << endl;
-            return 1;
-        }
+        // read position of objects in st coordinates
         if (obj.child("relativePosition")) 
         {
             pugi::xml_node position = obj.child("relativePosition");
@@ -293,7 +287,8 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
         for (pugi::xml_node ob: obj.children())
         {
             signal s; 
-            s.rule = c.id;
+            data.nSignal++;
+            s.id = data.nSignal;
             s.id = ob.attribute("id").as_int();
             s.type = ob.attribute("type").value();
             s.value = ob.attribute("value").as_double();
@@ -351,7 +346,8 @@ int addSignal(road &r, roadNetwork &data, double s, double t, string type, strin
     }
 
     signal sig; 
-    sig.id = data.controller[i].signals.size();
+    data.nSignal++;
+    sig.id = data.nSignal;
     sig.s = s;
     sig.t = t;
     sig.z = 0;

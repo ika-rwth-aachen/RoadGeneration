@@ -29,43 +29,37 @@ int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 
 	for (pugi::xml_node_iterator it = segments.begin(); it != segments.end(); ++it)
 	{
-		if ((string)it->name() == "junctions")
+		if ((string)it->name() == "tjunction")
+		{
+			cout << "Processing tjunction" << endl;
+			if (tjunction(*it, data))
 			{
-			for (pugi::xml_node_iterator itt = it->begin(); itt != it->end(); ++itt)
-			{
-				if ((string)itt->name() == "tjunction")
-				{
-					cout << "Processing tjunction" << endl;
-					if (tjunction(*itt, data))
-					{
-						cerr << "ERR: error in tjunction." << endl;
-						return 1;
-					}
-				}
-
-				if ((string)itt->name() == "xjunction")
-				{
-					cout << "Processing xjunction" << endl;
-					if (xjunction(*itt, data))
-					{
-						cerr << "ERR: error in xjunction." << endl;
-						return 1;
-					}
-
-				}
-
-				if ((string)itt->name() == "njunction")
-				{
-					cout << "Processing njunction" << endl;
-					if (false)
-					{
-						cerr << "ERR: error in njunction." << endl;
-						return 1;
-					}
-				}
+				cerr << "ERR: error in tjunction." << endl;
+				return 1;
 			}
 		}
 
+		if ((string)it->name() == "xjunction")
+		{
+			cout << "Processing xjunction" << endl;
+			if (xjunction(*it, data))
+			{
+				cerr << "ERR: error in xjunction." << endl;
+				return 1;
+			}
+
+		}
+
+		if ((string)it->name() == "njunction")
+		{
+			cout << "Processing njunction" << endl;
+			if (false)
+			{
+				cerr << "ERR: error in njunction." << endl;
+				return 1;
+			}
+		}
+			
 		if ((string)it->name() == "roundabout")
 		{
 			cout << "Processing roundabout" << endl;

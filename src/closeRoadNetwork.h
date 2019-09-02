@@ -43,12 +43,14 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 		double fromX,fromY,fromHdg;
 		double toX,toY,toHdg;
         laneSection lS1, lS2;
+		bool found = false;
 
 		// save from position
 		for(auto&& r : data.roads)
 		{
 			if (r.junction != fromSegment || r.id != fromRoad) continue;
-            
+				
+            found = true;
             rConnection.predecessor.elementId = r.id;
 
 			if (fromPos == "start")
@@ -76,12 +78,19 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 				return 1;
 			}
 		}
+		if (!found)
+		{
+			cerr << "ERR: from road not found." << endl;
+			return 1;
+		}
 
 		// save to position
+		found = false;
 		for(auto&& r : data.roads)
 		{
 			if (r.junction != toSegment || r.id != toRoad) continue;
-
+            
+			found = true;
             rConnection.successor.elementId = r.id;
 
 			if (toPos == "start")
@@ -109,6 +118,11 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 				return 1;
 			}
         }
+		if (!found)
+		{
+			cerr << "ERR: to road not found." << endl;
+			return 1;
+		}
 
         // adjust toHdg
         toHdg += M_PI;

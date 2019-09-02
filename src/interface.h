@@ -40,6 +40,14 @@ struct width
     double d = 0;
 };
 
+struct material
+{
+    double s = 0;
+    string surface = "asphalt";
+    double friction = 0;
+    double roughness = 0;
+};
+
 struct lane
 {
     int id;
@@ -47,6 +55,7 @@ struct lane
     int level = 0;
     width w;
     roadmark rm;
+    material m;
 };
 
 struct laneSection
@@ -137,4 +146,5 @@ struct roadNetwork
     vector<road> roads;
     vector<junction> junctions;
     vector<control> controller;
+    int nSignal = 0;
 };

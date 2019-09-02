@@ -151,13 +151,22 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
                     width.append_attribute("c") = ittt->w.c;
                     width.append_attribute("d") = ittt->w.d;
                 }
-                pugi::xml_node roadmark = lane.append_child("roadMark");
 
+                pugi::xml_node roadmark = lane.append_child("roadMark");
                 roadmark.append_attribute("sOffset") = ittt->rm.s;
                 roadmark.append_attribute("type") = ittt->rm.type.c_str();
                 roadmark.append_attribute("weight") = ittt->rm.weight.c_str();
                 roadmark.append_attribute("color") = ittt->rm.color.c_str();
                 roadmark.append_attribute("width") = ittt->rm.width;
+
+                if (ittt->id != 0)
+                {
+                    pugi::xml_node material = lane.append_child("material");
+                    material.append_attribute("sOffset") = ittt->m.s;
+                    material.append_attribute("surface") = ittt->m.surface.c_str();
+                    material.append_attribute("friction") = ittt->m.friction;
+                    material.append_attribute("roughness") = ittt->m.roughness;
+                }
             }
         }
 
@@ -212,13 +221,13 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         for (std::vector<signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
         {
             signal s = *itt;
-            //pugi::xml_node sig = signals.append_child("signal");
-            pugi::xml_node sig = objects.append_child("object");
+            pugi::xml_node sig = signals.append_child("signal");
+            //pugi::xml_node sig = objects.append_child("object");
             
             sig.append_attribute("id") = s.id;
             
             sig.append_attribute("name") = s.type.c_str();
-            //sig.append_attribute("type") = s.type.c_str();
+            sig.append_attribute("type") = s.type.c_str();
             
             sig.append_attribute("subtype") = "-";
             sig.append_attribute("s") = s.s;

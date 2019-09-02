@@ -1,12 +1,16 @@
 <?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xs3p.xsl"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 elementFormDefault="qualified">
 
     <xs:element name="roadNetwork">
+        <xs:annotation>
+            <xs:documentation>This is the main element containing segments, .</xs:documentation>
+        </xs:annotation>
         <xs:complexType mixed="true"> 
             <xs:sequence>
                 <xs:element name="segments" type="segmentsType"/>
-                <xs:element name="interfaces" type="interfacesType" minOccurs="0"/>
+                <xs:element name="links" type="linksType" minOccurs="0"/>
                 <xs:element name="closeRoadNetwork" type="closeRoadNetworkType" minOccurs="0"/>
             </xs:sequence>
             <xs:attribute name="lang" type="xs:string"/>
@@ -14,20 +18,12 @@ elementFormDefault="qualified">
     </xs:element>
 
     <xs:complexType name="segmentsType">
-        <xs:sequence>
-            <xs:element name="junctions" type="junctionsType" minOccurs="0"/>
-            <xs:choice minOccurs="0" maxOccurs="unbounded">
-                <xs:element name="roundabout" type="roundaboutType" />
-                <xs:element name="connectingRoad" type="connectingRoadType" /> 
-            </xs:choice>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="junctionsType">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
             <xs:element name="tjunction" type="tjunctionType" />
             <xs:element name="xjunction" type="xjunctionType" />
             <xs:element name="njunction" type="njunctionType" />
+            <xs:element name="roundabout" type="roundaboutType" />
+            <xs:element name="connectingRoad" type="connectingRoadType" /> 
         </xs:choice>
     </xs:complexType>
 
@@ -52,6 +48,9 @@ elementFormDefault="qualified">
     </xs:complexType>
 
     <xs:complexType name="njunctionType">
+        <xs:annotation>
+            <xs:documentation>TODO: not used</xs:documentation>
+        </xs:annotation>
         <xs:sequence>
             <xs:element name="road" type="roadType" minOccurs="2" maxOccurs="unbounded"/>
             <xs:element name="intersectionPoint" type="intersectionPointType"/>
@@ -85,7 +84,7 @@ elementFormDefault="qualified">
             <xs:element name="elevationProfile" type="elevationProfileType" minOccurs="0"/>
             <xs:element name="lateralProfile" type="lateralProfileType" minOccurs="0"/>
             <xs:element name="lanes" type="lanesType" minOccurs="0"/>
-            <xs:element name="objects" type="objectsType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="objects" type="objectsType" minOccurs="0" />
         </xs:sequence>
         <xs:attribute name="id" type="xs:int" use="required"/>
         <xs:attribute name="length" type="xs:double" use="required"/>
@@ -110,6 +109,11 @@ elementFormDefault="qualified">
     </xs:complexType>
 
     <xs:complexType name="elevationProfileType">
+        <xs:annotation>
+            <xs:documentation>
+                TODO: not used
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
             <xs:element name="elevationPoint" type="elevationPointType"    minOccurs="2" maxOccurs="unbounded"/>
             <xs:element name="elevationRadius" type="elevationRadiusType"    minOccurs="1" maxOccurs="unbounded"/>
@@ -117,17 +121,32 @@ elementFormDefault="qualified">
     </xs:complexType>
 
     <xs:complexType name="elevationPointType">
+        <xs:annotation>
+            <xs:documentation>
+                TODO: not used
+            </xs:documentation>
+        </xs:annotation>
         <xs:attribute name="id" type="xs:int" use="required"/>
         <xs:attribute name="s" type="xs:double" use="required"/>
         <xs:attribute name="z" type="xs:double" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="elevationRadiusType">
+        <xs:annotation>
+            <xs:documentation>
+                TODO: not used
+            </xs:documentation>
+        </xs:annotation>
         <xs:attribute name="pointId" type="xs:string" use="required"/>
         <xs:attribute name="R" type="xs:double" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="lateralProfileType">
+        <xs:annotation>
+            <xs:documentation>
+                TODO: not used
+            </xs:documentation>
+        </xs:annotation>        
         <xs:sequence>
             <xs:element name="lateralPoint" type="lateralPointType"          minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
@@ -137,6 +156,11 @@ elementFormDefault="qualified">
     </xs:complexType>
 
     <xs:complexType name="lateralPointType">
+        <xs:annotation>
+            <xs:documentation>
+                TODO: not used
+            </xs:documentation>
+        </xs:annotation>        
         <xs:attribute name="id" type="xs:int" use="required"/>
         <xs:attribute name="t" type="xs:double" use="required"/>
         <xs:attribute name="h" type="xs:double" use="required"/>
@@ -179,6 +203,9 @@ elementFormDefault="qualified">
     </xs:complexType>
 
     <xs:complexType name="restrictedAreaType">
+        <xs:annotation>
+            <xs:documentation>TODO: not used</xs:documentation>
+        </xs:annotation>
         <xs:sequence>
             <xs:element name="changeMark" type="changeMarkType"/>
         </xs:sequence>
@@ -188,6 +215,9 @@ elementFormDefault="qualified">
     </xs:complexType>
 
     <xs:complexType name="changeMarkType">
+        <xs:annotation>
+            <xs:documentation>TODO: not used</xs:documentation>
+        </xs:annotation>
         <xs:attribute name="angle" type="xs:double" use="required"/>        
         <xs:attribute name="color" type="xs:string" use="required"/>        
         <xs:attribute name="width" type="xs:double" use="required"/>        
@@ -211,7 +241,6 @@ elementFormDefault="qualified">
     </xs:complexType>
 
     <xs:complexType name="materialType">
-        <xs:attribute name="sOffset" type="xs:double" use="required"/>    
         <xs:attribute name="surface" type="xs:string" use="required"/>    
         <xs:attribute name="friction" type="xs:double" use="required"/>    
         <xs:attribute name="roughness" type="xs:double" use="required"/>    
@@ -219,6 +248,12 @@ elementFormDefault="qualified">
 
     <xs:complexType name="intersectionPointType">
         <xs:sequence>
+            <xs:annotation>
+                <xs:documentation>
+                    additional roads will be added and get ID ..1, ..2, etc.
+                    notice that for linking process, there the new ID's will be used
+                </xs:documentation>
+            </xs:annotation>
             <xs:element name="adRoad" type="adRoadType" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:int" use="required"/>
@@ -256,7 +291,10 @@ elementFormDefault="qualified">
 
     <xs:complexType name="streetBorderType">
         <xs:sequence>
-            <xs:element name="laneBorder" type="laneBorderType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:annotation>
+                <xs:documentation> TODO: not used </xs:documentation>
+            </xs:annotation>
+            <xs:element name="laneBorder" type="laneBorderType" minOccurs="0" maxOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:int" use="required"/>   
         <xs:attribute name="sOffset" type="xs:double" use="required"/>   
@@ -292,22 +330,15 @@ elementFormDefault="qualified">
     </xs:complexType>
 
     <xs:complexType name="objectsType">
-        <xs:sequence>
-            <xs:element name="trafficRule" type="trafficRulesType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="marking" type="markingsType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="streetLamp" type="streetLampType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="roadWork" type="roadworksType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="busStop" type="busStopsType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="parkingSpace" type="parkingSpaceType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="trafficIsland" type="trafficIslandType" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="absoluteType">
-        <xs:attribute name="x" type="xs:double" use="required"/>
-        <xs:attribute name="y" type="xs:double" use="required"/>
-        <xs:attribute name="z" type="xs:double" use="required"/>
-        <xs:attribute name="hdg" type="xs:double" use="required"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="trafficRule" type="trafficRulesType" />
+            <xs:element name="marking" type="markingsType" />
+            <xs:element name="streetLamp" type="streetLampType" />
+            <xs:element name="roadWork" type="roadworksType" />
+            <xs:element name="busStop" type="busStopsType" />
+            <xs:element name="parkingSpace" type="parkingSpaceType" />
+            <xs:element name="trafficIsland" type="trafficIslandType" />
+        </xs:choice>
     </xs:complexType>
 
     <xs:complexType name="relativeType">
@@ -334,7 +365,6 @@ elementFormDefault="qualified">
 
     <xs:complexType name="markingsType">
         <xs:choice>
-            <xs:element name="absolutePosition" type="absoluteType" />
             <xs:element name="relativePosition" type="relativeType" />
             <xs:element name="repeatPosition" type="repeatType" />
         </xs:choice>
@@ -346,7 +376,6 @@ elementFormDefault="qualified">
         <xs:sequence>
                 <xs:element name="relativePosition" type="relativeType" />
         </xs:sequence>
-        <xs:attribute name="id" type="xs:int" use="required"/>
         <xs:attribute name="type" type="xs:string" use="required"/>
         <xs:attribute name="value" type="xs:double" use="required"/>
         <xs:attribute name="dynamic" type="xs:boolean" use="required"/>
@@ -354,7 +383,6 @@ elementFormDefault="qualified">
 
     <xs:complexType name="streetLampType">
         <xs:choice>
-            <xs:element name="absolutePosition" type="absoluteType" />
             <xs:element name="relativePosition" type="relativeType" />
             <xs:element name="repeatPosition" type="repeatType" />
         </xs:choice>
@@ -370,7 +398,6 @@ elementFormDefault="qualified">
 
     <xs:complexType name="busStopsType">
         <xs:choice>
-            <xs:element name="absolutePosition" type="absoluteType" />
             <xs:element name="relativePosition" type="relativeType" />
             <xs:element name="repeatPosition" type="repeatType" />
         </xs:choice>
@@ -380,7 +407,6 @@ elementFormDefault="qualified">
 
     <xs:complexType name="parkingSpaceType">
         <xs:choice>
-            <xs:element name="absolutePosition" type="absoluteType" />
             <xs:element name="relativePosition" type="relativeType" />
             <xs:element name="repeatPosition" type="repeatType" />
         </xs:choice>
@@ -390,14 +416,20 @@ elementFormDefault="qualified">
     </xs:complexType>
 
     <xs:complexType name="trafficIslandType">
+        <xs:annotation>
+            <xs:documentation>traffic Island always lies on reference line of a road</xs:documentation>
+        </xs:annotation>
         <xs:attribute name="id" type="xs:int" use="required"/>
         <xs:attribute name="s" type="xs:double" use="required"/>
         <xs:attribute name="length" type="xs:double" use="required"/>
         <xs:attribute name="width" type="xs:double" use="required"/>
     </xs:complexType>
 
-    <xs:complexType name="interfacesType">
+    <xs:complexType name="linksType">
         <xs:sequence>
+            <xs:annotation>
+                <xs:documentation>assumption: from segment is already linked to reference segment</xs:documentation>
+            </xs:annotation>
             <xs:element name="segmentLink" type="segmentLinkType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="referenceId" type="xs:int" use="required"/>
