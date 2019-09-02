@@ -67,8 +67,16 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
             double xTmp = x1 + cos(phi1 + M_PI/4) * d/4;
             double yTmp = y1 + sin(phi1 + M_PI/4) * d/4;
             double phiTmp = phi1 + M_PI/2;
-            addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp);
-            closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2);
+            if(addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp))
+            {
+                cerr << "ERR: error in addArc function." << endl;
+                return 1;
+            }
+            if(closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2))
+            {
+                cerr << "ERR: error in closeRoadConnection function." << endl;
+                return 1;
+            }
         }
 
         // case: ->  -> 
@@ -85,8 +93,16 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
                 double xTmp = x1 + cos(phi1 + M_PI/4) * d/4;
                 double yTmp = y1 + sin(phi1 + M_PI/4) * d/4;
                 double phiTmp = phi1 + M_PI/2;
-                addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp);
-                closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2);
+                if(addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp))
+                {
+                    cerr << "ERR: error in addArc function." << endl;
+                    return 1;
+                }
+                if(closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2))
+                {
+                    cerr << "ERR: error in closeRoadConnection function." << endl;
+                    return 1;
+                }
             }
             // if start points to end
             if (t2 == n)
@@ -117,8 +133,16 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
                 double xTmp = x1 + cos(phi1 + M_PI/4) * h/4;
                 double yTmp = y1 + sin(phi1 + M_PI/4) * h/4;
                 double phiTmp = phi1 + M_PI/2;
-                addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp);
-                closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2);
+                if(addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp))
+                {
+                    cerr << "ERR: error in addArc function." << endl;
+                    return 1;
+                }
+                if(closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2))
+                {
+                    cerr << "ERR: error in closeRoadConnection function." << endl;
+                    return 1;
+                }
             }
             if ((t1 == p && t2 == p) ||
                 (t1 == n && t2 == n))
@@ -127,7 +151,11 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
                 computeIP(x1,y1,phi1,x2,y2,phi2+M_PI/2,t,t1,t2,iPx,iPy);
                 
                 addLine(geo, x1, y1, phi1, iPx, iPy, phi1);
-                closeRoadConnection(geo, iPx, iPy, phi1, x2, y2, phi2);
+                if(closeRoadConnection(geo, iPx, iPy, phi1, x2, y2, phi2))
+                {
+                    cerr << "ERR: error in closeRoadConnection function." << endl;
+                    return 1;
+                }
             }
         }
 
@@ -144,8 +172,16 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
                 double xTmp = x1 + cos(phi1 + M_PI/4) * h/4;
                 double yTmp = y1 + sin(phi1 + M_PI/4) * h/4;
                 double phiTmp = phi1 + M_PI/2;
-                addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp);
-                closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2);
+                if(addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp))
+                {
+                    cerr << "ERR: error in addArc function." << endl;
+                    return 1;
+                }
+                if(closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2))
+                {
+                    cerr << "ERR: error in closeRoadConnection function." << endl;
+                    return 1;
+                }
             }
             if(t1 == n)
             {
@@ -153,8 +189,16 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
                 double xTmp = x1 + cos(phi1 - M_PI/4) * h/4;
                 double yTmp = y1 + sin(phi1 - M_PI/4) * h/4;
                 double phiTmp = phi1 - M_PI/2;
-                addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp);
-                closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2);
+                if(addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp))
+                {
+                    cerr << "ERR: error in addArc function." << endl;
+                    return 1;
+                }
+                if(closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2))
+                {
+                    cerr << "ERR: error in closeRoadConnection function." << endl;
+                    return 1;
+                }
             }
         }
     }
@@ -167,20 +211,32 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
             double xTmp = x1 + cos(phi1) * (d1-d2);
             double yTmp = y1 + sin(phi1) * (d1-d2);
             addLine(geo, x1, y1, phi1, xTmp, yTmp, phi1);
-            addArc(geo, xTmp, yTmp, phi1, x2, y2, phi2);
+            if(addArc(geo, xTmp, yTmp, phi1, x2, y2, phi2))
+            {
+                cerr << "ERR: error in addArc function." << endl;
+                return 1;
+            }
         }
 
         if (d1 < d2)
         {
             double xTmp = x2 - cos(phi2) * (d2-d1);
             double yTmp = y2 - sin(phi2) * (d2-d1);
-            addArc(geo, x1, y1, phi1, xTmp, yTmp, phi2);
+            if(addArc(geo, x1, y1, phi1, xTmp, yTmp, phi2))
+            {
+                cerr << "ERR: error in addArc function." << endl;
+                return 1;
+            }
             addLine(geo, xTmp, yTmp, phi2, x2, y2, phi2);
         }
 
         if (d1 == d2)
         {
-            addArc(geo, x1, y1, phi1, x2, y2, phi2);
+            if(addArc(geo, x1, y1, phi1, x2, y2, phi2))
+            {
+                cerr << "ERR: error in addArc function." << endl;
+                return 1;
+            }
         }
     }
     // --- case oo -------------------------------------------------------------
@@ -205,8 +261,16 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
         double xTmp = x1 + cos(phi1 + alpha) * d/4;
         double yTmp = y1 + sin(phi1 + alpha) * d/4;
         double phiTmp = phi1 + 2 * alpha;
-        addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp);
-        closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2);
+        if(addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp))
+        {
+            cerr << "ERR: error in addArc function." << endl;
+            return 1;
+        }
+        if(closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2))
+        {
+            cerr << "ERR: error in closeRoadConnection function." << endl;
+            return 1;
+        }
     }
     // --- p0 && n0 ------------------------------------------------------------
     if ((type1 == p && type2 == o) ||
@@ -221,8 +285,16 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
         double xTmp = x1 + cos(phi1 + beta) * d/4;
         double yTmp = y1 + sin(phi1 + beta) * d/4;
         double phiTmp = phi1 + 2 * beta;
-        addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp);
-        closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2);
+        if(addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp))
+        {
+            cerr << "ERR: error in addArc function." << endl;
+            return 1;
+        }
+        if(closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2))
+        {
+            cerr << "ERR: error in closeRoadConnection function." << endl;
+            return 1;
+        }
     }
     
     return 0;

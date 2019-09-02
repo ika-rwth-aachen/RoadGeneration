@@ -29,16 +29,27 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
     }
 
     // store properties of mainRoad
-    double R = mainRoad.child("referenceLine").child("geometry").attribute("R").as_double();
-    double sOld = node.last_child().child("couplerArea").attribute("sOffset").as_double();
+    double length = mainRoad.child("referenceLine").child("geometry").attribute("length").as_double();
+    double R = length / (2 * M_PI);
+    mainRoad.child("referenceLine").child("geometry").append_attribute("R") = R;
+
+    double sOld;
     road rOld;
 
     bool clockwise;
     if (R > 0) clockwise = false;
     if (R < 0) clockwise = true;
-    if (abs(R) < 10)
+    if (abs(R) < 5)
     {
-        cerr << "ERR: radius of reference road in a roundabout have to be larger than 10.";
+        cerr << "ERR: radius of reference road in a roundabout have to be larger than 5.";
+        return 1;
+    }
+
+    // get coupler
+    pugi::xml_node coupler = node.child("coupler");
+    if (!coupler)
+    {
+        cerr << "ERR: coupler is not defined.";
         return 1;
     }
 
@@ -52,19 +63,6 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
     for (pugi::xml_node iP: node.children("intersectionPoint"))
     {   
         cc++;
-
-        // corresponding coupler
-        pugi::xml_node coupler;
-        for (pugi::xml_node c: node.children("coupler"))
-        {
-            if (c.attribute("id").as_int() == iP.attribute("id").as_int())
-                coupler = c;
-        }
-        if (!coupler)
-        {
-            cerr << "ERR: coupler with Id " << iP.attribute("id").as_int() << " is not defined.";
-            return 1;
-        }
 
         // find additionalRoad
         int adId = iP.child("adRoad").attribute("id").as_int();
@@ -122,6 +120,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         r1.junction = junc.id;
         r1.successor.elementId = junc.id;
         r1.successor.elementType = "junction";
+        if (cc == 1) sOld = sOffMain;
         generateRoad(mainRoad, r1, sOld, sMain-sOffMain, 0, sMain, iPx, iPy,iPhdg);        
 
         road r2;
@@ -153,44 +152,60 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         cout << "\t Generate Connecting Lanes" << endl;
 
         // max and min id's of laneSections
-        int max1 = findMaxLaneId(r1.laneSections.back());
-        int min1 = findMinLaneId(r1.laneSections.back());
+        int inner1, outer1, outer3, inner3, nLane;
+        
+        if (clockwise)
+        {
+            outer1 = findMaxLaneId(r1.laneSections.back());
+            inner1 = sgn(outer1);
+
+            outer3 = findMaxLaneId(helper.laneSections.back());
+            inner3 = sgn(outer3);
+
+            nLane = outer1 - inner1 + 1;
+        } 
+        if (!clockwise)
+        {
+            outer1 = findMinLaneId(r1.laneSections.back());
+            inner1 = sgn(outer1);
+
+            outer3 = findMinLaneId(helper.laneSections.back());
+            inner3 = sgn(outer3);
+            nLane = inner1 - outer1 + 1;
+        } 
 
         int max2 = findMaxLaneId(r2.laneSections.front());
         int min2 = findMinLaneId(r2.laneSections.front());
-
-        int max3 = findMaxLaneId(helper.laneSections.front());
-        int min3 = findMinLaneId(helper.laneSections.front());
 
         int from, to;
 
         road r3; 
         r3.id = 100*junc.id + cc * 10 + 4;
-        from = findRightLane(max1);
-        to = findRightLane(max3);
+        from = inner1;
+        to = inner3;
         if (clockwise)
-            createRoadConnection(r1,helper,r3,junc,from,to,bro,bro,bro);
+            createRoadConnection(r1,helper,r3,junc,from,to,bro,sol,bro);
         if (!clockwise)
             createRoadConnection(r1,helper,r3,junc,from,to,sol,bro,bro);
 
         road r4; 
         r4.id = 100*junc.id + cc * 10 + 5;
-        from = findRightLane(min1);
-        to = findRightLane(min3);
+        from = outer1;
+        to = outer3;
         if (clockwise)
-            createRoadConnection(r1,helper,r4,junc,from,to,bro,sol,bro);
+            createRoadConnection(r1,helper,r4,junc,from,to,bro,bro,bro);
         if (!clockwise)
             createRoadConnection(r1,helper,r4,junc,from,to,bro,bro,bro);
 
         road r5; 
         r5.id = 100*junc.id + cc * 10 + 6;
         if (clockwise){
-            from = findLeftLane(max1);
+            from = outer1;
             to = findLeftLane(max2);
             createRoadConnection(r1,r2,r5,junc,from,to,sol,non,non);
         }
         if (!clockwise){
-            from = findRightLane(min1);
+            from = outer1;
             to = findRightLane(min2);
             createRoadConnection(r1,r2,r5,junc,from,to,non,sol,non);
         }
@@ -199,12 +214,12 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         r6.id = 100*junc.id + cc * 10 + 7;
         if (clockwise){
             from = findLeftLane(min2);
-            to = findLeftLane(max3);
+            to = outer3;
             createRoadConnection(r2,helper,r6,junc,from,to,sol,non,non);
         }
         if (!clockwise){
             from = findRightLane(max2);
-            to = findRightLane(min3);
+            to = outer3;
             createRoadConnection(r2,helper,r6,junc,from,to,non,sol,non);
         }
 
@@ -215,7 +230,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         data.roads.push_back(r1);
         data.roads.push_back(r2);
         data.roads.push_back(r3);
-        data.roads.push_back(r4);
+        if (nLane > 1) data.roads.push_back(r4);
         data.roads.push_back(r5);
         data.roads.push_back(r6);
 

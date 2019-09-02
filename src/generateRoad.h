@@ -334,7 +334,7 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
                 l.id = itt->attribute("id").as_int();
 
                 // flip lanes for mode 1
-                if (mode == 1) l.id *= -1;  
+                if (mode == 2) l.id *= -1;  
 
                 l.type = itt->attribute("type").value();
 
@@ -389,7 +389,16 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
             // only perform drop if not close to junction
             if (s < sLaneWidening + 50) continue;       
             if (s > r.length) continue;       
-            addLaneDrop(r.laneSections, lane, s, ds);                
+            addLaneDrop(r.laneSections, lane, s, ds);  
+
+            //restricted area
+            if (itt->child("restrictedArea"))
+            {
+                int signNumber = itt->child("restrictedArea").attribute("signNumber").as_int();
+                double s2 = itt->child("restrictedArea").attribute("sOffset").as_int();
+                double ds2 = itt->child("restrictedArea").attribute("ds2").as_int();
+                addRestrictedArea(r.laneSections, lane, s, s2, ds, ds2, signNumber);
+            }              
         }
     }
 

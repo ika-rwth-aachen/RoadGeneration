@@ -28,6 +28,8 @@ int addLine(vector<geometry> &geo, double x1, double y1, double phi1, double x2,
     g.length = sqrt(pow(x2-x1,2) + pow(y2-y1,2));
 
     geo.push_back(g);
+
+    return 0;
 }
 
 /**
@@ -50,6 +52,12 @@ int addArc(vector<geometry> &geo, double x1, double y1, double phi1, double x2, 
     double dist = sqrt(pow(x2-x1,2)  + pow(y2-y1,2));
     double R = (dist / 2) / sin(a / 2);
 
+    if (abs(R) < 10)
+    {
+        cerr << "Radius is to small in arc generation." << endl;
+        //return 1;
+    }
+
     geometry g;
 
     g.s = 0;
@@ -64,6 +72,8 @@ int addArc(vector<geometry> &geo, double x1, double y1, double phi1, double x2, 
     g.length = abs(R * a);
 
     geo.push_back(g);
+
+    return 0;
 }
 
 /**

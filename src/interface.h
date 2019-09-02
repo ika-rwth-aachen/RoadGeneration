@@ -44,8 +44,8 @@ struct material
 {
     double s = 0;
     string surface = "asphalt";
-    double friction = 0;
-    double roughness = 0;
+    double friction = 0.8;
+    double roughness = 0.015;
 };
 
 struct lane

@@ -207,3 +207,152 @@ int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
 
     return 0;
 }
+
+
+
+/**
+ * @brief function adds a laneSection with laneDrop  to a given lanesection set
+ * 
+ * @param secs      vector of all lanesections of a road
+ * @param laneId    laneId of the lane where the laneDrop should be performed
+ * @param s         position of laneDrop
+ * @param ds        length of laneDrop
+ * @param sign      id of signNumber
+ * @return int      errorcode
+ */
+int addRestrictedArea(vector<laneSection> &secs, int laneId, double s1, double s2, double ds1, double ds2, int sign)
+{
+    std::vector<laneSection>::iterator it;
+    std::vector<lane>::iterator itt;
+
+    // search corresponding lane Section
+    int i = 0;
+    bool found = false;
+    for (i = 0; i < secs.size()-1; i++)
+    {
+        if (secs[i].s <= s1 && secs[i+1].s > s1) {
+            found = true;
+            it = secs.begin() + i;
+            break; 
+        }
+    }
+    if (!found) {
+        it = secs.begin() + secs.size()-1;
+        i = secs.size()-1;
+    }
+
+    laneSection adLaneSec = *it;
+    lane l;
+    int id;
+    double dx;
+
+    // ---------------------------------------------
+    id = findLane(adLaneSec, l, laneId);
+
+    double a = l.w.a;
+    double b = l.w.b;
+    double c = l.w.c;
+    double d = l.w.d;
+    
+    double w = laneWidth(l,0);
+    l.w.a = w - a;
+    l.w.b = - b; 
+    l.w.c = - c; 
+    l.w.d = - d; 
+    l.id = sgn(laneId) + laneId;
+    adLaneSec.lanes.push_back(l);
+
+    secs[i] = adLaneSec;
+
+    // --------------------------------------------
+    adLaneSec.id++;
+    adLaneSec.s = s2;
+
+    id = findLane(adLaneSec, l, laneId);
+    dx = s1 + ds1 - s2;
+    l.w.d = d;
+    l.w.c = 3 * dx * d + c;
+    l.w.b = 3 * pow(dx,2) * d + 2 * dx * c + b;
+    double wTmp = pow(dx,3) * d + pow(dx,2) * c + pow(dx,1) * b + a;
+    l.w.a = wTmp;
+    adLaneSec.lanes[id] = l;
+
+    id = findLane(adLaneSec, l, laneId + sgn(laneId));
+    l.w.a = w - wTmp;
+    l.w.b = 0;
+    l.w.c = 0;
+    l.w.d = 0;
+    adLaneSec.lanes[id] = l;
+
+    it++;
+    secs.insert(it, adLaneSec);
+
+    // --------------------------------------------
+    adLaneSec.id++;
+    adLaneSec.s = s1 + ds1;
+
+    id = findLane(adLaneSec, l, laneId);
+    l.w.a = 0;
+    l.w.b = 0;
+    l.w.c = 0;
+    l.w.d = 0;
+    adLaneSec.lanes[id] = l;
+
+    id = findLane(adLaneSec, l, laneId + sgn(laneId));
+    dx = s2 + ds2 - (s1 + ds1);
+    l.w.d = 2 * wTmp / pow(dx,3);
+    l.w.c = - 3 * wTmp / pow(dx,2);
+    l.w.b = 0;
+    l.w.a = wTmp;        
+
+    adLaneSec.lanes[id] = l;
+
+    it++;
+    secs.insert(it, adLaneSec);
+
+
+    // --------------------------------------------
+    adLaneSec.id++;
+    adLaneSec.s = s2 + ds2;
+
+    // remove lane 
+    id = findLane(adLaneSec, l, laneId + sgn(laneId));
+    shiftLanes(adLaneSec, laneId + sgn(laneId), -1);
+    itt = adLaneSec.lanes.begin() + id;
+    adLaneSec.lanes.erase(itt); 
+
+    id = findLane(adLaneSec, l, laneId);
+    shiftLanes(adLaneSec, laneId, -1);
+    itt = adLaneSec.lanes.begin() + id;
+    adLaneSec.lanes.erase(itt); 
+
+    // make outer boundary solid
+    if(laneId > 0) id = findMaxLaneId(adLaneSec);
+    if(laneId < 0) id = findMinLaneId(adLaneSec);
+
+    id = findLane(adLaneSec, l, id);
+    adLaneSec.lanes[id].rm.type = "solid";
+
+    // make center line dashed
+    id = findLane(adLaneSec, l, 0);
+    adLaneSec.lanes[id].rm.type = "broken";
+
+    it++;
+    it = secs.insert(it, adLaneSec);
+
+    it++; 
+    secs.erase(it);
+
+    // --- shift all lanes in following lane sections --------------------------
+    for (; it != secs.end(); ++it)
+    {        
+        int id = findLane(*it, l, laneId);
+
+        shiftLanes(*it, laneId, -1);
+
+        itt = it->lanes.begin() + id;
+        it->lanes.erase(itt); 
+    }
+
+    return 0;
+}
