@@ -43,8 +43,8 @@
                 <adRoad id="2" s="0" angle="1.15"/>
             </intersectionPoint>
             <coupler id="1">
-                <couplerArea sOffset="15">
-                    <streetBorder id="2" sOffset="15"/>
+                <couplerArea sOffset="1">
+                    <streetBorder id="2" sOffset="1"/>
                 </couplerArea>
                 <connection type="all"/>
             </coupler>
@@ -83,8 +83,8 @@
                 <adRoad id="3" s="0" angle="3.0"/>
             </intersectionPoint>
             <coupler id="1">
-                <couplerArea sOffset="15">
-                    <streetBorder id="2" sOffset="15"/>
+                <couplerArea sOffset="1">
+                    <streetBorder id="2" sOffset="1"/>
                 </couplerArea>
                 <connection type="all"/>
             </coupler>
@@ -116,11 +116,14 @@
         <roundabout id="3" refId="1">
             <road id="1" type="0" >	
                 <referenceLine>
-                    <geometry id="1" length="32" type="arc"/>
+                    <geometry id="1" length="32.5" type="arc"/>
                 </referenceLine>
                 <lanes>
                     <laneSection id="1" s="0">
-                        <lane id="-1" type="driving" />
+                        <lane id="-2" type="driving" />
+                        <lane id="-1" type="driving">
+                            <roadMark   type="broken" color="white" width="0.13"/>
+                        </lane>
                         <lane id="0" type="driving" />
                     </laneSection>
                 </lanes>
@@ -130,28 +133,22 @@
                     <geometry id="1" length="100"  type="line"/>
                 </referenceLine>
             </road>
-            <road id="3" type="0" >	
-                <referenceLine>
-                    <geometry id="1" length="250"  R="-100" type="arc"/>
-                </referenceLine>
-            </road>
-            <intersectionPoint id="1" refId="1" s="8">
+            <intersectionPoint id="1" refId="1" s="0.25">
                 <adRoad id="2" s="0" angle="-1.56"/>
             </intersectionPoint>
-            <intersectionPoint id="2" refId="1" s="16">
+            <intersectionPoint id="2" refId="1" s="0.5">
                 <adRoad id="2" s="0" angle="-1.56"/>
             </intersectionPoint>
-            <intersectionPoint id="3" refId="1" s="24">
+            <intersectionPoint id="3" refId="1" s="0.75">
                 <adRoad id="2" s="0" angle="-1.56"/>
             </intersectionPoint>
-            <intersectionPoint id="4" refId="1" s="32">
-                <adRoad id="3" s="10" angle="-1.56"/>
+            <intersectionPoint id="4" refId="1" s="1">
+                <adRoad id="2" s="0" angle="-1.6"/>
             </intersectionPoint>
             <coupler id="1">
                 <couplerArea sOffset="10">
                     <streetBorder id="1" sOffset="2" />
                     <streetBorder id="2" sOffset="10" />
-                    <streetBorder id="3" sOffset="10" />
                 </couplerArea> 
             </coupler>
         </roundabout>
@@ -213,7 +210,7 @@
     </links>
     <closeRoadNetwork>
         <segmentLink fromSegment="1" toSegment="2" fromRoad="103" toRoad="202" fromPos="end" toPos="end" />
-        <segmentLink fromSegment="3" toSegment="3" fromRoad="332" toRoad="342" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="3" toSegment="3" fromRoad="342" toRoad="332" fromPos="end" toPos="end" />
         <segmentLink fromSegment="6" toSegment="5" fromRoad="601" toRoad="501" fromPos="end" toPos="end" />
         <segmentLink fromSegment="7" toSegment="1" fromRoad="704" toRoad="101" fromPos="end" toPos="end" />
         <segmentLink fromSegment="7" toSegment="7" fromRoad="702" toRoad="703" fromPos="end" toPos="end" />

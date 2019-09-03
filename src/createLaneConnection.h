@@ -12,16 +12,8 @@
  * @param right     right roadmarking
  * @return int      errorcode
  */
-int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, int to, string left, string right, int type)
+int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, int to, string left, string right)
 {
-    /*  if type = 1
-            simply add a lane left or right from the roads centerline
-
-        if type = 2
-            centerline is not parallel to lane: 
-            additional helperlane which compensates tOffset is necessary
-     */
-
     if (from == 0 || to == 0) {
         cout << "ERR: cannot connect lane Id 0." << endl;
     }
@@ -57,34 +49,20 @@ int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, in
     center.id = 0;
     center.type = "none";
     center.w.a = 0;
-
-    lane helpLane;
-    helpLane.id = dir;
-    helpLane.type = "none";
     
     lane newLane;
-    newLane.id = type * dir;
+    newLane.id = dir;
 
     if (dir > 0)
     {
-        if (type == 1) center.rm.type = right;
-        if (type == 2) center.rm.type = "none";
-        helpLane.rm.type = right;
+        center.rm.type = right;
         newLane.rm.type = left;
     }
     else if (dir < 0)
     {
-        if (type == 1) center.rm.type = left;
-        if (type == 2) center.rm.type = "none";
-        helpLane.rm.type = left;
+        center.rm.type = left;
         newLane.rm.type = right;
     }
-
-    // width of helplane
-    helpLane.w.d = -2 * (tOffSet2 - tOffSet1) / pow(r.length,3);
-    helpLane.w.c =  3 * (tOffSet2 - tOffSet1) / pow(r.length,2);
-    helpLane.w.b = 0;
-    helpLane.w.a = tOffSet1;
 
     // width of newLane
     newLane.w.d = -2 * (w2 - w1) / pow(r.length,3);
@@ -97,9 +75,6 @@ int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, in
     {
         r.laneSections.back().lanes.push_back(center);
     }
-
-    if (type == 2)
-        r.laneSections.back().lanes.push_back(helpLane);
     
     r.laneSections.back().lanes.push_back(newLane);
 

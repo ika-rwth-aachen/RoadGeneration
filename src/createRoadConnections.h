@@ -102,55 +102,35 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     double w1 = lS1.o.a + s1*lS1.o.b + s1*s1*lS1.o.c + s1*s1*s1*lS.o.d; 
     double w2 = lS2.o.a + s2*lS2.o.b + s2*s2*lS2.o.c + s2*s2*s2*lS.o.d; 
 
-    x1 += cos(hdg1-M_PI/2) * w1;
-    y1 += sin(hdg1-M_PI/2) * w1;
+    x1 += cos(g1.hdg+M_PI/2) * w1;
+    y1 += sin(g1.hdg+M_PI/2) * w1;
 
 
-    x2 += cos(hdg2+M_PI/2) * w2;
-    y2 += sin(hdg2+M_PI/2) * w2;
+    x2 += cos(g2.hdg+M_PI/2) * w2;
+    y2 += sin(g2.hdg+M_PI/2) * w2;
 
     // --- compute connecting road ---------------------------------------------
     double a = hdg2-hdg1;
     fixAngle(a);
-
-    // --- type ----------------------------------------------------------------
-    /*
-        if the angle between the two points is 
-        
-        larger than 90 degree:
-            create the new center line between the two lanes directly
-        
-        smaller than 90 degree; 
-            create the new center line between the two center lines 
-            add helper lane to compensate t offset in lanes
-    */
     
-    int type;
-    // strong corner (more than 90 deg)
-    if (abs(a) >= M_PI / 2) 
-    {
-        // update start end endpoint according to lane
-        double phi1, phi2;
-        double t1 = findTOffset(lS1,fromId-sgn(fromId),0);
-        double t2 = findTOffset(lS2,toId-sgn(toId),0);
-        
-        if(t1 > 0) phi1 = g1.hdg + M_PI/2; 
-        if(t1 < 0) phi1 = g1.hdg - M_PI/2; 
-        fixAngle(phi1);
-        
-        if(t2 > 0) phi2 = g2.hdg + M_PI/2; 
-        if(t2 < 0) phi2 = g2.hdg - M_PI/2; 
-        fixAngle(phi2);
-        
-        x1 += cos(phi1) * fabs(t1);
-        y1 += sin(phi1) * fabs(t1);
+    // update start end endpoint according to lane
+    double phi1, phi2;
+    double t1 = findTOffset(lS1,fromId-sgn(fromId),0);
+    double t2 = findTOffset(lS2,toId-sgn(toId),0);
+    
+    if(t1 > 0) phi1 = g1.hdg + M_PI/2; 
+    if(t1 < 0) phi1 = g1.hdg - M_PI/2; 
+    fixAngle(phi1);
+    
+    if(t2 > 0) phi2 = g2.hdg + M_PI/2; 
+    if(t2 < 0) phi2 = g2.hdg - M_PI/2; 
+    fixAngle(phi2);
+    
+    x1 += cos(phi1) * fabs(t1);
+    y1 += sin(phi1) * fabs(t1);
 
-        x2 += cos(phi2) * fabs(t2);
-        y2 += sin(phi2) * fabs(t2);
-        type = 1;
-    } 
-    // weak corner (less than 90 deg)
-    if (abs(a) <  M_PI / 2) type = 2;
+    x2 += cos(phi2) * fabs(t2);
+    y2 += sin(phi2) * fabs(t2);
 
     // simple line if angles are almost the same
     if (abs(a) < 0.1) 
@@ -261,7 +241,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     }
 
     // --- lanemarkings in crossing section ------------------------------------
-    createLaneConnection(r,lS1,lS2,fromId,toId,laneMarkLeft,laneMarkRight,type);
+    createLaneConnection(r,lS1,lS2,fromId,toId,laneMarkLeft,laneMarkRight);
                
     return 0;
 }

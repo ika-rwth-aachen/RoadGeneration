@@ -39,9 +39,9 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
     bool clockwise;
     if (R > 0) clockwise = false;
     if (R < 0) clockwise = true;
-    if (abs(R) < 5)
+    if (abs(R) < 3)
     {
-        cerr << "ERR: radius of reference road in a roundabout have to be larger than 5.";
+        cerr << "ERR: radius of reference road in a roundabout have to be larger than 3.";
         return 1;
     }
 
@@ -93,8 +93,37 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
                 sOffAdd = sB.attribute("sOffset").as_double();
         }
 
+        // calculate width of mainRoad and addtionalRoad
+        road helpMain;
+        generateRoad(mainRoad, helpMain, 0, INFINITY, 0, 0, 0, 0, 0);  
+        laneSection lSMain = helpMain.laneSections.front();
+        double widthMain = abs(findTOffset(lSMain, findMinLaneId(lSMain), 0));
+        
+        road helpAdd;
+        generateRoad(additionalRoad, helpAdd, 0, INFINITY, 0, 0, 0, 0, 0);  
+        laneSection lSAdd = helpAdd.laneSections.front();
+        double widthAdd = abs(findTOffset(lSAdd, findMinLaneId(lSAdd), 0)) +                      abs(findTOffset(lSAdd, findMaxLaneId(lSAdd), 0));
+        
+        // check offsets and adjust them if necessary
+        bool (changed) = false;
+        if (sOffMain < widthAdd/2 * 1.25) 
+        {sOffMain = widthAdd/2 * 1.25; changed = true;}
+        if (sOffAdd < widthMain   * 1.25) 
+        {sOffAdd = widthMain * 1.25; changed = true;}        
+        
+        if (changed)
+        {
+            cerr << "!!! sOffset of at least one road was changed, due to feasible road structure !!!" << endl;
+        }
+
+        if (sOffMain * 2 > length / nIp)
+        {
+            cerr << "Length of roundabout is too short, overlapping roads." << endl;
+            return 1;
+        }
+
         // calculate s and phi at intersection
-        double sMain = iP.attribute("s").as_double();
+        double sMain = iP.attribute("s").as_double() * length;
         double sAdd = iP.child("adRoad").attribute("s").as_double();
         double phi = iP.child("adRoad").attribute("angle").as_double();
 

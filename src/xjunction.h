@@ -92,6 +92,48 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         if (sB->attribute("id").as_int() == additionalRoad3.attribute("id").as_int()) sOffAdd3 = sB->attribute("sOffset").as_double();
     }
 
+    // calculate width of mainRoad and addtionalRoad
+    road help1;
+    generateRoad(mainRoad, help1, 0, INFINITY, 0, 0, 0, 0, 0); 
+
+    road help2;
+    generateRoad(additionalRoad1, help2, 0, INFINITY, 0, 0, 0, 0, 0); 
+
+    road help3;
+    generateRoad(additionalRoad2, help3, 0, INFINITY, 0, 0, 0, 0, 0);
+
+    road help4;
+    generateRoad(additionalRoad3, help4, 0, INFINITY, 0, 0, 0, 0, 0);
+ 
+    laneSection lS1 = help1.laneSections.front();
+    double width1 = abs(findTOffset(lS1, findMinLaneId(lS1), 0))                              + abs(findTOffset(lS1, findMaxLaneId(lS1), 0));
+
+    laneSection lS2 = help2.laneSections.front();
+    double width2 = abs(findTOffset(lS2, findMinLaneId(lS2), 0))                              + abs(findTOffset(lS2, findMaxLaneId(lS2), 0));
+
+    laneSection lS3 = help3.laneSections.front();
+    double width3 = abs(findTOffset(lS3, findMinLaneId(lS3), 0))                              + abs(findTOffset(lS3, findMaxLaneId(lS3), 0));
+
+    laneSection lS4 = help4.laneSections.front();
+    double width4 = abs(findTOffset(lS4, findMinLaneId(lS4), 0))                              + abs(findTOffset(lS4, findMaxLaneId(lS4), 0));
+        
+    // check offsets and adjust them if necessary
+    double w1 = max(width2/2, max(width3/2, width4/2)) * 4;
+    double w2 = max(width1/2, max(width3/2, width4/2)) * 4;
+    double w3 = max(width1/2, max(width2/2, width4/2)) * 4;
+    double w4 = max(width1/2, max(width2/2, width3/2)) * 4;
+
+    bool changed = false;
+    if (sOffMain < w1) {sOffMain = w1; changed = true;}
+    if (sOffAdd1 < w2) {sOffAdd1 = w2; changed = true;} 
+    if (sOffAdd2 < w3) {sOffAdd2 = w3; changed = true;} 
+    if (sOffAdd3 < w4) {sOffAdd3 = w4; changed = true;} 
+
+    if (changed)
+    {
+        cerr << "!!! sOffset of at least one road was changed, due to feasible road structure !!!" << endl;
+    }
+
     // calculate s and phi at intersection
     sMain = iP.attribute("s").as_double();
 
