@@ -60,6 +60,7 @@ struct lane
 {
     int id;
     string type = "driving";
+    int turn = 0;
     int level = 0;
     double speed = 0;
     width w;

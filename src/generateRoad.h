@@ -411,67 +411,7 @@ int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, dou
 
     // add laneWidening before junction
     //     sLaneWidening is distance from junction to point where the lane drops
-    if (sLaneWidening != 0) 
-    {
-        /*
-        sLaneWidening > 0 -> laneWidening
-        sLaneWidening < 0 -> restricted Area
-        */
-
-        r.laneSections.front().s = abs(sLaneWidening) + 20;
-
-        laneSection adLaneSec = r.laneSections.front();
-        adLaneSec.s = 0;
-        adLaneSec.id++;
-
-        // additional lane
-        lane l;
-        findLane(adLaneSec, l, 1);
-        double w = laneWidth(l,0);
-        l.w.a = w;
-        
-        if (sLaneWidening > 0)
-        { 
-            l.rm.type = "broken";
-            l.type = "driving";
-        }
-        if (sLaneWidening < 0)
-        { 
-            l.rm.type = "solid";
-            l.type = "restricted";
-        }
-        shiftLanes(adLaneSec,1,1);
-        adLaneSec.lanes.push_back(l);   
-
-        // solid center line
-        lane lTmp;
-        int id = findLane(adLaneSec, lTmp, 0);
-        adLaneSec.lanes[id].rm.type = "solid";
-
-        // laneOffset
-        adLaneSec.o.a = -abs(w)/2;
-
-        vector<laneSection>::iterator it = r.laneSections.begin();
-        it = r.laneSections.insert(it, adLaneSec);
-        it++;
-
-        // ---------------------------------------------------------------------
-        // widening lane
-        l.w.d = 2 * w / pow(20,3);
-        l.w.c = - 3 * w / pow(20,2);
-        l.w.b = 0;
-
-        adLaneSec.o.a = -abs(w)/2;
-        adLaneSec.o.b = 0;
-        adLaneSec.o.c = 3 * abs(w)/2 / pow(20,2);
-        adLaneSec.o.d = - 2 * abs(w)/2 / pow(20,3);
-
-        adLaneSec.id++;
-        adLaneSec.s = abs(sLaneWidening);
-        id = findLane(adLaneSec, lTmp, 1);
-        adLaneSec.lanes[id] = l;
-        it = r.laneSections.insert(it, adLaneSec);
-    }
+    if (sLaneWidening != 0) laneWideningJunction(r,  sLaneWidening, 1);
 
     return 0;
 }

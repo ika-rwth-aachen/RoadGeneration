@@ -371,3 +371,96 @@ int addRestrictedArea(vector<laneSection> &secs, int laneId, double s1, double s
 
     return 0;
 }
+
+
+int laneWideningJunction(road &r, int sLaneWidening, int turn)
+{
+    /*
+    sLaneWidening > 0 -> laneWidening
+    sLaneWidening < 0 -> restricted Area
+    */
+
+    // if restricted area, always turn = 1
+    if (sLaneWidening < 0) turn = 1;
+
+    vector<laneSection>::iterator it = r.laneSections.begin();
+
+    laneSection adLaneSec = *it;
+    adLaneSec.s = 0;
+    adLaneSec.id = 1;
+
+    // additional lane
+    lane l;
+    int laneId = 1; 
+    if (turn == -1) laneId = findMaxLaneId(adLaneSec);
+    int id = findLane(adLaneSec, l, laneId);
+    double w = laneWidth(l,0);
+    l.w.a = w;
+    
+    if (sLaneWidening > 0 && turn == 1)
+    { 
+        l.rm.type = "broken";
+        l.type = "driving";
+        l.turn = 1;
+    }
+    if (sLaneWidening > 0 && turn == -1)
+    { 
+        adLaneSec.lanes[id].rm.type = "broken";
+        l.rm.type = "solid";
+        l.type = "driving";
+        l.turn = -1;
+    }
+    if (sLaneWidening < 0)
+    { 
+        l.rm.type = "solid";
+        l.type = "restricted";
+    }
+    if (turn == 1)
+    {
+        shiftLanes(adLaneSec,laneId,1);
+        adLaneSec.lanes.push_back(l);   
+    }
+    if (turn == -1)
+    {   
+        laneId += sgn(laneId);
+        l.id = laneId;
+        adLaneSec.lanes.push_back(l);
+    }
+
+    // solid center line
+    lane lTmp;
+    id = findLane(adLaneSec, lTmp, 0);
+    adLaneSec.lanes[id].rm.type = "solid";
+
+    // laneOffset
+    adLaneSec.o.a = -abs(w)/2 + it->o.a;
+
+    it = r.laneSections.insert(it, adLaneSec);
+    it++;
+
+    // ---------------------------------------------------------------------
+    // widening lane
+    l.w.d = 2 * w / pow(20,3);
+    l.w.c = - 3 * w / pow(20,2);
+    l.w.b = 0;
+
+    adLaneSec.o.a = - abs(w)/2 + it->o.a;
+    adLaneSec.o.b = 0;
+    adLaneSec.o.c = 3 * abs(w)/2 / pow(20,2);
+    adLaneSec.o.d = - 2 * abs(w)/2 / pow(20,3);
+
+    adLaneSec.id++;
+    adLaneSec.s = abs(sLaneWidening);
+    id = findLane(adLaneSec, lTmp, laneId);
+    adLaneSec.lanes[id] = l;
+
+    it = r.laneSections.insert(it, adLaneSec);
+    it++;
+
+    // --- shift all lanes in following lane sections --------------------------
+    for (; it != r.laneSections.end(); ++it)
+    {        
+        it->id += 2;
+        it->s += 20 + abs(sLaneWidening);
+    }
+}
