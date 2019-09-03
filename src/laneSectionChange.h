@@ -242,11 +242,11 @@ int addRestrictedArea(vector<laneSection> &secs, int laneId, double s1, double s
     }
 
     laneSection adLaneSec = *it;
-    lane l;
+    lane l, lTmp;
     int id;
     double dx;
 
-    // ---------------------------------------------
+    // --- Section 1 -----------------------------------------
     id = findLane(adLaneSec, l, laneId);
 
     double a = l.w.a;
@@ -254,43 +254,52 @@ int addRestrictedArea(vector<laneSection> &secs, int laneId, double s1, double s
     double c = l.w.c;
     double d = l.w.d;
     
+    // addtional lane: w - droppingLane
     double w = laneWidth(l,0);
     l.w.a = w - a;
     l.w.b = - b; 
     l.w.c = - c; 
     l.w.d = - d; 
+
+    // type
+    l.type = "roadWorks";
     l.id = sgn(laneId) + laneId;
     adLaneSec.lanes.push_back(l);
 
     secs[i] = adLaneSec;
 
-    // --------------------------------------------
+    // --- Section 2 -----------------------------------------
     adLaneSec.id++;
     adLaneSec.s = s2;
 
+    // shift coordinates of droppingLane
     id = findLane(adLaneSec, l, laneId);
     dx = s1 + ds1 - s2;
     l.w.d = d;
     l.w.c = 3 * dx * d + c;
     l.w.b = 3 * pow(dx,2) * d + 2 * dx * c + b;
-    double wTmp = pow(dx,3) * d + pow(dx,2) * c + pow(dx,1) * b + a;
-    l.w.a = wTmp;
+    l.w.a = pow(dx,3) * d + pow(dx,2) * c + pow(dx,1) * b + a;
     adLaneSec.lanes[id] = l;
 
-    id = findLane(adLaneSec, l, laneId + sgn(laneId));
-    l.w.a = w - wTmp;
-    l.w.b = 0;
-    l.w.c = 0;
-    l.w.d = 0;
-    adLaneSec.lanes[id] = l;
+    // addtional lane: original polynom of additional lane - droppingLane
+    id = findLane(adLaneSec, lTmp, laneId + sgn(laneId));
+    lTmp.w.a = w - l.w.a;
+    lTmp.w.b = 0 - l.w.b;
+    lTmp.w.c = -3 * w / pow(ds2,2) - l.w.c;
+    lTmp.w.d = 2 * w / pow(ds2,3) - l.w.d;
+    
+    // type
+    lTmp.type = "roadWorks";
+    adLaneSec.lanes[id] = lTmp;
 
     it++;
     secs.insert(it, adLaneSec);
 
-    // --------------------------------------------
+    // --- Section 3 -----------------------------------------
     adLaneSec.id++;
     adLaneSec.s = s1 + ds1;
 
+    // zero droppingLane
     id = findLane(adLaneSec, l, laneId);
     l.w.a = 0;
     l.w.b = 0;
@@ -298,42 +307,48 @@ int addRestrictedArea(vector<laneSection> &secs, int laneId, double s1, double s
     l.w.d = 0;
     adLaneSec.lanes[id] = l;
 
+    // additional lane: shifted coordinates of original polynom
     id = findLane(adLaneSec, l, laneId + sgn(laneId));
-    dx = s2 + ds2 - (s1 + ds1);
-    l.w.d = 2 * wTmp / pow(dx,3);
-    l.w.c = - 3 * wTmp / pow(dx,2);
-    l.w.b = 0;
-    l.w.a = wTmp;        
+    
+    // original polynoam
+    a = w; b = 0; c = -3 * w / pow(ds2,2); d = 2 * w / pow(ds2,3);
+    
+    // shift original polynom
+    l.w.a = pow(dx,3) * d + pow(dx,2) * c + pow(dx,1) * b + a;
+    l.w.b = 3 * pow(dx,2) * d + 2 * dx * c + b;
+    l.w.c = 3 * dx * d + c;
+    l.w.d = d;
 
+    // type
+    l.type = "roadWorks";
     adLaneSec.lanes[id] = l;
 
     it++;
     secs.insert(it, adLaneSec);
 
-
-    // --------------------------------------------
+    // --- Section 4 -----------------------------------------
     adLaneSec.id++;
     adLaneSec.s = s2 + ds2;
 
-    // remove lane 
+    // remove additional lane 
     id = findLane(adLaneSec, l, laneId + sgn(laneId));
     shiftLanes(adLaneSec, laneId + sgn(laneId), -1);
     itt = adLaneSec.lanes.begin() + id;
     adLaneSec.lanes.erase(itt); 
 
+    // remove droppingLane 
     id = findLane(adLaneSec, l, laneId);
     shiftLanes(adLaneSec, laneId, -1);
     itt = adLaneSec.lanes.begin() + id;
     adLaneSec.lanes.erase(itt); 
 
-    // make outer boundary solid
+    // --- make outer boundary solid -------------------------------------------
     if(laneId > 0) id = findMaxLaneId(adLaneSec);
     if(laneId < 0) id = findMinLaneId(adLaneSec);
-
     id = findLane(adLaneSec, l, id);
     adLaneSec.lanes[id].rm.type = "solid";
 
-    // make center line dashed
+    // --- make center line dashed ---------------------------------------------
     id = findLane(adLaneSec, l, 0);
     adLaneSec.lanes[id].rm.type = "broken";
 

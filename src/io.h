@@ -109,6 +109,17 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
 
         for (std::vector<laneSection>::iterator itt = it->laneSections.begin() ; itt != it->laneSections.end(); ++itt)
         {
+            pugi::xml_node laneOffset = lanes.append_child("laneOffset");
+
+            laneOffset.append_attribute("s") = itt->s;
+            laneOffset.append_attribute("a") = itt->o.a;
+            laneOffset.append_attribute("b") = itt->o.b;
+            laneOffset.append_attribute("c") = itt->o.c;
+            laneOffset.append_attribute("d") = itt->o.d;
+        }
+
+        for (std::vector<laneSection>::iterator itt = it->laneSections.begin() ; itt != it->laneSections.end(); ++itt)
+        {
             pugi::xml_node laneSection = lanes.append_child("laneSection");
             laneSection.append_attribute("s") = itt->s;
 

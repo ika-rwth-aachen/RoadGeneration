@@ -404,9 +404,14 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
 
     // add laneWidening before junction
     //     sLaneWidening is distance from junction to point where the lane drops
-    if (sLaneWidening > 0) 
+    if (sLaneWidening != 0) 
     {
-        r.laneSections.front().s = sLaneWidening + 50;
+        /*
+        sLaneWidening > 0 -> laneWidening
+        sLaneWidening < 0 -> restricted Area
+        */
+
+        r.laneSections.front().s = abs(sLaneWidening) + 50;
 
         laneSection adLaneSec = r.laneSections.front();
         adLaneSec.s = 0;
@@ -417,7 +422,17 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
         findLane(adLaneSec, l, 1);
         double w = laneWidth(l,0);
         l.w.a = w;
-        l.rm.type = "broken";
+        
+        if (sLaneWidening > 0)
+        { 
+            l.rm.type = "broken";
+            l.type = "driving";
+        }
+        if (sLaneWidening < 0)
+        { 
+            l.rm.type = "solid";
+            l.type = "roadWorks";
+        }
         shiftLanes(adLaneSec,1,1);
         adLaneSec.lanes.push_back(l);   
 
@@ -426,17 +441,26 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
         int id = findLane(adLaneSec, lTmp, 0);
         adLaneSec.lanes[id].rm.type = "solid";
 
+        // laneOffset
+        adLaneSec.o.a = -abs(w)/2;
+
         vector<laneSection>::iterator it = r.laneSections.begin();
         it = r.laneSections.insert(it, adLaneSec);
         it++;
 
+        // ---------------------------------------------------------------------
         // widening lane
         l.w.d = 2 * w / pow(50,3);
         l.w.c = - 3 * w / pow(50,2);
         l.w.b = 0;
 
+        adLaneSec.o.a = -abs(w)/2;
+        adLaneSec.o.b = 0;
+        adLaneSec.o.c = 3 * abs(w)/2 / pow(50,2);
+        adLaneSec.o.d = - 2 * abs(w)/2 / pow(50,3);
+
         adLaneSec.id++;
-        adLaneSec.s = sLaneWidening;
+        adLaneSec.s = abs(sLaneWidening);
         id = findLane(adLaneSec, lTmp, 1);
         adLaneSec.lanes[id] = l;
         it = r.laneSections.insert(it, adLaneSec);

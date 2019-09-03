@@ -40,6 +40,14 @@ struct width
     double d = 0;
 };
 
+struct offset
+{
+    double a = 0;
+    double b = 0;
+    double c = 0;
+    double d = 0;
+};
+
 struct material
 {
     double s = 0;
@@ -63,6 +71,8 @@ struct laneSection
     int id;
     double s = 0;
     vector<lane> lanes;
+
+    offset o;
 };
 
 struct geometry

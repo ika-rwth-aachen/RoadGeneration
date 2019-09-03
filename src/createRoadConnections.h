@@ -26,7 +26,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     r.successor.elementType   = "junction";
 
     // connect r1 with r2 at reference points  
-    double x1,y1,hdg1,x2,y2,hdg2;
+    double x1,y1,hdg1,x2,y2,hdg2,s1,s2;
     geometry g1, g2;
     laneSection lS1, lS2;
 
@@ -37,6 +37,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         lS1 = r1.laneSections.front();
         x1 = g1.x; 
         y1 = g1.y; 
+        s1 = 0;
         hdg1 = g1.hdg + M_PI; 
         fixAngle(hdg1);
     }
@@ -47,6 +48,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         lS1 = r1.laneSections.back();
         x1 = g1.x; 
         y1 = g1.y; 
+        s1 = r1.length - lS1.s;
         hdg1 = g1.hdg; 
         curve(g1.length,g1,x1,y1,hdg1,1);
     }
@@ -67,6 +69,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         lS2 = r2.laneSections.front();
         x2 = g2.x; 
         y2 = g2.y; 
+        s2 = 0;
         hdg2 = g2.hdg; 
     }
 
@@ -76,6 +79,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         lS2 = r2.laneSections.back();
         x2 = g2.x; 
         y2 = g2.y; 
+        s2 = r2.length - lS2.s;
         hdg2 = g2.hdg; 
         curve(g2.length,g2,x2,y2,hdg2,1);
 
@@ -92,6 +96,18 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     con2.fromLane = sgn(fromId) * 2;    // 1 is helperLane
     con2.toLane = toId;
     junc.connections.push_back(con2);
+
+
+    // --- correct laneOffset --------------------------------------------------
+    double w1 = lS1.o.a + s1*lS1.o.b + s1*s1*lS1.o.c + s1*s1*s1*lS.o.d; 
+    double w2 = lS2.o.a + s2*lS2.o.b + s2*s2*lS2.o.c + s2*s2*s2*lS.o.d; 
+
+    x1 += cos(hdg1-M_PI/2) * w1;
+    y1 += sin(hdg1-M_PI/2) * w1;
+
+
+    x2 += cos(hdg2+M_PI/2) * w2;
+    y2 += sin(hdg2+M_PI/2) * w2;
 
     // --- compute connecting road ---------------------------------------------
     double a = hdg2-hdg1;
