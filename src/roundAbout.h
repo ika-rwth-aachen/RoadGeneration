@@ -213,18 +213,18 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         from = inner1;
         to = inner3;
         if (clockwise)
-            createRoadConnection(r1,helper,r3,junc,from,to,bro,sol,bro);
+            createRoadConnection(r1,helper,r3,junc,from,to,non,sol,non);
         if (!clockwise)
-            createRoadConnection(r1,helper,r3,junc,from,to,sol,bro,bro);
+            createRoadConnection(r1,helper,r3,junc,from,to,sol,non,non);
 
         road r4; 
         r4.id = 100*junc.id + cc * 10 + 5;
         from = outer1;
         to = outer3;
         if (clockwise)
-            createRoadConnection(r1,helper,r4,junc,from,to,bro,bro,bro);
+            createRoadConnection(r1,helper,r4,junc,from,to,non,non,non);
         if (!clockwise)
-            createRoadConnection(r1,helper,r4,junc,from,to,bro,bro,bro);
+            createRoadConnection(r1,helper,r4,junc,from,to,non,non,non);
 
         road r5; 
         r5.id = 100*junc.id + cc * 10 + 6;

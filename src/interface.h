@@ -61,6 +61,7 @@ struct lane
     int id;
     string type = "driving";
     int level = 0;
+    double speed = 0;
     width w;
     roadmark rm;
     material m;

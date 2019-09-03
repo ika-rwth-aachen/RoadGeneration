@@ -151,8 +151,6 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
                 lane.append_attribute("id") = ittt->id;
                 lane.append_attribute("type") = ittt->type.c_str();
 
-                //pugi::xml_node link = lane.append_child("link");
-
                 if (ittt->id != 0)
                 {
                     pugi::xml_node width = lane.append_child("width");
@@ -177,6 +175,10 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
                     material.append_attribute("surface") = ittt->m.surface.c_str();
                     material.append_attribute("friction") = ittt->m.friction;
                     material.append_attribute("roughness") = ittt->m.roughness;
+                
+                    pugi::xml_node speed = lane.append_child("speed");
+                    speed.append_attribute("sOffset") = 0;
+                    speed.append_attribute("max") = ittt->speed;
                 }
             }
         }
@@ -253,6 +255,21 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         }
     }
         
+    // --- write controllers ---------------------------------------------------
+    for (std::vector<control>::iterator it = data.controller.begin() ; it != data.controller.end(); ++it)
+    {
+        pugi::xml_node controller = root.append_child("controller");
+
+        controller.append_attribute("id") = it->id;
+
+        for (std::vector<signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
+        {
+            pugi::xml_node con = controller.append_child("control");
+
+            con.append_attribute("signalId") = itt->id;
+        }
+    }
+
     // --- write junctions -----------------------------------------------------
     for (std::vector<junction>::iterator it = data.junctions.begin() ; it != data.junctions.end(); ++it)
     {
@@ -272,21 +289,6 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
             pugi::xml_node lL = con.append_child("laneLink");
             lL.append_attribute("from") = itt->fromLane;
             lL.append_attribute("to") = itt->toLane;
-        }
-    }
-
-    // --- write controllers ---------------------------------------------------
-    for (std::vector<control>::iterator it = data.controller.begin() ; it != data.controller.end(); ++it)
-    {
-        pugi::xml_node controller = root.append_child("controller");
-
-        controller.append_attribute("id") = it->id;
-
-        for (std::vector<signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
-        {
-            pugi::xml_node con = controller.append_child("control");
-
-            con.append_attribute("signalId") = itt->id;
         }
     }
 

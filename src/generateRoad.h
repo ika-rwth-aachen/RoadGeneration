@@ -6,8 +6,8 @@
 /**
  * @brief function generate a road based on the input data from xml file
  * 
- * @param geos              geometry data from the input file
- * @param r                 resulting road 
+ * @param road              geometry data from the input file
+ * @param r                 resulting road
  * @param sStart            starting s position
  * @param sEnd              ending s position
  * @param sLaneWidening     position of laneWiding (always on lane 1 - roads points away from junction)
@@ -17,8 +17,10 @@
  * @param phi0              phi0 should hold at s0 for the resulting road
  * @return int              errorcode
  */
-int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, double sLaneWidening, double s0, double x0, double y0, double phi0)
+int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, double sLaneWidening, double s0, double x0, double y0, double phi0)
 {
+    r.type = roadIn.attribute("type").value();
+
     // save geometry data from sStart - sEnd 
     //  -> s0 is located at x0, y0, phi0 
     // mode = 1 -> in s direction
@@ -54,7 +56,7 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
     int cc = 0;
     double s = 0;
 
-    for (pugi::xml_node_iterator it = geos.child("referenceLine").begin(); it != geos.child("referenceLine").end(); ++it)
+    for (pugi::xml_node_iterator it = roadIn.child("referenceLine").begin(); it != roadIn.child("referenceLine").end(); ++it)
     {
         double length = it->attribute("length").as_double();
         
@@ -80,7 +82,7 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
     double hdg = 0;
 
     cc = 0;
-    for (pugi::xml_node_iterator it = geos.child("referenceLine").begin(); it != geos.child("referenceLine").end(); ++it)
+    for (pugi::xml_node_iterator it = roadIn.child("referenceLine").begin(); it != roadIn.child("referenceLine").end(); ++it)
     {
         int type;
         double c = 0, c1 = 0, c2 = 0;
@@ -295,7 +297,7 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
 
     // --- add lanes to road ---------------------------------------------------
 
-    if (!geos.child("lanes").child("laneSection"))
+    if (!roadIn.child("lanes").child("laneSection"))
     {
         laneSection laneSec;
         laneSec.id = 1;
@@ -303,6 +305,7 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
 
         lane l1;
         l1.id = 1;
+        l1.speed = 50;
         laneSec.lanes.push_back(l1);
         
         lane l2;
@@ -313,13 +316,14 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
         
         lane l3;
         l3.id = -1;
+        l3.speed = 50;
         laneSec.lanes.push_back(l3);
         
         r.laneSections.push_back(laneSec);
     }
     else 
     {
-        for (pugi::xml_node_iterator it = geos.child("lanes").begin(); it != geos.child("lanes").end(); ++it)
+        for (pugi::xml_node_iterator it = roadIn.child("lanes").begin(); it != roadIn.child("lanes").end(); ++it)
         {
             if ((string)it->name() != "laneSection") continue;
 
@@ -358,6 +362,9 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
                     l.m.roughness = m.attribute("roughness").as_double();
                 }
 
+                if (r.type == "town") l.speed = 50;
+                if (r.type == "motorway") l.speed = 130;
+
                 laneSec.lanes.push_back(l);
             }
             r.laneSections.push_back(laneSec);
@@ -366,7 +373,7 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
         
     // consider lanedrops and lanewidenings 
     //      -> have to be defined in increasing s order
-    for (pugi::xml_node_iterator itt = geos.child("lanes").begin(); itt != geos.child("lanes").end(); ++itt)
+    for (pugi::xml_node_iterator itt = roadIn.child("lanes").begin(); itt != roadIn.child("lanes").end(); ++itt)
     {   
         if ((string)itt->name() == "laneWidening")
         {
@@ -431,7 +438,7 @@ int generateRoad(pugi::xml_node geos, road &r, double sStart, double sEnd, doubl
         if (sLaneWidening < 0)
         { 
             l.rm.type = "solid";
-            l.type = "roadWorks";
+            l.type = "restricted";
         }
         shiftLanes(adLaneSec,1,1);
         adLaneSec.lanes.push_back(l);   

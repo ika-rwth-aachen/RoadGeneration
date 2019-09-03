@@ -340,7 +340,7 @@ int addSignal(road &r, roadNetwork &data, double s, double t, string type, strin
     if (!found) 
     {
         control c; 
-        c.id = +r.junction*100;
+        c.id = 1000 + r.junction*100;
         data.controller.push_back(c);
         i = data.controller.size()-1;
     }

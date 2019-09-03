@@ -262,7 +262,7 @@ int addRestrictedArea(vector<laneSection> &secs, int laneId, double s1, double s
     l.w.d = - d; 
 
     // type
-    l.type = "roadWorks";
+    l.type = "restricted";
     l.id = sgn(laneId) + laneId;
     adLaneSec.lanes.push_back(l);
 
@@ -289,7 +289,7 @@ int addRestrictedArea(vector<laneSection> &secs, int laneId, double s1, double s
     lTmp.w.d = 2 * w / pow(ds2,3) - l.w.d;
     
     // type
-    lTmp.type = "roadWorks";
+    lTmp.type = "restricted";
     adLaneSec.lanes[id] = lTmp;
 
     it++;
@@ -320,7 +320,7 @@ int addRestrictedArea(vector<laneSection> &secs, int laneId, double s1, double s
     l.w.d = d;
 
     // type
-    l.type = "roadWorks";
+    l.type = "restricted";
     adLaneSec.lanes[id] = l;
 
     it++;
