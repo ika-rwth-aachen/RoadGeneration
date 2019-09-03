@@ -31,18 +31,8 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         return 1;
     }
     pugi::xml_node cA = node.child("coupler").child("couplerArea");
-    if (!cA)
-    {
-        cerr << "ERR: couplerArea in coupler is not defined correct.";
-        return 1;
-    }
     pugi::xml_node con = node.child("coupler").child("connection");
-    if (!con)
-    {
-        cerr << "ERR: connection in coupler is not defined correct.";
-        return 1;
-    }
-
+    
     // define junction roads
     pugi::xml_node mainRoad;
     pugi::xml_node additionalRoad1;
@@ -71,7 +61,8 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     double sMain, sAdd1, sAdd2, sOffMain, sOffAdd1, sOffAdd2, phi1, phi2;
 
     // calculate offsets
-    double sOffset = stod(cA.attribute("sOffset").value(),&sz);
+    double sOffset = 0;
+    if (cA) sOffset = stod(cA.attribute("sOffset").value(),&sz);
     sOffMain = sOffset;
     sOffAdd1 = sOffset;
     sOffAdd2 = sOffset;
@@ -118,7 +109,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     {
         cerr << "!!! sOffset of at least one road was changed, due to feasible road structure !!!" << endl;
     }
-    
+
     // calculate s and phi at intersection
     sMain = iP.attribute("s").as_double();
 
@@ -235,7 +226,53 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     // --- generate connecting lanes -------------------------------------------
     cout << "\t Generate Connecting Lanes" << endl;
 
-    if((string)con.attribute("type").value() == "all")
+    // --- generate user-defined connecting lanes
+    if(con && (string)con.attribute("type").value() == "single")
+    {
+        for (pugi::xml_node roadLink: con.children("roadLink"))
+        {
+            int fromId = roadLink.attribute("fromId").as_int();
+            int toId = roadLink.attribute("toId").as_int();
+
+            road r1,r2;
+            for (int i = 0; i < data.roads.size(); i++)
+            {
+                if (data.roads[i].id == fromId) r1 = data.roads[i];
+                if (data.roads[i].id == toId)   r2 = data.roads[i];
+            }
+            if (r1.id == -1 || r2.id == -1)
+            {
+                cerr << "ERR: error in user-defined lane connecting:" << endl;
+                cerr << "\t road to 'fromId' or 'toId' can not be found" << endl;
+                return 1;
+            }
+
+            for (pugi::xml_node laneLink: roadLink.children("laneLink"))
+            {
+                int from = laneLink.attribute("fromId").as_int();
+                int to = laneLink.attribute("toId").as_int();
+
+                string left = non;
+                string right = non;
+                string middle = non;
+
+                if (laneLink.attribute("left")) 
+                    left = laneLink.attribute("left").value();
+
+                if (laneLink.attribute("right")) 
+                    left = laneLink.attribute("right").value();
+
+                if (laneLink.attribute("middle")) 
+                    middle = laneLink.attribute("middle").value();
+
+                road r;
+                r.id = 100*junc.id + data.roads.size() + 1;
+                createRoadConnection(r1,r2,r,junc,from,to,left,right,middle);
+                data.roads.push_back(r);
+            }
+        }
+    }
+    else 
     {
         // switch roads if necessary, so that 
         if(sortRoads(r1,r2,r3))
@@ -272,7 +309,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         r5.id = 100*junc.id + 50 + 2;
         if (mode == 1 && phi1 > 0) 
         {
-            from = findRightLane(max2);
+            from = findMiddleLane(max2);
             to = findLeftLane(min1);
             createRoadConnection(r2,r1,r5,junc,from,to,bro,bro,bro);
         }
@@ -336,7 +373,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         }
         if (mode == 1 && phi1 < 0)  
         {
-            from = findRightLane(max1);
+            from = findMiddleLane(max1);
             to = findLeftLane(min3);
             createRoadConnection(r1,r3,r9,junc,from,to,bro,bro,bro);
         }
@@ -347,52 +384,6 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             createRoadConnection(r1,r3,r9,junc,from,to,non,non,non);
         }
         data.roads.push_back(r9);
-    }
-    // --- generate user-defined connecting lanes
-    else if((string)con.attribute("type").value() == "single")
-    {
-        for (pugi::xml_node roadLink: con.children("roadLink"))
-        {
-            int fromId = roadLink.attribute("fromId").as_int();
-            int toId = roadLink.attribute("toId").as_int();
-
-            road r1,r2;
-            for (int i = 0; i < data.roads.size(); i++)
-            {
-                if (data.roads[i].id == fromId) r1 = data.roads[i];
-                if (data.roads[i].id == toId)   r2 = data.roads[i];
-            }
-            if (r1.id == -1 || r2.id == -1)
-            {
-                cerr << "ERR: error in user-defined lane connecting:" << endl;
-                cerr << "\t road to 'fromId' or 'toId' can not be found" << endl;
-                return 1;
-            }
-
-            for (pugi::xml_node laneLink: roadLink.children("laneLink"))
-            {
-                int from = laneLink.attribute("fromId").as_int();
-                int to = laneLink.attribute("toId").as_int();
-
-                string left = non;
-                string right = non;
-                string middle = non;
-
-                if (laneLink.attribute("left")) 
-                    left = laneLink.attribute("left").value();
-
-                if (laneLink.attribute("right")) 
-                    left = laneLink.attribute("right").value();
-
-                if (laneLink.attribute("middle")) 
-                    middle = laneLink.attribute("middle").value();
-
-                road r;
-                r.id = 100*junc.id + data.roads.size() + 1;
-                createRoadConnection(r1,r2,r,junc,from,to,left,right,middle);
-                data.roads.push_back(r);
-            }
-        }
     }
 
     data.junctions.push_back(junc);     

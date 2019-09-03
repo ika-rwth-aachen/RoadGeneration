@@ -47,6 +47,10 @@
                     <streetBorder id="2" sOffset="1"/>
                 </couplerArea>
                 <connection type="all"/>
+                <additionalLanes>
+                    <additionalLane roadId="202" type="right" />
+                    <additionalLane roadId="201" type="left" />
+                </additionalLanes>
             </coupler>
         </tjunction>
         <tjunction id="6" type="3A">

@@ -418,7 +418,7 @@ int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, dou
         sLaneWidening < 0 -> restricted Area
         */
 
-        r.laneSections.front().s = abs(sLaneWidening) + 50;
+        r.laneSections.front().s = abs(sLaneWidening) + 20;
 
         laneSection adLaneSec = r.laneSections.front();
         adLaneSec.s = 0;
@@ -457,14 +457,14 @@ int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, dou
 
         // ---------------------------------------------------------------------
         // widening lane
-        l.w.d = 2 * w / pow(50,3);
-        l.w.c = - 3 * w / pow(50,2);
+        l.w.d = 2 * w / pow(20,3);
+        l.w.c = - 3 * w / pow(20,2);
         l.w.b = 0;
 
         adLaneSec.o.a = -abs(w)/2;
         adLaneSec.o.b = 0;
-        adLaneSec.o.c = 3 * abs(w)/2 / pow(50,2);
-        adLaneSec.o.d = - 2 * abs(w)/2 / pow(50,3);
+        adLaneSec.o.c = 3 * abs(w)/2 / pow(20,2);
+        adLaneSec.o.d = - 2 * abs(w)/2 / pow(20,3);
 
         adLaneSec.id++;
         adLaneSec.s = abs(sLaneWidening);

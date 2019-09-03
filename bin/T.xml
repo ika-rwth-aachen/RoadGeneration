@@ -1,72 +1,37 @@
 <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/home/geller/Dokumente/roadgeneration/xml/input.xsd">
 	<segments>
-        <junctions>
             <tjunction id="1" type="MA">
-                <road id="1" length="400" sOffset="0" type="0">	
+                <road id="1" type="town">	
                     <referenceLine>
-                        <geometry id="1" length="400" connectToEndOf="0" connectToStartOf="0" Rs="-100" Re="0" type="spiral"/>
+                        <geometry id="1" length="400"  Rs="-100" Re="0" type="spiral"/>
                     </referenceLine>
-                    <lanes>
-                        <laneSection id="1" s="0">
-                            <lane id="1" type="driving">
-                                <laneWidth sOffset="0" w="3.75"/>
-                                <roadMark sOffset="0" tOffset="0" type="solid" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
-                            </lane>
-                            <lane id="0" type="driving">
-                                <laneWidth sOffset="0" w="0"/>
-                                <roadMark sOffset="0" tOffset="0" type="broken" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
-                            </lane>
-                            <lane id="-1" type="driving">
-                                <laneWidth sOffset="0" w="3.75"/>
-                                <roadMark sOffset="0" tOffset="0" type="solid" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
-                            </lane>
-                        </laneSection>
-                    </lanes>
                 </road>
-                <road id="2" length="100" sOffset="0" type="0">	
+                <road id="3"  type="town">	
                     <referenceLine>
-                        <geometry id="1" length="100" connectToEndOf="0" connectToStartOf="0" R="100" type="arc"/>
+                        <geometry id="1" length="100"  type="line"/>
                     </referenceLine>
                     <lanes>
                         <laneSection id="1" s="0">
-                            <lane id="1" type="driving">
-                                <laneWidth sOffset="0" w="3.75"/>
-                                <roadMark sOffset="0" tOffset="0" type="solid" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
+                            <lane id="2" type="driving">
+                                <roadMark   type="solid" color="white" width="0.13"/>
                             </lane>
+                            <lane id="1" type="driving">
+                                    <roadMark   type="broken" color="white" width="0.13"/>
+                                </lane>
                             <lane id="0" type="driving">
-                                <laneWidth sOffset="0" w="0"/>
-                                <roadMark sOffset="0" tOffset="0" type="broken" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
+                                <roadMark  type="solid" color="white" width="0.13" />
                             </lane>
                             <lane id="-1" type="driving">
-                                <laneWidth sOffset="0" w="3.75"/>
-                                <roadMark sOffset="0" tOffset="0" type="solid" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
+                                <roadMark  type="broken" color="white" width="0.13" />
                             </lane>
-                        </laneSection>
-                    </lanes>
-                </road>
-                <road id="3" length="100" sOffset="0" type="0">	
-                    <referenceLine>
-                        <geometry id="1" length="100" connectToEndOf="0" connectToStartOf="0" type="line"/>
-                    </referenceLine>
-                    <lanes>
-                        <laneSection id="1" s="0">
-                            <lane id="1" type="driving">
-                                <laneWidth sOffset="0" w="3.75"/>
-                                <roadMark sOffset="0" tOffset="0" type="solid" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
-                            </lane>
-                            <lane id="0" type="driving">
-                                <laneWidth sOffset="0" w="0"/>
-                                <roadMark sOffset="0" tOffset="0" type="broken" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
-                            </lane>
-                            <lane id="-1" type="driving">
-                                <laneWidth sOffset="0" w="3.75"/>
-                                <roadMark sOffset="0" tOffset="0" type="solid" color="white" width="0.13" lengthOfMark="1.5" lengthOfSpace="1.5"/>
-                            </lane>
+                            <lane id="-2" type="driving">
+                                    <roadMark  type="solid" color="white" width="0.13" />
+                                </lane>
                         </laneSection>
                     </lanes>
                 </road>
                 <intersectionPoint id="1" refId="1" s="200">
-                    <adRoad id="2" s="0" angle="1.0"/>
+                    <adRoad id="3" s="0" angle="1.0"/>
                 </intersectionPoint>
                 <coupler id="1">
                     <couplerArea sOffset="15">
@@ -75,7 +40,6 @@
                     <connection type="all"/>
                 </coupler>
             </tjunction>
-        </junctions>
 	</segments>
 </roadNetwork>
 

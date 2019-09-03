@@ -46,13 +46,8 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
     }
 
     // get coupler
-    pugi::xml_node coupler = node.child("coupler");
-    if (!coupler)
-    {
-        cerr << "ERR: coupler is not defined.";
-        return 1;
-    }
-
+    pugi::xml_node cA = node.child("coupler").child("couplerArea");
+   
     // count intersectionPoints
     int nIp = 0;
     for (pugi::xml_node iP: node.children("intersectionPoint")) nIp++;
@@ -80,11 +75,12 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         }
 
         // calculate offsets
-        double sOffset = coupler.child("couplerArea").attribute("sOffset").as_double();
+        double sOffset = 0;
+        if (cA) sOffset = cA.attribute("sOffset").as_double();
 
         double sOffMain = sOffset;
         double sOffAdd = sOffset;
-        for (pugi::xml_node sB: coupler.child("couplerArea").children("streetBorder"))
+        for (pugi::xml_node sB: cA.children("streetBorder"))
         {
             if (sB.attribute("id").as_int() == refId) 
                 sOffMain = sB.attribute("sOffset").as_double();

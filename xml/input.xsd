@@ -31,7 +31,7 @@ elementFormDefault="qualified">
         <xs:sequence>
             <xs:element name="road" type="roadType" minOccurs="2" maxOccurs="unbounded"/>
             <xs:element name="intersectionPoint" type="intersectionPointType"/>
-            <xs:element name="coupler" type="couplerType"/>
+            <xs:element name="coupler" type="couplerType" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:int" use="optional"/>
         <xs:attribute name="type" type="xs:string" use="required"/>
@@ -41,7 +41,7 @@ elementFormDefault="qualified">
         <xs:sequence>
             <xs:element name="road" type="roadType" minOccurs="2" maxOccurs="unbounded"/>
             <xs:element name="intersectionPoint" type="intersectionPointType"/>
-            <xs:element name="coupler" type="couplerType"/>
+            <xs:element name="coupler" type="couplerType" minOccurs="0"/>
         </xs:sequence>        
         <xs:attribute name="id" type="xs:int" use="required"/>
         <xs:attribute name="type" type="xs:string" use="required"/>
@@ -54,7 +54,7 @@ elementFormDefault="qualified">
         <xs:sequence>
             <xs:element name="road" type="roadType" minOccurs="2" maxOccurs="unbounded"/>
             <xs:element name="intersectionPoint" type="intersectionPointType"/>
-            <xs:element name="coupler" type="couplerType"/>
+            <xs:element name="coupler" type="couplerType" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:int" use="required"/>
     </xs:complexType>
@@ -66,7 +66,7 @@ elementFormDefault="qualified">
             <xs:sequence>
                 <xs:element name="intersectionPoint" type="intersectionPointType" maxOccurs="unbounded" />
             </xs:sequence>
-            <xs:element name="coupler" type="couplerRoundAboutType" />
+            <xs:element name="coupler" type="couplerRoundAboutType" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:int" use="required"/>
         <xs:attribute name="refId" type="xs:int" use="required"/>
@@ -291,8 +291,9 @@ elementFormDefault="qualified">
 
     <xs:complexType name="couplerType">
         <xs:sequence>
-            <xs:element name="couplerArea" type="couplerAreaType"/>
-            <xs:element name="connection" type="connectionType"/>
+            <xs:element name="couplerArea" type="couplerAreaType" minOccurs="0"/>
+            <xs:element name="connection" type="connectionType" minOccurs="0"/>
+            <xs:element name="additionalLanes" type="additionalLanesType" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:int" use="required"/>
     </xs:complexType>
@@ -349,6 +350,18 @@ elementFormDefault="qualified">
         <xs:attribute name="left" type="xs:string" use="optional"/>
         <xs:attribute name="right" type="xs:string" use="optional"/>
         <xs:attribute name="middle" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="additionalLanesType">
+        <xs:sequence>
+            <xs:element name="additionalLane" type="additionalLaneType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="additionalLaneType">
+        <xs:attribute name="roadId" type="xs:int" use="required"/>   
+        <xs:attribute name="type" type="xs:string" use="required"/>   
+        <xs:attribute name="amount" type="xs:int"/>   
     </xs:complexType>
 
     <xs:complexType name="objectsType">

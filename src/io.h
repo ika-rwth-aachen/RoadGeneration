@@ -12,7 +12,7 @@
 int parseXML(pugi::xml_document &doc, roadNetwork &data, char * file)
 {   
     // TODO: only debugging purposes
-    if (true)
+    if (false)
     {
         data.file = "bin/all.xml";
         doc.load_file("bin/all.xml");
