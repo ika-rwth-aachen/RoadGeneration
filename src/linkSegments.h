@@ -24,9 +24,9 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 
 	// define reference system
 	int referenceId = links.attribute("referenceId").as_int();
-	int angleOffset = links.attribute("angleOffset").as_int();
-	int xOffset = links.attribute("xOffset").as_int();
-	int yOffset = links.attribute("yOffset").as_int();
+	double angleOffset = links.attribute("angleOffset").as_double();
+	double xOffset = links.attribute("xOffset").as_double();
+	double yOffset = links.attribute("yOffset").as_double();
 
 	for(auto&& r : data.roads)
 	{

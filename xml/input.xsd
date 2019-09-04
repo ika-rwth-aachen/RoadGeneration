@@ -35,6 +35,7 @@ elementFormDefault="qualified">
         </xs:sequence>
         <xs:attribute name="id" type="xs:int" use="optional"/>
         <xs:attribute name="type" type="xs:string" use="required"/>
+        <xs:attribute name="automaticWiding" type="xs:boolean" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="xjunctionType">
@@ -45,6 +46,7 @@ elementFormDefault="qualified">
         </xs:sequence>        
         <xs:attribute name="id" type="xs:int" use="required"/>
         <xs:attribute name="type" type="xs:string" use="required"/>
+        <xs:attribute name="automaticWiding" type="xs:double" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="njunctionType">
@@ -57,6 +59,7 @@ elementFormDefault="qualified">
             <xs:element name="coupler" type="couplerType" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:int" use="required"/>
+        <xs:attribute name="automaticWiding" type="xs:boolean" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="roundaboutType">

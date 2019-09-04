@@ -24,6 +24,11 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     junction junc;
     junc.id = node.attribute("id").as_int();
 
+    // automatic widing
+    double autoWiding = 25;
+    if (node.attribute("automaticWiding"))
+        autoWiding = node.attribute("automaticWiding").as_double();
+
     // define intersection properties
     pugi::xml_node iP = node.child("intersectionPoint");
     if (!iP)
@@ -191,7 +196,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r1.predecessor.elementType = "junction";
     if (mode == 1 || mode == 2)
     {
-        generateRoad(mainRoad, r1, sMain-sOffMain, 0, 25, sMain, iPx, iPy, iPhdg);
+        generateRoad(mainRoad, r1, sMain-sOffMain, 0, autoWiding, sMain, iPx, iPy, iPhdg);
     }
     if (mode == 3)
     {
@@ -207,7 +212,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r2.predecessor.elementType = "junction";
     if (mode == 1)
     {
-        generateRoad(additionalRoad1, r2, sAdd1-sOffAdd1, 0, 25, sAdd1, iPx, iPy, iPhdg+phi1);
+        generateRoad(additionalRoad1, r2, sAdd1-sOffAdd1, 0, autoWiding, sAdd1, iPx, iPy, iPhdg+phi1);
     }
     if (mode == 2 || mode == 3)
     {
@@ -223,7 +228,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r3.predecessor.elementType = "junction";
     if (mode == 1 || mode == 2)
     {
-        generateRoad(mainRoad, r3, sMain+sOffMain, INFINITY, 25, sMain,iPx, iPy,iPhdg);
+        generateRoad(mainRoad, r3, sMain+sOffMain, INFINITY, autoWiding, sMain,iPx, iPy,iPhdg);
         addObjects(mainRoad,r3,data);
     }
     if (mode == 3)
@@ -240,7 +245,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r4.predecessor.elementType = "junction";
     if (mode == 1)
     {
-        generateRoad(additionalRoad1, r4, sAdd1+sOffAdd1, INFINITY, 25,sAdd1, iPx, iPy, iPhdg+phi1);
+        generateRoad(additionalRoad1, r4, sAdd1+sOffAdd1, INFINITY, autoWiding, sAdd1, iPx, iPy, iPhdg+phi1);
         addObjects(additionalRoad1,r4,data);
     }
     if (mode == 2)
@@ -396,17 +401,19 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
 
         // generate connections
         int nCount = 1;
-        int from, to, n;
+        int from, to, nF, nT;
 
 
 
         // 1) PART from M1 To M3 -> Middle to Middle
         
-        n = r1_F_MO - r1_F_MI + 1;
+        nF = r1_F_MO - r1_F_MI + 1;
         from = r1_F_MI;
+
+        nT = r3_T_MI - r3_T_MO + 1;
         to = r3_T_MI;
         
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i<min(nF,nT); i++)
         {
             road r;
             r.id = 100*junc.id + 50 + nCount;
@@ -427,11 +434,13 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
 
         // 2) PART from M2 To M4 -> Middle to Middle
         
-        n = r2_F_MO - r2_F_MI + 1;
+        nF = r2_F_MO - r2_F_MI + 1;
         from = r2_F_MI;
+
+        nT = r4_T_MI - r4_T_MO + 1;
         to = r4_T_MI;
         
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i<min(nF,nT); i++)
         {
             road r;
             r.id = 100*junc.id + 50 + nCount;
@@ -448,11 +457,13 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
 
         // 3) PART from M3 To M1 -> Middle to Middle
         
-        n = r3_F_MO - r3_F_MI + 1;
+        nF = r3_F_MO - r3_F_MI + 1;
         from = r3_F_MI;
+
+        nT = r1_T_MI - r1_T_MO + 1;
         to = r1_T_MI;
         
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i<min(nF,nT); i++)
         {
             road r;
             r.id = 100*junc.id + 50 + nCount;
@@ -473,11 +484,13 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
 
         // 4) PART from M4 To M2 -> Middle to Middle
         
-        n = r4_F_MO - r4_F_MI + 1;
+        nF = r4_F_MO - r4_F_MI + 1;
         from = r4_F_MI;
+
+        nT = r2_T_MI - r2_T_MO + 1;
         to = r2_T_MI;
         
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i<min(nF,nT); i++)
         {
             road r;
             r.id = 100*junc.id + 50 + nCount;
@@ -496,19 +509,27 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         
         if (r1_F_R != 0) 
         {
-            n = r1_F_R - r1_F_MO;
+            nF = r1_F_R - r1_F_MO;
             from = r1_F_R;
         }
         else
         {
-            n = 1;
+            nF = r1_F_MO - r1_F_MI + 1;
             from = r1_F_MO;
         }
 
-        if (r2_T_R != 0) to = r2_T_R;
-        else to = r2_T_MO;
+        if (r2_T_R != 0) 
+        {
+            nT = r2_T_MO - r2_T_R;
+            to = r2_T_R;
+        }
+        else
+        {
+            nT = r2_T_MI - r2_T_MO + 1;
+            to = r2_T_MO;
+        }
         
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i<min(nF,nT); i++)
         {
             road r;
             r.id = 100*junc.id + 50 + nCount;
@@ -531,19 +552,27 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         
         if (r2_F_L != 0) 
         {
-            n = r2_F_MI - r2_F_L;
+            nF = r2_F_MI - r2_F_L;
             from = r2_F_L;
         }
         else
         {
-            n = 1;
+            nF = r2_F_MO - r2_F_MI + 1;
             from = r2_F_MI;
         }
 
-        if (r1_T_L != 0) to = r1_T_L;
-        else to = r1_T_MI;
+        if (r1_T_L != 0) 
+        {
+            nT = r1_T_L - r1_T_MI;
+            to = r1_T_L;
+        }
+        else 
+        {
+            nT = r1_T_MI - r1_T_MO + 1;
+            to = r1_T_MI;
+        }
         
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i<min(nF,nT); i++)
         {
             road r;
             r.id = 100*junc.id + 50 + nCount;
@@ -562,19 +591,27 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         
         if (r2_F_R != 0) 
         {
-            n = r2_F_R - r2_F_MO;
+            nF = r2_F_R - r2_F_MO;
             from = r2_F_R;
         }
         else
         {
-            n = 1;
+            nF = r2_F_MO - r2_F_MI + 1;
             from = r2_F_MO;
         }
 
-        if (r3_T_R != 0) to = r3_T_R;
-        else to = r3_T_MO;
+        if (r3_T_R != 0) 
+        {
+            nT = r3_T_MO - r3_T_R;
+            to = r3_T_R;
+        }
+        else
+        {
+            nT = r3_T_MI - r3_T_MO + 1;
+            to = r3_T_MO;
+        }
         
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i<min(nF,nT); i++)
         {
             road r;
             r.id = 100*junc.id + 50 + nCount;
@@ -597,19 +634,27 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         
         if (r3_F_L != 0) 
         {
-            n = r3_F_MI - r3_F_L;
+            nF = r3_F_MI - r3_F_L;
             from = r3_F_L;
         }
         else
         {
-            n = 1;
+            nF = r3_F_MO - r3_F_MI + 1;
             from = r3_F_MI;
         }
 
-        if (r2_T_L != 0) to = r2_T_L;
-        else to = r2_T_MI;
+        if (r2_T_L != 0) 
+        {
+            nT = r2_T_L - r2_T_MI;
+            to = r2_T_L;
+        }
+        else 
+        {
+            nT = r2_T_MI - r2_T_MO + 1;
+            to = r2_T_MI;
+        }
         
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i<min(nF,nT); i++)
         {
             road r;
             r.id = 100*junc.id + 50 + nCount;
@@ -628,19 +673,27 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         
         if (r3_F_R != 0) 
         {
-            n = r3_F_R - r3_F_MO;
+            nF = r3_F_R - r3_F_MO;
             from = r3_F_R;
         }
         else
         {
-            n = 1;
+            nF = r3_F_MO - r3_F_MI + 1;
             from = r3_F_MO;
         }
-
-        if (r4_T_R != 0) to = r4_T_R;
-        else to = r4_T_MO;
         
-        for (int i = 0; i < n; i++)
+        if (r4_T_R != 0) 
+        {
+            nT = r4_T_MO - r4_T_R;
+            to = r4_T_R;
+        }
+        else
+        {
+            nT = r4_T_MI - r4_T_MO + 1;
+            to = r4_T_MO;
+        }
+        
+        for (int i = 0; i<min(nF,nT); i++)
         {
             road r;
             r.id = 100*junc.id + 50 + nCount;
@@ -663,19 +716,27 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         
         if (r4_F_L != 0) 
         {
-            n = r4_F_MI - r4_F_L;
+            nF = r4_F_MI - r4_F_L;
             from = r4_F_L;
         }
         else
         {
-            n = 1;
+            nF = r4_F_MO - r4_F_MI + 1;
             from = r4_F_MI;
         }
 
-        if (r3_T_L != 0) to = r3_T_L;
-        else to = r3_T_MI;
+        if (r3_T_L != 0) 
+        {
+            nT = r3_T_L - r3_T_MI;
+            to = r3_T_L;
+        }
+        else 
+        {
+            nT = r3_T_MI - r3_T_MO + 1;
+            to = r3_T_MI;
+        }
         
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i<min(nF,nT); i++)
         {
             road r;
             r.id = 100*junc.id + 50 + nCount;
@@ -694,19 +755,27 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         
         if (r4_F_R != 0) 
         {
-            n = r4_F_R - r4_F_MO;
+            nF = r4_F_R - r4_F_MO;
             from = r4_F_R;
         }
         else
         {
-            n = 1;
+            nF = r4_F_MO - r4_F_MI + 1;
             from = r4_F_MO;
         }
-
-        if (r1_T_R != 0) to = r1_T_R;
-        else to = r1_T_MO;
         
-        for (int i = 0; i < n; i++)
+        if (r1_T_R != 0) 
+        {
+            nT = r1_T_MO - r1_T_R;
+            to = r1_T_R;
+        }
+        else
+        {
+            nT = r1_T_MI - r1_T_MO + 1;
+            to = r1_T_MO;
+        }
+        
+        for (int i = 0; i<min(nF,nT); i++)
         {
             road r;
             r.id = 100*junc.id + 50 + nCount;
@@ -729,19 +798,27 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         
         if (r1_F_L != 0) 
         {
-            n = r1_F_MI - r1_F_L;
+            nF = r1_F_MI - r1_F_L;
             from = r1_F_L;
         }
         else
         {
-            n = 1;
+            nF = r1_F_MO - r1_F_MI + 1;
             from = r1_F_MI;
         }
 
-        if (r4_T_L != 0) to = r4_T_L;
-        else to = r4_T_MI;
+        if (r4_T_L != 0) 
+        {
+            nT = r4_T_L - r4_T_MI;
+            to = r4_T_L;
+        }
+        else 
+        {
+            nT = r4_T_MI - r4_T_MO + 1;
+            to = r4_T_MI;
+        }
         
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i<min(nF,nT); i++)
         {
             road r;
             r.id = 100*junc.id + 50 + nCount;

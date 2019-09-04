@@ -296,80 +296,79 @@ int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, dou
     }
 
     // --- add lanes to road ---------------------------------------------------
+    laneSection laneSec;
+    laneSec.id = 1;
+    laneSec.s = 0;
 
-    if (!roadIn.child("lanes").child("laneSection"))
+    lane l1;
+    l1.id = 1;
+    l1.speed = 50;
+    laneSec.lanes.push_back(l1);
+    
+    lane l2;
+    l2.id = 0;
+    l2.rm.type = "broken";
+    l2.w.a = 0.0;
+    laneSec.lanes.push_back(l2);
+    
+    lane l3;
+    l3.id = -1;
+    l3.speed = 50;
+    laneSec.lanes.push_back(l3);
+        
+    r.laneSections.push_back(laneSec);
+
+    for (pugi::xml_node_iterator it = roadIn.child("lanes").begin(); it != roadIn.child("lanes").end(); ++it)
     {
+        if ((string)it->name() != "laneSection") continue;
+
         laneSection laneSec;
-        laneSec.id = 1;
-        laneSec.s = 0;
+        laneSec.id = it->attribute("id").as_int();
 
-        lane l1;
-        l1.id = 1;
-        l1.speed = 50;
-        laneSec.lanes.push_back(l1);
-        
-        lane l2;
-        l2.id = 0;
-        l2.rm.type = "broken";
-        l2.w.a = 0.0;
-        laneSec.lanes.push_back(l2);
-        
-        lane l3;
-        l3.id = -1;
-        l3.speed = 50;
-        laneSec.lanes.push_back(l3);
-        
-        r.laneSections.push_back(laneSec);
-    }
-    else 
-    {
-        for (pugi::xml_node_iterator it = roadIn.child("lanes").begin(); it != roadIn.child("lanes").end(); ++it)
+        if (laneSec.id == 1) laneSec = r.laneSections.back();
+
+        laneSec.s = it->attribute("s").as_double();
+
+        for (pugi::xml_node_iterator itt = it->begin(); itt != it->end(); ++itt)
         {
-            if ((string)it->name() != "laneSection") continue;
+            lane l; 
 
-            laneSection laneSec;
-            laneSec.id = it->attribute("id").as_int();
-            laneSec.s = it->attribute("s").as_double();
+            l.id = itt->attribute("id").as_int();
 
-            for (pugi::xml_node_iterator itt = it->begin(); itt != it->end(); ++itt)
+            // flip lanes for mode 1
+            if (mode == 2) l.id *= -1;  
+
+            l.type = itt->attribute("type").value();
+
+            if (l.id == 0) l.w.a = 0.0;
+            if (itt->attribute("width"))
+                l.w.a = itt->attribute("width").as_double();
+        
+            pugi::xml_node rm = itt->child("roadMark");
+            if (rm)
             {
-                lane l; 
-
-                l.id = itt->attribute("id").as_int();
-
-                // flip lanes for mode 1
-                if (mode == 2) l.id *= -1;  
-
-                l.type = itt->attribute("type").value();
-
-                if (l.id == 0) l.w.a = 0.0;
-                if (itt->attribute("width"))
-                    l.w.a = itt->attribute("width").as_double();
-            
-                pugi::xml_node rm = itt->child("roadMark");
-                if (rm)
-                {
-                    l.rm.type = rm.attribute("type").value();
-                    l.rm.color = rm.attribute("color").value();
-                    l.rm.width = rm.attribute("width").as_double();
-                }
-
-                pugi::xml_node m = itt->child("material");
-                if (m)
-                {
-                    l.m.surface = m.attribute("surface").value();
-                    l.m.friction = m.attribute("friction").as_double();
-                    l.m.roughness = m.attribute("roughness").as_double();
-                }
-
-                if (r.type == "town") l.speed = 50;
-                if (r.type == "motorway") l.speed = 130;
-
-                laneSec.lanes.push_back(l);
+                l.rm.type = rm.attribute("type").value();
+                l.rm.color = rm.attribute("color").value();
+                l.rm.width = rm.attribute("width").as_double();
             }
-            r.laneSections.push_back(laneSec);
+
+            pugi::xml_node m = itt->child("material");
+            if (m)
+            {
+                l.m.surface = m.attribute("surface").value();
+                l.m.friction = m.attribute("friction").as_double();
+                l.m.roughness = m.attribute("roughness").as_double();
+            }
+
+            if (r.type == "town") l.speed = 50;
+            if (r.type == "motorway") l.speed = 130;
+
+            laneSec.lanes.push_back(l);
         }
+        if (laneSec.id == 1) r.laneSections.back() = laneSec;
+        else r.laneSections.push_back(laneSec);
     }
+    
         
     // consider lanedrops and lanewidenings 
     //      -> have to be defined in increasing s order

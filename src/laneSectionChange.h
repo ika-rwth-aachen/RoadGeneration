@@ -433,7 +433,8 @@ int laneWideningJunction(road &r, int sLaneWidening, int turn)
     adLaneSec.lanes[id].rm.type = "solid";
 
     // laneOffset
-    adLaneSec.o.a = -abs(w)/2 + it->o.a;
+    if (turn == 1)
+        adLaneSec.o.a = -abs(w)/2 + it->o.a;
 
     it = r.laneSections.insert(it, adLaneSec);
     it++;
@@ -444,10 +445,13 @@ int laneWideningJunction(road &r, int sLaneWidening, int turn)
     l.w.c = - 3 * w / pow(20,2);
     l.w.b = 0;
 
-    adLaneSec.o.a = - abs(w)/2 + it->o.a;
-    adLaneSec.o.b = 0;
-    adLaneSec.o.c = 3 * abs(w)/2 / pow(20,2);
-    adLaneSec.o.d = - 2 * abs(w)/2 / pow(20,3);
+    if (turn == 1)
+    {
+        adLaneSec.o.a = - abs(w)/2 + it->o.a;
+        adLaneSec.o.b = 0;
+        adLaneSec.o.c = 3 * abs(w)/2 / pow(20,2);
+        adLaneSec.o.d = - 2 * abs(w)/2 / pow(20,3);
+    }
 
     adLaneSec.id++;
     adLaneSec.s = abs(sLaneWidening);
