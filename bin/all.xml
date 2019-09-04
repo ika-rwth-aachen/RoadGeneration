@@ -15,6 +15,20 @@
                 <referenceLine>
                     <geometry id="1" length="500"  type="line"/>
                 </referenceLine>
+                <lanes>
+                    <laneSection id="1" s="0">
+                        <lane id="-2" type="driving">
+                            <roadMark   type="solid" color="white" width="0.13"/>
+                        </lane>
+                        <lane id="-1" type="driving">
+                            <roadMark   type="broken" color="white" width="0.13"/>
+                        </lane>
+                        <lane id="0" type="driving" />
+                        <lane id="1" type="driving">
+                            <roadMark   type="solid" color="white" width="0.13"/>
+                        </lane>
+                    </laneSection>
+                </lanes>
             </road>
             <intersectionPoint id="1" refId="1" s="200">
                 <adRoad id="2" s="0" angle="-1.08"/>
@@ -26,6 +40,11 @@
                     <streetBorder id="3" sOffset="10"/>
                 </couplerArea>
                 <connection type="all"/>
+                <additionalLanes>
+                    <additionalLane roadId="101" type="1" />
+                    <additionalLane roadId="101" type="-1" />
+                    <additionalLane roadId="103" type="-1" />
+                </additionalLanes>
             </coupler>
         </xjunction>
         <tjunction id="2" type="MA">

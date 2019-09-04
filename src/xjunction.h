@@ -33,7 +33,8 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     }
     pugi::xml_node cA = node.child("coupler").child("couplerArea");
     pugi::xml_node con = node.child("coupler").child("connection");
-    
+    pugi::xml_node addLanes = node.child("coupler").child("additionalLanes");
+
 
     // define junction roads
     pugi::xml_node mainRoad;
@@ -198,7 +199,6 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     }
     addObjects(mainRoad,r1,data);
     addSignal(r1, data, 1, INFINITY, "1.000.001", "-");
-    data.roads.push_back(r1);
 
     road r2;
     r2.id = 100*junc.id + 2;
@@ -215,7 +215,6 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     }
     addObjects(additionalRoad1,r2,data);
     addSignal(r2, data, 1, INFINITY, "1.000.001", "-");
-    data.roads.push_back(r2);
 
     road r3; 
     r3.id = 100*junc.id + 3;
@@ -233,7 +232,6 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         addObjects(additionalRoad2,r3,data);
     }
     addSignal(r3, data, 1, INFINITY, "1.000.001", "-");
-    data.roads.push_back(r3);
 
     road r4; 
     r4.id = 100*junc.id + 4;
@@ -256,6 +254,45 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         addObjects(additionalRoad3,r4,data);
     }
     addSignal(r4, data, 1, INFINITY, "1.000.001", "-");
+
+    // add addtional lanes
+    for (pugi::xml_node addLane: addLanes.children("additionalLane"))
+    {
+        int n = 1;
+        if (addLane.attribute("amount"))
+            n = addLane.attribute("amount").as_int();
+
+        int type = addLane.attribute("type").as_int();
+        int id = addLane.attribute("roadId").as_int();
+        
+        if (id == r1.id)
+        {
+            for (int i = 0; i < n; i++)
+                laneWideningJunction(r1, 50, type);
+        }
+
+        if (id == r2.id)
+        {
+            for (int i = 0; i < n; i++)
+                laneWideningJunction(r2, 50, type);
+        }
+        
+        if (id == r3.id)
+        {
+            for (int i = 0; i < n; i++)
+                laneWideningJunction(r3, 50, type);
+        }
+
+        if (id == r4.id)
+        {
+            for (int i = 0; i < n; i++)
+                laneWideningJunction(r4, 50, type);
+        }
+    }
+
+    data.roads.push_back(r1);
+    data.roads.push_back(r2);
+    data.roads.push_back(r3);
     data.roads.push_back(r4);
 
     // --- generate connecting lanes -------------------------------------------
