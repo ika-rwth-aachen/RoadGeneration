@@ -39,6 +39,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         y1 = g1.y; 
         s1 = 0;
         hdg1 = g1.hdg + M_PI; 
+
         fixAngle(hdg1);
     }
 
@@ -51,6 +52,9 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         s1 = r1.length - lS1.s;
         hdg1 = g1.hdg; 
         curve(g1.length,g1,x1,y1,hdg1,1);
+
+        fixAngle(hdg1);
+        g1.hdg = hdg1;
     }
 
     // connection between starting road and current road
@@ -71,6 +75,9 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         y2 = g2.y; 
         s2 = 0;
         hdg2 = g2.hdg; 
+
+        fixAngle(hdg2);
+        g2.hdg = hdg2;
     }
 
     if (r2.successor.elementType == "junction") 
@@ -82,6 +89,9 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         s2 = r2.length - lS2.s;
         hdg2 = g2.hdg; 
         curve(g2.length,g2,x2,y2,hdg2,1);
+        
+        g2.hdg = hdg2;
+        fixAngle(g2.hdg);
 
         hdg2 = hdg2 + M_PI; 
         fixAngle(hdg2);

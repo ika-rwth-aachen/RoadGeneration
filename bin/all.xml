@@ -47,9 +47,6 @@
                     <streetBorder id="2" sOffset="1"/>
                 </couplerArea>
                 <connection type="all"/>
-                <additionalLanes>
-                    <additionalLane roadId="201" type="-1" amount="1"/>
-                </additionalLanes>
             </coupler>
         </tjunction>
         <tjunction id="6" type="3A">
@@ -119,11 +116,19 @@
         <roundabout id="3" refId="1">
             <road id="1" type="town" >	
                 <referenceLine>
-                    <geometry id="1" length="32.5" type="arc"/>
+                    <geometry id="1" length="320.5" type="arc"/>
                 </referenceLine>
                 <lanes>
                     <laneSection id="1" s="0">
-                        <lane id="-2" type="driving" />
+                        <lane id="-4" type="driving">
+                            <roadMark   type="solid" color="white" width="0.13"/>
+                        </lane>
+                        <lane id="-3" type="driving">
+                            <roadMark   type="broken" color="white" width="0.13"/>
+                        </lane>
+                        <lane id="-2" type="driving">
+                            <roadMark   type="broken" color="white" width="0.13"/>
+                        </lane>
                         <lane id="-1" type="driving">
                             <roadMark   type="broken" color="white" width="0.13"/>
                         </lane>

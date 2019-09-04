@@ -104,8 +104,8 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         bool (changed) = false;
         if (sOffMain < widthAdd/2 * 1.25) 
         {sOffMain = widthAdd/2 * 1.25; changed = true;}
-        if (sOffAdd < widthMain   * 1.25) 
-        {sOffAdd = widthMain * 1.25; changed = true;}        
+        if (sOffAdd < widthMain   * 1.5) 
+        {sOffAdd = widthMain * 1.5; changed = true;}        
         
         if (changed)
         {
@@ -139,28 +139,31 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
                        | id:2 |
                        |      |
         */
+        int nCount = 1;
 
         road r1;
-        r1.id = 100*junc.id + cc * 10 + 1;
+        r1.id = 100*junc.id + cc * 10 + nCount;
         r1.junction = junc.id;
         r1.successor.elementId = junc.id;
         r1.successor.elementType = "junction";
         if (cc == 1) sOld = sOffMain;
-        generateRoad(mainRoad, r1, sOld, sMain-sOffMain, 0, sMain, iPx, iPy,iPhdg);        
+        generateRoad(mainRoad, r1, sOld, sMain-sOffMain, 0, sMain, iPx, iPy,iPhdg);       
+        nCount++; 
 
         road r2;
-        r2.id = 100*junc.id + cc * 10 + 2;
+        r2.id = 100*junc.id + cc * 10 + nCount;
         r2.junction = junc.id;
         r2.predecessor.elementId = junc.id;
         r2.predecessor.elementType = "junction";
         generateRoad(additionalRoad, r2, sAdd+sOffAdd, INFINITY, 0, sAdd, iPx, iPy, iPhdg+phi); 
         addObjects(additionalRoad, r2, data);
+        nCount++; 
 
         // add signal to outgoing roads
         addSignal(r2, data, 1, INFINITY, "1.000.001", "-");
 
         road helper;
-        helper.id = r1.id + cc * 10 + 3; 
+        helper.id = r1.id + cc * 10 + nCount; 
         helper.junction = junc.id;
         if (cc < nIp)
             generateRoad(mainRoad, helper, sMain+sOffMain, sMain+2*sOffMain, 0, sMain, iPx, iPy,iPhdg);  
@@ -181,72 +184,102 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         
         if (clockwise)
         {
-            outer1 = findMaxLaneId(r1.laneSections.back());
-            inner1 = sgn(outer1);
+            outer1 = findOuterMiddleLane(r1.laneSections.back(),1);
+            inner1 = findInnerMiddleLane(r1.laneSections.back(),1);
 
-            outer3 = findMaxLaneId(helper.laneSections.back());
-            inner3 = sgn(outer3);
+            outer3 = findOuterMiddleLane(helper.laneSections.back(),1);
+            inner3 = findInnerMiddleLane(helper.laneSections.back(),1);
 
             nLane = outer1 - inner1 + 1;
         } 
         if (!clockwise)
         {
-            outer1 = findMinLaneId(r1.laneSections.back());
-            inner1 = sgn(outer1);
+            outer1 = findOuterMiddleLane(r1.laneSections.back(),-1);
+            inner1 = findInnerMiddleLane(r1.laneSections.back(),-1);
 
-            outer3 = findMinLaneId(helper.laneSections.back());
-            inner3 = sgn(outer3);
+            outer3 = findOuterMiddleLane(helper.laneSections.back(),-1);
+            inner3 = findInnerMiddleLane(helper.laneSections.back(),-1);
             nLane = inner1 - outer1 + 1;
         } 
 
-        int max2 = findMaxLaneId(r2.laneSections.front());
-        int min2 = findMinLaneId(r2.laneSections.front());
+        int r2_F_L  = findLeftLane(r2.laneSections.front(), 1);
+        int r2_F_MI = findInnerMiddleLane(r2.laneSections.front(), 1);
+        int r2_F_MO = findOuterMiddleLane(r2.laneSections.front(), 1);
+        int r2_F_R  = findRightLane(r2.laneSections.front(), 1);
 
+        int r2_T_L  = findLeftLane(r2.laneSections.front(), -1);
+        int r2_T_MI = findInnerMiddleLane(r2.laneSections.front(), -1);
+        int r2_T_MO = findOuterMiddleLane(r2.laneSections.front(), -1);
+        int r2_T_R  = findRightLane(r2.laneSections.front(), -1);
+
+        // generate connections
         int from, to;
 
-        road r3; 
-        r3.id = 100*junc.id + cc * 10 + 4;
+        // 1) PART from R1 to HELPER
         from = inner1;
         to = inner3;
-        if (clockwise)
-            createRoadConnection(r1,helper,r3,junc,from,to,non,sol,non);
-        if (!clockwise)
-            createRoadConnection(r1,helper,r3,junc,from,to,sol,non,non);
 
-        road r4; 
-        r4.id = 100*junc.id + cc * 10 + 5;
-        from = outer1;
-        to = outer3;
-        if (clockwise)
-            createRoadConnection(r1,helper,r4,junc,from,to,non,non,non);
-        if (!clockwise)
-            createRoadConnection(r1,helper,r4,junc,from,to,non,non,non);
+        for (int i = 0; i < nLane; i++)
+        {
+            road r;
+            r.id = 100*junc.id + cc * 10 + nCount;
+
+            if (clockwise)
+            {
+                if (i == 0)
+                    createRoadConnection(r1,helper,r,junc,from,to,non,sol,non);
+                if (i != 0)
+                    createRoadConnection(r1,helper,r,junc,from,to,bro,non,non);
+                from++;
+                to++;
+            }
+            if (!clockwise)
+            {
+                if (i == 0)
+                    createRoadConnection(r1,helper,r,junc,from,to,sol,non,non);
+                if (i != 0)
+                    createRoadConnection(r1,helper,r,junc,from,to,bro,non,non);
+                from--;
+                to--;
+            }
+
+            data.roads.push_back(r);
+            nCount++;
+        }
 
         road r5; 
-        r5.id = 100*junc.id + cc * 10 + 6;
+        r5.id = 100*junc.id + cc * 10 + nCount;
         if (clockwise){
             from = outer1;
-            to = findLeftLane(max2);
+            if (r2_F_R != 0) to = r2_F_R;
+            else to = r2_F_MO;
+
             createRoadConnection(r1,r2,r5,junc,from,to,sol,non,non);
         }
         if (!clockwise){
             from = outer1;
-            to = findRightLane(min2);
+            if (r2_T_R != 0) to = r2_T_R;
+            else to = r2_T_MO;
+
             createRoadConnection(r1,r2,r5,junc,from,to,non,sol,non);
         }
+        nCount++;
 
         road r6; 
-        r6.id = 100*junc.id + cc * 10 + 7;
+        r6.id = 100*junc.id + cc * 10 + nCount;
         if (clockwise){
-            from = findLeftLane(min2);
+            if (r2_T_R != 0) from = r2_T_R;
+            else from = r2_T_MO;
             to = outer3;
             createRoadConnection(r2,helper,r6,junc,from,to,sol,non,non);
         }
         if (!clockwise){
-            from = findRightLane(max2);
+            if (r2_F_R != 0) from = r2_F_R;
+            else from = r2_F_MO;
             to = outer3;
             createRoadConnection(r2,helper,r6,junc,from,to,non,sol,non);
         }
+        nCount++;
 
         // adjust precessor of first element, due to loop
         r1.predecessor.elementId = junc.id;
@@ -254,8 +287,6 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
 
         data.roads.push_back(r1);
         data.roads.push_back(r2);
-        data.roads.push_back(r3);
-        if (nLane > 1) data.roads.push_back(r4);
         data.roads.push_back(r5);
         data.roads.push_back(r6);
 
