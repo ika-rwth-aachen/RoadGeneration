@@ -316,111 +316,407 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
             return 1;
         }
 
-        int from, to;
+        // lane ID's of relevant laneSections
+        int r1_F_L  = findLeftLane(r1.laneSections.front(), 1);
+        int r1_F_MI = findInnerMiddleLane(r1.laneSections.front(), 1);
+        int r1_F_MO = findOuterMiddleLane(r1.laneSections.front(), 1);
+        int r1_F_R  = findRightLane(r1.laneSections.front(), 1);
 
-        // max and min id's of relevant laneSections
-        int max1 = findMaxLaneId(r1.laneSections.front());
-        int min1 = findMinLaneId(r1.laneSections.front());
+        int r1_T_L  = findLeftLane(r1.laneSections.front(), -1);
+        int r1_T_MI = findInnerMiddleLane(r1.laneSections.front(), -1);
+        int r1_T_MO = findOuterMiddleLane(r1.laneSections.front(), -1);
+        int r1_T_R  = findRightLane(r1.laneSections.front(), -1);
 
-        int max2 = findMaxLaneId(r2.laneSections.front());
-        int min2 = findMinLaneId(r2.laneSections.front());
+        int r2_F_L  = findLeftLane(r2.laneSections.front(), 1);
+        int r2_F_MI = findInnerMiddleLane(r2.laneSections.front(), 1);
+        int r2_F_MO = findOuterMiddleLane(r2.laneSections.front(), 1);
+        int r2_F_R  = findRightLane(r2.laneSections.front(), 1);
 
-        int max3 = findMaxLaneId(r3.laneSections.front());
-        int min3 = findMinLaneId(r3.laneSections.front());
+        int r2_T_L  = findLeftLane(r2.laneSections.front(), -1);
+        int r2_T_MI = findInnerMiddleLane(r2.laneSections.front(), -1);
+        int r2_T_MO = findOuterMiddleLane(r2.laneSections.front(), -1);
+        int r2_T_R  = findRightLane(r2.laneSections.front(), -1);
 
-        int max4 = findMaxLaneId(r4.laneSections.front());
-        int min4 = findMinLaneId(r4.laneSections.front());
+        int r3_F_L  = findLeftLane(r3.laneSections.front(), 1);
+        int r3_F_MI = findInnerMiddleLane(r3.laneSections.front(), 1);
+        int r3_F_MO = findOuterMiddleLane(r3.laneSections.front(), 1);
+        int r3_F_R  = findRightLane(r3.laneSections.front(), 1);
 
-        road r5; 
-        r5.id = 100*junc.id + 50 + 1;
-        from = findMiddleLane(max1);
-        to = findMiddleLane(min3);
-        if (mode == 1 || mode == 2)
-            createRoadConnection(r1,r3,r5,junc,from,to,bro,bro,bro);
-        if (mode == 3)
-            createRoadConnection(r1,r3,r5,junc,from,to,non,non,non);
-        data.roads.push_back(r5);
+        int r3_T_L  = findLeftLane(r3.laneSections.front(), -1);
+        int r3_T_MI = findInnerMiddleLane(r3.laneSections.front(), -1);
+        int r3_T_MO = findOuterMiddleLane(r3.laneSections.front(), -1);
+        int r3_T_R  = findRightLane(r3.laneSections.front(), -1);
 
-        road r6; 
-        r6.id = 100*junc.id + 50 + 2;
-        from = findMiddleLane(max3);
-        to = findMiddleLane(min1);
-        if (mode == 1 || mode == 2)
-        createRoadConnection(r3,r1,r6,junc,from,to,bro,bro,bro);
-        if (mode == 3)
-        createRoadConnection(r3,r1,r6,junc,from,to,non,non,non);
-        data.roads.push_back(r6);
+        int r4_F_L  = findLeftLane(r4.laneSections.front(), 1);
+        int r4_F_MI = findInnerMiddleLane(r4.laneSections.front(), 1);
+        int r4_F_MO = findOuterMiddleLane(r4.laneSections.front(), 1);
+        int r4_F_R  = findRightLane(r4.laneSections.front(), 1);
 
-        road r7; 
-        r7.id = 100*junc.id + 50 + 3;
-        from = findMiddleLane(max2);
-        to = findMiddleLane(min4);
-        createRoadConnection(r2,r4,r7,junc,from,to,non,non,non);
-        data.roads.push_back(r7);
+        int r4_T_L  = findLeftLane(r4.laneSections.front(), -1);
+        int r4_T_MI = findInnerMiddleLane(r4.laneSections.front(), -1);
+        int r4_T_MO = findOuterMiddleLane(r4.laneSections.front(), -1);
+        int r4_T_R  = findRightLane(r4.laneSections.front(), -1);
 
-        road r8; 
-        r8.id = 100*junc.id + 50 + 4;
-        from = findMiddleLane(max4);
-        to = findMiddleLane(min2);
-        createRoadConnection(r4,r2,r8,junc,from,to,non,non,non);
-        data.roads.push_back(r8);
+        // generate connections
+        int nCount = 1;
+        int from, to, n;
 
-        // --- more complicated junctions ---
-        road r9; 
-        r9.id = 100*junc.id + 50 + 5;
-        from = findRightLane(max1);
-        to = findRightLane(min2);
-        createRoadConnection(r1,r2,r9,junc,from,to,non,sol,non);
-        data.roads.push_back(r9);
 
-        road r10; 
-        r10.id = 100*junc.id + 50 + 6;
-        from = findLeftLane(min1);
-        to = findLeftLane(max2);
-        createRoadConnection(r1,r2,r10,junc,from,to,non,non,non);
-        data.roads.push_back(r10);
 
-        road r11; 
-        r11.id = 100*junc.id + 50 + 7;
-        from = findRightLane(max2);
-        to = findRightLane(min3);
-        createRoadConnection(r2,r3,r11,junc,from,to,non,sol,non);
-        data.roads.push_back(r11);
-
-        road r12; 
-        r12.id = 100*junc.id + 50 + 8;
-        from = findLeftLane(min2);
-        to = findLeftLane(max3);
-        createRoadConnection(r2,r3,r12,junc,from,to,non,non,non);
-        data.roads.push_back(r12);
-
-        road r13; 
-        r13.id = 100*junc.id + 50 + 9;
-        from = findRightLane(max3);
-        to = findRightLane(min4);
-        createRoadConnection(r3,r4,r13,junc,from,to,non,sol,non);
-        data.roads.push_back(r13);
+        // 1) PART from M1 To M3 -> Middle to Middle
         
-        road r14; 
-        r14.id = 100*junc.id + 50 + 10;
-        from = findLeftLane(min3);
-        to = findLeftLane(max4);
-        createRoadConnection(r3,r4,r14,junc,from,to,non,non,non);
-        data.roads.push_back(r14);
+        n = r1_F_MO - r1_F_MI + 1;
+        from = r1_F_MI;
+        to = r3_T_MI;
+        
+        for (int i = 0; i < n; i++)
+        {
+            road r;
+            r.id = 100*junc.id + 50 + nCount;
 
-        road r15; 
-        r15.id = 100*junc.id + 50 + 11;
-        from = findRightLane(max4);
-        to = findRightLane(min1);
-        createRoadConnection(r4,r1,r15,junc,from,to,non,sol,non);
-        data.roads.push_back(r15);
+            if (mode == 1 || mode == 2)
+                createRoadConnection(r1,r3,r,junc,from,to,bro,bro,bro);
+            if (mode == 3)
+                createRoadConnection(r1,r3,r,junc,from,to,non,non,non);
+            
+            data.roads.push_back(r);
 
-        road r16; 
-        r16.id = 100*junc.id + 50 + 12;
-        from = findLeftLane(min4);
-        to = findLeftLane(max1);
-        createRoadConnection(r4,r1,r16,junc,from,to,non,non,non);
-        data.roads.push_back(r16);
+            from ++;
+            to--;
+            nCount ++;
+        }
+
+
+
+        // 2) PART from M2 To M4 -> Middle to Middle
+        
+        n = r2_F_MO - r2_F_MI + 1;
+        from = r2_F_MI;
+        to = r4_T_MI;
+        
+        for (int i = 0; i < n; i++)
+        {
+            road r;
+            r.id = 100*junc.id + 50 + nCount;
+
+            createRoadConnection(r2,r4,r,junc,from,to,non,non,non);            
+            data.roads.push_back(r);
+
+            from ++;
+            to--;
+            nCount ++;
+        }
+
+
+
+        // 3) PART from M3 To M1 -> Middle to Middle
+        
+        n = r3_F_MO - r3_F_MI + 1;
+        from = r3_F_MI;
+        to = r1_T_MI;
+        
+        for (int i = 0; i < n; i++)
+        {
+            road r;
+            r.id = 100*junc.id + 50 + nCount;
+
+            if (mode == 1 || mode == 2)
+                createRoadConnection(r3,r1,r,junc,from,to,bro,bro,bro);
+            if (mode == 3)
+                createRoadConnection(r3,r1,r,junc,from,to,non,non,non);
+            
+            data.roads.push_back(r);
+
+            from ++;
+            to--;
+            nCount ++;
+        }
+
+
+
+        // 4) PART from M4 To M2 -> Middle to Middle
+        
+        n = r4_F_MO - r4_F_MI + 1;
+        from = r4_F_MI;
+        to = r2_T_MI;
+        
+        for (int i = 0; i < n; i++)
+        {
+            road r;
+            r.id = 100*junc.id + 50 + nCount;
+
+            createRoadConnection(r4,r2,r,junc,from,to,non,non,non);            
+            data.roads.push_back(r);
+
+            from ++;
+            to--;
+            nCount ++;
+        }
+
+
+
+        // 5) PART from R1 To R2 -> Right to Right (if exist)
+        
+        if (r1_F_R != 0) 
+        {
+            n = r1_F_R - r1_F_MO;
+            from = r1_F_R;
+        }
+        else
+        {
+            n = 1;
+            from = r1_F_MO;
+        }
+
+        if (r2_T_R != 0) to = r2_T_R;
+        else to = r2_T_MO;
+        
+        for (int i = 0; i < n; i++)
+        {
+            road r;
+            r.id = 100*junc.id + 50 + nCount;
+
+            if (i == 0) 
+                createRoadConnection(r1,r2,r,junc,from,to,non,sol,non);
+            else if (i != 0) 
+                createRoadConnection(r1,r2,r,junc,from,to,non,non,non);
+            
+            data.roads.push_back(r);
+
+            from --;
+            to++;
+            nCount ++;
+        }
+
+
+
+        // 6) PART from L2 To L1 -> Left to Left (if exist)
+        
+        if (r2_F_L != 0) 
+        {
+            n = r2_F_MI - r2_F_L;
+            from = r2_F_L;
+        }
+        else
+        {
+            n = 1;
+            from = r2_F_MI;
+        }
+
+        if (r1_T_L != 0) to = r1_T_L;
+        else to = r1_T_MI;
+        
+        for (int i = 0; i < n; i++)
+        {
+            road r;
+            r.id = 100*junc.id + 50 + nCount;
+
+            createRoadConnection(r2,r1,r,junc,from,to,non,non,non);
+            
+            data.roads.push_back(r);
+
+            from++;
+            to--;
+            nCount ++;
+        }
+         
+
+        // 7) PART from R2 To R3 -> Right to Right (if exist)
+        
+        if (r2_F_R != 0) 
+        {
+            n = r2_F_R - r2_F_MO;
+            from = r2_F_R;
+        }
+        else
+        {
+            n = 1;
+            from = r2_F_MO;
+        }
+
+        if (r3_T_R != 0) to = r3_T_R;
+        else to = r3_T_MO;
+        
+        for (int i = 0; i < n; i++)
+        {
+            road r;
+            r.id = 100*junc.id + 50 + nCount;
+
+            if (i == 0) 
+                createRoadConnection(r2,r3,r,junc,from,to,non,sol,bro);
+            else if (i != 0) 
+                createRoadConnection(r2,r3,r,junc,from,to,non,non,bro);
+            
+            data.roads.push_back(r);
+
+            from --;
+            to++;
+            nCount ++;
+        }
+
+
+
+        // 8) PART from L3 To L2 -> Left to Left (if exist)
+        
+        if (r3_F_L != 0) 
+        {
+            n = r3_F_MI - r3_F_L;
+            from = r3_F_L;
+        }
+        else
+        {
+            n = 1;
+            from = r3_F_MI;
+        }
+
+        if (r2_T_L != 0) to = r2_T_L;
+        else to = r2_T_MI;
+        
+        for (int i = 0; i < n; i++)
+        {
+            road r;
+            r.id = 100*junc.id + 50 + nCount;
+
+            createRoadConnection(r3,r2,r,junc,from,to,non,non,non);            
+            
+            data.roads.push_back(r);
+
+            from++;
+            to--;
+            nCount ++;
+        }
+
+
+        // 9) PART from R3 To R4 -> Right to Right (if exist)
+        
+        if (r3_F_R != 0) 
+        {
+            n = r3_F_R - r3_F_MO;
+            from = r3_F_R;
+        }
+        else
+        {
+            n = 1;
+            from = r3_F_MO;
+        }
+
+        if (r4_T_R != 0) to = r4_T_R;
+        else to = r4_T_MO;
+        
+        for (int i = 0; i < n; i++)
+        {
+            road r;
+            r.id = 100*junc.id + 50 + nCount;
+
+            if (i == 0) 
+                createRoadConnection(r3,r4,r,junc,from,to,non,sol,non);
+            else if (i != 0) 
+                createRoadConnection(r3,r4,r,junc,from,to,non,non,non);
+            
+            data.roads.push_back(r);
+
+            from --;
+            to++;
+            nCount ++;
+        }
+
+
+
+        // 10) PART from L4 To L3 -> Left to Left (if exist)
+        
+        if (r4_F_L != 0) 
+        {
+            n = r4_F_MI - r4_F_L;
+            from = r4_F_L;
+        }
+        else
+        {
+            n = 1;
+            from = r4_F_MI;
+        }
+
+        if (r3_T_L != 0) to = r3_T_L;
+        else to = r3_T_MI;
+        
+        for (int i = 0; i < n; i++)
+        {
+            road r;
+            r.id = 100*junc.id + 50 + nCount;
+
+            createRoadConnection(r4,r3,r,junc,from,to,non,non,non);
+            
+            data.roads.push_back(r);
+
+            from++;
+            to--;
+            nCount ++;
+        }
+
+
+        // 11) PART from R4 To R1 -> Right to Right (if exist)
+        
+        if (r4_F_R != 0) 
+        {
+            n = r4_F_R - r4_F_MO;
+            from = r4_F_R;
+        }
+        else
+        {
+            n = 1;
+            from = r4_F_MO;
+        }
+
+        if (r1_T_R != 0) to = r1_T_R;
+        else to = r1_T_MO;
+        
+        for (int i = 0; i < n; i++)
+        {
+            road r;
+            r.id = 100*junc.id + 50 + nCount;
+
+            if (i == 0) 
+                createRoadConnection(r4,r1,r,junc,from,to,non,sol,non);
+            else if (i != 0) 
+                createRoadConnection(r4,r1,r,junc,from,to,non,non,non);
+            
+            data.roads.push_back(r);
+
+            from --;
+            to++;
+            nCount ++;
+        }
+
+
+
+        // 12) PART from L1 To L4 -> Left to Left (if exist)
+        
+        if (r1_F_L != 0) 
+        {
+            n = r1_F_MI - r1_F_L;
+            from = r1_F_L;
+        }
+        else
+        {
+            n = 1;
+            from = r1_F_MI;
+        }
+
+        if (r4_T_L != 0) to = r4_T_L;
+        else to = r4_T_MI;
+        
+        for (int i = 0; i < n; i++)
+        {
+            road r;
+            r.id = 100*junc.id + 50 + nCount;
+
+            createRoadConnection(r1,r4,r,junc,from,to,non,non,non);
+            
+            data.roads.push_back(r);
+
+            from++;
+            to--;
+            nCount ++;
+        }
     }
 
     data.junctions.push_back(junc);     
