@@ -284,49 +284,89 @@ int findOuterMiddleLane(laneSection sec, int side)
     return 0;    
 }
 
-/**
- * @brief function finds the id of the left lane
- * 
- * @param i     input laneId
- * @return int  laneId of left lane
- */
-int findLeftLane(int i){
-    if (i > 0)
-        return 1;
-    else if (i < 0)
-        return -1;
-    else 
-        return 0;
-}
+int calcFromTo(road r1, road r2, int &from, int &to, int &nF, int &nT, int mode)
+{
+    int r1_F_L  = findLeftLane(r1.laneSections.front(), 1);
+    int r1_F_MI = findInnerMiddleLane(r1.laneSections.front(), 1);
+    int r1_F_MO = findOuterMiddleLane(r1.laneSections.front(), 1);
+    int r1_F_R  = findRightLane(r1.laneSections.front(), 1);
 
-/**
- * @brief function finds the id of the right lane
- * 
- * @param i     input laneId
- * @return int  laneId of right lane
- */
-int findRightLane(int i){
-    if (i > 0)
-        return i;
-    else if (i < 0)
-        return i;
-    else 
-        return 0;
-}
+    int r1_T_L  = findLeftLane(r1.laneSections.front(), -1);
+    int r1_T_MI = findInnerMiddleLane(r1.laneSections.front(), -1);
+    int r1_T_MO = findOuterMiddleLane(r1.laneSections.front(), -1);
+    int r1_T_R  = findRightLane(r1.laneSections.front(), -1);
 
-/**
- * @brief function finds the id of the middle lane
- * 
- * @param i     input laneId
- * @return int  laneId of middle lane
- */
-int findMiddleLane(int i){
-    if (i > 0)
-        return floor(i/2+1);
-    else if (i < 0)
-        return ceil(i/2-1);
-    else 
-        return 0;
+    int r2_F_L  = findLeftLane(r2.laneSections.front(), 1);
+    int r2_F_MI = findInnerMiddleLane(r2.laneSections.front(), 1);
+    int r2_F_MO = findOuterMiddleLane(r2.laneSections.front(), 1);
+    int r2_F_R  = findRightLane(r2.laneSections.front(), 1);
+
+    int r2_T_L  = findLeftLane(r2.laneSections.front(), -1);
+    int r2_T_MI = findInnerMiddleLane(r2.laneSections.front(), -1);
+    int r2_T_MO = findOuterMiddleLane(r2.laneSections.front(), -1);
+    int r2_T_R  = findRightLane(r2.laneSections.front(), -1);
+
+    // left to left
+    if (mode == 1)
+    {
+        if (r1_F_L != 0) 
+        {
+            nF = r1_F_MI - r1_F_L;
+            from = r1_F_L;
+        }
+        else
+        {
+            nF = r1_F_MO - r1_F_MI + 1;
+            from = r1_F_MI;
+        }
+
+        if (r2_T_L != 0) 
+        {
+            nT = r2_T_L - r2_T_MI;
+            to = r2_T_L;
+        }
+        else 
+        {
+            nT = r2_T_MI - r2_T_MO + 1;
+            to = r2_T_MI;
+        }
+    }
+
+    // middle to middle
+    if (mode == 0)
+    {
+        nF = r1_F_MO - r1_F_MI + 1;
+        from = r1_F_MI;
+
+        nT = r2_T_MI - r2_T_MO + 1;
+        to = r2_T_MI;
+    }
+
+    // right to right
+    if (mode == -1)
+    {
+        if (r1_F_R != 0) 
+        {
+            nF = r1_F_R - r1_F_MO;
+            from = r1_F_R;
+        }
+        else
+        {
+            nF = r1_F_MO - r1_F_MI + 1;
+            from = r1_F_MO;
+        }
+
+        if (r2_T_R != 0) 
+        {
+            nT = r2_T_MO - r2_T_R;
+            to = r2_T_R;
+        }
+        else
+        {
+            nT = r2_T_MI - r2_T_MO + 1;
+            to = r2_T_MO;
+        }
+    }
 }
 
 /**

@@ -317,66 +317,13 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             return 1;
         }
         
-        // lane ID's of relevant laneSections
-        int r1_F_L  = findLeftLane(r1.laneSections.front(), 1);
-        int r1_F_MI = findInnerMiddleLane(r1.laneSections.front(), 1);
-        int r1_F_MO = findOuterMiddleLane(r1.laneSections.front(), 1);
-        int r1_F_R  = findRightLane(r1.laneSections.front(), 1);
-
-        int r1_T_L  = findLeftLane(r1.laneSections.front(), -1);
-        int r1_T_MI = findInnerMiddleLane(r1.laneSections.front(), -1);
-        int r1_T_MO = findOuterMiddleLane(r1.laneSections.front(), -1);
-        int r1_T_R  = findRightLane(r1.laneSections.front(), -1);
-
-        int r2_F_L  = findLeftLane(r2.laneSections.front(), 1);
-        int r2_F_MI = findInnerMiddleLane(r2.laneSections.front(), 1);
-        int r2_F_MO = findOuterMiddleLane(r2.laneSections.front(), 1);
-        int r2_F_R  = findRightLane(r2.laneSections.front(), 1);
-
-        int r2_T_L  = findLeftLane(r2.laneSections.front(), -1);
-        int r2_T_MI = findInnerMiddleLane(r2.laneSections.front(), -1);
-        int r2_T_MO = findOuterMiddleLane(r2.laneSections.front(), -1);
-        int r2_T_R  = findRightLane(r2.laneSections.front(), -1);
-
-        int r3_F_L  = findLeftLane(r3.laneSections.front(), 1);
-        int r3_F_MI = findInnerMiddleLane(r3.laneSections.front(), 1);
-        int r3_F_MO = findOuterMiddleLane(r3.laneSections.front(), 1);
-        int r3_F_R  = findRightLane(r3.laneSections.front(), 1);
-
-        int r3_T_L  = findLeftLane(r3.laneSections.front(), -1);
-        int r3_T_MI = findInnerMiddleLane(r3.laneSections.front(), -1);
-        int r3_T_MO = findOuterMiddleLane(r3.laneSections.front(), -1);
-        int r3_T_R  = findRightLane(r3.laneSections.front(), -1);
-
         // generate connections
         int nCount = 1;
         int from, to, nF, nT;
 
-
-
         // 1) PART from R1 To R2 -> Right to Right (if exist)
         
-        if (r1_F_R != 0) 
-        {
-            nF = r1_F_R - r1_F_MO;
-            from = r1_F_R;
-        }
-        else
-        {
-            nF = r1_F_MO - r1_F_MI + 1;
-            from = r1_F_MO;
-        }
-
-        if (r2_T_R != 0) 
-        {
-            nT = r2_T_MO - r2_T_R;
-            to = r2_T_R;
-        }
-        else
-        {
-            nT = r2_T_MI - r2_T_MO + 1;
-            to = r2_T_MO;
-        }
+        calcFromTo(r1,r2,from,to,nF,nT,-1);
 
         for (int i = 0; i < min(nF,nT); i++)
         {
@@ -403,31 +350,9 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             nCount ++;
         }
 
-
-
-        // 2) PART from R2 To R1 -> Left to Left (if exist)
+        // 2) PART from L2 To L1 -> Left to Left (if exist)
         
-        if (r2_F_L != 0) 
-        {
-            nF = r2_F_MI - r2_F_L;
-            from = r2_F_L;
-        }
-        else
-        {
-            nF = r2_F_MO - r2_F_MI + 1;
-            from = r2_F_MI;
-        }
-
-        if (r1_T_L != 0) 
-        {
-            nT = r1_T_L - r1_T_MI;
-            to = r1_T_L;
-        }
-        else 
-        {
-            nT = r1_T_MI - r1_T_MO + 1;
-            to = r1_T_MI;
-        }
+        calcFromTo(r2,r1,from,to,nF,nT,1);
         
         for (int i = 0; i < min(nF,nT); i++)
         {
@@ -448,30 +373,9 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             nCount ++;
         }
          
-
         // 3) PART from R2 To R3 -> Right to Right (if exist)
         
-        if (r2_F_R != 0) 
-        {
-            nF = r2_F_R - r2_F_MO;
-            from = r2_F_R;
-        }
-        else
-        {
-            nF = r2_F_MO - r2_F_MI + 1;
-            from = r2_F_MO;
-        }
-
-        if (r3_T_R != 0) 
-        {
-            nT = r3_T_MO - r3_T_R;
-            to = r3_T_R;
-        }
-        else
-        {
-            nT = r3_T_MI - r3_T_MO + 1;
-            to = r3_T_MO;
-        }
+        calcFromTo(r2,r3,from,to,nF,nT,-1);
 
         for (int i = 0; i < min(nF,nT); i++)
         {
@@ -490,31 +394,9 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             nCount ++;
         }
 
-
-
         // 4) PART from R3 To R2 -> Left to Left (if exist)
         
-        if (r3_F_L != 0) 
-        {
-            nF = r3_F_MI - r3_F_L;
-            from = r3_F_L;
-        }
-        else
-        {
-            nF = r3_F_MO - r3_F_MI + 1;
-            from = r3_F_MI;
-        }
-
-        if (r2_T_L != 0) 
-        {
-            nT = r2_T_L - r2_T_MI;
-            to = r2_T_L;
-        }
-        else 
-        {
-            nT = r2_T_MI - r2_T_MO + 1;
-            to = r2_T_MI;
-        }
+        calcFromTo(r3,r2,from,to,nF,nT,1);
                 
         for (int i = 0; i < min(nF,nT); i++)
         {
@@ -531,31 +413,10 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             nCount ++;
         }
 
-
         // 5) PART from R3 To R1 -> Right to Right (if exist)
         
-        if (r3_F_R != 0) 
-        {
-            nF = r3_F_R - r3_F_MO;
-            from = r3_F_R;
-        }
-        else
-        {
-            nF = r3_F_MO - r3_F_MI + 1;
-            from = r3_F_MO;
-        }
-        
-        if (r1_T_R != 0) 
-        {
-            nT = r1_T_MO - r1_T_R;
-            to = r1_T_R;
-        }
-        else
-        {
-            nT = r1_T_MI - r1_T_MO + 1;
-            to = r1_T_MO;
-        }
-        
+        calcFromTo(r3,r1,from,to,nF,nT,-1);
+
         for (int i = 0; i < min(nF,nT); i++)
         {
             road r;
@@ -581,31 +442,9 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             nCount ++;
         }
 
-
-
         // 6) PART from L1 To L3 -> Left to Left (if exist)
         
-        if (r1_F_L != 0) 
-        {
-            nF = r1_F_MI - r1_F_L;
-            from = r1_F_L;
-        }
-        else
-        {
-            nF = r1_F_MO - r1_F_MI + 1;
-            from = r1_F_MI;
-        }
-
-        if (r3_T_L != 0) 
-        {
-            nT = r3_T_L - r3_T_MI;
-            to = r3_T_L;
-        }
-        else 
-        {
-            nT = r3_T_MI - r3_T_MO + 1;
-            to = r3_T_MI;
-        }
+        calcFromTo(r1,r3,from,to,nF,nT,1);
         
         for (int i = 0; i < min(nF,nT); i++)
         {
