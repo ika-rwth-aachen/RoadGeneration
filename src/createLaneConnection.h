@@ -14,8 +14,22 @@
  */
 int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, int to, string left, string right)
 {
-    if (from == 0 || to == 0) {
+    if (from == 0 || to == 0) 
+    {
         cout << "ERR: cannot connect lane Id 0." << endl;
+        return 1;
+    }
+
+    if (from > findMaxLaneId(lS1) || from < findMinLaneId(lS1))
+    {
+        cout << "ERR: cannot connect lane Id from:" << from << endl;
+        return 1;
+    }
+
+    if (to > findMaxLaneId(lS2) || to < findMinLaneId(lS2))
+    {
+        cout << "ERR: cannot connect lane Id to:" << to << endl;
+        return 1;
     }
     
     int dir = sgn(to);

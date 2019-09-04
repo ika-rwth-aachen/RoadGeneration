@@ -179,6 +179,114 @@ int shiftLanes(laneSection &sec, int id, int dir)
 /**
  * @brief function finds the id of the left lane
  * 
+ * @param sec   laneSection 
+ * @param side  determines current side 
+ * @return int  laneId of left lane
+ */
+int findLeftLane(laneSection sec, int side){
+
+    int search = sgn(side);
+    int end;
+
+    if (side > 0) end = findMaxLaneId(sec) + sgn(side);
+    if (side < 0) end = findMinLaneId(sec) + sgn(side);
+
+    // search first for leftest marked lane
+    while (search != end)
+    {
+        lane l;
+        findLane(sec, l, search);
+        if (l.type == "driving" && l.turn == 1) return search;
+        search += sgn(side);
+    }
+    
+    return 0;    
+}
+
+/**
+ * @brief function finds the id of the right lane
+ * 
+ * @param sec   laneSection 
+ * @param side  determines current side 
+ * @return int  laneId of right lane
+ */
+int findRightLane(laneSection sec, int side){
+    
+    int search;
+    int end = 0;
+    
+    if (side > 0) search = findMaxLaneId(sec);
+    if (side < 0) search = findMinLaneId(sec);
+
+    // search first for leftest marked lane
+    while (search != end)
+    {
+        lane l;
+        findLane(sec, l, search);
+        if (l.type == "driving" && l.turn == -1) return search;
+        search -= sgn(side);
+    }
+    
+    return 0;    
+}
+
+/**
+ * @brief function finds the id of the inner middle lane (not marked) 
+ * 
+ * @param sec   laneSection 
+ * @param side  determines current side 
+ * @return int  laneId of left lane
+ */
+int findInnerMiddleLane(laneSection sec, int side){
+
+    int search = sgn(side);
+    int end;
+
+    if (side > 0) end = findMaxLaneId(sec) + sgn(side);
+    if (side < 0) end = findMinLaneId(sec) + sgn(side);
+
+    // search first for leftest marked lane
+    while (search != end)
+    {
+        lane l;
+        findLane(sec, l, search);
+        if (l.type == "driving" && l.turn == 0) return search;
+        search += sgn(side);
+    }
+    
+    return 0;    
+}
+
+/**
+ * @brief function finds the id of the outer middle lane (not marked) 
+ * 
+ * @param sec   laneSection 
+ * @param side  determines current side 
+ * @return int  laneId of left lane
+ */
+int findOuterMiddleLane(laneSection sec, int side)
+{
+    int search;
+    int end = 0;
+    
+    if (side > 0) search = findMaxLaneId(sec);
+    if (side < 0) search = findMinLaneId(sec);
+
+    // search first for leftest marked lane
+    while (search != end)
+    {
+        lane l;
+        findLane(sec, l, search);
+        if (l.type == "driving" && l.turn == 0) return search;
+        search -= sgn(side);
+    }
+    
+    return 0;    
+}
+
+/**
+ * @brief function finds the id of the left lane
+ * 
  * @param i     input laneId
  * @return int  laneId of left lane
  */

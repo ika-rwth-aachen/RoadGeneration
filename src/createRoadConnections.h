@@ -241,7 +241,12 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     }
 
     // --- lanemarkings in crossing section ------------------------------------
-    createLaneConnection(r,lS1,lS2,fromId,toId,laneMarkLeft,laneMarkRight);
+    if (createLaneConnection(r,lS1,lS2,fromId,toId,laneMarkLeft,laneMarkRight))
+    {
+        cerr << "Error in createLaneConnection" << endl;
+        exit(0);
+        return 1;
+    }
                
     return 0;
 }
