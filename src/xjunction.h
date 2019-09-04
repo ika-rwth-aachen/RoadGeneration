@@ -191,7 +191,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r1.predecessor.elementType = "junction";
     if (mode == 1 || mode == 2)
     {
-        generateRoad(mainRoad, r1, sMain-sOffMain, 0, 50, sMain, iPx, iPy, iPhdg);
+        generateRoad(mainRoad, r1, sMain-sOffMain, 0, 25, sMain, iPx, iPy, iPhdg);
     }
     if (mode == 3)
     {
@@ -207,7 +207,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r2.predecessor.elementType = "junction";
     if (mode == 1)
     {
-        generateRoad(additionalRoad1, r2, sAdd1-sOffAdd1, 0, 50, sAdd1, iPx, iPy, iPhdg+phi1);
+        generateRoad(additionalRoad1, r2, sAdd1-sOffAdd1, 0, 25, sAdd1, iPx, iPy, iPhdg+phi1);
     }
     if (mode == 2 || mode == 3)
     {
@@ -223,7 +223,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r3.predecessor.elementType = "junction";
     if (mode == 1 || mode == 2)
     {
-        generateRoad(mainRoad, r3, sMain+sOffMain, INFINITY, 50, sMain,iPx, iPy,iPhdg);
+        generateRoad(mainRoad, r3, sMain+sOffMain, INFINITY, 25, sMain,iPx, iPy,iPhdg);
         addObjects(mainRoad,r3,data);
     }
     if (mode == 3)
@@ -240,7 +240,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r4.predecessor.elementType = "junction";
     if (mode == 1)
     {
-        generateRoad(additionalRoad1, r4, sAdd1+sOffAdd1, INFINITY, 50,sAdd1, iPx, iPy, iPhdg+phi1);
+        generateRoad(additionalRoad1, r4, sAdd1+sOffAdd1, INFINITY, 25,sAdd1, iPx, iPy, iPhdg+phi1);
         addObjects(additionalRoad1,r4,data);
     }
     if (mode == 2)
@@ -268,25 +268,25 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         if (id == r1.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r1, 50, type);
+                laneWideningJunction(r1, 25, type);
         }
 
         if (id == r2.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r2, 50, type);
+                laneWideningJunction(r2, 25, type);
         }
         
         if (id == r3.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r3, 50, type);
+                laneWideningJunction(r3, 25, type);
         }
 
         if (id == r4.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r4, 50, type);
+                laneWideningJunction(r4, 25, type);
         }
     }
 

@@ -167,7 +167,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
 
         // add street is left from road 1
         if (phi > 0) 
-            generateRoad(mainRoad, r1, sMain-sOffMain, 0, 50, sMain, iPx, iPy, iPhdg);
+            generateRoad(mainRoad, r1, sMain-sOffMain, 0, 25, sMain, iPx, iPy, iPhdg);
         // add street is right from road 1
         if (phi < 0) 
             generateRoad(mainRoad, r1, sMain-sOffMain, 0, -1, sMain, iPx, iPy, iPhdg);
@@ -194,7 +194,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             generateRoad(mainRoad, r2, sMain+sOffMain, INFINITY, -1, sMain, iPx, iPy, iPhdg);
         // add street is right from road 1
         if (phi < 0) 
-            generateRoad(mainRoad, r2, sMain+sOffMain, INFINITY, 50, sMain, iPx, iPy, iPhdg);
+            generateRoad(mainRoad, r2, sMain+sOffMain, INFINITY, 25, sMain, iPx, iPy, iPhdg);
         addObjects(mainRoad,r2,data);
     }
     if (mode == 2)
@@ -234,19 +234,19 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         if (id == r1.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r1, 50, type);
+                laneWideningJunction(r1, 25, type);
         }
 
         if (id == r2.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r2, 50, type);
+                laneWideningJunction(r2, 25, type);
         }
         
         if (id == r3.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r3, 50, type);
+                laneWideningJunction(r3, 25, type);
         }
     }
 

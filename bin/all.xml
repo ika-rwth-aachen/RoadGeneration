@@ -28,6 +28,7 @@
                             <roadMark   type="solid" color="white" width="0.13"/>
                         </lane>
                     </laneSection>
+                    <laneDrop lane="-2" sOffset="100" ds1="50" />
                 </lanes>
             </road>
             <intersectionPoint id="1" refId="1" s="200">
