@@ -115,7 +115,7 @@ struct object
     double distance = 0;
 };
 
-struct signal
+struct Signal
 {
     int id = -1;
     int rule = -1;
@@ -132,7 +132,7 @@ struct signal
 
 struct control
 {
-    vector<signal> signals;
+    vector<Signal> signals;
     int id = -1;
 };
 
@@ -149,7 +149,7 @@ struct road
     vector<geometry> geometries;
     vector<laneSection> laneSections;
     vector<object> objects;
-    vector<signal> signals;
+    vector<Signal> signals;
 };
 
 struct roadNetwork

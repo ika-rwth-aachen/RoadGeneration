@@ -368,6 +368,7 @@ int calcFromTo(road r1, road r2, int &from, int &to, int &nF, int &nT, int mode)
             to = r2_T_MO;
         }
     }
+    return 0;
 }
 
 /**

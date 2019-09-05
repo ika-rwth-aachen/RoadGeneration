@@ -62,6 +62,7 @@ int addRoadWork(object o, road &r, int laneId)
     {
         r.laneSections[i].id++;
     }
+    return 0;
 }
 
 /**
@@ -287,7 +288,7 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
 
         for (pugi::xml_node ob: obj.children())
         {
-            signal s; 
+            Signal s; 
             data.nSignal++;
             s.id = data.nSignal;
             s.id = ob.attribute("id").as_int();
@@ -346,7 +347,7 @@ int addSignal(road &r, roadNetwork &data, double s, double t, string type, strin
         i = data.controller.size()-1;
     }
 
-    signal sig; 
+    Signal sig; 
     data.nSignal++;
     sig.id = data.nSignal;
     sig.s = s;

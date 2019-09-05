@@ -1,5 +1,92 @@
 // file io.h
 
+#include "pugixml.hpp"
+#include <xercesc/util/XMLString.hpp>
+#include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/framework/LocalFileInputSource.hpp>
+#include <xercesc/sax/ErrorHandler.hpp>
+#include <xercesc/sax/SAXParseException.hpp>
+#include <xercesc/validators/common/Grammar.hpp>
+
+using namespace xercesc;
+
+/**
+ * @brief function which checks the input file against the corresponding xsd
+ * 
+ * @param file  input file
+ * @return int  error code
+ */
+int validateInput (char* file)
+{
+    XMLPlatformUtils::Initialize();
+
+	const char* schemaFilePath = "../xml/input.xsd";
+	const char* xmlFilePath = file;
+
+	XercesDOMParser domParser;
+    if (domParser.loadGrammar(schemaFilePath, Grammar::SchemaGrammarType) == NULL)
+    {
+        fprintf(stderr, "couldn't load schema\n");
+        return 1;
+    }
+ 
+    domParser.setValidationScheme(XercesDOMParser::Val_Auto);
+    domParser.setDoNamespaces(true);
+    domParser.setDoSchema(true);
+    domParser.setValidationConstraintFatal(true);
+	
+    domParser.parse(xmlFilePath);
+
+    if (domParser.getErrorCount() == 0)
+        printf("XML file validated against the schema successfully\n");
+    else
+    {
+        printf("XML file doesn't conform to the schema\n");
+        return 1;
+    }
+
+    return 0;
+}
+
+/**
+ * @brief function which checks the output file against the corresponding xsd
+ * 
+ * @param file  output file
+ * @return int  error code
+ */
+int validateOutput (string file)
+{
+    XMLPlatformUtils::Initialize();
+
+    file.append(".xodr");
+	const char* xmlFilePath = file.c_str();
+	const char* schemaFilePath = "../xml/output.xsd";
+
+	XercesDOMParser domParser;
+    if (domParser.loadGrammar(schemaFilePath, Grammar::SchemaGrammarType) == NULL)
+    {
+        fprintf(stderr, "couldn't load schema\n");
+        return 1;
+    }
+ 
+    domParser.setValidationScheme(XercesDOMParser::Val_Auto);
+    domParser.setDoNamespaces(true);
+    domParser.setDoSchema(true);
+    domParser.setValidationConstraintFatal(true);
+	
+    domParser.parse(xmlFilePath);
+
+    if (domParser.getErrorCount() == 0)
+        printf("XML file validated against the schema successfully\n");
+    else
+    {
+        printf("XML file doesn't conform to the schema\n");
+        return 1;
+    }
+
+    return 0;
+}
+
 /**
  * @brief function parses the input xml file with the external tool pugi_xml
  *  input is then accessable in a pugi::xml_document tree structure 
@@ -18,7 +105,9 @@ int parseXML(pugi::xml_document &doc, roadNetwork &data, char * file)
         doc.load_file("bin/all.xml");
         return 0;
     }
-    data.file = file;
+    string f = file;
+    data.file = f.substr(0,f.find(".xml"));
+
 	if (doc.load_file(file)) 
     {
         return 0;
@@ -230,9 +319,9 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         // --- write signals ---------------------------------------------------
         pugi::xml_node signals = road.append_child("signals");
 
-        for (std::vector<signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
+        for (std::vector<Signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
         {
-            signal s = *itt;
+            Signal s = *itt;
             pugi::xml_node sig = signals.append_child("signal");
             //pugi::xml_node sig = objects.append_child("object");
             
@@ -261,7 +350,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
 
         controller.append_attribute("id") = it->id;
 
-        for (std::vector<signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
+        for (std::vector<Signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
         {
             pugi::xml_node con = controller.append_child("control");
 
@@ -292,7 +381,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     }
 
     // --- write doc structure to file -----------------------------------------
-    string file = data.file.substr(0,data.file.find(".xml"));
+    string file = data.file;
     file.append(".xodr");
 
     if (doc.save_file(file.c_str())) 

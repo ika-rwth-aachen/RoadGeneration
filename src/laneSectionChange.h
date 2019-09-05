@@ -502,4 +502,5 @@ int laneWideningJunction(road &r, int sLaneWidening, int turn, bool verschwenkun
         it->id += 2;
         it->s += 20 + abs(sLaneWidening);
     }
+    return 0;
 }
