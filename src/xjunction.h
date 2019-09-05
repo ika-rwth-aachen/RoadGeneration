@@ -299,7 +299,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         if (id == r4.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r4, 25, type, verschwenkung);
+                laneWideningJunction(r4, length, type, verschwenkung);
         }
     }
 

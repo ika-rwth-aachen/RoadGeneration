@@ -163,7 +163,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         addSignal(r2, data, 1, INFINITY, "1.000.001", "-");
 
         road helper;
-        helper.id = r1.id + cc * 10 + nCount; 
+        helper.id = 100*junc.id + cc * 10 + nCount; 
         helper.junction = junc.id;
         if (cc < nIp)
             generateRoad(mainRoad, helper, sMain+sOffMain, sMain+2*sOffMain, 0, sMain, iPx, iPy,iPhdg);  
