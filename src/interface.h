@@ -28,7 +28,7 @@ struct roadmark
     string type = "solid";
     string weight = "standard";
     string color = "white";
-    double width = 0.2;
+    double width = 0.15;
 };
 
 struct width

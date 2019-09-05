@@ -363,7 +363,16 @@ int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, dou
             if (r.type == "town") l.speed = 50;
             if (r.type == "motorway") l.speed = 130;
 
-            laneSec.lanes.push_back(l);
+            lane ltmp;
+            int id = findLane(laneSec,ltmp,l.id);
+            if (id >= 0) laneSec.lanes[id] = l;
+            else laneSec.lanes.push_back(l);
+
+            if (l.type == "delete")
+            {
+                int id = findLane(laneSec,l,l.id);
+                laneSec.lanes.erase(laneSec.lanes.begin() + id);
+            }
         }
         if (laneSec.id == 1) r.laneSections.back() = laneSec;
         else r.laneSections.push_back(laneSec);

@@ -91,17 +91,18 @@ bool isBoundary(laneSection sec, int id)
  */
 int findLane(laneSection sec, lane &l, int id)
 {
-    int i = -100;
+    int res = -1;
 
-    for (i = 0; i < sec.lanes.size(); i++)
+    for (int i = 0; i < sec.lanes.size(); i++)
     {
         if (sec.lanes[i].id == id) 
         {
             l = sec.lanes[i];
+            res = i;
             break;
         }
     }
-    return i;
+    return res;
 }
 
 /**
