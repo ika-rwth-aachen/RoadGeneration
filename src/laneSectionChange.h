@@ -1,7 +1,7 @@
 // file laneSectionChange.h
 
 /**
- * @brief function adds a laneSection with laneWiding  to a given lanesection set
+ * @brief function adds a laneSection with laneWiding  to a given lanesection set in s direction
  * 
  * @param secs      vector of all lanesections of a road
  * @param laneId    laneId of the lane where the laneWiding should be performed
@@ -118,7 +118,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds, 
 }
 
 /**
- * @brief function adds a laneSection with laneDrop  to a given lanesection set
+ * @brief function adds a laneSection with laneDrop  to a given lanesection set in s direction
  * 
  * @param secs      vector of all lanesections of a road
  * @param laneId    laneId of the lane where the laneDrop should be performed
@@ -211,7 +211,7 @@ int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
 
 
 /**
- * @brief function adds a laneSection with laneDrop  to a given lanesection set
+ * @brief function adds a laneSection with restricted area to a given lanesection set in s direction
  * 
  * @param secs      vector of all lanesections of a road
  * @param laneId    laneId of the lane where the laneDrop should be performed
@@ -372,15 +372,28 @@ int addRestrictedArea(vector<laneSection> &secs, int laneId, double s1, double s
     return 0;
 }
 
-
-int laneWideningJunction(road &r, int sLaneWidening, int turn)
+/**
+ * @brief function creates laneWidenings in Junction areas (in opposite s direction)
+ * 
+ * @param r 
+ * @param sLaneWidening 
+ * @param turn 
+ * @return int 
+ */
+int laneWideningJunction(road &r, int sLaneWidening, int turn, bool verschwenkung)
 {
     /*
-    sLaneWidening > 0 -> laneWidening
-    sLaneWidening < 0 -> restricted Area
+        sLaneWidening > 0 -> laneWidening
+        sLaneWidening < 0 -> restricted Area
+
+        turn = 1  -> left lane
+        turn = -1 -> right lane
+
+        verschwenkung   -> original lane stays constant, additional lane with 3rd order polynom
+        !verschwenkung  -> original lane splits in two new lanes (without marking), which increases to 0.75 of original lane (no offset shift)
     */
 
-    // if restricted area, always turn = 1
+    // if restricted area, always on left side (turn = 1)
     if (sLaneWidening < 0) turn = 1;
 
     vector<laneSection>::iterator it = r.laneSections.begin();
@@ -415,6 +428,13 @@ int laneWideningJunction(road &r, int sLaneWidening, int turn)
         l.rm.type = "solid";
         l.type = "restricted";
     }
+
+    if (!verschwenkung)
+    {
+        l.w.a *= 0.75;
+        adLaneSec.lanes[id].w.a = l.w.a;
+    }
+
     if (turn == 1)
     {
         shiftLanes(adLaneSec,laneId,1);
@@ -433,7 +453,7 @@ int laneWideningJunction(road &r, int sLaneWidening, int turn)
     adLaneSec.lanes[id].rm.type = "solid";
 
     // laneOffset
-    if (turn == 1)
+    if (turn == 1 && verschwenkung)
         adLaneSec.o.a = -abs(w)/2 + it->o.a;
 
     it = r.laneSections.insert(it, adLaneSec);
@@ -441,11 +461,26 @@ int laneWideningJunction(road &r, int sLaneWidening, int turn)
 
     // ---------------------------------------------------------------------
     // widening lane
-    l.w.d = 2 * w / pow(20,3);
-    l.w.c = - 3 * w / pow(20,2);
-    l.w.b = 0;
+    if(verschwenkung)
+    {
+        l.w.d = 2 * w / pow(20,3);
+        l.w.c = - 3 * w / pow(20,2);
+        l.w.b = 0;
+    }
+    else{
+        l.w.a = 0.75 * w;
+        l.w.b = - 0.0125 * w;
+        l.w.c = 0;
+        l.w.d = 0;
 
-    if (turn == 1)
+        id = findLane(adLaneSec, lTmp, laneId + turn);
+        adLaneSec.lanes[id].w = l.w;
+
+        if (turn ==  1) l.rm.type = "none";
+        if (turn == -1) adLaneSec.lanes[id].rm.type = "none";
+    }
+
+    if (turn == 1 && verschwenkung)
     {
         adLaneSec.o.a = - abs(w)/2 + it->o.a;
         adLaneSec.o.b = 0;

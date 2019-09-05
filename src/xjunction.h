@@ -267,31 +267,39 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         if (addLane.attribute("amount"))
             n = addLane.attribute("amount").as_int();
 
+        bool verschwenkung = true;
+        if (addLane.attribute("verschwenkung"))
+            verschwenkung = addLane.attribute("verschwenkung").as_bool();
+
+        double length = 25;
+        if (addLane.attribute("length"))
+            length = addLane.attribute("length").as_double();
+
         int type = addLane.attribute("type").as_int();
         int id = addLane.attribute("roadId").as_int();
         
         if (id == r1.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r1, 25, type);
+                laneWideningJunction(r1, length, type, verschwenkung);
         }
 
         if (id == r2.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r2, 25, type);
+                laneWideningJunction(r2, length, type, verschwenkung);
         }
         
         if (id == r3.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r3, 25, type);
+                laneWideningJunction(r3, length, type, verschwenkung);
         }
 
         if (id == r4.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r4, 25, type);
+                laneWideningJunction(r4, 25, type, verschwenkung);
         }
     }
 

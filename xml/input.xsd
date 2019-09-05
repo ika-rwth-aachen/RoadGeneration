@@ -364,7 +364,9 @@ elementFormDefault="qualified">
     <xs:complexType name="additionalLaneType">
         <xs:attribute name="roadId" type="xs:int" use="required"/>   
         <xs:attribute name="type" type="xs:string" use="required"/>   
+        <xs:attribute name="length" type="xs:double"/>   
         <xs:attribute name="amount" type="xs:int"/>   
+        <xs:attribute name="verschwenkung" type="xs:boolean"/>   
     </xs:complexType>
 
     <xs:complexType name="objectsType">

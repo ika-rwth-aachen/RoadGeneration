@@ -419,7 +419,7 @@ int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, dou
 
     // add laneWidening before junction
     //     sLaneWidening is distance from junction to point where the lane drops
-    if (sLaneWidening != 0) laneWideningJunction(r,  sLaneWidening, 1);
+    if (sLaneWidening != 0) laneWideningJunction(r,  sLaneWidening, 1, true);
 
     return 0;
 }
