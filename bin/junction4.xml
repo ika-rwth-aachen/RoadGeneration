@@ -45,6 +45,8 @@
                 <additionalLanes>
                     <additionalLane roadId="103" type="left"/>
                     <additionalLane roadId="101" type="left" length="-25"/>
+                    <additionalLane roadId="101" type="right" length="25"/>
+                    <additionalLane roadId="102" type="right" length="1" verschwenkung="false"/>
                 </additionalLanes>
             </coupler>
         </xjunction>

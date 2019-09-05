@@ -9,6 +9,8 @@ std::string::size_type sz;
 using namespace std;
 
 #include "pugixml.hpp"
+#include <xercesc/dom/DOM.hpp>
+#include <xercesc/util/XMLString.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
 
 #include "interface.h"
@@ -31,6 +33,75 @@ using namespace xercesc;
  */
 int main(int argc,  char** argv)
 {   
+	/*
+	try {
+		XMLPlatformUtils::Initialize();
+	}
+	catch (const XMLException& toCatch) {
+		char* message = XMLString::transcode(toCatch.getMessage());
+		cout << "Error during initialization! :\n"
+				<< message << "\n";
+		XMLString::release(&message);
+		return 1;
+	}
+
+
+	XMLCh tempStr[100];
+	XMLString::transcode("LS", tempStr, 99);
+	DOMImplementation *impl = DOMImplementationRegistry::getDOMImplementation(tempStr);
+	DOMLSParser* parser = ((DOMImplementationLS*)impl)->createLSParser(DOMImplementationLS::MODE_SYNCHRONOUS, 0);
+
+	// optionally you can set some features on this builder
+	if (parser->getDomConfig()->canSetParameter(XMLUni::fgDOMValidate, true))
+		parser->getDomConfig()->setParameter(XMLUni::fgDOMValidate, true);
+	if (parser->getDomConfig()->canSetParameter(XMLUni::fgDOMNamespaces, true))
+		parser->getDomConfig()->setParameter(XMLUni::fgDOMNamespaces, true);
+	if (parser->getDomConfig()->canSetParameter(XMLUni::fgDOMDatatypeNormalization, true))
+		parser->getDomConfig()->setParameter(XMLUni::fgDOMDatatypeNormalization, true);
+
+
+	char* xmlFile = "all.xml";
+	DOMDocument *doc = 0;
+
+	try {
+		doc = parser->parseURI(xmlFile);
+	}
+	catch (const XMLException& toCatch) {
+		char* message = XMLString::transcode(toCatch.getMessage());
+		cout << "Exception message is: \n"
+				<< message << "\n";
+		XMLString::release(&message);
+		return -1;
+	}
+	catch (const DOMException& toCatch) {
+		char* message = XMLString::transcode(toCatch.msg);
+		cout << "Exception message is: \n"
+				<< message << "\n";
+		XMLString::release(&message);
+		return -1;
+	}
+	catch (...) {
+		cout << "Unexpected Exception \n" ;
+		return -1;
+	}
+
+	parser->release();
+
+	DOMElement* root = doc->getDocumentElement();
+
+	XMLCh *tag = XMLString::transcode("segments");
+	DOMNodeList * segments = root->getChildNodes();  
+
+	XMLSize_t index = 1;
+	DOMNode * te = segments->item(index);
+
+	char* test =  XMLString::transcode(te->getNodeName());
+
+	cout << test << endl;
+	return 0;
+	*/
+
+
     if (argc < 2) 
 	{
         cerr << "ERR: no input file provided." << endl; 
