@@ -33,9 +33,12 @@
             </intersectionPoint>
             <coupler id="1">
                 <couplerArea sOffset="10">
-                    <streetBorder id="2" sOffset="15"/>
+                    <streetBorder id="2" sOffset="10"/>
                 </couplerArea>
                 <connection type="all"/>
+                <additionalLanes>
+                    <additionalLane roadId="103" type="right" length = "0.1" verschwenkung="false" />
+                </additionalLanes>
             </coupler>
         </tjunction>
     </segments>

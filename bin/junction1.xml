@@ -5,6 +5,8 @@
                 <referenceLine>
                     <geometry id="1" length="400" type="line"/>
                 </referenceLine>
+                <lanes>
+                </lanes>
             </road>
             <road id="2" type="town" >	
                 <referenceLine>
@@ -19,6 +21,9 @@
                     <streetBorder id="2" sOffset="15"/>
                 </couplerArea>
                 <connection type="all"/>
+                <additionalLanes>
+                    <additionalLane roadId="103" type="left" length="0.1" verschwenkung="false" />
+                </additionalLanes>
             </coupler>
         </tjunction>
     </segments>

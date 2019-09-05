@@ -34,7 +34,7 @@
                 </couplerArea>
                 <connection type="all"/>
                 <additionalLanes>
-                    <additionalLane roadId="101" type="1" />
+                    <additionalLane roadId="101" type="left" verschwenkung="false"/>
                 </additionalLanes>
                 
             </coupler>

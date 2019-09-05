@@ -276,7 +276,11 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         if (addLane.attribute("length"))
             length = addLane.attribute("length").as_double();
 
-        int type = addLane.attribute("type").as_int();
+        int type;
+        string tmpType = addLane.attribute("type").value();
+        if (tmpType == "left") type = 1;
+        if (tmpType == "right") type = -1;
+
         int id = addLane.attribute("roadId").as_int();
         
         if (id == r1.id)

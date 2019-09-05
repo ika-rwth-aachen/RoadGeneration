@@ -10,7 +10,7 @@
                             <lane id="2" type="driving">
                                 <roadMark type="solid" color="white" width="0.1"/>
                             </lane>
-                            <lane id="1" type="restricted">
+                            <lane id="1" type="restricted" width="1.5">
                                 <roadMark type="solid" color="white" width="0.1"/>
                             </lane>
                             <lane id="0" type="driving"> </lane>

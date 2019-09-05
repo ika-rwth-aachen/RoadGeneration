@@ -348,8 +348,10 @@ int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, dou
             if (rm)
             {
                 l.rm.type = rm.attribute("type").value();
-                l.rm.color = rm.attribute("color").value();
-                l.rm.width = rm.attribute("width").as_double();
+                if (rm.attribute("color"))
+                    l.rm.color = rm.attribute("color").value();
+                if (rm.attribute("width"))
+                    l.rm.width = rm.attribute("width").as_double();
             }
 
             pugi::xml_node m = itt->child("material");

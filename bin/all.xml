@@ -42,10 +42,10 @@
                 </couplerArea>
                 <connection type="all"/>
                 <additionalLanes>
-                    <additionalLane roadId="101" type="1" />
-                    <additionalLane roadId="101" type="-1" />
-                    <additionalLane roadId="103" type="1" length="-10" verschwenkung="true" />
-                    <additionalLane roadId="103" type="-1" length=".1" verschwenkung="false" />
+                    <additionalLane roadId="101" type="left" />
+                    <additionalLane roadId="101" type="right" />
+                    <additionalLane roadId="103" type="left" length="-10" verschwenkung="true" />
+                    <additionalLane roadId="103" type="right" length=".1" verschwenkung="false" />
                 </additionalLanes>
             </coupler>
         </xjunction>
