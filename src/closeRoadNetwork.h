@@ -25,13 +25,11 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
     // we assume that all segments are already linked
 
 	// add other specified segments
-    int cc = 0;
 	for (pugi::xml_node segmentLink : cRN.children("segmentLink"))
 	{
-        cc++;
-
+		data.nSegment++;
         road rConnection;
-        rConnection.id = 1000 + cc;
+        rConnection.id = data.nSegment * 100 + 1;
         
 		int fromSegment = segmentLink.attribute("fromSegment").as_int();
 		int toSegment = segmentLink.attribute("toSegment").as_int();

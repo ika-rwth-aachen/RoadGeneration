@@ -10,6 +10,7 @@
 int roundAbout(pugi::xml_node &node, roadNetwork &data)
 {
     // create junction
+    data.nSegment++;
     junction junc;
     junc.id = node.attribute("id").as_int();
 

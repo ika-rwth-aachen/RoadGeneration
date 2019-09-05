@@ -159,4 +159,5 @@ struct roadNetwork
     vector<junction> junctions;
     vector<control> controller;
     int nSignal = 0;
+    int nSegment = 0;
 };

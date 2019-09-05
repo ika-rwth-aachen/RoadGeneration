@@ -10,6 +10,7 @@
 int connectingRoad(pugi::xml_node &node, roadNetwork &data)
 {
     // define junction roads
+    data.nSegment++;
     pugi::xml_node mainRoad = node.child("road");
 
     if(!mainRoad)
