@@ -40,6 +40,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         s1 = 0;
         hdg1 = g1.hdg + M_PI; 
 
+        fixAngle(g1.hdg);
         fixAngle(hdg1);
     }
 
@@ -118,13 +119,10 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
 
     x2 += cos(g2.hdg+M_PI/2) * w2;
     y2 += sin(g2.hdg+M_PI/2) * w2;
-
-    // --- compute connecting road ---------------------------------------------
-    double a = hdg2-hdg1;
-    fixAngle(a);
     
-    // update start end endpoint according to lane
-    double phi1, phi2;
+    // --- update start end endpoint according to lane -------------------------
+    double phi1 = 0;
+    double phi2 = 0;
     double t1 = findTOffset(lS1,fromId-sgn(fromId),0);
     double t2 = findTOffset(lS2,toId-sgn(toId),0);
     
@@ -141,6 +139,10 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
 
     x2 += cos(phi2) * fabs(t2);
     y2 += sin(phi2) * fabs(t2);
+
+    // --- compute connecting road ---------------------------------------------
+    double a = hdg2-hdg1;
+    fixAngle(a);
 
     // simple line if angles are almost the same
     if (abs(a) < 0.1) 

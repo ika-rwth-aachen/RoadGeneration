@@ -3,56 +3,11 @@
 #include "curve.h"
 #include "laneSectionChange.h"
 
-/**
- * @brief function generate a road based on the input data from xml file
- * 
- * @param road              geometry data from the input file
- * @param r                 resulting road
- * @param sStart            starting s position
- * @param sEnd              ending s position
- * @param sLaneWidening     position of laneWiding (always on lane 1 - roads points away from junction)
- * @param s0                position of s where x0, y0, phi0 should hold
- * @param x0                x0 should hold at s0 for the resulting road
- * @param y0                y0 should hold at s0 for the resulting road
- * @param phi0              phi0 should hold at s0 for the resulting road
- * @return int              errorcode
- */
-int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, double sLaneWidening, double s0, double x0, double y0, double phi0)
+
+
+
+int computeFirstLast(pugi::xml_node roadIn, int &foundfirst, int &foundlast, double &sStart, double &sEnd)
 {
-    r.type = roadIn.attribute("type").value();
-
-    // save geometry data from sStart - sEnd 
-    //  -> s0 is located at x0, y0, phi0 
-    // mode = 1 -> in s direction
-    // mode = 2 -> in opposite s direction
-    int mode;
-
-    if (sEnd >= sStart)
-    {   
-        mode = 1;
-    }
-    else if (sEnd < sStart)
-    {   
-        // switch sStart and sEnd but store this with mode = 2
-        double tmp = sStart;
-        sStart = sEnd;
-        sEnd = tmp;
-        mode = 2;
-    }
-
-    // s0case 0: s0 lies between sStart and sEnd
-    // s0case 1: s0 before sStart 
-    // s0case 2: s0 after sEnd
-    // -> road geometry at end is also considered for s0 
-    // (only valid for small offsets where the current geometry is valid)
-    int s0case = 0;
-    if (s0 < sStart) s0case = 1;
-    if (s0 > sEnd)   s0case = 2;
-    
-    int foundfirst = -1;
-    int foundlast = -1;
-
-    // search first and last relevant geometry
     int cc = 0;
     double s = 0;
 
@@ -75,13 +30,28 @@ int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, dou
         sEnd = s;
     }
 
+    return 0;
+}
+
+int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &sEnd)
+{
+
+    if (r.id == 152)
+    {
+        cout << endl;
+    }
+    // search first and last relevant geometry
+    int foundfirst = -1;
+    int foundlast = -1;
+    computeFirstLast(roadIn, foundfirst, foundlast, sStart, sEnd);
+
     // start values (starting point at origin)
-    s = 0;
+    double s = 0;
     double x = 0;
     double y = 0;
     double hdg = 0;
 
-    cc = 0;
+    int cc = 0;
     for (pugi::xml_node_iterator it = roadIn.child("referenceLine").begin(); it != roadIn.child("referenceLine").end(); ++it)
     {
         int type;
@@ -198,11 +168,27 @@ int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, dou
         s += length;
         cc++;;
     }
+    return 0;
+}
 
-    // calculate x, y, phi at s0
-    double dphi;
-    
-    if (s0case == 0 || s0case == 2)
+int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, double y0, double phi0)
+{
+    /* -> s0 is located at x0, y0, phi0 
+     * s0case 0: s0 lies between sStart and sEnd
+     * s0case 1: s0 before sStart 
+     * s0case 2: s0 after sEnd
+     * -> road geometry segment at  the end is also considered at s = s0 
+     *  (only valid for small offsets where the current geometry is valid)
+     */
+
+    // calculate x, y, hdg at s0
+    double x, y, hdg, dphi;
+
+    int Case = 0; 
+    if (s0 < sStart) Case = 1;
+    if (s0 > sEnd)   Case = 2;
+
+    if (Case == 0 || Case == 2)
     {
         for (int i = 0; i < r.geometries.size(); i++)
         {
@@ -220,7 +206,7 @@ int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, dou
             }
         }
     }
-    else if (s0case == 1)
+    else if (Case == 1)
     {
         geometry g = r.geometries.front();
 
@@ -263,39 +249,42 @@ int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, dou
         r.geometries[i].y += y0;
 
     }
+    return 0;
+}
 
-    // flip geometries (convention: all roads point away from junction)
-    if (mode == 2)
+int flipGeometries(road &r)
+{
+    road rNew = r;
+    rNew.geometries.clear();
+
+    for (int i = r.geometries.size()-1; i >= 0; i--)
     {
-        road rNew = r;
-        rNew.geometries.clear();
+        geometry g = r.geometries[i];
 
-        for (int i = r.geometries.size()-1; i >= 0; i--)
+        curve(g.length,g,g.x,g.y,g.hdg,1);
+
+        // flip angles and curvature
+        g.hdg += M_PI;
+        fixAngle(g.hdg);
+
+        double c1 = g.c1;
+        double c2 = g.c2;
+
+        if (g.type == 2) g.c *= -1;
+        if (g.type == 3) 
         {
-            geometry g = r.geometries[i];
-
-            curve(g.length,g,g.x,g.y,g.hdg,1);
-
-            // flip angles and curvature
-            g.hdg += M_PI;
-            fixAngle(g.hdg);
-
-            double c1 = g.c1;
-            double c2 = g.c2;
-
-            if (g.type == 2) g.c *= -1;
-            if (g.type == 3) 
-            {
-                g.c1 = -c2;
-                g.c2 = -c1;
-            }
-            rNew.geometries.push_back(g);
+            g.c1 = -c2;
+            g.c2 = -c1;
         }
-        r.geometries.clear();
-        r.geometries = rNew.geometries;
+        rNew.geometries.push_back(g);
     }
+    r.geometries.clear();
+    r.geometries = rNew.geometries;
+}
 
-    // --- add lanes to road ---------------------------------------------------
+int addLanes(pugi::xml_node roadIn, road &r, int mode)
+{
+    // --- add basic laneSection to road ---------------------------------------
     laneSection laneSec;
     laneSec.id = 1;
     laneSec.s = 0;
@@ -318,6 +307,7 @@ int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, dou
         
     r.laneSections.push_back(laneSec);
 
+    // --- add user defined laneSection to road --------------------------------
     for (pugi::xml_node_iterator it = roadIn.child("lanes").begin(); it != roadIn.child("lanes").end(); ++it)
     {
         if ((string)it->name() != "laneSection") continue;
@@ -380,9 +370,15 @@ int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, dou
         else r.laneSections.push_back(laneSec);
     }
     
-        
-    // consider lanedrops and lanewidenings 
-    //      -> have to be defined in increasing s order
+    return 0;
+}
+
+int addLaneSectionChanges(pugi::xml_node roadIn, road &r, double sJunction)
+{
+
+    // --- user defined lanedrops or lanewidenings -----------------------------
+    //      -> have to be defined in increasing s order !!!
+
     for (pugi::xml_node_iterator itt = roadIn.child("lanes").begin(); itt != roadIn.child("lanes").end(); ++itt)
     {   
         if ((string)itt->name() == "laneWidening")
@@ -392,7 +388,7 @@ int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, dou
             double ds = itt->attribute("ds1").as_double();
 
             // only perform drop if not close to junction
-            if (s < sLaneWidening + 50) continue;
+            if (s < sJunction + 50) continue;
             if (s > r.length) continue;  
                  
             addLaneWidening(r.laneSections, lane, s, ds, false);
@@ -404,7 +400,7 @@ int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, dou
             double ds = itt->attribute("ds1").as_double();
 
             // only perform drop if not close to junction
-            if (s < sLaneWidening + 50) continue;       
+            if (s < sJunction + 50) continue;       
             if (s > r.length) continue;       
             addLaneDrop(r.laneSections, lane, s, ds);  
 
@@ -419,9 +415,62 @@ int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, dou
         }
     }
 
-    // add laneWidening before junction
-    //     sLaneWidening is distance from junction to point where the lane drops
-    if (sLaneWidening != 0) laneWideningJunction(r,  sLaneWidening, 1, true);
+    // --- automatic generated laneWiding --------------------------------------
+    if (sJunction != 0) laneWideningJunction(r,  sJunction, 1, true);
+
+    return 0;
+}
+
+/**
+ * @brief function generate a road based on the input data from xml file
+ * 
+ * @param road              geometry data from the input file
+ * @param r                 resulting road
+ * @param sStart            starting s position
+ * @param sEnd              ending s position
+ * @param sJunction         position of laneWiding (always on lane 1 - roads points away from junction)
+ * @param s0                position of s where x0, y0, phi0 should hold
+ * @param x0                x0 should hold at s0 for the resulting road
+ * @param y0                y0 should hold at s0 for the resulting road
+ * @param phi0              phi0 should hold at s0 for the resulting road
+ * @return int              errorcode
+ */
+int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, double sJunction, double s0, double x0, double y0, double phi0)
+{
+    r.type = roadIn.attribute("type").value();
+
+    // save geometry data from sStart - sEnd 
+    // mode = 1 -> in s direction
+    // mode = 2 -> in opposite s direction
+    int mode;
+
+    if (sEnd >= sStart)
+    {   
+        mode = 1;
+    }
+    else if (sEnd < sStart)
+    {   
+        // switch sStart and sEnd but store this with mode = 2
+        double tmp = sStart;
+        sStart = sEnd;
+        sEnd = tmp;
+        mode = 2;
+    }
+
+    // generate geometries
+    generateGeometries(roadIn, r, sStart, sEnd);
+
+    // shift geometries
+    shiftGeometries(r, sStart, sEnd, s0, x0, y0, phi0);
+
+    // flip geometries (convention: all roads point away from junction)
+    if (mode == 2) flipGeometries(r);
+
+    // add lanes
+    addLanes(roadIn, r, mode);
+
+    // add lane section changes
+    addLaneSectionChanges(roadIn, r, sJunction);
 
     return 0;
 }

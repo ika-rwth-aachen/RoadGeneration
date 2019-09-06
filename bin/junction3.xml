@@ -19,7 +19,7 @@
                             <roadMark type="broken" color="white" width="0.1"/>
                         </lane>
                         <lane id="0" type="driving"> </lane>
-                        <lane id="-1" type="grass" width="2">
+                        <lane id="-1" type="none" width="2">
                             <roadMark type="none" color="white" width="0.1"/>
                         </lane>
                         <lane id="-2" type="driving">

@@ -1,6 +1,105 @@
 // file addObjects.h
 
 /**
+ * @brief 
+ * 
+ * @param o 
+ * @param r 
+ * @return int 
+ */
+int addTrafficIsland(object o, road &r)
+{
+    /*  design of a trafficIsland
+     *          __________
+     *      ___/    __    \___
+     *             |  |
+     *      ___    |__|    ___
+     *         \__________/
+     */
+
+    r.objects.push_back(o);
+    
+    // find laneSection and lane
+    int i;
+    for (i = r.laneSections.size()-1; i >= 0; i--)
+        if (r.laneSections[i].s < o.s) break;
+    laneSection lS = r.laneSections[i];
+
+    lane l;
+    findLane(lS,l,1);
+
+    double w = o.width / 2;
+    double ds = o.length / 2;
+    
+    laneSection sec;
+
+    // --- part 1 (opening)
+    sec = r.laneSections[i];
+    sec.s = o.s - o.length;
+
+    l.w.d = -2 * w / pow(ds,3);
+    l.w.c =  3 * w / pow(ds,2);
+    l.w.b = 0;
+    l.w.a = 0;
+    l.rm.type = "none";
+    l.type = "driving";
+
+    shiftLanes(sec, 1, 1);
+    shiftLanes(sec, -1, 1);
+    
+    l.id = 1; sec.lanes.push_back(l);
+    l.id = -1; sec.lanes.push_back(l);
+
+    r.laneSections.push_back(sec);
+
+    // --- part 2 (straight)
+    sec = r.laneSections[i];
+    sec.s = o.s - o.length/2;
+
+    l.w.d = 0;
+    l.w.c = 0;
+    l.w.b = 0;
+    l.w.a = w;
+    l.rm.type = "none";
+    l.type = "none";
+
+    shiftLanes(sec, 1, 1);
+    shiftLanes(sec, -1, 1);
+
+    l.id = 1; sec.lanes.push_back(l);
+    l.id = -1; sec.lanes.push_back(l);
+
+    r.laneSections.push_back(sec);
+
+    // --- part 3 (closing)
+    sec = r.laneSections[i];
+    sec.s = o.s + o.length/2;
+
+    l.w.d = 2 * w / pow(ds,3);
+    l.w.c = - 3 * w / pow(ds,2);
+    l.w.b = 0;
+    l.w.a = w;
+    l.rm.type = "none";
+    l.type = "driving";
+
+    shiftLanes(sec, 1, 1);
+    shiftLanes(sec, -1, 1);
+
+    l.id = 1; sec.lanes.push_back(l);
+    l.id = -1; sec.lanes.push_back(l);
+
+    r.laneSections.push_back(sec);
+
+    // --- part 4 (after trafficIsland)
+    sec = r.laneSections[i];
+    sec.s = o.s + o.length;
+
+    r.laneSections.push_back(sec);
+    
+    return 0;
+}
+
+/**
  * @brief function generates a roadwork at given position
  * 
  * @param o         object containing length and position of roadwork   
@@ -66,6 +165,110 @@ int addRoadWork(object o, road &r, int laneId)
 }
 
 /**
+ * @brief 
+ * 
+ * @param o 
+ * @param r 
+ * @return int 
+ */
+int addParking(object o, road &r)
+{
+    // find laneSection
+    int i;
+    for (i = r.laneSections.size()-1; i >= 0; i--)
+        if (r.laneSections[i].s < o.s) break;
+
+    laneSection lS = r.laneSections[i];
+
+    int laneId;
+    if (o.t > 0) laneId = findMaxLaneId(lS);
+    if (o.t < 0) laneId = findMinLaneId(lS);
+    double t = findTOffset(lS,laneId,o.s);
+    fixAngle(o.hdg);
+
+    if (abs(o.hdg) > M_PI/4)
+    {
+        o.t = t + sgn(laneId) * abs(o.length / (2 * sin(o.hdg)));
+        o.distance = abs(o.width / sin(o.hdg));
+    }
+    if (abs(o.hdg) < M_PI/4)
+    {
+        o.t = t + sgn(laneId) * abs(o.width / (2 * cos(o.hdg)));
+        o.distance = abs(o.length / cos(o.hdg));
+    }
+    r.objects.push_back(o);
+
+    return 0;
+}
+
+/**
+ * @brief 
+ * 
+ * @param o 
+ * @param r 
+ * @return int 
+ */
+int addBusStop(object o, road &r)
+{
+    // find starting laneSection
+    int i;
+    for (i = r.laneSections.size()-1; i >= 0; i--)
+        if (r.laneSections[i].s < o.s) break;
+    laneSection lS = r.laneSections[i];
+
+    int laneId;
+    if (o.t > 0) laneId = findMaxLaneId(lS);
+    if (o.t < 0) laneId = findMinLaneId(lS);
+
+    double length = 20;
+    if (o.length != 0) length = o.length;
+
+    addLaneWidening(r.laneSections, laneId, o.s-length/2-7.5, 7.5, true);
+    addLaneDrop (r.laneSections, laneId+sgn(laneId), o.s+length/2, 7.5);
+
+    lane l;
+    int id; 
+    // set type of additional lanes to "bus"
+    id = findLane(r.laneSections[i+1],l,laneId+sgn(laneId));
+    r.laneSections[i+1].lanes[id].type = "bus";
+    id = findLane(r.laneSections[i+2],l,laneId+sgn(laneId));
+    r.laneSections[i+2].lanes[id].type = "bus";
+    id = findLane(r.laneSections[i+3],l,laneId+sgn(laneId));
+    r.laneSections[i+3].lanes[id].type = "bus";
+}
+
+/**
+ * @brief Get the Position object
+ * 
+ * @param node 
+ * @param o 
+ * @return int 
+ */
+int getPosition(pugi::xml_node node, object &o)
+{
+    // read position of objects in st coordinates
+    if (node.child("relativePosition")) 
+    {
+        pugi::xml_node position = node.child("relativePosition");
+        o.s = position.attribute("s").as_double();
+        o.t = position.attribute("t").as_double();
+        o.hdg = position.attribute("hdg").as_double();
+    }
+    if (node.child("repeatPosition")) 
+    {
+        pugi::xml_node position = node.child("repeatPosition");
+        o.s = position.attribute("s").as_double();
+        o.t = position.attribute("t").as_double();
+        o.hdg = position.attribute("hdg").as_double();
+                    
+        o.repeat = true;
+        o.len = position.attribute("length").as_double();
+    }
+
+    return 0;
+}
+
+/**
  * @brief function creates objects like parking spots, traffic signs or markings
  * 
  * @param inRoad    road data from input file, containing the specified objects
@@ -82,24 +285,8 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
 
         o.id = obj.attribute("id").as_double();
 
-        // read position of objects in st coordinates
-        if (obj.child("relativePosition")) 
-        {
-            pugi::xml_node position = obj.child("relativePosition");
-            o.s = position.attribute("s").as_double();
-            o.t = position.attribute("t").as_double();
-            o.hdg = position.attribute("hdg").as_double();
-        }
-        if (obj.child("repeatPosition")) 
-        {
-            pugi::xml_node position = obj.child("repeatPosition");
-            o.s = position.attribute("s").as_double();
-            o.t = position.attribute("t").as_double();
-            o.hdg = position.attribute("hdg").as_double();
-                        
-            o.repeat = true;
-            o.len = position.attribute("length").as_double();
-        }
+        // save position in object 
+        getPosition(obj, o);
         
         // --- consider different object cases ---------------------------------
         if (type == "parkingSpace")
@@ -109,30 +296,7 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
             o.width = obj.attribute("width").as_double();
             o.height = 4;
 
-            // find laneSection
-            int i;
-            for (i = r.laneSections.size()-1; i >= 0; i--)
-                if (r.laneSections[i].s < o.s) break;
-
-            laneSection lS = r.laneSections[i];
-
-            int laneId;
-            if (o.t > 0) laneId = findMaxLaneId(lS);
-            if (o.t < 0) laneId = findMinLaneId(lS);
-            double t = findTOffset(lS,laneId,o.s);
-            fixAngle(o.hdg);
-
-            if (abs(o.hdg) > M_PI/4)
-            {
-                o.t = t + sgn(laneId) * abs(o.length / (2 * sin(o.hdg)));
-                o.distance = abs(o.width / sin(o.hdg));
-            }
-            if (abs(o.hdg) < M_PI/4)
-            {
-                o.t = t + sgn(laneId) * abs(o.width / (2 * cos(o.hdg)));
-                o.distance = abs(o.length / cos(o.hdg));
-            }
-            r.objects.push_back(o);
+            addParking(o, r);
         }
 
         if (type == "streetLamp")
@@ -153,126 +317,18 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
 
         if (type == "busStop")
         {
-            // find starting laneSection
-            int i;
-            for (i = r.laneSections.size()-1; i >= 0; i--)
-                if (r.laneSections[i].s < o.s) break;
-            laneSection lS = r.laneSections[i];
-
-            int laneId;
-            if (o.t > 0) laneId = findMaxLaneId(lS);
-            if (o.t < 0) laneId = findMinLaneId(lS);
-
-            double length = 20;
-            addLaneWidening(r.laneSections, laneId, o.s-length/2-7.5, 7.5, true);
-            addLaneDrop (r.laneSections, laneId+sgn(laneId), o.s+length/2, 7.5);
-
-            lane l;
-            int id; 
-            // set type of additional lanes to "bus"
-            id = findLane(r.laneSections[i+1],l,laneId+sgn(laneId));
-            r.laneSections[i+1].lanes[id].type = "bus";
-            id = findLane(r.laneSections[i+2],l,laneId+sgn(laneId));
-            r.laneSections[i+2].lanes[id].type = "bus";
-            id = findLane(r.laneSections[i+3],l,laneId+sgn(laneId));
-            r.laneSections[i+3].lanes[id].type = "bus";
+            addBusStop(o, r);
         }
 
         if (type == "trafficIsland")
         {
-            /*  design of a trafficIsland
-                __________
-            ___/    __    \___
-                   |  |
-            ___    |__|    ___
-               \__________/
-            */
-
             o.type = type;
             o.s = obj.attribute("s").as_double();
             o.t = 0;
-            
             o.length = obj.attribute("length").as_double();
             o.width = obj.attribute("width").as_double();
             
-            r.objects.push_back(o);
-            
-            // find laneSection and lane
-            int i;
-            for (i = r.laneSections.size()-1; i >= 0; i--)
-                if (r.laneSections[i].s < o.s) break;
-            laneSection lS = r.laneSections[i];
-
-            lane l;
-            findLane(lS,l,1);
-
-            double w = o.width / 2;
-            double ds = o.length / 2;
-            
-            laneSection sec;
-
-            // --- part 1 (opening)
-            sec = r.laneSections[i];
-            sec.s = o.s - o.length;
-
-            l.w.d = -2 * w / pow(ds,3);
-            l.w.c =  3 * w / pow(ds,2);
-            l.w.b = 0;
-            l.w.a = 0;
-            l.rm.type = "none";
-            l.type = "driving";
-
-            shiftLanes(sec, 1, 1);
-            shiftLanes(sec, -1, 1);
-            
-            l.id = 1; sec.lanes.push_back(l);
-            l.id = -1; sec.lanes.push_back(l);
-
-            r.laneSections.push_back(sec);
-
-            // --- part 2 (straight)
-            sec = r.laneSections[i];
-            sec.s = o.s - o.length/2;
-
-            l.w.d = 0;
-            l.w.c = 0;
-            l.w.b = 0;
-            l.w.a = w;
-            l.rm.type = "none";
-            l.type = "none";
-
-            shiftLanes(sec, 1, 1);
-            shiftLanes(sec, -1, 1);
-
-            l.id = 1; sec.lanes.push_back(l);
-            l.id = -1; sec.lanes.push_back(l);
-
-            r.laneSections.push_back(sec);
-
-            // --- part 3 (closing)
-            sec = r.laneSections[i];
-            sec.s = o.s + o.length/2;
-
-            l.w.d = 2 * w / pow(ds,3);
-            l.w.c = - 3 * w / pow(ds,2);
-            l.w.b = 0;
-            l.w.a = w;
-            l.rm.type = "none";
-            l.type = "driving";
-
-            shiftLanes(sec, 1, 1);
-            shiftLanes(sec, -1, 1);
-
-            l.id = 1; sec.lanes.push_back(l);
-            l.id = -1; sec.lanes.push_back(l);
-
-            r.laneSections.push_back(sec);
-
-            // --- part 4 (after trafficIsland)
-            sec = r.laneSections[i];
-            sec.s = o.s + o.length;
-
-            r.laneSections.push_back(sec);
+            addTrafficIsland(o, r);
         }
 
         if (type == "marking")
@@ -280,7 +336,7 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
             // TODO: depends on type
         }
 
-        //--- SIGNALS ----------------------------------------------------------
+        //--- Traffic Rule -----------------------------------------------------
         if (type != "trafficRule") continue;
 
         control c;
