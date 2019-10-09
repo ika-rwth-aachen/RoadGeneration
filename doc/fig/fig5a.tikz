@@ -15,4 +15,6 @@
     \fill[blue] (iP) circle (0.075);
     \fill[orange] (H) circle (0.075);
 
+    \draw (2.7, 0.25) node {$\alpha$};
+
 \end{tikzpicture}
