@@ -168,23 +168,23 @@ Wie schon erläutert gibt es für Kreuzungen verschiedene Typen. Der hier beispi
 \label{abb6}
 \end{figure}
 
-Zusätzlich wurden im Eingabedokument weitere Abbiegespuren und Sperrbereiche definiert. Auf der Hauptstrße wurde eine Linksabbiegerspur mit Verschwenkung und gegenüber ein entsprechender Sperrbereich definiert. Des weiteren existieren zwei unterschiedliche Typen von Rechtsabbiegerspuren. Auf der Hauptstraße ist eine einmalige Aufweitung zu Beginn vorzufinden, wärend auf der Nebenstraße eine linear aufweitende Spuraufweitung definiert wurde. 
+Zusätzlich wurden im Eingabedokument weitere Abbiegespuren und Sperrbereiche definiert. Auf der Hauptstraße wurde eine Linksabbiegerspur mit Verschwenkung und gegenüber ein entsprechender Sperrbereich definiert. Des weiteren existieren zwei unterschiedliche Typen von Rechtsabbiegerspuren. Auf der Hauptstraße ist eine einmalige Aufweitung zu Beginn vorzufinden, wärend auf der Nebenstraße eine linear aufweitende Spuraufweitung definiert wurde. 
 
 Automatisiert werden alle relevanten Spuren miteinander verbunden. Das Beispiel zeigt also eine konkrete und valide Kreuzung generiert aus einfachen Eingabedaten, denn der Nutzer gibt neben den Gemometrien der drei Eingangsstraßen nur den Schnittwinkel und die Abbiegespuren an. Dies macht sich auch bemerkbar wenn die Ein- und Ausgabedokumente näher untersucht werden. 
 
 Das vereinfachte Eingabeformat enthält für diesen konkreten Fall \(55\) Zeilen die für den Nutzer leicht zu verstehen und übersichtlich sind, während das openDrive Ausgabedokument \(1091\) Zeilen enthält, in welchem die Straßen und Verbindungselemente hintereinander gelistet sind. Der Vorteil des Tools wird daraus klar ersichtlich, weil es eine intuitive Definition von Kreuzungen im openDrive Format ermöglicht. 
 
 \section{T-Kreuzung}
-Analog zur X-Kreuzung kann auch eine T-Kreuzung generiert werden. Der hier dargestellte Typ besteht hierbei aus einer Hauptstrasse und einer angrenzenden Nebenstraße. Auf der Hauptstraße wurde automatisch eine Linksabbiegerspur und entsprechend ein gegenüberliegender Sperrbereich generiert. Zusätzlich wird vom Nutzer eine Rechtsabbiegespur definiert. Die Besonderheit in diesem Beispiel ist eine Nebenstraße mit unterschiedlicher Fahrbahnanzahl und zusätzlichem Grünstreifen in der Mitte. Eine Übersicht der erläuterten Kreuzung lässt sich in Abbildung \ref{abb7} finden.
+Analog zur X-Kreuzung kann auch eine T-Kreuzung generiert werden. Der hier dargestellte Typ besteht hierbei aus einer Hauptstrasse und einer angrenzenden Nebenstraße. Auf der Hauptstraße wurde automatisch eine Linksabbiegerspur und entsprechend ein gegenüberliegender Sperrbereich generiert. Eine Übersicht der erläuterten Kreuzung lässt sich in Abbildung \ref{abb7} finden.
 
 \begin{figure}[H]
     \flushleft
-    \includegraphics[width=0.95\textwidth]{fig/junction3.png}
+    \includegraphics[width=0.95\textwidth]{fig/junction6.png}
     \caption{X-Kreuzung im OpenDRIVE Viewer}
     \label{abb7}
 \end{figure}
 
-Auch hier wird aus einfachen Eingabedaten mit lediglich \(46\) Zeilen eine komplexe openDRIVE Struktur mit \(582\) Zeilen generiert. Zusätzlich ist für den Nutzer das Eingabeformat des Tools intuitiver und übersichtlicher.
+Auch hier wird aus einfachen Eingabedaten mit lediglich \(44\) Zeilen eine komplexe openDRIVE Struktur mit \(461\) Zeilen generiert. Zusätzlich ist für den Nutzer das Eingabeformat des Tools intuitiver und übersichtlicher.
 
 \section{Kreisverkehr}
 Neben Kreuzungen können auch Kreisverkehrsegmente erstellt werden, welche an sich, als Zusammenschluss von einzelnden T-Kreuzungen verstanden werden können. Ausgangspunkt ist die Definition des Kreises mit Radius und Spuranzahl, sowie der angrenzenden Straßen mit jeweiliger Position und Winkel der Schnittpunktes. Daraus generiert das Tool alle Kreuzungsbereiche des Kreisverkehrs eigenständig, schneidet das Kreissegment an den entsprechenden Stellen und erstellt die Verbindungsstraßen der einzelnen T-Kreuzungen. Eine Visualisierung der Straßen lässt sich in Abbildung \ref{abb8} finden. Zudem werden automatisch Verkehrsschilder und Fahrbahnmarkierungen erstellt.
@@ -204,7 +204,7 @@ Diese und weitere parametrisierte Segmente lassen sich mithilfe des erstellten T
 
 \begin{figure}[H]
 \flushleft
-\includegraphics[width=0.95\textwidth]{fig/fig8.png}
+\includegraphics[width=0.95\textwidth]{fig/all.png}
 \caption{Streckennetzwerk im OpenDRIVE Viewer}
 \label{abb9}
 \end{figure}
@@ -220,7 +220,7 @@ Die Beispiele haben gezeigt, dass durch die getroffene logische Beschreibung und
         \toprule
         \textbf{Beispielfall} & Zeilen in Eingabedatei & Zeilen in Ausgabedatei & Faktor \\
         \midrule
-        T-Kreuzung   & 46 & 582  & 12.65\\
+        T-Kreuzung   & 44 & 461  & 10.47\\
         X-Kreuzung   & 55 & 1091 & 19.84\\
         Kreisverkehr & 38 & 988 & 26.00\\
         Straßennetz  & 248 & 5191 & 20.93 \\
@@ -230,7 +230,7 @@ Die Beispiele haben gezeigt, dass durch die getroffene logische Beschreibung und
     \label{tab1}
 \end{figure}
 
-Der Faktor zwischen Eingabe und Ausgabedatei liegt hier im Durchschnitt bei \(19.86\).
+Der Faktor zwischen Eingabe und Ausgabedatei liegt hier im Durchschnitt bei \(19.31\).
 
 Interessant ist auch der Einfluss einer kleinen Parameteränderung. Wird beispielsweise der Winkel des Referenzsegments nur im Vorzeichen geändert ergibt dies für den letzten Beispielfall direkt eine Änderungen von \(188\) Zeilen in der openDrive Datei.
 
