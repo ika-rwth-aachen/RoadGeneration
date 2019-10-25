@@ -180,7 +180,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     }
     if (mode == 2)
     {
-        generateRoad(mainRoad, r1, sMain+sOffMain, INFINITY, 0, sMain, iPx, iPy, iPhdg);
+        generateRoad(mainRoad, r1, sMain+sOffMain, INFINITY, autoWiding, sMain, iPx, iPy, iPhdg);
     }
     addObjects(mainRoad,r1,data);
     addSignal(r1, data, 1, INFINITY, "1.000.001", "-");
@@ -205,7 +205,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     }
     if (mode == 2)
     {
-        generateRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, 0, sAdd1,iPx, iPy, iPhdg+phi1);
+        generateRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, autoWiding, sAdd1,iPx, iPy, iPhdg+phi1);
         addObjects(additionalRoad1,r2,data);
     }
     addSignal(r2, data, 1, INFINITY, "1.000.001", "-");
@@ -217,12 +217,12 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     r3.predecessor.elementId = junc.id;
     if (mode == 1)
     {
-        generateRoad(additionalRoad1, r3, sAdd1 + sOffAdd1, INFINITY, 0, sAdd1, iPx, iPy, iPhdg+phi1);
+        generateRoad(additionalRoad1, r3, sAdd1 + sOffAdd1, INFINITY, autoWiding, sAdd1, iPx, iPy, iPhdg+phi1);
         addObjects(additionalRoad1,r3,data);
     }
     if (mode == 2)
     {
-        generateRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, 0, sAdd2, iPx, iPy, iPhdg+phi2);
+        generateRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, autoWiding, sAdd2, iPx, iPy, iPhdg+phi2);
         addObjects(additionalRoad2,r3,data);
     }
     addSignal(r3, data, 1, INFINITY, "1.000.001", "-");

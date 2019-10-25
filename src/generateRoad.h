@@ -284,6 +284,10 @@ void flipGeometries(road &r)
 
 int addLanes(pugi::xml_node roadIn, road &r, int mode)
 {
+    double desWidth = 3.5;
+    if (roadIn.attribute("type").value() == "motorway") desWidth = 4;
+    if (roadIn.attribute("type").value() == "access") desWidth = 3;
+
     // --- add basic laneSection to road ---------------------------------------
     laneSection laneSec;
     laneSec.id = 1;
@@ -292,17 +296,20 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
     lane l1;
     l1.id = 1;
     l1.speed = 50;
+    //l1.w.a = desWidth;
     laneSec.lanes.push_back(l1);
     
     lane l2;
     l2.id = 0;
     l2.rm.type = "broken";
     l2.w.a = 0.0;
+    //l2.w.a = desWidth;
     laneSec.lanes.push_back(l2);
     
     lane l3;
     l3.id = -1;
     l3.speed = 50;
+    //l3.w.a = desWidth;
     laneSec.lanes.push_back(l3);
         
     r.laneSections.push_back(laneSec);
@@ -352,7 +359,8 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
                 l.m.roughness = m.attribute("roughness").as_double();
             }
 
-            if (r.type == "town") l.speed = 50;
+            if (r.type == "main") l.speed = 50;
+            if (r.type == "access") l.speed = 50;
             if (r.type == "motorway") l.speed = 130;
 
             lane ltmp;
@@ -438,6 +446,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, double sJunction)
 int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, double sJunction, double s0, double x0, double y0, double phi0)
 {
     r.type = roadIn.attribute("type").value();
+    if (r.type == "access") sJunction = 0;
 
     // save geometry data from sStart - sEnd 
     // mode = 1 -> in s direction

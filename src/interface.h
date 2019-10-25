@@ -34,7 +34,7 @@ struct roadmark
 struct width
 {
     double s = 0;
-    double a = 3.25;
+    double a = 3.5;
     double b = 0;
     double c = 0;
     double d = 0;
