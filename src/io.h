@@ -132,14 +132,17 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     pugi::xml_node root = doc.append_child("OpenDRIVE");
 
     // specify location of .xsd file
-    root.append_attribute("xmlns:xsi") = "http://www.w3.org/2001/XMLSchema-instance";
-	string tmp = string_format("%s/xml/output.xsd", PROJ_DIR);
-    root.append_attribute("xsi:noNamespaceSchemaLocation") = tmp.c_str();
+    if (false)
+    {
+        root.append_attribute("xmlns:xsi") = "http://www.w3.org/2001/XMLSchema-instance";
+	    string tmp = string_format("%s/xml/output.xsd", PROJ_DIR);
+        root.append_attribute("xsi:noNamespaceSchemaLocation") = tmp.c_str();
+    }
     
     // write header
     pugi::xml_node header = root.append_child("header");
-    header.append_attribute("revMajor") = 1;
-    header.append_attribute("revMinor") = 4;
+    header.append_attribute("revMajor") = data.versionMajor;
+    header.append_attribute("revMinor") = data.versionMinor;
 
     // --- write roads ---------------------------------------------------------
     for (std::vector<road>::iterator it = data.roads.begin() ; it != data.roads.end(); ++it)
@@ -319,50 +322,56 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
 
 
         // --- write signals ---------------------------------------------------
-        /*
-        pugi::xml_node signals = road.append_child("signals");
-
-        for (std::vector<Signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
+    
+        // signals format is different in version 1.4
+        if (data.versionMajor >= 1 && data.versionMinor >= 5)
         {
-            Signal s = *itt;
-            pugi::xml_node sig = signals.append_child("signal");
-            //pugi::xml_node sig = objects.append_child("object");
-            
-            sig.append_attribute("id") = s.id;
-            
-            sig.append_attribute("name") = s.type.c_str();
-            sig.append_attribute("type") = s.type.c_str();
-            
-            sig.append_attribute("subtype") = "-";
-            sig.append_attribute("s") = s.s;
-            sig.append_attribute("t") = s.t;
-            sig.append_attribute("zOffset") = s.z;
-            sig.append_attribute("orientation") = s.orientation.c_str();
-            if (s.dynamic) sig.append_attribute("dynamic") = "yes";
-            else sig.append_attribute("dynamic") = "no";
-            sig.append_attribute("value") = s.value;
-            sig.append_attribute("width") = s.width;
-            sig.append_attribute("height") = s.height;
+            pugi::xml_node signals = road.append_child("signals");
+
+            for (std::vector<Signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
+            {
+                Signal s = *itt;
+                pugi::xml_node sig = signals.append_child("signal");
+                //pugi::xml_node sig = objects.append_child("object");
+                
+                sig.append_attribute("id") = s.id;
+                
+                sig.append_attribute("name") = s.type.c_str();
+                sig.append_attribute("type") = s.type.c_str();
+                
+                sig.append_attribute("subtype") = "-";
+                sig.append_attribute("s") = s.s;
+                sig.append_attribute("t") = s.t;
+                sig.append_attribute("zOffset") = s.z;
+                sig.append_attribute("orientation") = s.orientation.c_str();
+                if (s.dynamic) sig.append_attribute("dynamic") = "yes";
+                else sig.append_attribute("dynamic") = "no";
+                sig.append_attribute("value") = s.value;
+                sig.append_attribute("width") = s.width;
+                sig.append_attribute("height") = s.height;
+            }
         }
-        */
     }
         
     // --- write controllers ---------------------------------------------------
-    /*
-    for (std::vector<control>::iterator it = data.controller.begin() ; it != data.controller.end(); ++it)
-    {
-        pugi::xml_node controller = root.append_child("controller");
-
-        controller.append_attribute("id") = it->id;
-
-        for (std::vector<Signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
+    
+    // controllers format is different in version 1.4
+    if (data.versionMajor >= 1 && data.versionMinor >= 5)
+    {        
+        for (std::vector<control>::iterator it = data.controller.begin() ; it != data.controller.end(); ++it)
         {
-            pugi::xml_node con = controller.append_child("control");
+            pugi::xml_node controller = root.append_child("controller");
 
-            con.append_attribute("signalId") = itt->id;
+            controller.append_attribute("id") = it->id;
+
+            for (std::vector<Signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
+            {
+                pugi::xml_node con = controller.append_child("control");
+
+                con.append_attribute("signalId") = itt->id;
+            }
         }
     }
-    */
 
     // --- write junctions -----------------------------------------------------
     for (std::vector<junction>::iterator it = data.junctions.begin() ; it != data.junctions.end(); ++it)

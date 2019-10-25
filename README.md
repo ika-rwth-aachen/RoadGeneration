@@ -27,10 +27,11 @@ Im folgenden kann das Tool gebaut werden:
 
 ## Anwendung
 Im /bin Ordner kann die Executable zusammen mit einem .xml input file gestartet werden:
+
 ` ./roadGeneration all.xml`
 
 Dies erstellt eine OpenDrive Datei im gleichen Ordner. Zur Visualisierung eigenet sich der openDrive Viewer. 
-Wird die Version 1.4 genutzt lassen sich die Strecken ebenfalls mit CarMaker 8.0 darstellen.
+Wird die OpenDrive Version 1.4 generiert (lässt sich in interface.h umstellen) lassen sich die Strecken ebenfalls mit CarMaker 8.0 darstellen.
 
 ## ToDo's
 * spezifische user-basierte Markierungen sind nicht implementiert

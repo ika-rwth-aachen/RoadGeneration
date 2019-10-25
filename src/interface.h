@@ -160,4 +160,6 @@ struct roadNetwork
     vector<control> controller;
     int nSignal = 0;
     int nSegment = 0;
+    int versionMajor = 1;
+    int versionMinor = 5;
 };
