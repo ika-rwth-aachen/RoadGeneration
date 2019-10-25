@@ -19,8 +19,8 @@ using namespace xercesc;
 int validateInput (char* file)
 {
     XMLPlatformUtils::Initialize();
-
-	const char* schemaFilePath = "../xml/input.xsd";
+	string tmp = string_format("%s/xml/input.xsd", PROJ_DIR);
+	const char* schemaFilePath = tmp.c_str();
 	const char* xmlFilePath = file;
 
 	XercesDOMParser domParser;
@@ -60,7 +60,9 @@ int validateOutput (string file)
 
     file.append(".xodr");
 	const char* xmlFilePath = file.c_str();
-	const char* schemaFilePath = "../xml/output.xsd";
+
+	string tmp = string_format("%s/xml/output.xsd", PROJ_DIR);	
+	const char* schemaFilePath = tmp.c_str();
 
 	XercesDOMParser domParser;
     if (domParser.loadGrammar(schemaFilePath, Grammar::SchemaGrammarType) == NULL)
@@ -75,7 +77,7 @@ int validateOutput (string file)
     domParser.setValidationConstraintFatal(true);
 	
     domParser.parse(xmlFilePath);
-
+	cout << domParser.getErrorCount() << endl;
     if (domParser.getErrorCount() == 0)
         printf("XML file validated against the schema successfully\n");
     else
@@ -100,7 +102,7 @@ int parseXML(pugi::xml_document &doc, roadNetwork &data, char * file)
 {   
     // TODO: only debugging purposes
     if (0)
-    {
+    {  // TODO: use PROJ_DIR!
         data.file = "bin/all.xml";
         doc.load_file("bin/all.xml");
         return 0;
@@ -132,7 +134,8 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
 
     // specify location of .xsd file
     root.append_attribute("xmlns:xsi") = "http://www.w3.org/2001/XMLSchema-instance";
-    root.append_attribute("xsi:noNamespaceSchemaLocation") = "../xml/output.xsd";
+	string tmp = string_format("%s/xml/output.xsd", PROJ_DIR);
+    root.append_attribute("xsi:noNamespaceSchemaLocation") = tmp.c_str();
     
     // write header
     pugi::xml_node header = root.append_child("header");

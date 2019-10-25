@@ -36,6 +36,7 @@ add_executable(roadGeneration
     )
 
 add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})
+add_definitions(-DPROJ_DIR=\"${PROJECT_SOURCE_DIR}\")
 
 target_link_libraries(roadGeneration xerces-c)
 

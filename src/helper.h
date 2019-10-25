@@ -1,5 +1,4 @@
 // file helper.h
-
 /**
  * @brief signum function
  * 
@@ -510,4 +509,12 @@ int computeIP(double x1,double y1,double phi1,double x2,double y2,double phi2,in
     iPy = y1 + t1 * sin(phi1);
 
     return 0;
+}
+
+template<typename ... Args>
+std::string string_format(const std::string &format, Args ... args) {
+	auto size = snprintf(nullptr, 0, format.c_str(), args ...) + 1; // Extra space for '\0'
+	char *buf(new char[size]);
+	snprintf(buf, size, format.c_str(), args ...);
+	return std::string(buf, buf + size - 1); // We don't want the '\0' inside
 }

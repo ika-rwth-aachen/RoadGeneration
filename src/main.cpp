@@ -3,6 +3,14 @@
 #include <string>
 #include <vector>
 #include <cmath>
+#ifdef _WIN32
+#define NOMINMAX
+#include <windows.h>
+#include <algorithm>
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+#endif
 
 std::string::size_type sz;
 
@@ -28,8 +36,8 @@ int main(int argc,  char** argv)
 {   
     if (argc < 2) 
 	{
-        cerr << "ERR: no input file provided." << endl; 
-		//return -1;
+        cout << "ERR: no input file provided." << endl; 
+		return -1;
     }
 
 	pugi::xml_document in;

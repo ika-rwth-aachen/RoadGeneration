@@ -252,7 +252,7 @@ int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, d
     return 0;
 }
 
-int flipGeometries(road &r)
+void flipGeometries(road &r)
 {
     road rNew = r;
     rNew.geometries.clear();

@@ -208,7 +208,7 @@ int addParking(object o, road &r)
  * @param r 
  * @return int 
  */
-int addBusStop(object o, road &r)
+void addBusStop(object o, road &r)
 {
     // find starting laneSection
     int i;

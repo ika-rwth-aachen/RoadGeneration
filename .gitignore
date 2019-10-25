@@ -1,5 +1,6 @@
 build/
 bin/
+libs/xerces-c-3.2.2
 Makefile
 
 .vscode
