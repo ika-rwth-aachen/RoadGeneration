@@ -71,7 +71,7 @@ int main(int argc,  char** argv)
 	}
 	if (createXML(out, data)) 
 	{
-		cerr << "ERR: error durining createXML" << endl;
+		cerr << "ERR: error during createXML" << endl;
 		return -1;
 	}
 	if (validateOutput(data.file))

@@ -1,4 +1,4 @@
-<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/home/geller/Dokumente/roadgeneration/xml/input.xsd">
+<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/home/geller/Dokumente/road-generation/xml/input.xsd">
 	<segments>
         <xjunction id="1" type="M2A">
             <road id="1" type="0">	

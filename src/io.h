@@ -77,7 +77,6 @@ int validateOutput (string file)
     domParser.setValidationConstraintFatal(true);
 	
     domParser.parse(xmlFilePath);
-	cout << domParser.getErrorCount() << endl;
     if (domParser.getErrorCount() == 0)
         printf("XML file validated against the schema successfully\n");
     else
@@ -101,10 +100,10 @@ int validateOutput (string file)
 int parseXML(pugi::xml_document &doc, roadNetwork &data, char * file)
 {   
     // TODO: only debugging purposes
-    if (0)
+    if (false)
     {  // TODO: use PROJ_DIR!
-        data.file = "bin/all.xml";
-        doc.load_file("bin/all.xml");
+        data.file = "bin/laneWidingDrop.xml";
+        doc.load_file("bin/laneWidingDrop.xml");
         return 0;
     }
     string f = file;
