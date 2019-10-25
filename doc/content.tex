@@ -4,19 +4,22 @@
 % --- EINLEITUNG ---------------------------------------------------------------
 \chapter{Einleitung}
 
-In der Automobilindustrie geht der Trend in den vergangenen Jahren verstärkt  zur Entwicklung und Realisierung von autonomen Fahrfunktionen. Um diese automatisierten Fahrmanöver zu validieren und abzusichern werden Testfahrten mit oft vielen tausend Testkilometern benötigt. Als kostengünstige Alternative zur realen Testfahrt können diese Fahrmanöver auch mithilfe von Simulationen durchgeführt werden. Der Ausgangspunkt bzw. die Grundvoraussetzung für jede Fahrzeugsimulation ist eine vorhandene Streckenbeschreibung auf der die entsprechende Simulation durchgeführt wird. Zum einen können solche Strecken anhand von realen Daten erzeugt werden, was jedoch einen hohen Detaillierungsgrad voraus setzt und aktuell nicht automatisiert realisierbar ist. Eine weitere Möglichkeit zur Erzeugung von Strecken ist ein logisch, variierbarer Ansatz der als Grundlage für diese Seminararbeit herangezogen wird. Hierbei ist nicht das Abbild der Realität das Ziel, sondern Vorschriften und Grenzen einzuhalten und durch einfache und parametrisierte Angaben ein komplexes und vor allem in sich valides Streckennetz generieren zu können.
+In der Automobilindustrie geht der Trend in den vergangenen Jahren verstärkt  zur Entwicklung und Realisierung von autonomen Fahrfunktionen. Um diese automatisierten Fahrmanöver zu validieren und abzusichern werden Testfahrten mit oft vielen tausend Testkilometern benötigt. Als kostengünstige Alternative zur realen Testfahrt können diese Fahrmanöver auch mithilfe von Simulationen durchgeführt werden. Der Ausgangspunkt bzw. die Grundvoraussetzung für jede Fahrzeugsimulation ist eine vorhandene Streckenbeschreibung auf der die entsprechende Simulation durchgeführt wird. Zum einen können solche Strecken anhand von realen Daten erzeugt werden, was jedoch einen hohen Detaillierungsgrad voraus setzt und aktuell nur schwer automatisiert realisierbar ist. Eine weitere Möglichkeit zur Erzeugung von Strecken ist ein logisch, variierbarer Ansatz der als Grundlage für diese Seminararbeit herangezogen wird. Hierbei ist nicht das Abbild der Realität das Ziel, sondern Vorschriften und Grenzen einzuhalten und durch einfache und parametrisierte Angaben ein komplexes und vor allem in sich valides Streckennetz generieren zu können.
 
-Die Grundidee dieser Arbeit ist nun die Implementierung eines Tools mithilfe dessen der Benutzer anhand von vereinfachten logischen Streckenbeschreibungen ein konkretes in sich valides Streckennetz erhält. Das Eingabeformat wurde als solches im Rahmen einer Masterarbeit klar definiert und ausgearbeitet \cite{Russ.2019}. Die Hauptaufgabe dieser Seminararbeit besteht nun also in der Validierung und Absicherung des vorhandenen Formates und dem Entwickeln eines Übersetzungstool, dass die konkrete Strecke in einem industriell gängigem Format als Resultat liefert. Besonderer Fokus wird in erster Linie auf innerstädtische Streckenszenarien gelegt, sodass ins besondere Kreuzungen genauer Untersucht werden. 
+Die Grundidee dieser Arbeit ist nun die Implementierung eines Tools mithilfe dessen der Benutzer anhand von vereinfachten logischen Streckenbeschreibungen ein konkretes Streckennetz erhält. Das Eingabeformat wurde als solches im Rahmen einer Masterarbeit klar definiert und ausgearbeitet \cite{Russ.2019}. Die Hauptaufgabe dieser Seminararbeit besteht nun also in der Validierung und Absicherung des vorhandenen Formates und dem Entwickeln eines Übersetzungstool, dass die konkrete Strecke in einem industriell gängigem Format als Resultat liefert. Besonderer Fokus wird in erster Linie auf innerstädtische Streckenszenarien gelegt, sodass ins besondere Kreuzungen genauer Untersucht werden. 
 
-% --- ALLGEMEINE STRECKENBESCHREIBUNG ------------------------------------------
-\chapter{Allgemeine Streckenbeschreibung}
+% --- STAND DER TECHNIK --------------------------------------------------------
+% TODO
+
+% --- STRECKENBESCHREIBUNG ------------------------------------------
+\section{Allgemeine Streckenbeschreibung}
 
 Grundsätzlich lässt sich eine Strecke in verschiedene Ebenen teilen, wie in Abbildung \ref{abb1} sichtbar. Ausgangspunkt ist die Straße als solche mit Fahrbahnen und Fahrbahnmarkierungen. Ein weiterer Bestandteil sind verkehrsführende Elemente wie beispielsweise Beschilderungen, Ampelanlagen oder Bushaltestellen. Ein letzter, für die Streckenbeschreibung notwendiger Aspekt, sind temporäre Veränderungen wie zum Beispiel Baustellen. Alle weiteren Ebenen des gezeigten Modells finden in der Streckenbeschreibung und Generierung keine Anwendung.
 
 \begin{figure}[H]
 \flushleft
 \includegraphics[width=0.95\textwidth]{fig/fig1.png}
-\caption{Vereinfachtes Ebenenmodell einer Straße \cite{Eckstein.2018}}
+\caption{6 Ebenen-Modell zur Beschreibung eines Szenarios \cite{Eckstein.2018}}
 \label{abb1}
 \end{figure}
 
@@ -32,7 +35,7 @@ Im Allgemeinen gibt es zwei relevante Koordinatensysteme für Strecken. Neben de
 An die definierte Referenzlinie können dann während der Streckengenerierung Fahrbahnen hinzugefügt werden, für welche individuelle Breiten oder Markierungen festgelegt werden können. Die Verbindung von mehreren auf diese Weise definierten Strassen ermöglicht letztendlich die Darstellung komplexer Strekennetze und gewährleistet somit eine eindeutige Streckenbeschreibung. 
 
 % --- OPEN DRIVE STANDARD ------------------------------------------------------
-\chapter{OpenDRIVE Standard}
+\section{OpenDRIVE Standard}
 
 OpenDRIVE ist ein 2005 entwickeltes Format zur Darstellung von logischen Straßennetzwerken und gilt mittlerweile als Standard für Streckenbeschreibungen in Fahrzeugsimulationen. Das Format enthält nicht nur Straßen und Fahrbahninformationen, sondern ermöglicht auch die Definition komplexerer Beschilderungen, Fahrbahnmarkierungen oder Ampelsignale. \cite{OpenDRIVE.2019} Definiert wird die OpenDRIVE Datenstruktur im XML-Format in welcher grundsätzlich zwischen Straßen (\texttt{roads}) und Verbindungsstücken (\texttt{junctions}) unterschieden wird. Eine vereinfachte Übersicht der OpenDRIVE Struktur lässt sich in Abbildung \ref{abb3} finden. Hieraus wird deutlich, dass Straßen sowohl direkt, als auch über \texttt{junctions} miteinander verbunden werden können. 
 
@@ -45,19 +48,19 @@ Die Referenzlinie einer jeden Straße wird wie erläutert mit geometrischen Elem
 \label{abb3}
 \end{figure}
 
-Deshalb existieren Tools mit denen ermöglicht wird eine Strecke über eine grafische Benutzeroberfläche im OpenDRIVE Format zu erzeugen. Ein Beispiel hierfür ist der \texttt{Road Generator}.\cite{RoadGenerator.2019} Zur Abbildung der Realität kann ein solcher graphischer Generator herangezogen werden, allerdings ist die generische Variierbarkeit von Strecken durch einfache Parameteränderungen ein großer Vorteil bei der Simulation von Fahrmanövern die zur Absicherung durchgeführt werden. 
+Deshalb existieren Tools mit denen es ermöglicht wird eine Strecke über eine grafische Benutzeroberfläche im OpenDRIVE Format zu erzeugen. Ein Beispiel hierfür ist der \texttt{Road Generator}.\cite{RoadGenerator.2019} Zur Abbildung der Realität kann ein solcher graphischer Generator herangezogen werden, allerdings ist die generische Variierbarkeit von Strecken durch einfache Parameteränderungen ein großer Vorteil bei der Simulation von Fahrmanövern die zur Absicherung durchgeführt werden. 
 
 % --- Abstraktionslevel von Strecken ------------------------------
-\chapter{Abstraktionslevel von Strecken}
+\section{Abstraktionslevel von Strecken}
 
 Im Allgemeinen gibt es verschiedene Möglichkeiten eine Strecke zu beschreiben, wobei sich die hier dargestellten Abstraktionslevel aus der Szenariobeschreibung ableiten lassen. Besonders wichtig ist im Bezug auf diese Arbeit der Unterschied von logischen und konkreten Strecken.
 
 In beiden Beschreibungen wird die Strecke durch Parameter definiert, die die Strecke definieren. Diese Parameter können beispielsweise Kurvenradien oder Spurbreiten sein. Für alle Parameter wird in einer logischen Beschreibung ein Wertebereich festgelegt, sodass sich damit ein Zustandsraum für mögliche, valide Strecken ergibt. Eine konkrete Strecke ist nun eine bestimmte Strecke aus diesem Zustandsraum mit konkreten Parametern, welche durch eine valide logische Beschreibung ebenfalls valide ist.\cite{Szenarienbeschreibung.2019}
 
-Das in diser Arbeit entwickelte Tool soll nun anhand von einer logischen Streckenbeschreibung und zusätzlichen Benutzereingaben eine valide konkrete Strecke erzeugen. Ziel dabei ist, durch kleine Parameteränderungen des Nutzers komplett unterschiedliche konkrete Strecken zu generieren. Dies ermöglicht dann auf einfache Weise die Generierung von beliebig vielen Strecken.
+Das in dieser Arbeit entwickelte Tool soll nun anhand von einer logischen Streckenbeschreibung und zusätzlichen Benutzereingaben eine valide konkrete Strecke erzeugen. Ziel dabei ist, durch kleine Parameteränderungen des Nutzers komplett unterschiedliche konkrete Strecken zu generieren. Dies ermöglicht dann auf einfache Weise die Generierung von beliebig vielen Strecken.
 
-% --- ANNAHMEN UND VEREINFACHUNGEN IM IKA KONZEPT ------------------------------
-\chapter {Annahmen und Vereinfachungen im ika Konzept}
+% --- KONZEPT ------------------------------
+\chapter {Konzept}
 
 Das Tool basiert auf einer logischen Streckenbeschreibung, sodass unabhängig von den gewählten Parametern des Nutzers immer valide Streckennetzte generiert werden. Die konkrete Beschreibung der Strecke hängt dann neben der logischen Beschreibung ebenfalls von den zusätzlich festgelegten Parametern des Nutzers ab. 
 
@@ -65,7 +68,7 @@ Das Tool ermöglicht dabei eine benutzerfreundliche Definition der Streckenparam
 
 Anders als im OpenDRIVE Format werden Kreuzungen vom Nutzer nur über die Ausgangsstraßen und einem gemeinsamen Kreuzungspunkt definiert, die Definition der Verbindungsstraßen im Kreuzungsbereich sind nicht zwingend notwendig, denn diese werden durch das Tool automatisch erstellt. Dazu wird der Kreuzungsbereich um den Kreuzungsmittelpunkt in einem optional anzugebenen Parameter aufgeschnitten und die verbleibenden Kreuzungsarme durch automatisch berechnete Verbindungsstraßen verbunden.
 
-Weiterhin werden Linksabbiegerspuren auf Hauptstraßen automatisch erstellt und entsprechend Spurmarkierungen gesetzt. Optional können beliebig weitere Eigenschaften der Kreuzung durch den Nutzer spezifiziert werden. So sind zusätzliche Spuraufweitungen für Rechts- oder Linksabbiegerspuren möglich oder Kreuzungssperrbereiche können definiert werden. Eine Spuraufweitung kann dabei mit oder ohne Verschwenkung und nach innen oder außen realisiert werden. Diese beispielhaften erweiterten Kreuzungseigenschaften können im Eingabedokument optional spezifiert werden. Das Tool übersetzt dann aus einer kurzen Angabe einer Spuraufweitung eine komplexe openDRIVE Struktur im Ausgabeformat, in welcher ein neuer Fahrbahnabschnitt mit neuer in breite variierbarer Fahrbahn entsteht. Für den Nutzer händisch wäre eine solche Änderungen nur schwer und sehr aufwendig realisierbar. Mithilfe der vereinfachten Annahmen und den Parametern im Eingabeformat lassen sich so beliebig viele konkrete Strecken generieren.
+Weiterhin werden Linksabbiegefahrstreifen auf Hauptstraßen automatisch erstellt und entsprechend Fahrbahnmarkierungen gesetzt. Optional können beliebig weitere Eigenschaften der Kreuzung durch den Nutzer spezifiziert werden. So sind zusätzliche Spuraufweitungen für Rechts- oder Linksabbiegerspuren möglich oder Kreuzungssperrbereiche können definiert werden. Eine Spuraufweitung kann dabei mit oder ohne Verschwenkung und nach innen oder außen realisiert werden. Diese beispielhaften erweiterten Kreuzungseigenschaften können im Eingabedokument optional spezifiert werden. Das Tool übersetzt dann aus einer kurzen Angabe einer Spuraufweitung eine komplexe OpenDRIVE Struktur im Ausgabeformat, in welcher ein neuer Fahrbahnabschnitt mit neuer in breite variierbarer Fahrbahn entsteht. Für den Nutzer händisch wäre eine solche Änderungen nur schwer und sehr aufwendig realisierbar. Mithilfe der vereinfachten Annahmen und den Parametern im Eingabeformat lassen sich so beliebig viele konkrete Strecken generieren.
 
 Zudem muss der Benutzer keine expliziten Koordinaten der Straßen angeben, da die Annahme getroffen wird, dass der Kreuzungsmittelpunkt im Ursprung des kartesischen Koordinatensystems liegt. Darüber hinaus gibt es die Möglichkeit verschiedene Kreuzungssegmente über zwei klar definierte Straßenpunkte miteinander zu verbinden. Über die Koordinaten und die Winkel der Straßen ist die Lage der beiden Segmente dann eindeutig bestimmt. Das Tool transformiert die das entsprechende Segment, sodass das Verbinden von mehreren Elementen und somit die Erstellung komplexer Strassennetze ermöglicht wird.
 
@@ -73,8 +76,8 @@ Um ein Straßennetzwerk schließen zu können bedarf es einer sehr genauen Konst
 
 Für den Nutzer sind also nur vereinfachte Angaben wie der Kreuzungstyp, die Straßengeometrie, der Kreuzungsschnittwinkel oder die Fahrbahnanzahl gefragt. Das Tool trifft nun Annahmen und Vereinfachungen, sodass basierend auf diesen die Übersetzung in ein detailreiches Straßennetzwerk im gängigen OpenDRIVE Format möglich wird.
 
-% --- UMSETZUNG UND IMPLEMENTIERUNG DES TOOLS ----------------------------------
-\chapter{Umsetzung und Implementierung des Tools}
+% --- IMPLEMENTIERUNG DES TOOLS ----------------------------------
+\chapter{Implementierung des Tools}
 Der folgende Abschnitt beschreibt die grobe Umsetzung des beschriebenen Tools. 
 
 \section{Ein - und Ausgabeformat}
@@ -153,8 +156,8 @@ Für den Fall, dass die Straße an Start oder Endpunkt eine Krümmung besitzt, w
 
 Das Vorgehen gewährleistet einen kontinuierlichen Übergang vom Startpunkt in den Endpunkt und somit ein korrektes Schließen des Straßennetzwerkes. Zusammen mit den anderen gezeigten Funktionen bildet das Tool also eine Möglichkeit beliebige Straßennetze zu konstruieren und im OpenDRIVE Format abzuspeichern. Diese sind dann nutzbar für weitere Simulationen.
 
-% --- BEISPIELE UND TESTS ------------------------------------------------------
-\chapter{Beispiele und Tests}
+% --- AUSWERTUNG ------------------------------------------------------
+\chapter{Auswertung}
 
 Im folgenden Abschnitt finden sich einige beispielhaft generierte Kreuzungen. Zudem wurden im letzten Schritt einige zuvor generierte Straßen zusammengefügt und durch Verbindungsstraßen mithilfe der Funktion \texttt{closeRoadConnection} geschlossen.
 
@@ -238,8 +241,8 @@ Der Aufwand für eine solche Änderung wäre manuell also kaum umsetzbar, das To
 
 Insgesamt zeigen die dargestellten Beispiele, dass das Tool die vereinfachten Eingaben des Nutzers, zusammen mit der logischen Beschreibung in ein valides und generisches Straßennetz im OpenDRIVE Standard übersetzen kann.
 
-% --- AUSBLICK -----------------------------------------------------------------
-\chapter{Ausblick}
+% --- ZUSAMMENFASSUNG UND AUSBLICK -----------------------------------------------------------------
+\chapter{Zusammenfassung und Ausblick}
 
 Das in dieser Seminararbeit entwickelte Tool ermöglicht es mithilfe einer logischen Streckenbeschreibung ein vollständiges und konkretes Streckennetz im standardisierten OpenDRIVE Format zu generieren. Dies erlaubt Benutzern durch einfache Parameteränderungen komplett unterschiedliche, aber valide, konkrete Strecken zu erhalten. So ist es möglich große Strecken mit wenigen Eingaben zu generieren und für eine anschließende Simulation zu benutzen.
 
