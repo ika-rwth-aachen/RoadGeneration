@@ -137,7 +137,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     // write header
     pugi::xml_node header = root.append_child("header");
     header.append_attribute("revMajor") = 1;
-    header.append_attribute("revMinor") = 5;
+    header.append_attribute("revMinor") = 4;
 
     // --- write roads ---------------------------------------------------------
     for (std::vector<road>::iterator it = data.roads.begin() ; it != data.roads.end(); ++it)
@@ -317,6 +317,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
 
 
         // --- write signals ---------------------------------------------------
+        /*
         pugi::xml_node signals = road.append_child("signals");
 
         for (std::vector<Signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
@@ -341,9 +342,11 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
             sig.append_attribute("width") = s.width;
             sig.append_attribute("height") = s.height;
         }
+        */
     }
         
     // --- write controllers ---------------------------------------------------
+    /*
     for (std::vector<control>::iterator it = data.controller.begin() ; it != data.controller.end(); ++it)
     {
         pugi::xml_node controller = root.append_child("controller");
@@ -357,6 +360,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
             con.append_attribute("signalId") = itt->id;
         }
     }
+    */
 
     // --- write junctions -----------------------------------------------------
     for (std::vector<junction>::iterator it = data.junctions.begin() ; it != data.junctions.end(); ++it)
