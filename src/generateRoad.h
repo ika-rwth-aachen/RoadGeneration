@@ -285,8 +285,8 @@ void flipGeometries(road &r)
 int addLanes(pugi::xml_node roadIn, road &r, int mode)
 {
     double desWidth = 3.5;
-    if (roadIn.attribute("type").value() == "motorway") desWidth = 4;
-    if (roadIn.attribute("type").value() == "access") desWidth = 3;
+    if ((string)roadIn.attribute("type").value() == "motorway") desWidth = 4.0;
+    if ((string)roadIn.attribute("type").value() == "access") desWidth = 3.0;
 
     // --- add basic laneSection to road ---------------------------------------
     laneSection laneSec;
@@ -296,20 +296,19 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
     lane l1;
     l1.id = 1;
     l1.speed = 50;
-    //l1.w.a = desWidth;
+    l1.w.a = desWidth;
     laneSec.lanes.push_back(l1);
     
     lane l2;
     l2.id = 0;
     l2.rm.type = "broken";
     l2.w.a = 0.0;
-    //l2.w.a = desWidth;
     laneSec.lanes.push_back(l2);
     
     lane l3;
     l3.id = -1;
     l3.speed = 50;
-    //l3.w.a = desWidth;
+    l3.w.a = desWidth;
     laneSec.lanes.push_back(l3);
         
     r.laneSections.push_back(laneSec);
@@ -338,8 +337,11 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
             l.type = itt->attribute("type").value();
 
             if (l.id == 0) l.w.a = 0.0;
+
             if (itt->attribute("width"))
                 l.w.a = itt->attribute("width").as_double();
+            else if(l.type == "access") l.w.a = 3.0;
+            else if(l.type == "motorway") l.w.a = 4.0;
         
             pugi::xml_node rm = itt->child("roadMark");
             if (rm)
