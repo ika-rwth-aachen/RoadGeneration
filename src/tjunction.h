@@ -143,12 +143,10 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         phi2 = stod(tmpNode.next_sibling("adRoad").attribute("angle").value(),&sz);
     }
 
-    // calculate coordinates of intersectionPoint
-    road helperRoad;
-    generateRoad(mainRoad, helperRoad, sMain, INFINITY, 0, sMain, 0, 0, 0);
-    double iPx = helperRoad.geometries.back().x;
-    double iPy = helperRoad.geometries.back().y;
-    double iPhdg = helperRoad.geometries.back().hdg;
+  // set coordinates of intersectionPoint
+    double iPx = 0;
+    double iPy = 0;
+    double iPhdg = 0;
     
     // --- generate roads ------------------------------------------------------
     /*            |      |

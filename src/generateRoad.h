@@ -35,11 +35,6 @@ int computeFirstLast(pugi::xml_node roadIn, int &foundfirst, int &foundlast, dou
 
 int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &sEnd)
 {
-
-    if (r.id == 152)
-    {
-        cout << endl;
-    }
     // search first and last relevant geometry
     int foundfirst = -1;
     int foundlast = -1;
@@ -92,7 +87,8 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
         {
             // calculate new position and increase s but do not save this
             curve(length, geo, x, y, hdg,1);
-            s += length;            
+            s += length;   
+            cc++;         
             continue;
         } 
         if (cc > foundlast)
@@ -112,6 +108,9 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
             geo.s = 0;
             s = 0;
 
+            // normal calculation of full length
+            curve(length, geo, x, y,hdg,1);
+
             // calculate new start point of geometry
             curve(sStart - s, geo, geo.x, geo.y, geo.hdg,1);
 
@@ -119,9 +118,6 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
             geo.c1 += (sStart - s) * (geo.c2 - geo.c1) / length; 
             // update length
             geo.length = actuallength;
-
-            // normal calculation of full length
-            curve(length, geo, x, y,hdg,1);
         }
 
         // sStart   |-------sEnd--------|
@@ -166,7 +162,7 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
 
         // increase variables
         s += length;
-        cc++;;
+        cc++;
     }
     return 0;
 }
@@ -266,6 +262,9 @@ void flipGeometries(road &r)
         // flip angles and curvature
         g.hdg += M_PI;
         fixAngle(g.hdg);
+
+        //flip s
+        g.s = r.length - g.length - g.s;
 
         double c1 = g.c1;
         double c2 = g.c2;
