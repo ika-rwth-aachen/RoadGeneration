@@ -100,7 +100,7 @@ int validateOutput (string file)
 int parseXML(pugi::xml_document &doc, roadNetwork &data, char * file)
 {   
     // TODO: only debugging purposes
-    if (true)
+    if (false)
     {  // TODO: use PROJ_DIR!
         data.file = "bin/test.xml";
         doc.load_file("bin/test.xml");

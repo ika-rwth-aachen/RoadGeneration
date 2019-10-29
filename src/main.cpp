@@ -37,18 +37,18 @@ int main(int argc,  char** argv)
     if (argc < 2) 
 	{
         cout << "ERR: no input file provided." << endl; 
-		//return -1;
+		return -1;
     }
 
 	pugi::xml_document in;
 	pugi::xml_document out;
 	roadNetwork data;
 
-	/*if (validateInput(argv[1])) 
+	if (validateInput(argv[1])) 
 	{
 		cerr << "ERR: error in Inputfile" << endl;
 		return -1;
-	}*/
+	}
 	if (parseXML(in, data, argv[1])) 
 	{
 		cerr << "ERR: error in parseXML" << endl;
