@@ -45,6 +45,7 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
     double x = 0;
     double y = 0;
     double hdg = 0;
+    r.length = 0;
 
     int cc = 0;
     for (pugi::xml_node_iterator it = roadIn.child("referenceLine").begin(); it != roadIn.child("referenceLine").end(); ++it)
@@ -106,7 +107,6 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
 
             // reset s to zero
             geo.s = 0;
-            s = 0;
 
             // normal calculation of full length
             curve(length, geo, x, y,hdg,1);
@@ -129,7 +129,9 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
             // update second curvature
             geo.c2 = geo.c1 + (actuallength) * (geo.c2 - geo.c1) / length;
             // update length
-            geo.length = actuallength;            
+            geo.length = actuallength;   
+            // update s
+            geo.s = s - sStart;         
         }
 
         // |-----sStart------sEnd--------|   
@@ -139,13 +141,17 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
 
             // reset s to zero
             geo.s = 0;
-            s = 0;
 
             // calculate new start point of geometry
             curve(sStart - s, geo, geo.x, geo.y, geo.hdg,1);
 
-            // update first curvature
-            geo.c1 += (sStart - s) * (geo.c2 - geo.c1) / length; 
+            // update curvatures
+            double c1 = geo.c1;
+            double c2 = geo.c2;
+
+            geo.c1 = c1 + (sStart - s) * (c2 - c1) / length; 
+            geo.c2 = c1 + (sEnd   - s) * (c2 - c1) / length;
+
             // update length
             geo.length = actuallength;            
         }
@@ -157,7 +163,7 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
         
         // update road
         fixAngle(geo.hdg);
-        r.length = s + actuallength;
+        r.length += actuallength;
         r.geometries.push_back(geo);
 
         // increase variables
@@ -186,7 +192,7 @@ int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, d
 
     if (Case == 0 || Case == 2)
     {
-        for (int i = 0; i < r.geometries.size(); i++)
+        for (int i = r.geometries.size()-1; i >= 0; i--)
         {
             geometry g = r.geometries[i];
 
@@ -204,6 +210,7 @@ int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, d
     }
     else if (Case == 1)
     {
+        // take first geometry and flip
         geometry g = r.geometries.front();
 
         // update angle and curvatures
