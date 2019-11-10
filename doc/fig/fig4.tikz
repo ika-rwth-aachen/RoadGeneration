@@ -12,7 +12,7 @@
     \draw[line width=3pt] (3,-0.2) -- (3,-1);
 
     \node[text = white, fill = gray] at  (-3,1.5) {2 Hauptstraßen};
-    \node[text = white, fill = gray] at  (0,1.5) {1 Haupstraße und 2 Nebenstraßen};
+    \node[text = white, fill = gray] at  (0,1.5) {1 Hauptstraße und 2 Nebenstraßen};
     \node[text = white, fill = gray] at  (3,1.5) {4 Nebenstraßen};
 
 \end{tikzpicture}
