@@ -24,11 +24,11 @@ Anschließend kann das Tool kompiliert werden. Hierfür wird cmake genutzt. Dazu
 `make ` 
 
 ## Nutzung
-Im [bin](road-generation/bin) Ordner kann die kompilierte Anwendung zusammen mit einem .xml Inputfile gestartet werden. 
+Im [bin](bin) Ordner kann die kompilierte Anwendung zusammen mit einem .xml Inputfile gestartet werden. 
 
 ` ./roadGeneration <input>.xml`
 
-Das Tool erstellt eine OpenDrive Datei im gleichen Ordner ([bin](road-generation/bin)). Zur Visualisierung des Steckennetzes eigenet sich der openDrive Viewer von VIRES. 
+Das Tool erstellt eine OpenDrive Datei im gleichen Ordner ([bin](bin)). Zur Visualisierung des Steckennetzes eigenet sich der openDrive Viewer von VIRES. 
 Wird die OpenDrive Version 1.4 generiert (lässt sich in interface.h umstellen) lassen sich die Strecken ebenfalls mit CarMaker 8.0 darstellen.
 
 ## ToDo's
@@ -40,7 +40,7 @@ Wird die OpenDrive Version 1.4 generiert (lässt sich in interface.h umstellen) 
 - [ ] Unterscheidung zwischen M und A Road: aktuell sind M Roads immer durchgehende Straßen an einer Kreuzung und haben eine automatische Spuraufweitung mit Länge(25m). A Roads haben keine zusätzliche Linksabbiegerspur und starten immer im Krezungsmittelpunkt. Diese Definition soll noch verändert werden.
 
 ## Beschreibung des Input Files
-Die genaue Definition ist dem XSD Schema File zu entnehmen. [input.xsd](road-generation/xml/input.xsd)
+Die genaue Definition ist dem XSD Schema File zu entnehmen. [input.xsd](xml/input.xsd)
 
 Nachfolgend einige Hinweise:
 
