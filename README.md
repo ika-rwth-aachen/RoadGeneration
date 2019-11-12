@@ -1,6 +1,4 @@
-# roadGeneration
-
-# Seminararbeit Christian Geller 
+# roadGeneration - Seminararbeit Christian Geller 
 
 Entwicklung eines Tools zur automatisierten Erstellung komplexer Straßennetze ausgehend von einer logischen Beschreibung
 
@@ -15,36 +13,42 @@ Entwicklung eines Tools zur automatisierten Erstellung komplexer Straßennetze a
 * xml enthält die xsd validation files (input.xsd enthält die vollständige Beschreibung des Inputfiles)
 
 ## Installation
-Folgende Schritte werden im vorrausgesetzt:
+Folgende Schritte werden vorrausgesetzt:
 * Installation von Pugi_XML
 * Installation von xerces-c++
 
-Im folgenden kann das Tool gebaut werden:
+Anschließend kann das Tool kompiliert werden. Hierfür wird cmake genutzt. Dazu auf oberster Orderebene folgende Schritte ausführen:
 
 `cmake .`
 
 `make ` 
 
-## Anwendung
-Im /bin Ordner kann die Executable zusammen mit einem .xml input file gestartet werden:
+## Nutzung
+Im [bin](bin) Ordner kann die kompilierte Anwendung zusammen mit einem .xml Inputfile gestartet werden. 
 
-` ./roadGeneration all.xml`
+` ./roadGeneration <input>.xml`
 
-Dies erstellt eine OpenDrive Datei im gleichen Ordner. Zur Visualisierung eigenet sich der openDrive Viewer. 
+Das Tool erstellt eine OpenDrive Datei im gleichen Ordner ([bin](bin)). Zur Visualisierung des Steckennetzes eigenet sich der openDrive Viewer von VIRES. 
 Wird die OpenDrive Version 1.4 generiert (lässt sich in interface.h umstellen) lassen sich die Strecken ebenfalls mit CarMaker 8.0 darstellen.
 
 ## ToDo's
-* spezifische user-basierte Markierungen sind nicht implementiert
-* automatisch generierte Haltelinien/Pfeile sind nicht implementiert
-* Handbuch ist noch nicht aktualisiert
-* OpenDrive Viewer visualisiert keine Signale oder Markierungen
-* Unterscheidung zwischen M und A Road: aktuell sind M Roads immer durchgehende Straßen an einer Kreuzung und haben eine automatische Spuraufweitung mit Länge(25m). A Roads haben keine zusätzliche Linksabbiegerspur und starten immer im Krezungsmittelpunkt. Diese Definition soll noch verändert werden.
+- [x] Verbindung von Segmenten
+- [ ] spezifische user-basierte Markierungen sind nicht implementiert
+- [ ] automatisch generierte Haltelinien/Pfeile sind nicht implementiert
+- [ ] Handbuch ist noch nicht aktualisiert
+- [ ] OpenDrive Viewer visualisiert keine Signale oder Markierungen
+- [ ] Unterscheidung zwischen M und A Road: aktuell sind M Roads immer durchgehende Straßen an einer Kreuzung und haben eine automatische Spuraufweitung mit Länge(25m). A Roads haben keine zusätzliche Linksabbiegerspur und starten immer im Krezungsmittelpunkt. Diese Definition soll noch verändert werden.
 
 ## Beschreibung des Input Files
-Die genaue Definition ist dem XSD Schema File zu entnehmen (input.xsd)
+Die genaue Definition ist dem XSD Schema File zu entnehmen. [input.xsd](xml/input.xsd)
 
-Hier folgen einige Hinweise:
+Nachfolgend einige Hinweise:
 
-* segments können sein: tjunction, xjunction, njunction (nicht implementiert), roundabout oder connectingroad
+* segments sind: tjunction, xjunction, njunction (nicht implementiert), roundabout oder connectingroad
 * jede junction besitzt einen Typ, der die Stuktur der Kreuzung beschreibt (Beispiel an X Kreuzung: 2M [2 durchgehende Straßen], 4A [4 angrenzende Straßen], M2A [1 durchgehende Straße und 2 angrenzende Straßen])
 * jede Kreuzung hat einen Typ (beschreibt automatische Linksabbiegerspur, breitere Spurbreite, Geschwindigkeitslimit)
+
+## Kontakt
+Bei Fragen zur Nutzung oder Implementierung:
+[christian.geller@ika.rwth-aachen.de](mailto:christian.geller@ika.rwth-aachen.de)
+
