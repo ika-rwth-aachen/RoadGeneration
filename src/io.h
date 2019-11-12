@@ -156,12 +156,14 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         pugi::xml_node pre = road.append_child("link").append_child("predecessor");
         pre.append_attribute("elementType") = it->predecessor.elementType.c_str();
         pre.append_attribute("elementId") = it->predecessor.elementId;
-        pre.append_attribute("contactPoint") = it->predecessor.contactPoint.c_str();
+        if (it->predecessor.elementType.c_str() == "road")
+            pre.append_attribute("contactPoint") = it->predecessor.contactPoint.c_str();
         
         pugi::xml_node suc = road.child("link").append_child("successor");
         suc.append_attribute("elementType") = it->successor.elementType.c_str();
         suc.append_attribute("elementId") = it->successor.elementId;
-        suc.append_attribute("contactPoint") = it->successor.contactPoint.c_str();
+        if (it->successor.elementType.c_str() == "road")
+            suc.append_attribute("contactPoint") = it->successor.contactPoint.c_str();
         
         road.append_child("type").append_attribute("s") = "0";
         road.child("type").append_attribute("type") = it->type.c_str();
@@ -243,6 +245,19 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
                 
                 lane.append_attribute("id") = ittt->id;
                 lane.append_attribute("type") = ittt->type.c_str();
+
+
+                pugi::xml_node link = lane.append_child("link");
+                if (ittt->preId != 0)
+                {
+                    pugi::xml_node pre = lane.append_child("predecessor");
+                    pre.append_attribute("id") = ittt->preId;
+                }
+                if (ittt->sucId != 0)
+                {
+                    pugi::xml_node suc = lane.append_child("successor");
+                    suc.append_attribute("id") = ittt->sucId;
+                }
 
                 if (ittt->id != 0)
                 {
@@ -337,9 +352,9 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
                 sig.append_attribute("id") = s.id;
                 
                 sig.append_attribute("name") = s.type.c_str();
-                sig.append_attribute("type") = s.type.c_str();
-                
-                sig.append_attribute("subtype") = "-";
+                sig.append_attribute("type") = s.type.c_str();                
+                sig.append_attribute("subtype") = s.subtype.c_str();
+                sig.append_attribute("country") = s.country.c_str();
                 sig.append_attribute("s") = s.s;
                 sig.append_attribute("t") = s.t;
                 sig.append_attribute("zOffset") = s.z;

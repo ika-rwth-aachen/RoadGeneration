@@ -20,10 +20,12 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     if (r.laneSections.size() == 0) r.laneSections.push_back(lS);
 
     r.junction = junc.id;
-    r.predecessor.elementId = junc.id;
-    r.successor.elementId   = junc.id;
-    r.predecessor.elementType = "junction";
-    r.successor.elementType   = "junction";
+    r.predecessor.elementId = r1.id;
+    r.successor.elementId   = r2.id;
+    r.predecessor.elementType = "road";
+    r.successor.elementType   = "road";
+    r.predecessor.contactPoint = "start";
+    r.successor.contactPoint = "start";
 
     // connect r1 with r2 at reference points  
     double x1,y1,hdg1,x2,y2,hdg2,s1,s2;
@@ -64,7 +66,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     con1.from = r1.id;
     con1.to = r.id;
     con1.fromLane = fromId;
-    con1.toLane = sgn(fromId) * 2;    // 1 is helperLane
+    con1.toLane = sgn(fromId);   
     junc.connections.push_back(con1);
 
     // compute ending point
@@ -104,7 +106,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     con2.contactPoint = "end";
     con2.from = r.id;
     con2.to = r2.id;
-    con2.fromLane = sgn(fromId) * 2;    // 1 is helperLane
+    con2.fromLane = sgn(fromId);
     con2.toLane = toId;
     junc.connections.push_back(con2);
 

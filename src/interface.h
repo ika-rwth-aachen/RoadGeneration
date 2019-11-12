@@ -66,6 +66,8 @@ struct lane
     width w;
     roadmark rm;
     material m;
+    int preId = 0;
+    int sucId = 0;
 };
 
 struct laneSection
@@ -119,8 +121,10 @@ struct Signal
 {
     int id = -1;
     int rule = -1;
+
     string type;
-    double value;
+    string subtype = "-1";
+    double value = -1;
     double s = 0;
     double t = 0;
     double z = 0;
@@ -128,6 +132,7 @@ struct Signal
     double width = 0;
     double height = 0;
     bool dynamic;
+    string country = "OpenDRIVE";
 };
 
 struct control
@@ -140,7 +145,7 @@ struct road
 {
     double length = 0;
     int id = -1;
-    int junction;
+    int junction = -1;
     string type = "town";
 
     link predecessor;

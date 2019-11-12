@@ -46,10 +46,11 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 		// save from position
 		for(auto&& r : data.roads)
 		{
-			if (r.junction != fromSegment || r.id != fromRoad) continue;
+			if (r.id != fromRoad) continue;
 				
             found = true;
             rConnection.predecessor.elementId = r.id;
+            rConnection.predecessor.contactPoint = "end";
 
 			if (fromPos == "start")
 			{
@@ -57,6 +58,7 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 				fromY = r.geometries.front().y;
 				fromHdg = r.geometries.front().hdg;
                 r.predecessor.elementId = rConnection.id;
+				r.predecessor.contactPoint = "start";
                 lS1 = r.laneSections.front();
 			}
 			else if (fromPos == "end")
@@ -67,6 +69,7 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 				fromY = g.y;
 				fromHdg = g.hdg;
                 r.successor.elementId = rConnection.id;
+				r.successor.contactPoint = "start";
                 lS1 = r.laneSections.back();
 			}
 			else
@@ -90,6 +93,7 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
             
 			found = true;
             rConnection.successor.elementId = r.id;
+            rConnection.successor.contactPoint = "end";
 
 			if (toPos == "start")
 			{
@@ -97,6 +101,7 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 				toY = r.geometries.front().y;
 				toHdg = r.geometries.front().hdg;
                 r.predecessor.elementId = rConnection.id;
+				r.predecessor.contactPoint = "end";
                 lS2 = r.laneSections.front();
 			}
 			else if (toPos == "end")
@@ -107,6 +112,7 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 				toHdg = g.hdg;
 				curve(g.length,g, toX, toY, toHdg, 1);
                 r.successor.elementId = rConnection.id;				
+				r.successor.contactPoint = "end";
                 lS2 = r.laneSections.back();
 			}
 			else
@@ -207,7 +213,14 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 		}
 		
     	rConnection.laneSections = secs;
-		
+
+		// add lane links
+		for (int j = 0; j < secs.front().lanes.size(); j++) 
+			secs.front().lanes[j].preId = secs.back().lanes[j].id;
+
+		for (int j = 0; j < secs.back().lanes.size(); j++)
+			secs.back().lanes[j].sucId = secs.back().lanes[j].id;
+
         data.roads.push_back(rConnection);
 	}
     return 0;

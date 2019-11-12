@@ -67,6 +67,8 @@ int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, in
     lane newLane;
     newLane.id = dir;
     newLane.speed = 30;
+    newLane.preId = from;
+    newLane.sucId = to;
 
     if (dir > 0)
     {
