@@ -303,6 +303,8 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
     l1.id = 1;
     l1.speed = 50;
     l1.w.a = desWidth;
+    l1.preId = 1;
+    l1.sucId = 1;
     laneSec.lanes.push_back(l1);
     
     lane l2;
@@ -315,6 +317,8 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
     l3.id = -1;
     l3.speed = 50;
     l3.w.a = desWidth;
+    l3.preId = -1;
+    l3.sucId = -1;
     laneSec.lanes.push_back(l3);
         
     r.laneSections.push_back(laneSec);
@@ -336,6 +340,8 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
             lane l; 
 
             l.id = itt->attribute("id").as_int();
+            l.preId = l.id;
+            l.sucId = l.id;
 
             // flip lanes for mode 1
             if (mode == 2) l.id *= -1;  

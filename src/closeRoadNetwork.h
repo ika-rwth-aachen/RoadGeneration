@@ -212,14 +212,14 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 			secs.back().lanes[j] = curLane;
 		}
 		
-    	rConnection.laneSections = secs;
-
 		// add lane links
 		for (int j = 0; j < secs.front().lanes.size(); j++) 
-			secs.front().lanes[j].preId = secs.back().lanes[j].id;
+			secs.front().lanes[j].preId = secs.front().lanes[j].id;
 
 		for (int j = 0; j < secs.back().lanes.size(); j++)
 			secs.back().lanes[j].sucId = secs.back().lanes[j].id;
+
+    	rConnection.laneSections = secs;
 
         data.roads.push_back(rConnection);
 	}

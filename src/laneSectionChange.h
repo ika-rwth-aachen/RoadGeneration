@@ -46,7 +46,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds, 
     l.w.b = 0;
     l.w.a = 0;
 
-    // shift other lanes and add addtional lane
+    // shift other lanes and add additional lane
     if (addOuterLane)
     {
         l.id = laneId + sgn(laneId);
