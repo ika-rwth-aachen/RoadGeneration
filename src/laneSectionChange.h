@@ -456,6 +456,14 @@ int laneWideningJunction(road &r, int sLaneWidening, int turn, bool verschwenkun
     if (turn == 1 && verschwenkung)
         adLaneSec.o.a = -abs(w)/2 + it->o.a;
 
+    // update lane links
+    for (int i = 0; i < adLaneSec.lanes.size(); i++)
+    {
+        adLaneSec.lanes[i].preId = 0;
+        adLaneSec.lanes[i].sucId = adLaneSec.lanes[i].id;
+    }
+
+    // insert lane section
     it = r.laneSections.insert(it, adLaneSec);
     it++;
 
@@ -492,6 +500,51 @@ int laneWideningJunction(road &r, int sLaneWidening, int turn, bool verschwenkun
     adLaneSec.s = abs(sLaneWidening);
     id = findLane(adLaneSec, lTmp, laneId);
     adLaneSec.lanes[id] = l;
+
+    // update lane links
+    for (int i = 0; i < adLaneSec.lanes.size(); i++)
+    {
+        int id = adLaneSec.lanes[i].id;
+        adLaneSec.lanes[i].preId = id;
+
+        lane tmpLane;
+        int idL = findLane(*it, tmpLane, id);
+
+        if (idL == -1)
+        {
+            cout << idL << endl;
+            cout << id << endl;
+            cout << turn << endl;
+            
+        }
+
+        if (sgn(id) == sgn(laneId))
+        {
+            if (turn == 1)
+            {
+                adLaneSec.lanes[i].sucId = id - sgn(id);
+                if (idL != -1)
+                    it->lanes[idL].preId = id + sgn(id);
+            }
+            if (turn == -1)
+            {
+                adLaneSec.lanes[i].sucId = id;
+                if (idL != -1)
+                    it->lanes[idL].preId = id;
+            }
+            if (turn == -1 && id == laneId)
+            {
+                adLaneSec.lanes[i].sucId = 0;
+            }
+        }
+        else
+        {
+            adLaneSec.lanes[i].sucId = id;
+            it->lanes[idL].preId = id;
+        }        
+    }
+
+    // update lane links in next lane section
 
     it = r.laneSections.insert(it, adLaneSec);
     it++;
