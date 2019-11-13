@@ -156,13 +156,13 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         pugi::xml_node pre = road.append_child("link").append_child("predecessor");
         pre.append_attribute("elementType") = it->predecessor.elementType.c_str();
         pre.append_attribute("elementId") = it->predecessor.elementId;
-        if (it->predecessor.elementType.c_str() == "road")
+        if (it->predecessor.elementType == "road")
             pre.append_attribute("contactPoint") = it->predecessor.contactPoint.c_str();
         
         pugi::xml_node suc = road.child("link").append_child("successor");
         suc.append_attribute("elementType") = it->successor.elementType.c_str();
         suc.append_attribute("elementId") = it->successor.elementId;
-        if (it->successor.elementType.c_str() == "road")
+        if (it->successor.elementType == "road")
             suc.append_attribute("contactPoint") = it->successor.contactPoint.c_str();
         
         road.append_child("type").append_attribute("s") = "0";
@@ -246,21 +246,20 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
                 lane.append_attribute("id") = ittt->id;
                 lane.append_attribute("type") = ittt->type.c_str();
 
-
-                pugi::xml_node link = lane.append_child("link");
-                if (ittt->preId != 0)
-                {
-                    pugi::xml_node pre = lane.append_child("predecessor");
-                    pre.append_attribute("id") = ittt->preId;
-                }
-                if (ittt->sucId != 0)
-                {
-                    pugi::xml_node suc = lane.append_child("successor");
-                    suc.append_attribute("id") = ittt->sucId;
-                }
-
                 if (ittt->id != 0)
                 {
+                    pugi::xml_node link = lane.append_child("link");
+                    if (ittt->preId != 0)
+                    {
+                        pugi::xml_node pre = link.append_child("predecessor");
+                        pre.append_attribute("id") = ittt->preId;
+                    }
+                    if (ittt->sucId != 0)
+                    {
+                        pugi::xml_node suc = link.append_child("successor");
+                        suc.append_attribute("id") = ittt->sucId;
+                    }
+
                     pugi::xml_node width = lane.append_child("width");
                     width.append_attribute("sOffset") = ittt->w.s;
                     width.append_attribute("a") = ittt->w.a;

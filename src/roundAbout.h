@@ -161,7 +161,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         nCount++; 
 
         // add signal to outgoing roads
-        addSignal(r2, data, 1, INFINITY, "1.000.001", "-");
+        addSignal(r2, data, 1, INFINITY, "1.000.001", -1);
 
         road helper;
         helper.id = 100*junc.id + cc * 10 + nCount; 

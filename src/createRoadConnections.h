@@ -66,7 +66,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     con1.from = r1.id;
     con1.to = r.id;
     con1.fromLane = fromId;
-    con1.toLane = sgn(fromId);   
+    con1.toLane = sgn(toId);   
     junc.connections.push_back(con1);
 
     // compute ending point
@@ -106,7 +106,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     con2.contactPoint = "end";
     con2.from = r.id;
     con2.to = r2.id;
-    con2.fromLane = sgn(fromId);
+    con2.fromLane = sgn(toId);
     con2.toLane = toId;
     junc.connections.push_back(con2);
 

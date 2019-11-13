@@ -302,10 +302,17 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         }
     }
 
-    addSignal(r1, data, 1, INFINITY, "1000001", "-");
-    addSignal(r2, data, 1, INFINITY, "1000001", "-");
-    addSignal(r3, data, 1, INFINITY, "1000001", "-");
-    addSignal(r4, data, 1, INFINITY, "1000001", "-");
+    addSignal(r1, data, 1, INFINITY, "1000001", 1);
+    addSignal(r1, data, 1, 5, "1000011", 3);
+
+    addSignal(r2, data, 1, INFINITY, "1000001", 2);
+    addSignal(r2, data, 1, 2, "1000011", 4);
+
+    addSignal(r3, data, 1, INFINITY, "1000001", 1);
+    addSignal(r3, data, 1, 8, "1000011", 3);
+
+    addSignal(r4, data, 1, INFINITY, "1000001", 2);
+    addSignal(r4, data, 1, 5, "1000011", 4);
 
     data.roads.push_back(r1);
     data.roads.push_back(r2);

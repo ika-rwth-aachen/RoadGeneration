@@ -181,7 +181,6 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         generateRoad(mainRoad, r1, sMain+sOffMain, INFINITY, autoWiding, sMain, iPx, iPy, iPhdg);
     }
     addObjects(mainRoad,r1,data);
-    addSignal(r1, data, 1, INFINITY, "1.000.001", "-");
 
     road r2;
     r2.id = 100*junc.id + 2;
@@ -206,7 +205,6 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         generateRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, autoWiding, sAdd1,iPx, iPy, iPhdg+phi1);
         addObjects(additionalRoad1,r2,data);
     }
-    addSignal(r2, data, 1, INFINITY, "1.000.001", "-");
 
     road r3; 
     r3.id = 100*junc.id + 3;
@@ -223,7 +221,6 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         generateRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, autoWiding, sAdd2, iPx, iPy, iPhdg+phi2);
         addObjects(additionalRoad2,r3,data);
     }
-    addSignal(r3, data, 1, INFINITY, "1.000.001", "-");
 
     // add addtional lanes
     for (pugi::xml_node addLane: addLanes.children("additionalLane"))
@@ -264,6 +261,9 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
                 laneWideningJunction(r3, length, type, verschwenkung);
         }
     }
+    addSignal(r1, data, 1, INFINITY, "1.000.001", -1);
+    addSignal(r2, data, 1, INFINITY, "1.000.001", -1);
+    addSignal(r3, data, 1, INFINITY, "1.000.001", -1);
 
     data.roads.push_back(r1);
     data.roads.push_back(r2);

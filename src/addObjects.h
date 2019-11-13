@@ -377,18 +377,22 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
  * @param ori       orientation of signal
  * @return int      errorcode
  */
-int addSignal(road &r, roadNetwork &data, double s, double t, string type, string ori)
+int addSignal(road &r, roadNetwork &data, double s, double t, string type, int controller)
 {
+    if (controller == -1) controller = 1000+r.junction*100;
+
     laneSection lS = r.laneSections.front();
+
     if (t ==  INFINITY) t = findTOffset(lS, findMaxLaneId(lS), s) + 1;
     if (t == -INFINITY) t = findTOffset(lS, findMinLaneId(lS), s) - 1;
+    t += r.laneSections.front().o.a;
 
     // search controller for given junction
     bool found = false;
     int i; 
     for (i = 0; i < data.controller.size(); i++)
     {
-        if (data.controller[i].id == 1000+r.junction*100) 
+        if (data.controller[i].id == controller) 
         {
             found = true; 
             break;
@@ -398,7 +402,7 @@ int addSignal(road &r, roadNetwork &data, double s, double t, string type, strin
     if (!found) 
     {
         control c; 
-        c.id = 1000 + r.junction*100;
+        c.id = controller;
         data.controller.push_back(c);
         i = data.controller.size()-1;
     }
@@ -412,14 +416,24 @@ int addSignal(road &r, roadNetwork &data, double s, double t, string type, strin
     sig.type = type;
     sig.height = 2;
     sig.width = 0.5;
-    sig.orientation = ori;
     sig.rule = 1000;
 
     // basic traffic light
-    if (type == "100.0.0.1")
+    if (type == "1000001")
     {
         sig.dynamic = true;
+        sig.orientation = "-";
         sig.value = 0;
+    }
+
+    // left traffic light
+    if (type == "1000011")
+    {
+        sig.subtype = "10";
+        sig.dynamic = true;
+        sig.orientation = "-";
+        sig.value = 0;
+        sig.z = 4;
     }
 
     r.signals.push_back(sig);
