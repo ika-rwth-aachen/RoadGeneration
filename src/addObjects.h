@@ -377,7 +377,7 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
  * @param ori       orientation of signal
  * @return int      errorcode
  */
-int addSignal(road &r, roadNetwork &data, double s, double t, string type, int controller)
+int addSignal(road &r, roadNetwork &data, double s, double t, string type,  string subtype, int controller)
 {
     if (controller == -1) controller = 1000+r.junction*100;
 
@@ -414,6 +414,7 @@ int addSignal(road &r, roadNetwork &data, double s, double t, string type, int c
     sig.t = t;
     sig.z = 0;
     sig.type = type;
+    sig.subtype = subtype;
     sig.height = 2;
     sig.width = 0.5;
     sig.rule = 1000;
@@ -422,16 +423,16 @@ int addSignal(road &r, roadNetwork &data, double s, double t, string type, int c
     if (type == "1000001")
     {
         sig.dynamic = true;
-        sig.orientation = "-";
+        sig.orientation = "+";
         sig.value = 0;
+        sig.z = 4;
     }
 
     // left traffic light
     if (type == "1000011")
     {
-        sig.subtype = "10";
         sig.dynamic = true;
-        sig.orientation = "-";
+        sig.orientation = "+";
         sig.value = 0;
         sig.z = 4;
     }

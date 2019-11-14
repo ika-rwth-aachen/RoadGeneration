@@ -261,9 +261,9 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
                 laneWideningJunction(r3, length, type, verschwenkung);
         }
     }
-    addSignal(r1, data, 1, INFINITY, "1.000.001", -1);
-    addSignal(r2, data, 1, INFINITY, "1.000.001", -1);
-    addSignal(r3, data, 1, INFINITY, "1.000.001", -1);
+    addSignal(r1, data, 1, INFINITY, "1.000.001", "-", -1);
+    addSignal(r2, data, 1, INFINITY, "1.000.001", "-", -1);
+    addSignal(r3, data, 1, INFINITY, "1.000.001", "-", -1);
 
     data.roads.push_back(r1);
     data.roads.push_back(r2);
