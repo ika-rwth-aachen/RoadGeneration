@@ -197,7 +197,7 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 			
 			lane refLane;
 			findLane(lS2,refLane,id);
-
+			
 			double w1 = curLane.w.a;
 			double w2 = refLane.w.a;
 			if (w1 == w2) continue;
@@ -212,12 +212,30 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 			secs.back().lanes[j] = curLane;
 		}
 		
+		road tmpRoad;
+		int fromRoadId = findRoad(data.roads,tmpRoad, fromRoad);
+		int toRoadId   = findRoad(data.roads,tmpRoad, toRoad);
+
 		// add lane links
 		for (int j = 0; j < secs.front().lanes.size(); j++) 
+		{
 			secs.front().lanes[j].preId = secs.front().lanes[j].id;
+			if (fromPos == "start") 
+			{
+				secs.front().lanes[j].preId *= -1;
+				data.roads[fromRoadId].laneSections.front().lanes[j].preId *= -1;
+			}
+		}
 
 		for (int j = 0; j < secs.back().lanes.size(); j++)
+		{
 			secs.back().lanes[j].sucId = secs.back().lanes[j].id;
+			if (toPos == "end") 
+			{
+				secs.back().lanes[j].sucId *= -1;
+				data.roads[toRoadId].laneSections.back().lanes[j].sucId *= -1;
+			}
+		}
 
     	rConnection.laneSections = secs;
 

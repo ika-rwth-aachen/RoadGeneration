@@ -104,6 +104,31 @@ int findLane(laneSection sec, lane &l, int id)
     return res;
 }
 
+
+/**
+ * @brief function returns the road with the given id
+ * 
+ * @param roads   roads in which the lane is stored
+ * @param l     lane which has the laneId id
+ * @param id    laneId of the lane to find
+ * @return int  position in laneSection vector of the lane to find
+ */
+int findRoad(vector<road> roads, road &r, int id)
+{
+    int res = -1;
+
+    for (int i = 0; i < roads.size(); i++)
+    {
+        if (roads[i].id == id) 
+        {
+            r = roads[i];
+            res = i;
+            break;
+        }
+    }
+    return res;
+}
+
 /**
  * @brief function determines lanewidth of the given lane at positon s
  * 

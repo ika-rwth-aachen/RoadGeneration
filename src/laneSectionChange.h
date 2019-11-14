@@ -404,10 +404,23 @@ int laneWideningJunction(road &r, int sLaneWidening, int turn, bool verschwenkun
 
     // additional lane
     lane l;
-    int laneId = 1; 
-    if (turn == -1) laneId = findMaxLaneId(adLaneSec);
+    int laneId = 0;
+
+    
+    if (turn ==  1) 
+    {
+        laneId = findLeftLane(*it,1);
+        if (laneId == 0) laneId = findInnerMiddleLane(*it,1);
+    }
+    if (turn == -1) 
+    {
+        laneId = findRightLane(*it,1);
+        if (laneId == 0) laneId = findOuterMiddleLane(*it,1);
+    }
+
     int id = findLane(adLaneSec, l, laneId);
     double w = laneWidth(l,0);
+
     l.w.a = w;
     
     if (sLaneWidening > 0 && turn == 1)
