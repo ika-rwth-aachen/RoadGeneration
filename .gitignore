@@ -27,3 +27,5 @@ CMakeCache.txt
 *.run.xml
 *.DS_Store
 *main.pdf
+
+*/doxy
