@@ -43,3 +43,7 @@
 Possibly put those phrases in the title:
 * Validation of AD
 * 
+
+
+# Alternative
+maybe just master thesis... fitting tool for OpenStreetMap coordinates. Approach to construct continous road description from discrete input data
