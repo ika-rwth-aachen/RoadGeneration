@@ -2,7 +2,8 @@
 
 ## Possible Title
 
-**Generation of complex synthetic road networks using a simplified logical description**
+**Generation of complex synthetic road networks using a simplified logical description for the validation of automated vehicles**
+
 
 ## Rough content
 
@@ -37,3 +38,8 @@
 * At the same time there has to be a mechanism to create concrete (standardized) instances of the description to perform simulations to validate automated driving functions. 
   * C++ tool 
   * open source (or soon to be)
+
+# Important key words
+Possibly put those phrases in the title:
+* Validation of AD
+* 
