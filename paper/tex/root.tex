@@ -69,12 +69,13 @@ One approach to reach this state is scenario based testing. [ref] proposed diffe
 Current research initiatives such as SET Level 4to5 (footnote?) address simulative scenario based testing with focus on inner city traffic. Besides layer four which describes the dynamic behavior of all participants, the static scenery has to be taken into account as well. The latter is described within layer one to three and has to be defined in a logical and concrete manner, respectively. The open source standard format OpenDRIVE [ref asam] is suitable for concrete descriptions of road networks and is widely used in industry and research. However, by now there is no standardized logical road description format which is easy to use and capable to be transfered into OpenDRIVE. 
 
 This article introduces a prototypical logical description language for complex road networks and a tool which generates concrete, standardized OpenDRIVE maps which may be used for the simulative testing of ADF.
-%\begin{figure}[thpb]
-%	\centering
-%	\includegraphics{fig/layers.pdf}
-%	\caption{Representation of a traffic scenario in six layers [ref] (create fig. as pdf and include correct font. image is way too big...)}
-%	\label{figurelabel}
-%\end{figure}
+
+\begin{figure}[thpb] 		
+	\centering
+	\includegraphics{fig/motivation.pdf}
+	\caption{Graphical example of input and output of the road generation tool. As a minimal input two reference lines with assigned road types and a coupling point are sufficient to generate an intersection written in valid OpenDRIVE. (OpenDRIVE visualized in CarMaker 8.0[ref?]) \textbf{roughDraft}}
+	\label{fig_curvGraph}
+\end{figure}
 
 \section{RELATED WORK}
 During the research initiative PEGASUS [ref] these concepts have been developed and utilized within the domain German motorway. Furthermore, the main focus has been on layer four. Nevertheless, when moving the testing domain to inner city scenarios such as the driving behavior on intersections, layers one to three are much more complex. Motorways usually consist of parallel lanes which follow curves with big radii. Such a road is not complicated to describe and generate. It can be done automatically with low effort. [ref. menzel et al.] propose a method to create a standardized road network in the OpenDRIVE format from a logical (and functional) road description. However, inner city intersections are more complex both in the logical description and in terms of the concrete format. 
@@ -84,17 +85,28 @@ die Frage ist, was alles "related" ist... eventuell kuerzer halten und laengere 
 \section{METHODOLOGY}
 
 \section{LOGICAL ROAD DESCRIPTION}
-formulate general sentence to get into logical conept
+The proposed logical road description is derived from the reference line concept of OpenDRIVE. This means that each lane is described by an offset from a reference line defined in the x,y-plane (topview). However, in contrast to OpenDRIVE we introduce some simplifications and eliminate redundancies along the reference line. Each road segment consists of the geometric primitives line, arc and spiral, which is motivated by the federal guidelines for road constructions [ref]. In order to ensure a smooth driveability along the road network, we define that the curvature graph has to be continuous. Therefor, the definition of curvature over distance, a start point and initial heading is sufficient to uniquely describe a road segment's course. Fig. \ref{fig_curvGraph} shows the definition of a road segment that is composed of the geometric primitive sequence line-spiral-arc-spiral-line.
+\begin{figure}[thpb] 		
+	\centering
+	\includegraphics{fig/curvGraph.pdf}
+	\caption{Example for a curve defined by the curvature graph. The plan view results from two integrations over $s$. Geometric primitives: line-spiral-arc-spiral-line. Positive curvature values correspond to left turns in positive $s$ direction.\textbf{roughDraft}}
+	\label{fig_curvGraph}
+\end{figure}
 
-The first step is to identify the essential segments of a road network, which in turn can consist of any arrangement of so called features. Segments and features should have parameters which are described by intuitive quantities that can be specified by measurable values. The parameters are the main determining characteristics of the segments and features and represent similar to reality its variation possibilities. A modular arrangement should be achieved by creating the segments independently of each other in their own reference systems. The subsequent relative arrangement of the segments to each other enables variability in the composition to a complex route network
+\textit{short introduction to curvature graph integral}
 
+\textit{now explain tree structure}
+
+\begin{figure}[thpb] 		
+	\centering
+	\includegraphics{fig/schema.pdf}
+	\caption{Hierarchical structure of the road network. On the first level all segments and their relation to each other are defined. In addition, it is possible to define the automatic connection of two road ends. Segments are defined as roundabouts, junctions and connection roads. $r_i$ and $I$ describe roads and intersection definitions, respectively}
+	\label{figurelabel}
+\end{figure}
 \section{ROAD GENERATION}
 
 \subsection{Geometry}
 
-$$
-\alpha + \beta = \chi \eqno{(1)}
-$$
 \subsection{Intersections}
 
 \subsection{Road Network}
@@ -105,7 +117,7 @@ $$
 \caption{An Example of a Table}
 \label{table_example}
 \begin{center}
-\begin{tabular}{|c||c|}
+\begin{tabular}{|c|c|}
 \hline
 One & Two\\
 \hline
@@ -114,9 +126,6 @@ Three & Four\\
 \end{tabular}
 \end{center}
 \end{table}
-
-
-
 
 \section{CONCLUSIONS}
 
