@@ -35,29 +35,22 @@ Generation of Complex Road Networks Using a Simplified Logical Description for t
 }
 
 
-\author{Daniel Becker$^{1}$ and Lutz Eckstein$^{2}$% <-this % stops a space
+\author{Daniel Becker$^{1}$, Fabian Ruß$^{1}$ and Lutz Eckstein$^{2}$% <-this % stops a space
 \thanks{*This research is funded by the SET Level 4to5 research initiative, promoted by the	Federal Ministry for Economic Affairs and Energy (BMWi).}% <-this % stops a space
-\thanks{$^{1}$Daniel Becker is with the automated driving department of the Institute
-	for Automotive Engineering (ika), RWTH Aachen University, 52074
-	Aachen, Germany {\tt\small daniel.becker@ika.rwth-aachen.de}}%
-\thanks{$^{2}$Lutz Eckstein is head of the Institute for Automotive Engineering
-	(ika), RWTH Aachen University, 52074 Aachen, Germany {\tt\small lutz.eckstein@ika.rwth-aachen.de}}%
+\thanks{$^{1}$Daniel Becker and Fabian Ruß are with the automated driving department of the Institute for Automotive Engineering (ika), RWTH Aachen University, 52074 	Aachen, Germany {\tt\small \{daniel.becker, fabian.russ\}@ika.rwth-aachen.de}}%
+\thanks{$^{2}$Lutz Eckstein is head of the Institute for Automotive Engineering (ika), RWTH Aachen University, 52074 Aachen, Germany {\tt\small lutz.eckstein@ika.rwth-aachen.de}}%
 }
 
-
 \begin{document}
-
 
 \maketitle
 \thispagestyle{empty}
 \pagestyle{empty}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-The verification and validation of automated driving functions is an essential building block in the process of releasing those functions to the public. 
+The verification and validation of automated driving functions is an essential building block in the process of releasing those functions to the public.  
 \end{abstract}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{INTRODUCTION}
@@ -68,13 +61,13 @@ One approach to reach this state is scenario based testing. [ref] proposed diffe
 
 Current research initiatives such as SET Level 4to5 (footnote?) address simulative scenario based testing with focus on inner city traffic. Besides layer four which describes the dynamic behavior of all participants, the static scenery has to be taken into account as well. The latter is described within layer one to three and has to be defined in a logical and concrete manner, respectively. The open source standard format OpenDRIVE [ref asam] is suitable for concrete descriptions of road networks and is widely used in industry and research. However, by now there is no standardized logical road description format which is easy to use and capable to be transfered into OpenDRIVE. 
 
-This article introduces a prototypical logical description language for complex road networks and a tool which generates concrete, standardized OpenDRIVE maps which may be used for the simulative testing of ADF.
+This article introduces a prototypical logical description language for complex road networks and a tool which generates concrete, standardized OpenDRIVE maps which may be used for the simulative testing of ADF. An example which outlines the idea of the concept is shown in Fig.~\ref{fig_motivation}
 
-\begin{figure}[thpb] 		
+\begin{figure}[tpb] 		
 	\centering
 	\includegraphics{fig/motivation.pdf}
 	\caption{Graphical example of input and output of the road generation tool. As a minimal input two reference lines with assigned road types and a coupling point are sufficient to generate an intersection written in valid OpenDRIVE. (OpenDRIVE visualized in CarMaker 8.0[ref?]) \textbf{roughDraft}}
-	\label{fig_curvGraph}
+	\label{fig_motivation}
 \end{figure}
 
 \section{RELATED WORK}
@@ -85,7 +78,7 @@ die Frage ist, was alles "related" ist... eventuell kuerzer halten und laengere 
 \section{METHODOLOGY}
 
 \section{LOGICAL ROAD DESCRIPTION}
-The proposed logical road description is derived from the reference line concept of OpenDRIVE. This means that each lane is described by an offset from a reference line defined in the x,y-plane (topview). However, in contrast to OpenDRIVE we introduce some simplifications and eliminate redundancies along the reference line. Each road segment consists of the geometric primitives line, arc and spiral, which is motivated by the federal guidelines for road constructions [ref]. In order to ensure a smooth driveability along the road network, we define that the curvature graph has to be continuous. Therefor, the definition of curvature over distance, a start point and initial heading is sufficient to uniquely describe a road segment's course. Fig. \ref{fig_curvGraph} shows the definition of a road segment that is composed of the geometric primitive sequence line-spiral-arc-spiral-line.
+The proposed logical road description is derived from the reference line concept used in OpenDRIVE. This means that each lane is described by an offset from a reference line defined in the x,y-plane (topview). However, in contrast to OpenDRIVE we introduce some simplifications and eliminate redundancies along the reference line. Each road segment consists of the geometric primitives line, arc and spiral, which is motivated by the federal guidelines for road constructions [ref]. In order to ensure a smooth driveability along the road network, we define that the curvature graph has to be continuous. Therefor, the definition of curvature over distance, a start point and initial heading is sufficient to uniquely describe a road segment's course (cf.~(\ref{eq1})). Fig.~\ref{fig_curvGraph} shows the definition of a road segment that is composed of the geometric primitive sequence line-spiral-arc-spiral-line.
 \begin{figure}[thpb] 		
 	\centering
 	\includegraphics{fig/curvGraph.pdf}
@@ -93,16 +86,26 @@ The proposed logical road description is derived from the reference line concept
 	\label{fig_curvGraph}
 \end{figure}
 
-\textit{short introduction to curvature graph integral}
+As shown in Fig.~\ref{fig_curvGraph}, the curvature $\kappa(s)$ is a piecewise linear defined function over distance. Since we use lines, spirals and arcs, three definitions for those pieces are required. A line is described by $\kappa(s) = 0$, a spiral is characterized by a linear change of curvature: $\kappa(s) = a s$, where $a$ is constant (for details on spirals cf. [ref]). Finally, an arc's curvature is defined as: $\kappa(s) = \kappa_\text{arc}$, where $\kappa_\text{arc}$ is constant. Those definitions have their origin at $s=0$ and need to be shifted by their specific $s_\text{start}$ when being concatenated to a curvature graph. If the initial values $\phi_\text{0}, x_\text{0}, y_\text{0}$ are provided, the plan view coordinates can be calculated as follows:
+\begin{equation} \label{eq1}
+\begin{split}
+\phi(s) &= \int_0^s \kappa(\hat{s}) d\hat{s} + \phi_\text{0} \\ 
+x(s) &= \int_{0}^{s} \cos(\phi(\hat{s})) d\hat{s} + x_\text{0} \\ 
+y(s) &= \int_{0}^{s} \sin(\phi(\hat{s})) d\hat{s} + y_\text{0} \\
+\end{split}
+\end{equation}
 
-\textit{now explain tree structure}
+The definition of the road network is stored in XML format. A simplified illustration of the structure is shown in Fig.~\ref{fig_schema}. On the first level under the \textit{roadNetwork} tag all segments are defined and links which connect them can be stated. In addition, "loose ends" of segments can be automatically connected inside the \textit{closeRoadNetwork} tag. 
+
+\textit{describe segments in detail... ref line is clear, now features...}
 
 \begin{figure}[thpb] 		
 	\centering
 	\includegraphics{fig/schema.pdf}
 	\caption{Hierarchical structure of the road network. On the first level all segments and their relation to each other are defined. In addition, it is possible to define the automatic connection of two road ends. Segments are defined as roundabouts, junctions and connection roads. $r_i$ and $I$ describe roads and intersection definitions, respectively}
-	\label{figurelabel}
+	\label{fig_schema}
 \end{figure}
+
 \section{ROAD GENERATION}
 
 \subsection{Geometry}
