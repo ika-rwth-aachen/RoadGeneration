@@ -88,9 +88,12 @@ This article introduces a prototypical logical description language for complex 
 \section{RELATED WORK}
 During the research initiative PEGASUS [ref] these concepts have been developed and utilized within the domain German motorway. Furthermore, the main focus has been on layer four. Nevertheless, when moving the testing domain to inner city scenarios such as the driving behavior on intersections, layers one to three are much more complex. Motorways usually consist of parallel lanes which follow curves with big radii. Such a road is not complicated to describe and generate. It can be done automatically with low effort. [ref. menzel et al.] propose a method to create a standardized road network in the OpenDRIVE format from a logical (and functional) road description. However, inner city intersections are more complex both in the logical description and in terms of the concrete format. 
 
-die Frage ist, was alles "related" ist... eventuell kuerzer halten und laengere introduction? \cite{BagschikG..2018} \cite{Roesener2017}
+die Frage ist, was alles "related" ist... eventuell kuerzer halten und laengere introduction? \textit{bibtex platzhalter} \cite{BagschikG..2018} \cite{Roesener2017}
+
+\textit{hier muss noch der DLR ODR generator und deren logische Beschreibung für Autobahnen aus Pegasus rein}
 
 \section{METHODOLOGY}
+The concept presented in this paper aims to offer a logical description for road networks which can be translated into a concrete standardized format. We use XML to store the input and the corresponding OpenDRIVE output is saved in XML as well. With the logical description comes a road generation tool that calculates all required OpenDRIVE quantities from the simplified input.
 
 \section{LOGICAL ROAD DESCRIPTION}
 The proposed logical road description is derived from the reference line concept used in OpenDRIVE [ref]. This means that each lane is described by an offset from a reference line defined in the x,y-plane (topview). However, in contrast to OpenDRIVE we introduce some simplifications and eliminate redundancies along the reference line. Each road segment consists of the geometric primitives line, arc and spiral, which is motivated by the federal guidelines for road constructions [ref]. In order to ensure a smooth driveability along the road network, we define that the curvature graph has to be continuous. Therefor, the definition of curvature over distance, a start point and initial heading is sufficient to uniquely describe a road segment's course (cf.~(\ref{eq1})). Fig.~\ref{fig_curvGraph} shows the definition of a road segment that is composed of the geometric primitive sequence line-spiral-arc-spiral-line.
@@ -138,7 +141,7 @@ The definition of the road network is stored in XML format. A simplified illustr
 \begin{figure}[thpb] 		
 	\centering
 	\includegraphics{fig/createJunction.pdf}
-	\caption{From logical definition to concrete intersection. After the reference lines are in the correct position a), lanes are generated (b). Subsequently, the intersection area is cut free (c) and all required connection lanes are generated automatically (d). \textbf{grafik ok so...?}}
+	\caption{From logical definition to concrete intersection. After the reference lines are in the correct position a), corresponding lanes are generated (b). Subsequently, the intersection area is cut free (c) and all required connection lanes are generated automatically (d). \textbf{grafik ok so...?}}
 	\label{fig_createJunction}
 \end{figure}
 \subsection{Geometry}
