@@ -1,0 +1,1532 @@
+
+@misc{linder-norenMinimalPyTorchImplementation2018,
+  title = {Minimal {{PyTorch}} Implementation of {{YOLOv3}}. {{Contribute}} to Eriklindernoren/{{PyTorch}}-{{YOLOv3}} Development by Creating an Account on {{GitHub}}},
+  author = {{Linder-Nor\'en}, Erik},
+  month = nov,
+  year = {2018},
+  keywords = {\#nosource}
+}
+
+@inproceedings{yang2016wider,
+	Author = {Yang, Shuo and Luo, Ping and Loy, Chen Change and Tang, Xiaoou},
+	Booktitle = {IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+	Title = {WIDER FACE: A Face Detection Benchmark},
+	Year = {2016}
+}
+
+@INPROCEEDINGS{laroca2018robust, 
+  author={Rayson Laroca and Evair Severo and Luiz A. Zanlorensi and Luiz S. Oliveira and Gabriel Resende Gon{\c{c}}alves and William Robson Schwartz and David Menotti}, 
+  booktitle={2018 International Joint Conference on Neural Networks (IJCNN)}, 
+  title={A Robust Real-Time Automatic License Plate Recognition Based on the YOLO Detector}, 
+  year={2018}, 
+  volume={}, 
+  number={}, 
+  pages={1-10}, 
+  keywords={Cameras;Automobiles;Motorcycles;Character recognition;Object detection;Real-time systems;Licenses}, 
+  doi={10.1109/IJCNN.2018.8489629}, 
+  ISSN={2161-4407}, 
+  month={July},
+}
+
+@inproceedings{Cordts2016Cityscapes,
+title={The Cityscapes Dataset for Semantic Urban Scene Understanding},
+author={Cordts, Marius and Omran, Mohamed and Ramos, Sebastian and Rehfeld, Timo and Enzweiler, Markus and Benenson, Rodrigo and Franke, Uwe and Roth, Stefan and Schiele, Bernt},
+booktitle={Proc. of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+year={2016}
+}
+
+@inproceedings{jungResNetBasedVehicleClassification2017,
+  title = {{{ResNet}}-{{Based Vehicle Classification}} and {{Localization}} in {{Traffic Surveillance Systems}}},
+  doi = {10/gfkx58},
+  abstract = {In this paper, we present ResNet-based vehicle classification and localization methods using real traffic surveillance recordings. We utilize a MIOvision traffic dataset, which comprises 11 categories including a variety of vehicles, such as bicycle, bus, car, motorcycle, and so on. To improve the classification performance, we exploit a technique called joint fine-tuning (JF). In addition, we propose a dropping CNN (DropCNN) method to create a synergy effect with the JF. For the localization, we implement basic concepts of state-of-the-art region based detector combined with a backbone convolutional feature extractor using 50 and 101 layers of residual networks and ensemble them into a single model. Finally, we achieved the highest accuracy in both classification and localization tasks using the dataset among several state-of-the-art methods, including VGG16, AlexNet, and ResNet50 for the classification, and YOLO Faster R-CNN, and SSD for the localization reported on the website.},
+  booktitle = {2017 {{IEEE Conference}} on {{Computer Vision}} and {{Pattern Recognition Workshops}} ({{CVPRW}})},
+  author = {Jung, H. and Choi, M. and Jung, J. and Lee, J. and Kwon, S. and Jung, W. Y.},
+  month = jul,
+  year = {2017},
+  keywords = {AlexNet dataset,backbone convolutional feature extractor,Computer vision,Conferences,DropCNN method,dropping convolutional neural networks,feature extraction,Feature extraction,image classification,JF technique,joint fine-tuning technique,MIOvision traffic dataset,neural nets,Pattern recognition,Proposals,residual networks,ResNet-based vehicle classification,ResNet-based vehicle localization,ResNet50 dataset,road traffic,SSD,synergy effect,traffic engineering computing,traffic surveillance systems,VGG16 dataset,YOLO Faster R-CNN},
+  pages = {934-940},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Jung et al_2017_ResNet-Based Vehicle Classification and Localization in Traffic Surveillance.pdf;/home/schuldes/Zotero/storage/TIPG7XWU/8014863.html}
+}
+
+@inproceedings{rohRefiningFasterRCNNAccurate2017,
+  title = {Refining Faster-{{RCNN}} for Accurate Object Detection},
+  doi = {10/gfkx59},
+  abstract = {Object detector with region proposal networks such as Fast/Faster R-CNN [1, 2] have shown the state-of-the art performance on several benchmarks. However, they have limited success for detecting small objects. We argue the limitation is related to insufficient performance of Fast R-CNN block in Faster R-CNN. In this paper, we propose a refining block for Fast R-CNN. We further merge the block and Faster R-CNN into a single network (RF-RCNN). The RF-RCNN was applied on plate and human detection in RoadView image that consists of high resolution street images (over 30M pixels). As a result, the RF-RCNN showed great improvement over the Faster-RCNN.},
+  booktitle = {2017 {{Fifteenth IAPR International Conference}} on {{Machine Vision Applications}} ({{MVA}})},
+  author = {Roh, M. and Lee, J.},
+  month = may,
+  year = {2017},
+  keywords = {Proposals,Art,Detectors,fast/faster R-CNN,high resolution street images,human detection,image resolution,Licenses,object detection,Object detection,Organizations,RoadView image,Training},
+  pages = {514-517},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Roh_Lee_2017_Refining faster-RCNN for accurate object detection.pdf;/home/schuldes/Zotero/storage/LT4QHMA5/7986913.html}
+}
+
+@article{wuGroupNormalization2018,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1803.08494},
+  primaryClass = {cs},
+  title = {Group {{Normalization}}},
+  abstract = {Batch Normalization (BN) is a milestone technique in the development of deep learning, enabling various networks to train. However, normalizing along the batch dimension introduces problems \textemdash{} BN's error increases rapidly when the batch size becomes smaller, caused by inaccurate batch statistics estimation. This limits BN's usage for training larger models and transferring features to computer vision tasks including detection, segmentation, and video, which require small batches constrained by memory consumption. In this paper, we present Group Normalization (GN) as a simple alternative to BN. GN divides the channels into groups and computes within each group the mean and variance for normalization. GN's computation is independent of batch sizes, and its accuracy is stable in a wide range of batch sizes. On ResNet-50 trained in ImageNet, GN has 10.6\% lower error than its BN counterpart when using a batch size of 2; when using typical batch sizes, GN is comparably good with BN and outperforms other normalization variants. Moreover, GN can be naturally transferred from pre-training to fine-tuning. GN can outperform its BNbased counterparts for object detection and segmentation in COCO,1 and for video classification in Kinetics, showing that GN can effectively replace the powerful BN in a variety of tasks. GN can be easily implemented by a few lines of code in modern libraries.},
+  language = {en},
+  journal = {arXiv:1803.08494 [cs]},
+  author = {Wu, Yuxin and He, Kaiming},
+  month = mar,
+  year = {2018},
+  keywords = {🔍No DOI found,Computer Science - Computer Vision and Pattern Recognition,Computer Science - Machine Learning,⛔ No DOI found},
+  file = {/home/schuldes/Zotero/storage/ZU2ANLWM/Wu und He - 2018 - Group Normalization.pdf}
+}
+
+@article{tangPyramidBoxContextassistedSingle2018,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1803.07737},
+  primaryClass = {cs},
+  title = {{{PyramidBox}}: {{A Context}}-Assisted {{Single Shot Face Detector}}},
+  shorttitle = {{{PyramidBox}}},
+  abstract = {Face detection has been well studied for many years and one of remaining challenges is to detect small, blurred and partially occluded faces in uncontrolled environment. This paper proposes a novel context-assisted single shot face detector, named \textbackslash{}emph\{PyramidBox\} to handle the hard face detection problem. Observing the importance of the context, we improve the utilization of contextual information in the following three aspects. First, we design a novel context anchor to supervise high-level contextual feature learning by a semi-supervised method, which we call it PyramidAnchors. Second, we propose the Low-level Feature Pyramid Network to combine adequate high-level context semantic feature and Low-level facial feature together, which also allows the PyramidBox to predict faces of all scales in a single shot. Third, we introduce a context-sensitive structure to increase the capacity of prediction network to improve the final accuracy of output. In addition, we use the method of Data-anchor-sampling to augment the training samples across different scales, which increases the diversity of training data for smaller faces. By exploiting the value of context, PyramidBox achieves superior performance among the state-of-the-art over the two common face detection benchmarks, FDDB and WIDER FACE. Our code is available in PaddlePaddle: \textbackslash{}href\{https://github.com/PaddlePaddle/models/tree/develop/fluid/face\_detection\}\{\textbackslash{}url\{https://github.com/PaddlePaddle/models/tree/develop/fluid/face\_detection\}\}.},
+  journal = {arXiv:1803.07737 [cs]},
+  author = {Tang, Xu and Du, Daniel K. and He, Zeqiang and Liu, Jingtuo},
+  month = mar,
+  year = {2018},
+  keywords = {🔍No DOI found,Computer Science - Computer Vision and Pattern Recognition,⛔ No DOI found},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Tang et al_2018_PyramidBox.pdf;/home/schuldes/Zotero/storage/EWF5VBCF/1803.html}
+}
+
+@article{huFindingTinyFaces2016,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1612.04402},
+  primaryClass = {cs},
+  title = {Finding {{Tiny Faces}}},
+  abstract = {Though tremendous strides have been made in object recognition, one of the remaining open challenges is detecting small objects. We explore three aspects of the problem in the context of finding small faces: the role of scale invariance, image resolution, and contextual reasoning. While most recognition approaches aim to be scale-invariant, the cues for recognizing a 3px tall face are fundamentally different than those for recognizing a 300px tall face. We take a different approach and train separate detectors for different scales. To maintain efficiency, detectors are trained in a multi-task fashion: they make use of features extracted from multiple layers of single (deep) feature hierarchy. While training detectors for large objects is straightforward, the crucial challenge remains training detectors for small objects. We show that context is crucial, and define templates that make use of massively-large receptive fields (where 99\% of the template extends beyond the object of interest). Finally, we explore the role of scale in pre-trained deep networks, providing ways to extrapolate networks tuned for limited scales to rather extreme ranges. We demonstrate state-of-the-art results on massively-benchmarked face datasets (FDDB and WIDER FACE). In particular, when compared to prior art on WIDER FACE, our results reduce error by a factor of 2 (our models produce an AP of 82\% while prior art ranges from 29-64\%).},
+  journal = {arXiv:1612.04402 [cs]},
+  author = {Hu, Peiyun and Ramanan, Deva},
+  month = dec,
+  year = {2016},
+  keywords = {🔍No DOI found,Computer Science - Computer Vision and Pattern Recognition,⛔ No DOI found},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Hu_Ramanan_2016_Finding Tiny Faces.pdf;/home/schuldes/Nextcloud/Documents/MA/zotero/Hu_Ramanan_2016_Finding Tiny Faces2.pdf;/home/schuldes/Zotero/storage/6W3AMD6C/1612.html;/home/schuldes/Zotero/storage/VQRGAFDA/1612.html}
+}
+
+@article{chengEncryptionSystemIntegrated,
+  title = {Encryption {{System Integrated}} with {{ROI}} and {{Tracking}} for {{High Efficiency Video Coding}}},
+  abstract = {In this paper, we present a novel encryption scheme that integrates Region of Interest (ROI) tracking on the next generation High Efficiency Video Coding (HEVC) standard. With the Tracking Learning Detection (TLD) algorithm, the ROI encryption system can become more intelligent through constrained motion estimation and some constrained mode decision. The encryption system we proposed on the selected bin strings in Context Adaptive Binary Arithmetic Coding (CABAC) of the HEVC can achieve an obvious encryption performance improvement on different situations. With the RSA and key management scheme, the security of our encryption system is fully guaranteed.},
+  language = {en},
+  author = {Cheng, Ximing and Li, Houqiang},
+  keywords = {🔍No DOI found,⛔ No DOI found},
+  pages = {8},
+  file = {/home/schuldes/Zotero/storage/YKD5RDD6/Cheng und Li - Encryption System Integrated with ROI and Tracking.pdf}
+}
+
+@article{heDeepResidualLearning2015,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1512.03385},
+  primaryClass = {cs},
+  title = {Deep {{Residual Learning}} for {{Image Recognition}}},
+  abstract = {Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously. We explicitly reformulate the layers as learning residual functions with reference to the layer inputs, instead of learning unreferenced functions. We provide comprehensive empirical evidence showing that these residual networks are easier to optimize, and can gain accuracy from considerably increased depth. On the ImageNet dataset we evaluate residual nets with a depth of up to 152 layers---8x deeper than VGG nets but still having lower complexity. An ensemble of these residual nets achieves 3.57\% error on the ImageNet test set. This result won the 1st place on the ILSVRC 2015 classification task. We also present analysis on CIFAR-10 with 100 and 1000 layers. The depth of representations is of central importance for many visual recognition tasks. Solely due to our extremely deep representations, we obtain a 28\% relative improvement on the COCO object detection dataset. Deep residual nets are foundations of our submissions to ILSVRC \& COCO 2015 competitions, where we also won the 1st places on the tasks of ImageNet detection, ImageNet localization, COCO detection, and COCO segmentation.},
+  journal = {arXiv:1512.03385 [cs]},
+  author = {He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian},
+  month = dec,
+  year = {2015},
+  keywords = {🔍No DOI found,Computer Science - Computer Vision and Pattern Recognition,⛔ No DOI found},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/He et al_2015_Deep Residual Learning for Image Recognition.pdf;/home/schuldes/Zotero/storage/PAIZZ5IW/1512.html}
+}
+
+@article{zhangJointFaceDetection2016,
+  title = {Joint {{Face Detection}} and {{Alignment Using Multitask Cascaded Convolutional Networks}}},
+  volume = {23},
+  issn = {1070-9908, 1558-2361},
+  doi = {10/gfhwcq},
+  language = {en},
+  number = {10},
+  journal = {IEEE Signal Processing Letters},
+  author = {Zhang, Kaipeng and Zhang, Zhanpeng and Li, Zhifeng and Qiao, Yu},
+  month = oct,
+  year = {2016},
+  pages = {1499-1503},
+  file = {/home/schuldes/Zotero/storage/LI6JMKKF/Zhang et al. - 2016 - Joint Face Detection and Alignment Using Multitask.pdf}
+}
+
+@inproceedings{ruchaudASePPIAdaptiveScrambling2017,
+  title = {{{ASePPI}}, an Adaptive Scrambling Enabling Privacy Protection and Intelligibility in {{H}}.264/{{AVC}}},
+  doi = {10/gfkx6d},
+  abstract = {The usage of video surveillance systems increases more and more every year and protecting people privacy becomes a serious concern. In this paper, we present ASePPI, an Adaptive Scrambling enabling Privacy Protection and Intelligibility. It operates in the DCT domain within the H.264 standard. For each residual block of the luminance channel inside the region of interest, we encrypt the coefficients. Whereas encrypted coefficients appear as noise in the protected image, the DC value is dedicated to restore some of the original information. Thus, the proposed approach automatically adapts the level of protection according to the resolution of the region of interest. Comparing to existing methods, our framework provides better privacy protection with some flexibilities on the appearance of the protected version yielding better visibility of the scene for monitoring. Moreover, the impact on the source coding stream is negligible. Indeed, the results demonstrate a slight decrease in the quality of the reconstructed images and a small percentage of bits overhead.},
+  booktitle = {2017 25th {{European Signal Processing Conference}} ({{EUSIPCO}})},
+  author = {Ruchaud, N. and Dugelay, J.},
+  month = aug,
+  year = {2017},
+  keywords = {Cameras,adaptive scrambling,ASePPI,cryptography,data privacy,encrypted coefficients,Encryption,H.264/AVC,Image coding,image reconstruction,Image resolution,intelligibility,people privacy protection,Privacy,privacy protection,protected image,protected version,Signal processing algorithms,video coding,video surveillance,video surveillance systems},
+  pages = {946-950},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Ruchaud_Dugelay_2017_ASePPI, an adaptive scrambling enabling privacy protection and intelligibility.pdf;/home/schuldes/Zotero/storage/WUXYH7RQ/8081347.html}
+}
+
+@misc{agrawalFindingTinyFaces2018,
+  title = {Finding {{Tiny Faces}} in {{PyTorch}}. {{Contribute}} to Varunagrawal/Tiny-Faces-Pytorch Development by Creating an Account on {{GitHub}}},
+  copyright = {MIT},
+  author = {Agrawal, Varun},
+  month = oct,
+  year = {2018},
+  keywords = {\#nosource}
+}
+
+@misc{cydoniaTensorflowTinyFace2018,
+  title = {A {{Tensorflow Tiny Face Detector}}, Implementing "{{Finding Tiny Faces}}": Cydonia999/{{Tiny}}\_{{Faces}}\_in\_{{Tensorflow}}},
+  copyright = {MIT},
+  shorttitle = {A {{Tensorflow Tiny Face Detector}}, Implementing "{{Finding Tiny Faces}}"},
+  author = {{cydonia}},
+  month = nov,
+  year = {2018},
+  keywords = {\#nosource}
+}
+
+@misc{huTinyFaceDetector2018,
+  title = {Tiny {{Face Detector}}, {{CVPR}} 2017. {{Contribute}} to Peiyunh/Tiny Development by Creating an Account on {{GitHub}}},
+  copyright = {View license},
+  author = {Hu, Peiyun},
+  month = nov,
+  year = {2018},
+  keywords = {\#nosource},
+  note = {cites: HEVCTestModel}
+}
+
+@inproceedings{alvarCanYouFind2018,
+  title = {Can You {{Find}} a {{Face}} in a {{HEVC Bitstream}}?},
+  doi = {10/gfkx6g},
+  abstract = {Finding faces in images is one of the most important tasks in computer vision, with applications in biometrics, surveillance, human-computer interaction, and other areas. In our earlier work, we demonstrated that it is possible to tell whether or not an image contains a face by only examining the HEVC syntax, without fully reconstructing the image. In the present work we move further in this direction by showing how to localize faces in HEVC-coded images, without full reconstruction. We also demonstrate the benefits that such approach can have in privacy-friendly face localization.},
+  booktitle = {2018 {{IEEE International Conference}} on {{Acoustics}}, {{Speech}} and {{Signal Processing}} ({{ICASSP}})},
+  author = {Alvar, S. R. and Choi, H. and Bajic, I. V.},
+  month = apr,
+  year = {2018},
+  keywords = {Benchmark testing,computer vision,image reconstruction,video coding,Computer architecture,Decoding,deep learning,Face,Face detection,face localization,face recognition,HEVC,HEVC bitstream,HEVC-coded images,human-computer interaction,Image reconstruction,privacy,scrambling,surveillance,Syntactics},
+  pages = {1288-1292},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Alvar et al_2018_Can you Find a Face in a HEVC Bitstream.pdf;/home/schuldes/Nextcloud/Documents/MA/zotero/Alvar et al_2018_Can you Find a Face in a HEVC Bitstream2.pdf;/home/schuldes/Zotero/storage/83YS8F9Q/references.html;/home/schuldes/Zotero/storage/RY8BLDN3/8462654.html}
+}
+
+@article{boyadjisExtendedSelectiveEncryption2017a,
+  title = {Extended {{Selective Encryption}} of {{H}}.264/{{AVC}} ({{CABAC}})- and {{HEVC}}-{{Encoded Video Streams}}},
+  volume = {27},
+  issn = {1051-8215},
+  doi = {10/gfgzx3},
+  abstract = {This paper proposes an extended selective encryption (SE) method for both H.264/advanced video coding (AVC) (CABAC) and High Efficiency Video Coding (HEVC) streams, addressing the main security issue that SE is facing: content protection, related to the amount of information leakage through a protected video. Our contribution is the improvement in the visual distortion induced by SE approaches. Previous works on both H.264/AVC (CABAC) and HEVC limit encryption to bins treated by one specific mode of CABAC\textemdash{}its bypass mode\textemdash{}which has the advantage of preserving the overall bitrate, we propose here to also rely on the encryption of the more widely used mode of CABAC\textemdash{}its regular mode. This allows encryption of a major codeword for video reconstruction, the prediction modes for intra blocks/units. Disturbing their statistics may cause bitrate overhead, which is the tradeoff for improving the content security level of the SE approach. A comprehensive study of this compromise between the improvement in the scrambling efficiency and the undesirable aftereffects is presented in this paper, and a specific security analysis of the proposed CABAC regular mode encryption is conducted.},
+  number = {4},
+  journal = {IEEE Trans. Cir. and Sys. for Video Technol.},
+  author = {Boyadjis, Benoit and Bergeron, Cyril and {Pesquet-Popescu}, Beatrice and Dufaux, Frederic},
+  month = apr,
+  year = {2017},
+  keywords = {cryptography,Encryption,image reconstruction,video coding,bypass mode,CABAC,Channel coding,content protection,content security level improvement,Context-adaptive binary arithmetic coding (CABAC),H.264-advanced video coding method,H.264-AVC extended selective encryption,H.264/advanced video coding (AVC),HEVC-encoded video stream,High Efficiency Video Coding (HEVC),high efficiency video coding stream,information leakage,prediction mode,scrambling efficiency improvement,SE approach,security analysis,selective encryption (SE),Standards,Streaming media,video reconstruction,video streaming,visual distortion},
+  pages = {892--906},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Boyadjis et al_2017_Extended Selective Encryption of H.pdf;/home/schuldes/Zotero/storage/4D5PEC3J/7370952.html}
+}
+
+@inproceedings{hamidoucheSelectiveVideoEncryption2015,
+  title = {Selective Video Encryption Using Chaotic System in the {{SHVC}} Extension},
+  doi = {10/gfkx6j},
+  abstract = {In this paper we investigate a selective video encryption in the scalable HEVC extension (SHVC). The SHVC extension encodes the video in several layers corresponding to different spatial and quality representations of the video. We propose a selective encryption solution using a chaotic-based encryption system. The proposed solution encrypts a set of sensitive parameters with a minimum complexity overhead, at constant bitrate and SHVC format compliant. Experimental results compare the performance of three encryption schemes: encrypt only the lowest layer, all layers, and only the highest layer. The first two schemes achieve a high security level with a drastic degradation in the decoded video, while the last scheme enables a perceptual video encryption by decreasing the quality of the highest layer below the quality of the clear layers.},
+  booktitle = {2015 {{IEEE International Conference}} on {{Acoustics}}, {{Speech}} and {{Signal Processing}} ({{ICASSP}})},
+  author = {Hamidouche, W. and Farajallah, M. and Raulet, M. and D\'eforges, O. and Assad, S. El},
+  month = apr,
+  year = {2015},
+  keywords = {image resolution,cryptography,Encryption,video coding,Syntactics,Streaming media,video codecs,Video coding,Bit rate,Chaos,chaotic-based encryption system,data compression,image representation,quality representations,scalable HEVC extension,selective encryption,selective video encryption,Selective video encryption,SHVC,spatial representations},
+  pages = {1762-1766},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Hamidouche et al_2015_Selective video encryption using chaotic system in the SHVC extension.pdf;/home/schuldes/Zotero/storage/EQYBGRMV/7178273.html}
+}
+
+@inproceedings{carrilloCompressionIndependentObject2008,
+  address = {Hannover, Germany},
+  title = {Compression Independent Object Encryption for Ensuring Privacy in Video Surveillance},
+  isbn = {978-1-4244-2570-9},
+  doi = {10/cmpxrz},
+  abstract = {One of the main concerns of the wide use of video surveillance is the loss of individual privacy. Individuals who are not suspects need not be identified on camera recordings. Mechanisms that protect the identity while ensuring legitimate security needs are necessary. Selectively encrypting objects that reveal identity (e.g., faces or vehicle tags) is necessary to preserve individuals' right to privacy. This paper presents a compression algorithm independent solution that provides privacy in video surveillance applications. The proposed approach is based on the use of permutation based encryption to hide identity revealing features. The permutation based encryption tolerates lossy compression and allows decryption at a later time. The use of permutation based encryption makes the proposed solution independent of the compression algorithms used. The paper presents the performance of the system when using H.264 video encoding.},
+  language = {en},
+  booktitle = {2008 {{IEEE International Conference}} on {{Multimedia}} and {{Expo}}},
+  publisher = {{IEEE}},
+  author = {Carrillo, Paula and Kalva, Hari and Magliveras, Spyros},
+  month = jun,
+  year = {2008},
+  pages = {273-276},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Carrillo et al_2008_Compression independent object encryption for ensuring privacy in video.pdf;/home/schuldes/Nextcloud/Documents/MA/zotero/Carrillo et al_2008_Compression independent object encryption for ensuring privacy in video2.pdf;/home/schuldes/Nextcloud/Documents/MA/zotero/Carrillo et al_2008_Compression independent object encryption for ensuring privacy in video3.pdf}
+}
+
+@inproceedings{tongRestricted264AVC2010,
+  address = {Hong Kong, Hong Kong},
+  title = {Restricted {{H}}.264/{{AVC}} Video Coding for Privacy Region Scrambling},
+  isbn = {978-1-4244-7992-4},
+  doi = {10/fqdfwj},
+  abstract = {Scrambling is widely used to protect privacy in surveillance video. However, as a critical issue in privacy protected video scrambling, drift error has not been adequately studied. In this paper, we focus on drift error prevention for different elements scrambling in privacy protected H.264/AVC video, which is the prevailing coding standard. A restricted coding scheme is proposed to prevent drift error in Transform Coefficient (TC), Intra Prediction Mode (IPM) and Motion Vector (MV) scrambling, respectively. Experiments show that the proposed scheme effectively prevents drift error with coding efficiency dramatically improved.},
+  language = {en},
+  booktitle = {2010 {{IEEE International Conference}} on {{Image Processing}}},
+  publisher = {{IEEE}},
+  author = {Tong, Lingling and Dai, Feng and Zhang, Yongdong and Li, Jintao},
+  month = sep,
+  year = {2010},
+  pages = {2089-2092},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Tong et al_2010_Restricted H.pdf;/home/schuldes/Nextcloud/Documents/MA/zotero/Tong et al_2010_Restricted H2.pdf;/home/schuldes/Nextcloud/Documents/MA/zotero/Tong et al_2010_Restricted H3.pdf}
+}
+
+@article{maLosslessROIPrivacy2016a,
+  title = {Lossless {{ROI Privacy Protection}} of {{H}}.264/{{AVC Compressed Surveillance Videos}}},
+  volume = {4},
+  issn = {2168-6750},
+  doi = {10/gfgr9k},
+  abstract = {Privacy becomes one of the major concerns of video surveillance systems, especially in cloud-based systems. Privacy protection of surveillance videos aims to protect privacy information without hampering normal video surveillance tasks. Region-of-interest (ROI) privacy protection is more practical compared with the whole video encryption approaches. However, one common drawback of virtually all current ROI privacy protection methods is that the original compressed surveillance video recorded in the camera is permanently distorted by the privacy protection process, due to the quantization in the re-encoding process. Thus, the integrity of the original compressed surveillance video captured by the camera is destroyed. This is unacceptable for some application scenarios, such as video forensics for investigations and video authentication for law enforcement. In this paper, we introduce a new paradigm for privacy protection in surveillance videos, referred to as lossless privacy region protection, which has the property that the distortion introduced by the protection of the privacy data can be completely removed from the protected videos by authorized users. We demonstrate the concept of lossless privacy region protection through a proposed scheme applied on H.264/Advanced Video Coding compressed videos.},
+  language = {en},
+  number = {3},
+  journal = {IEEE Transactions on Emerging Topics in Computing},
+  author = {Ma, Xiaojing and Zeng, Wenjun Kevin and Yang, Laurence T. and Zou, Deqing and Jin, Hai},
+  month = jul,
+  year = {2016},
+  pages = {349-362},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Ma et al_2016_Lossless ROI Privacy Protection of H.pdf;/home/schuldes/Nextcloud/Documents/MA/zotero/Ma et al_2016_Lossless ROI Privacy Protection of H.pdf;/home/schuldes/Nextcloud/Documents/MA/zotero/Ma et al_2016_Lossless ROI Privacy Protection of H3.pdf;/home/schuldes/Nextcloud/Documents/MA/zotero/Ma et al_2016_Lossless ROI Privacy Protection of H4.pdf;/home/schuldes/Nextcloud/Documents/MA/zotero/Ma et al_2016_Lossless ROI Privacy Protection of H5.pdf;/home/schuldes/Nextcloud/Documents/MA/zotero/Ma et al_2016_Lossless ROI Privacy Protection of H6.pdf}
+}
+
+@inproceedings{farajallahROIEncryptionHEVC2015,
+  address = {Quebec City, QC, Canada},
+  title = {{{ROI}} Encryption for the {{HEVC}} Coded Video Contents},
+  isbn = {978-1-4799-8339-1},
+  doi = {10/gfkx6z},
+  abstract = {In this paper we investigate privacy protection for the HEVC standard based on the tile concept. Tiles in HEVC enable the video to be split into independent rectangular regions. Two solutions are proposed to encrypt the tiles containing the Region Of Interest (ROI). The first solution performs encryption at the bitstream level by encrypting all HEVC syntax elements within the ROI tiles. The second solution enables a selective encryption of the ROI tiles under constant bitrate and format compliant requirements. To avoid temporal propagation of the encryption outside the ROI boundaries caused by inter prediction, the motion vectors of non ROI regions are restricted inside the non encrypted tiles in the reference frames.},
+  language = {en},
+  booktitle = {2015 {{IEEE International Conference}} on {{Image Processing}} ({{ICIP}})},
+  publisher = {{IEEE}},
+  author = {Farajallah, Mousa and Hamidouche, Wassim and Deforges, Olivier and Assad, Safwan El},
+  month = sep,
+  year = {2015},
+  pages = {3096-3100},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Farajallah et al_2015_ROI encryption for the HEVC coded video contents.pdf}
+}
+
+@inproceedings{nawazAnnotationfreeMethodEvaluating2015b,
+  address = {Karlsruhe, Germany},
+  title = {An Annotation-Free Method for Evaluating Privacy Protection Techniques in Videos},
+  isbn = {978-1-4673-7632-7},
+  doi = {10/gfkx6s},
+  abstract = {While several privacy protection techniques are presented in the literature, they are not complemented with an established objective evaluation method for their assessment and comparison. This paper proposes an annotationfree evaluation method that assesses the two key aspects of privacy protection that are privacy and utility. Unlike some existing methods, the proposed method does not rely on the use of subjective judgements and does not assume a specific target type in the image data. The privacy aspect is quantified as an appearance similarity and the utility aspect is measured as a structural similarity between the original raw image data and the privacy-protected image data. We performed an extensive experimentation using six challenging datasets (including two new ones) to demonstrate the effectiveness of the evaluation method by providing a performance comparison of four state-of-the-art privacy protection techniques.},
+  language = {en},
+  booktitle = {2015 12th {{IEEE International Conference}} on {{Advanced Video}} and {{Signal Based Surveillance}} ({{AVSS}})},
+  publisher = {{IEEE}},
+  author = {Nawaz, Tahir and Ferryman, James},
+  month = aug,
+  year = {2015},
+  keywords = {annotation-free evaluation method,appearance similarity,Blanking,data privacy,Data privacy,image data,Image quality,original raw image data,Positron emission tomography,Privacy,privacy protection techniques evaluation,Vehicles,video processing,video surveillance,Videos},
+  pages = {1-6},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Nawaz_Ferryman_2015_An annotation-free method for evaluating privacy protection techniques in videos.pdf;/home/schuldes/Zotero/storage/HDLHGS8B/7301800.html}
+}
+
+@misc{SHORE,
+  title = {{SHORE\textregistered}},
+  abstract = {SHORE\texttrademark{} - detect the information behind},
+  language = {de},
+  journal = {Fraunhofer-Institut f\"ur Integrierte Schaltungen IIS},
+  howpublished = {https://www.iis.fraunhofer.de/de/ff/sse/ils/tech/shore-facedetection.html},
+  file = {/home/schuldes/Zotero/storage/3B7Y5EQ8/shore-facedetection.html}
+}
+
+@inproceedings{gerhardtSelectiveFaceEncryption2017,
+  title = {Selective Face Encryption in {{H}}.264 Encoded Videos},
+  doi = {10/gfkx68},
+  abstract = {Video surveillance is becoming increasingly common, but raises serious questions related to data confidentiality and privacy issues. In order to address these issues, several approaches for selective video encryption have been proposed within recent years: They aim at encrypting specific video regions, while keeping the remaining video unencrypted for analysis purposes. This paper describes a new system for selective H.264 video encryption which, in contrast to other approaches, individually encrypts and decrypts several regions in the video, uses a well-accepted encryption standard, and allows playback of the partially encrypted videos using standard H.264 decoders.},
+  booktitle = {2017 {{IEEE Visual Communications}} and {{Image Processing}} ({{VCIP}})},
+  author = {Gerhardt, C. and Aichroth, P. and Mann, S.},
+  month = dec,
+  year = {2017},
+  keywords = {cryptography,Encryption,video coding,video surveillance,Decoding,Face,Standards,selective video encryption,data confidentiality,Encoding,encryption standard,H.264 video encryption,partially encrypted videos,privacy issues,selective face encryption,Videos},
+  pages = {1-4},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Gerhardt et al_2017_Selective face encryption in H.pdf;/home/schuldes/Zotero/storage/UZ2WKJ7B/8305040.html}
+}
+
+@inproceedings{bergeronRealtimeSelectiveEncryption2017,
+  address = {London},
+  title = {Real-Time Selective Encryption Solution Based on {{ROI}} for {{MPEG}}-{{A}} Visual Identity Management {{AF}}},
+  isbn = {978-1-5386-1895-0},
+  doi = {10/gfkx69},
+  abstract = {As part of a new MPEG-A standardization activity, called Visual Identity Management Application Format (VIMAF), this paper presents an end-to-end encryption solution of Region of Interest (ROI) in both AVC and HEVC encoded streams for privacy protection applications. This solution uses a selective encryption method that encrypts only the most sensitive information of the video and proposes a new adapted syntax in order to facilitate interoperability between equipment. Objective video quality measurements have shown the robustness of the proposed selective encryption solution with only a slight bitrate increase.},
+  language = {en},
+  booktitle = {2017 22nd {{International Conference}} on {{Digital Signal Processing}} ({{DSP}})},
+  publisher = {{IEEE}},
+  author = {Bergeron, Cyril and Sidaty, Naty and Hamidouche, Wassim and Boyadjis, Benoit and Le Feuvre, Jean and Lim, Youngkwon},
+  month = aug,
+  year = {2017},
+  keywords = {RTMPEGA},
+  pages = {1-5},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Bergeron et al_2017_Real-time selective encryption solution based on ROI for MPEG-A visual identity.pdf}
+}
+
+@inproceedings{unterwegerBitstreambasedScramblingRegions2016,
+  title = {Bit-Stream-Based Scrambling for Regions of Interest in {{H}}.264/{{AVC}} Videos with Drift Reduction},
+  doi = {10/gfkx7b},
+  abstract = {We propose a new scrambling approach for regions of interest in compressed H.264/AVC bit streams. By scrambling at bit stream level and applying drift reduction techniques, we reduce the processing time by up to 45\% compared to full re-encoding. Depending on the input video quality, our approach induces an overhead between -0.5 and 1.5\% (high resolution sequences) and -0.5 and 3\% (low resolution sequences), respectively, to reduce the drift outside the regions of interest. The quality degradation in these regions remains small in most cases, and moderate in a worst-case scenario with a high number of small regions of interest.},
+  booktitle = {2016 {{Sixth International Conference}} on {{Image Processing Theory}}, {{Tools}} and {{Applications}} ({{IPTA}})},
+  author = {Unterweger, A. and Cock, J. De and Uhl, A.},
+  month = dec,
+  year = {2016},
+  keywords = {Cameras,video coding,scrambling,Streaming media,data compression,Videos,AVC,bit stream,bit stream compression,bit-stream-based scrambling,drift,H.264,H.264-AVC video drift reduction,input video quality degradation,post-compression,reduction,region of interest,Region of interest,Transcoding,Transform coding,video,Video surveillance},
+  pages = {1-6},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Unterweger et al_2016_Bit-stream-based scrambling for regions of interest in H.pdf;/home/schuldes/Zotero/storage/VGV2KY9Z/7820929.html}
+}
+
+@article{molina-morenoEfficientScaleAdaptiveLicense2018,
+  title = {Efficient {{Scale}}-{{Adaptive License Plate Detection System}}},
+  issn = {1524-9050},
+  doi = {10/gfgt8v},
+  abstract = {License plate detection is a common problem in traffic surveillance applications. Although some solutions have been proposed in the literature, their success is usually restricted to very specific scenarios, with their performance dropping in more demanding conditions. One of the main challenges to be addressed for this kind of systems is the varying scale of the license plates, which depends on the distance between the vehicles and the camera. Traditionally, systems have handled this issue by sequentially running single-scale detectors over a pyramid of images. This approach, although simplifies the training process, requires as many evaluations as considered scales, which leads to running times that grow linearly with the number of scales considered. In this paper, we propose a scale-adaptive deformable part-based model which, based on a well-known boosting algorithm, automatically models scale during the training phase by selecting the most prominent features at each scale and notably reduces the test detection time by avoiding the evaluation at different scales. In addition, our method incorporates an empirically constrained-deformation model that adapts to different levels of deformation shown by distinct local features within license plates. As shown in the experimental section, the proposed detector is robust and scale and perspective independent and can work in quite diverse scenarios. Experiments on two datasets show that the proposed method achieves a significantly better performance in comparison with other methods of the state of the art.},
+  journal = {IEEE Transactions on Intelligent Transportation Systems},
+  author = {{Molina-Moreno}, M. and {Gonz\'alez-D\'iaz}, I. and {D\'iaz-de-Mar\'ia}, F.},
+  year = {2018},
+  keywords = {Feature extraction,Detectors,Licenses,video surveillance,Deformable models,GentleBoost,Image edge detection,License plate detection,Lighting,Robustness,scale-adaptive part-based model},
+  pages = {1-13},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Molina-Moreno et al_2018_Efficient Scale-Adaptive License Plate Detection System.pdf;/home/schuldes/Zotero/storage/4BWST4VV/8437177.html}
+}
+
+@article{torralbaSharingVisualFeatures2007,
+  title = {Sharing {{Visual Features}} for {{Multiclass}} and {{Multiview Object Detection}}},
+  volume = {29},
+  issn = {0162-8828},
+  doi = {10/ftbmgr},
+  abstract = {We consider the problem of detecting a large number of different classes of objects in cluttered scenes. Traditional approaches require applying a battery of different classifiers to the image, at multiple locations and scales. This can be slow and can require a lot of training data since each classifier requires the computation of many different image features. In particular, for independently trained detectors, the (runtime) computational complexity and the (training-time) sample complexity scale linearly with the number of classes to be detected. We present a multitask learning procedure, based on boosted decision stumps, that reduces the computational and sample complexity by finding common features that can be shared across the classes (and/or views). The detectors for each class are trained jointly, rather than independently. For a given performance level, the total number of features required and, therefore, the runtime cost of the classifier, is observed to scale approximately logarithmically with the number of classes. The features selected by joint training are generic edge-like features, whereas the features chosen by training each class separately tend to be more object-specific. The generic features generalize better and considerably reduce the computational cost of multiclass object detection},
+  number = {5},
+  journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  author = {Torralba, A. and Murphy, K. P. and Freeman, W. T.},
+  month = may,
+  year = {2007},
+  keywords = {image classification,Detectors,object detection,Object detection,Algorithms,Artificial Intelligence,Batteries,boosting,Boosting,Cluster Analysis,computational complexity,Computational complexity,Computational efficiency,Costs,generic edge-like features,Image Enhancement,Image Interpretation; Computer-Assisted,Information Storage and Retrieval,interclass transfer,Layout,multiclass object detection,multiclass.,multitask learning procedure,multiview object detection,Pattern Recognition; Automated,Reproducibility of Results,Runtime,Sensitivity and Specificity,sharing features,Subtraction Technique,Training data,visual features},
+  pages = {854-869},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Torralba et al_2007_Sharing Visual Features for Multiclass and Multiview Object Detection.pdf;/home/schuldes/Zotero/storage/52MXN95V/4135679.html}
+}
+
+@inproceedings{spanhelHolisticRecognitionLow2017,
+  title = {Holistic Recognition of Low Quality License Plates by {{CNN}} Using Track Annotated Data},
+  doi = {10/gfkx7d},
+  abstract = {This work is focused on recognition of license plates in low resolution and low quality images. We present a methodology for collection of real world (non-synthetic) dataset of low quality license plate images with ground truth transcriptions. Our approach to the license plate recognition is based on a Convolutional Neural Network which holistically processes the whole image, avoiding segmentation of the license plate characters. Evaluation results on multiple datasets show that our method significantly outperforms other free and commercial solutions to license plate recognition on the low quality data. To enable further research of low quality license plate recognition, we make the datasets publicly available.},
+  booktitle = {2017 14th {{IEEE International Conference}} on {{Advanced Video}} and {{Signal Based Surveillance}} ({{AVSS}})},
+  author = {{\v S}pa{\v n}hel, J. and Sochor, J. and Jur\'anek, R. and Herout, A. and Mar{\v s}\'ik, L. and Zem{\v c}\'ik, P.},
+  month = aug,
+  year = {2017},
+  keywords = {neural nets,traffic engineering computing,image resolution,Licenses,Training,image recognition,Character recognition,CNN,convolution,Convolutional Neural Network,image annotation,Image recognition,Image segmentation,low quality images,low quality license plate images,low quality license plate recognition,low resolution images,Neural networks,Optical character recognition software,track annotated data},
+  pages = {1-6},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Špaňhel et al_2017_Holistic recognition of low quality license plates by CNN using track annotated.pdf;/home/schuldes/Zotero/storage/38DI9WZI/Špaňhel et al. - 2017 - Holistic recognition of low quality license plates.pdf;/home/schuldes/Zotero/storage/DIFEC3EL/8078501.html;/home/schuldes/Zotero/storage/VL3WQ3Z3/8078501.html}
+}
+
+@misc{zhubenfuWorksRealtimeDetection2018,
+  title = {Works in Real-Time with Detection and Recognition Accuracy up to 99.8\% for {{Chinese}} License Plates: 100 Ms/Plate: Zhubenfu/{{License}}-{{Plate}}-{{Detect}}-{{Recognition}}-via-{{Deep}}-{{Neural}}-{{Networks}}-Accuracy-up-to-99.9},
+  shorttitle = {Works in Real-Time with Detection and Recognition Accuracy up to 99.8\% for {{Chinese}} License Plates},
+  author = {朱本福},
+  month = nov,
+  year = {2018},
+  keywords = {\#nosource}
+}
+
+@misc{HolisticRecognitionLowa,
+  title = {Holistic {{Recognition}} of {{Low Quality License Plates}} by {{CNN}} Using {{Track Annotated Data}} [{{IWT4S}}-{{AVSS}} 2017] | {{Traffic Research}}},
+  language = {en-US},
+  file = {/home/schuldes/Zotero/storage/M49E44HJ/holistic-recognition-of-low-quality-license-plates-by-cnn-using-track-annotated-data-iwt4s-avss.html}
+}
+
+@misc{sergiomsilvaLicensePlateDetection2018,
+  title = {License {{Plate Detection}} and {{Recognition}} in {{Unconstrained Scenarios}}: Sergiomsilva/Alpr-Unconstrained},
+  copyright = {View license},
+  shorttitle = {License {{Plate Detection}} and {{Recognition}} in {{Unconstrained Scenarios}}},
+  author = {{sergiomsilva}},
+  month = nov,
+  year = {2018},
+  keywords = {\#nosource}
+}
+
+@misc{FDDBMain,
+  title = {{{FDDB}} : {{Main}}},
+  howpublished = {http://vis-www.cs.umass.edu/fddb/},
+  file = {/home/schuldes/Zotero/storage/6EF5D7S7/fddb.html;/home/schuldes/Zotero/storage/833383LL/fddb.html;/home/schuldes/Zotero/storage/CJBGKRQL/fddb.html}
+}
+
+@misc{FaceRecognitionHomepage,
+  title = {Face {{Recognition Homepage}} - {{Databases}}},
+  howpublished = {http://www.face-rec.org/databases/},
+  file = {/home/schuldes/Zotero/storage/SUZIEUJ8/databases.html}
+}
+
+@misc{IABHome,
+  title = {{{IAB Home}}},
+  howpublished = {http://iab-rubric.org/resources/dfw.html},
+  file = {/home/schuldes/Zotero/storage/PFTTBVYN/dfw.html}
+}
+
+@book{Wien2014,
+  title     = {{High Efficiency Video Coding}},
+  publisher = {{Springer-Verlag GmbH}},
+  year      = {2014},
+  month     = sep,
+  author    = {Wien, Mathias},
+  isbn      = {978-3-662-44275-3},
+}
+
+@misc{geitgeyWorldSimplestFacial2018,
+  title = {The World's Simplest Facial Recognition Api for {{Python}} and the Command Line: Ageitgey/Face\_recognition},
+  copyright = {MIT},
+  shorttitle = {The World's Simplest Facial Recognition Api for {{Python}} and the Command Line},
+  author = {Geitgey, Adam},
+  month = nov,
+  year = {2018},
+  keywords = {\#nosource}
+}
+
+@article{xieNewCNNBasedMethod2018,
+  title = {A {{New CNN}}-{{Based Method}} for {{Multi}}-{{Directional Car License Plate Detection}}},
+  volume = {19},
+  issn = {1524-9050},
+  doi = {10/gczm6f},
+  abstract = {This paper presents a novel convolutional neural network (CNN) -based method for high-accuracy real-time car license plate detection. Many contemporary methods for car license plate detection are reasonably effective under the specific conditions or strong assumptions only. However, they exhibit poor performance when the assessed car license plate images have a degree of rotation, as a result of manual capture by traffic police or deviation of the camera. Therefore, we propose the a CNN-based MD-YOLO framework for multi-directional car license plate detection. Using accurate rotation angle prediction and a fast intersection-over-union evaluation strategy, our proposed method can elegantly manage rotational problems in real-time scenarios. A series of experiments have been carried out to establish that the proposed method outperforms over other existing state-of-the-art methods in terms of better accuracy and lower computational cost.},
+  number = {2},
+  journal = {IEEE Transactions on Intelligent Transportation Systems},
+  author = {Xie, L. and Ahmad, T. and Jin, L. and Liu, Y. and Zhang, S.},
+  month = feb,
+  year = {2018},
+  keywords = {Feature extraction,traffic engineering computing,Licenses,object detection,Training,image recognition,License plate detection,CNN,convolution,automobiles,Automobiles,car license plate images,Computational modeling,convolutional neural network,feedforward neural nets,intersection over union,MD-YOLO,MD-YOLO framework,multi-direction,multidirectional car license plate detection,real-time car license plate detection},
+  pages = {507-517},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Xie et al_2018_A New CNN-Based Method for Multi-Directional Car License Plate Detection.pdf;/home/schuldes/Nextcloud/Documents/MA/zotero/Xie et al_2018_A New CNN-Based Method for Multi-Directional Car License Plate Detection2.pdf;/home/schuldes/Zotero/storage/6VIU5WFT/authors.html;/home/schuldes/Zotero/storage/SB9UYBLT/8253610.html}
+}
+
+@misc{NormativeFlow,
+  title = {Normative Flow},
+  howpublished = {https://journals.ametsoc.org/doi/pdf/10.1175/1520-0469\%281963\%29020\%3C0130\%3ADNF\%3E2.0.CO\%3B2},
+  file = {/home/schuldes/Zotero/storage/ZTUNITNP/1520-0469(1963)0200130DNF2.0.pdf}
+}
+
+@article{larocaRobustRealTimeAutomatic2018,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1802.09567},
+  title = {A {{Robust Real}}-{{Time Automatic License Plate Recognition Based}} on the {{YOLO Detector}}},
+  doi = {10/gfgw3w},
+  abstract = {Automatic License Plate Recognition (ALPR) has been a frequent topic of research due to many practical applications. However, many of the current solutions are still not robust in real-world situations, commonly depending on many constraints. This paper presents a robust and efficient ALPR system based on the state-of-the-art YOLO object detector. The Convolutional Neural Networks (CNNs) are trained and fine-tuned for each ALPR stage so that they are robust under different conditions (e.g., variations in camera, lighting, and background). Specially for character segmentation and recognition, we design a two-stage approach employing simple data augmentation tricks such as inverted License Plates (LPs) and flipped characters. The resulting ALPR approach achieved impressive results in two datasets. First, in the SSIG dataset, composed of 2,000 frames from 101 vehicle videos, our system achieved a recognition rate of 93.53\% and 47 Frames Per Second (FPS), performing better than both Sighthound and OpenALPR commercial systems (89.80\% and 93.03\%, respectively) and considerably outperforming previous results (81.80\%). Second, targeting a more realistic scenario, we introduce a larger public dataset, called UFPR-ALPR dataset, designed to ALPR. This dataset contains 150 videos and 4,500 frames captured when both camera and vehicles are moving and also contains different types of vehicles (cars, motorcycles, buses and trucks). In our proposed dataset, the trial versions of commercial systems achieved recognition rates below 70\%. On the other hand, our system performed better, with recognition rate of 78.33\% and 35 FPS.},
+  journal = {2018 International Joint Conference on Neural Networks (IJCNN)},
+  author = {Laroca, Rayson and Severo, Evair and Zanlorensi, Luiz A. and Oliveira, Luiz S. and Gon{\c c}alves, Gabriel Resende and Schwartz, William Robson and Menotti, David},
+  month = jul,
+  year = {2018},
+  keywords = {Computer Science - Computer Vision and Pattern Recognition},
+  pages = {1-10},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Laroca et al_2018_A Robust Real-Time Automatic License Plate Recognition Based on the YOLO.pdf;/home/schuldes/Zotero/storage/8XM3M3RX/1802.html}
+}
+
+@article{liEndtoEndCarLicense2017,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1709.08828},
+  primaryClass = {cs},
+  title = {Towards {{End}}-to-{{End Car License Plates Detection}} and {{Recognition}} with {{Deep Neural Networks}}},
+  abstract = {In this work, we tackle the problem of car license plate detection and recognition in natural scene images. We propose a unified deep neural network which can localize license plates and recognize the letters simultaneously in a single forward pass. The whole network can be trained end-to-end. In contrast to existing approaches which take license plate detection and recognition as two separate tasks and settle them step by step, our method jointly solves these two tasks by a single network. It not only avoids intermediate error accumulation, but also accelerates the processing speed. For performance evaluation, three datasets including images captured from various scenes under different conditions are tested. Extensive experiments show the effectiveness and efficiency of our proposed approach.},
+  journal = {arXiv:1709.08828 [cs]},
+  author = {Li, Hui and Wang, Peng and Shen, Chunhua},
+  month = sep,
+  year = {2017},
+  keywords = {🔍No DOI found,Computer Science - Computer Vision and Pattern Recognition,⛔ No DOI found},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Li et al_2017_Towards End-to-End Car License Plates Detection and Recognition with Deep.pdf;/home/schuldes/Zotero/storage/RHEMHG2M/1709.html}
+}
+
+@article{zherzdevLPRNetLicensePlate2018,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1806.10447},
+  primaryClass = {cs},
+  title = {{{LPRNet}}: {{License Plate Recognition}} via {{Deep Neural Networks}}},
+  shorttitle = {{{LPRNet}}},
+  abstract = {This paper proposes LPRNet - end-to-end method for Automatic License Plate Recognition without preliminary character segmentation. Our approach is inspired by recent breakthroughs in Deep Neural Networks, and works in real-time with recognition accuracy up to 95\% for Chinese license plates: 3 ms/plate on nVIDIA GeForce GTX 1080 and 1.3 ms/plate on Intel Core i7-6700K CPU. LPRNet consists of the lightweight Convolutional Neural Network, so it can be trained in end-to-end way. To the best of our knowledge, LPRNet is the first real-time License Plate Recognition system that does not use RNNs. As a result, the LPRNet algorithm may be used to create embedded solutions for LPR that feature high level accuracy even on challenging Chinese license plates.},
+  journal = {arXiv:1806.10447 [cs]},
+  author = {Zherzdev, Sergey and Gruzdev, Alexey},
+  month = jun,
+  year = {2018},
+  keywords = {🔍No DOI found,Computer Science - Computer Vision and Pattern Recognition,⛔ No DOI found},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Zherzdev_Gruzdev_2018_LPRNet.pdf;/home/schuldes/Zotero/storage/GGJ3P4NL/1806.html}
+}
+
+@misc{AutomaticLicensePlate2018,
+  title = {Automatic {{License Plate Recognition}} Library. {{Contribute}} to Openalpr/Openalpr Development by Creating an Account on {{GitHub}}},
+  copyright = {AGPL-3.0},
+  howpublished = {openalpr},
+  month = nov,
+  year = {2018},
+  keywords = {\#nosource}
+}
+
+@misc{ImplementDeepLearning,
+  title = {Implement Deep Learning {{CNN}} for Plate Detection {$\cdot$} {{Issue}} \#99 {$\cdot$} Openalpr/Openalpr},
+  abstract = {Deep learning convolutional neural networks seem like the next generation for object detection. The accuracy is significantly better, and it is not tied to particular aspect ratio. This would work ...},
+  language = {en},
+  journal = {GitHub},
+  howpublished = {https://github.com/openalpr/openalpr/issues/99},
+  file = {/home/schuldes/Zotero/storage/JTKPA78D/openalpr.html}
+}
+
+@article{liReadingCarLicense2016,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1601.05610},
+  primaryClass = {cs},
+  title = {Reading {{Car License Plates Using Deep Convolutional Neural Networks}} and {{LSTMs}}},
+  abstract = {In this work, we tackle the problem of car license plate detection and recognition in natural scene images. Inspired by the success of deep neural networks (DNNs) in various vision applications, here we leverage DNNs to learn high-level features in a cascade framework, which lead to improved performance on both detection and recognition. Firstly, we train a \$37\$-class convolutional neural network (CNN) to detect all characters in an image, which results in a high recall, compared with conventional approaches such as training a binary text/non-text classifier. False positives are then eliminated by the second plate/non-plate CNN classifier. Bounding box refinement is then carried out based on the edge information of the license plates, in order to improve the intersection-over-union (IoU) ratio. The proposed cascade framework extracts license plates effectively with both high recall and precision. Last, we propose to recognize the license characters as a \{sequence labelling\} problem. A recurrent neural network (RNN) with long short-term memory (LSTM) is trained to recognize the sequential features extracted from the whole license plate via CNNs. The main advantage of this approach is that it is segmentation free. By exploring context information and avoiding errors caused by segmentation, the RNN method performs better than a baseline method of combining segmentation and deep CNN classification; and achieves state-of-the-art recognition accuracy.},
+  journal = {arXiv:1601.05610 [cs]},
+  author = {Li, Hui and Shen, Chunhua},
+  month = jan,
+  year = {2016},
+  keywords = {🔍No DOI found,Computer Science - Computer Vision and Pattern Recognition,⛔ No DOI found},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Li_Shen_2016_Reading Car License Plates Using Deep Convolutional Neural Networks and LSTMs.pdf;/home/schuldes/Zotero/storage/7TUULF99/1601.html}
+}
+
+@article{bulanSegmentationAnnotationFreeLicense2017,
+  title = {Segmentation- and {{Annotation}}-{{Free License Plate Recognition With Deep Localization}} and {{Failure Identification}}},
+  volume = {18},
+  issn = {1524-9050},
+  doi = {10/gbwq8k},
+  abstract = {Automated license plate recognition (ALPR) is essential in several roadway imaging applications. For ALPR systems deployed in the United States, variation between jurisdictions on character width, spacing, and the existence of noise sources (e.g., heavy shadows, non-uniform illumination, various optical geometries, poor contrast, and so on) present in LP images makes it challenging for the recognition accuracy and scalability of ALPR systems. Font and plate-layout variation across jurisdictions further adds to the difficulty of proper character segmentation and increases the level of manual annotation required for training classifiers for each state, which can result in excessive operational overhead and cost. In this paper, we propose a new ALPR workflow that includes novel methods for segmentation- and annotation-free ALPR, as well as improved plate localization and automation for failure identification. Our proposed workflow begins with localizing the LP region in the captured image using a two-stage approach that first extracts a set of candidate regions using a weak sparse network of winnows classifier and then filters them using a strong convolutional neural network (CNN) classifier in the second stage. Images that fail a primary confidence test for plate localization are further classified to identify localization failures, such as LP not present, LP too bright, LP too dark, or no vehicle found. In the localized plate region, we perform segmentation and optical character recognition (OCR) jointly by using a probabilistic inference method based on hidden Markov models (HMMs) where the most likely code sequence is determined by applying the Viterbi algorithm. In order to reduce manual annotation required for training classifiers for OCR, we propose the use of either artificially generated synthetic LP images or character samples acquired by trained ALPR systems already operating in other sites. The performance gap due to differences between training and target domain distributions is minimized using an unsupervised domain adaptation. We evaluated the performance of our proposed methods on LP images captured in several US jurisdictions under realistic conditions.},
+  number = {9},
+  journal = {IEEE Transactions on Intelligent Transportation Systems},
+  author = {Bulan, O. and Kozitsky, V. and Ramesh, P. and Shreve, M.},
+  month = sep,
+  year = {2017},
+  keywords = {Feature extraction,image classification,neural nets,Licenses,Training,deep learning,image quality assessment,Character recognition,Image segmentation,Optical character recognition software,convolutional neural network,ALPR systems,ALPR workflow,annotation,annotation-free ALPR,annotation-free license plate recognition,automated license plate recognition,character recognition,character segmentation,character width,classifiers,CNN classifier,convolutional neural networks,deep localization,domain adaptation,failure identification,Font,hidden Markov models,HMM,image segmentation,noise sources,nonuniform illumination,object recognition,OCR,optical character recognition,optical geometries,plate localization,Plate localization,plate-layout variation,probabilistic inference method,roadway imaging applications,Scalability,segmentation,segmentation-free license plate recognition,spacing,synthetic LP images,target domain distributions,unsupervised domain adaptation,Viterbi algorithm,winnows classifier},
+  pages = {2351-2363},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Bulan et al_2017_Segmentation- and Annotation-Free License Plate Recognition With Deep.pdf;/home/schuldes/Zotero/storage/IP56Q32X/7819489.html}
+}
+
+@article{rafiqueVehicleLicensePlate2018,
+  title = {Vehicle License Plate Detection Using Region-Based Convolutional Neural Networks},
+  volume = {22},
+  issn = {1433-7479},
+  doi = {10/gfcd8h},
+  abstract = {Vehicle license plate (LP) detection is a relatively complex problem until we assume the use of a static camera, variations in illumination, known templates of the LP, guaranteed color patterns and other simple assumptions. Practical applications demand robust and generalized LP detection techniques to accommodate complex scenarios. This work suggests a new approach to solving this problem by treating the vehicle LP as an object. The primary focus of this study is to address following tasks associated with the challenge of LP detection: (1) LP detection in every frame of a video sequence, (2) detection of partial LPs and (3) detection of LPs with moving cameras and moving vehicles. The state-of-the-art object detection techniques, including convolutional neural networks with region proposal (RCNN), its successors (Fast-RCNN and Faster-RCNN) and the exemplar-SVM, are used in this work to provide solutions to the problem. The suggested study demonstrates better results in comprehensive tests and comparisons than other conventional approaches.},
+  language = {en},
+  number = {19},
+  journal = {Soft Computing},
+  author = {Rafique, Muhammad Aasim and Pedrycz, Witold and Jeon, Moongu},
+  month = oct,
+  year = {2018},
+  keywords = {Artificial neural networks,exemplar-SVM,RCNN,Vehicle license plate detection},
+  pages = {6429-6440},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Rafique et al_2018_Vehicle license plate detection using region-based convolutional neural networks.pdf}
+}
+
+@article{masoodLicensePlateDetection2017,
+  title = {License {{Plate Detection}} and {{Recognition Using Deeply Learned Convolutional Neural Networks}}},
+  language = {en},
+  author = {Masood, Syed Zain and Shu, Guang and Dehghan, Afshin and Ortiz, Enrique G.},
+  month = mar,
+  year = {2017},
+  keywords = {🔍No DOI found,Computer Science - Computer Vision and Pattern Recognition,⛔ No DOI found},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Masood et al_2017_License Plate Detection and Recognition Using Deeply Learned Convolutional.pdf;/home/schuldes/Nextcloud/Documents/MA/zotero/Masood et al_2017_License Plate Detection and Recognition Using Deeply Learned Convolutional2.pdf;/home/schuldes/Zotero/storage/DQKBATX9/1703.html;/home/schuldes/Zotero/storage/IIP53R99/1703.html}
+}
+
+@inproceedings{silvaRealTimeBrazilianLicense2017,
+  title = {Real-{{Time Brazilian License Plate Detection}} and {{Recognition Using Deep Convolutional Neural Networks}}},
+  doi = {10/gfkx7f},
+  abstract = {Automatic License Plate Recognition (ALPR) is an important task with many applications in Intelligent Transportation and Surveillance systems. As in other computer vision tasks, Deep Learning (DL) methods have been recently applied in the context of ALPR, focusing on country-specific plates, such as American or European, Chinese, Indian and Korean. However, either they are not a complete DL-ALPR pipeline, or they are commercial and utilize private datasets and lack detailed information. In this work, we proposed an end-to-end DL-ALPR system for Brazilian license plates based on state-of-the-art Convolutional Neural Network architectures. Using a publicly available dataset with Brazilian plates, the system was able to correctly detect and recognize all seven characters of a license plate in 63.18\% of the test set, and 97.39\% when considering at least five correct characters (partial match). Considering the segmentation and recognition of each character individually, we are able to segment 99\% of the characters, and correctly recognize 93\% of them.},
+  booktitle = {2017 30th {{SIBGRAPI Conference}} on {{Graphics}}, {{Patterns}} and {{Images}} ({{SIBGRAPI}})},
+  author = {Silva, S. M. and Jung, C. R.},
+  month = oct,
+  year = {2017},
+  keywords = {traffic engineering computing,Licenses,object detection,Training,Cameras,computer vision,image recognition,Character recognition,Automobiles,character recognition,character segmentation,image segmentation,object recognition,Automatic License Plate Recognition,Brazilian license plates,Brazilian plates,complete DL-ALPR pipeline,computer vision tasks,Convolutional Neural Network architectures,country-specific plates,Databases,Deep Convolutional Neural networks,Deep Learning methods,end-to-end DL-ALPR system,neural net architecture,private datasets,real-time Brazilian License Plate detection},
+  pages = {55-62},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Silva_Jung_2017_Real-Time Brazilian License Plate Detection and Recognition Using Deep.pdf;/home/schuldes/Zotero/storage/GX2TN3JJ/8097294.html}
+}
+
+@inproceedings{hsuRobustLicensePlate2017,
+  title = {Robust License Plate Detection in the Wild},
+  doi = {10/gfkx7g},
+  abstract = {License Plate Detection (LPD) is the pivotal step for License Plate Recognition. In this work, we explore and customize state-of-the-art detection approaches for exclusively handling the LPD in the wild. In-the-wild LPD considers license plates captured in challenging conditions caused by bad weathers, lighting, traffics, and other factors. As conventional methods failed to handle these inevitable conditions, we explore the latest deep learning based detectors, namely YOLO (You-Only-Look-Once) and its variant YOLO-9000 (referred here as YOLO-2), and customize them for effectively handling the LPD. The prime customizations include modification of the grid size and of the bounding box parameter estimation, and the composition of a more challenging AOLPE (Application-Oriented License Plate Extended) database for performance evaluation. The AOLPE database is an extended version of the AOLP database [1] with additional images taken under extreme but frequently-encountered conditions. As the original YOLO and YOLO-2 are not designed for the LPD, they failed to handle the LPD on the AOLPE without the customizations. This study can be one of the pioneering works that revise state-of-the-art real-time deep networks for handling the LPD. It also serves as a case study for those who wish to customize existing deep networks for detecting specific objects. In addition to a pioneering explorations of deep networks for handling the in-the-wild LPD, our contribution also includes the release of the AOLPE database and evaluation protocol for a novel benchmark for the LPD.},
+  booktitle = {2017 14th {{IEEE International Conference}} on {{Advanced Video}} and {{Signal Based Surveillance}} ({{AVSS}})},
+  author = {Hsu, G. and Ambikapathi, A. and Chung, S. and Su, C.},
+  month = aug,
+  year = {2017},
+  keywords = {Detectors,Licenses,Training,image recognition,Lighting,Robustness,Databases,AOLPE database,application-oriented license plate extended database,bounding box parameter estimation,deep learning based detectors,evaluation protocol,grid size,in-the-wild LPD,license plate recognition,Machine learning,parameter estimation,prime customizations,protocols,robust license plate detection,state-of-the-art detection,state-of-the-art real-time deep networks,variant YOLO-9000,YOLO-2,you-only-look-once},
+  pages = {1-6},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Hsu et al_2017_Robust license plate detection in the wild.pdf;/home/schuldes/Zotero/storage/X2GCDJFL/Hsu et al. - 2017 - Robust license plate detection in the wild.pdf;/home/schuldes/Zotero/storage/BS5M9YZZ/8078493.html;/home/schuldes/Zotero/storage/TEFX4DM4/8078493.html}
+}
+
+@article{zhangInterpretableDeepLearning2018,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1812.00891},
+  primaryClass = {cs},
+  title = {Interpretable {{Deep Learning}} under {{Fire}}},
+  abstract = {Providing explanations for complicated deep neural network (DNN) models is critical for their usability in securitysensitive domains. A proliferation of interpretation methods have been proposed to help end users understand the inner workings of DNNs, that is, how a DNN arrives at a particular decision for a specific input. This improved interpretability is believed to offer a sense of security by involving human in the decision-making process. However, due to its data-driven nature, the interpretability itself is potentially susceptible to malicious manipulation, about which little is known thus far.},
+  language = {en},
+  journal = {arXiv:1812.00891 [cs]},
+  author = {Zhang, Xinyang and Wang, Ningfei and Ji, Shouling and Shen, Hua and Wang, Ting},
+  month = dec,
+  year = {2018},
+  keywords = {⛔ No DOI found,🔍No DOI found,Computer Science - Cryptography and Security,Computer Science - Machine Learning},
+  file = {/home/schuldes/Zotero/storage/SBGQ8DWP/Zhang et al. - 2018 - Interpretable Deep Learning under Fire.pdf;/home/schuldes/Zotero/storage/VAIQU4QP/Zhang et al. - 2018 - Interpretable Deep Learning under Fire.pdf;/home/schuldes/Zotero/storage/WWI52FY6/Zhang et al. - 2018 - Interpretable Deep Learning under Fire.pdf}
+}
+
+@misc{2018OverviewObject,
+  title = {A 2018 Overview of {{Object Detection Algorithms}} in {{Computer Vision}} | {{Machine}} Learning},
+  howpublished = {https://www.machinelearningtutorial.net/2018/09/05/a-2018-overview-of-object-detection-algorithms-in-computer-vision/},
+  file = {/home/schuldes/Zotero/storage/K2NV2RKP/a-2018-overview-of-object-detection-algorithms-in-computer-vision.html}
+}
+
+@article{chiSelectiveRefinementNetwork2018,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1809.02693},
+  primaryClass = {cs},
+  title = {Selective {{Refinement Network}} for {{High Performance Face Detection}}},
+  abstract = {High performance face detection remains a very challenging problem, especially when there exists many tiny faces. This paper presents a novel single-shot face detector, named Selective Refinement Network (SRN), which introduces novel two-step classification and regression operations selectively into an anchor-based face detector to reduce false positives and improve location accuracy simultaneously. In particular, the SRN consists of two modules: the Selective Two-step Classification (STC) module and the Selective Two-step Regression (STR) module. The STC aims to filter out most simple negative anchors from low level detection layers to reduce the search space for the subsequent classifier, while the STR is designed to coarsely adjust the locations and sizes of anchors from high level detection layers to provide better initialization for the subsequent regressor. Moreover, we design a Receptive Field Enhancement (RFE) block to provide more diverse receptive field, which helps to better capture faces in some extreme poses. As a consequence, the proposed SRN detector achieves state-of-the-art performance on all the widely used face detection benchmarks, including AFW, PASCAL face, FDDB, and WIDER FACE datasets. Codes will be released to facilitate further studies on the face detection problem.},
+  journal = {arXiv:1809.02693 [cs]},
+  author = {Chi, Cheng and Zhang, Shifeng and Xing, Junliang and Lei, Zhen and Li, Stan Z. and Zou, Xudong},
+  month = sep,
+  year = {2018},
+  keywords = {🔍No DOI found,Computer Science - Computer Vision and Pattern Recognition,⛔ No DOI found},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Chi et al_2018_Selective Refinement Network for High Performance Face Detection.pdf;/home/schuldes/Zotero/storage/RRMPFWSC/1809.html}
+}
+
+@article{liDSFDDualShot2018,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1810.10220},
+  primaryClass = {cs},
+  title = {{{DSFD}}: {{Dual Shot Face Detector}}},
+  shorttitle = {{{DSFD}}},
+  abstract = {Recently, Convolutional Neural Network (CNN) has achieved great success in face detection. However, it remains a challenging problem for the current face detection methods owing to high degree of variability in scale, pose, occlusion, expression, appearance and illumination. In this paper, we propose a novel face detection network named Dual Shot Face Detector(DSFD), which inherits the architecture of SSD and introduces a Feature Enhance Module (FEM) for transferring the original feature maps to extend the single shot detector to dual shot detector. Specially, Progressive Anchor Loss (PAL) computed by using two set of anchors is adopted to effectively facilitate the features. Additionally, we propose an Improved Anchor Matching (IAM) method by integrating novel data augmentation techniques and anchor design strategy in our DSFD to provide better initialization for the regressor. Extensive experiments on popular benchmarks: WIDER FACE (easy: \$0.966\$, medium: \$0.957\$, hard: \$0.904\$) and FDDB ( discontinuous: \$0.991\$, continuous: \$0.862\$) demonstrate the superiority of DSFD over the state-of-the-art face detectors (\textbackslash{}emph\{e.g.\}, PyramidBox and SRN). Code will be made available upon publication.},
+  journal = {arXiv:1810.10220 [cs]},
+  author = {Li, Jian and Wang, Yabiao and Wang, Changan and Tai, Ying and Qian, Jianjun and Yang, Jian and Wang, Chengjie and Li, Jilin and Huang, Feiyue},
+  month = oct,
+  year = {2018},
+  keywords = {🔍No DOI found,Computer Science - Computer Vision and Pattern Recognition,⛔ No DOI found},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Li et al_2018_DSFD.pdf;/home/schuldes/Zotero/storage/2DQ4WNFZ/1810.html}
+}
+
+@article{sirichotedumrongGrayscaleBasedImageEncryption2018,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1812.06799},
+  primaryClass = {cs, eess},
+  title = {Grayscale-{{Based Image Encryption Considering Color Sub}}-Sampling {{Operation}} for {{Encryption}}-Then-{{Compression Systems}}},
+  abstract = {A new grayscale-based block scrambling image encryption scheme is presented to enhance the security of Encryption-then-Compression (EtC) systems, which are used to securely transmit images through an untrusted channel provider. The proposed scheme enables the use of a smaller block size and a larger number of blocks than the conventional scheme. Images encrypted using the proposed scheme include less color information due to the use of grayscale images even when the original image has three color channels. These features enhance security against various attacks, such as jigsaw puzzle solver and bruteforce attacks. Moreover, it allows the use of color sub-sampling, which can improve the compression performance, although the encrypted images have no color information. In an experiment, encrypted images were uploaded to and then downloaded from Facebook and Twitter, and the results demonstrated that the proposed scheme is effective for EtC systems, while maintaining a high compression performance.},
+  language = {en},
+  journal = {arXiv:1812.06799 [cs, eess]},
+  author = {Sirichotedumrong, Warit and Chuman, Tatsuya and Kiya, Hitoshi},
+  month = dec,
+  year = {2018},
+  keywords = {🔍No DOI found,⛔ No DOI found,Computer Science - Cryptography and Security,Computer Science - Multimedia,Electrical Engineering and Systems Science - Image and Video Processing},
+  file = {/home/schuldes/Zotero/storage/ELFKU5BY/Sirichotedumrong et al. - 2018 - Grayscale-Based Image Encryption Considering Color.pdf}
+}
+
+@misc{forsonUnderstandingSSDMultiBox2017,
+  title = {Understanding {{SSD MultiBox}} \textemdash{} {{Real}}-{{Time Object Detection In Deep Learning}}},
+  abstract = {This post is meant to constitute an intuitive explanation of the SSD MultiBox object detection technique. I have tried to minimise the\ldots{}},
+  journal = {Towards Data Science},
+  howpublished = {https://towardsdatascience.com/understanding-ssd-multibox-real-time-object-detection-in-deep-learning-495ef744fab},
+  author = {Forson, Eddie},
+  month = nov,
+  year = {2017},
+  file = {/home/schuldes/Zotero/storage/ZN2STVUX/understanding-ssd-multibox-real-time-object-detection-in-deep-learning-495ef744fab.html}
+}
+
+@article{liFSSDFeatureFusion2017,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1712.00960},
+  primaryClass = {cs},
+  title = {{{FSSD}}: {{Feature Fusion Single Shot Multibox Detector}}},
+  shorttitle = {{{FSSD}}},
+  abstract = {SSD (Single Shot Multibox Detector) is one of the best object detection algorithms with both high accuracy and fast speed. However, SSD's feature pyramid detection method makes it hard to fuse the features from different scales. In this paper, we proposed FSSD (Feature Fusion Single Shot Multibox Detector), an enhanced SSD with a novel and lightweight feature fusion module which can improve the performance significantly over SSD with just a little speed drop. In the feature fusion module, features from different layers with different scales are concatenated together, followed by some down-sampling blocks to generate new feature pyramid, which will be fed to multibox detectors to predict the final detection results. On the Pascal VOC 2007 test, our network can achieve 82.7 mAP (mean average precision) at the speed of 65.8 FPS (frame per second) with the input size 300\$\textbackslash{}times\$300 using a single Nvidia 1080Ti GPU. In addition, our result on COCO is also better than the conventional SSD with a large margin. Our FSSD outperforms a lot of state-of-the-art object detection algorithms in both aspects of accuracy and speed. Code is available at https://github.com/lzx1413/CAFFE\_SSD/tree/fssd.},
+  journal = {arXiv:1712.00960 [cs]},
+  author = {Li, Zuoxin and Zhou, Fuqiang},
+  month = dec,
+  year = {2017},
+  keywords = {⛔ No DOI found,🔍No DOI found,Computer Science - Computer Vision and Pattern Recognition},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Li_Zhou_2017_FSSD.pdf;/home/schuldes/Zotero/storage/55Q3QY9Z/1712.html}
+}
+
+@article{liFSSDFeatureFusion2017a,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1712.00960},
+  primaryClass = {cs},
+  title = {{{FSSD}}: {{Feature Fusion Single Shot Multibox Detector}}},
+  shorttitle = {{{FSSD}}},
+  abstract = {SSD (Single Shot Multibox Detector) is one of the best object detection algorithms with both high accuracy and fast speed. However, SSD's feature pyramid detection method makes it hard to fuse the features from different scales. In this paper, we proposed FSSD (Feature Fusion Single Shot Multibox Detector), an enhanced SSD with a novel and lightweight feature fusion module which can improve the performance significantly over SSD with just a little speed drop. In the feature fusion module, features from different layers with different scales are concatenated together, followed by some down-sampling blocks to generate new feature pyramid, which will be fed to multibox detectors to predict the final detection results. On the Pascal VOC 2007 test, our network can achieve 82.7 mAP (mean average precision) at the speed of 65.8 FPS (frame per second) with the input size 300\texttimes{}300 using a single Nvidia 1080Ti GPU. In addition, our result on COCO is also better than the conventional SSD with a large margin. Our FSSD outperforms a lot of state-of-the-art object detection algorithms in both aspects of accuracy and speed. Code is available at https://github.com/ lzx1413/CAFFE\_SSD/tree/fssd.},
+  language = {en},
+  journal = {arXiv:1712.00960 [cs]},
+  author = {Li, Zuoxin and Zhou, Fuqiang},
+  month = dec,
+  year = {2017},
+  keywords = {⛔ No DOI found,🔍No DOI found,Computer Science - Computer Vision and Pattern Recognition},
+  file = {/home/schuldes/Zotero/storage/FES7PDDD/Li und Zhou - 2017 - FSSD Feature Fusion Single Shot Multibox Detector.pdf}
+}
+
+@misc{forsonUnderstandingSSDMultiBox2017a,
+  title = {Understanding {{SSD MultiBox}} \textemdash{} {{Real}}-{{Time Object Detection In Deep Learning}}},
+  abstract = {This post is meant to constitute an intuitive explanation of the SSD MultiBox object detection technique. I have tried to minimise the\ldots{}},
+  journal = {Towards Data Science},
+  howpublished = {https://towardsdatascience.com/understanding-ssd-multibox-real-time-object-detection-in-deep-learning-495ef744fab},
+  author = {Forson, Eddie},
+  month = nov,
+  year = {2017},
+  file = {/home/schuldes/Zotero/storage/WUBP3ZE8/understanding-ssd-multibox-real-time-object-detection-in-deep-learning-495ef744fab.html}
+}
+
+@article{bodlaSoftNMSImprovingObject2017,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1704.04503},
+  primaryClass = {cs},
+  title = {Soft-{{NMS}} -- {{Improving Object Detection With One Line}} of {{Code}}},
+  abstract = {Non-maximum suppression is an integral part of the object detection pipeline. First, it sorts all detection boxes on the basis of their scores. The detection box M with the maximum score is selected and all other detection boxes with a significant overlap (using a pre-defined threshold) with M are suppressed. This process is recursively applied on the remaining boxes. As per the design of the algorithm, if an object lies within the predefined overlap threshold, it leads to a miss. To this end, we propose Soft-NMS, an algorithm which decays the detection scores of all other objects as a continuous function of their overlap with M. Hence, no object is eliminated in this process. Soft-NMS obtains consistent improvements for the coco-style mAP metric on standard datasets like PASCAL VOC 2007 (1.7\% for both R-FCN and Faster-RCNN) and MS-COCO (1.3\% for R-FCN and 1.1\% for Faster-RCNN) by just changing the NMS algorithm without any additional hyper-parameters. Using Deformable-RFCN, Soft-NMS improves state-of-the-art in object detection from 39.8\% to 40.9\% with a single model. Further, the computational complexity of Soft-NMS is the same as traditional NMS and hence it can be efficiently implemented. Since Soft-NMS does not require any extra training and is simple to implement, it can be easily integrated into any object detection pipeline. Code for Soft-NMS is publicly available on GitHub (http://bit.ly/2nJLNMu).},
+  journal = {arXiv:1704.04503 [cs]},
+  author = {Bodla, Navaneeth and Singh, Bharat and Chellappa, Rama and Davis, Larry S.},
+  month = apr,
+  year = {2017},
+  keywords = {⛔ No DOI found,🔍No DOI found,Computer Science - Computer Vision and Pattern Recognition},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Bodla et al_2017_Soft-NMS -- Improving Object Detection With One Line of Code.pdf;/home/schuldes/Zotero/storage/ZIT6L596/1704.html}
+}
+
+@inproceedings{liuSSDSingleShot2016,
+  author="Liu, Wei
+  and Anguelov, Dragomir
+  and Erhan, Dumitru
+  and Szegedy, Christian
+  and Reed, Scott
+  and Fu, Cheng-Yang
+  and Berg, Alexander C.",
+  editor="Leibe, Bastian
+  and Matas, Jiri
+  and Sebe, Nicu
+  and Welling, Max",
+  title="SSD: Single Shot MultiBox Detector",
+  booktitle="Computer Vision -- ECCV 2016",
+  year="2016",
+  publisher="Springer International Publishing",
+  address="Cham",
+  pages="21--37",
+  abstract="We present a method for detecting objects in images using a single deep neural network. Our approach, named SSD, discretizes the output space of bounding boxes into a set of default boxes over different aspect ratios and scales per feature map location. At prediction time, the network generates scores for the presence of each object category in each default box and produces adjustments to the box to better match the object shape. Additionally, the network combines predictions from multiple feature maps with different resolutions to naturally handle objects of various sizes. SSD is simple relative to methods that require object proposals because it completely eliminates proposal generation and subsequent pixel or feature resampling stages and encapsulates all computation in a single network. This makes SSD easy to train and straightforward to integrate into systems that require a detection component. Experimental results on the PASCAL VOC, COCO, and ILSVRC datasets confirm that SSD has competitive accuracy to methods that utilize an additional object proposal step and is much faster, while providing a unified framework for both training and inference. For {\$}{\$}300 {\backslash}times 300{\$}{\$}300{\texttimes}300input, SSD achieves 74.3 {\%} mAP on VOC2007 test at 59 FPS on a Nvidia Titan X and for {\$}{\$}512 {\backslash}times 512{\$}{\$}512{\texttimes}512input, SSD achieves 76.9 {\%} mAP, outperforming a comparable state of the art Faster R-CNN model. Compared to other single stage methods, SSD has much better accuracy even with a smaller input image size. Code is available at https://github.com/weiliu89/caffe/tree/ssd.",
+  isbn="978-3-319-46448-0"
+}
+
+@article{ghiasiDropBlockRegularizationMethod2018,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1810.12890},
+  primaryClass = {cs},
+  title = {{{DropBlock}}: {{A}} Regularization Method for Convolutional Networks},
+  shorttitle = {{{DropBlock}}},
+  abstract = {Deep neural networks often work well when they are over-parameterized and trained with a massive amount of noise and regularization, such as weight decay and dropout. Although dropout is widely used as a regularization technique for fully connected layers, it is often less effective for convolutional layers. This lack of success of dropout for convolutional layers is perhaps due to the fact that activation units in convolutional layers are spatially correlated so information can still flow through convolutional networks despite dropout. Thus a structured form of dropout is needed to regularize convolutional networks. In this paper, we introduce DropBlock, a form of structured dropout, where units in a contiguous region of a feature map are dropped together. We found that applying DropbBlock in skip connections in addition to the convolution layers increases the accuracy. Also, gradually increasing number of dropped units during training leads to better accuracy and more robust to hyperparameter choices. Extensive experiments show that DropBlock works better than dropout in regularizing convolutional networks. On ImageNet classification, ResNet-50 architecture with DropBlock achieves 78.13\% accuracy, which is more than 1.6\% improvement on the baseline. On COCO detection, DropBlock improves Average Precision of RetinaNet from 36.8\% to 38.4\%.},
+  language = {en},
+  journal = {arXiv:1810.12890 [cs]},
+  author = {Ghiasi, Golnaz and Lin, Tsung-Yi and Le, Quoc V.},
+  month = oct,
+  year = {2018},
+  keywords = {⛔ No DOI found,Computer Science - Computer Vision and Pattern Recognition},
+  file = {/home/schuldes/Zotero/storage/5I8LVRDR/Ghiasi et al. - 2018 - DropBlock A regularization method for convolution.pdf}
+}
+
+@article{leeResidualFeaturesUnified2017a,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1707.05031},
+  primaryClass = {cs},
+  title = {Residual {{Features}} and {{Unified Prediction Network}} for {{Single Stage Detection}}},
+  abstract = {Recently, a lot of single stage detectors using multi-scale features have been actively proposed. They are much faster than two stage detectors that use region proposal networks (RPN) without much degradation in the detection performances. However, the feature maps in the lower layers close to the input which are responsible for detecting small objects in a single stage detector have a problem of insufficient representation power because they are too shallow. There is also a structural contradiction that the feature maps have to deliver low-level information to next layers as well as contain high-level abstraction for prediction. In this paper, we propose a method to enrich the representation power of feature maps using Resblock and deconvolution layers. In addition, a unified prediction module is applied to generalize output results and boost earlier layers' representation power for prediction. The proposed method enables more precise prediction, which achieved higher score than SSD on PASCAL VOC and MS COCO. In addition, it maintains the advantage of fast computation of a single stage detector, which requires much less computation than other detectors with similar performance. Code is available at https://github.com/kmlee-snu/run},
+  journal = {arXiv:1707.05031 [cs]},
+  author = {Lee, Kyoungmin and Choi, Jaeseok and Jeong, Jisoo and Kwak, Nojun},
+  month = jul,
+  year = {2017},
+  keywords = {⛔ No DOI found,Computer Science - Computer Vision and Pattern Recognition},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Lee et al_2017_Residual Features and Unified Prediction Network for Single Stage Detection.pdf;/home/schuldes/Zotero/storage/I6IFRQ5G/1707.html}
+}
+
+@article{zhangBagFreebiesTraining2019,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1902.04103},
+  primaryClass = {cs},
+  title = {Bag of {{Freebies}} for {{Training Object Detection Neural Networks}}},
+  abstract = {Comparing with enormous research achievements targeting better image classification models, efforts applied to object detector training are dwarfed in terms of popularity and universality. Due to significantly more complex network structures and optimization targets, various training strategies and pipelines are specifically designed for certain detection algorithms and no other. In this work, we explore universal tweaks that help boosting the performance of state-of-the-art object detection models to a new level without sacrificing inference speed. Our experiments indicate that these freebies can be as much as 5\% absolute precision increase that everyone should consider applying to object detection training to a certain degree.},
+  journal = {arXiv:1902.04103 [cs]},
+  author = {Zhang, Zhi and He, Tong and Zhang, Hang and Zhang, Zhongyuan and Xie, Junyuan and Li, Mu},
+  month = feb,
+  year = {2019},
+  keywords = {Computer Science - Computer Vision and Pattern Recognition,⛔ No DOI found},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Zhang et al_2019_Bag of Freebies for Training Object Detection Neural Networks.pdf;/home/schuldes/Zotero/storage/EI2DJ3IN/1902.html}
+}
+
+@misc{rosebrockIntersectionUnionIoU2016,
+  title = {Intersection over {{Union}} ({{IoU}}) for Object Detection},
+  abstract = {Discover how to apply the Intersection over Union metric (Python code included) to evaluate custom object detectors.},
+  language = {en-US},
+  journal = {PyImageSearch},
+  author = {Rosebrock, Adrian},
+  month = nov,
+  year = {2016},
+  file = {/home/schuldes/Zotero/storage/P7NZXYPS/intersection-over-union-iou-for-object-detection.html}
+}
+
+@article{huangSpeedAccuracyTradeoffs2016,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1611.10012},
+  primaryClass = {cs},
+  title = {Speed/Accuracy Trade-Offs for Modern Convolutional Object Detectors},
+  abstract = {The goal of this paper is to serve as a guide for selecting a detection architecture that achieves the right speed/memory/accuracy balance for a given application and platform. To this end, we investigate various ways to trade accuracy for speed and memory usage in modern convolutional object detection systems. A number of successful systems have been proposed in recent years, but apples-to-apples comparisons are difficult due to different base feature extractors (e.g., VGG, Residual Networks), different default image resolutions, as well as different hardware and software platforms. We present a unified implementation of the Faster R-CNN [Ren et al., 2015], R-FCN [Dai et al., 2016] and SSD [Liu et al., 2015] systems, which we view as "meta-architectures" and trace out the speed/accuracy trade-off curve created by using alternative feature extractors and varying other critical parameters such as image size within each of these meta-architectures. On one extreme end of this spectrum where speed and memory are critical, we present a detector that achieves real time speeds and can be deployed on a mobile device. On the opposite end in which accuracy is critical, we present a detector that achieves state-of-the-art performance measured on the COCO detection task.},
+  journal = {arXiv:1611.10012 [cs]},
+  author = {Huang, Jonathan and Rathod, Vivek and Sun, Chen and Zhu, Menglong and Korattikara, Anoop and Fathi, Alireza and Fischer, Ian and Wojna, Zbigniew and Song, Yang and Guadarrama, Sergio and Murphy, Kevin},
+  month = nov,
+  year = {2016},
+  keywords = {⛔ No DOI found,Computer Science - Computer Vision and Pattern Recognition},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Huang et al_2016_Speed-accuracy trade-offs for modern convolutional object detectors.pdf;/home/schuldes/Zotero/storage/APYW2P4N/1611.html}
+}
+
+@inproceedings{tahaEndtoEndRealTimeROIBased2018,
+  title = {End-to-{{End Real}}-{{Time ROI}}-{{Based Encryption}} in {{HEVC Videos}}},
+  doi = {10/gfws9c},
+  abstract = {In this paper, we present an end-to-end real-time encryption of Region of Interest (ROI) in HEVC videos. The proposed ROI encryption makes use of the independent tile concept of HEVC that splits the video frame into separable rectangular areas. Tiles are used to extract the ROI from the background and only the tiles forming the ROI are encrypted. The selective encryption is performed for a set of HEVC syntax elements in a format compliant with the HEVC standard. Thus, the bit-stream can be decoded with a standard HEVC decoder where a secret key is only needed for ROI decryption. In Inter coding, tiles independency is guaranteed by restricting the motion vectors to use only unencrypted tiles in the reference frames. The proposed solution is validated by integrating the encryption into the open-source Kvazaar HEVC encoder and the decryption into the open-source openHEVC decoder, respectively. The results show that this solution performs secure encryption of ROI in real time and with diminutive bitrate and complexity overheads.},
+  booktitle = {2018 26th {{European Signal Processing Conference}} ({{EUSIPCO}})},
+  author = {Taha, M. A. and Sidaty, N. and Hamidouche, W. and Dforges, O. and Vanne, J. and Viitanen, M.},
+  month = sep,
+  year = {2018},
+  keywords = {Decoding,Encoding,Encryption,Generators,High Efficiency Video Coding (HEVC),quality assessments,Region of Interest (ROI),selective encryption,Syntactics,tiles,User identity management,Videos},
+  pages = {171-175},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Taha et al_2018_End-to-End Real-Time ROI-Based Encryption in HEVC Videos.pdf;/home/schuldes/Zotero/storage/SDCSTMVE/8553038.html}
+}
+
+@misc{XiphOrgDerf,
+  title = {Xiph.Org :: {{Derf}}s {{Test Media Collection}}},
+  howpublished = {https://media.xiph.org/video/derf/},
+  file = {/home/schuldes/Zotero/storage/A2LI7NZ2/derf.html}
+}
+
+@inproceedings{sidatyLiveDemonstrationEndtoEnd2018,
+  title = {Live {{Demonstration}}: {{End}}-to-{{End Real}}-{{Time ROI}}-Based {{Encryption}} in {{HEVC Videos}}},
+  shorttitle = {Live {{Demonstration}}},
+  doi = {10/gfkx62},
+  abstract = {This paper presents a demonstration setup for live HEVC video coding with Region of Interest (ROI) encryption. The showcased approach splits video frames into independent HEVC tiles and encrypts those belonging to the ROI. This end-to-end content protection scheme is put into practice by integrating the algorithms of selective encryption into Kvazaar HEVC encoder and decryption into openHEVC decoder. The shown implementation performs secure encryption of the ROI in real time with small bit rate and complexity overhead.},
+  booktitle = {2018 {{IEEE International Symposium}} on {{Circuits}} and {{Systems}} ({{ISCAS}})},
+  author = {Sidaty, N. and Viitanen, M. and Hamidouche, W. and Vanne, J. and D\'eforges, O.},
+  month = may,
+  year = {2018},
+  keywords = {Bit rate,computational complexity,cryptography,decoding,Decoding,decryption,Electronic mail,Encryption,end-to-end content protection scheme,HEVC videos,High Efficiency Video Coding (HEVC),independent HEVC tiles,Interest encryption,live demonstration,live HEVC video coding,rate distortion theory,real-time ROI-based encryption,Real-time systems,Region of Interest (ROI),selective encryption,tiles,user identity management,video coding,video frames,Videos},
+  pages = {1-1},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Sidaty et al_2018_Live Demonstration4.pdf;/home/schuldes/Zotero/storage/YM5T52E6/8351775.html}
+}
+
+@inproceedings{birnstillUserStudyAnonymization2015,
+  title = {A User Study on Anonymization Techniques for Smart Video Surveillance},
+  doi = {10/gfwwdw},
+  abstract = {A key mechanism of privacy-aware smart video surveillance is anonymization of video data. We conducted a user study with a response of 103 participants in order to investigate which pixel operations are suitable for protecting persons' identities while, at the same time, allowing a human operator to recognize persons' activities i.e., preserving the utility of the video data. Regarding the activities in the data set, namely stealing, fighting, and dropping a bag, our data does not approve the common hypothesis that privacy and utility of video data are necessarily trade-off.},
+  booktitle = {2015 12th {{IEEE International Conference}} on {{Advanced Video}} and {{Signal Based Surveillance}} ({{AVSS}})},
+  author = {Birnstill, P. and Ren, D. and Beyerer, J.},
+  month = aug,
+  year = {2015},
+  keywords = {Image color analysis,data privacy,Privacy,video surveillance,Video surveillance,Image edge detection,anonymization techniques,Color,privacy-aware smart video surveillance,Shape,video data,Video recording},
+  pages = {1-6},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Birnstill et al_2015_A user study on anonymization techniques for smart video surveillance.pdf;/home/schuldes/Zotero/storage/QDA8LSXI/7301805.html}
+}
+
+@inproceedings{sidatyNewPerceptualAssessment2017a,
+  title = {A New Perceptual Assessment Methodology for Selective {{HEVC}} Video Encryption},
+  doi = {10/gfws87},
+  abstract = {Video data security is one of the most research topic in the recent years. It is widely used in the multimedia applications such as video-conferencing, Video on Demand and Pay-TV services. Although many video encryption methods and objective measurements have been employed, few real time schemes and no subjective studies have been proposed. In this paper we investigate a set of selective video encryption schemes by encrypting only a few parameters in HEVC video streams. Firstly, we carried out an in-depth subjective study of three proposed selective HEVC video encryption schemes. A panel of observers has participated in this test campaign in order to evaluate the degree of visibility of the encrypted videos at different bitrates. Experimental results are presented and analysed, showing therefore that two proposed selected encryption schemes allow a high perceptual security level by masking the whole details of the video content, while the third scheme achieves a high security level, with a content nearly unidentifiable. In addition, subjective scores can be used as ground truth for assessing selective video encryption methods, instead of classical objective signal-based metrics, which are not correlated with human judgment.},
+  booktitle = {2017 {{IEEE International Conference}} on {{Acoustics}}, {{Speech}} and {{Signal Processing}} ({{ICASSP}})},
+  author = {Sidaty, N. and Hamidouche, W. and Deforges, O.},
+  month = mar,
+  year = {2017},
+  keywords = {cryptography,Encryption,video coding,Standards,Streaming media,selective video encryption,Encoding,HEVC standard,encrypted video degree of visibility evaluation,high perceptual security level,Measurement,multimedia applications,perceptual assessment methodology,selective HEVC video encryption,subjective visual security assessment},
+  pages = {1542-1546},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Sidaty et al_2017_A new perceptual assessment methodology for selective HEVC video encryption.pdf;/home/schuldes/Zotero/storage/36WD3BCI/7952415.html}
+}
+
+@inproceedings{huSDMSemanticDistortion2018a,
+  title = {{{SDM}}: {{Semantic Distortion Measurement}} for {{Video Encryption}}},
+  shorttitle = {{{SDM}}},
+  doi = {10/gfkx6h},
+  abstract = {Semantic information is important in video encryption. However, existing image quality assessment (IQA) methods, such as the peak signal to noise ratio (PSNR), are still widely applied to measure the encryption security. Generally, these traditional IQA methods aim to evaluate the image quality from the perspective of visual signal rather than semantic information. In this paper, we propose a novel semantic-level full-reference image quality assessment (FR-IQA) method named Semantic Distortion Measurement (SDM) to measure the degree of semantic distortion for video encryption. Then, based on a semantic saliency dataset, we verify that the proposed SDM method outperforms state-of-the-art algorithms. Furthermore, we construct a Region Of Semantic Saliency (ROSS) video encryption system to demonstrate the effectiveness of our proposed SDM method in the practical application.},
+  booktitle = {2018 13th {{IEEE International Conference}} on {{Automatic Face Gesture Recognition}} ({{FG}} 2018)},
+  author = {Hu, Y. and Zhou, W. and Zhao, S. and Chen, Z. and Li, W.},
+  month = may,
+  year = {2018},
+  keywords = {Visualization,video signal processing,cryptography,Encryption,Distortion,distortion measurement,Distortion measurement,encryption security,image caption,image quality assessment,image quality assessment (IQA),IQA methods,Object segmentation,peak signal,region of interest (ROI) encryption,SDM method,semantic distortion,semantic distortion measurement,semantic information,semantic saliency dataset,semantic saliency video encryption system,semantic-level full-reference image quality assessment,Semantics,sentence similarity,video encryption,visual signal},
+  pages = {764-768},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Hu et al_2018_SDM2.pdf;/home/schuldes/Zotero/storage/VVZHK2KV/8373913.html}
+}
+
+@inproceedings{tahaEndtoEndRealTimeROIBased2018a,
+  title = {End-to-{{End Real}}-{{Time ROI}}-{{Based Encryption}} in {{HEVC Videos}}},
+  doi = {10/gfws9c},
+  abstract = {In this paper, we present an end-to-end real-time encryption of Region of Interest (ROI) in HEVC videos. The proposed ROI encryption makes use of the independent tile concept of HEVC that splits the video frame into separable rectangular areas. Tiles are used to extract the ROI from the background and only the tiles forming the ROI are encrypted. The selective encryption is performed for a set of HEVC syntax elements in a format compliant with the HEVC standard. Thus, the bit-stream can be decoded with a standard HEVC decoder where a secret key is only needed for ROI decryption. In Inter coding, tiles independency is guaranteed by restricting the motion vectors to use only unencrypted tiles in the reference frames. The proposed solution is validated by integrating the encryption into the open-source Kvazaar HEVC encoder and the decryption into the open-source openHEVC decoder, respectively. The results show that this solution performs secure encryption of ROI in real time and with diminutive bitrate and complexity overheads.},
+  booktitle = {2018 26th {{European Signal Processing Conference}} ({{EUSIPCO}})},
+  author = {Taha, M. A. and Sidaty, N. and Hamidouche, W. and Dforges, O. and Vanne, J. and Viitanen, M.},
+  month = sep,
+  year = {2018},
+  keywords = {Decoding,Encoding,Encryption,Generators,High Efficiency Video Coding (HEVC),quality assessments,Region of Interest (ROI),selective encryption,Syntactics,tiles,User identity management,Videos},
+  pages = {171-175},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Taha et al_2018_End-to-End Real-Time ROI-Based Encryption in HEVC Videos2.pdf;/home/schuldes/Zotero/storage/6M8T932G/8553038.html}
+}
+
+@article{dufauxScramblingPrivacyProtection2008,
+  title = {Scrambling for {{Privacy Protection}} in {{Video Surveillance Systems}}},
+  volume = {18},
+  issn = {1051-8215},
+  doi = {10/dqwbjj},
+  abstract = {In this paper, we address the problem of privacy protection in video surveillance. We introduce two efficient approaches to conceal regions of interest (ROIs) based on transform-domain or codestream-domain scrambling. In the first technique, the sign of selected transform coefficients is pseudorandomly flipped during encoding. In the second method, some bits of the codestream are pseudorandomly inverted. We address more specifically the cases of MPEG-4 as it is today the prevailing standard in video surveillance equipment. Simulations show that both techniques successfully hide private data in ROIs while the scene remains comprehensible. Additionally, the amount of noise introduced by the scrambling process can be adjusted. Finally, the impact on coding efficiency performance is small, and the required computational complexity is negligible.},
+  number = {8},
+  journal = {IEEE Transactions on Circuits and Systems for Video Technology},
+  author = {Dufaux, F. and Ebrahimi, T.},
+  month = aug,
+  year = {2008},
+  keywords = {Access control,codestream-domain scrambling,computational complexity,Cryptography,data compression,data privacy,Discrete wavelet transforms,encoding,Filters,Layout,MPEG 4 Standard,MPEG-4,privacy,Privacy,privacy protection,Protection,pseudorandomly inverted codestream,regions of interest,selective encryption,surveillance,transform-domain scrambling,video coding,Video compression,video processing,video surveillance,Video surveillance,video surveillance equipment,video surveillance systems},
+  pages = {1168-1174},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Dufaux_Ebrahimi_2008_Scrambling for Privacy Protection in Video Surveillance Systems.pdf;/home/schuldes/Zotero/storage/4BEU6X8G/4559592.html}
+}
+
+@inproceedings{meibingFaceProtection2642007,
+  title = {Face {{Protection}} of {{H}}.264 {{Video Based}} on {{Detecting}} and {{Tracking}}},
+  doi = {10/d9x29r},
+  abstract = {With more and more attention on security in video, people have proposed many video encryption algorithms and many of them have been put into application. However, these algorithms encrypt the whole frame, they don't consider regions of interest, this will increase the communication cost. In this paper, we proposed a safe protection scheme of interesting facial region. This approach included rough face detection based on skin-color model, accurate facial region location based on Bayes classifier depending on direction character convolved by Sobel filter, tracking based on Kalman filter and encrypt face region in CABAC coding. Experimental results showed that this approach has better quality of anti-attack and protect interesting facial region effectively.},
+  booktitle = {2007 8th {{International Conference}} on {{Electronic Measurement}} and {{Instruments}}},
+  author = {Meibing, Q. and Xiaorui, C. and Jianguo, J. and Shu, Z.},
+  month = aug,
+  year = {2007},
+  keywords = {Bayes classifier,CABAC coding,cryptography,Cryptography,Educational technology,encrypt,face detection,Face detection,face protection,face recognition,Filters,H.264 video,Identity-based encryption,Instruments,Kalman filter,Kalman filters,Protection,regions of interest,rough face detection,Security,Skin,skin color model,Sobel filter,tracking,video detection,video encryption,video signal processing,video tracking,Videoconference},
+  pages = {2-172-2-177},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Meibing et al_2007_Face Protection of H.pdf;/home/schuldes/Zotero/storage/AYMGT6P5/4350647.html}
+}
+
+@article{martinPrivacyProtectedSurveillance2008,
+  title = {Privacy {{Protected Surveillance Using Secure Visual Object Coding}}},
+  volume = {18},
+  issn = {1051-8215},
+  doi = {10/cxwdch},
+  abstract = {This paper presents the Secure Shape and Texture SPIHT (SecST-SPIHT) scheme for secure coding of arbitrarily shaped visual objects. The scheme can be employed in a privacy protected surveillance system, whereby visual objects are encrypted so that the content is only available to authorized personnel with the correct decryption key. The secure visual object coder employs shape and texture set partitioning in hierarchical trees (ST-SPIHT) along with a novel selective encryption scheme for efficient, secure storage and transmission of visual object shape and textures. The encryption is performed in the compressed domain and does not affect the rate-distortion performance of the coder. A separate parameter for each encrypted object controls the strength of the encryption versus required processing overhead. Security analyses are provided, demonstrating the confidentiality of both the encrypted and unencrypted portions of the secured output bit-stream, effectively securing the entire object shape and texture content. Experimental results showed that no object details are revealed to attackers who do not possess the correct decryption key. Using typical parameter values and output bit-rates, the SecST-SPIHT coder is shown to require encryption on less than 5\% of the output bit-stream, a significant reduction in computational overhead compared to ``whole content'' encryption schemes.},
+  number = {8},
+  journal = {IEEE Transactions on Circuits and Systems for Video Technology},
+  author = {Martin, K. and Plataniotis, K. N.},
+  month = aug,
+  year = {2008},
+  keywords = {Encryption,Privacy,privacy protection,surveillance,Shape,encryption,Cryptography,Discrete wavelet transforms,Protection,Security,Personnel,Rate-distortion,Secure storage,security,set partitioning in hierarchical trees (SPIHT),shape adaptive coding,Shape adaptive coding,shape and texture coding,Surveillance,visual object coding,wavelet based coding,wavelet-based coding},
+  pages = {1152-1162},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Martin_Plataniotis_2008_Privacy Protected Surveillance Using Secure Visual Object Coding.pdf;/home/schuldes/Zotero/storage/8L7KWIN8/4543857.html}
+}
+
+@inproceedings{sohnPrivacyProtectionVideo2009a,
+  title = {Privacy {{Protection}} in {{Video Surveillance Systems Using Scalable Video Coding}}},
+  doi = {10/fngr94},
+  abstract = {Thanks to high-speed Internet access and feature-rich mobile devices, the demand for ubiquitous and secure surveillance systems has increased. In this paper, we propose a privacy-protected video surveillance system that makes use of scalable video coding (SVC). SVC can be used to fulfill the requirement of omnipresence. Further, to address privacy concerns, we detect face regions and subsequently scramble these regions-of-interest (ROIs) in the compressed domain. To demonstrate the feasibility of the proposed video surveillance system, simulation results are provided. The results show that our system is able to provide a good level of security, while offering access to surveillance video content in heterogeneous usage environments.},
+  booktitle = {2009 {{Sixth IEEE International Conference}} on {{Advanced Video}} and {{Signal Based Surveillance}}},
+  author = {Sohn, H. and AnzaKu, E. T. and Neve, W. De and Ro, Y. M. and Plataniotis, K. N.},
+  month = sep,
+  year = {2009},
+  keywords = {compressed domain,data compression,data privacy,Face detection,face recognition,face region detection,feature-rich mobile devices,Humans,Internet access,Monitoring,Privacy,privacy protection,privacy-protected video surveillance system,Protection,Scalability,scalable video coding,scalable video coding (SVC),security,Static VAr compensators,ubiquitous system,video coding,Video coding,Video compression,video surveillance,Video surveillance,video surveillance system,video surveillance systems},
+  pages = {424-429},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Sohn et al_2009_Privacy Protection in Video Surveillance Systems Using Scalable Video Coding4.pdf;/home/schuldes/Zotero/storage/YAGLTZRU/5279668.html}
+}
+
+@article{newtonPreservingPrivacyDeidentifying2005,
+  title = {Preserving Privacy by De-Identifying Face Images},
+  volume = {17},
+  issn = {1041-4347},
+  doi = {10/ctxgsb},
+  abstract = {In the context of sharing video surveillance data, a significant threat to privacy is face recognition software, which can automatically identify known people, such as from a database of drivers' license photos, and thereby track people regardless of suspicion. This paper introduces an algorithm to protect the privacy of individuals in video surveillance data by deidentifying faces such that many facial characteristics remain but the face cannot be reliably recognized. A trivial solution to deidentifying faces involves blacking out each face. This thwarts any possible face recognition, but because all facial details are obscured, the result is of limited use. Many ad hoc attempts, such as covering eyes, fail to thwart face recognition because of the robustness of face recognition methods. This work presents a new privacy-enabling algorithm, named k-Same, that guarantees face recognition software cannot reliably recognize deidentified faces, even though many facial details are preserved. The algorithm determines similarity between faces based on a distance metric and creates new faces by averaging image components, which may be the original image pixels (k-Same-Pixel) or eigenvectors (k-Same-Eigen). Results are presented on a standard collection of real face images with varying k.},
+  number = {2},
+  journal = {IEEE Transactions on Knowledge and Data Engineering},
+  author = {Newton, E. M. and Sweeney, L. and Malin, B.},
+  month = feb,
+  year = {2005},
+  keywords = {image resolution,Licenses,data privacy,face recognition,privacy,surveillance,Video surveillance,tracking,Robustness,Character recognition,Data privacy,security of data,Protection,data mining,drivers license photos,Eyes,face image deidentification,Face recognition,face recognition software,Image databases,Index Terms- Video surveillance,k-anonymity,k-anonymity.,k-Same privacy-enabling algorithm,privacy-preserving data mining,Software algorithms,video cameras,video databases,video surveillance data},
+  pages = {232-243},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Newton et al_2005_Preserving privacy by de-identifying face images.pdf;/home/schuldes/Zotero/storage/IL7CEFI3/1377174.html}
+}
+
+@article{pengROIPrivacyProtection2013,
+  title = {An {{ROI Privacy Protection Scheme}} for {{H}}.264 {{Video Based}} on {{FMO}} and {{Chaos}}},
+  volume = {8},
+  issn = {1556-6013},
+  doi = {10/f5bc7x},
+  abstract = {With the increase of terrorist and criminal activities, closed circuit television (CCTV) is widely used on many occasions. However, abuse of surveillance video may result in the leakage of personal privacy. To protect the privacy in the video of CCTV, an encryption scheme for region of interest (ROI) of H.264 video based on flexible macroblock ordering (FMO) and chaos is proposed in this paper, where human face regions are selected as an example of ROI. First, the human face regions in the video are detected and extracted. Then, they are mapped into slice groups by using FMO technology in H.264. After that, these regions are encrypted using selective video encryption based on chaos. Experimental results and analysis show that the proposed scheme can effectively protect the private information of H.264 video and, therefore, can strike a good balance among the security, encryption efficiency, and coding performance. It has great potential to be used in the privacy protection of the video of CCTV.},
+  number = {10},
+  journal = {IEEE Transactions on Information Forensics and Security},
+  author = {Peng, F. and Zhu, X. and Long, M.},
+  month = oct,
+  year = {2013},
+  keywords = {CCTV,chaos,Chaos,chaotic encryption,closed circuit television,coding performance,criminal activities,cryptography,Encryption,encryption efficiency,Face,flexible macroblock ordering,FMO,FMO technology,H.264 coding,H.264 video,human face regions,Image color analysis,Privacy,privacy protection,region of interest,ROI,ROI privacy protection scheme,security,selective video encryption,terrorist,video coding},
+  pages = {1688-1699},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Peng et al_2013_An ROI Privacy Protection Scheme for H.pdf;/home/schuldes/Zotero/storage/7NAQHSRP/6507633.html}
+}
+
+@techreport{SAEInternational2018,
+  title = {Taxonomy and {{Definitions}} for {{Terms Related}} to {{Driving Automation Systems}} for {{On}}-{{Road Motor Vehicles}}},
+  institution = {{Society of Automotive Engineers}},
+  type = {Standard},
+  date = {2018-09},
+  author = {{SAE International}},
+  volume = {J3016}
+}
+
+@inproceedings{sohnPrivacyProtectionVideo2009b,
+  title = {Privacy {{Protection}} in {{Video Surveillance Systems Using Scalable Video Coding}}},
+  doi = {10/fngr94},
+  abstract = {Thanks to high-speed Internet access and feature-rich mobile devices, the demand for ubiquitous and secure surveillance systems has increased. In this paper, we propose a privacy-protected video surveillance system that makes use of scalable video coding (SVC). SVC can be used to fulfill the requirement of omnipresence. Further, to address privacy concerns, we detect face regions and subsequently scramble these regions-of-interest (ROIs) in the compressed domain. To demonstrate the feasibility of the proposed video surveillance system, simulation results are provided. The results show that our system is able to provide a good level of security, while offering access to surveillance video content in heterogeneous usage environments.},
+  booktitle = {2009 {{Sixth IEEE International Conference}} on {{Advanced Video}} and {{Signal Based Surveillance}}},
+  author = {Sohn, H. and AnzaKu, E. T. and Neve, W. De and Ro, Y. M. and Plataniotis, K. N.},
+  month = sep,
+  year = {2009},
+  keywords = {compressed domain,data compression,data privacy,Face detection,face recognition,face region detection,feature-rich mobile devices,Humans,Internet access,Monitoring,Privacy,privacy protection,privacy-protected video surveillance system,Protection,Scalability,scalable video coding,scalable video coding (SVC),security,Static VAr compensators,ubiquitous system,video coding,Video coding,Video compression,video surveillance,Video surveillance,video surveillance system,video surveillance systems},
+  pages = {424-429},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Sohn et al_2009_Privacy Protection in Video Surveillance Systems Using Scalable Video Coding5.pdf;/home/schuldes/Zotero/storage/5YWZ9MHM/5279668.html}
+}
+
+@misc{L3Pilot2017,
+  title = {{L3Pilot - Piloting Automated Driving on European Roads}},
+  url = {https://l3pilot.eu/index.php},
+  date = {2017/2021},
+  howpublished = {Online},
+  owner = {hiller}
+}
+
+@article{wallendaelEncryptionHighEfficiency2013,
+  title = {Encryption for High Efficiency Video Coding with Video Adaptation Capabilities},
+  volume = {59},
+  issn = {0098-3063},
+  doi = {10/gfwwf7},
+  abstract = {Video encryption techniques enable applications like digital rights management and video scrambling. Applying encryption on the entire video stream can be computationally costly and prevents advanced video modifications by an untrusted middlebox in the network, like splicing, quality monitoring, watermarking, and transcoding. Therefore, encryption techniques are proposed which influence a small amount of the video stream while keeping the video compliant with its compression standard, High Efficiency Video Coding. Encryption while guaranteeing standard compliance can cause degraded compression efficiency, so depending on their bitrate impact, a selection of encrypted syntax elements should be made. Each element also impacts the quality for untrusted decoders differently, so this aspect should also be considered. In this paper, multiple techniques for partial video encryption are investigated, most of them having a low impact on rate-distortion performance and having a broad range in scrambling performance.},
+  number = {3},
+  journal = {IEEE Transactions on Consumer Electronics},
+  author = {Wallendael, G. Van and Boho, A. and Cock, J. De and Munteanu, A. and Walle, R. Van De},
+  month = aug,
+  year = {2013},
+  keywords = {cryptography,Encryption,video coding,Syntactics,Streaming media,Video coding,Bit rate,data compression,high efficiency video coding,encryption,advanced video modifications,compression efficiency,digital rights management,distortion,encrypted syntax elements,encryption techniques,High Efficiency Video Coding,Indexes,partial video encryption,quality monitoring,rate-distortion performance,scrambling performance1,standard compliance,transcoding,untrusted decoders,untrusted middlebox,video adaptation capabilities,video encryption techniques,video scrambling,video stream,watermarking},
+  pages = {634-642},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Wallendael et al_2013_Encryption for high efficiency video coding with video adaptation capabilities.pdf;/home/schuldes/Zotero/storage/N3UWDCNU/6626250.html}
+}
+
+@article{shahidVisualProtectionHEVC2014,
+  title = {Visual {{Protection}} of {{HEVC Video}} by {{Selective Encryption}} of {{CABAC Binstrings}}},
+  volume = {16},
+  issn = {1520-9210},
+  doi = {10/f5mvjd},
+  abstract = {This paper presents one of the first methods allowing the protection of the newly emerging video codec HEVC (High Efficiency Video Coding). Visual protection is achieved through selective encryption (SE) of HEVC-CABAC binstrings in a format compliant manner. The SE approach developed for HEVC is different from that of H.264/AVC in several aspects. Truncated rice code is introduced for binarization of quantized transform coefficients (QTCs) instead of truncated unary code. The encryption space (ES) of binstrings of truncated rice codes is not always dyadic and cannot be represented by an integer number of bits. Hence they cannot be concatenated together to create plaintext for the CFB (Cipher Feedback) mode of AES, which is a self-synchronizing stream cipher for so-called AES-CFB. Another challenge for SE in HEVC concerns the introduction of context, which is adaptive to QTC. This work presents a thorough investigation of HEVC-CABAC from an encryption standpoint. An algorithm is devised for conversion of non-dyadic ES to dyadic, which can be concatenated to form plaintext for AES-CFB. For selectively encrypted binstrings, the context of truncated rice code for binarization of future syntax elements is guaranteed to remain unchanged. Hence the encrypted bitstream is format-compliant and has exactly the same bit-rate. The proposed technique requires very little processing power and is ideal for playback on hand held devices. The proposed scheme is acceptable for DRM of a wide range of applications, since it protects the contour and motion information, along with texture. Several benchmark video sequences of different resolutions and diverse contents were used for experimental evaluation of the proposed algorithm. A detailed security analysis of the proposed scheme verified the validity of the proposed encryption scheme for content protection in a wide range of applications.},
+  number = {1},
+  journal = {IEEE Transactions on Multimedia},
+  author = {Shahid, Z. and Puech, W.},
+  month = jan,
+  year = {2014},
+  keywords = {AES-CFB,benchmark video sequences,CABAC,CFB mode,cipher feedback mode,content protection,Context,contour information,cryptography,detailed security analysis,diverse contents,DRM,Encoding,encrypted bitstream,Encryption,encryption scheme,encryption space,encryption standpoint,Entropy,format compliant manner,hand held devices,HEVC,HEVC video codec,HEVC-CABAC binstring SE,high-efficiency video coding,image sequences,motion information,non-dyadic encryption space,nondyadic-dyadic ES,QTC binarization,quantized transform coefficients,SE approach,selective encryption,self-synchronizing stream cipher,syntax element binarization,Transforms,truncated rice code,truncated unary code,video codecs,video coding,Video coding,visual protection},
+  pages = {24-36},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Shahid_Puech_2014_Visual Protection of HEVC Video by Selective Encryption of CABAC Binstrings.pdf;/home/schuldes/Zotero/storage/B3MFVTQS/6589970.html}
+}
+
+@inproceedings{xuROIEncryptionScheme2013a,
+  title = {A {{ROI}} Encryption Scheme for {{H}}.264 Video Based on Moving Object Detection},
+  doi = {10/gfkx6t},
+  abstract = {To protect the privacy in the surveillance video, a selective encryption scheme for region of interest (ROI) of H.264 video is proposed in this paper. By only encrypting the content of ROIs, the most important part of video can be protected with less cost and operation. The technique of moving object detection is employed to locate the ROIs in the video automatically. There is no need to transmit additional position information of ROIs to the end of decryption. ROI is encrypted with other area unchanged under the mechanism of Flexible Macroblock Ordering (FMO). A new encryption algorithm is designed to modify both luminance component and chrominance components to achieve good encryption quality and location accuracy. In decryption, the encrypted area is located automatically, and the encrypted video is decrypted with the secret key. JM 18.4 software is employed to perform the simulation experiment. Experimental results present the accuracy and effectiveness of our scheme to encrypt and decrypt the ROIs in H.264 video.},
+  booktitle = {2013 2nd {{International Symposium}} on {{Instrumentation}} and {{Measurement}}, {{Sensor Network}} and {{Automation}} ({{IMSNA}})},
+  author = {Xu, J. and Guo, J. and Bao, J.},
+  month = dec,
+  year = {2013},
+  keywords = {brightness,chrominance components,Encryption,encryption algorithm,flexible macroblock ordering,Flexible Macroblock Ordering,FMO,Gaussian mixture model,Gaussian Mixture Model,H.264 video,JM 18.4 software,luminance component,moving object detection surveillance video,object detection,position information,private key cryptography,region of interest,Region of Interest,ROI encryption scheme,secret key,selective encryption scheme,Selective Video Encryption,Surveillance,video coding,video surveillance,Watermarking},
+  pages = {494-497},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Xu et al_2013_A ROI encryption scheme for H4.pdf;/home/schuldes/Zotero/storage/N6V7DHPF/6743323.html}
+}
+
+@inproceedings{tewRegionofinterestEncryptionHEVC2016,
+  title = {Region-of-Interest Encryption in {{HEVC}} Compressed Video},
+  doi = {10/gfkx6x},
+  abstract = {In this work, three encryption techniques are proposed by manipulating the bin (binary symbol) of significant values, transform skip signals and suffixes in selected CTU (coding tree unit) of video slices under the HEVC standard. These techniques are applied with minimal parsing overhead during encoding and decoding processes. Experiment results show that the selected region can be sufficiently encrypted.},
+  booktitle = {2016 {{IEEE International Conference}} on {{Consumer Electronics}}-{{Taiwan}} ({{ICCE}}-{{TW}})},
+  author = {Tew, Y. and Wong, K. and Phan, R. C.-},
+  month = may,
+  year = {2016},
+  keywords = {binary symbol manipulation,cryptography,data compression,decoding,decoding process,Encoding,encoding process,encryption,Encryption,HEVC,HEVC compressed video,HEVC standard,minimal parsing overhead,region-of-interest encryption,ROI,sign bin,skip signal transform,Standards,Streaming media,suffix bin,suffix transform,transform skip bin,Transforms,video coding,Video coding,video slice coding tree unit,video slice CTU},
+  pages = {1-2},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Tew et al_2016_Region-of-interest encryption in HEVC compressed video4.pdf;/home/schuldes/Zotero/storage/WE4PQJJ2/7520709.html}
+}
+
+@article{zhangLightweightEncryptionMethod2018,
+  title = {A {{Lightweight Encryption Method}} for {{Privacy Protection}} in {{Surveillance Videos}}},
+  volume = {6},
+  issn = {2169-3536},
+  doi = {10/gfwwf9},
+  abstract = {Privacy protection of surveillance videos is an important issue because of the pervasiveness of surveillance cameras. Region of interest (RoI) privacy protection prefers encrypting limited privacy-sensitive areas to encrypting the entire video because of the resource-tightened Internet of Things devices. However, many cryptographic technologies now applied in privacy protection, e.g., AES and RSA, are not efficient to meet the real-time requirement for surveillance videos. A lightweight encryption approach is then devised based on layered cellular automata (LCA). Using our approach, the extracted RoIs are fed into the initial state of an 8-layer cellular automata, which is driven by the randomly selected rules for the LCA's state transitions. As a result, all RoIs are encrypted independently and synchronously. The encrypted RoIs are stored at the camera side and can be used by authenticated users through an on-demand manner. The surveillance video without RoIs can be watched in real-time by any user online. Theoretical analyses and experimental results show that our approach is both efficient and effective.},
+  journal = {IEEE Access},
+  author = {Zhang, X. and Seo, S. and Wang, C.},
+  year = {2018},
+  keywords = {Cameras,cryptography,Encryption,Privacy,video surveillance,Videos,data protection,Surveillance,video cameras,8-layer cellular automata,Automata,cellular automata,cryptographic technologies,encrypted RoIs,Internet of Things,layered cellular automata,LCA state transitions,lightweight encryption method,region of interest privacy protection,resource-tightened Internet of Things devices,reversible rule,RoI encryption,shift transformation,surveillance cameras,surveillance video,Surveillance video},
+  pages = {18074-18087},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Zhang et al_2018_A Lightweight Encryption Method for Privacy Protection in Surveillance Videos.pdf;/home/schuldes/Zotero/storage/YE6WI9ZZ/8329515.html}
+}
+
+@inproceedings{ahmadIntelligentRealTimeOccupancy2018,
+  title = {An {{Intelligent Real}}-{{Time Occupancy Monitoring System}} with {{Enhanced Encryption}} and {{Privacy}}},
+  doi = {10/gfkx65},
+  abstract = {The number of people entering or leaving a building is an essential piece of information that has a lot of practical applications in intelligent building, queue management, and customer service. Vision-based technologies are widely installed in real-time occupancy monitoring systems due to accuracy and reliability. However, monitoring occupancy through unprotected video may disclose privacy of innocent people. Therefore, protecting confidentiality and accurately counting the number of people in real-time scenarios is a severe challenge. Encrypting such videos is one of the promising solutions for maintaining privacy. In this paper, we propose a real-time occupancy monitoring system with Region of Interest (ROI) based light-weight video encryption. People movement is detected through a widely used background model, i.e., Gaussian Mixture Model (GMM) and Kalman filter. Instead of encrypting the whole frame including background, the main idea is to encrypt people present in video via Tangent Delay Ellipse Reflecting Cavity Map System (TD-ERCS). Compared to existing schemes which are mainly based on complete encryption, the proposed method provides partial encryption though cryptographically secure and low-cost computation. The proposed scheme is tested with several different parameters such as correlation, entropy, contrast, energy, Number of Pixel Change Rate (NPCR) NPCR, Unified Average Change Intensity (UACI) and key space. Results from all security parameters have highlighted sufficient security of the proposed scheme.},
+  booktitle = {2018 {{IEEE}} 17th {{International Conference}} on {{Cognitive Informatics Cognitive Computing}} ({{ICCI}}*{{CC}})},
+  author = {Ahmad, J. and Larijani, H. and Emmanuel, R. and Mannion, M. and Javed, A. and Ahmadinia, A.},
+  month = jul,
+  year = {2018},
+  keywords = {Kalman filters,cryptography,data privacy,Encryption,Privacy,video coding,Streaming media,Real-time systems,chaos,Cavity Map System,Gaussian processes,image encryption,image processing,innocent people,intelligent building,intelligent real-time occupancy monitoring System,light-weight video encryption,Occupancy,partial encryption,TD-ERCS map,unprotected video,vision-based technologies},
+  pages = {524-529},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Ahmad et al_2018_An Intelligent Real-Time Occupancy Monitoring System with Enhanced Encryption4.pdf;/home/schuldes/Zotero/storage/I7TYRV2I/8482047.html}
+}
+
+@article{maLosslessROIPrivacy2016,
+  title = {Lossless {{ROI Privacy Protection}} of {{H}}.264/{{AVC Compressed Surveillance Videos}}},
+  volume = {4},
+  issn = {2168-6750},
+  doi = {10/gfgr9k},
+  abstract = {Privacy becomes one of the major concerns of video surveillance systems, especially in cloud-based systems. Privacy protection of surveillance videos aims to protect privacy information without hampering normal video surveillance tasks. Region-of-interest (ROI) privacy protection is more practical compared with the whole video encryption approaches. However, one common drawback of virtually all current ROI privacy protection methods is that the original compressed surveillance video recorded in the camera is permanently distorted by the privacy protection process, due to the quantization in the re-encoding process. Thus, the integrity of the original compressed surveillance video captured by the camera is destroyed. This is unacceptable for some application scenarios, such as video forensics for investigations and video authentication for law enforcement. In this paper, we introduce a new paradigm for privacy protection in surveillance videos, referred to as lossless privacy region protection, which has the property that the distortion introduced by the protection of the privacy data can be completely removed from the protected videos by authorized users. We demonstrate the concept of lossless privacy region protection through a proposed scheme applied on H.264/Advanced Video Coding compressed videos.},
+  number = {3},
+  journal = {IEEE Transactions on Emerging Topics in Computing},
+  author = {Ma, X. and Zeng, W. K. and Yang, L. T. and Zou, D. and Jin, H.},
+  month = jul,
+  year = {2016},
+  keywords = {advanced video coding,AVC compressed surveillance videos,Cameras,cloud-based systems,data compression,data privacy,Encryption,H.264 compressed surveillance videos,H.264/Advanced Video Coding,image sensors,inter-frame drift error,intra-frame drift error,Lossless,lossless region-of-interest privacy protection,lossless ROI privacy protection,Privacy,privacy information protection,privacy protection,reencoding process,Surveillance,video coding,Video coding,video surveillance,Videos},
+  pages = {349-362},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Ma et al_2016_Lossless ROI Privacy Protection of H7.pdf;/home/schuldes/Zotero/storage/7XHNTWXM/7181657.html}
+}
+
+@inproceedings{hamidoucheSelectiveVideoEncryption2015a,
+  title = {Selective Video Encryption Using Chaotic System in the {{SHVC}} Extension},
+  doi = {10/gfkx6j},
+  abstract = {In this paper we investigate a selective video encryption in the scalable HEVC extension (SHVC). The SHVC extension encodes the video in several layers corresponding to different spatial and quality representations of the video. We propose a selective encryption solution using a chaotic-based encryption system. The proposed solution encrypts a set of sensitive parameters with a minimum complexity overhead, at constant bitrate and SHVC format compliant. Experimental results compare the performance of three encryption schemes: encrypt only the lowest layer, all layers, and only the highest layer. The first two schemes achieve a high security level with a drastic degradation in the decoded video, while the last scheme enables a perceptual video encryption by decreasing the quality of the highest layer below the quality of the clear layers.},
+  booktitle = {2015 {{IEEE International Conference}} on {{Acoustics}}, {{Speech}} and {{Signal Processing}} ({{ICASSP}})},
+  author = {Hamidouche, W. and Farajallah, M. and Raulet, M. and D\'eforges, O. and Assad, S. El},
+  month = apr,
+  year = {2015},
+  keywords = {image resolution,cryptography,Encryption,video coding,Syntactics,Streaming media,video codecs,Video coding,Bit rate,Chaos,chaotic-based encryption system,data compression,image representation,quality representations,scalable HEVC extension,selective encryption,selective video encryption,Selective video encryption,SHVC,spatial representations},
+  pages = {1762-1766},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Hamidouche et al_2015_Selective video encryption using chaotic system in the SHVC extension2.pdf;/home/schuldes/Zotero/storage/YDT742L5/7178273.html}
+}
+
+@inproceedings{cichowskiReversibleVideoStream2011,
+  title = {Reversible Video Stream Anonymization for Video Surveillance Systems Based on Pixels Relocation and Watermarking},
+  doi = {10/fxmts9},
+  abstract = {A method of reversible video image regions of interest anonymization for applications in video surveillance systems is described. A short introduction to the anonymization procedures is presented together with the explanation of its relation to visual surveillance. A short review of state of the art of sensitive data protection in media is included. An approach to reversible Region of Interest (ROI) hiding in video is presented, utilizing a new relocation algorithm for hashing and a watermarking technique for extra data embedding. Implemented application is described, and results obtained using it are reported. Future work and possible improvements to introduced algorithms are discussed.},
+  booktitle = {2011 {{IEEE International Conference}} on {{Computer Vision Workshops}} ({{ICCV Workshops}})},
+  author = {Cichowski, J. and Czyzewski, A.},
+  month = nov,
+  year = {2011},
+  keywords = {computer network security,cryptography,data embedding,Data mining,data protection,Decoding,file organisation,hashing technique,Image coding,pixels relocation,region of interest hiding,reversible video image regions,reversible video stream anonymization,Robustness,Streaming media,Transform coding,video streaming,video surveillance,video surveillance systems,video watermarking,visual surveillance,Watermarking,watermarking technique},
+  pages = {1971-1977},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Cichowski_Czyzewski_2011_Reversible video stream anonymization for video surveillance systems based on.pdf;/home/schuldes/Zotero/storage/CRFQ5P2S/6130490.html}
+}
+
+@inproceedings{ruchaudASePPIRobustPrivacy2017,
+  title = {{{ASePPI}}: {{Robust Privacy Protection Against De}}-{{Anonymization Attacks}}},
+  shorttitle = {{{ASePPI}}},
+  doi = {10/gfwwgd},
+  abstract = {The evolution of the video surveillance systems generates questions concerning protection of individual privacy. In this paper, we design ASePPI, an Adaptive Scrambling enabling Privacy Protection and Intelligibility method operating in the H.264/AVC stream with the aim to be robust against de-anonymization attacks targeting the restoration of the original image and the re-identification of people. The proposed approach automatically adapts the level of protection according to the resolution of the region of interest. Compared to existing methods, our framework provides a better trade-off between the privacy protection and the visibility of the scene with robustness against de-anonymization attacks. Moreover, the impact on the source coding stream is negligible.},
+  booktitle = {2017 {{IEEE Conference}} on {{Computer Vision}} and {{Pattern Recognition Workshops}} ({{CVPRW}})},
+  author = {Ruchaud, N. and Dugelay, J.},
+  month = jul,
+  year = {2017},
+  keywords = {adaptive scrambling enabling privacy protection-and-intelligibility,ASePPI,Cameras,data protection,de-anonymization attacks,Discrete cosine transforms,Encryption,H.264-AVC stream,Image coding,image restoration,original image restoration,people re-identification,Privacy,Robustness,scene visibility,source coding stream,video surveillance,video surveillance systems},
+  pages = {1352-1359},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Ruchaud_Dugelay_2017_ASePPI.pdf;/home/schuldes/Zotero/storage/HUPBWZWF/8014911.html}
+}
+
+@article{wiegandOverview264AVC2003,
+  title = {Overview of the {{H}}.264/{{AVC}} Video Coding Standard},
+  volume = {13},
+  issn = {1051-8215},
+  doi = {10/cr56b4},
+  abstract = {H.264/AVC is newest video coding standard of the ITU-T Video Coding Experts Group and the ISO/IEC Moving Picture Experts Group. The main goals of the H.264/AVC standardization effort have been enhanced compression performance and provision of a "network-friendly" video representation addressing "conversational" (video telephony) and "nonconversational" (storage, broadcast, or streaming) applications. H.264/AVC has achieved a significant improvement in rate-distortion efficiency relative to existing standards. This article provides an overview of the technical features of H.264/AVC, describes profiles and applications for the standard, and outlines the history of the standardization process.},
+  number = {7},
+  journal = {IEEE Transactions on Circuits and Systems for Video Technology},
+  author = {Wiegand, T. and Sullivan, G. J. and Bjontegaard, G. and Luthra, A.},
+  month = jul,
+  year = {2003},
+  keywords = {Automatic voltage control,Broadcasting,code standards,compression performance,data compression,H.264/AVC standardization,H.264/AVC video coding standard,IEC standards,ISO standards,ISO/IEC Moving Picture Experts Group,ITU-T Video Coding Experts Group,MPEG standards,Multimedia communication,rate distortion theory,rate-distortion efficiency,standardisation,Standardization,standardization history,telecommunication standards,Telephony,video broadcast,video coding,Video coding,Video compression,video representation,video storage,video streaming,video telephony},
+  pages = {560-576},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Wiegand et al_2003_Overview of the H.pdf;/home/schuldes/Zotero/storage/KBZQXUSE/1218189.html}
+}
+
+@inproceedings{tahaEndtoEndRealTimeROIBased2018a,
+  title = {End-to-{{End Real}}-{{Time ROI}}-{{Based Encryption}} in {{HEVC Videos}}},
+  doi = {10/gfws9c},
+  abstract = {In this paper, we present an end-to-end real-time encryption of Region of Interest (ROI) in HEVC videos. The proposed ROI encryption makes use of the independent tile concept of HEVC that splits the video frame into separable rectangular areas. Tiles are used to extract the ROI from the background and only the tiles forming the ROI are encrypted. The selective encryption is performed for a set of HEVC syntax elements in a format compliant with the HEVC standard. Thus, the bit-stream can be decoded with a standard HEVC decoder where a secret key is only needed for ROI decryption. In Inter coding, tiles independency is guaranteed by restricting the motion vectors to use only unencrypted tiles in the reference frames. The proposed solution is validated by integrating the encryption into the open-source Kvazaar HEVC encoder and the decryption into the open-source openHEVC decoder, respectively. The results show that this solution performs secure encryption of ROI in real time and with diminutive bitrate and complexity overheads.},
+  eventtitle = {2018 26th {{European Signal Processing Conference}} ({{EUSIPCO}})},
+  booktitle = {2018 26th {{European Signal Processing Conference}} ({{EUSIPCO}})},
+  date = {2018-09},
+  pages = {171-175},
+  keywords = {Videos,tiles,Encryption,High Efficiency Video Coding (HEVC),Decoding,Syntactics,Encoding,selective encryption,Generators,quality assessments,Region of Interest (ROI),User identity management},
+  author = {Taha, M. A. and Sidaty, N. and Hamidouche, W. and Dforges, O. and Vanne, J. and Viitanen, M.},
+  file = {/home/michael/Nextcloud/Documents/MA/zotero/Taha et al_2018_End-to-End Real-Time ROI-Based Encryption in HEVC Videos2.pdf;/home/michael/Zotero/storage/6M8T932G/8553038.html}
+}
+
+@inproceedings{huSDMSemanticDistortion2018a,
+  title = {{{SDM}}: {{Semantic Distortion Measurement}} for {{Video Encryption}}},
+  doi = {10/gfkx6h},
+  shorttitle = {{{SDM}}},
+  abstract = {Semantic information is important in video encryption. However, existing image quality assessment (IQA) methods, such as the peak signal to noise ratio (PSNR), are still widely applied to measure the encryption security. Generally, these traditional IQA methods aim to evaluate the image quality from the perspective of visual signal rather than semantic information. In this paper, we propose a novel semantic-level full-reference image quality assessment (FR-IQA) method named Semantic Distortion Measurement (SDM) to measure the degree of semantic distortion for video encryption. Then, based on a semantic saliency dataset, we verify that the proposed SDM method outperforms state-of-the-art algorithms. Furthermore, we construct a Region Of Semantic Saliency (ROSS) video encryption system to demonstrate the effectiveness of our proposed SDM method in the practical application.},
+  eventtitle = {2018 13th {{IEEE International Conference}} on {{Automatic Face Gesture Recognition}} ({{FG}} 2018)},
+  booktitle = {2018 13th {{IEEE International Conference}} on {{Automatic Face Gesture Recognition}} ({{FG}} 2018)},
+  date = {2018-05},
+  pages = {764-768},
+  keywords = {cryptography,Encryption,video signal processing,Visualization,Distortion,distortion measurement,Distortion measurement,encryption security,image caption,image quality assessment,image quality assessment (IQA),IQA methods,Object segmentation,peak signal,region of interest (ROI) encryption,SDM method,semantic distortion,semantic distortion measurement,semantic information,semantic saliency dataset,semantic saliency video encryption system,semantic-level full-reference image quality assessment,Semantics,sentence similarity,video encryption,visual signal},
+  author = {Hu, Y. and Zhou, W. and Zhao, S. and Chen, Z. and Li, W.},
+  file = {/home/michael/Nextcloud/Documents/MA/zotero/Hu et al_2018_SDM2.pdf;/home/michael/Zotero/storage/VVZHK2KV/8373913.html}
+}
+
+@inproceedings{andSecureHEVCVideo2017,
+  title = {Secure {{HEVC}} Video by Encrypting Header of Wavefront Parallel Processing},
+  doi = {10/gfwwfc},
+  abstract = {This research proposed a method In securing HEVC video. The proposed method considered to be efficient (few bytes that being manipulated), effective (changes in certain frame impacts whole group of picture), powerful (shown by visual and PSNR analysis), and has potential use in video-related applications. The main idea of the proposed method is performing an encryption method to the first 3 bytes of WPP's header for video which is one of the feature of the HEVC standard. The encryption is done for I, P, and B frames of the inputed video. The algorithm gives good results, which can be shown from visual observation as well as from an objective assessment that gives a small value of PSNR.},
+  eventtitle = {2017 11th {{International Conference}} on {{Telecommunication Systems Services}} and {{Applications}} ({{TSSA}})},
+  booktitle = {2017 11th {{International Conference}} on {{Telecommunication Systems Services}} and {{Applications}} ({{TSSA}})},
+  date = {2017-10},
+  pages = {1-4},
+  keywords = {Streaming media,video coding,HEVC standard,Standards,cryptography,Encryption,Decoding,HEVC,encryption,B frames,encryption method,header,HEVC video security,High efficiency video coding,inputed video,parallel processing,PSNR analysis,secure,video-related applications,visual analysis,visual observation,wavefront parallel processing,WPP,WPP header},
+  author = {A. Mustafa and Hendrawan},
+  file = {/home/michael/Nextcloud/Documents/MA/zotero/and_2017_Secure HEVC video by encrypting header of wavefront parallel processing.pdf;/home/michael/Zotero/storage/7XIXGP26/8272948.html}
+}
+
+@article{boyadjisExtendedSelectiveEncryption2017a,
+  title = {Extended {{Selective Encryption}} of {{H}}.264/{{AVC}} ({{CABAC}})- and {{HEVC}}-{{Encoded Video Streams}}},
+  volume = {27},
+  issn = {1051-8215},
+  doi = {10/cr56b4},
+  abstract = {H.264/AVC is newest video coding standard of the ITU-T Video Coding Experts Group and the ISO/IEC Moving Picture Experts Group. The main goals of the H.264/AVC standardization effort have been enhanced compression performance and provision of a "network-friendly" video representation addressing "conversational" (video telephony) and "nonconversational" (storage, broadcast, or streaming) applications. H.264/AVC has achieved a significant improvement in rate-distortion efficiency relative to existing standards. This article provides an overview of the technical features of H.264/AVC, describes profiles and applications for the standard, and outlines the history of the standardization process.},
+  number = {7},
+  journal = {IEEE Transactions on Circuits and Systems for Video Technology},
+  author = {Wiegand, T. and Sullivan, G. J. and Bjontegaard, G. and Luthra, A.},
+  month = jul,
+  year = {2003},
+  keywords = {Automatic voltage control,Broadcasting,code standards,compression performance,data compression,H.264/AVC standardization,H.264/AVC video coding standard,IEC standards,ISO standards,ISO/IEC Moving Picture Experts Group,ITU-T Video Coding Experts Group,MPEG standards,Multimedia communication,rate distortion theory,rate-distortion efficiency,standardisation,Standardization,standardization history,telecommunication standards,Telephony,video broadcast,video coding,Video coding,Video compression,video representation,video storage,video streaming,video telephony},
+  pages = {560-576},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Wiegand et al_2003_Overview of the H.pdf;/home/schuldes/Zotero/storage/KBZQXUSE/1218189.html}
+}
+
+@article{ohmHighEfficiencyVideo2013,
+  title = {High Efficiency Video Coding: The next Frontier in Video Compression [{{Standards}} in a {{Nutshell}}]},
+  volume = {30},
+  issn = {1053-5888},
+  shorttitle = {High Efficiency Video Coding},
+  doi = {10/gfwwzk},
+  abstract = {High Efficiency Video Coding (HEVC) is a new video compression standard developed jointly by ITU-T Video Coding Experts Group (VCEG) and ISO/IEC Moving Pictures Expert Group (MPEG) through their Joint Collaborative Team on Video Coding (JCT-VC). The first version of HEVC will be finalized by the JCT-VC in January 2013. The HEVC project was launched to achieve major savings-e.g., reduction by about half for 1,280 \texttimes{} 720 high-definition (HD) and higher-resolution progressives can video-for equivalent visual quality relative to the bit rate needed by the widely used H.264/ MPEG-4 Advanced Video Coding (AVC) standard. For high resolution video where such additional compression is most urgently required, implementations of the current draft standard are already meeting or exceeding the targeted goal. We review the architecture and building blocks of HEVC, which were carefully selected with regard to compression capability versus complexity and to enable parallelism for the signal processing operations. Given the benefits that HEVC provides, it is likely to become the new primary reference for video compression.},
+  number = {1},
+  journal = {IEEE Signal Processing Magazine},
+  author = {Ohm, J. and Sullivan, G. J.},
+  month = jan,
+  year = {2013},
+  keywords = {data compression,H.264/MPEG-4 advanced video coding standard,HEVC,high efficiency video coding,high-definition,signal processing operation,Standards,video coding,Video coding,video compression,Video compression},
+  pages = {152-158},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Ohm_Sullivan_2013_High efficiency video coding.pdf;/home/schuldes/Zotero/storage/Y5SHWKL2/6375943.html}
+}
+
+@inproceedings{andSecureHEVCVideo2017a,
+  title = {Secure {{HEVC}} Video by Utilizing Selective Manipulation Method and Grading Level Model},
+  doi = {10/gfwwfb},
+  abstract = {This research proposed a method in securing HEVC video. The proposed method considered to be efficient (few parameters that being manipulated), effective (changing one parameter impacts to whole frame sequences), powerful (shown by visual and PSNR analysis), and has potential use in other video-related technologies. The main idea of the proposed method is performing a bit-flipping method to eight selected important parameters in HEVC video. These eight parameters contained in general video parameters, e.g VPS, SPS, and PPS, and could be assured exist in all HEVC videos. Moreover, the proposed scheme divided into five levels. As level increased, more parameters being manipulated. Grading level minimizes the probability of unauthorized person to revert back the video into original video. The result of this scheme are degradation in visual aspect as manipulation level increases, PSNR calculation drop to 19.86062 dB, 15.0796 dB, 14.9121 dB, 10.0865 dB, and 10.5689 dB from first level to fifth level respectively, and potential use of the proposed scheme ranging from pay-per-view model, video on demand, video conferencing, and webinar.},
+  eventtitle = {2017 3rd {{International Conference}} on {{Wireless}} and {{Telematics}} ({{ICWT}})},
+  booktitle = {2017 3rd {{International Conference}} on {{Wireless}} and {{Telematics}} ({{ICWT}})},
+  date = {2017-07},
+  pages = {1-6},
+  keywords = {Streaming media,video coding,Encryption,HEVC,video conferencing,Visualization,Encoding,security of data,High efficiency video coding,PSNR analysis,secure,visual analysis,bit-flipping,bit-flipping method,Complexity theory,eight parameters,grading level model,level,secure HEVC video,selective manipulation method,video parameters,video-related technologies},
+  author = {A. Mustafa and Hendrawan},
+  file = {/home/michael/Nextcloud/Documents/MA/zotero/and_2017_Secure HEVC video by utilizing selective manipulation method and grading level.pdf;/home/michael/Zotero/storage/GNNJML8X/8284127.html}
+}
+
+@misc{ImageQualityAssessment,
+  title = {Image {{Quality Assessment}}: {{From Error Visibility}} to {{Structural Similarity}}},
+  howpublished = {https://ece.uwaterloo.ca/\textasciitilde{}z70wang/publications/ssim.html},
+  file = {/home/schuldes/Zotero/storage/WN6UMUGX/ssim.html}
+}
+
+@INPROCEEDINGS{linFocalLossDense2017,
+  author={T. {Lin} and P. {Goyal} and R. {Girshick} and K. {He} and P. {Dollár}},
+  booktitle={2017 IEEE International Conference on Computer Vision (ICCV)},
+  title={Focal Loss for Dense Object Detection},
+  year={2017},
+  volume={},
+  number={},
+  pages={2999-3007},
+  keywords={convolution;entropy;image classification;neural nets;object detection;dense object detection;two-stage approach;classifier;sparse set;candidate object locations;extreme foreground-background class imbalance;focal loss;object detectors;R-CNN;dense detectors training;cross entropy loss reshaping;Detectors;Training;Entropy;Object detection;Proposals;Robustness;Computer vision},
+  doi={10.1109/ICCV.2017.324},
+  ISSN={2380-7504},
+  month={Oct}
+}
+
+@article{redmonYOLOv3IncrementalImprovement2018,
+  archivePrefix = {arXiv},
+  eprinttype = {arxiv},
+  eprint = {1804.02767},
+  primaryClass = {cs},
+  title = {{{YOLOv3}}: {{An Incremental Improvement}}},
+  shorttitle = {{{YOLOv3}}},
+  abstract = {We present some updates to YOLO! We made a bunch of little design changes to make it better. We also trained this new network that's pretty swell. It's a little bigger than last time but more accurate. It's still fast though, don't worry. At 320x320 YOLOv3 runs in 22 ms at 28.2 mAP, as accurate as SSD but three times faster. When we look at the old .5 IOU mAP detection metric YOLOv3 is quite good. It achieves 57.9 mAP@50 in 51 ms on a Titan X, compared to 57.5 mAP@50 in 198 ms by RetinaNet, similar performance but 3.8x faster. As always, all the code is online at https://pjreddie.com/yolo/},
+  journal = {arXiv:1804.02767 [cs]},
+  author = {Redmon, Joseph and Farhadi, Ali},
+  month = apr,
+  year = {2018},
+  keywords = {Computer Science - Computer Vision and Pattern Recognition,⛔ No DOI found},
+  file = {/home/schuldes/Nextcloud/Documents/MA/zotero/Redmon_Farhadi_2018_YOLOv2.pdf;/home/schuldes/Zotero/storage/UGV667QF/1804.html}
+}
+
+@article{renFasterRCNNRealTime2015,
+  author={S. {Ren} and K. {He} and R. {Girshick} and J. {Sun}},
+  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  title={Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks},
+  year={2017},
+  volume={39},
+  number={6},
+  pages={1137-1149},
+  keywords={graphics processing units;neural nets;object detection;faster-R-CNN;real-time object detection;region proposal networks;RPN;full-image convolutional features;high-quality region proposals;attention mechanisms;deep VGG-16 model;GPU;object detection accuracy;PASCAL VOC 2007;PASCAL VOC 2012;MS COCO datasets;COCO 2015 competitions;ILSVRC;Proposals;Object detection;Convolutional codes;Feature extraction;Search problems;Detectors;Training;Object detection;region proposal;convolutional neural network},
+  doi={10.1109/TPAMI.2016.2577031},
+  ISSN={0162-8828},
+  month={June}
+}
+
+@inproceedings{zhiqiangReviewObjectDetection2017,
+  title = {A Review of Object Detection Based on Convolutional Neural Network},
+  doi = {10/gfw6g7},
+  abstract = {With the development of intelligent device and social media, the data bulk on Internet has grown with high speed. As an important aspect of image processing, object detection has become one of the international popular research fields. In recent years, the powerful ability with feature learning and transfer learning of Convolutional Neural Network (CNN) has received growing interest within the computer vision community, thus making a series of important breakthroughs in object detection. So it is a significant survey that how to apply CNN to object detection for better performance. First the paper introduced the basic concept and architecture of CNN. Secondly the methods that how to solve the existing problems of conventional object detection are surveyed, mainly analyzing the detection algorithm based on region proposal and based on regression. Thirdly it mentioned some means which improve the performance of object detection. Then the paper introduced some public datasets of object detection and the concept of evaluation criterion. Finally, it combed the current research achievements and thoughts of object detection, summarizing the important progress and discussing the future directions.},
+  booktitle = {2017 36th {{Chinese Control Conference}} ({{CCC}})},
+  author = {Zhiqiang, W. and Jun, L.},
+  month = jul,
+  year = {2017},
+  keywords = {Computer vision,Feature extraction,neural nets,Proposals,object detection,Object detection,Training,computer vision,CNN,Convolutional Neural Network,convolutional neural network,social networking (online),image processing,datasets,feature learning,intelligent device,Internet,learning (artificial intelligence),region proposal,regression,regression analysis,social media,transfer learning},
+  pages = {11104-11109},
+  file = {/home/schuldes/Zotero/storage/3HV3NDIF/8029130.html}
+}
+
+@Misc{fastai,
+  howpublished = {\url{http://docs.fast.ai}},
+  note = {Accessed March 4, 2019},
+  title = {fast.ai},
+  author = {Howard, Jeremy}
+}
+
+@Misc{ultravideo,
+  howpublished = {\url{http://ultravideo.cs.tut.fi}},
+  title  = {Testsequences},
+  author = {Ultra Video Group}
+}
+
+@inproceedings{Smith15a,
+  author={L. N. {Smith}},
+  booktitle={2017 IEEE Winter Conference on Applications of Computer Vision (WACV)},
+  title={Cyclical Learning Rates for Training Neural Networks},
+  year={2017},
+  volume={},
+  number={},
+  pages={464-472},
+  keywords={image classification;learning (artificial intelligence);neural nets;visual databases;cyclical learning rates;hyper-parameter;deep neural network training;global learning rates;boundary values;classification accuracy improvement;CIFAR-10 dataset;CIFAR-100 dataset;ResNets dataset;stochastic depth networks;DenseNets;ImageNet dataset;GoogLeNet architecture;AlexNet architecture;Training;Neural networks;Schedules;Computer architecture;Tuning;Computational efficiency},
+  doi={10.1109/WACV.2017.58},
+  ISSN={},
+  month={March}
+}
+
+
+
+@inproceedings{cityperson,
+  author = {Zhang, Shanshan and Benenson, Rodrigo and Schiele, Bernt},
+  title = {CityPersons: A Diverse Dataset for Pedestrian Detection},
+  booktitle = {The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+  month = {July},
+  year = {2017}
+}
+@article{CalculationAveragePSNR,
+author = {Bjontegaard, G},
+year = {2001},
+month = {01},
+pages = {},
+title = {Calculation of average PSNR differences between RD-Curves},
+journal = {Proceedings of the ITU-T Video Coding Experts Group (VCEG) Thirteenth Meeting}
+}
+
+@misc{KvazaarHEVCEncoder,
+  title = {Kvazaar {{HEVC Encoder}}},
+  abstract = {Academic open source project
+from Ultra Video Group, Tampere University of Technology (Finland)},
+  howpublished = {https://github.com/ultravideo/kvazaar}
+}
+@misc{gdpr2016,
+  author={{Council of {E}uropean {U}nion}},
+  title={{Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (General Data Protection Regulation)}},
+  year={2016},
+  note={\newline\url{https://eur-lex.europa.eu/eli/reg/2016/679/oj}},
+}
+
+@misc{HEVCDecoder,
+  title = {{{openHEVC Decoder}}},
+  howpublished = {https://github.com/OpenHEVC/openHEVC}
+}
+
+@INPROCEEDINGS{Roesener2017,
+  author={C. {Roesener} and J. {Hiller} and H. {Weber} and L. {Eckstein}},
+  booktitle={2017 IEEE 20th International Conference on Intelligent Transportation Systems (ITSC)},
+  title={{How safe is automated driving? Human driver models for safety performance assessment}},
+  year={2017},
+  volume={},
+  number={},
+  pages={1-7},
+  abstract={Automated driving functions are under intensified development by industry and academia. One of the major challenges for many years to come is to identify risks and benefits of these functions in order to enable a market introduction. Due to the fact that automated driving functions are working in large operation spaces with a driving behavior resulting from complex decision making algorithms, identifying their benefits and drawbacks by only using real world driving tests will not be feasible. In addition, it is possible that automated driving will lead to complete new accident scenarios while others such as rear end collisions may disappear. Therefore, new methods which incorporate virtual testing have to be developed. In this paper a framework for safety performance assessment of automated driving is developed by combining the advantages of learning- and model-based approaches for incorporating human behaviour as a reference for assessment. Whereas learning-based Hidden Markov Models (HMMs) are used for identifying the frequency of the occurrence of safety relevant scenarios in traffic, detailed models for human driver performance obtained from driving simulator studies are used for deriving the change of impact in these safety relevant scenarios induced by automated driving. Finally, it is analysed which distance behaviour of automated driving functions is optimal in terms of reduction of injury risk.},
+  keywords={decision making;driver information systems;hidden Markov models;learning (artificial intelligence);road accidents;road safety;road vehicles;world driving tests;safety performance assessment;safety relevant scenarios;human driver performance;automated driving functions;human driver models;complex decision making algorithms;learning-based hidden Markov models;HMM;model-based approaches;driving simulator;injury risk reduction;Hidden Markov models;Safety;Data models;Injuries;Predictive models;Analytical models;Accidents},
+  doi={10.1109/ITSC.2017.8317706},
+  ISSN={2153-0017},
+  month={Oct}
+}
+
+@INPROCEEDINGS{Puetz2017,
+  author={A. {P{\"u}tz} and A. {Zlocki} and J. {K{\"u}fen} and J. {Bock} and L. {Eckstein}},
+  booktitle={25th International Technical Conference on the Enhanced Safety of Vehicles (ESV)},
+  title={{Database Approach for the Sign-Off Process of Highly Automated Vehicles}},
+  year={2017},
+  month={Jun}
+}
+
+@Article{Cunningham2004,
+  author    = {Douglas W. Cunningham and Manfred Nusseck and Christian Wallraven and Heinrich H. Bülthoff},
+  title     = {The role of image size in the recognition of conversational facial expressions},
+  journal   = {Computer Animation and Virtual Worlds},
+  year      = {2004},
+  volume    = {15},
+  number    = {34},
+  pages     = {305--310},
+  month     = {jun},
+  doi       = {10.1002/cav.33},
+  publisher = {Wiley},
+}
+
+@Article{Marciniak2015,
+  author="Marciniak, Tomasz and Chmielewska, Agata and Weychan, Radoslaw and Parzych, Marianna and Dabrowski, Adam",
+  title="Influence of low resolution of images on reliability  of face detection and recognition",
+  journal="Multimedia Tools and Applications",
+  year="2015",
+  month="Jun",
+  day="01",
+  volume="74",
+  number="12",
+  pages="4329--4349",
+  abstract="In this paper we analyze reliability of the real-time system for face detection and recognition from low-resolution images, e.g., from video monitoring images. First, we briefly describe main features of the standards for biometric face images. Available scientific databases have been checked for compliance with these biometric standards. During the research we have considered both the correctness of extraction (location) of the face from the image as well as the correctness of the identification (based on the eigenfaces approach). To the tests we have used the face databases that allow to study tolerance to illumination and face positions. We have compared various face detection techniques and analyzed minimum requirements for the resolution of facial images. Finally, an influence of the resolution reduction on the FAR/FRR  of the recognition is presented.",
+  issn="1573-7721",
+  doi="10.1007/s11042-013-1568-8",
+  url="https://doi.org/10.1007/s11042-013-1568-8"
+}
+
+@INPROCEEDINGS{Lin2017,
+  author={T. {Lin} and P. {Dollár} and R. {Girshick} and K. {He} and B. {Hariharan} and S. {Belongie}},
+  booktitle={2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+  title={Feature Pyramid Networks for Object Detection},
+  year={2017},
+  volume={},
+  number={},
+  pages={936-944},
+  keywords={feature extraction;image representation;neural nets;object detection;object recognition;deep convolutional networks;pyramidal hierarchy;high-level semantic feature maps;Feature Pyramid Network;generic feature extractor;basic Faster R-CNN system;COCO detection benchmark;multiscale object detection;pyramid representations;FPN;Feature extraction;Detectors;Semantics;Computer architecture;Proposals;Object detection;Robustness},
+  doi={10.1109/CVPR.2017.106},
+  ISSN={1063-6919},
+  month={July}
+}
+
+@Article{Zou2019,
+  author      = {Zhengxia Zou and Zhenwei Shi and Yuhong Guo and Jieping Ye},
+  title       = {Object Detection in 20 Years: A Survey},
+  abstract    = {Object detection, as of one the most fundamental and challenging problems in computer vision, has received great attention in recent years. Its development in the past two decades can be regarded as an epitome of computer vision history. If we think of today's object detection as a technical aesthetics under the power of deep learning, then turning back the clock 20 years we would witness the wisdom of cold weapon era. This paper extensively reviews 400+ papers of object detection in the light of its technical evolution, spanning over a quarter-century's time (from the 1990s to 2019). A number of topics have been covered in this paper, including the milestone detectors in history, detection datasets, metrics, fundamental building blocks of the detection system, speed up techniques, and the recent state of the art detection methods. This paper also reviews some important detection applications, such as pedestrian detection, face detection, text detection, etc, and makes an in-deep analysis of their challenges as well as technical improvements in recent years.},
+  date        = {2019-05-13},
+  eprint      = {http://arxiv.org/abs/1905.05055v2},
+  journal     = {arXiv:1905.05055 [cs]},
+  month       = may,
+  year        = 2019,
+  eprintclass = {cs.CV},
+  eprinttype  = {arXiv},
+  file        = {:Zou2019 - Object Detection in 20 Years_ a Survey.pdf:PDF},
+  keywords    = {cs.CV},
+}
+

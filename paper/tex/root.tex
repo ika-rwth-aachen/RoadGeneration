@@ -29,6 +29,7 @@
 %\usepackage{times} % assumes new font selection scheme installed
 \usepackage{amsmath} % assumes amsmath package installed
 \usepackage{amssymb}  % assumes amsmath package installed
+\usepackage{tikz}
 
 \title{\LARGE \bf
 Generation of Complex Road Networks Using a Simplified Logical Description for the Validation of Automated Vehicles*
@@ -69,23 +70,37 @@ This article introduces a prototypical logical description language for complex 
 	\caption{Graphical example of input and output of the road generation tool. As a minimal input two reference lines with assigned road types and a coupling point are sufficient to generate an intersection written in valid OpenDRIVE. (OpenDRIVE visualized in CarMaker 8.0[ref?]) \textbf{roughDraft}}
 	\label{fig_motivation}
 \end{figure}
-
+%\begin{figure}
+%	\begin{tikzpicture}
+%	\node[anchor=west](layer6) at (0,7.4) {\small Layer 6};
+%	\node[anchor=west](layer5) at (0,6.1) {\small Layer 5};
+%	\node[anchor=west](layer4) at (0,4.9) {\small Layer 4};
+%	\node[anchor=west](layer3) at (0,3.6) {\small Layer 3};
+%	\node[anchor=west](layer2) at (0,2.3) {\small Layer 2};
+%	\node[anchor=west](layer1) at (0,0.8) {\small Layer 1};
+%	\begin{scope}[xshift=1.22cm]
+%	\node[anchor=south west,inner sep=0] (image) at (0,0) {\includegraphics[width=0.4\textwidth]{fig/en_layers_raw.png}};
+%	\end{scope}
+%	\end{tikzpicture}
+%	\caption{The data layers for the description of a scenario following~\cite{bock2018data} and~\cite{bagschik2018ontology}}
+%	\label{fig:datalayers}
+%\end{figure}
 \section{RELATED WORK}
 During the research initiative PEGASUS [ref] these concepts have been developed and utilized within the domain German motorway. Furthermore, the main focus has been on layer four. Nevertheless, when moving the testing domain to inner city scenarios such as the driving behavior on intersections, layers one to three are much more complex. Motorways usually consist of parallel lanes which follow curves with big radii. Such a road is not complicated to describe and generate. It can be done automatically with low effort. [ref. menzel et al.] propose a method to create a standardized road network in the OpenDRIVE format from a logical (and functional) road description. However, inner city intersections are more complex both in the logical description and in terms of the concrete format. 
 
-die Frage ist, was alles "related" ist... eventuell kuerzer halten und laengere introduction?
+die Frage ist, was alles "related" ist... eventuell kuerzer halten und laengere introduction? \cite{BagschikG..2018} \cite{Roesener2017}
 
 \section{METHODOLOGY}
 
 \section{LOGICAL ROAD DESCRIPTION}
-The proposed logical road description is derived from the reference line concept used in OpenDRIVE. This means that each lane is described by an offset from a reference line defined in the x,y-plane (topview). However, in contrast to OpenDRIVE we introduce some simplifications and eliminate redundancies along the reference line. Each road segment consists of the geometric primitives line, arc and spiral, which is motivated by the federal guidelines for road constructions [ref]. In order to ensure a smooth driveability along the road network, we define that the curvature graph has to be continuous. Therefor, the definition of curvature over distance, a start point and initial heading is sufficient to uniquely describe a road segment's course (cf.~(\ref{eq1})). Fig.~\ref{fig_curvGraph} shows the definition of a road segment that is composed of the geometric primitive sequence line-spiral-arc-spiral-line.
-\begin{figure}[thpb] 		
+The proposed logical road description is derived from the reference line concept used in OpenDRIVE [ref]. This means that each lane is described by an offset from a reference line defined in the x,y-plane (topview). However, in contrast to OpenDRIVE we introduce some simplifications and eliminate redundancies along the reference line. Each road segment consists of the geometric primitives line, arc and spiral, which is motivated by the federal guidelines for road constructions [ref]. In order to ensure a smooth driveability along the road network, we define that the curvature graph has to be continuous. Therefor, the definition of curvature over distance, a start point and initial heading is sufficient to uniquely describe a road segment's course (cf.~(\ref{eq1})). Fig.~\ref{fig_curvGraph} shows the definition of a road segment that is composed of the geometric primitive sequence line-spiral-arc-spiral-line.
+\begin{figure}%[thpb] 		
 	\centering
 	\includegraphics{fig/curvGraph.pdf}
 	\caption{Example for a curve defined by the curvature graph. The plan view results from two integrations over $s$. Geometric primitives: line-spiral-arc-spiral-line. Positive curvature values correspond to left turns in positive $s$ direction.\textbf{roughDraft}}
 	\label{fig_curvGraph}
 \end{figure}
-
+% maybe some subsections...
 As shown in Fig.~\ref{fig_curvGraph}, the curvature $\kappa(s)$ is a piecewise linear defined function over distance. Since we use lines, spirals and arcs, three definitions for those pieces are required. A line is described by $\kappa(s) = 0$, a spiral is characterized by a linear change of curvature: $\kappa(s) = a s$, where $a$ is constant (for details on spirals cf. [ref]). Finally, an arc's curvature is defined as: $\kappa(s) = \kappa_\text{arc}$, where $\kappa_\text{arc}$ is constant. Those definitions have their origin at $s=0$ and need to be shifted by their specific $s_\text{start}$ when being concatenated to a curvature graph. If the initial values $\phi_\text{0}, x_\text{0}, y_\text{0}$ are provided, the plan view coordinates can be calculated as follows:
 \begin{equation} \label{eq1}
 \begin{split}
@@ -94,10 +109,9 @@ x(s) &= \int_{0}^{s} \cos(\phi(\hat{s})) d\hat{s} + x_\text{0} \\
 y(s) &= \int_{0}^{s} \sin(\phi(\hat{s})) d\hat{s} + y_\text{0} \\
 \end{split}
 \end{equation}
+\textit{briefly explain s,t coordinate system....}
 
-The definition of the road network is stored in XML format. A simplified illustration of the structure is shown in Fig.~\ref{fig_schema}. On the first level under the \textit{roadNetwork} tag all segments are defined and links which connect them can be stated. In addition, "loose ends" of segments can be automatically connected inside the \textit{closeRoadNetwork} tag. 
-
-\textit{describe segments in detail... ref line is clear, now features...}
+The definition of the road network is stored in XML format. A simplified illustration of the structure is shown in Fig.~\ref{fig_schema}. On the first level under the \textit{roadNetwork} tag all segments are defined and links which connect them can be stated. In addition, "loose ends" of segments can be automatically connected inside the \textit{closeRoadNetwork} tag. As illustrated, segments might be T-/X-junctions, roundabouts and connection roads. The latter consist of a single \textit{road} defined by reference lines and definitions for lanes and signals in the s,t-coordinate system. Lane extension and merging follow 3rd degree polynomials which are stated by their start and end point in s,t-coordinates, the corresponding polynomial coefficients are calculated by the road generation tool. T- and X-junctions are similarly defined and thus are described mutual. At least to \textit{road} entities are required to create a junction
 
 \begin{figure}[thpb] 		
 	\centering
@@ -106,8 +120,27 @@ The definition of the road network is stored in XML format. A simplified illustr
 	\label{fig_schema}
 \end{figure}
 
-\section{ROAD GENERATION}
+\begin{figure}[thpb] 		
+	\centering
+	\includegraphics[width=0.9\columnwidth]{fig/junctionDef.png}
+	\caption{Two roads are coupled to form a T-junction. On both roads the intersection point along $s$ is defined. In addition, the angle at this point needs to be stated. \textbf{Platzhalter. NEU MACHEN}}
+	\label{fig_juncDef}
+\end{figure}
 
+\begin{figure}[thpb] 		
+	\centering
+	\includegraphics[width=0.9\columnwidth]{fig/concatSegments.png}
+	\caption{Three segments are concatenated to form a road network. For a connection only the two end points need to be specified because concatenation follows the continuous curvature condition. \textbf{Platzhalter. NEU MACHEN}}
+	\label{fig_concatSeg}
+\end{figure}
+
+\section{ROAD GENERATION}
+\begin{figure}[thpb] 		
+	\centering
+	\includegraphics{fig/createJunction.pdf}
+	\caption{From logical definition to concrete intersection. After the reference lines are in the correct position a), lanes are generated (b). Subsequently, the intersection area is cut free (c) and all required connection lanes are generated automatically (d). \textbf{grafik ok so...?}}
+	\label{fig_createJunction}
+\end{figure}
 \subsection{Geometry}
 
 \subsection{Intersections}
@@ -149,15 +182,7 @@ Three & Four\\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{thebibliography}{99}
-
-\bibitem{c1} G. O. Young, Synthetic structure of industrial plastics (Book style with paper title and editor), 	in Plastics, 2nd ed. vol. 3, J. Peters, Ed.  New York: McGraw-Hill, 1964, pp. 15-64.
-\bibitem{c2} W.-K. Chen, Linear Networks and Systems (Book style).	Belmont, CA: Wadsworth, 1993, pp. 123-135.
-
-
-\end{thebibliography}
-
-
-
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEexample,ma_russ,anonymization,roadgen}
 
 \end{document}
