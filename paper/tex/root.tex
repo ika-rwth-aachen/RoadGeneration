@@ -126,8 +126,8 @@ A simplified illustration of the road network's XML structure is shown in Fig.~\
 At least two and at most three \textit{road} entities are required to create a T-junction. Often one road is the dominant or main road in an intersection, which can be exploited by defining it as a single road that is intersected by an access road (cf. Fig.~\ref{fig_juncDef}). Alternatively, three single roads can be combined to form a T-junction by defining one reference road and the angles at which the other two roads are connected. In addition to topological information of the junction, it is possible to define the intersection area more detailed. First, for each road arm the distance from the intersection point to the beginning of the junction can be specified. The latter means the point where turning lanes start to leave the course of the reference line. Fig.~\ref{fig_createJunction} c) shows such an intersection area. Furthermore, additional lanes for left and right turns can be added ad libitum (\textit{verrückter ausdruck für "nach Belieben"}). Those lanes are specified by their minimal radius, the concrete course is calculated automatically. The descriptions of T- and X-junctions are a lot alike and thus X-junctions can be created analogously to the preceding paragraph about T-junctions.
 \begin{figure}[thpb] 		
 	\centering
-	\includegraphics[width=0.9\columnwidth]{fig/junctionDef.png}
-	\caption{Two roads are coupled to form a T-junction. On both roads the intersection point along $s$ is defined. In addition, the angle at this point needs to be stated. \textbf{Platzhalter. NEU MACHEN, 2 Spalten reichen aus}}
+	\includegraphics{fig/junctionDef.pdf}
+	\caption{Two roads are coupled to form a T-junction. Road 1 is defined as an arc by length and curvature whereas road 2 is a straight line with length $L$. On both roads the intersection point along $s$ is defined. In addition, the angle $\alpha$ at this point is stated. }
 	\label{fig_juncDef}
 \end{figure}
 
