@@ -100,7 +100,7 @@ The proposed logical road description is derived from the reference line concept
 \begin{figure}%[thpb] 		
 	\centering
 	\includegraphics{fig/curvGraph.pdf}
-	\caption{Example for a curve defined by the curvature graph. The plan view results from two integrations over $s$. Geometric primitives: line-spiral-arc-spiral-line. Positive curvature values correspond to left turns in positive $s$ direction.\textbf{roughDraft, wenn es zu viele Abb. werden, kann diese raus...}}
+	\caption{Example for a curve defined by the curvature graph. The plan view results from two integrations over $s$. Geometric primitives: line-spiral-arc-spiral-line. Positive curvature values correspond to left turns in positive $s$ direction.\textbf{roughDraft, wenn es zu viele Abb. werden, kann diese raus... Evtl. ersetzen durch eine Abb., die ref. Linie, Fahrstreifen und Objekte beinhaltet. Vgl. ODR}}
 	\label{fig_curvGraph}
 \end{figure}
 % maybe some subsections...
@@ -115,10 +115,7 @@ y(s) &= \int_{0}^{s} \sin(\phi(\hat{s})) d\hat{s} + y_\text{0} \\
 
 \textit{briefly explain s,t coordinate system....}
 
-A simplified illustration of the road network's XML structure is shown in Fig.~\ref{fig_schema}. On the first level under the \textit{roadNetwork} tag all segments are defined and links which connect them can be stated. In addition, "loose ends" of segments can be automatically connected inside the \textit{closeRoadNetwork} tag. As illustrated, segments might be T-/X-junctions, roundabouts and connection roads. The latter consist of single \textit{roads} defined by reference lines and definitions for lanes and signals in the s,t-coordinate system. Lane extension and merging follow 3rd degree polynomials which are stated by their start and end point in s,t-coordinates, the corresponding polynomial coefficients are calculated by the road generation tool.
-
-At least two and at most three \textit{road} entities are required to create a T-junction. Often one road is the dominant or main road in an intersection, which can be exploited by defining it as a single road that is intersected by an access road (cf. Fig.~\ref{fig_juncDef}). Alternatively, three single roads can be combined to form a T-junction by defining one reference road and the angles at which the other two roads are connected. In addition to topological information of the junction, it is possible to define the intersection area more detailed.  The descriptions of T- and X-junctions are a lot alike and thus the X-junctions can be created analogously to the preceding paragraph about T-junctions.
-
+A simplified illustration of the road network's XML structure is shown in Fig.~\ref{fig_schema}. On the first level under the \textit{roadNetwork} tag all segments are defined and links which connect them can be stated. In addition, "loose ends" of segments can be automatically connected inside the \textit{closeRoadNetwork} tag. As illustrated, segments might be T-/X-junctions, roundabouts and connection roads. The latter consist of single \textit{roads} defined by reference lines and definitions for lanes and signals in the s,t-coordinate system. Lane extension and merging follow 3rd degree polynomials which are stated by their start and end point in s,t-coordinates, the corresponding polynomial coefficients are calculated by the road generation tool (\textit{Falls platz ist, kann noch eine Grafik mit Spuraufweitung erzeugt werden}).
 \begin{figure}[thpb] 		
 	\centering
 	\includegraphics{fig/schema.pdf}
@@ -126,6 +123,7 @@ At least two and at most three \textit{road} entities are required to create a T
 	\label{fig_schema}
 \end{figure}
 
+At least two and at most three \textit{road} entities are required to create a T-junction. Often one road is the dominant or main road in an intersection, which can be exploited by defining it as a single road that is intersected by an access road (cf. Fig.~\ref{fig_juncDef}). Alternatively, three single roads can be combined to form a T-junction by defining one reference road and the angles at which the other two roads are connected. In addition to topological information of the junction, it is possible to define the intersection area more detailed. First, for each road arm the distance from the intersection point to the beginning of the junction can be specified. The latter means the point where turning lanes start to leave the course of the reference line. Fig.~\ref{fig_createJunction} c) shows such an intersection area. Furthermore, additional lanes for left and right turns can be added ad libitum (\textit{verrückter ausdruck für "nach Belieben"}). Those lanes are specified by their minimal radius, the concrete course is calculated automatically. The descriptions of T- and X-junctions are a lot alike and thus X-junctions can be created analogously to the preceding paragraph about T-junctions.
 \begin{figure}[thpb] 		
 	\centering
 	\includegraphics[width=0.9\columnwidth]{fig/junctionDef.png}
@@ -133,6 +131,7 @@ At least two and at most three \textit{road} entities are required to create a T
 	\label{fig_juncDef}
 \end{figure}
 
+\textit{paragraph for concatenating road segments to a network}
 \begin{figure}[thpb] 		
 	\centering
 	\includegraphics[width=0.9\columnwidth]{fig/concatSegments.png}
