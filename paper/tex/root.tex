@@ -30,15 +30,16 @@
 \usepackage{amsmath} % assumes amsmath package installed
 \usepackage{amssymb}  % assumes amsmath package installed
 \usepackage{tikz}
+\usepackage{multirow} % merge columns in rows
 
 \title{\LARGE \bf
 Generation of Complex Road Networks Using a Simplified Logical Description for the Validation of Automated Vehicles*
 }
 
 
-\author{Daniel Becker$^{1}$, Fabian Ruß$^{1}$ and Lutz Eckstein$^{2}$% <-this % stops a space
+\author{Daniel Becker$^{1}$, Fabian Ru{\ss}$^{1}$ and Lutz Eckstein$^{2}$% <-this % stops a space
 \thanks{*This research is funded by the SET Level 4to5 research initiative, promoted by the	Federal Ministry for Economic Affairs and Energy (BMWi).}% <-this % stops a space
-\thanks{$^{1}$Daniel Becker and Fabian Ruß are with the automated driving department of the Institute for Automotive Engineering (ika), RWTH Aachen University, 52074 	Aachen, Germany {\tt\small \{daniel.becker, fabian.russ\}@ika.rwth-aachen.de}}%
+\thanks{$^{1}$Daniel Becker and Fabian Ru{\ss} are with the automated driving department of the Institute for Automotive Engineering (ika), RWTH Aachen University, 52074 	Aachen, Germany {\tt\small \{daniel.becker, fabian.russ\}@ika.rwth-aachen.de}}%
 \thanks{$^{2}$Lutz Eckstein is head of the Institute for Automotive Engineering (ika), RWTH Aachen University, 52074 Aachen, Germany {\tt\small lutz.eckstein@ika.rwth-aachen.de}}%
 }
 
@@ -155,15 +156,17 @@ At least two and at most three \textit{road} entities are required to create a T
 \section{RESULTS}
 
 \begin{table}[h]
-\caption{An Example of a Table}
-\label{table_example}
+\caption{Comparison of OpenDRIVE and logical description}
+\label{tab_comparison}
+\def\arraystretch{1.5}
 \begin{center}
-\begin{tabular}{|c|c|}
+\begin{tabular}{c|cccc}
+\multirow{2}{*}{File} & \multicolumn{2}{c}{OpenDRIVE} & \multicolumn{2}{c}{Logical Description}\\
+& Lines & Chars & Lines & Chars \\
 \hline
-One & Two\\
-\hline
-Three & Four\\
-\hline
+1 & $23423$ & $23423$& $7\%$ &$9\%$\\
+2 & $2343$ & $3423$& $7\%$ &$9\%$\\
+3 & $3423$ & $1423$& $7\%$ &$9\%$
 \end{tabular}
 \end{center}
 \end{table}
