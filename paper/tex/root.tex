@@ -93,14 +93,14 @@ die Frage ist, was alles "related" ist... eventuell kuerzer halten und laengere 
 \textit{hier muss noch der DLR ODR generator und deren logische Beschreibung für Autobahnen aus Pegasus rein}
 
 \section{METHODOLOGY}
-The concept presented in this paper aims to offer a logical description for road networks which can be translated into a concrete standardized format. We use XML to store the input and the corresponding OpenDRIVE output is saved in XML as well. With the logical description comes a road generation tool that calculates all required OpenDRIVE quantities from the simplified input.
+The concept presented in this paper aims to offer a description for road networks which allows easy modifications of the map due to a non-redundant design. Further, it is possible to provide limited information for intersections and lane definitions since some default configurations are defined. The input can be translated into a concrete standardized road description format. We use XML to store the input and the corresponding OpenDRIVE output is saved in XML as well. With the logical description comes a road generation tool that calculates all required OpenDRIVE quantities from the simplified input. This way we attempt to close a gap in the pipeline of defining logical scenarios and make them executable in a concrete manner.
 
 \section{LOGICAL ROAD DESCRIPTION}
 The proposed logical road description is derived from the reference line concept used in OpenDRIVE [ref]. This means that each lane is described by an offset from a reference line defined in the x,y-plane (topview). However, in contrast to OpenDRIVE we introduce some simplifications and eliminate redundancies along the reference line. Each road segment consists of the geometric primitives line, arc and spiral, which is motivated by the federal guidelines for road constructions [ref]. In order to ensure a smooth driveability along the road network, we define that the curvature graph has to be continuous. Therefor, the definition of curvature over distance, a start point and initial heading is sufficient to uniquely describe a road segment's course (cf.~(\ref{eq1})). Fig.~\ref{fig_curvGraph} shows the definition of a road segment that is composed of the geometric primitive sequence line-spiral-arc-spiral-line.
 \begin{figure}%[thpb] 		
 	\centering
 	\includegraphics{fig/curvGraph.pdf}
-	\caption{Example for a curve defined by the curvature graph. The plan view results from two integrations over $s$. Geometric primitives: line-spiral-arc-spiral-line. Positive curvature values correspond to left turns in positive $s$ direction.\textbf{roughDraft}}
+	\caption{Example for a curve defined by the curvature graph. The plan view results from two integrations over $s$. Geometric primitives: line-spiral-arc-spiral-line. Positive curvature values correspond to left turns in positive $s$ direction.\textbf{roughDraft, wenn es zu viele Abb. werden, kann diese raus...}}
 	\label{fig_curvGraph}
 \end{figure}
 % maybe some subsections...
@@ -126,14 +126,14 @@ The definition of the road network is stored in XML format. A simplified illustr
 \begin{figure}[thpb] 		
 	\centering
 	\includegraphics[width=0.9\columnwidth]{fig/junctionDef.png}
-	\caption{Two roads are coupled to form a T-junction. On both roads the intersection point along $s$ is defined. In addition, the angle at this point needs to be stated. \textbf{Platzhalter. NEU MACHEN}}
+	\caption{Two roads are coupled to form a T-junction. On both roads the intersection point along $s$ is defined. In addition, the angle at this point needs to be stated. \textbf{Platzhalter. NEU MACHEN, 2 Spalten reichen aus}}
 	\label{fig_juncDef}
 \end{figure}
 
 \begin{figure}[thpb] 		
 	\centering
 	\includegraphics[width=0.9\columnwidth]{fig/concatSegments.png}
-	\caption{Three segments are concatenated to form a road network. For a connection only the two end points need to be specified because concatenation follows the continuous curvature condition. \textbf{Platzhalter. NEU MACHEN}}
+	\caption{Three segments are concatenated to form a road network. For a connection only the two end points need to be specified because concatenation follows the continuous curvature condition. \textbf{NEU MACHEN, Bsp gut so, aber Achsen und Schrift anpassen}}
 	\label{fig_concatSeg}
 \end{figure}
 
