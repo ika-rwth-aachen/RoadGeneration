@@ -90,13 +90,13 @@ During the research initiative PEGASUS [ref] these concepts have been developed 
 
 die Frage ist, was alles "related" ist... eventuell kuerzer halten und laengere introduction? \textit{bibtex platzhalter} \cite{BagschikG..2018} \cite{Roesener2017}
 
-\textit{hier muss noch der DLR ODR generator und deren logische Beschreibung für Autobahnen aus Pegasus rein}
+\textit{hier muss noch der DLR ODR generator und deren logische Beschreibung für Autobahnen aus Pegasus rein \cite{dlrODRgen}}
 
 \section{METHODOLOGY}
 The concept presented in this paper aims to offer a description for road networks which allows easy modifications of the map due to a non-redundant design. Further, it is possible to provide limited information for intersections and lane definitions since some default configurations are defined. The input can be translated into a concrete standardized road description format. We use XML to store the input and the corresponding OpenDRIVE output is saved in XML as well. With the logical description comes a road generation tool that calculates all required OpenDRIVE quantities from the simplified input. This way we attempt to close a gap in the pipeline of defining logical scenarios and make them executable in a concrete manner.
 
 \section{LOGICAL ROAD DESCRIPTION}
-The proposed logical road description is derived from the reference line concept used in OpenDRIVE [ref]. This means that each lane is described by an offset from a reference line defined in the x,y-plane (topview). However, in contrast to OpenDRIVE we introduce some simplifications and eliminate redundancies along the reference line. Each road segment consists of the geometric primitives line, arc and spiral, which is motivated by the federal guidelines for road constructions [ref]. In order to ensure a smooth driveability along the road network, we define that the curvature graph has to be continuous. Therefor, the definition of curvature over distance, a start point and initial heading is sufficient to uniquely describe a road segment's course (cf.~(\ref{eq1})). Fig.~\ref{fig_curvGraph} shows the definition of a road segment that is composed of the geometric primitive sequence line-spiral-arc-spiral-line.
+The proposed logical road description is derived from the reference line concept used in OpenDRIVE [ref]. This means that each lane is described by an offset from a reference line defined in the x,y-plane (topview). However, in contrast to OpenDRIVE we introduce some simplifications and eliminate redundancies along the reference line. Each road segment consists of the geometric primitives line, arc and spiral, which is motivated by the federal guidelines for road constructions [ref]. In order to ensure a smooth driveability along the road network, we define that the curvature has to be continuous. Therefor, the definition of curvature over distance, a start point and initial heading is sufficient to uniquely describe a road segment's course (cf.~(\ref{eq1})). Fig.~\ref{fig_curvGraph} shows the definition of a road segment that is composed of the geometric primitive sequence line-spiral-arc-spiral-line.
 \begin{figure}%[thpb] 		
 	\centering
 	\includegraphics{fig/curvGraph.pdf}
@@ -112,9 +112,12 @@ x(s) &= \int_{0}^{s} \cos(\phi(\hat{s})) d\hat{s} + x_\text{0} \\
 y(s) &= \int_{0}^{s} \sin(\phi(\hat{s})) d\hat{s} + y_\text{0} \\
 \end{split}
 \end{equation}
+
 \textit{briefly explain s,t coordinate system....}
 
-The definition of the road network is stored in XML format. A simplified illustration of the structure is shown in Fig.~\ref{fig_schema}. On the first level under the \textit{roadNetwork} tag all segments are defined and links which connect them can be stated. In addition, "loose ends" of segments can be automatically connected inside the \textit{closeRoadNetwork} tag. As illustrated, segments might be T-/X-junctions, roundabouts and connection roads. The latter consist of a single \textit{road} defined by reference lines and definitions for lanes and signals in the s,t-coordinate system. Lane extension and merging follow 3rd degree polynomials which are stated by their start and end point in s,t-coordinates, the corresponding polynomial coefficients are calculated by the road generation tool. T- and X-junctions are similarly defined and thus are described mutual. At least to \textit{road} entities are required to create a junction
+A simplified illustration of the road network's XML structure is shown in Fig.~\ref{fig_schema}. On the first level under the \textit{roadNetwork} tag all segments are defined and links which connect them can be stated. In addition, "loose ends" of segments can be automatically connected inside the \textit{closeRoadNetwork} tag. As illustrated, segments might be T-/X-junctions, roundabouts and connection roads. The latter consist of single \textit{roads} defined by reference lines and definitions for lanes and signals in the s,t-coordinate system. Lane extension and merging follow 3rd degree polynomials which are stated by their start and end point in s,t-coordinates, the corresponding polynomial coefficients are calculated by the road generation tool.
+
+At least two and at most three \textit{road} entities are required to create a T-junction. Often one road is the dominant or main road in an intersection, which can be exploited by defining it as a single road that is intersected by an access road (cf. Fig.~\ref{fig_juncDef}). Alternatively, three single roads can be combined to form a T-junction by defining one reference road and the angles at which the other two roads are connected. In addition to topological information of the junction, it is possible to define the intersection area more detailed.  The descriptions of T- and X-junctions are a lot alike and thus the X-junctions can be created analogously to the preceding paragraph about T-junctions.
 
 \begin{figure}[thpb] 		
 	\centering
