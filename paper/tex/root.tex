@@ -104,7 +104,7 @@ The proposed logical road description is derived from the reference line concept
 	\caption{Hierarchical structure of the road network. On the first level all segments and their relation to each other are defined. In addition, it is possible to define the automatic connection of two road ends. Segments are defined as roundabouts, junctions and connection roads. $r_i$ and $I$ describe roads and intersection definitions, respectively}
 	\label{fig_schema}
 \end{figure}
-\subsection{Route Layout / Linienführung} % or find better heading
+\subsection{Reference Line / Linienführung} % or find better heading
 In order to ensure a smooth driveability along the road network, we define that the curvature has to be continuous along roads. Therefor, the definition of curvature over distance, a start point and initial heading is sufficient to uniquely describe a road segment's course (cf.~(\ref{eq1})). Fig.~\ref{fig_curvGraph} shows the definition of a road segment that is composed of the geometric primitive sequence line-spiral-arc-spiral-line.
 
 As shown in Fig.~\ref{fig_curvGraph}, the curvature $\kappa(s)$ is a piecewise linear defined function over distance. Since we use lines, spirals and arcs, three definitions for those pieces are required. A line is described by $\kappa(s) = 0$, a spiral is characterized by a linear change of curvature: $\kappa(s) = a s$, where $a$ is constant (for details on spirals cf. [ref]). Finally, an arc's curvature is defined as: $\kappa(s) = \kappa_\text{arc}$, where $\kappa_\text{arc}$ is constant. Those definitions have their origin at $s=0$ and need to be shifted by their specific $s_\text{start}$ when being concatenated to a curvature graph. If the initial values $\phi_\text{0}, x_\text{0}, y_\text{0}$ are provided, the plan view coordinates can be calculated as follows:
@@ -155,7 +155,7 @@ At least two and at most three \textit{road} entities are required to create a T
 \end{figure}
 
 \section{RESULTS}
-
+\textit{Describe two or three different input files and somehow show corresponding output --> qualitative evaluation. Show line/char reduction in table + mention verified xsd scheme of opendrive. --> somehow quantitive evaluation}
 \begin{table}[h]
 \caption{Comparison of OpenDRIVE and logical description}
 \label{tab_comparison}
