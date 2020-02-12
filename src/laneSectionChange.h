@@ -523,14 +523,6 @@ int laneWideningJunction(road &r, int sLaneWidening, int turn, bool verschwenkun
         lane tmpLane;
         int idL = findLane(*it, tmpLane, id);
 
-        if (idL == -1)
-        {
-            cout << idL << endl;
-            cout << id << endl;
-            cout << turn << endl;
-            
-        }
-
         if (sgn(id) == sgn(laneId))
         {
             if (turn == 1)

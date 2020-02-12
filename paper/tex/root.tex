@@ -145,15 +145,85 @@ At least two and at most three \textit{road} entities are required to create a T
 \end{figure}
 
 \subsection{Closing the raod network}
-
 \section{ROAD GENERATION / IMPLEMENTATION}
-\begin{figure}[thpb] 		
-	\centering
-	\includegraphics{fig/createJunction.pdf}
-	\caption{From logical definition to concrete intersection. After the reference lines are in the correct position a), corresponding lanes are generated (b). Subsequently, the intersection area is cut free (c) and all required connection lanes are generated automatically (d). \textbf{grafik ok so...?}}
-	\label{fig_createJunction}
-\end{figure}
 
+\subsection{Geometry}
+    Each road network consists of a collection of many different roads. The most important component of a road is its reference line, which clearly defines the shape and length of the road employing an analytical description. Straight lines, arcs, and spirals are considered as segments of the reference line. Each segment is defined by a starting point and angle, as well as the curvature of the road. In order to get the coordinates and orientation along \(s\), a transformation, depending on the geometry type, is necessary. For a straight line, the following trivial equations result.
+    \begin{equation}
+        \varphi = \varphi_0, \quad x = s \cdot \cos(\varphi_0), \quad y = s \cdot \sin(\varphi_0)
+    \end{equation}
+
+    With a segment of a circle, however, the orientation also changes along \(s\). With the curvature \(\kappa\) this results in:
+    \begin{equation}
+        \varphi = s  \kappa + \varphi_0, \quad x = \frac{1}{\kappa} \left(\sin\varphi - \sin\varphi_0 \right),  y = \frac{1}{\kappa} \left(\cos\varphi_0 - \cos\varphi \right) 
+    \end{equation} 
+
+    For a spiral the coordinates along s can be described with a parameter \(a = \frac{1}{\sqrt{2R_1s_1}} = \sqrt{\frac{\kappa_1}{2s_1}}\) and the following equations. 
+    \begin{equation} 
+        x = \frac{1}{a}\int_0^{as}  \cos\left(t^2\right)dt, \quad y = \frac{1}{a}\int_0^{as}  \sin\left(t^2\right)dt 
+    \end{equation}
+
+    These integrals can finally be approximated with a series, so-called Fresnel integrals since they have no analytical solution. This power series can be cut off after a few terms, still leading good results.
+    % is it relevant? 
+
+    In a further step, lanes are added to the reference line. Each is described by a lane type, a marking, and especially by a width, which can be varied over road length \(s\) and is unambiguously described by a fourth-order polynomial with coefficients \(a,b,c,d\). In the simplest case, a constant road width \(w\) results in \(a=b=c=0, d=w\). If a lane widening occurs at point \(s_0\), the lane width increases from zero to the final width \(b\) over a given length \(ds\). Additional conditions for modeling the four polynomial coefficients are continuous transitions \(\left(f'(s) = 0\right)\) at the ends \(s_0\) and \(s_0 + ds\) of the widening. This results in the following coefficients.
+
+    \begin{equation}
+        a = -2\frac{w}{ds^3}, \quad b=3 \frac{w}{ds^2}, \quad c=0 , \quad c=0   
+    \end{equation}
+        
+\subsection{Intersections}
+    \begin{figure}[thpb]        
+        \centering
+        \includegraphics{fig/createJunction.pdf}
+        \caption{From logical definition to concrete intersection. After the reference lines are in the correct position a), corresponding lanes are generated (b). Subsequently, the intersection area is cut free (c) and all required connection lanes are generated automatically (d). \textbf{grafik ok so...?}}
+        \label{fig_createJunction}
+    \end{figure}
+
+    In a road network, besides roads, there are also intersections, which can appear as T or X intersection as well as roundabouts. Each of them is specified in a separate tag in the input file and consists, as shown in Figure \ref{fig_schema}, of intersection information \(I\) as well as the corresponding roads \(r_i\). In this information, the intersection center is specified by the exact arrangement of the streets. A reference street is defined, where further streets can be added at a given s-position under a certain angle. Furthermore, a coupler tag exists, which defines the intersection area with its traffic lanes in more detail. Besides the size of the intersection area, it also specifies which lanes of the individual roads are connected with each other or whether additional lanes are added before the intersection.
+
+    The segment is constructed such that the junction midpoint lies in the origin and intersects the reference road without any angle. Further roads intersect the origin at road position \(s_I\) at a defined angle \(\varphi_I\), so that the starting point and the starting angle of each geometry of this road must be shifted by a translatory offset \(\tilde{x}, \tilde{y}\) and rotated around the angle \(\tilde{\varphi} = \varphi_I\). The translatory offset can be determined from the coordinates at position \(s_I\) so that all segments with their starting points \(x_0,y_0,\varphi_0\) can be transformed as follows.
+
+    \begin{align} \label{eq2}
+        \begin{split}
+            x &= \cos(\tilde{\varphi}) \left(x_0-\tilde{x}\right) - \sin(\tilde{\varphi}) \left(y_0-\tilde{y}\right) \\
+            y &= \sin(\tilde{\varphi}) \left(x_0-\tilde{x}\right) + \cos(\tilde{\varphi}) \left(y_0-\tilde{y}\right) \\
+            \varphi &= \varphi_0 + \tilde{\varphi} \\
+        \end{split}
+    \end{align}
+
+    For inserting new connecting roads, the junction area has to be cut, which requires a cut in each reference line of the roads. Due to the concatenation of several geometries inside of a reference line, performing the cut is an iteratively process. The two cut positions of a reference line are called \(s_{1}\) and \(s_{2}\) in the following and can be calculated from the intersection position \(s_I\) as well as the intersection area size \(s_A\). Iterating over all geometries can result in four different cases, as seen in Figure \ref{fig_geometryCut}. 
+    \begin{figure}[]    
+        \includegraphics[width= \columnwidth]{fig/geometryCut.pdf}
+        \caption{possible cases for reference line cutting}
+        \label{fig_geometryCut}
+    \end{figure}
+
+    For case a), the starting cut takes place in the geometry so that the new start point is calculated first, and then the geometry is adjusted concerning length and starting curvature. Similarly, in case of b), the end cut is made, which changes the length and, in case of a spiral, the end curvature of the geometry, respectively. In the third case c), both cuts are made in the current geometry so that the start point, as well as the length and the curvatures, are adjusted. In the fourth case d), no cut is performed, so the current geometry remains unchanged.
+
+    After every street is cut and correctly positioned, the next step is calculating the reference lines of the lanes inside of the intersection area. Each lane is generated as an individual street with its reference line, whereby the single-lane lies to the right of the reference line. Based on starting point \(x_{1}, y_1\) and endpoint \(x_{2}, y_2\) as well as the angles \(\varphi_{1}\) and \(\varphi_{2}\) the new reference line of a lane is calculated. Simplified, only straight lines and arcs are used since the discontinuity in the curvature can be neglected at low speeds. In the first step, the endpoints are extended with straight lines to calculate the intersecting point \(x_i, y_i\).
+
+    \begin{align}
+        \begin{split}
+            x_i &= \frac{y_2 - y_1 + \left(\tan(\varphi_1) x_1 - \tan(\varphi_2) x_2\right)}{\tan(\varphi_1) - \tan(\varphi_2)} \\
+            y_i &= \tan(\varphi_1) \cdot x_i+ \left(y_1 - \tan(\varphi_1) x_1\right)\\
+        \end{split}     
+    \end{align}
+
+    The euclidian distances between endpoints and intersection point \(d_1, d_2\) can be determined from this. In the following, the line with further distance is extended until the new distances \(d_1, d_2\) are the same for both endpoints. The new helping ends of the two lines are marked as \(x_{h_1}, y_{h_1}\) and \(x_{h_2}, y_{h_2}\), which are connected in a last step by an arc with radius \(r\) and length \(l\). The following equation determines the parameters of the circle.
+
+    \begin{align}
+        \begin{split}           
+        r &= \frac{\sqrt{\left(x_{h_2} - x_{h_1}\right)^2 + \left(y_{h_2} - y_{h_1}\right)^2}}{2 \cdot \sin\left(\frac{a}{2}\right)} \\
+        l &= \vert r \cdot \left(\varphi_2 - \varphi_1\right) \vert \\  
+        \end{split}
+    \end{align}
+
+    % TODO: add more functionalities ? 
+
+\subsection{Road Network}
+
+\clearpage % TODO remove
 \section{RESULTS}
 \textit{Describe two or three different input files and somehow show corresponding output --> qualitative evaluation. Show line/char reduction in table + mention verified xsd scheme of opendrive. --> somehow quantitive evaluation}
 \begin{table}[h]
