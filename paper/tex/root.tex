@@ -31,6 +31,7 @@
 \usepackage{amssymb}  % assumes amsmath package installed
 \usepackage{tikz}
 \usepackage{multirow} % merge columns in rows
+\usepackage{listings} % code snippets
 
 \title{\LARGE \bf
 Generation of Complex Road Networks Using a Simplified Logical Description for the Validation of Automated Vehicles*
@@ -98,23 +99,28 @@ The concept presented in this paper aims to offer a description for road network
 
 \section{LOGICAL ROAD DESCRIPTION}
 The proposed logical road description is derived from the reference line concept used in OpenDRIVE [ref]. This means that each lane is described by an offset from a reference line defined in the x,y-plane (topview). However, in contrast to OpenDRIVE we introduce some simplifications and eliminate redundancies along the reference line. Each road segment consists of the geometric primitives line, arc and spiral, which is motivated by the federal guidelines for road constructions [ref]. A simplified illustration of the road network's XML structure is shown in Fig.~\ref{fig_schema}. On the first level under the \textit{roadNetwork} tag all segments are defined and links which connect them can be stated. In addition, "loose ends" of segments can be automatically connected inside the \textit{closeRoadNetwork} tag. As illustrated, segments might be T-/X-junctions, roundabouts and connection roads. 
+
+In the following sections, the refernce line is examined more detailed followed by the description of the input for the logical road network concept. The documentation is based on the nodes shown in Fig.~\ref{fig_schema}. 
 \begin{figure}[thpb] 		
 	\centering
 	\includegraphics{fig/schema.pdf}
 	\caption{Hierarchical structure of the road network. On the first level all segments and their relation to each other are defined. In addition, it is possible to define the automatic connection of two road ends. Segments are defined as roundabouts, junctions and connection roads. $r_i$ and $I$ describe roads and intersection definitions, respectively}
 	\label{fig_schema}
 \end{figure}
-\subsection{Reference Line / Linienführung} % or find better heading
-In order to ensure a smooth driveability along the road network, we define that the curvature has to be continuous along roads. Therefor, the definition of curvature over distance, a start point and initial heading is sufficient to uniquely describe a road segment's course (cf.~(\ref{eq1})). Fig.~\ref{fig_curvGraph} shows the definition of a road segment that is composed of the geometric primitive sequence line-spiral-arc-spiral-line.
+\subsection{Reference Lines} % or find better heading
+In order to ensure a smooth driveability along the road network, we define that the curvature has to be continuous along roads (where curvature is defined as the reciprocal of the radius). Therefor, the definition of curvature over distance, a start point and initial heading is sufficient to uniquely describe a road's course. Fig.~\ref{fig_curvGraph} shows the definition of a road segment that is composed of the geometric primitive sequence line-spiral-arc-spiral-line.
 
-As shown in Fig.~\ref{fig_curvGraph}, the curvature $\kappa(s)$ is a piecewise linear defined function over distance. Since we use lines, spirals and arcs, three definitions for those pieces are required. A line is described by $\kappa(s) = 0$, a spiral is characterized by a linear change of curvature: $\kappa(s) = a s$, where $a$ is constant (for details on spirals cf. [ref]). Finally, an arc's curvature is defined as: $\kappa(s) = \kappa_\text{arc}$, where $\kappa_\text{arc}$ is constant. Those definitions have their origin at $s=0$ and need to be shifted by their specific $s_\text{start}$ when being concatenated to a curvature graph. If the initial values $\phi_\text{0}, x_\text{0}, y_\text{0}$ are provided, the plan view coordinates can be calculated as follows:
-\begin{equation} \label{eq1}
-\begin{split}
-\phi(s) &= \int_0^s \kappa(\hat{s}) d\hat{s} + \phi_\text{0} \\ 
-x(s) &= \int_{0}^{s} \cos(\phi(\hat{s})) d\hat{s} + x_\text{0} \\ 
-y(s) &= \int_{0}^{s} \sin(\phi(\hat{s})) d\hat{s} + y_\text{0} \\
-\end{split}
-\end{equation}
+As shown in Fig.~\ref{fig_curvGraph}, the curvature $\kappa(s)$ is a piecewise linear defined function over distance. Since we use lines, spirals and arcs, three definitions for those pieces are required. A line is described by $\kappa(s) = 0$ which means, only a length $L$ needs to be specified. An arc's course is defined by a constant curvature $\kappa(s) = \kappa_\text{arc} = \text{const}$. Therefor, an arc is defined by a length $L$ and a radius $R$. Note that we use radii in the input description because they are more intuitive than the curvature. Finally, a spiral is characterized by a linear change of curvature: $\kappa(s) = a s$, where $a$ is constant (for details on spirals cf. [ref]). Consequently, in addition to the length $L$, the start and end radius $R_s$ and $R_e$ need to be defined for a spiral to be unique. Those definitions are then being concatenated to a curvature graph and result in a unique road course in the x,y-plane if the initial values for position and orientation are provided. 
+
+%% maths prob. later, better describe input
+%If the initial values $\phi_\text{0}, x_\text{0}, y_\text{0}$ are provided, the plan view coordinates can be calculated as follows:
+%\begin{equation} \label{eq1}
+%\begin{split}
+%\phi(s) &= \int_0^s \kappa(\hat{s}) d\hat{s} + \phi_\text{0} \\ 
+%x(s) &= \int_{0}^{s} \cos(\phi(\hat{s})) d\hat{s} + x_\text{0} \\ 
+%y(s) &= \int_{0}^{s} \sin(\phi(\hat{s})) d\hat{s} + y_\text{0} \\
+%\end{split}
+%\end{equation}
 \begin{figure}%[thpb] 		
 	\centering
 	\includegraphics{fig/curvGraph.pdf}
@@ -225,7 +231,7 @@ At least two and at most three \textit{road} entities are required to create a T
 
 \clearpage % TODO remove
 \section{RESULTS}
-\textit{Describe two or three different input files and somehow show corresponding output --> qualitative evaluation. Show line/char reduction in table + mention verified xsd scheme of opendrive. --> somehow quantitive evaluation}
+\textit{Describe two or three different input files and somehow show corresponding output $\rightarrow$ qualitative evaluation. Show line/char reduction in table + mention verified xsd scheme of opendrive. $\rightarrow$ somehow quantitive evaluation}
 \begin{table}[h]
 \caption{Comparison of OpenDRIVE and logical description}
 \label{tab_comparison}
