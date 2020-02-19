@@ -30,6 +30,7 @@
 \usepackage{amsmath} % assumes amsmath package installed
 \usepackage{amssymb}  % assumes amsmath package installed
 \usepackage{tikz}
+\usepackage{pgfplots}
 \usepackage{multirow} % merge columns in rows
 \usepackage{listings} % code snippets
 
@@ -98,9 +99,9 @@ die Frage ist, was alles "related" ist... eventuell kuerzer halten und laengere 
 The concept presented in this paper aims to offer a description for road networks which allows easy modifications of the map due to a non-redundant design. Further, it is possible to provide limited information for intersections and lane definitions since some default configurations for main and access roads are defined. The input shall be translated into a concrete standardized road description format. With the logical description comes a road generation tool that calculates all required OpenDRIVE quantities from the simplified input. We use XML to store the input and the corresponding OpenDRIVE output is saved in XML as well. This way we attempt to close a gap in the pipeline of defining logical scenarios on intersections and make them executable in a concrete manner.
 
 \section{LOGICAL ROAD DESCRIPTION}
-The proposed logical road description is derived from the reference line concept used in OpenDRIVE [ref]. This means that each lane is described by an offset from a reference line defined in the x,y-plane (topview). However, in contrast to OpenDRIVE we introduce some simplifications and eliminate redundancies along the reference line. Each road segment consists of the geometric primitives line, arc and spiral, which is motivated by the federal guidelines for road constructions [ref]. A simplified illustration of the road network's XML structure is shown in Fig.~\ref{fig_schema}. On the first level under the \textit{roadNetwork} tag all segments are defined and links which connect them can be stated. In addition, "loose ends" of segments can be automatically connected inside the \textit{closeRoadNetwork} tag. As illustrated, segments might be T-/X-junctions, roundabouts and connection roads. 
+The proposed logical road description is derived from the reference line concept used in OpenDRIVE [ref]. This means that each lane is described by an offset from a reference line defined in the $x,y$-plane (topview). However, in contrast to OpenDRIVE we introduce some simplifications and eliminate redundancies along the reference line. Each road segment consists of the geometric primitives line, arc and spiral, which is motivated by the federal guidelines for road constructions [ref]. A simplified illustration of the road network's XML structure is shown in Fig.~\ref{fig_schema}. On the first level under the \textit{roadNetwork} tag all segments are defined and links which connect them can be stated. In addition, "loose ends" of segments can be automatically connected within the \textit{closeRoadNetwork} tag. As illustrated, segments might be T-/X-junctions, roundabouts and connection roads. 
 
-In the following sections, the refernce line is examined more detailed followed by the description of the input for the logical road network concept. The documentation is based on the nodes shown in Fig.~\ref{fig_schema}. 
+In the following sections, the refernce line is examined more detailed, followed by the description of the input for the logical road network concept. The documentation is based on the nodes shown in Fig.~\ref{fig_schema}. 
 \begin{figure}[thpb] 		
 	\centering
 	\includegraphics{fig/schema.pdf}
@@ -108,9 +109,9 @@ In the following sections, the refernce line is examined more detailed followed 
 	\label{fig_schema}
 \end{figure}
 \subsection{Reference Lines} % or find better heading
-In order to ensure a smooth driveability along the road network, we define that the curvature has to be continuous along roads (where curvature is defined as the reciprocal of the radius). Therefor, the definition of curvature over distance, a start point and initial heading is sufficient to uniquely describe a road's course. Fig.~\ref{fig_curvGraph} shows the definition of a road segment that is composed of the geometric primitive sequence line-spiral-arc-spiral-line.
+In order to ensure a smooth driveability along the road network, we define that the curvature has to be continuous along roads (where curvature is defined as the reciprocal of the radius). Therefor, the definition of curvature over distance, a start point and initial heading is sufficient to uniquely describe a road's course. This, at the same time implies that in contrast to OpenDRIVE it is not necessary to state the start point and heading of each geometric primitive. Fig.~\ref{fig_curvGraph} shows the definition of a road segment that is composed of the geometric primitive sequence line-spiral-arc-spiral-line.
 
-As shown in Fig.~\ref{fig_curvGraph}, the curvature $\kappa(s)$ is a piecewise linear defined function over distance. Since we use lines, spirals and arcs, three definitions for those pieces are required. A line is described by $\kappa(s) = 0$ which means, only a length $L$ needs to be specified. An arc's course is defined by a constant curvature $\kappa(s) = \kappa_\text{arc} = \text{const}$. Therefor, an arc is defined by a length $L$ and a radius $R$. Note that we use radii in the input description because they are more intuitive than the curvature. Finally, a spiral is characterized by a linear change of curvature: $\kappa(s) = a s$, where $a$ is constant (for details on spirals cf. [ref]). Consequently, in addition to the length $L$, the start and end radius $R_s$ and $R_e$ need to be defined for a spiral to be unique. Those definitions are then being concatenated to a curvature graph and result in a unique road course in the x,y-plane if the initial values for position and orientation are provided. 
+As shown in Fig.~\ref{fig_curvGraph}, the curvature $\kappa(s)$ is a piecewise linear defined function over distance. Since we use lines, spirals and arcs, three definitions for those pieces are required. A line is described by $\kappa(s) = 0$ which means, only a length $L$ needs to be specified. An arc's course is defined by a constant curvature $\kappa(s) = \kappa_\text{arc} = \text{const}$. Therefor, an arc is defined by a length $L$ and a radius $R$. Note that we use radii in the input description because they are more intuitive than the curvature. Finally, a spiral is characterized by a linear change of curvature: $\kappa(s) = a s$, where $a$ is constant (for details on spirals cf. [ref]). Consequently, in addition to the length $L$, the start and end radius $R_s$ and $R_e$ need to be defined for a spiral to be unique. Those definitions are then being concatenated to a curvature graph and result in an unambiguous road course in the $x,y$-plane if either the initial values for position and orientation at the start are provided or the road is connected to another segment without a curvature jump.
 
 %% maths prob. later, better describe input
 %If the initial values $\phi_\text{0}, x_\text{0}, y_\text{0}$ are provided, the plan view coordinates can be calculated as follows:
@@ -124,24 +125,25 @@ As shown in Fig.~\ref{fig_curvGraph}, the curvature $\kappa(s)$ is a piecewise l
 \begin{figure}%[thpb] 		
 	\centering
 	\includegraphics{fig/curvGraph.pdf}
-	\caption{Example for a curve defined by the curvature graph. The plan view results from two integrations over $s$. Geometric primitives: line-spiral-arc-spiral-line. Positive curvature values correspond to left turns in positive $s$ direction.\textbf{roughDraft, wenn es zu viele Abb. werden, kann diese raus... Evtl. ersetzen durch eine Abb., die ref. Linie, Fahrstreifen und Objekte beinhaltet. Vgl. ODR}}
+	%&\input{fig/curveDescription.tex}
+	\caption{Qualitative example for a curve defined by the curvature graph. The plan view results from two integrations over $s$. Geometric primitives: line-spiral-arc-spiral-line. Positive curvature values correspond to left turns in positive $s$ direction.\textbf{almost final}}
 	\label{fig_curvGraph}
 \end{figure}
-\textit{briefly explain s,t coordinate system....}
 
-\subsection{Connection Roads}
-Connection roads consist of single \textit{road} tags defined by a reference line and definition for lanes and signals in the s,t-coordinate system. Lane extension and merging follow 3rd degree polynomials which are stated by their start and end point in s,t-coordinates, the corresponding polynomial coefficients are calculated by the road generation tool (\textit{Falls platz ist, kann noch eine Grafik mit Spuraufweitung erzeugt werden}).
+\subsection{Segements}
+Below, the segments which might be defined in the road network input are described starting with connections roads, followed by junctions and roundabouts.
 
-\subsection{Junctions}
+Connection roads consist of single \textit{road} tags defined by a reference line and definition for lanes and signals in the $s,t$-coordinate system. The latter is a moving coordinate system along the distance $s$. The $t$-coordinate is defined as the offset parallel to the reference line at position $s$. Lane extension and merging follow 3rd degree polynomials which are stated by their start and end point in $s,t$-coordinates, the corresponding polynomial coefficients are calculated by the road generation tool.
+
 At least two and at most three \textit{road} entities are required to create a T-junction. Often one road is the dominant or main road in an intersection, which can be exploited by defining it as a single road that is intersected by an access road (cf. Fig.~\ref{fig_juncDef}). Alternatively, three single roads can be combined to form a T-junction by defining one reference road and the angles at which the other two roads are connected. In addition to topological information of the junction, it is possible to define the intersection area more detailed. First, for each road arm the distance from the intersection point to the beginning of the junction can be specified. The latter means the point where turning lanes start to leave the course of the reference line. Fig.~\ref{fig_createJunction} c) shows such an intersection area. Furthermore, additional lanes for left and right turns can be added ad libitum (\textit{verrückter ausdruck für "nach Belieben"}). Those lanes are specified by their minimal radius, the concrete course is calculated automatically. The descriptions of T- and X-junctions are a lot alike and thus X-junctions can be created analogously to the preceding paragraph about T-junctions.
 \begin{figure}[thpb] 		
 	\centering
-	\includegraphics{fig/junctionDef.pdf}
+	\includegraphics{fig/junctionDef.pdf}	
 	\caption{Two roads are coupled to form a T-junction. Road 1 is defined as an arc by length and curvature whereas road 2 is a straight line with length $L_l$. On both roads the intersection point along $s$ is defined. In addition, the angle $\alpha$ at this point is stated. }
 	\label{fig_juncDef}
 \end{figure}
 
-\subsection{Road Network creation}
+\subsection{Segment Concatenation}
 \textit{paragraph for concatenating road segments to a network}
 \begin{figure}[thpb] 		
 	\centering
@@ -151,6 +153,7 @@ At least two and at most three \textit{road} entities are required to create a T
 \end{figure}
 
 \subsection{Closing the raod network}
+\textit{Describe the possibility and idea of closing the road network by just defining two end which are then connected curvature continuous.}
 \section{ROAD GENERATION / IMPLEMENTATION}
 
 \subsection{Geometry}
