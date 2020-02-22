@@ -33,6 +33,8 @@
 \usepackage{pgfplots}
 \usepackage{multirow} % merge columns in rows
 \usepackage{listings} % code snippets
+\usepackage{subcaption} % using subfigures
+\usetikzlibrary{calc}   % using calculation feature of tikz
 
 \title{\LARGE \bf
 Generation of Complex Road Networks Using a Simplified Logical Description for the Validation of Automated Vehicles*
@@ -189,7 +191,7 @@ At least two and at most three \textit{road} entities are required to create a T
         \label{fig_createJunction}
     \end{figure}
 
-    In a road network, besides roads, there are also intersections, which can appear as T or X intersection as well as roundabouts. Each of them is specified in a separate tag in the input file and consists, as shown in Figure \ref{fig_schema}, of intersection information \(I\) as well as the corresponding roads \(r_i\). In this information, the intersection center is specified by the exact arrangement of the streets. A reference street is defined, where further streets can be added at a given s-position under a certain angle. Furthermore, a coupler tag exists, which defines the intersection area with its traffic lanes in more detail. Besides the size of the intersection area, it also specifies which lanes of the individual roads are connected with each other or whether additional lanes are added before the intersection.
+    In a road network, besides roads, there are also intersections, which can appear as T- or X-intersection as well as roundabouts. Each of them is specified in a separate tag in the input file and consists, as shown in Figure \ref{fig_schema}, of intersection information \(I\) as well as the corresponding roads \(r_i\). With this information, the intersection center is entirely specified by the road's s-coordinates of the intersection and the angles to the reference road. Furthermore, a coupler tag exists, which defines the intersection area with its traffic lanes in more detail. Besides the size of the intersection area, it also specifies which lanes of the individual roads are connected or whether additional lanes are added before the intersection.
 
     The segment is constructed such that the junction midpoint lies in the origin and intersects the reference road without any angle. Further roads intersect the origin at road position \(s_I\) at a defined angle \(\varphi_I\), so that the starting point and the starting angle of each geometry of this road must be shifted by a translatory offset \(\tilde{x}, \tilde{y}\) and rotated around the angle \(\tilde{\varphi} = \varphi_I\). The translatory offset can be determined from the coordinates at position \(s_I\) so that all segments with their starting points \(x_0,y_0,\varphi_0\) can be transformed as follows.
 
@@ -201,30 +203,119 @@ At least two and at most three \textit{road} entities are required to create a T
         \end{split}
     \end{align}
 
-    For inserting new connecting roads, the junction area has to be cut, which requires a cut in each reference line of the roads. Due to the concatenation of several geometries inside of a reference line, performing the cut is an iteratively process. The two cut positions of a reference line are called \(s_{1}\) and \(s_{2}\) in the following and can be calculated from the intersection position \(s_I\) as well as the intersection area size \(s_A\). Iterating over all geometries can result in four different cases, as seen in Figure \ref{fig_geometryCut}. 
-    \begin{figure}[]    
-        \includegraphics[width= \columnwidth]{fig/geometryCut.pdf}
-        \caption{possible cases for reference line cutting}
-        \label{fig_geometryCut}
-    \end{figure}
+    For inserting new connecting roads, the junction area has to be cut, which requires a cut in each reference line of the roads. \(s_I\) bezeichnet dabei den Punkt im Kreuzungsmittelpunkt und \(s_A\) den Kreuzungsbereich. Aus der definierten Referenzlinie werden nun zwei Teilstücke extrahiert, zum einen der Teil bis zum beginn der kreuzung \((-\inf,s_I - s_A]\), sowie der Teil hinter der Kreuzung \([s_I + s_A, \inf)\). Die zwei relevanten Stellen der Referenzlinie werden nun also iterativ über alle Geometrien kopiert um die neuen Ausgangsstraßen der Kreuzung zu generieren. Je nach Schnitt auf Gerade, Kreisbogen oder Spirale muss das jeweile Segment der Referenzlinie angepasst werden.
+    
+    %Iterating over all geometries can result in four different cases, as seen in Figure \ref{fig_geometryCut}. 
+    %\begin{figure}[]    
+    %    \includegraphics[width= \columnwidth]{fig/geometryCut.pdf}
+    %    \caption{possible cases for reference line cutting}
+    %    \label{fig_geometryCut}
+    %\end{figure}
 
-    For case a), the starting cut takes place in the geometry so that the new start point is calculated first, and then the geometry is adjusted concerning length and starting curvature. Similarly, in case of b), the end cut is made, which changes the length and, in case of a spiral, the end curvature of the geometry, respectively. In the third case c), both cuts are made in the current geometry so that the start point, as well as the length and the curvatures, are adjusted. In the fourth case d), no cut is performed, so the current geometry remains unchanged.
+    %For case a), the starting cut takes place in the geometry so that the new start point is calculated first, and then the geometry is adjusted concerning length and starting curvature. Similarly, in case of b), the end cut is made, which changes the length and, in case of a spiral, the end curvature of the geometry, respectively. In the third case c), both cuts are made in the current geometry so that the start point, as well as the length and the curvatures, are adjusted. In the fourth case d), no cut is performed, so the current geometry remains unchanged.
 
-    After every street is cut and correctly positioned, the next step is calculating the reference lines of the lanes inside of the intersection area. Each lane is generated as an individual street with its reference line, whereby the single-lane lies to the right of the reference line. Based on starting point \(x_{1}, y_1\) and endpoint \(x_{2}, y_2\) as well as the angles \(\varphi_{1}\) and \(\varphi_{2}\) the new reference line of a lane is calculated. Simplified, only straight lines and arcs are used since the discontinuity in the curvature can be neglected at low speeds. In the first step, the endpoints are extended with straight lines to calculate the intersecting point \(x_i, y_i\).
-
+    After every street is cut and correctly positioned, the next step is calculating the reference lines of the lanes inside of the intersection area. Each lane is generated as an individual street with its reference line, whereby the single-lane lies to the right of the reference line. Based on starting point \(A\) and endpoint \(B\) as well as the angles \(\varphi_{A}\) and \(\varphi_{B}\) the new reference line of a lane is calculated. Simplified, only straight lines and arcs are used since the discontinuity in the curvature can be neglected at low speeds. In the first step, the endpoints are extended with straight lines to calculate the intersecting point \(I\). 
     \begin{align}
         \begin{split}
-            x_i &= \frac{y_2 - y_1 + \left(\tan(\varphi_1) x_1 - \tan(\varphi_2) x_2\right)}{\tan(\varphi_1) - \tan(\varphi_2)} \\
-            y_i &= \tan(\varphi_1) \cdot x_i+ \left(y_1 - \tan(\varphi_1) x_1\right)\\
+            I_x &= \frac{B_y - A_y + \left(\tan(\varphi_A) A_x - \tan(\varphi_B) B_x\right)}{\tan(\varphi_A) - \tan(\varphi_B)} \\
+            I_y &= \tan(\varphi_A) \cdot I_x + \left(A_y - \tan(\varphi_A) A_x\right)\\
         \end{split}     
     \end{align}
 
-    The euclidian distances between endpoints and intersection point \(d_1, d_2\) can be determined from this. In the following, the line with further distance is extended until the new distances \(d_1, d_2\) are the same for both endpoints. The new helping ends of the two lines are marked as \(x_{h_1}, y_{h_1}\) and \(x_{h_2}, y_{h_2}\), which are connected in a last step by an arc with radius \(r\) and length \(l\). The following equation determines the parameters of the circle.
+
+    \begin{figure}[!h]
+        \begin{subfigure}{0.32\columnwidth}
+        \vspace{1.05cm}
+        \begin{tikzpicture}[scale=0.45]
+            \coordinate[label=above:$A$] (A) at (0,0);
+            \coordinate[label=135:$B$] (B) at (4,2);
+            \coordinate[label=above:$I$] (iP) at (2,0);
+            \coordinate[label=135:$H$] (H) at (3.41421,1.41421);
+        
+            \draw[dashed, line width=0.2] (-1,0) -- (5,0);
+            \draw[dashed, line width=0.2] (5,3) -- (1,-1);
+        
+            \draw[->, line width=1] (A) -- (0.5,0);
+            \draw[->, line width=1] (B) -- (4.35,2.35);
+            \fill[red] (A) circle (0.075);
+            \fill[red] (B) circle (0.075);
+            \fill[blue] (iP) circle (0.075);
+            \fill[orange] (H) circle (0.075);
+        
+            \draw (2.7, 0.25) node {$\alpha$};
+        \end{tikzpicture}
+        \caption{find helping point}
+        \label{fig_construct_hp}
+        \end{subfigure}
+        \begin{subfigure}{0.32\columnwidth}
+            \begin{tikzpicture}[scale=0.45]
+                \coordinate[label=below:$A$] (A) at (0,0);
+                \coordinate[label=135:$B$] (B) at (4,2);
+                \coordinate[] (iP) at (2,0);
+                \coordinate[] (H) at (3.41421,1.41421);
+                \coordinate[] (E) at (0,4.8284);
+                \coordinate[] (F) at ($(A)!0.5!(H)$);
+            
+                \draw[dashed, line width=0.2] (-1,0) -- (5,0);
+                \draw[dashed, line width=0.2] (5,3) -- (1,-1);
+            
+                \draw[blue, line width = 1] (H) -- (B);
+            
+                \draw[->, black, line width=1] (A) -- (0.5,0);
+                \draw[->, black, line width=1] (H) -- (3.7676,1.7676);
+            
+                \draw[label=below:$d$] (A) -- (H);
+                \draw[line width=1] (A) arc (-90:-45:4.8284);
+                \draw (0,4.3284) arc (-90:-45:0.5);
+                \draw[dashed] (A) -- (E) -- (H);
+                \draw[] (E) -- (F);
+            
+                \fill[red] (A) circle (0.075);
+                \fill[red] (B) circle (0.075);
+                \fill[blue] (iP) circle (0.075);
+                \fill[orange] (H) circle (0.075);
+                \fill[black] (E) circle (0.05);
+            
+                \draw (-0.35,2)  node {r};
+                \draw (2.4,1.4) node {d};
+                \draw (0.25,4.5) -- (0.6,4.7);
+                \draw (0.75, 4.7) node {$\frac{\alpha}{2}$};
+            
+            \end{tikzpicture}
+        \caption{arc construction}
+        \end{subfigure}
+        \begin{subfigure}{0.32\columnwidth}
+            \vspace{1cm}
+        \begin{tikzpicture}[scale=0.45]
+            
+            \coordinate[label=above:$A$] (A) at (0,0);
+            \coordinate[label=135:$B$] (B) at (4,2);
+            \coordinate[] (H) at (3.41421,1.41421);
+        
+            \draw[dashed, line width=0.2] (-1,0) -- (5,0);
+            \draw[dashed, line width=0.2] (5,3) -- (1,-1);
+        
+            \draw[blue, line width=1] (H) -- (B);
+            \draw[blue, line width=1] (A) arc (-90:-45:4.8284);
+        
+            \fill[red] (A) circle (0.075);
+            \fill[red] (B) circle (0.075);
+            \fill[orange] (H) circle (0.075);
+        
+        \end{tikzpicture}
+        \caption{connected road}
+        \end{subfigure}
+        \caption{process for connecting roads in junction area}
+        \label{fig_connecting_road}
+    \end{figure}
+
+
+    The euclidian distances between endpoints \(A\), \(B\) and intersection point \(d_A, d_B\) can be determined from this. In the following, the line with further distance is extended until the new distances are equal, which introduced the new helping point \(H\) at the end of the extended line. In a last step, the two points are connected by an arc with radius \(r\) and length \(l\). The following equation determines the parameters of the circle, where \(\alpha = \varphi_B - \varphi_A\). A visualization of the process is provided in Figure~\ref{fig_connecting_road}.
 
     \begin{align}
         \begin{split}           
-        r &= \frac{\sqrt{\left(x_{h_2} - x_{h_1}\right)^2 + \left(y_{h_2} - y_{h_1}\right)^2}}{2 \cdot \sin\left(\frac{a}{2}\right)} \\
-        l &= \vert r \cdot \left(\varphi_2 - \varphi_1\right) \vert \\  
+        r &= \frac{\sqrt{\left(H_x - A_x\right)^2 + \left(H_y - A_y\right)^2}}{2 \cdot \sin\left(\frac{a}{2}\right)} \\
+        l &= \vert r \cdot \left(\varphi_B - \varphi_A\right) \vert \\  
         \end{split}
     \end{align}
 
