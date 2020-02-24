@@ -177,10 +177,10 @@ At least two and at most three \textit{road} entities are required to create a T
     These integrals can finally be approximated with a series, so-called Fresnel integrals since they have no analytical solution. This power series can be cut off after a few terms, still leading good results.
     % is it relevant? 
 
-    In a further step, lanes are added to the reference line. Each is described by a lane type, a marking, and especially by a width, which can be varied over road length \(s\) and is unambiguously described by a fourth-order polynomial with coefficients \(a,b,c,d\). In the simplest case, a constant road width \(w\) results in \(a=b=c=0, d=w\). If a lane widening occurs at point \(s_0\), the lane width increases from zero to the final width \(b\) over a given length \(ds\). Additional conditions for modeling the four polynomial coefficients are continuous transitions \(\left(f'(s) = 0\right)\) at the ends \(s_0\) and \(s_0 + ds\) of the widening. This results in the following coefficients.
+    In a further step, lanes are added to the reference line. Each is described by a lane type, a marking, and especially by a width, which can be varied over road length \(s\) and is unambiguously described by a third-order polynomial with coefficients \(a,b,c,d\). In the simplest case, a constant road width \(w\) results in \(a=b=c=0, d=w\). If a lane widening occurs at point \(s_0\), the lane width increases from zero to the final width \(b\) over a given length \(ds\). Additional conditions for modeling the four polynomial coefficients are continuous transitions \(\left(f'(s) = 0\right)\) at start and end of the widening \(s_0\) and \(s_0 + ds\) respectively. This results in the following coefficients.
 
     \begin{equation}
-        a = -2\frac{w}{ds^3}, \quad b=3 \frac{w}{ds^2}, \quad c=0 , \quad c=0   
+        a = -2\frac{w}{ds^3}, \quad b=3 \frac{w}{ds^2}, \quad c=0 , \quad d=0   
     \end{equation}
         
 \subsection{Intersections}
@@ -191,7 +191,7 @@ At least two and at most three \textit{road} entities are required to create a T
         \label{fig_createJunction}
     \end{figure}
 
-    In a road network, besides roads, there are also intersections, which can appear as T- or X-intersection as well as roundabouts. Each of them is specified in a separate tag in the input file and consists, as shown in Figure \ref{fig_schema}, of intersection information \(I\) as well as the corresponding roads \(r_i\). With this information, the intersection center is entirely specified by the road's s-coordinates of the intersection and the angles to the reference road. Furthermore, a coupler tag exists, which defines the intersection area with its traffic lanes in more detail. Besides the size of the intersection area, it also specifies which lanes of the individual roads are connected or whether additional lanes are added before the intersection.
+    In a road network, besides roads, there are also intersections, which can appear as T- or X-intersection as well as roundabouts. Each of them is specified in a separate tag in the input file and consists, as shown in Fig.~ \ref{fig_schema}, of intersection information \(I\) as well as the corresponding roads \(r_i\). With this information, the intersection center is entirely specified by the roads $s$-coordinates of the intersection and the angles to the reference road (cf. Fig.~\ref{fig_juncDef}). Furthermore, a coupler tag exists, which defines the intersection area with its traffic lanes in more detail. Besides the size of the intersection area, it also specifies which lanes of the individual roads are connected or whether additional lanes are added before the intersection.
 
     The segment is constructed such that the junction midpoint lies in the origin and intersects the reference road without any angle. Further roads intersect the origin at road position \(s_I\) at a defined angle \(\varphi_I\), so that the starting point and the starting angle of each geometry of this road must be shifted by a translatory offset \(\tilde{x}, \tilde{y}\) and rotated around the angle \(\tilde{\varphi} = \varphi_I\). The translatory offset can be determined from the coordinates at position \(s_I\) so that all segments with their starting points \(x_0,y_0,\varphi_0\) can be transformed as follows.
 
@@ -214,7 +214,7 @@ At least two and at most three \textit{road} entities are required to create a T
 
     %For case a), the starting cut takes place in the geometry so that the new start point is calculated first, and then the geometry is adjusted concerning length and starting curvature. Similarly, in case of b), the end cut is made, which changes the length and, in case of a spiral, the end curvature of the geometry, respectively. In the third case c), both cuts are made in the current geometry so that the start point, as well as the length and the curvatures, are adjusted. In the fourth case d), no cut is performed, so the current geometry remains unchanged.
 
-    After every street is cut and correctly positioned, the next step is calculating the reference lines of the lanes inside of the intersection area. Each lane is generated as an individual street with its reference line, whereby the single-lane lies to the right of the reference line. Based on starting point \(A\) and endpoint \(B\) as well as the angles \(\varphi_{A}\) and \(\varphi_{B}\) the new reference line of a lane is calculated. Simplified, only straight lines and arcs are used since the discontinuity in the curvature can be neglected at low speeds. In the first step, the endpoints are extended with straight lines to calculate the intersecting point \(I\). 
+    After every street is cut and correctly positioned, the next step is calculating the reference lines of the lanes inside of the intersection area. Each lane is generated as an individual street with its reference line, whereby the single-lane lies to the right of the reference line. Based on starting point \(A\) and endpoint \(B\) as well as the angles \(\varphi_{A}\) and \(\varphi_{B}\) the new reference line of a lane is calculated. As a simplification, only straight lines and arcs are used since the discontinuity in the curvature can be neglected at low speeds. In the first step, the endpoints are extended with straight lines to calculate the intersecting point \(I\). 
     \begin{align}
         \begin{split}
             I_x &= \frac{B_y - A_y + \left(\tan(\varphi_A) A_x - \tan(\varphi_B) B_x\right)}{\tan(\varphi_A) - \tan(\varphi_B)} \\
@@ -310,7 +310,7 @@ At least two and at most three \textit{road} entities are required to create a T
     \end{figure}
 
 
-    The euclidian distances between endpoints \(A\), \(B\) and intersection point \(d_A, d_B\) can be determined from this. In the following, the line with further distance is extended until the new distances are equal, which introduced the new helping point \(H\) at the end of the extended line. In a last step, the two points are connected by an arc with radius \(r\) and length \(l\). The following equation determines the parameters of the circle, where \(\alpha = \varphi_B - \varphi_A\). A visualization of the process is provided in Figure~\ref{fig_connecting_road}.
+    The euclidean distances between endpoints \(A\), \(B\) and intersection point \(d_A, d_B\) can be determined from this. In the following, the line with further distance is extended until the new distances are equal, which introduces the new helping point \(H\) at the end of the extended line. In a last step, the two points are connected by an arc with radius \(r\) and length \(l\). The following equation determines the parameters of the circle, where \(\alpha = \varphi_B - \varphi_A\). A visualization of the process is provided in Figure~\ref{fig_connecting_road}.
 
     \begin{align}
         \begin{split}           
@@ -323,7 +323,7 @@ At least two and at most three \textit{road} entities are required to create a T
 
 \subsection{Road Network}
 
-\clearpage % TODO remove
+%\clearpage % TODO remove
 \section{RESULTS}
 \textit{Describe two or three different input files and somehow show corresponding output $\rightarrow$ qualitative evaluation. Show line/char reduction in table + mention verified xsd scheme of opendrive. $\rightarrow$ somehow quantitive evaluation}
 \begin{table}[h]
