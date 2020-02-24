@@ -158,7 +158,9 @@ Once all desired segments are specified, those may be concatenated to form a roa
 	\label{fig_concatSeg}
 \end{figure}
 
-One more option of the road network concept is the automated generation of a compound curve (composed of two spirals with an arc between them) to close the gap between two loose road ends. This might be required if the road network should be used for endurance simulations where traffic agents shall drive in circles infinitely often. 
+One more option of the road network concept is the automated generation of a compound curve (composed of two spirals with an arc between them) to close the gap between two loose road ends. This might be required if the road network should be used for endurance simulations where traffic agents shall drive in circles infinitely often and no sources and sinks are implemented in the simulation environment. Since it is not possible to calculate a curvature graph which matches a desired end point in the $x,y$-plane from an known start point analytically, an optimization problem needs to be solved to match $\kappa=0$ and this end point.
+\textit{explain the why and how...}
+
 \section{ROAD GENERATION / IMPLEMENTATION}
 The specified input may be translated into the road network standard format OpenDRIVE by a command line tool. Since the input describes a simplified representation of the road network, missing information needs to be calculated to provide a verified OpenDRIVE map. In the following, some steps of these calculations are described starting with details on geometric properties of roads and lanes followed by the generation of intersections. 
 \subsection{Geometry}
