@@ -110,7 +110,7 @@ In the following sections, the refernce line is examined more detailed, followed
 	\caption{Hierarchical structure of the road network. On the first level all segments and their relation to each other are defined. In addition, it is possible to define the automatic connection of two road ends. Segments are defined as roundabouts, junctions and connection roads. $r_i$ and $I$ describe roads and intersection definitions, respectively}
 	\label{fig_schema}
 \end{figure}
-\subsection{Reference Lines} % or find better heading
+\subsection{Reference Lines} \label{sec_refline} % or find better heading 
 In order to ensure a smooth driveability along the road network, we define that the curvature has to be continuous along roads (where curvature is defined as the reciprocal of the radius). Therefor, the definition of curvature over distance, a start point and initial heading is sufficient to uniquely describe a road's course. This, at the same time implies that in contrast to OpenDRIVE it is not necessary to state the start point and heading of each geometric primitive. Fig.~\ref{fig_curvGraph} shows the definition of a road segment that is composed of the geometric primitive sequence line-spiral-arc-spiral-line.
 
 As shown in Fig.~\ref{fig_curvGraph}, the curvature $\kappa(s)$ is a piecewise linear defined function over distance. Since we use lines, spirals and arcs, three definitions for those pieces are required. A line is described by $\kappa(s) = 0$ which means, only a length $L$ needs to be specified. An arc's course is defined by a constant curvature $\kappa(s) = \kappa_\text{arc} = \text{const}$. Therefor, an arc is defined by a length $L$ and a radius $R$. Note that we use radii in the input description because they are more intuitive than the curvature. Finally, a spiral is characterized by a linear change of curvature: $\kappa(s) = a s$, where $a$ is constant (for details on spirals cf. [ref]). Consequently, in addition to the length $L$, the start and end radius $R_s$ and $R_e$ need to be defined for a spiral to be unique. Those definitions are then being concatenated to a curvature graph and result in an unambiguous road course in the $x,y$-plane if either the initial values for position and orientation at the start are provided or the road is connected to another segment without a curvature jump.
@@ -132,12 +132,14 @@ As shown in Fig.~\ref{fig_curvGraph}, the curvature $\kappa(s)$ is a piecewise l
 	\label{fig_curvGraph}
 \end{figure}
 
-\subsection{Segements}
+\subsection{Segements}\label{sec_segments}
 Below, the segments which might be defined in the road network input are described starting with connections roads, followed by junctions and roundabouts.
 
 Connection roads consist of single \textit{road} tags defined by a reference line and definition for lanes and signals in the $s,t$-coordinate system. The latter is a moving coordinate system along the distance $s$. The $t$-coordinate is defined as the offset parallel to the reference line at position $s$. Lane extension and merging follow 3rd degree polynomials which are stated by their start and end point in $s,t$-coordinates, the corresponding polynomial coefficients are calculated by the road generation tool.
 
-At least two and at most three \textit{road} entities are required to create a T-junction. Often one road is the dominant or main road in an intersection, which can be exploited by defining it as a single road that is intersected by an access road (cf. Fig.~\ref{fig_juncDef}). Alternatively, three single roads can be combined to form a T-junction by defining one reference road and the angles at which the other two roads are connected. In addition to topological information of the junction, it is possible to define the intersection area more detailed. First, for each road arm the distance from the intersection point to the beginning of the junction can be specified. The latter means the point where turning lanes start to leave the course of the reference line. Fig.~\ref{fig_createJunction} c) shows such an intersection area. Furthermore, additional lanes for left and right turns can be added ad libitum (\textit{verrückter ausdruck für "nach Belieben"}). Those lanes are specified by their minimal radius, the concrete course is calculated automatically. The descriptions of T- and X-junctions are a lot alike and thus X-junctions can be created analogously to the preceding paragraph about T-junctions.
+At least two and at most three \textit{road} entities are required to create a T-junction. Often one road is the dominant or main road in an intersection, which can be exploited by defining it as a single road that is intersected by an access road. Alternatively, three single roads can be combined to form a T-junction by defining one reference road and the angles at which the other two roads are connected. The main idea of the intersection concept is that each road is defined in its own local coordinate system (cf. Fig.~\ref{fig_juncDef}~a)) and then is combined as shown in Fig.~\ref{fig_juncDef}~b). E.g., the T-junction in Fig.~\ref{fig_juncDef} consists of a main road described by an arc and an access road whose course follows a line. The main road is intersected by the access road around its center ($s_1$) whereas road two is connected at its origin ($s_2=0$) under the angle $\alpha$. The reference coordinate system of the segment now is that of road one. The described road combinations are defined within "coupler"-tags which are indicated by the $I$-knots of Fig.~\ref{fig_schema}.
+
+In addition to topological information of the junction, it is possible to define the intersection area more detailed. First, for each road arm the distance from the intersection point to the beginning of the junction can be specified. The latter means the point where turning lanes start to leave the course of the reference line. Fig.~\ref{fig_createJunction} shows the concept of the intersection area. Furthermore, additional lanes for left and right turns can be added ad libitum. Those lanes are specified by their minimal radius, the concrete course is calculated automatically (cf.~Sec.~\ref{sec_inters}). The descriptions of T- and X-junctions are a lot alike and thus X-junctions can be created analogously to the preceding paragraph about T-junctions.
 \begin{figure}[thpb] 		
 	\centering
 	\includegraphics{fig/junctionDef.pdf}	
@@ -145,52 +147,50 @@ At least two and at most three \textit{road} entities are required to create a T
 	\label{fig_juncDef}
 \end{figure}
 
-\subsection{Segment Concatenation}
-\textit{paragraph for concatenating road segments to a network}
+Roundabouts ...
+
+\subsection{Complete the Road Network}
+Once all desired segments are specified, those may be concatenated to form a road network. In general, all segment types can be combined with each other. The only condition is that the curvature at the connection point is mutual to fulfill the continuous curvature condition we introduced for reference lines. However, in the current state of the road generation tool the curvature has to be zero at the connection to combine two segments. Fig.~\ref{fig_concatSeg} illustrates the combination of an X-junction, connection road and T-junction. In this example, segment \textbf{I} provides the reference coordinate system which can be placed at any position and orientation $x_\text{offset}, y_\text{offset}$ and $\alpha_\text{offset}$ in world coordinates. Next, the connections between \textbf{I} and \textbf{II} as well as \textbf{II} and \textbf{III} are defined in a linking tag by stating which segment endings are linked. With this information, the road generation tool is able to generate an OpenDRIVE map uniquely.
 \begin{figure}[thpb] 		
 	\centering
 	\includegraphics[width=0.9\columnwidth]{fig/concatSegments.png}
-	\caption{Three segments are concatenated to form a road network. First, one reference segment has to be set (I). For further connections only the two end points need to be specified because concatenation follows the continuous curvature condition. \textbf{NEU MACHEN, Bsp gut so, aber Achsen und Schrift anpassen}}
+	\caption{Three segments are concatenated to form a road network. First, one reference segment has to be set (I). For further connections only the two end points need to be specified because concatenation follows the continuous curvature condition.\textbf{draft}}
 	\label{fig_concatSeg}
 \end{figure}
 
-\subsection{Closing the raod network}
-\textit{Describe the possibility and idea of closing the road network by just defining two end which are then connected curvature continuous.}
+One more option of the road network concept is the automated generation of a compound curve (composed of two spirals with an arc between them) to close the gap between two loose road ends. This might be required if the road network should be used for endurance simulations where traffic agents shall drive in circles infinitely often. 
 \section{ROAD GENERATION / IMPLEMENTATION}
-
+The specified input may be translated into the road network standard format OpenDRIVE by a command line tool. Since the input describes a simplified representation of the road network, missing information needs to be calculated to provide a verified OpenDRIVE map. In the following, some steps of these calculations are described starting with details on geometric properties of roads and lanes followed by the generation of intersections. 
 \subsection{Geometry}
-    Each road network consists of a collection of many different roads. The most important component of a road is its reference line, which clearly defines the shape and length of the road employing an analytical description. Straight lines, arcs, and spirals are considered as segments of the reference line. Each segment is defined by a starting point and angle, as well as the curvature of the road. In order to get the coordinates and orientation along \(s\), a transformation, depending on the geometry type, is necessary. For a straight line, the following trivial equations result.
+	As introduced Sec.~\ref{sec_refline}, we assume that a roads reference line is curvature continuous and therefor a single initial position and heading is sufficient. However, OpenDRIVE requires a start point and heading for each line, arc or spiral. In order to provide information on $x,y$-coordinates and orientation $\varphi$ for each geometric primitive, a transformation depending on the geometry type is necessary. For a straight line, the following trivial equations result:
     \begin{equation}
-        \varphi = \varphi_0, \quad x = s \cdot \cos(\varphi_0), \quad y = s \cdot \sin(\varphi_0)
+        \varphi(s) = \varphi_0, \quad x(s) = s \cos(\varphi_0), \quad y(s) = s \sin(\varphi_0)\text{.}
+        \label{eq_line}
     \end{equation}
-
-    With a segment of a circle, however, the orientation also changes along \(s\). With the curvature \(\kappa\) this results in:
+    With a segment of a circle, however, the orientation also changes along $s$. With constant curvature $\kappa$ and the angle $\varphi(s) = s \kappa + \varphi_0$ this results in:
     \begin{equation}
-        \varphi = s  \kappa + \varphi_0, \quad x = \frac{1}{\kappa} \left(\sin\varphi - \sin\varphi_0 \right),  y = \frac{1}{\kappa} \left(\cos\varphi_0 - \cos\varphi \right) 
-    \end{equation} 
-
-    For a spiral the coordinates along s can be described with a parameter \(a = \frac{1}{\sqrt{2R_1s_1}} = \sqrt{\frac{\kappa_1}{2s_1}}\) and the following equations. 
+    \begin{split}
+        x(s) &= \frac{1}{\kappa} \left(\sin\varphi(s) - \sin\varphi_0 \right)\\
+        y(s) &= \frac{1}{\kappa} \left(\cos\varphi_0 - \cos\varphi(s) \right) \text{.}
+    \end{split}
+    \label{eq_arc}
+    \end{equation}
+    For a spiral the coordinates along $s$ can be described with a parameter \(a = \frac{1}{\sqrt{2Rs}} = \sqrt{\frac{\kappa}{2s}}\) which is constant at any point of the spiral (cf. [ref]) and the following equations: 
     \begin{equation} 
-        x = \frac{1}{a}\int_0^{as}  \cos\left(t^2\right)dt, \quad y = \frac{1}{a}\int_0^{as}  \sin\left(t^2\right)dt 
+        x = \frac{1}{a}\int_0^{as}  \cos\left(t^2\right)dt, \quad y = \frac{1}{a}\int_0^{as}  \sin\left(t^2\right)dt \text{.}
+        \label{eq_spiral}
     \end{equation}
+	These formulas are called Fresnel integrals and it can be shown that there is no analytical solution to them. However, they can be approximated by a power series expansion for sine and cosine [ref.]. With help of \ref{eq_line} to \ref{eq_spiral} missing information for each reference line can be calculated such that OpenDRIVE requirements are fulfilled.
 
-    These integrals can finally be approximated with a series, so-called Fresnel integrals since they have no analytical solution. This power series can be cut off after a few terms, still leading good results.
-    % is it relevant? 
-
-    In a further step, lanes are added to the reference line. Each is described by a lane type, a marking, and especially by a width, which can be varied over road length \(s\) and is unambiguously described by a third-order polynomial with coefficients \(a,b,c,d\). In the simplest case, a constant road width \(w\) results in \(a=b=c=0, d=w\). If a lane widening occurs at point \(s_0\), the lane width increases from zero to the final width \(b\) over a given length \(ds\). Additional conditions for modeling the four polynomial coefficients are continuous transitions \(\left(f'(s) = 0\right)\) at start and end of the widening \(s_0\) and \(s_0 + ds\) respectively. This results in the following coefficients.
-
-    \begin{equation}
-        a = -2\frac{w}{ds^3}, \quad b=3 \frac{w}{ds^2}, \quad c=0 , \quad d=0   
-    \end{equation}
+    In a further step, lanes are added to the reference line. Each is described by a lane type, a marking, and especially by a width $w$, which corresponds to the local $t$ coordinate $t_\text{lane}(s)=t(s)-t_0$ where $t_0$ is the constant offset of the lane to the reference line. The lane width is unambiguously described by a third-order polynomial of the form $t_\text{lane}(s) = as^3 + bs^2 + cs + d$ with coefficients \(a,b,c,d\). Lanes are divided into lane sections in which those polynomials are valid. Note that the $s$ coordinate is zero at the beginning of a road but not of a lane section. In the simplest case, $w$ is constant and $a=b=c=0, d=w$ holds. If a lane widening occurs, the lane width increases from $t_\text{lane}(s_0)=0$ to the final width $t_\text{lane}(s_0+ds)=w$ over a given length $ds$. Additional conditions for modeling the four polynomial coefficients are continuous transitions \(\left(t_\text{lane}'(s) = 0\right)\) at start and end of the widening $s_0$ and $s_0 + ds$, respectively. This case, the four coefficients can be uniquely solved with help of the described conditions. A lane lapse behaves analogously but starting with $t_\text{lane}(s_0)=w$ and ending with $t_\text{lane}(s_0+ds)=0$
         
-\subsection{Intersections}
+\subsection{Intersections}\label{sec_inters}
     \begin{figure}[thpb]        
         \centering
         \includegraphics{fig/createJunction.pdf}
         \caption{From logical definition to concrete intersection. After the reference lines are in the correct position a), corresponding lanes are generated (b). Subsequently, the intersection area is cut free (c) and all required connection lanes are generated automatically (d). \textbf{grafik ok so...?}}
         \label{fig_createJunction}
     \end{figure}
-
     In a road network, besides roads, there are also intersections, which can appear as T- or X-intersection as well as roundabouts. Each of them is specified in a separate tag in the input file and consists, as shown in Fig.~ \ref{fig_schema}, of intersection information \(I\) as well as the corresponding roads \(r_i\). With this information, the intersection center is entirely specified by the roads $s$-coordinates of the intersection and the angles to the reference road (cf. Fig.~\ref{fig_juncDef}). Furthermore, a coupler tag exists, which defines the intersection area with its traffic lanes in more detail. Besides the size of the intersection area, it also specifies which lanes of the individual roads are connected or whether additional lanes are added before the intersection.
 
     The segment is constructed such that the junction midpoint lies in the origin and intersects the reference road without any angle. Further roads intersect the origin at road position \(s_I\) at a defined angle \(\varphi_I\), so that the starting point and the starting angle of each geometry of this road must be shifted by a translatory offset \(\tilde{x}, \tilde{y}\) and rotated around the angle \(\tilde{\varphi} = \varphi_I\). The translatory offset can be determined from the coordinates at position \(s_I\) so that all segments with their starting points \(x_0,y_0,\varphi_0\) can be transformed as follows.
@@ -222,93 +222,11 @@ At least two and at most three \textit{road} entities are required to create a T
         \end{split}     
     \end{align}
 
-
-    \begin{figure}[!h]
-        \begin{subfigure}{0.32\columnwidth}
-        \vspace{1.05cm}
-        \begin{tikzpicture}[scale=0.45]
-            \coordinate[label=above:$A$] (A) at (0,0);
-            \coordinate[label=135:$B$] (B) at (4,2);
-            \coordinate[label=above:$I$] (iP) at (2,0);
-            \coordinate[label=135:$H$] (H) at (3.41421,1.41421);
-        
-            \draw[dashed, line width=0.2] (-1,0) -- (5,0);
-            \draw[dashed, line width=0.2] (5,3) -- (1,-1);
-        
-            \draw[->, line width=1] (A) -- (0.5,0);
-            \draw[->, line width=1] (B) -- (4.35,2.35);
-            \fill[red] (A) circle (0.075);
-            \fill[red] (B) circle (0.075);
-            \fill[blue] (iP) circle (0.075);
-            \fill[orange] (H) circle (0.075);
-        
-            \draw (2.7, 0.25) node {$\alpha$};
-        \end{tikzpicture}
-        \caption{find helping point}
-        \label{fig_construct_hp}
-        \end{subfigure}
-        \begin{subfigure}{0.32\columnwidth}
-            \begin{tikzpicture}[scale=0.45]
-                \coordinate[label=below:$A$] (A) at (0,0);
-                \coordinate[label=135:$B$] (B) at (4,2);
-                \coordinate[] (iP) at (2,0);
-                \coordinate[] (H) at (3.41421,1.41421);
-                \coordinate[] (E) at (0,4.8284);
-                \coordinate[] (F) at ($(A)!0.5!(H)$);
-            
-                \draw[dashed, line width=0.2] (-1,0) -- (5,0);
-                \draw[dashed, line width=0.2] (5,3) -- (1,-1);
-            
-                \draw[blue, line width = 1] (H) -- (B);
-            
-                \draw[->, black, line width=1] (A) -- (0.5,0);
-                \draw[->, black, line width=1] (H) -- (3.7676,1.7676);
-            
-                \draw[label=below:$d$] (A) -- (H);
-                \draw[line width=1] (A) arc (-90:-45:4.8284);
-                \draw (0,4.3284) arc (-90:-45:0.5);
-                \draw[dashed] (A) -- (E) -- (H);
-                \draw[] (E) -- (F);
-            
-                \fill[red] (A) circle (0.075);
-                \fill[red] (B) circle (0.075);
-                \fill[blue] (iP) circle (0.075);
-                \fill[orange] (H) circle (0.075);
-                \fill[black] (E) circle (0.05);
-            
-                \draw (-0.35,2)  node {r};
-                \draw (2.4,1.4) node {d};
-                \draw (0.25,4.5) -- (0.6,4.7);
-                \draw (0.75, 4.7) node {$\frac{\alpha}{2}$};
-            
-            \end{tikzpicture}
-        \caption{arc construction}
-        \end{subfigure}
-        \begin{subfigure}{0.32\columnwidth}
-            \vspace{1cm}
-        \begin{tikzpicture}[scale=0.45]
-            
-            \coordinate[label=above:$A$] (A) at (0,0);
-            \coordinate[label=135:$B$] (B) at (4,2);
-            \coordinate[] (H) at (3.41421,1.41421);
-        
-            \draw[dashed, line width=0.2] (-1,0) -- (5,0);
-            \draw[dashed, line width=0.2] (5,3) -- (1,-1);
-        
-            \draw[blue, line width=1] (H) -- (B);
-            \draw[blue, line width=1] (A) arc (-90:-45:4.8284);
-        
-            \fill[red] (A) circle (0.075);
-            \fill[red] (B) circle (0.075);
-            \fill[orange] (H) circle (0.075);
-        
-        \end{tikzpicture}
-        \caption{connected road}
-        \end{subfigure}
+    \begin{figure}[thpb]
+        \input{fig/roadConnection.tex}
         \caption{process for connecting roads in junction area}
         \label{fig_connecting_road}
     \end{figure}
-
 
     The euclidean distances between endpoints \(A\), \(B\) and intersection point \(d_A, d_B\) can be determined from this. In the following, the line with further distance is extended until the new distances are equal, which introduces the new helping point \(H\) at the end of the extended line. In a last step, the two points are connected by an arc with radius \(r\) and length \(l\). The following equation determines the parameters of the circle, where \(\alpha = \varphi_B - \varphi_A\). A visualization of the process is provided in Figure~\ref{fig_connecting_road}.
 
@@ -321,11 +239,10 @@ At least two and at most three \textit{road} entities are required to create a T
 
     % TODO: add more functionalities ? 
 
-\subsection{Road Network}
-
-%\clearpage % TODO remove
 \section{RESULTS}
 \textit{Describe two or three different input files and somehow show corresponding output $\rightarrow$ qualitative evaluation. Show line/char reduction in table + mention verified xsd scheme of opendrive. $\rightarrow$ somehow quantitive evaluation}
+
+\textit{another evaluation/result is the easy modification of distinct quantities. E.g der Radius of a right turn or movement of an intersection center}
 \begin{table}[h]
 \caption{Comparison of OpenDRIVE and logical description}
 \label{tab_comparison}
