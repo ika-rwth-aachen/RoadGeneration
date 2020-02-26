@@ -81,7 +81,7 @@ This article introduces a prototypical logical description language for complex 
 \begin{figure}[tpb] 		
 	\centering
 	\includegraphics{fig/motivation.png}
-	\caption{Graphical example of input and output of the road generation tool. As a minimal input two reference lines with assigned road types and a coupling point are sufficient to generate an intersection written in valid OpenDRIVE. (OpenDRIVE visualized in CarMaker 8.0[ref?]) \textbf{roughDraft}}
+	\caption{Graphical example of input and output of the road generation tool. As a minimal input two reference lines with assigned road types and a coupling point are sufficient to generate an intersection written in valid OpenDRIVE. (OpenDRIVE visualized in CarMaker 8.0[ref?])}
 	\label{fig_motivation}
 \end{figure}
 %\begin{figure}
@@ -137,7 +137,7 @@ As shown in Fig.~\ref{fig_curvGraph}, the curvature $\kappa(s)$ is a piecewise l
 	\centering
 	\includegraphics{fig/curvGraph.pdf}
 	%&\input{fig/curveDescription.tex}
-	\caption{Qualitative example for a curve defined by the curvature graph. The plan view results from two integrations over $s$. Geometric primitives: line-spiral-arc-spiral-line. Positive curvature values correspond to left turns in positive $s$ direction.\textbf{almost final}}
+	\caption{Qualitative example for a curve defined by the curvature graph. The plan view results from two integrations over $s$. Geometric primitives: line-spiral-arc-spiral-line. Positive curvature values correspond to left turns in positive $s$ direction.}
 	\label{fig_curvGraph}
 \end{figure}
 
@@ -200,7 +200,7 @@ The specified input may be translated into the road network standard format Open
     \begin{figure}[thpb]        
         \centering
         \includegraphics{fig/createJunction.pdf}
-        \caption{From logical definition to concrete intersection. After the reference lines are in the correct position a), corresponding lanes are generated (b). Subsequently, the intersection area is cut free (c) and all required connection lanes are generated automatically (d). \textbf{grafik ok so...?}}
+        \caption{From logical definition to concrete intersection. After the reference lines are in the correct position a), corresponding lanes are generated (b). Subsequently, the intersection area is cut free (c) and all required connection lanes are generated automatically (d).}
         \label{fig_createJunction}
     \end{figure}
     In a road network, besides roads, there are also intersections, which can appear as T- or X-intersection as well as roundabouts. Each of them is specified in a separate tag in the input file and consists, as shown in Fig.~ \ref{fig_schema}, of intersection information \(I\) as well as the corresponding roads \(r_i\). With this information, the intersection center is entirely specified by the roads $s$-coordinates of the intersection and the angles to the reference road (cf. Fig.~\ref{fig_juncDef}). Furthermore, a coupler tag exists, which defines the intersection area with its traffic lanes in more detail. Besides the size of the intersection area, it also specifies which lanes of the individual roads are connected or whether additional lanes are added before the intersection.
@@ -240,7 +240,7 @@ The specified input may be translated into the road network standard format Open
         \label{fig_connecting_road}
     \end{figure}
 
-    The euclidean distances between endpoints \(A\), \(B\) and intersection point \(d_A, d_B\) can be determined from this. In the following, the line with further distance is extended until the new distances are equal, which introduces the new helping point \(H\) at the end of the extended line. In a last step, the two points are connected by an arc with radius \(r\) and length \(l\). The following equation determines the parameters of the circle, where \(\alpha = \varphi_B - \varphi_A\). A visualization of the process is provided in Figure~\ref{fig_connecting_road}.
+    The euclidean distances between endpoints \(A\), \(B\) and intersection point \(d_A, d_B\) can be determined from this. In the following, the line with further distance is extended until the new distances are equal, which introduces the new helping point \(H\) at the end of the extended line. In a last step, the two points are connected by an arc with radius \(r\) and length \(l\). The following equation determines the parameters of the circle, where \(\alpha = \varphi_B - \varphi_A\).
 
     \begin{align}
         \begin{split}           
@@ -248,22 +248,24 @@ The specified input may be translated into the road network standard format Open
         l &= \vert r \cdot \left(\varphi_B - \varphi_A\right) \vert \\  
         \end{split}
     \end{align}
-
+ 	A visualization of the process is provided in Figure~\ref{fig_connecting_road}.
     % TODO: add more functionalities ? 
 
 \section{RESULTS}
-\textit{Describe two or three different input files and somehow show corresponding output $\rightarrow$ qualitative evaluation. Show line/char reduction in table + mention verified xsd scheme of opendrive. $\rightarrow$ somehow quantitive evaluation}
+In Fig.~\ref{fig_resHuge} the result for a considerably large road network is illustrated. It  is described entirely by the presented logical description and then is instantiated as OpenDRIVE with help of the developed tool. The network consists of four intersections, one roundabout and several connection roads. Further, all open ends are automatically closed employing the mentioned road network closing tag. As shown in Table~\ref{tab_comparison} line 3, the input file is significantly smaller in terms of code length than the resulting OpenDRIVE file. In addition, only little parts of the input have to be changed (e.g. the curvature of one connection road) in order to obtain a road network of similar topology but with thousands of changes in the OpenDRIVE file.
 
+To analyze generated junctions in more detail, another result is show in Fig.~\ref{fig_res3_2}. 
+
+\begin{figure*}[ht]
+	\includegraphics[width=\textwidth]{fig/res_huge.PNG}
+	\caption{OpenDRIVE Output of road network generated by the tool which processes the developed logical road description}
+	\label{fig_resHuge}
+\end{figure*}
 \begin{figure}[thpb]
 	\includegraphics[width=\columnwidth]{fig/res3_2.png}
 	\caption{OpenDRIVE Output of two concatenated T-junctions. Both junctions are almost identically defined. The only differences for the upper junction are that the radius of the main road is changed and an option that automatically generates lane widening for left turns is activated}
 	\label{fig_res3_2}
 \end{figure}
-\begin{figure*}[thpb]
-	\includegraphics[width=\textwidth]{fig/res_huge.PNG}
-	\caption{OpenDRIVE Output of road network generated by the tool which processes the developed logical road description}
-	\label{fig_res3}
-\end{figure*}
 \begin{table}[h]
 \caption{Comparison of OpenDRIVE and logical description in terms of amount of code}
 \label{tab_comparison}
@@ -275,7 +277,7 @@ The specified input may be translated into the road network standard format Open
 \hline
 XJunc (Fig.~\ref{fig_motivation}) & $875$ & $32468$& $4\%$ &$4.1\%$\\
 TwoTJunc (Fig.~\ref{fig_res3_2}) & $937$ & $36414$& $5\%$ &$5.3\%$\\
-HugeRoadNet (Fig.~\ref{fig_res3}) & $6301$ & $242803$& $3.9\%$ &$4.8\%$
+HugeRoadNet (Fig.~\ref{fig_resHuge}) & $6301$ & $242803$& $3.9\%$ &$4.8\%$
 \end{tabular}
 \end{center}
 \end{table}
