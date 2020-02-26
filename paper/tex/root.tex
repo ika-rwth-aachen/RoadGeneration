@@ -153,8 +153,9 @@ Roundabouts ...
 Once all desired segments are specified, those may be concatenated to form a road network. In general, all segment types can be combined with each other. The only condition is that the curvature at the connection point is mutual to fulfill the continuous curvature condition we introduced for reference lines. However, in the current state of the road generation tool the curvature has to be zero at the connection to combine two segments. Fig.~\ref{fig_concatSeg} illustrates the combination of an X-junction, connection road and T-junction. In this example, segment \textbf{I} provides the reference coordinate system which can be placed at any position and orientation $x_\text{offset}, y_\text{offset}$ and $\alpha_\text{offset}$ in world coordinates. Next, the connections between \textbf{I} and \textbf{II} as well as \textbf{II} and \textbf{III} are defined in a linking tag by stating which segment endings are linked. With this information, the road generation tool is able to generate an OpenDRIVE map uniquely.
 \begin{figure}[thpb] 		
 	\centering
-	\includegraphics[width=0.9\columnwidth]{fig/concatSegments.png}
-	\caption{Three segments are concatenated to form a road network. First, one reference segment has to be set (I). For further connections only the two end points need to be specified because concatenation follows the continuous curvature condition.\textbf{draft}}
+	%\includegraphics[width=0.9\columnwidth]{fig/concatSegments.png}
+	\includegraphics{fig/concatSegments.pdf}
+	\caption{Three segments are concatenated to form a road network. First, one reference segment has to be set (I). For further connections only the two end points need to be specified because concatenation follows the continuous curvature condition.}
 	\label{fig_concatSeg}
 \end{figure}
 
