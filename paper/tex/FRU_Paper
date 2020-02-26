@@ -12,6 +12,6 @@ During the research initiative PEGASUS [ref] these concepts have been developed 
 Noyer et al. [ref] created a format called SimplifiedRoad which is a xml schema to describe long streets without junctions. This logical description is primary meant to easily create concrete highway sections and connot specify all details in OpenDRIVE.
 
 There are basically two different ways of creating virtual roads for simulation in the industry. In the first variant, the streets are build on the basis of recorded real data. Disadvantages are the necessity of the recorded data and the restricted possibility to variate the track. Examples of such systems are OpenStreetMap [ref Internetseite] and Road2Simulation [ref Internetseite].
-The second variant is based on the manual creation of a the track with a visual track editor. Thereby is always a user needed to assemble the road manually. 
+The second variant is based on the manual creation of a track with a visual track editor. Thereby is always a user needed to assemble the road manually. 
 Examples of such systems are Road Designer (VIRES Simulationstechnologie GmbH) [ref Internetseite], CarMaker (IPG Automotive) [ref Internetseite] and others.
-This two different variants for the creation of virtual tracks are difficult to automate. There isn’t a possibility to use parts of uniquely created track for another one or refill the parameters of a track with new values on a easy way.
+These two different variants for the creation of virtual tracks are difficult to automate. There isn’t a possibility to use parts of uniquely created track for another one or refill the parameters of a track with new values on an easy way.
