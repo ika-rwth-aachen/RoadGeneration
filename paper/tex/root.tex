@@ -54,7 +54,7 @@ Generation of Complex Road Networks Using a Simplified Logical Description for t
 \pagestyle{empty}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{abstract}
+\begin{abstract} % TODO: write abstract
 The verification and validation of automated driving functions is an essential building block in the process of releasing those functions to the public.  
 \end{abstract}
 
@@ -105,14 +105,14 @@ During the research initiative PEGASUS [ref] these concepts have been developed 
 die Frage ist, was alles "related" ist... eventuell kuerzer halten und laengere introduction? \textit{bibtex platzhalter} \cite{BagschikG..2018} \cite{Roesener2017}
 
 \textit{hier muss noch der DLR ODR generator und deren logische Beschreibung für Autobahnen aus Pegasus rein \cite{dlrODRgen}}
-
+% TODO: section related work
 \section{METHODOLOGY}
 The concept presented in this paper aims to offer a description for road networks which allows easy modifications of the map due to a non-redundant design. Further, it is possible to provide limited information for intersections and lane definitions since some default configurations for main and access roads are defined. The input shall be translated into a concrete standardized road description format. With the logical description comes a road generation tool that calculates all required OpenDRIVE quantities from the simplified input. We use XML to store the input and the corresponding OpenDRIVE output is saved in XML as well. This way we attempt to close a gap in the pipeline of defining logical scenarios on intersections and make them executable in a concrete manner.
 
 \section{LOGICAL ROAD DESCRIPTION}
 The proposed logical road description is derived from the reference line concept used in OpenDRIVE [ref]. This means that each lane is described by an offset from a reference line defined in the $x,y$-plane (topview). However, in contrast to OpenDRIVE we introduce some simplifications and eliminate redundancies along the reference line. Each road segment consists of the geometric primitives line, arc and spiral, which is motivated by the federal guidelines for road constructions [ref]. A simplified illustration of the road network's XML structure is shown in Fig.~\ref{fig_schema}. On the first level under the \textit{roadNetwork} tag all segments are defined and links which connect them can be stated. In addition, "loose ends" of segments can be automatically connected within the \textit{closeRoadNetwork} tag. As illustrated, segments might be T-/X-junctions, roundabouts and connection roads. 
 
-In the following sections, the refernce line is examined more detailed, followed by the description of the input for the logical road network concept. The documentation is based on the nodes shown in Fig.~\ref{fig_schema}. 
+In the following sections, the reference line is examined more detailed, followed by the description of the input for the logical road network concept. The documentation is based on the nodes shown in Fig.~\ref{fig_schema}. 
 \begin{figure}[thpb] 		
 	\centering
 	\includegraphics{fig/schema.pdf}
@@ -156,7 +156,7 @@ In addition to topological information of the junction, it is possible to define
 	\label{fig_juncDef}
 \end{figure}
 
-Roundabouts ...
+\emph{Roundabouts ...} % TODO: very shortly describe roundabouts
 
 \subsection{Complete the Road Network}
 Once all desired segments are specified, those may be concatenated to form a road network. In general, all segment types can be combined with each other. The only condition is that the curvature at the connection point is mutual to fulfill the continuous curvature condition we introduced for reference lines. However, in the current state of the road generation tool the curvature has to be zero at the connection to combine two segments. Fig.~\ref{fig_concatSeg} illustrates the combination of an X-junction, connection road and T-junction. In this example, segment \textbf{I} provides the reference coordinate system which can be placed at any position and orientation $x_\text{offset}, y_\text{offset}$ and $\alpha_\text{offset}$ in world coordinates. Next, the connections between \textbf{I} and \textbf{II} as well as \textbf{II} and \textbf{III} are defined in a linking tag by stating which segment endings are linked. With this information, the road generation tool is able to generate an OpenDRIVE map uniquely.
@@ -169,7 +169,7 @@ Once all desired segments are specified, those may be concatenated to form a roa
 \end{figure}
 
 One more option of the road network concept is the automated generation of a compound curve (composed of two spirals with an arc between them) to close the gap between two loose road ends. This might be required if the road network should be used for endurance simulations where traffic agents shall drive in circles infinitely often and no sources and sinks are implemented in the simulation environment. Since it is not possible to calculate a curvature graph which matches a desired end point in the $x,y$-plane from an known start point analytically, an optimization problem needs to be solved to match $\kappa=0$ and this end point.
-\textit{explain the why and how...}
+\textit{explain the why and how...} %TODO: extend close road network a little
 
 \section{ROAD GENERATION / IMPLEMENTATION}
 The specified input may be translated into the road network standard format OpenDRIVE by a command line tool. Since the input describes a simplified representation of the road network, missing information needs to be calculated to provide a verified OpenDRIVE map. In the following, some steps of these calculations are described starting with details on geometric properties of roads and lanes followed by the generation of intersections. 
@@ -203,11 +203,12 @@ The specified input may be translated into the road network standard format Open
         \caption{From logical definition to concrete intersection. After the reference lines are in the correct position a), corresponding lanes are generated (b). Subsequently, the intersection area is cut free (c) and all required connection lanes are generated automatically (d).}
         \label{fig_createJunction}
     \end{figure}
-    In a road network, besides roads, there are also intersections, which can appear as T- or X-intersection as well as roundabouts. Each of them is specified in a separate tag in the input file and consists, as shown in Fig.~ \ref{fig_schema}, of intersection information \(I\) as well as the corresponding roads \(r_i\). With this information, the intersection center is entirely specified by the roads $s$-coordinates of the intersection and the angles to the reference road (cf. Fig.~\ref{fig_juncDef}). Furthermore, a coupler tag exists, which defines the intersection area with its traffic lanes in more detail. Besides the size of the intersection area, it also specifies which lanes of the individual roads are connected or whether additional lanes are added before the intersection.
+	
+    Besides the reference lines, the intersections and roundabouts specified in the input file have to be processed in order to form valid OpenDRIVE entities. Each intersection or roundabout consists, as shown in Fig.~\ref{fig_schema}, of corresponding roads \(r_i\) as well as more detailed information \(I\). The latter specifies the junction center by $s$-coordinates at which the roads intersect and the angles to the reference road (cf. Fig.~\ref{fig_juncDef}). Furthermore, a coupler tag exists, which defines the intersection area with its lanes in more detail. Besides the size of the intersection area, it also specifies which lanes of the individual roads are connected or whether additional lanes are added before the intersection.
 
-    The segment is constructed such that the junction midpoint lies in the origin and intersects the reference road without any angle. Further roads intersect the origin at road position \(s_I\) at a defined angle \(\varphi_I\), so that the starting point and the starting angle of each geometry of this road must be shifted by a translatory offset \(\tilde{x}, \tilde{y}\) and rotated around the angle \(\tilde{\varphi} = \varphi_I\). The translatory offset can be determined from the coordinates at position \(s_I\) so that all segments with their starting points \(x_0,y_0,\varphi_0\) can be transformed as follows.
+    A segment is constructed such that the junction midpoint lies in the origin and intersects the reference road without any angle. Further roads \(r_i\) intersect the origin at the specified road position \(s_\text{I,i}\) at a defined angle \(\alpha_\text{I,i}\), so that the starting point and the starting angle of each geometry of this road must be shifted by a translatory offset \(\tilde{x}, \tilde{y}\) and rotated around the angle \(\tilde{\varphi} = \alpha_\text{I,i}\). The translatory offset can be determined from the coordinates at position \(s_\text{I,i}\) so that all segments with their starting points \(x_0,y_0,\varphi_0\) can be transformed as follows.
 
-    \begin{align} \label{eq2}
+    \begin{align} \label{eq_transform}
         \begin{split}
             x &= \cos(\tilde{\varphi}) \left(x_0-\tilde{x}\right) - \sin(\tilde{\varphi}) \left(y_0-\tilde{y}\right) \\
             y &= \sin(\tilde{\varphi}) \left(x_0-\tilde{x}\right) + \cos(\tilde{\varphi}) \left(y_0-\tilde{y}\right) \\
@@ -215,7 +216,7 @@ The specified input may be translated into the road network standard format Open
         \end{split}
     \end{align}
 
-    For inserting new connecting roads, the junction area has to be cut, which requires a cut in each reference line of the roads. \(s_I\) bezeichnet dabei den Punkt im Kreuzungsmittelpunkt und \(s_A\) den Kreuzungsbereich. Aus der definierten Referenzlinie werden nun zwei Teilstücke extrahiert, zum einen der Teil bis zum beginn der kreuzung \((-\inf,s_I - s_A]\), sowie der Teil hinter der Kreuzung \([s_I + s_A, \inf)\). Die zwei relevanten Stellen der Referenzlinie werden nun also iterativ über alle Geometrien kopiert um die neuen Ausgangsstraßen der Kreuzung zu generieren. Je nach Schnitt auf Gerade, Kreisbogen oder Spirale muss das jeweile Segment der Referenzlinie angepasst werden.
+    Before inserting new connecting roads, the junction area has to be generated, which requires a cut in the reference line of each road $r_i$. From the junction midpoint at \(s_\text{I,i}\) we define \(s_A\) as the length along $s$ which spans the junction area in one direction. Note that for simplicity we assume \(s_A\) in both directions of the reference line in the documentation. In practice those are two variables. From the defined reference line of $r_\text{i}$, two parts are extracted: the part up to the beginning of the junction \((-\inf,s_I - s_A]\) and the part behind the junction \([s_I + s_A, \inf)\). The two relevant points of the reference line are now iteratively copied over all geometries to generate the new exit roads of the intersection. Depending on the cut of straight line, arc or spiral, the respective segment of the reference line has to be adapted. The result of this step can be illustrated as shown in Fig.~\ref{fig_createJunction}~c).
     
     %Iterating over all geometries can result in four different cases, as seen in Figure \ref{fig_geometryCut}. 
     %\begin{figure}[]    
@@ -226,7 +227,14 @@ The specified input may be translated into the road network standard format Open
 
     %For case a), the starting cut takes place in the geometry so that the new start point is calculated first, and then the geometry is adjusted concerning length and starting curvature. Similarly, in case of b), the end cut is made, which changes the length and, in case of a spiral, the end curvature of the geometry, respectively. In the third case c), both cuts are made in the current geometry so that the start point, as well as the length and the curvatures, are adjusted. In the fourth case d), no cut is performed, so the current geometry remains unchanged.
 
-    After every street is cut and correctly positioned, the next step is calculating the reference lines of the lanes inside of the intersection area. Each lane is generated as an individual street with its reference line, whereby the single-lane lies to the right of the reference line. Based on starting point \(A\) and endpoint \(B\) as well as the angles \(\varphi_{A}\) and \(\varphi_{B}\) the new reference line of a lane is calculated. As a simplification, only straight lines and arcs are used since the discontinuity in the curvature can be neglected at low speeds. In the first step, the endpoints are extended with straight lines to calculate the intersecting point \(I\). 
+    After every street is cut and correctly positioned, the next step is calculating the reference lines of the lanes inside of the intersection area. Each lane is generated as an individual street with its reference line, whereby the single-lane lies to the right of the reference line. Based on starting point \(A\) and endpoint \(B\) as well as the angles \(\varphi_{A}\) and \(\varphi_{B}\) the new reference line of a lane is calculated. As a simplification, only straight lines and arcs are used since the discontinuity in the curvature can be neglected at low speeds. Note that the assumption still yields continuous angles along $s$. The setup for one connection road is illustrated in Fig.~\ref{fig_connecting_road}. $A$ is the end of the road entering the junction area and $B$ is the corresponding start of the newly generated road leaving the junction. In the following, the geometric construction of the new reference line is described.
+    \begin{figure}[thpb]
+    	\input{fig/roadConnection.tex}
+    	\caption{process for connecting roads in junction area}
+    	\label{fig_connecting_road}
+    \end{figure}
+
+    In the first step, the endpoints are extended with straight lines to calculate the intersecting point \(I\). 
     \begin{align}
         \begin{split}
             I_x &= \frac{B_y - A_y + \left(\tan(\varphi_A) A_x - \tan(\varphi_B) B_x\right)}{\tan(\varphi_A) - \tan(\varphi_B)} \\
@@ -234,38 +242,30 @@ The specified input may be translated into the road network standard format Open
         \end{split}     
     \end{align}
 
-    \begin{figure}[thpb]
-        \input{fig/roadConnection.tex}
-        \caption{process for connecting roads in junction area}
-        \label{fig_connecting_road}
-    \end{figure}
-
-    The euclidean distances between endpoints \(A\), \(B\) and intersection point \(d_A, d_B\) can be determined from this. In the following, the line with further distance is extended until the new distances are equal, which introduces the new helping point \(H\) at the end of the extended line. In a last step, the two points are connected by an arc with radius \(r\) and length \(l\). The following equation determines the parameters of the circle, where \(\alpha = \varphi_B - \varphi_A\).
-
+    The euclidean distances $d_\text{A} = \|A-I\|$ and $d_\text{B} = \|B-I\|$ between endpoints and intersection point are then being calculated and the road with further distance is extended by a line until the new distances are equal, which introduces the new helping point \(H\) at the end of the extended line. Finally, the two points are connected by an arc with radius \(r\) and length \(l\). The following equation determines the parameters of the circle, where \(\beta = \varphi_B - \varphi_A\):
     \begin{align}
         \begin{split}           
-        r &= \frac{\sqrt{\left(H_x - A_x\right)^2 + \left(H_y - A_y\right)^2}}{2 \cdot \sin\left(\frac{a}{2}\right)} \\
+        r &= \frac{\sqrt{\left(H_x - A_x\right)^2 + \left(H_y - A_y\right)^2}}{2 \cdot \sin\left(\frac{\beta}{2}\right)} \\
         l &= \vert r \cdot \left(\varphi_B - \varphi_A\right) \vert \\  
         \end{split}
     \end{align}
- 	A visualization of the process is provided in Figure~\ref{fig_connecting_road}.
-    % TODO: add more functionalities ? 
+    
+    This procedure is repeated until all connection roads, i.e. lanes, inside the junction are calculated.
 
 \section{RESULTS}
-In Fig.~\ref{fig_resHuge} the result for a considerably large road network is illustrated. It  is described entirely by the presented logical description and then is instantiated as OpenDRIVE with help of the developed tool. The network consists of four intersections, one roundabout and several connection roads. Further, all open ends are automatically closed employing the mentioned road network closing tag. As shown in Table~\ref{tab_comparison} line 3, the input file is significantly smaller in terms of code length than the resulting OpenDRIVE file. In addition, only little parts of the input have to be changed (e.g. the curvature of one connection road) in order to obtain a road network of similar topology but with thousands of changes in the OpenDRIVE file.
+In Fig.~\ref{fig_res3_2} the OpenDRIVE output of two concatenated T-junctions is shown. Both are defined mostly the same, only differences for the upper junction is that the radius of the main road is smaller and that an option is activated which automatically generates lane widenings for left turns on main roads. In fact, only two chars are different in the respective junction definitions which makes the description easy to vary. In addition, the input file consists of four defined roads whereas the resulting OpenDRIVE file contains 18 road definitions. These effects have impact on the overall amount of code which can be seen in Table~\ref{tab_comparison}~line 2. The input file requires only $5.3\%$ as many chars as the concrete OpenDRIVE file.
+\begin{figure}[thpb]
+	\includegraphics[width=\columnwidth]{fig/res3_2.png}
+	\caption{OpenDRIVE Output of two concatenated T-junctions. Both junctions are almost identically defined. The only differences for the upper junction are that the radius of the main road is changed and an option that automatically generates lane widening for left turns is activated. Note that black lines indicate lane courses, not their marking.}
+	\label{fig_res3_2}
+\end{figure}
 
-To analyze generated junctions in more detail, another result is show in Fig.~\ref{fig_res3_2}. 
-
-\begin{figure*}[ht]
+As an general overview, in Fig.~\ref{fig_resHuge} the result for a considerably large road network is illustrated. It  is described entirely by the presented logical description and then is instantiated as OpenDRIVE with help of the developed tool. The network consists of four intersections, one roundabout and several connection roads. Further, all open ends are automatically closed employing the mentioned road network closing tag. As shown in Table~\ref{tab_comparison} line 3, the input file is significantly smaller in terms of code length than the resulting OpenDRIVE file. In addition, only little parts of the input have to be changed (e.g. the curvature of one connection road) in order to obtain a road network of similar topology but with thousands of changes in the OpenDRIVE file.
+\begin{figure*}[thpb]
 	\includegraphics[width=\textwidth]{fig/res_huge.PNG}
 	\caption{OpenDRIVE Output of road network generated by the tool which processes the developed logical road description}
 	\label{fig_resHuge}
 \end{figure*}
-\begin{figure}[thpb]
-	\includegraphics[width=\columnwidth]{fig/res3_2.png}
-	\caption{OpenDRIVE Output of two concatenated T-junctions. Both junctions are almost identically defined. The only differences for the upper junction are that the radius of the main road is changed and an option that automatically generates lane widening for left turns is activated}
-	\label{fig_res3_2}
-\end{figure}
 \begin{table}[h]
 \caption{Comparison of OpenDRIVE and logical description in terms of amount of code}
 \label{tab_comparison}
@@ -275,14 +275,14 @@ To analyze generated junctions in more detail, another result is show in Fig.~\r
 \multirow{2}{*}{File} & \multicolumn{2}{c}{OpenDRIVE} & \multicolumn{2}{c}{Logical Description}\\
 & Lines & Chars & Lines & Chars \\
 \hline
-XJunc (Fig.~\ref{fig_motivation}) & $875$ & $32468$& $4\%$ &$4.1\%$\\
-TwoTJunc (Fig.~\ref{fig_res3_2}) & $937$ & $36414$& $5\%$ &$5.3\%$\\
-HugeRoadNet (Fig.~\ref{fig_resHuge}) & $6301$ & $242803$& $3.9\%$ &$4.8\%$
+XJunc (Fig.~\ref{fig_motivation}) & $875$ & $32,468$& $4.0\%$ &$4.1\%$\\
+TwoTJunc (Fig.~\ref{fig_res3_2}) & $937$ & $36,414$& $5.0\%$ &$5.3\%$\\
+HugeRoadNet (Fig.~\ref{fig_resHuge}) & $6,301$ & $242,803$& $3.9\%$ &$4.8\%$
 \end{tabular}
 \end{center}
 \end{table}
 
-\section{CONCLUSIONS}
+\section{CONCLUSIONS} %TODO: Conclusion / Discussion
 
 \addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
                                   % on the last page of the document manually. It shortens
