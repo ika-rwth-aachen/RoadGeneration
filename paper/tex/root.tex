@@ -156,7 +156,7 @@ In addition to topological information of the junction, it is possible to define
 	\label{fig_juncDef}
 \end{figure}
 
-\emph{Roundabouts ...} % TODO: very shortly describe roundabouts
+Roundabouts are defined similar to junctions with the difference that the reference road is of circular form (for now a circle) and every access road is assigned at a position $s$ with an angle $\alpha$ to this reference element.
 
 \subsection{Complete the Road Network}
 Once all desired segments are specified, those may be concatenated to form a road network. In general, all segment types can be combined with each other. The only condition is that the curvature at the connection point is mutual to fulfill the continuous curvature condition we introduced for reference lines. However, in the current state of the road generation tool the curvature has to be zero at the connection to combine two segments. Fig.~\ref{fig_concatSeg} illustrates the combination of an X-junction, connection road and T-junction. In this example, segment \textbf{I} provides the reference coordinate system which can be placed at any position and orientation $x_\text{offset}, y_\text{offset}$ and $\alpha_\text{offset}$ in world coordinates. Next, the connections between \textbf{I} and \textbf{II} as well as \textbf{II} and \textbf{III} are defined in a linking tag by stating which segment endings are linked. With this information, the road generation tool is able to generate an OpenDRIVE map uniquely.
@@ -168,12 +168,11 @@ Once all desired segments are specified, those may be concatenated to form a roa
 	\label{fig_concatSeg}
 \end{figure}
 
-One more option of the road network concept is the automated generation of a compound curve (composed of two spirals with an arc between them) to close the gap between two loose road ends. This might be required if the road network should be used for endurance simulations where traffic agents shall drive in circles infinitely often and no sources and sinks are implemented in the simulation environment. Since it is not possible to calculate a curvature graph which matches a desired end point in the $x,y$-plane from an known start point analytically, an optimization problem needs to be solved to match $\kappa=0$ and this end point.
-\textit{explain the why and how...} %TODO: extend close road network a little
+One more option of the road network concept is the automated generation of a compound curve (composed of two spirals with an arc between them) to close the gap between two loose road ends. This might be required if the road network should be used for endurance simulations where traffic agents shall drive in circles infinitely often and no sources and sinks are implemented in the simulation environment. It is not possible to calculate a curvature graph which matches a desired end point in the $x,y$-plane from an known start point analytically because of the algebraic properties of spirals (cf.~Sec.~\ref{sec_geometry}). Therefor, an optimization problem needs to be solved. The optimization attempts to find combinations of segment lengths $s_\text{i}$ and a radius $R$ which form a curve similar to Fig.~\ref{fig_curvGraph} that matches the desired end point with $\kappa=0$.
 
 \section{ROAD GENERATION / IMPLEMENTATION}
 The specified input may be translated into the road network standard format OpenDRIVE by a command line tool. Since the input describes a simplified representation of the road network, missing information needs to be calculated to provide a verified OpenDRIVE map. In the following, some steps of these calculations are described starting with details on geometric properties of roads and lanes followed by the generation of intersections. 
-\subsection{Geometry}
+\subsection{Geometry}\label{sec_geometry}
 	As introduced Sec.~\ref{sec_refline}, we assume that a roads reference line is curvature continuous and therefor a single initial position and heading is sufficient. However, OpenDRIVE requires a start point and heading for each line, arc or spiral. In order to provide information on $x,y$-coordinates and orientation $\varphi$ for each geometric primitive, a transformation depending on the geometry type is necessary. For a straight line, the following trivial equations result:
     \begin{equation}
         \varphi(s) = \varphi_0, \quad x(s) = s \cos(\varphi_0), \quad y(s) = s \sin(\varphi_0)\text{.}
@@ -261,6 +260,7 @@ In Fig.~\ref{fig_res3_2} the OpenDRIVE output of two concatenated T-junctions is
 \end{figure}
 
 As an general overview, in Fig.~\ref{fig_resHuge} the result for a considerably large road network is illustrated. It  is described entirely by the presented logical description and then is instantiated as OpenDRIVE with help of the developed tool. The network consists of four intersections, one roundabout and several connection roads. Further, all open ends are automatically closed employing the mentioned road network closing tag. As shown in Table~\ref{tab_comparison} line 3, the input file is significantly smaller in terms of code length than the resulting OpenDRIVE file. In addition, only little parts of the input have to be changed (e.g. the curvature of one connection road) in order to obtain a road network of similar topology but with thousands of changes in the OpenDRIVE file.
+% TODO: think about more evaluation text
 \begin{figure*}[thpb]
 	\includegraphics[width=\textwidth]{fig/res_huge.PNG}
 	\caption{OpenDRIVE Output of road network generated by the tool which processes the developed logical road description}
