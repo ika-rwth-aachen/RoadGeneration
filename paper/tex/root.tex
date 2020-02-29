@@ -61,7 +61,7 @@ The verification and validation of automated driving functions is an essential b
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{INTRODUCTION}
+\section{Introduction}
 \PARstart{I}{n} recent years, the interest in autonomous driving has considerably increased, both in research and society. To assure the safety of automated driving functions (ADF), verification and validation methods need to be developed and established. The approval of an ADF for public road traffic demands compliance with safety requirements regarding functionality. The requirements include the error-free functional verification over several billion test kilometers. For example Wachenfeld and Winner \cite{wachenfeld2016release} state that the distance to prove an interstate pilot amounts 6.62 billion test kilometers. With a theoretically 50\% chance this prove would say that the ADF is twice as god as a human driver. Since this distance seems unreal and economically not acceptable, Schuldt \cite{schuldt2017beitrag} advise a scenario based testing. In order to shorten the test time, save costs and detect functional errors at an early development stage, simulation is well suited. The approach is also appropriate to create any number of scenarios and to present critical driving situations without endangering people.
 
 Scenario based testing introduces three different stages to describe scenarios systematically: functional, logical and concrete \cite{menzel2018scenarios}. The term functional states a linguistic description which allows experts to talk about scenarios at an early stage of the development process. In logical scenarios parameters and ideally their probability distributions are provided. Finally, concrete scenarios specify a distinct value for each parameter which makes them feasible to be executed reproducible in a simulation or on proving grounds. 
@@ -94,18 +94,18 @@ Current research initiatives such as SET Level 4to5 which is funded by the Feder
 %	\caption{The data layers for the description of a scenario following~\cite{bock2018data} and~\cite{bagschik2018ontology}}
 %	\label{fig:datalayers}
 %\end{figure}
-\section{RELATED WORK}
+\section{Related work}
 During the research initiative PEGASUS \cite{pegasus.2019} these concepts have been developed and utilized within the domain German motorway. Furthermore, the main focus has been on layer four. Nevertheless, when moving the testing domain to inner city scenarios such as the driving behavior on intersections, layers one to three are much more complex. Motorways usually consist of parallel lanes which follow curves with big radii. Such a road is not complicated to describe and generate. It can be done automatically with low effort. Menzel et al. \cite{menzel2019functional} propose a method to create a standardized road network in the OpenDRIVE format from a logical (and functional) road description. However, inner city intersections are more complex both in the logical description and in terms of the concrete format. 
 A similar approach has been done by Noyer et al. \cite{dlrODRgen} created a format called SimplifiedRoad which is an XML schema to describe long streets without junctions. This logical description is primary meant to easily create concrete highway sections and connot specify all details in OpenDRIVE.
 
 There are basically two different ways of creating virtual roads for simulation in the industry. In the first variant, the streets are build on the basis of recorded real data. Disadvantages are the necessity of the recorded data and the restricted possibility to variate the track. Examples for such systems are Road2Simulation presented by Richter and Scholz in \cite{dlr110094} and the company atlatec\footnote{https://www.atlatec.de/}.
 The second variant is based on the manual creation of a the track with a visual track editor. Thereby is always a user needed to assemble the road manually. Examples of such systems are Road Designer \cite{ROD}, CarMaker (IPG Automotive) and others. Those tools are good for creating distinct road networks in an easy to use way but a automated generation of a huge number of similar road networks is hard to realize.
 
-\section{METHODOLOGY}
-The concept presented in this paper aims to offer a description for road networks which allows easy modifications of the map due to a non-redundant design. Further, it is possible to provide limited information for intersections and lane definitions since some default configurations for main and access roads are defined. The input shall be translated into a concrete standardized road description format. Therefor, with the logical description comes a road generation tool that calculates all required OpenDRIVE quantities from the simplified input. We use XML to store the input and the corresponding OpenDRIVE output is saved in XML as well. This way we attempt to close a gap in the pipeline of defining logical scenarios on intersections and make them executable in a concrete manner.
+\section{Methodology}
+The concept presented in this paper aims to offer a description for road networks which allows easy modifications of the map due to a non-redundant design. Further, it is possible to provide limited information for intersections and lane definitions since some default configurations and dependencies for main and access roads are defined. The input shall be translated into a concrete standardized road description format. Therefor, with the logical description comes a road generation tool that calculates all required OpenDRIVE quantities from the simplified input. We use XML to store the input and the corresponding OpenDRIVE output is saved in XML as well. This way we attempt to close a gap in the pipeline of defining logical scenarios on intersections and make them executable in a concrete manner.
 
-\section{LOGICAL ROAD DESCRIPTION}
-The proposed logical road description is derived from the reference line concept used in OpenDRIVE \cite{odr1.5}. This means that each lane is described by an offset from a reference line defined in the $x,y$-plane (topview). However, in contrast to OpenDRIVE we introduce some simplifications and eliminate redundancies along the reference line. Each road segment consists of the geometric primitives line, arc and spiral, which is motivated by the federal guidelines for road constructions [ref]. A simplified illustration of the road network's XML structure is shown in Fig.~\ref{fig_schema}. On the first level under the \textit{roadNetwork} tag all segments are defined and links which connect them can be stated. In addition, "loose ends" of segments can be automatically connected within the \textit{closeRoadNetwork} tag. As illustrated, segments might be T-/X-junctions, roundabouts and connection roads. 
+\section{Logical road description}
+The proposed logical road description is derived from the reference line concept used in OpenDRIVE \cite{odr1.5}. This means that each lane is described by an offset from a reference line defined in the $x,y$-plane (topview). However, in contrast to OpenDRIVE we introduce some simplifications and eliminate redundancies along the reference line. Each road segment consists of the geometric primitives line, arc and spiral, which is motivated by the federal guidelines for road constructions cf. \cite{Baier.2008} and \cite{StraenNRW.2019}. A simplified illustration of the road network's XML structure is shown in Fig.~\ref{fig_schema}. On the first level under the \textit{roadNetwork} tag all segments are defined and links which connect them can be stated. In addition, "loose ends" of segments can be automatically connected within the \textit{closeRoadNetwork} tag. As illustrated, segments might be T-/X-junctions, roundabouts and connection roads. 
 
 In the following sections, the reference line is examined more detailed, followed by the description of the input for the logical road network concept. The documentation is based on the nodes shown in Fig.~\ref{fig_schema}. 
 \begin{figure}[thpb] 		
@@ -115,7 +115,7 @@ In the following sections, the reference line is examined more detailed, followe
 	\label{fig_schema}
 \end{figure}
 \subsection{Reference Lines} \label{sec_refline} % or find better heading 
-In order to ensure a smooth driveability along the road network, we define that the curvature has to be continuous along roads (where curvature is defined as the reciprocal of the radius). This assumption is based on actual road planing regulations cf. \cite{Baier.2008} and \cite{StraenNRW.2019}. Therefor, the definition of curvature over distance, a start point and initial heading is sufficient to uniquely describe a road's course. This, at the same time implies that in contrast to OpenDRIVE it is not necessary to state the start point and heading of each geometric primitive. Fig.~\ref{fig_curvGraph} shows the definition of a road segment that is composed of the geometric primitive sequence line-spiral-arc-spiral-line.
+In order to ensure a smooth driveability along the road network, we define that the curvature has to be continuous along roads (where curvature is defined as the reciprocal of the radius). Therefor, the definition of curvature over distance, a start point and initial heading is sufficient to uniquely describe a road's course. This, at the same time implies that in contrast to OpenDRIVE it is not necessary to state the start point and heading of each geometric primitive. Fig.~\ref{fig_curvGraph} shows the definition of a road segment that is composed of the geometric primitive sequence line-spiral-arc-spiral-line.
 
 As shown in Fig.~\ref{fig_curvGraph}, the curvature $\kappa(s)$ is a piecewise linear defined function over distance. Since we use lines, spirals and arcs, three definitions for those pieces are required. A line is described by $\kappa(s) = 0$ which means, only a length $L$ needs to be specified. An arc's course is defined by a constant curvature $\kappa(s) = \kappa_\text{arc} = \text{const}$. Therefor, an arc is defined by a length $L$ and a radius $R$. Note that we use radii in the input description because they are more intuitive than the curvature. Finally, a spiral is characterized by a linear change of curvature: $\kappa(s) = a s$, where $a$ is constant (for details on spirals cf. \cite{Baier.2008}). Consequently, in addition to the length $L$, the start and end radius $R_s$ and $R_e$ need to be defined for a spiral to be unique. Those definitions are then being concatenated to a curvature graph and result in an unambiguous road course in the $x,y$-plane if either the initial values for position and orientation at the start are provided or the road is connected to another segment without a curvature jump.
 
@@ -137,7 +137,7 @@ As shown in Fig.~\ref{fig_curvGraph}, the curvature $\kappa(s)$ is a piecewise l
 \end{figure}
 
 \subsection{Segements}\label{sec_segments}
-Below, the segments which might be defined in the road network input are described starting with connections roads, followed by junctions and roundabouts.
+Below, the segments which might be defined in the road network input are described starting with connection roads, followed by junctions and roundabouts.
 
 Connection roads consist of single \textit{road} tags defined by a reference line and definition for lanes and signals in the $s,t$-coordinate system. The latter is a moving coordinate system along the distance $s$. The $t$-coordinate is defined as the offset parallel to the reference line at position $s$. Lane extension and merging follow 3rd degree polynomials which are stated by their start and end point in $s,t$-coordinates, the corresponding polynomial coefficients are calculated by the road generation tool.
 
@@ -165,7 +165,7 @@ Once all desired segments are specified, those may be concatenated to form a roa
 
 One more option of the road network concept is the automated generation of a compound curve (composed of two spirals with an arc between them) to close the gap between two loose road ends. This might be required if the road network should be used for endurance simulations where traffic agents shall drive in circles infinitely often and no sources and sinks are implemented in the simulation environment. It is not possible to calculate a curvature graph which matches a desired end point in the $x,y$-plane from an known start point analytically because of the algebraic properties of spirals (cf.~Sec.~\ref{sec_geometry}). Therefor, an optimization problem needs to be solved which attempts to find combinations of segment lengths $s_\text{i}$ and a radius $R$ which form a curve similar to Fig.~\ref{fig_curvGraph} that matches the desired end point with $\kappa=0$.
 
-\section{ROAD GENERATION / IMPLEMENTATION}
+\section{Road generation / Implementation}
 The specified input may be translated into the road network standard format OpenDRIVE by a command line tool. Since the input describes a simplified representation of the road network, missing information needs to be calculated to provide a verified OpenDRIVE map. In the following, some steps of these calculations are described starting with details on geometric properties of roads and lanes followed by the generation of intersections. 
 \subsection{Geometry}\label{sec_geometry}
 	As introduced Sec.~\ref{sec_refline}, we assume that a roads reference line is curvature continuous and therefor a single initial position and heading is sufficient to calculate its course. However, OpenDRIVE requires a start point and heading for each line, arc or spiral. In order to provide information on $x,y$-coordinates and orientation $\varphi$ for each geometric primitive, a transformation depending on the geometry type is necessary. For a straight line, the following trivial equations result:
@@ -246,39 +246,39 @@ The specified input may be translated into the road network standard format Open
     
     This procedure is repeated until all connection roads, i.e. connection lanes, inside the junction are calculated.
 
-\section{RESULTS}
-In Fig.~\ref{fig_res3_2} the OpenDRIVE output of two concatenated T-junctions is shown. Each segment consists of a main road which follows an arc and one access road that is modeled as a straight line. The angle between both roads is $\alpha=\frac{\pi}{2}$. Further, a link between both junctions is applied at the end of the respective access road. Both junctions are defined mostly the same, only differences for the upper junction are that the radius of the main road is smaller and that an option is activated which automatically generates lane widenings for left turns on main roads. In fact, only two chars are different in the respective junction definitions which makes the description easy to vary. In addition, the input file consists of four defined roads whereas the resulting OpenDRIVE file contains 18 road definitions. These effects have impact on the overall amount of code which can be seen in Table~\ref{tab_comparison}~line~2. The input file requires only $5.3\%$ as many chars as the concrete OpenDRIVE file.
+\section{Results}
+In Fig.~\ref{fig_res3_2} the OpenDRIVE output of two concatenated T-junctions is shown. Each segment consists of a main road which follows an arc and one access road that is modeled as a straight line. The angle between both roads is $\alpha=\frac{\pi}{2}$. Further, a link between both junctions is applied at the end of the respective access road. Both junctions are defined mostly the same, only differences for the upper junction are that the radius of the main road is smaller and that an option is activated which automatically generates lane widenings for left turns on main roads. In fact, only two chars are different in the respective junction definitions which makes the description easy to vary. In addition, the input file consists of four defined roads whereas the resulting OpenDRIVE file contains 18 road definitions. These effects have impact on the overall amount of code which can be seen in Table~\ref{tab_comparison} line~2. The input file requires only $5.3\%$ as many chars as the concrete OpenDRIVE file.
 \begin{figure}[thpb]
 	\includegraphics[width=\columnwidth]{fig/res3_2.png}
 	\caption{OpenDRIVE Output of two concatenated T-junctions. Both junctions are almost identically defined. The only differences for the upper junction are that the radius of the main road is changed and an option that automatically generates lane widening for left turns is activated. Note that black lines indicate lane courses, not their marking.}
 	\label{fig_res3_2}
 \end{figure}
 
-As an general overview, in Fig.~\ref{fig_resHuge} the result for a considerably large road network is illustrated. It  is described entirely by the presented logical description and then is instantiated as OpenDRIVE with help of the developed tool. The network consists of four intersections, one roundabout and several connection roads. Further, all open ends are automatically closed employing the mentioned road network closing tag. As shown in Table~\ref{tab_comparison} line 3, the input file is significantly smaller in terms of code length than the resulting OpenDRIVE file. In addition, only little parts of the input have to be changed (e.g. the curvature of one connection road) in order to obtain a road network of similar topology but with thousands of changes in the OpenDRIVE file.
-% TODO: think about more evaluation text
+As an general overview, in Fig.~\ref{fig_resHuge} the result for a considerably large road network is illustrated. It is described entirely by the presented logical description and then is instantiated as OpenDRIVE with help of the developed tool. The network consists of four intersections, one roundabout and several connection roads. Further, all open ends are automatically closed employing the mentioned road network closing tag. As shown in Table~\ref{tab_comparison} line~3, the input file is significantly smaller in terms of code length than the resulting OpenDRIVE file. In addition, only little parts of the input have to be changed (e.g. the curvature of one connection road) in order to obtain a road network of similar topology but with thousands of changes in the OpenDRIVE file. This way, parameter spaces for distinct quantities may be explored and many concrete road networks can be generated using one \emph{logical} definition.
 \begin{figure*}[ht]
 	\includegraphics[width=\textwidth]{fig/res_huge.PNG}
-	\caption{OpenDRIVE Output of road network generated by the tool which processes the developed logical road description}
+	\caption{OpenDRIVE Output of a road network generated by the tool which processes the developed logical road description. \emph{poor quality. Somehow think of something better}}
 	\label{fig_resHuge}
 \end{figure*}
-
 \begin{table}[hbt]
-\caption{Comparison of OpenDRIVE and logical description in terms of amount of code}
-\label{tab_comparison}
-\def\arraystretch{1.5}
-\begin{center}
-\begin{tabular}{l|cccc}
-\multirow{2}{*}{File} & \multicolumn{2}{c}{OpenDRIVE} & \multicolumn{2}{c}{Logical Description}\\
-& Lines & Chars & Lines & Chars \\
-\hline
-XJunc (Fig.~\ref{fig_motivation}) & $875$ & $32,468$& $4.0\%$ &$4.1\%$\\
-TwoTJunc (Fig.~\ref{fig_res3_2}) & $937$ & $36,414$& $5.0\%$ &$5.3\%$\\
-HugeRoadNet (Fig.~\ref{fig_resHuge}) & $6,301$ & $242,803$& $3.9\%$ &$4.8\%$
-\end{tabular}
-\end{center}
+	\caption{Comparison of OpenDRIVE and logical description in terms of amount of code}
+	\label{tab_comparison}
+	\def\arraystretch{1.5}
+	\begin{center}
+		\begin{tabular}{l|cccc}
+			\multirow{2}{*}{File} & \multicolumn{2}{c}{OpenDRIVE} & \multicolumn{2}{c}{Logical Description}\\
+			& Lines & Chars & Lines & Chars \\
+			\hline
+			XJunc (Fig.~\ref{fig_motivation}) & $875$ & $32,468$& $4.0\%$ &$4.1\%$\\
+			TwoTJunc (Fig.~\ref{fig_res3_2}) & $937$ & $36,414$& $5.0\%$ &$5.3\%$\\
+			HugeRoadNet (Fig.~\ref{fig_resHuge}) & $6,301$ & $242,803$& $3.9\%$ &$4.8\%$
+		\end{tabular}
+	\end{center}
 \end{table}
 
-\section{CONCLUSIONS} %TODO: Conclusion / Discussion
+All generated OpenDRIVE files are verified against current OpenDRIVE XSD schemas of version 1.4\footnote{http://www.opendrive.org/tools/OpenDRIVE\_1.4H.xsd} and 1.5\footnote{http://www.opendrive.org/tools/OpenDRIVE\_1.5M.xsd}. In addition, we evaluated selected tracks with ODR Viewer\footnote{http://www.opendrive.org/tools/odrViewer.zip}, CarMaker 8.0 and RoadRunner\footnote{https://www.vectorzero.io/roadrunner} by making sure the import works and the visualization looks plausible.
+
+\section{Conclusion and outlook} %TODO: Conclusion / Discussion
 In this paper, we introduced a concept to describe road networks in logical description with the possibility to generate a standardized concrete format which can be used in most simulation environments.
 % REMARK: Although a conclusion may review the main points of the paper, do not replicate the abstract as the conclusion. A conclusion might elaborate on the importance of the work or suggest applications and extensions.
 % TODO: mention what we have shown
