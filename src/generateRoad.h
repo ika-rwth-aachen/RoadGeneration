@@ -410,7 +410,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, double sJunction)
             double ds = itt->attribute("ds1").as_double();
 
             // only perform drop if not close to junction
-            if (s < sJunction + 50) continue;
+            if (s < sJunction + 25) continue;
             if (s > r.length) continue;  
                  
             addLaneWidening(r.laneSections, lane, s, ds, false);
@@ -422,7 +422,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, double sJunction)
             double ds = itt->attribute("ds1").as_double();
 
             // only perform drop if not close to junction
-            if (s < sJunction + 50) continue;       
+            if (s < sJunction + 25) continue;       
             if (s > r.length) continue;       
             addLaneDrop(r.laneSections, lane, s, ds);  
 
