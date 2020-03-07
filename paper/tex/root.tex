@@ -77,7 +77,7 @@ Besides layer four which describes the dynamic behavior of all traffic participa
 \begin{figure}[t] 		
 	\centering
 	\includegraphics{fig/motivation.png}
-	\caption[dummy]{Graphical example of input and output of the road generation tool. As a minimal input, two reference lines with assigned road types and a coupling point are sufficient to generate an intersection written in valid OpenDRIVE, visualized in CarMaker 8.0\footnotemark}
+	\caption[dummy]{Graphical example of input and output of the road generation tool. As a minimal input, two reference lines with assigned road types and a coupling point are sufficient to generate an intersection written in valid OpenDRIVE, visualized in CarMaker 8.0\footnotemark.}
 	\label{fig_motivation}
 \end{figure}
 \footnotetext{https://ipg-automotive.com/de/produkte-services/simulation-software/}
@@ -100,7 +100,7 @@ The remainder of this paper is organized as follows. First, Sec.~\ref{sec_relwor
 	\node[anchor=south west,inner sep=0] (image) at (0,0) {\includegraphics[width=0.4\textwidth]{fig/en_layers_raw.png}};
 	\end{scope}
 	\end{tikzpicture}
-	\caption{The data layers for the description of a scenario following~\cite{bock2018data} and~\cite{bagschik2018ontology}}
+	\caption{The data layers for the description of a scenario following~\cite{bock2018data} and~\cite{bagschik2018ontology}.}
 	\label{fig_layers}
 \end{figure}
 
@@ -118,7 +118,7 @@ In the following sections, the reference line is examined in more detail, follow
 \begin{figure}[thpb] 		
 	\centering
 	\includegraphics{fig/schema.pdf}
-	\caption{Hierarchical structure of the road network. On the first level all segments and their relation to each other are defined. In addition, it is possible to define the automatic connection of two road ends. Segments are defined as roundabouts, junctions and connection roads. $r_i$ and $I$ describe roads and intersection definitions, respectively}
+	\caption{Hierarchical structure of the road network. On the first level all segments and their relation to each other are defined. In addition, it is possible to define the automatic connection of two road ends. Segments are defined as roundabouts, junctions and connection roads. $r_i$ and $I$ describe roads and intersection definitions, respectively.}
 	\label{fig_schema}
 \end{figure}
 \subsection{Reference Lines} \label{sec_refline} % or find better heading 
@@ -143,7 +143,7 @@ As shown in Fig.~\ref{fig_curvGraph}~a), the curvature $\kappa(s)$ is a piecewis
 	\label{fig_curvGraph}
 \end{figure}
 
-\subsection{Segements}\label{sec_segments}
+\subsection{Segments}\label{sec_segments}
 In the following, the segments which might be defined in the road network input are described starting with connection roads, followed by junctions and roundabouts.
 
 Connection roads consist of single \texttt{road} tags defined by a reference line and definition for lanes and signals in the $s,t$-coordinate system. The latter is a moving coordinate system along the distance $s$. The $t$-coordinate is defined as the offset orthogonal to the reference line at position $s$. Lane extension and merging follow 3rd-degree polynomials which are stated by their start and end point in $s,t$-coordinates, the corresponding polynomial coefficients are calculated by the road generation tool.
@@ -232,7 +232,7 @@ The specified input may be translated into the road network standard format Open
     After every street is cut and correctly positioned, the next step is calculating the reference lines of the lanes inside of the intersection area. Each lane is generated as an individual street with its reference line, whereby the single-lane lies to the right of the reference line. Based on starting point \(A\) and endpoint \(B\) as well as the angles \(\varphi_{A}\) and \(\varphi_{B}\) the new reference line of a lane is calculated. As a simplification, only straight lines and arcs are used since the discontinuity in the curvature can be neglected at low speeds. Note that the assumption still yields continuous angles along $s$. The setup for one connection road is illustrated in Fig.~\ref{fig_connecting_road}. $A$ is the end of the road entering the intersection area and $B$ is the corresponding start of the newly generated road leaving the junction. In the following, the geometric construction of the new reference line is described.
     \begin{figure}
     	\input{fig/roadConnection.tex}
-    	\caption{process for connecting roads in junction area}
+    	\caption{Process for connecting roads in junction area.}
     	\label{fig_connecting_road}
     \end{figure}
 
@@ -268,13 +268,13 @@ In Fig.~\ref{fig_res3_2} the OpenDRIVE output of two concatenated T-junctions is
 
 \begin{figure}
 	\includegraphics[width=\columnwidth]{fig/res3_2.png}
-	\caption{OpenDRIVE Output of two concatenated T-junctions. Both junctions are almost identically defined. The only differences for the upper junction are that the radius of the main road is changed and an option that automatically generates lane widening for left turns is activated. Note that black lines indicate lane courses, not their marking. Visualization in CarMaker 8.0}
+	\caption{OpenDRIVE Output of two concatenated T-junctions. Both junctions are almost identically defined. The only differences for the upper junction are that the radius of the main road is changed and an option that automatically generates lane widening for left turns is activated. Note that black lines indicate lane courses, not their marking. Visualization in CarMaker 8.0.}
 	\label{fig_res3_2}
 \end{figure}
 
 
 \begin{table}[h]
-	\caption{Comparison of OpenDRIVE and logical description in terms of amount of code}
+	\caption{Comparison of OpenDRIVE and logical description in terms of amount of code.}
 	\label{tab_comparison}
 	\def\arraystretch{1.5}
 	\begin{center}
