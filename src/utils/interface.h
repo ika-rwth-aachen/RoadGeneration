@@ -1,11 +1,5 @@
 // file interface.h
 
-struct laneLink
-{
-    int from;
-    int to;
-};
-
 struct connection
 {
     int id;
@@ -160,11 +154,14 @@ struct road
 struct roadNetwork
 {
     string file;
+
     vector<road> roads;
     vector<junction> junctions;
     vector<control> controller;
+
     int nSignal = 0;
     int nSegment = 0;
+    
     int versionMajor = 1;
     int versionMinor = 5;
 };

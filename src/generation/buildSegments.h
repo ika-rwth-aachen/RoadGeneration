@@ -1,9 +1,9 @@
 // file buildSegments.h
 
-#include "generateRoad.h"
+#include "buildRoad.h"
 #include "addObjects.h"
 #include "createLaneConnection.h"
-#include "createRoadConnections.h"
+#include "createRoadConnection.h"
 
 #define all 0 
 #define non "none" 
@@ -25,7 +25,7 @@
 int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 {
 	pugi::xml_node segments = doc.child("roadNetwork").child("segments");
-	if(!segments) cout << "ERR: 'segments' not found in input file."  << endl;
+	if(!segments) cerr << "ERR: 'segments' not found in input file."  << endl;
 
 	for (pugi::xml_node_iterator it = segments.begin(); it != segments.end(); ++it)
 	{

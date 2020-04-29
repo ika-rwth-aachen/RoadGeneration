@@ -1,4 +1,4 @@
-// file createRoadConnections.h
+// file createRoadConnection.h
 
 /**
  * @brief function creates a new road connection 

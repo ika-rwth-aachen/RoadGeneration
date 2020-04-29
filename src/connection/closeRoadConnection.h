@@ -5,7 +5,7 @@
 #define o 0
 #define i 2
 
-#include "geometries.h"
+#include "../utils/geometries.h"
 
 /**
  * @brief function generates geometries (maybe recursivly) so that the two points are connected with a feasible connection road

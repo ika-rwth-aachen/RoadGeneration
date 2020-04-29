@@ -1,4 +1,4 @@
-// file laneSectionChange.h
+// file addLaneSections.h
 
 /**
  * @brief function adds a laneSection with laneWiding  to a given lanesection set in s direction
@@ -524,14 +524,6 @@ int laneWideningJunction(road &r, int sLaneWidening, int turn, bool verschwenkun
 
         lane tmpLane;
         int idL = findLane(*it, tmpLane, id);
-
-        if (idL == -1)
-        {
-            cout << idL << endl;
-            cout << id << endl;
-            cout << turn << endl;
-            
-        }
 
         if (sgn(id) == sgn(laneId))
         {

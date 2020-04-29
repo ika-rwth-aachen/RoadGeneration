@@ -1,4 +1,4 @@
-.. image:: doc/logo.png
+.. image:: doc/logo.jpg
     :width: 200px
     :alt: logo
 

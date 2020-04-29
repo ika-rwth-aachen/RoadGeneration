@@ -9,7 +9,7 @@
  */
 int roundAbout(pugi::xml_node &node, roadNetwork &data)
 {
-    // create junction
+    // create segment
     data.nSegment++;
     junction junc;
     junc.id = node.attribute("id").as_int();
@@ -92,12 +92,12 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
 
         // calculate width of mainRoad and addtionalRoad
         road helpMain;
-        generateRoad(mainRoad, helpMain, 0, INFINITY, 0, 0, 0, 0, 0);  
+        buildRoad(mainRoad, helpMain, 0, INFINITY, 0, 0, 0, 0, 0);  
         laneSection lSMain = helpMain.laneSections.front();
         double widthMain = abs(findTOffset(lSMain, findMinLaneId(lSMain), 0));
         
         road helpAdd;
-        generateRoad(additionalRoad, helpAdd, 0, INFINITY, 0, 0, 0, 0, 0);  
+        buildRoad(additionalRoad, helpAdd, 0, INFINITY, 0, 0, 0, 0, 0);  
         laneSection lSAdd = helpAdd.laneSections.front();
         double widthAdd = abs(findTOffset(lSAdd, findMinLaneId(lSAdd), 0)) +                      abs(findTOffset(lSAdd, findMaxLaneId(lSAdd), 0));
         
@@ -148,7 +148,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         r1.successor.elementId = junc.id;
         r1.successor.elementType = "junction";
         if (cc == 1) sOld = sOffMain;
-        generateRoad(mainRoad, r1, sOld, sMain-sOffMain, 0, sMain, iPx, iPy,iPhdg);       
+        buildRoad(mainRoad, r1, sOld, sMain-sOffMain, 0, sMain, iPx, iPy,iPhdg);       
         nCount++; 
 
         road r2;
@@ -156,7 +156,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         r2.junction = junc.id;
         r2.predecessor.elementId = junc.id;
         r2.predecessor.elementType = "junction";
-        generateRoad(additionalRoad, r2, sAdd+sOffAdd, INFINITY, 0, sAdd, iPx, iPy, iPhdg+phi); 
+        buildRoad(additionalRoad, r2, sAdd+sOffAdd, INFINITY, 0, sAdd, iPx, iPy, iPhdg+phi); 
         addObjects(additionalRoad, r2, data);
         nCount++; 
 
@@ -167,7 +167,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         helper.id = 100*junc.id + cc * 10 + nCount; 
         helper.junction = junc.id;
         if (cc < nIp)
-            generateRoad(mainRoad, helper, sMain+sOffMain, sMain+2*sOffMain, 0, sMain, iPx, iPy,iPhdg);  
+            buildRoad(mainRoad, helper, sMain+sOffMain, sMain+2*sOffMain, 0, sMain, iPx, iPy,iPhdg);  
         else // last segment
         {
             helper = rOld;

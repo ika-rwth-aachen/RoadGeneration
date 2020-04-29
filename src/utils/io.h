@@ -19,14 +19,14 @@ using namespace xercesc;
 int validateInput (char* file)
 {
     XMLPlatformUtils::Initialize();
-	string tmp = string_format("%s/xml/input.xsd", PROJ_DIR);
-	const char* schemaFilePath = tmp.c_str();
-	const char* xmlFilePath = file;
+	string schema = string_format("%s/xml/input.xsd", PROJ_DIR);
+	const char* schema_file = schema.c_str();
+	const char* xml_file = file;
 
 	XercesDOMParser domParser;
-    if (domParser.loadGrammar(schemaFilePath, Grammar::SchemaGrammarType) == NULL)
+    if (domParser.loadGrammar(schema_file, Grammar::SchemaGrammarType) == NULL)
     {
-        fprintf(stderr, "couldn't load schema\n");
+        cerr << "ERR: couldn't load schema" << endl;
         return 1;
     }
  
@@ -35,13 +35,13 @@ int validateInput (char* file)
     domParser.setDoSchema(true);
     domParser.setValidationConstraintFatal(true);
 	
-    domParser.parse(xmlFilePath);
+    domParser.parse(xml_file);
 
     if (domParser.getErrorCount() == 0)
-        printf("XML file validated against the schema successfully\n");
+        cout << "XML input file validated against the schema successfully" << endl;
     else
     {
-        printf("XML file doesn't conform to the schema\n");
+        cerr << "ERR: XML input file doesn't conform to the schema" << endl;
         return 1;
     }
 
@@ -54,20 +54,21 @@ int validateInput (char* file)
  * @param file  output file
  * @return int  error code
  */
-int validateOutput (string file)
+int validateOutput (roadNetwork data)
 {
     XMLPlatformUtils::Initialize();
 
+    string file = data.file;
     file.append(".xodr");
-	const char* xmlFilePath = file.c_str();
+	const char* xml_file = file.c_str();
 
-	string tmp = string_format("%s/xml/output.xsd", PROJ_DIR);	
-	const char* schemaFilePath = tmp.c_str();
+	string schema = string_format("%s/xml/output.xsd", PROJ_DIR);	
+	const char* schema_path = schema.c_str();
 
 	XercesDOMParser domParser;
-    if (domParser.loadGrammar(schemaFilePath, Grammar::SchemaGrammarType) == NULL)
+    if (domParser.loadGrammar(schema_path, Grammar::SchemaGrammarType) == NULL)
     {
-        fprintf(stderr, "couldn't load schema\n");
+        cerr << "ERR: couldn't load schema" << endl;
         return 1;
     }
  
@@ -76,12 +77,12 @@ int validateOutput (string file)
     domParser.setDoSchema(true);
     domParser.setValidationConstraintFatal(true);
 	
-    domParser.parse(xmlFilePath);
+    domParser.parse(xml_file);
     if (domParser.getErrorCount() == 0)
-        printf("XML file validated against the schema successfully\n");
+        cout << "XML output file validated against the schema successfully" << endl;
     else
     {
-        printf("XML file doesn't conform to the schema\n");
+        cerr << "ERR: XML output file doesn't conform to the schema" << endl;
         return 1;
     }
 
@@ -99,13 +100,7 @@ int validateOutput (string file)
  */
 int parseXML(pugi::xml_document &doc, roadNetwork &data, char * file)
 {   
-    // TODO: only debugging purposes
-    if (false)
-    {  // TODO: use PROJ_DIR!
-        data.file = "bin/test.xml";
-        doc.load_file("bin/test.xml");
-        return 0;
-    }
+    // save file name in data
     string f = file;
     data.file = f.substr(0,f.find(".xml"));
 
@@ -290,7 +285,6 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
             }
         }
 
-
         // --- write objects ---------------------------------------------------
         pugi::xml_node objects = road.append_child("objects");
 
@@ -403,9 +397,9 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
             con.append_attribute("connectingRoad") = itt->to;
             con.append_attribute("contactPoint") = itt->contactPoint.c_str();
 
-            pugi::xml_node lL = con.append_child("laneLink");
-            lL.append_attribute("from") = itt->fromLane;
-            lL.append_attribute("to") = itt->toLane;
+            pugi::xml_node ll = con.append_child("laneLink");
+            ll.append_attribute("from") = itt->fromLane;
+            ll.append_attribute("to") = itt->toLane;
         }
     }
 
@@ -422,4 +416,12 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         cerr << "ERR: file could not be saved." << endl;
         return 1;
     }
+}
+
+void printLogo()
+{
+    cout << "|‾\\  /‾\\  |‾‾| |‾\\       /‾‾  |‾‾  |\\  | |‾‾ |‾\\ |‾‾| ‾|‾ |  /‾\\  |\\  |" << endl;
+    cout << "|_/ |   | |--| |  |  -  |  _  |--  | | | |-- |_/ |--|  |  | |   | | | |" << endl;
+    cout << "| \\  \\_/  |  | |_/       \\_/  |__  |  \\| |__ | \\ |  |  |  |  \\_/  |  \\|" << endl;
+    cout << "=======================================================================" << endl;
 }

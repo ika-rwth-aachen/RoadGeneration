@@ -537,9 +537,18 @@ int computeIP(double x1,double y1,double phi1,double x2,double y2,double phi2,in
 }
 
 template<typename ... Args>
-std::string string_format(const std::string &format, Args ... args) {
-	auto size = snprintf(nullptr, 0, format.c_str(), args ...) + 1; // Extra space for '\0'
+/**
+ * @brief function used for xsd checking output
+ * 
+ * @param format 
+ * @param args 
+ * @return std::string 
+ */
+std::string string_format(const std::string &format, Args ... args) 
+{
+	auto size = snprintf(nullptr, 0, format.c_str(), args ...) + 1; 
 	char *buf(new char[size]);
 	snprintf(buf, size, format.c_str(), args ...);
-	return std::string(buf, buf + size - 1); // We don't want the '\0' inside
+
+	return std::string(buf, buf + size - 1); 
 }

@@ -9,7 +9,7 @@
  */
 int connectingRoad(pugi::xml_node &node, roadNetwork &data)
 {
-    // define junction roads
+    // define segment
     data.nSegment++;
     pugi::xml_node mainRoad = node.child("road");
 
@@ -27,7 +27,7 @@ int connectingRoad(pugi::xml_node &node, roadNetwork &data)
     r.id = 100 * node.attribute("id").as_int() + id;
     r.junction = node.attribute("id").as_int();
     
-    generateRoad(mainRoad, r, 0, INFINITY, 0, 0, 0, 0, 0);
+    buildRoad(mainRoad, r, 0, INFINITY, 0, 0, 0, 0, 0);
     addObjects(mainRoad, r, data);
 
     data.roads.push_back(r);

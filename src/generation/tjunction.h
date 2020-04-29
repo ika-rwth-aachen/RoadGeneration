@@ -19,7 +19,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         return 1;
     }
 
-    // create junction
+    // create segment
     data.nSegment++;
     junction junc;
     junc.id = node.attribute("id").as_int();
@@ -69,7 +69,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
 
     // calculate offsets
     double sOffset = 0;
-    if (cA) sOffset = stod(cA.attribute("sOffset").value(),&sz);
+    if (cA) sOffset = stod(cA.attribute("sOffset").value(),&st);
     sOffMain = sOffset;
     sOffAdd1 = sOffset;
     sOffAdd2 = sOffset;
@@ -84,13 +84,13 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     
      // calculate width of mainRoad and addtionalRoad
     road help1;
-    generateRoad(mainRoad, help1, 0, INFINITY, 0, 0, 0, 0, 0); 
+    buildRoad(mainRoad, help1, 0, INFINITY, 0, 0, 0, 0, 0); 
 
     road help2;
-    generateRoad(additionalRoad1, help2, 0, INFINITY, 0, 0, 0, 0, 0); 
+    buildRoad(additionalRoad1, help2, 0, INFINITY, 0, 0, 0, 0, 0); 
 
     road help3;
-    generateRoad(additionalRoad2, help3, 0, INFINITY, 0, 0, 0, 0, 0);
+    buildRoad(additionalRoad2, help3, 0, INFINITY, 0, 0, 0, 0, 0);
 
  
     laneSection lS1 = help1.laneSections.front();
@@ -128,8 +128,8 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             cerr << "ERR: first 'adRoad' is missing."<< endl;
             return 1;
         }
-        sAdd1 = stod(tmpNode.attribute("s").value(),&sz);
-        phi1 = stod(tmpNode.attribute("angle").value(),&sz);
+        sAdd1 = stod(tmpNode.attribute("s").value(),&st);
+        phi1 = stod(tmpNode.attribute("angle").value(),&st);
     }
 
     if(mode >= 2)
@@ -139,8 +139,8 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             cerr << "ERR: second 'adRoad' is missing."<< endl;
             return 1;
         }
-        sAdd2 = stod(tmpNode.next_sibling("adRoad").attribute("s").value(),&sz);
-        phi2 = stod(tmpNode.next_sibling("adRoad").attribute("angle").value(),&sz);
+        sAdd2 = stod(tmpNode.next_sibling("adRoad").attribute("s").value(),&st);
+        phi2 = stod(tmpNode.next_sibling("adRoad").attribute("angle").value(),&st);
     }
 
   // set coordinates of intersectionPoint
@@ -171,14 +171,14 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
 
         // add street is left from road 1
         if (phi > 0) 
-            generateRoad(mainRoad, r1, sMain-sOffMain, 0, autoWiding, sMain, iPx, iPy, iPhdg);
+            buildRoad(mainRoad, r1, sMain-sOffMain, 0, autoWiding, sMain, iPx, iPy, iPhdg);
         // add street is right from road 1
         if (phi < 0) 
-            generateRoad(mainRoad, r1, sMain-sOffMain, 0, -autoWiding, sMain, iPx, iPy, iPhdg);
+            buildRoad(mainRoad, r1, sMain-sOffMain, 0, -autoWiding, sMain, iPx, iPy, iPhdg);
     }
     if (mode == 2)
     {
-        generateRoad(mainRoad, r1, sMain+sOffMain, INFINITY, autoWiding, sMain, iPx, iPy, iPhdg);
+        buildRoad(mainRoad, r1, sMain+sOffMain, INFINITY, autoWiding, sMain, iPx, iPy, iPhdg);
     }
     addObjects(mainRoad,r1,data);
 
@@ -194,15 +194,15 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
 
         // add street is left from road 1
         if (phi > 0) 
-            generateRoad(mainRoad, r2, sMain+sOffMain, INFINITY, -autoWiding, sMain, iPx, iPy, iPhdg);
+            buildRoad(mainRoad, r2, sMain+sOffMain, INFINITY, -autoWiding, sMain, iPx, iPy, iPhdg);
         // add street is right from road 1
         if (phi < 0) 
-            generateRoad(mainRoad, r2, sMain+sOffMain, INFINITY, autoWiding, sMain, iPx, iPy, iPhdg);
+            buildRoad(mainRoad, r2, sMain+sOffMain, INFINITY, autoWiding, sMain, iPx, iPy, iPhdg);
         addObjects(mainRoad,r2,data);
     }
     if (mode == 2)
     {
-        generateRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, autoWiding, sAdd1,iPx, iPy, iPhdg+phi1);
+        buildRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, autoWiding, sAdd1,iPx, iPy, iPhdg+phi1);
         addObjects(additionalRoad1,r2,data);
     }
 
@@ -213,12 +213,12 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     r3.predecessor.elementId = junc.id;
     if (mode == 1)
     {
-        generateRoad(additionalRoad1, r3, sAdd1 + sOffAdd1, INFINITY, autoWiding, sAdd1, iPx, iPy, iPhdg+phi1);
+        buildRoad(additionalRoad1, r3, sAdd1 + sOffAdd1, INFINITY, autoWiding, sAdd1, iPx, iPy, iPhdg+phi1);
         addObjects(additionalRoad1,r3,data);
     }
     if (mode == 2)
     {
-        generateRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, autoWiding, sAdd2, iPx, iPy, iPhdg+phi2);
+        buildRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, autoWiding, sAdd2, iPx, iPy, iPhdg+phi2);
         addObjects(additionalRoad2,r3,data);
     }
 

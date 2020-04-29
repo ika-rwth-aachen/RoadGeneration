@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(roadGeneration)
+project(road-generation)
 
 find_package (XercesC REQUIRED)
 
@@ -8,7 +8,7 @@ include_directories(src)
 include_directories(${CMAKE_SOURCE_DIR}/libs/pugixml-1.9/src)
 include_directories (${XercesC_INCLUDE_DIR})
 
-set(BIN_DIR ${CMAKE_SOURCE_DIR}/bin CACHE PATH "BIN_DIR")
+set(BIN_DIR ${CMAKE_SOURCE_DIR} CACHE PATH "BIN_DIR")
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR})
 
@@ -17,11 +17,11 @@ file(GLOB_RECURSE DRIVER_SRC
     "${CMAKE_SOURCE_DIR}/libs/pugixml-1.9/src/*"
 )
 
-add_executable(roadGeneration
+add_executable(road-generation
         ${DRIVER_SRC}
     )
 
 add_definitions(-DPROJ_DIR=\"${PROJECT_SOURCE_DIR}\")
 
-target_link_libraries(roadGeneration ${XercesC_LIBRARIES})
+target_link_libraries(road-generation ${XercesC_LIBRARIES})
 

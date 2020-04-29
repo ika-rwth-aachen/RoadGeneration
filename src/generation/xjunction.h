@@ -20,7 +20,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         return 1;
     }
 
-    // create junction
+    // create segment
     data.nSegment++;
     junction junc;
     junc.id = node.attribute("id").as_int();
@@ -75,7 +75,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
 
     // calculate offsets
     double sOffset = 0;
-    if (cA) sOffset = stod(cA.attribute("sOffset").value(),&sz);
+    if (cA) sOffset = stod(cA.attribute("sOffset").value(),&st);
     sOffMain = sOffset;
     sOffAdd1 = sOffset;
     sOffAdd2 = sOffset;
@@ -93,16 +93,16 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
 
     // calculate width of mainRoad and addtionalRoad
     road help1;
-    generateRoad(mainRoad, help1, 0, INFINITY, 0, 0, 0, 0, 0); 
+    buildRoad(mainRoad, help1, 0, INFINITY, 0, 0, 0, 0, 0); 
 
     road help2;
-    generateRoad(additionalRoad1, help2, 0, INFINITY, 0, 0, 0, 0, 0); 
+    buildRoad(additionalRoad1, help2, 0, INFINITY, 0, 0, 0, 0, 0); 
 
     road help3;
-    generateRoad(additionalRoad2, help3, 0, INFINITY, 0, 0, 0, 0, 0);
+    buildRoad(additionalRoad2, help3, 0, INFINITY, 0, 0, 0, 0, 0);
 
     road help4;
-    generateRoad(additionalRoad3, help4, 0, INFINITY, 0, 0, 0, 0, 0);
+    buildRoad(additionalRoad3, help4, 0, INFINITY, 0, 0, 0, 0, 0);
  
     laneSection lS1 = help1.laneSections.front();
     double width1 = abs(findTOffset(lS1, findMinLaneId(lS1), 0))                              + abs(findTOffset(lS1, findMaxLaneId(lS1), 0));
@@ -195,11 +195,11 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r1.predecessor.elementType = "junction";
     if (mode == 1 || mode == 2)
     {
-        generateRoad(mainRoad, r1, sMain-sOffMain, 0, autoWiding, sMain, iPx, iPy, iPhdg);
+        buildRoad(mainRoad, r1, sMain-sOffMain, 0, autoWiding, sMain, iPx, iPy, iPhdg);
     }
     if (mode == 3)
     {
-        generateRoad(mainRoad, r1, sMain+sOffMain, INFINITY, autoWiding, sMain,iPx, iPy, iPhdg);
+        buildRoad(mainRoad, r1, sMain+sOffMain, INFINITY, autoWiding, sMain,iPx, iPy, iPhdg);
     }
     addObjects(mainRoad,r1,data);
 
@@ -210,11 +210,11 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r2.predecessor.elementType = "junction";
     if (mode == 1)
     {
-        generateRoad(additionalRoad1, r2, sAdd1-sOffAdd1, 0, autoWiding, sAdd1, iPx, iPy, iPhdg+phi1);
+        buildRoad(additionalRoad1, r2, sAdd1-sOffAdd1, 0, autoWiding, sAdd1, iPx, iPy, iPhdg+phi1);
     }
     if (mode == 2 || mode == 3)
     {
-        generateRoad(additionalRoad1, r2, sAdd1+sOffAdd1, INFINITY, autoWiding, sAdd1, iPx, iPy, iPhdg+phi1);
+        buildRoad(additionalRoad1, r2, sAdd1+sOffAdd1, INFINITY, autoWiding, sAdd1, iPx, iPy, iPhdg+phi1);
     }
     addObjects(additionalRoad1,r2,data);
 
@@ -225,12 +225,12 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r3.predecessor.elementType = "junction";
     if (mode == 1 || mode == 2)
     {
-        generateRoad(mainRoad, r3, sMain+sOffMain, INFINITY, autoWiding, sMain,iPx, iPy,iPhdg);
+        buildRoad(mainRoad, r3, sMain+sOffMain, INFINITY, autoWiding, sMain,iPx, iPy,iPhdg);
         addObjects(mainRoad,r3,data);
     }
     if (mode == 3)
     {
-        generateRoad(additionalRoad2, r3, sAdd2+sOffAdd2, INFINITY, autoWiding, sAdd2, iPx, iPy, iPhdg+phi2);
+        buildRoad(additionalRoad2, r3, sAdd2+sOffAdd2, INFINITY, autoWiding, sAdd2, iPx, iPy, iPhdg+phi2);
         addObjects(additionalRoad2,r3,data);
     }
 
@@ -241,17 +241,17 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r4.predecessor.elementType = "junction";
     if (mode == 1)
     {
-        generateRoad(additionalRoad1, r4, sAdd1+sOffAdd1, INFINITY, autoWiding, sAdd1, iPx, iPy, iPhdg+phi1);
+        buildRoad(additionalRoad1, r4, sAdd1+sOffAdd1, INFINITY, autoWiding, sAdd1, iPx, iPy, iPhdg+phi1);
         addObjects(additionalRoad1,r4,data);
     }
     if (mode == 2)
     {
-        generateRoad(additionalRoad2, r4, sAdd2+sOffAdd2, INFINITY, autoWiding, sAdd2, iPx, iPy, iPhdg+phi2);
+        buildRoad(additionalRoad2, r4, sAdd2+sOffAdd2, INFINITY, autoWiding, sAdd2, iPx, iPy, iPhdg+phi2);
         addObjects(additionalRoad2,r4,data);
     }
     if (mode == 3)
     {
-        generateRoad(additionalRoad3, r4, sAdd3+sOffAdd3, INFINITY, autoWiding, sAdd3, iPx, iPy, iPhdg+phi3);
+        buildRoad(additionalRoad3, r4, sAdd3+sOffAdd3, INFINITY, autoWiding, sAdd3, iPx, iPy, iPhdg+phi3);
         addObjects(additionalRoad3,r4,data);
     }
 

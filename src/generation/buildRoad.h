@@ -1,7 +1,7 @@
-// file generateRoad.h
+// file buildRoad.h
 
-#include "curve.h"
-#include "laneSectionChange.h"
+#include "../utils/curve.h"
+#include "addLaneSections.h"
 
 
 
@@ -444,7 +444,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, double sJunction)
 }
 
 /**
- * @brief function generate a road based on the input data from xml file
+ * @brief function builds a road based on the input data from xml file
  * 
  * @param road              geometry data from the input file
  * @param r                 resulting road
@@ -457,7 +457,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, double sJunction)
  * @param phi0              phi0 should hold at s0 for the resulting road
  * @return int              errorcode
  */
-int generateRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, double sJunction, double s0, double x0, double y0, double phi0)
+int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, double sJunction, double s0, double x0, double y0, double phi0)
 {
     r.type = roadIn.attribute("type").value();
     if (r.type == "access") sJunction = 0;

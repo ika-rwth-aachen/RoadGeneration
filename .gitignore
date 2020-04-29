@@ -1,7 +1,7 @@
 build/
-bin/
 libs/xerces-c-3.2.2
 Makefile
+road-generation
 carmaker/
 roadRunnerProject/
 CMakeFiles/
@@ -11,6 +11,8 @@ odrViewer64.1.9.1
 *.cmake
 CMakeCache.txt
 
+*.xodr
+*.txt
 *.synctex.gz
 *.synctex(busy)
 *.aux
