@@ -1,9 +1,3 @@
-.. image:: doc/logo.jpg
-    :width: 200px
-    :alt: logo
-
-.. inclusion-marker
-
 Road Generation
 ===============
 

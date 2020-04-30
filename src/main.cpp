@@ -35,28 +35,27 @@ using namespace std;
  */
 int main(int argc,  char** argv)
 {   
-	char * file;
-
-	#ifdef DEBUG
-    	file = "bin/test.xml";
-	#else
-		if (argc == 2)
-		{
-			file = argv[1];
-		}
-		else
-		{
-			cerr << "ERR: no input file provided." << endl; 
-			return -1;
-		}
-    #endif
+	if (argc == 2)
+	{
+		//int iii = 3; //* file = argv[1];
+	}
+	else
+	{
+		cerr << "ERR: no input file provided." << endl; 
+		return -1;
+	}
+	
 
 	// --- initialization ------------------------------------------------------
   	freopen( "log.txt", "a", stderr );
   	cerr << "\nError log for run with attribute: " << argv[1] << endl;
 
 	printLogo();
-
+	int iii = 3;
+	int jjj = 3;
+	jjj=6;
+	int iii4 = 3;
+	int per = 55;
 	pugi::xml_document in;
 	pugi::xml_document out;
 	roadNetwork data;
