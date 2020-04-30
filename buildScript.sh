@@ -1,13 +1,15 @@
 # update or create build directory
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     echo "Linux"
+    sudo apt install libxerces-c-dev
     mkdir -p build
     cd build
     rm -rf *
-    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin -DXercesC_INCLUDE_DIR="../libs/xerces-c-3.2.3/bin/include" -DXercesC_LIBRARY="../libs/xerces-c-3.2.3/bin/lib/xerces-c_3" ..
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
+    cmake --build .
 else
     echo "Windows?"
-    rm build -recurse
+    rm -r build 
     mkdir build
     cd build
     # configure cmake

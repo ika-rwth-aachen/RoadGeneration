@@ -166,5 +166,5 @@ struct roadNetwork
     int nSignal = 0;
     int nSegment = 0;
     int versionMajor = 1;
-    int versionMinor = 5;
+    int versionMinor = 4;
 };
