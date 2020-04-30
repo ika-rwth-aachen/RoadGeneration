@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <cmath>
+
 #ifdef _WIN32
 #define NOMINMAX
 #include <windows.h>
@@ -12,19 +13,19 @@
 #endif
 #endif
 
-std::string::size_type sz;
+std::string::size_type st;
 
 using namespace std;
 
-#include "interface.h"
-#include "helper.h"
-#include "io.h"
-#include "buildSegments.h"
-#include "linkSegments.h"
-#include "closeRoadNetwork.h"
+#include "utils/interface.h"
+#include "utils/helper.h"
+#include "utils/io.h"
+#include "generation/buildSegments.h"
+#include "connection/linkSegments.h"
+#include "connection/closeRoadNetwork.h"
 
 /**
- * @brief main function for the tool 'roadGeneration'
+ * @brief main function for the tool 'road-generation'
  * an input xml file with given structure (defined in input.xsd) is converted 
  * into a valid openDrive format (defined in output.xsd)
  * 
@@ -34,19 +35,35 @@ using namespace std;
  */
 int main(int argc,  char** argv)
 {   
-    if (argc < 2) 
+	if (argc == 2)
 	{
-        cout << "ERR: no input file provided." << endl; 
+		//int iii = 3; //* file = argv[1];
+	}
+	else
+	{
+		cerr << "ERR: no input file provided." << endl; 
 		return -1;
-    }
+	}
+	
 
+	// --- initialization ------------------------------------------------------
+  	freopen( "log.txt", "a", stderr );
+  	cerr << "\nError log for run with attribute: " << argv[1] << endl;
+
+	printLogo();
+	int iii = 3;
+	int jjj = 3;
+	jjj=6;
+	int iii4 = 3;
+	int per = 55;
 	pugi::xml_document in;
 	pugi::xml_document out;
 	roadNetwork data;
 
+	// --- pipeline ------------------------------------------------------------
 	if (validateInput(argv[1])) 
 	{
-		cerr << "ERR: error in Inputfile" << endl;
+		cerr << "ERR: error in validateInput" << endl;
 		return -1;
 	}
 	if (parseXML(in, data, argv[1])) 
@@ -74,9 +91,9 @@ int main(int argc,  char** argv)
 		cerr << "ERR: error during createXML" << endl;
 		return -1;
 	}
-	if (validateOutput(data.file))
+	if (validateOutput(data))
 	{
-		cerr << "ERR: error in Outputfile" << endl;
+		cerr << "ERR: error in validateOutput" << endl;
 		return -1;
 	}
 

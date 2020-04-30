@@ -1,0 +1,113 @@
+Road Generation
+===============
+
+Generation of Complex Road Networks Using a Simplified Logical Description for the Validation of Automated Vehicles
+--------------------------------------------------------------------------------------------------------------------
+
+|version| |project|
+
+
+``#road`` ``#openDRIVE`` ``#generic`` ``#generation``
+
+Overview 
+--------
+This repository provides a tool for the generation of road networkds. Here, the main folders are named:
+
+* bin: contains the executable and some sample input files
+* doc: copntains the sphinx documentation and the thesis
+* libs: contains the pugixml library
+* src: contains the main parts of the source code
+* xml: contains the xsd validation files 
+
+Abstract 
+--------
+Simulation is a valuable building block for the verification and validation of automated driving functions (ADF). When simulating urban driving scenarios, simulation maps are one important component. Often, the generation of those road networks is a time consuming and manual effort. Furthermore, typically many variations of a distinct junction or road section are demanded to ensure that an ADF can be validated in the process of releasing those functions to the public.
+Therefore, we present a prototypical solution for a logical road network description which is easy to maintain and modify. The concept aims to be non-redundant so that changes of distinct quantities do not affect other places in the code and thus the variation of maps is straightforward. In addition, the simple definition of junctions is a focus of the work. Intersecting roads are defined separately, are then set in relation and the junction is finally generated automatically.
+The idea is to derive the description from a commonly used, standardized format for simulation maps in order to generate this format from the introduced logical description. Consequently, we developed a command-line tool that generates the standardized simulation map format OpenDRIVE.
+
+Documentation
+-------------
+A simple but well designed documentation is provided by using `Sphinx`_ 
+
+.. _`Sphinx`: https://www.sphinx-doc.org/en/master/
+
+.. code-block:: bash
+
+    cd doc/
+    make html
+    open build/html/index.html
+
+The above commands show the detailed documentation for the provided scripts.
+
+
+Installation
+------------
+
+Download the repository as a zip-file and un-zip, or use git with
+
+.. code-block:: bash
+
+    # Clone Repository and open main folder
+    git clone git@git.rwth-aachen.de:dbecker/road-generation.git
+    cd road-generation
+
+The installation of xercesC is required and can be conducted by:
+
+.. code-block:: bash
+
+    # Install xercesC
+    ./build_xercesc_win64
+
+The actual source code can be compiled with 
+
+.. code-block:: bash
+
+    # Compile
+    cmake .
+    make
+
+Getting Started
+---------------
+
+For usage the compiled application can be called in the bin folder:
+
+.. code-block:: bash
+
+    ./roadGeneration <input>.xml
+
+This generates the output XML file in the same bin folder. The provided input file is checked against an input.xsd file. Please see this file for specific information about the input format. Analogous the output file is checked against the output.xsd file specifying the current openDRIVE standard.
+
+Notes
+-----
+
+A simple, but sufficient visualization can be processed by using the OpenDrive Viewer, maintained by VIRES. Other visualization tools are CarMaker oder Roadrunner.
+
+Here are some basic informations about the input format:
+
+* segments: tjunction, xjunction, roundabout or connectingRoad
+* typ for an X-junction can be either 2M, 4A, M2A 
+
+Further Work
+------------
+
+* specific road markings
+* documentation for the input file
+  
+Contact
+-------
+:Author:
+    | Christian Geller
+    | christian.geller@rwth-aachen.de
+:Supervisor:
+    | Daniel Becker
+    | Institute for Automotive Engineering (ika)
+    | RWTH Aachen University
+    | daniel.becker@ika.rwth-aachen.de
+
+.. |version| image:: https://img.shields.io/badge/version-0.1-blue.svg
+    :target: https://gitlab.ika.rwth-aachen.de/dbecker/road-generation
+    :alt: Documentation Website
+
+.. |project| image:: https://img.shields.io/badge/project-HDVMess-blue.svg
+    :target: https://gitlab.ika.rwth-aachen.de/dbecker/road-generation
+    :alt: Documentation Website

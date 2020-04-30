@@ -1,0 +1,33 @@
+<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/home/geller/Dokumente/roadgeneration/xml/input.xsd">
+    <segments>
+        <tjunction id="1" type="MA" automaticWiding="0">
+            <road id="1" type="main" >	
+                <referenceLine>
+                    <geometry id="1" length="300" type="line"/>
+                </referenceLine>
+                <lanes>
+                    <laneSection id="1" s="0">
+                        <lane id="2" type="driving" width="1">
+                            <roadMark type="solid" color="white" width="0.1" />
+                        </lane>
+                    </laneSection>
+                </lanes>
+            </road>
+            <road id="2" type="access" >	
+                <referenceLine>
+                    <geometry id="1" length="100"  type="line"/>
+                </referenceLine>
+            </road>
+            <intersectionPoint id="1" refId="1" s="150">
+                <adRoad id="2" s="0" angle="-1.57"/>
+            </intersectionPoint>
+            <coupler id="1">
+                <couplerArea sOffset="10">
+                    <streetBorder id="2" sOffset="15"/>
+                </couplerArea>
+                <connection type="all"/>
+            </coupler>
+        </tjunction>
+    </segments>
+    <links referenceId="1" angleOffset="-0.5" xOffset="0" yOffset="0" />
+</roadNetwork>
