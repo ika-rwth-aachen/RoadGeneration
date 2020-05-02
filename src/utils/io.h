@@ -8,6 +8,8 @@
 #include <xercesc/sax/SAXParseException.hpp>
 #include <xercesc/validators/common/Grammar.hpp>
 
+#include <algorithm>
+
 using namespace xercesc;
 
 /**
@@ -219,6 +221,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
             center = laneSection.append_child("center");
             if(findMinLaneId(*itt) < 0) right = laneSection.append_child("right");
 
+            std::sort(itt->lanes.begin(), itt->lanes.end(), compareLanes);
             for (std::vector<lane>::iterator ittt = itt->lanes.begin() ; ittt != itt->lanes.end(); ++ittt)
             {
                 pugi::xml_node lane;
@@ -286,6 +289,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         // --- write objects ---------------------------------------------------
         pugi::xml_node objects = road.append_child("objects");
 
+        std::sort(it->objects.begin(), it->objects.end(), compareObjects);
         for (std::vector<object>::iterator itt = it->objects.begin() ; itt != it->objects.end(); ++itt)
         {
             object o = *itt;
@@ -327,17 +331,18 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         }
 
 
-        // --- write signals ---------------------------------------------------
+        // --- write signs ---------------------------------------------------
     
-        // signals format is different in version 1.4
+        // signs format is different in version 1.4
         if (data.versionMajor >= 1 && data.versionMinor >= 5)
         {
-            pugi::xml_node signals = road.append_child("signals");
+            pugi::xml_node signs = road.append_child("signs");
 
-            for (std::vector<Signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
+            std::sort(it->signs.begin(), it->signs.end(), compareSignals);
+            for (std::vector<sign>::iterator itt = it->signs.begin() ; itt != it->signs.end(); ++itt)
             {
-                Signal s = *itt;
-                pugi::xml_node sig = signals.append_child("signal");
+                sign s = *itt;
+                pugi::xml_node sig = signs.append_child("signal");
                 //pugi::xml_node sig = objects.append_child("object");
                 
                 sig.append_attribute("id") = s.id;
@@ -370,7 +375,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
 
             controller.append_attribute("id") = it->id;
 
-            for (std::vector<Signal>::iterator itt = it->signals.begin() ; itt != it->signals.end(); ++itt)
+            for (std::vector<sign>::iterator itt = it->signs.begin() ; itt != it->signs.end(); ++itt)
             {
                 pugi::xml_node con = controller.append_child("control");
 

@@ -116,7 +116,7 @@ struct object
     double distance = 0;
 };
 
-struct Signal
+struct sign
 {
     int id = -1;
     string type = "";
@@ -136,7 +136,7 @@ struct Signal
 struct control
 {
     int id = -1;
-    vector<Signal> signals;
+    vector<sign> signs;
 };
 
 struct road
@@ -154,7 +154,7 @@ struct road
     vector<geometry> geometries;
     vector<laneSection> laneSections;
     vector<object> objects;
-    vector<Signal> signals;
+    vector<sign> signs;
 };
 
 struct roadNetwork

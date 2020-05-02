@@ -576,3 +576,18 @@ std::string getLinkType(linkType t)
     if (t == junctionType) return "junction";
     return "none";
 }
+
+bool compareObjects(const object &a, const object &b)
+{
+    return a.id < b.id;
+}
+
+bool compareSignals(const sign &a, const sign &b)
+{
+    return a.id < b.id;
+}
+
+bool compareLanes(const lane &a, const lane &b)
+{
+    return a.id < b.id;
+}

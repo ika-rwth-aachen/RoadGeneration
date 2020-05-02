@@ -344,7 +344,7 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
 
         for (pugi::xml_node ob: obj.children())
         {
-            Signal s; 
+            sign s; 
             data.nSignal++;
             s.id = data.nSignal;
             s.id = ob.attribute("id").as_int();
@@ -357,9 +357,9 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
             s.t = ob.child("relativePosition").attribute("t").as_double();
             s.z = ob.child("relativePosition").attribute("z").as_double();
 
-            r.signals.push_back(s);
+            r.signs.push_back(s);
 
-            if (s.dynamic) c.signals.push_back(s);
+            if (s.dynamic) c.signs.push_back(s);
         }
         data.controller.push_back(c);
     }
@@ -407,7 +407,7 @@ int addSignal(road &r, roadNetwork &data, double s, double t, string type,  stri
         i = data.controller.size()-1;
     }
 
-    Signal sig; 
+    sign sig; 
     data.nSignal++;
     sig.id = data.nSignal;
     sig.s = s;
@@ -437,8 +437,8 @@ int addSignal(road &r, roadNetwork &data, double s, double t, string type,  stri
         sig.z = 4;
     }
 
-    r.signals.push_back(sig);
-    data.controller[i].signals.push_back(sig);
+    r.signs.push_back(sig);
+    data.controller[i].signs.push_back(sig);
 
     return 0;
 }
