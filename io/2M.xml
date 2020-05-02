@@ -1,6 +1,6 @@
 <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/home/geller/Dokumente/roadgeneration/xml/input.xsd">
 	<segments>
-        <xjunction id="1" type="2M">
+        <junction id="1" type="2M">
             <road id="1" length="200" sOffset="0" classification="main">	
                 <referenceLine>
                     <geometry id="1" length="200" connectToEndOf="0" connectToStartOf="0" Rs="-100" Re="0" type="spiral"/>
@@ -53,7 +53,7 @@
                 </couplerArea>
                 <connection type="all"/>
             </coupler>
-        </xjunction>
+        </junction>
 	</segments>
 </roadNetwork>
 

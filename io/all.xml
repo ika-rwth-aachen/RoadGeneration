@@ -1,6 +1,6 @@
 <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/home/geller/Dokumente/roadgeneration/xml/input.xsd">
     <segments>
-        <xjunction id="1" type="M2A">
+        <junction id="1" type="M2A">
             <road id="1" classification="main" >	
                 <referenceLine>
                     <geometry id="1" length="400" Rs="-100" Re="0" type="spiral"/>
@@ -48,8 +48,8 @@
                     <additionalLane roadId="103" type="right" length=".1" verschwenkung="false" />
                 </additionalLanes>
             </coupler>
-        </xjunction>
-        <tjunction id="2" type="MA">
+        </junction>
+        <junction id="2" type="MA">
             <road id="1" classification="main" >	
                 <referenceLine>
                     <geometry id="1" length="400"  Rs="-100" Re="0" type="spiral"/>
@@ -69,8 +69,8 @@
                 </couplerArea>
                 <connection type="all"/>
             </coupler>
-        </tjunction>
-        <tjunction id="6" type="3A">
+        </junction>
+        <junction id="6" type="3A">
             <road id="1" classification="access" >	
                 <referenceLine>
                     <geometry id="1" length="200"  Rs="-100" Re="0" type="spiral"/>
@@ -109,8 +109,8 @@
                 </couplerArea>
                 <connection type="all"/>
             </coupler>
-        </tjunction>
-        <xjunction id="7" type="4A">
+        </junction>
+        <junction id="7" type="4A">
             <road id="1" classification="access">
                 <referenceLine>
                     <geometry id="1" length="100" type="line" />
@@ -133,7 +133,7 @@
                 <couplerArea sOffset="1"/>
                 <connection type="all"/>
             </coupler>
-        </xjunction>
+        </junction>
         <roundabout id="3" refId="1">
             <road id="1" classification="access" >	
                 <referenceLine>

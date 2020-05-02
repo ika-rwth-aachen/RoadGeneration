@@ -4,7 +4,7 @@
         <var id="angleT" type="normal" mu="1.57" sd="0.12" />
     </vars>
     <segments>
-        <tjunction id="1" type="MA">
+        <junction id="1" type="MA">
             <road id="1" classification="main" >	
                 <referenceLine>
                     <geometry id="1" length="50"  Rs="0" Re="-300" type="spiral"/>
@@ -22,8 +22,8 @@
             <intersectionPoint id="1" refId="1" s="100">
                 <adRoad id="2" s="0" angle="${angleT}"/>
             </intersectionPoint>
-        </tjunction>
-        <xjunction id="2" type="2M">
+        </junction>
+        <junction id="2" type="2M">
             <road id="1" classification="main" >	
                 <referenceLine>
                     <geometry id="1" length="200" type="line"/>
@@ -37,7 +37,7 @@
             <intersectionPoint id="1" refId="1" s="100">
                 <adRoad id="2" s="100" angle="1.57"/>
             </intersectionPoint>
-        </xjunction>
+        </junction>
         <connectingRoad id="3">
             <road id="1" classification="access" >	
                 <referenceLine>
