@@ -1,7 +1,7 @@
 <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/home/geller/Dokumente/roadgeneration/xml/input.xsd">
     <segments>
         <tjunction id="1" type="MA" automaticWiding="0">
-            <road id="1" type="main" >	
+            <road id="1" classification="main" >	
                 <referenceLine>
                     <geometry id="1" length="300" R ="500" type="arc"/>
                 </referenceLine>
@@ -20,7 +20,7 @@
                         </laneSection>
                     </lanes>
             </road>
-            <road id="2" type="access" >	
+            <road id="2" classification="access" >	
                 <referenceLine>
                     <geometry id="1" length="100"  type="line"/>
                 </referenceLine>

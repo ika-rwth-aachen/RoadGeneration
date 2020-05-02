@@ -1,18 +1,22 @@
 // file interface.h
 
+enum contactPointType {startType, endType};
+enum geometryType {line, spiral, arc};
+enum linkType {roadType, junctionType};
+
 struct connection
 {
-    int id;
-    int from;
-    int to;
-    string contactPoint = "start";
-    int fromLane;
-    int toLane;
+    int id = -1;
+    int from = -1;
+    int to = -1;
+    contactPointType contactPoint;
+    int fromLane = -1;
+    int toLane = -1;
 };
 
 struct junction
 {
-    int id;
+    int id = -1;
     vector<connection> connections;
 };
 
@@ -52,51 +56,52 @@ struct material
 
 struct lane
 {
-    int id;
+    int id = -1;
     string type = "driving";
-    int turn = 0;
-    int level = 0;
-    double speed = 0;
+    bool turnLeft = false;
+    bool turnStraight = true;
+    bool turnRight = false;
+    bool level = true;          
+    double speed = 50;
     width w;
     roadmark rm;
     material m;
-    int preId = 0;
-    int sucId = 0;
+    int preId = -1;
+    int sucId = -1;
 };
 
 struct laneSection
 {
-    int id;
+    int id = -1;
     double s = 0;
     vector<lane> lanes;
-
     offset o;
 };
 
 struct geometry
 {
-    int type;
-    double s;
-    double x;
-    double y;
-    double hdg;
-    double length;
-    double c;
-    double c1;
-    double c2;
+    geometryType type;
+    double s = -1;
+    double x = -1;
+    double y = -1;
+    double hdg = -1;
+    double length = -1;
+    double c = -1;
+    double c1 = -1;
+    double c2 = -1;
 };
 
 struct link
 {
-    string elementType = "road";
-    int elementId = -1;
-    string contactPoint = "start";
+    int id = -1;
+    linkType elementType = roadType;
+    contactPointType contactPoint;
 };
 
 struct object
 {
     int id = -1;
-    string type;
+    string type = "";
     double s = 0;
     double t = 0;
     double z = 0;
@@ -114,10 +119,9 @@ struct object
 struct Signal
 {
     int id = -1;
-    int rule = -1;
-
-    string type;
+    string type = "";
     string subtype = "-1";
+    int rule = -1;
     double value = -1;
     double s = 0;
     double t = 0;
@@ -125,22 +129,24 @@ struct Signal
     string orientation = "none";
     double width = 0;
     double height = 0;
-    bool dynamic;
+    bool dynamic = false;
     string country = "OpenDRIVE";
 };
 
 struct control
 {
-    vector<Signal> signals;
     int id = -1;
+    vector<Signal> signals;
 };
 
 struct road
 {
-    double length = 0;
     int id = -1;
+    int inputId = -1;
     int junction = -1;
     string type = "town";
+    string classification = "";
+    double length = 0;
 
     link predecessor;
     link successor;
@@ -163,5 +169,5 @@ struct roadNetwork
     int nSegment = 0;
     
     int versionMajor = 1;
-    int versionMinor = 4;
+    int versionMinor = 5;
 };

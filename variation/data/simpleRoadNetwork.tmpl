@@ -5,7 +5,7 @@
     </vars>
     <segments>
         <tjunction id="1" type="MA">
-            <road id="1" type="main" >	
+            <road id="1" classification="main" >	
                 <referenceLine>
                     <geometry id="1" length="50"  Rs="0" Re="-300" type="spiral"/>
                     <geometry id="2" length="100" R="-300" type="arc"/>
@@ -14,7 +14,7 @@
                 <lanes>
                 </lanes>
             </road>
-            <road id="2" type="access" >	
+            <road id="2" classification="access" >	
                 <referenceLine>
                     <geometry id="1" length="50" type="line"/>
                 </referenceLine>
@@ -24,12 +24,12 @@
             </intersectionPoint>
         </tjunction>
         <xjunction id="2" type="2M">
-            <road id="1" type="main" >	
+            <road id="1" classification="main" >	
                 <referenceLine>
                     <geometry id="1" length="200" type="line"/>
                 </referenceLine>
             </road>
-            <road id="2" type="access" >	
+            <road id="2" classification="access" >	
                 <referenceLine>
                     <geometry id="1" length="200"  type="line"/>
                 </referenceLine>
@@ -39,7 +39,7 @@
             </intersectionPoint>
         </xjunction>
         <connectingRoad id="3">
-            <road id="1" type="access" >	
+            <road id="1" classification="access" >	
                 <referenceLine>
                     <geometry id="1" length="20" type="line"/>                    
                     <geometry id="2" length="50"  Rs="0" Re="${radiusCR}" type="spiral"/>

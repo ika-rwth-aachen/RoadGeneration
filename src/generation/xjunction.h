@@ -191,8 +191,8 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     road r1;
     r1.id = 100*junc.id + 1;
     r1.junction = junc.id;
-    r1.predecessor.elementId = junc.id;
-    r1.predecessor.elementType = "junction";
+    r1.predecessor.id = junc.id;
+    r1.predecessor.elementType = junctionType;
     if (mode == 1 || mode == 2)
     {
         buildRoad(mainRoad, r1, sMain-sOffMain, 0, autoWiding, sMain, iPx, iPy, iPhdg);
@@ -206,8 +206,8 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     road r2;
     r2.id = 100*junc.id + 2;
     r2.junction = junc.id;
-    r2.predecessor.elementId = junc.id;
-    r2.predecessor.elementType = "junction";
+    r2.predecessor.id = junc.id;
+    r2.predecessor.elementType = junctionType;
     if (mode == 1)
     {
         buildRoad(additionalRoad1, r2, sAdd1-sOffAdd1, 0, autoWiding, sAdd1, iPx, iPy, iPhdg+phi1);
@@ -221,8 +221,8 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     road r3; 
     r3.id = 100*junc.id + 3;
     r3.junction = junc.id;
-    r3.predecessor.elementId = junc.id;
-    r3.predecessor.elementType = "junction";
+    r3.predecessor.id = junc.id;
+    r3.predecessor.elementType = junctionType;
     if (mode == 1 || mode == 2)
     {
         buildRoad(mainRoad, r3, sMain+sOffMain, INFINITY, autoWiding, sMain,iPx, iPy,iPhdg);
@@ -237,8 +237,8 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     road r4; 
     r4.id = 100*junc.id + 4;
     r4.junction = junc.id;
-    r4.predecessor.elementId = junc.id;
-    r4.predecessor.elementType = "junction";
+    r4.predecessor.id = junc.id;
+    r4.predecessor.elementType = junctionType;
     if (mode == 1)
     {
         buildRoad(additionalRoad1, r4, sAdd1+sOffAdd1, INFINITY, autoWiding, sAdd1, iPx, iPy, iPhdg+phi1);

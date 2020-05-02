@@ -221,7 +221,7 @@ int findLeftLane(laneSection sec, int side){
     {
         lane l;
         findLane(sec, l, search);
-        if (l.type == "driving" && l.turn == 1) return search;
+        if (l.type == "driving" && l.turnLeft) return search;
         search += sgn(side);
     }
     
@@ -248,7 +248,7 @@ int findRightLane(laneSection sec, int side){
     {
         lane l;
         findLane(sec, l, search);
-        if (l.type == "driving" && l.turn == -1) return search;
+        if (l.type == "driving" && l.turnRight) return search;
         search -= sgn(side);
     }
     
@@ -275,7 +275,7 @@ int findInnerMiddleLane(laneSection sec, int side){
     {
         lane l;
         findLane(sec, l, search);
-        if (l.type == "driving" && l.turn == 0) return search;
+        if (l.type == "driving" && l.turnStraight) return search;
         search += sgn(side);
     }
     
@@ -302,7 +302,7 @@ int findOuterMiddleLane(laneSection sec, int side)
     {
         lane l;
         findLane(sec, l, search);
-        if (l.type == "driving" && l.turn == 0) return search;
+        if (l.type == "driving" && l.turnStraight) return search;
         search -= sgn(side);
     }
     
@@ -551,4 +551,28 @@ std::string string_format(const std::string &format, Args ... args)
 	snprintf(buf, size, format.c_str(), args ...);
 
 	return std::string(buf, buf + size - 1); 
+}
+
+
+std::string getContactPointType(contactPointType t)
+{
+    if (t == startType) return "start";
+    if (t == endType) return "end";
+    return "none";
+}
+
+
+std::string getGeometryType(geometryType t)
+{
+    if (t == line) return "line";
+    if (t == spiral) return "spiral";
+    if (t == arc) return "arc";
+    return "none";
+}
+
+std::string getLinkType(linkType t)
+{
+    if (t == roadType) return "road";
+    if (t == junctionType) return "junction";
+    return "none";
 }

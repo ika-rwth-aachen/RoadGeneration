@@ -1,17 +1,17 @@
 <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/home/geller/Dokumente/roadgeneration/xml/input.xsd">
     <segments>
         <xjunction id="1" type="M2A">
-            <road id="1" type="main" >	
+            <road id="1" classification="main" >	
                 <referenceLine>
                     <geometry id="1" length="400" Rs="-100" Re="0" type="spiral"/>
                 </referenceLine>
             </road>
-            <road id="2" type="access" >	
+            <road id="2" classification="access" >	
                 <referenceLine>
                     <geometry id="1" length="100"  R="100" type="arc"/>
                 </referenceLine>
             </road>
-            <road id="3" type="access" >	
+            <road id="3" classification="access" >	
                 <referenceLine>
                     <geometry id="1" length="500"  type="line"/>
                 </referenceLine>
@@ -50,12 +50,12 @@
             </coupler>
         </xjunction>
         <tjunction id="2" type="MA">
-            <road id="1" type="main" >	
+            <road id="1" classification="main" >	
                 <referenceLine>
                     <geometry id="1" length="400"  Rs="-100" Re="0" type="spiral"/>
                 </referenceLine>
             </road>
-            <road id="2" type="access" >	
+            <road id="2" classification="access" >	
                 <referenceLine>
                     <geometry id="1" length="200"  R="150" type="arc"/>
                 </referenceLine>
@@ -71,7 +71,7 @@
             </coupler>
         </tjunction>
         <tjunction id="6" type="3A">
-            <road id="1" type="access" >	
+            <road id="1" classification="access" >	
                 <referenceLine>
                     <geometry id="1" length="200"  Rs="-100" Re="0" type="spiral"/>
                 </referenceLine>
@@ -89,12 +89,12 @@
                     </laneSection>
                 </lanes>
             </road>
-            <road id="2" type="access" >	
+            <road id="2" classification="access" >	
                 <referenceLine>
                     <geometry id="1" length="100"  R="100" type="arc"/>
                 </referenceLine>
             </road>
-            <road id="3" type="access" >	
+            <road id="3" classification="access" >	
                 <referenceLine>
                     <geometry id="1" length="300"  R="250" type="arc"/>
                 </referenceLine>
@@ -111,12 +111,12 @@
             </coupler>
         </tjunction>
         <xjunction id="7" type="4A">
-            <road id="1" type="access">
+            <road id="1" classification="access">
                 <referenceLine>
                     <geometry id="1" length="100" type="line" />
                 </referenceLine>    
             </road>
-            <road id="2" type="access">
+            <road id="2" classification="access">
                 <referenceLine>
                     <geometry id="1" length="150" type="line" />
                 </referenceLine>   
@@ -135,7 +135,7 @@
             </coupler>
         </xjunction>
         <roundabout id="3" refId="1">
-            <road id="1" type="access" >	
+            <road id="1" classification="access" >	
                 <referenceLine>
                     <geometry id="1" length="320.5" type="arc"/>
                 </referenceLine>
@@ -158,7 +158,7 @@
                     </laneSection>
                 </lanes>
             </road>
-            <road id="2" type="access" >	
+            <road id="2" classification="access" >	
                 <referenceLine>
                     <geometry id="1" length="100"  type="line"/>
                 </referenceLine>

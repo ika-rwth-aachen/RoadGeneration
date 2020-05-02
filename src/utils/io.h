@@ -149,16 +149,14 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         road.append_attribute("junction") = it->junction;
     
         pugi::xml_node pre = road.append_child("link").append_child("predecessor");
-        pre.append_attribute("elementType") = it->predecessor.elementType.c_str();
-        pre.append_attribute("elementId") = it->predecessor.elementId;
-        if (it->predecessor.elementType == "road")
-            pre.append_attribute("contactPoint") = it->predecessor.contactPoint.c_str();
+        pre.append_attribute("elementId") = it->predecessor.id;
+        pre.append_attribute("elementType") = getLinkType(it->predecessor.elementType).c_str();
+        pre.append_attribute("contactPoint") = getContactPointType(it->predecessor.contactPoint).c_str();
         
         pugi::xml_node suc = road.child("link").append_child("successor");
-        suc.append_attribute("elementType") = it->successor.elementType.c_str();
-        suc.append_attribute("elementId") = it->successor.elementId;
-        if (it->successor.elementType == "road")
-            suc.append_attribute("contactPoint") = it->successor.contactPoint.c_str();
+        suc.append_attribute("elementId") = it->successor.id;
+        suc.append_attribute("elementType") = getLinkType(it->successor.elementType).c_str();
+        suc.append_attribute("contactPoint") = getContactPointType(it->successor.contactPoint).c_str();
         
         road.append_child("type").append_attribute("s") = "0";
         road.child("type").append_attribute("type") = it->type.c_str();
@@ -177,15 +175,15 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
             geo.append_attribute("hdg") = itt->hdg;
             geo.append_attribute("length") = itt->length;
 
-            if (itt->type == 1)
+            if (itt->type == line)
             {
                 geo.append_child("line");
             }
-            if (itt->type == 2)
+            if (itt->type == arc)
             {
                 geo.append_child("arc").append_attribute("curvature") = itt->c;
             }
-            if (itt->type == 3)
+            if (itt->type == spiral)
             {
                 pugi::xml_node spiral = geo.append_child("spiral");
                 spiral.append_attribute("curvStart") = itt->c1;
@@ -395,7 +393,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
             con.append_attribute("id") = itt->id;
             con.append_attribute("incomingRoad") = itt->from;
             con.append_attribute("connectingRoad") = itt->to;
-            con.append_attribute("contactPoint") = itt->contactPoint.c_str();
+            con.append_attribute("contactPoint") = getContactPointType(itt->contactPoint).c_str();
 
             pugi::xml_node ll = con.append_child("laneLink");
             ll.append_attribute("from") = itt->fromLane;

@@ -460,7 +460,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, double sJunction)
  */
 int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, double sJunction, double s0, double x0, double y0, double phi0)
 {
-    r.classification = roadIn.attribute("type").value();
+    r.classification = roadIn.attribute("classification").value();
     if (r.classification == "access") sJunction = 0;
 
     // save geometry data from sStart - sEnd 

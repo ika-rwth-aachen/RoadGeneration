@@ -35,9 +35,11 @@ using namespace std;
  */
 int main(int argc,  char** argv)
 {   
+	char* file;
+
 	if (argc == 2)
 	{
-		//int iii = 3; //* file = argv[1];
+		file = argv[1];
 	}
 	else
 	{
@@ -48,25 +50,21 @@ int main(int argc,  char** argv)
 
 	// --- initialization ------------------------------------------------------
   	freopen( "log.txt", "a", stderr );
-  	cerr << "\nError log for run with attribute: " << argv[1] << endl;
+  	cerr << "\nError log for run with attribute: " << file << endl;
 
 	printLogo();
-	int iii = 3;
-	int jjj = 3;
-	jjj=6;
-	int iii4 = 3;
-	int per = 55;
+
 	pugi::xml_document in;
 	pugi::xml_document out;
 	roadNetwork data;
 
 	// --- pipeline ------------------------------------------------------------
-	if (validateInput(argv[1])) 
+	if (validateInput(file)) 
 	{
 		cerr << "ERR: error in validateInput" << endl;
 		return -1;
 	}
-	if (parseXML(in, data, argv[1])) 
+	if (parseXML(in, data, file)) 
 	{
 		cerr << "ERR: error in parseXML" << endl;
 		return -1;

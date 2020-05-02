@@ -162,8 +162,8 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     road r1;
     r1.id = 100*junc.id + 1;
     r1.junction = junc.id;
-    r1.predecessor.elementType = "junction";
-    r1.predecessor.elementId = junc.id;
+    r1.predecessor.elementType = junctionType;
+    r1.predecessor.id = junc.id;
     if (mode == 1)
     {
         double phi = phi1; 
@@ -185,8 +185,8 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     road r2;
     r2.id = 100*junc.id + 2;
     r2.junction = junc.id;
-    r2.predecessor.elementType = "junction";
-    r2.predecessor.elementId = junc.id;
+    r2.predecessor.elementType = junctionType;
+    r2.predecessor.id = junc.id;
     if (mode == 1)
     {
         double phi = phi1; 
@@ -209,8 +209,8 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     road r3; 
     r3.id = 100*junc.id + 3;
     r3.junction = junc.id;
-    r3.predecessor.elementType = "junction";
-    r3.predecessor.elementId = junc.id;
+    r3.predecessor.elementType = junctionType;
+    r3.predecessor.id = junc.id;
     if (mode == 1)
     {
         buildRoad(additionalRoad1, r3, sAdd1 + sOffAdd1, INFINITY, autoWiding, sAdd1, iPx, iPy, iPhdg+phi1);

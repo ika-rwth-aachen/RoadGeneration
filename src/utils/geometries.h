@@ -18,7 +18,7 @@ int addLine(vector<geometry> &geo, double x1, double y1, double phi1, double x2,
 
     g.s = 0;
     if (geo.size() > 0) g.s = geo.back().s + geo.back().length;
-    g.type = 1;
+    g.type = line;
     g.c = 0;
     g.c1 = 0;
     g.c2 = 0;
@@ -62,7 +62,7 @@ int addArc(vector<geometry> &geo, double x1, double y1, double phi1, double x2, 
 
     g.s = 0;
     if (geo.size() > 0) g.s = geo.back().s + geo.back().length;
-    g.type = 2;
+    g.type = arc;
     g.c = 1/R;
     g.c1 = 0;
     g.c2 = 0;
