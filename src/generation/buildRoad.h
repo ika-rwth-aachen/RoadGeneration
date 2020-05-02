@@ -4,8 +4,6 @@
 #include "addLaneSections.h"
 
 
-
-
 int computeFirstLast(pugi::xml_node roadIn, int &foundfirst, int &foundlast, double &sStart, double &sEnd)
 {
     int cc = 0;
@@ -275,9 +273,8 @@ void flipGeometries(road &r)
 
         double c1 = g.c1;
         double c2 = g.c2;
-
-        if (g.type == 2) g.c *= -1;
-        if (g.type == 3) 
+        if (g.type == arc) g.c *= -1;
+        if (g.type == spiral) 
         {
             g.c1 = -c2;
             g.c2 = -c1;

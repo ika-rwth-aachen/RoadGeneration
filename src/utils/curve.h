@@ -113,7 +113,7 @@ int curve(double s, geometry geo, double &x, double &y, double &phi, int fd)
     
     if (c == 0 && c1 == 0 && c2 == 0)   type = 1;   // line
     if (c != 0 && c1 == 0 && c2 == 0)   type = 2;   // arc
-    if (c == 0 && (c1 != 0 || c2 != 0)) type = 3;   // circle
+    if (c == 0 && (c1 != 0 || c2 != 0)) type = 3;   // spiral
     
     if (type == 1)
     {
