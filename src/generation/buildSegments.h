@@ -10,8 +10,7 @@
 #define bro "broken" 
 #define sol "solid" 
 
-#include "tjunction.h"
-#include "xjunction.h"
+#include "junctionWrapper.h"
 #include "roundAbout.h"
 #include "connectingRoad.h"
 
@@ -29,6 +28,17 @@ int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 
 	for (pugi::xml_node_iterator it = segments.begin(); it != segments.end(); ++it)
 	{
+		if ((string)it->name() == "junction")
+		{
+			cout << "Processing junction" << endl;
+			if (junctionWrapper(*it, data))
+			{
+				cerr << "ERR: error in junction." << endl;
+				return 1;
+			}
+
+		}
+		
 		if ((string)it->name() == "tjunction")
 		{
 			cout << "Processing tjunction" << endl;

@@ -49,16 +49,16 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 			if (r.id != fromRoad) continue;
 				
             found = true;
-            rConnection.predecessor.elementId = r.id;
-            rConnection.predecessor.contactPoint = "end";
+            rConnection.predecessor.id = r.id;
+            rConnection.predecessor.contactPoint = endType;
 
 			if (fromPos == "start")
 			{
 				fromX = r.geometries.front().x;
 				fromY = r.geometries.front().y;
 				fromHdg = r.geometries.front().hdg;
-                r.predecessor.elementId = rConnection.id;
-				r.predecessor.contactPoint = "start";
+                r.predecessor.id = rConnection.id;
+				r.predecessor.contactPoint = startType;
                 lS1 = r.laneSections.front();
 			}
 			else if (fromPos == "end")
@@ -68,8 +68,8 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 				fromX = g.x;
 				fromY = g.y;
 				fromHdg = g.hdg;
-                r.successor.elementId = rConnection.id;
-				r.successor.contactPoint = "start";
+                r.successor.id = rConnection.id;
+				r.successor.contactPoint = startType;
                 lS1 = r.laneSections.back();
 			}
 			else
@@ -92,16 +92,16 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 			if (r.junction != toSegment || r.id != toRoad) continue;
             
 			found = true;
-            rConnection.successor.elementId = r.id;
-            rConnection.successor.contactPoint = "end";
+            rConnection.successor.id = r.id;
+            rConnection.successor.contactPoint = endType;
 
 			if (toPos == "start")
 			{
 				toX = r.geometries.front().x;
 				toY = r.geometries.front().y;
 				toHdg = r.geometries.front().hdg;
-                r.predecessor.elementId = rConnection.id;
-				r.predecessor.contactPoint = "end";
+                r.predecessor.id = rConnection.id;
+				r.predecessor.contactPoint = endType;
                 lS2 = r.laneSections.front();
 			}
 			else if (toPos == "end")
@@ -111,8 +111,8 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 				toY = g.y;
 				toHdg = g.hdg;
 				curve(g.length,g, toX, toY, toHdg, 1);
-                r.successor.elementId = rConnection.id;				
-				r.successor.contactPoint = "end";
+                r.successor.id = rConnection.id;				
+				r.successor.contactPoint = endType;
                 lS2 = r.laneSections.back();
 			}
 			else

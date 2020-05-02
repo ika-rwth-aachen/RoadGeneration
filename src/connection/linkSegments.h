@@ -63,7 +63,7 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 		{
 			if (r.junction != fromSegment || r.id != fromRoad) continue;
 
-			r.successor.elementId = toRoad;
+			r.successor.id = toRoad;
 
 			if (fromPos == "start")
 			{
@@ -92,7 +92,7 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 		{
 			if (r.junction != toSegment || r.id != toRoad) continue;
 
-			r.predecessor.elementId = fromRoad;
+			r.predecessor.id = fromRoad;
 
 			if (toPos == "start")
 			{

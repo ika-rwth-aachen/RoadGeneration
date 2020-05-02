@@ -20,12 +20,12 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     if (r.laneSections.size() == 0) r.laneSections.push_back(lS);
 
     r.junction = junc.id;
-    r.predecessor.elementId = r1.id;
-    r.successor.elementId   = r2.id;
-    r.predecessor.elementType = "road";
-    r.successor.elementType   = "road";
-    r.predecessor.contactPoint = "start";
-    r.successor.contactPoint = "start";
+    r.predecessor.id = r1.id;
+    r.successor.id   = r2.id;
+    r.predecessor.elementType = roadType;
+    r.successor.elementType   = roadType;
+    r.predecessor.contactPoint = startType;
+    r.successor.contactPoint = startType;
 
     // connect r1 with r2 at reference points  
     double x1,y1,hdg1,x2,y2,hdg2,s1,s2;
@@ -33,7 +33,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     laneSection lS1, lS2;
 
     // compute starting point
-    if (r1.predecessor.elementType == "junction") 
+    if (r1.predecessor.elementType == junctionType) 
     {
         g1 = r1.geometries.front(); 
         lS1 = r1.laneSections.front();
@@ -46,7 +46,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         fixAngle(hdg1);
     }
 
-    if (r1.successor.elementType == "junction") 
+    if (r1.successor.elementType == junctionType) 
     {
         g1 = r1.geometries.back(); 
         lS1 = r1.laneSections.back();
@@ -63,6 +63,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     // connection between starting road and current road
     connection con1;
     con1.id = junc.connections.size() + 1;
+    con1.contactPoint = startType;
     con1.from = r1.id;
     con1.to = r.id;
     con1.fromLane = fromId;
@@ -70,7 +71,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     junc.connections.push_back(con1);
 
     // compute ending point
-    if (r2.predecessor.elementType == "junction")
+    if (r2.predecessor.elementType == junctionType)
     {
         g2 = r2.geometries.front(); 
         lS2 = r2.laneSections.front();
@@ -83,7 +84,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         g2.hdg = hdg2;
     }
 
-    if (r2.successor.elementType == "junction") 
+    if (r2.successor.elementType == junctionType) 
     {
         g2 = r2.geometries.back(); 
         lS2 = r2.laneSections.back();
@@ -103,7 +104,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     // connection between current road and ending road
     connection con2;
     con2.id = junc.connections.size() + 1;
-    con2.contactPoint = "end";
+    con2.contactPoint = endType;
     con2.from = r.id;
     con2.to = r2.id;
     con2.fromLane = sgn(toId);
@@ -159,7 +160,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         g.hdg = atan2(y2-y1,x2-x1);
 
         g.length = sqrt(pow(x2-x1,2)+pow(y2-y1,2));
-        g.type = 1;
+        g.type = line;
 
         r.geometries.push_back(g);
         r.length = g.length;
@@ -186,7 +187,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         g1.c = 0;
         g1.c1 = 0;
         g1.c2 = 0;
-        g1.type = 1;
+        g1.type = line;
 
         // line at start
         if (d1 > d2)
@@ -227,7 +228,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
 
         g2.c = 1/R;
         g2.length = abs(R * a);
-        g2.type = 2;
+        g2.type = arc;
 
         // first line then arc
         if (d1 > d2) 

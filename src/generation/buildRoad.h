@@ -50,14 +50,14 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
     int cc = 0;
     for (pugi::xml_node_iterator it = roadIn.child("referenceLine").begin(); it != roadIn.child("referenceLine").end(); ++it)
     {
-        int type;
+        geometryType type;
         double c = 0, c1 = 0, c2 = 0;
         double R = 0, R1 = 0, R2 = 0;
 
         // define type
-        if((string)it->attribute("type").value() == "line") type = 1;
-        if((string)it->attribute("type").value() == "arc") type = 2;
-        if((string)it->attribute("type").value() == "spiral") type = 3;
+        if((string)it->attribute("type").value() == "line") type = line;
+        if((string)it->attribute("type").value() == "arc") type = arc;
+        if((string)it->attribute("type").value() == "spiral") type = spiral;
 
         double length = it->attribute("length").as_double();
 
@@ -291,8 +291,8 @@ void flipGeometries(road &r)
 int addLanes(pugi::xml_node roadIn, road &r, int mode)
 {
     double desWidth = 3.5;
-    if ((string)roadIn.attribute("type").value() == "motorway") desWidth = 4.0;
-    if ((string)roadIn.attribute("type").value() == "access") desWidth = 3.0;
+    if ((string)roadIn.attribute("class").value() == "main") desWidth = 4.0;
+    if ((string)roadIn.attribute("class").value() == "access") desWidth = 3.0;
 
     // --- add basic laneSection to road ---------------------------------------
     laneSection laneSec;
@@ -311,6 +311,7 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
     l2.id = 0;
     l2.rm.type = "broken";
     l2.w.a = 0.0;
+    l2.turnStraight = false;
     laneSec.lanes.push_back(l2);
     
     lane l3;
@@ -353,7 +354,7 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
             if (itt->attribute("width"))
                 l.w.a = itt->attribute("width").as_double();
             else if(l.type == "access") l.w.a = 3.0;
-            else if(l.type == "motorway") l.w.a = 4.0;
+            else if(l.type == "main") l.w.a = 4.0;
         
             pugi::xml_node rm = itt->child("roadMark");
             if (rm)
@@ -373,9 +374,9 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
                 l.m.roughness = m.attribute("roughness").as_double();
             }
 
-            if (r.type == "main") l.speed = 50;
-            if (r.type == "access") l.speed = 50;
-            if (r.type == "motorway") l.speed = 130;
+            if (r.classification == "main") l.speed = 50;
+            if (r.classification == "access") l.speed = 50;
+            if (r.classification == "motorway") l.speed = 130;
 
             lane ltmp;
             int id = findLane(laneSec,ltmp,l.id);
@@ -459,8 +460,8 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, double sJunction)
  */
 int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, double sJunction, double s0, double x0, double y0, double phi0)
 {
-    r.type = roadIn.attribute("type").value();
-    if (r.type == "access") sJunction = 0;
+    r.classification = roadIn.attribute("type").value();
+    if (r.classification == "access") sJunction = 0;
 
     // save geometry data from sStart - sEnd 
     // mode = 1 -> in s direction

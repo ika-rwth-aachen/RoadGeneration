@@ -145,8 +145,8 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         road r1;
         r1.id = 100*junc.id + cc * 10 + nCount;
         r1.junction = junc.id;
-        r1.successor.elementId = junc.id;
-        r1.successor.elementType = "junction";
+        r1.successor.id = junc.id;
+        r1.successor.elementType = junctionType;
         if (cc == 1) sOld = sOffMain;
         buildRoad(mainRoad, r1, sOld, sMain-sOffMain, 0, sMain, iPx, iPy,iPhdg);       
         nCount++; 
@@ -154,8 +154,8 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         road r2;
         r2.id = 100*junc.id + cc * 10 + nCount;
         r2.junction = junc.id;
-        r2.predecessor.elementId = junc.id;
-        r2.predecessor.elementType = "junction";
+        r2.predecessor.id = junc.id;
+        r2.predecessor.elementType = junctionType;
         buildRoad(additionalRoad, r2, sAdd+sOffAdd, INFINITY, 0, sAdd, iPx, iPy, iPhdg+phi); 
         addObjects(additionalRoad, r2, data);
         nCount++; 
@@ -171,11 +171,11 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         else // last segment
         {
             helper = rOld;
-            helper.successor.elementType = "road";
-            helper.successor.elementId = -101;
+            helper.successor.elementType = roadType;
+            helper.successor.id = -101;
         }
-        helper.predecessor.elementId = junc.id;
-        helper.predecessor.elementType = "junction";
+        helper.predecessor.id = junc.id;
+        helper.predecessor.elementType = junctionType;
 
         // --- generate connecting lanes ---------------------------------------
         cout << "\t Generate Connecting Lanes" << endl;
@@ -283,8 +283,8 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         nCount++;
 
         // adjust precessor of first element, due to loop
-        r1.predecessor.elementId = junc.id;
-        r1.predecessor.elementType = "junction";
+        r1.predecessor.id = junc.id;
+        r1.predecessor.elementType = junctionType;
 
         data.roads.push_back(r1);
         data.roads.push_back(r2);

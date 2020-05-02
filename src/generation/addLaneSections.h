@@ -429,14 +429,16 @@ int laneWideningJunction(road &r, int sLaneWidening, int turn, bool verschwenkun
     { 
         l.rm.type = "broken";
         l.type = "driving";
-        l.turn = 1;
+        l.turnLeft = true;
+        l.turnStraight = false;
     }
     if (sLaneWidening > 0 && turn == -1)
     { 
         adLaneSec.lanes[id].rm.type = "broken";
         l.rm.type = "solid";
         l.type = "driving";
-        l.turn = -1;
+        l.turnRight = true;
+        l.turnStraight = false;
     }
     if (sLaneWidening < 0)
     { 
@@ -453,7 +455,7 @@ int laneWideningJunction(road &r, int sLaneWidening, int turn, bool verschwenkun
     if (turn == 1)
     {
         shiftLanes(adLaneSec,laneId,1);
-        adLaneSec.lanes.push_back(l);   
+         adLaneSec.lanes.push_back(l);   
     }
     if (turn == -1)
     {   
