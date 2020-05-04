@@ -3,7 +3,7 @@
         <junction id="1" type="M2A">
             <road id="1" classification="main" >	
                 <referenceLine>
-                    <geometry id="1" length="400" type="line"/>
+                    <line id="1" length="400"/>
                 </referenceLine>
                 <lanes>
                         <laneSection id="1" s="0">
@@ -25,12 +25,12 @@
             </road>
             <road id="2" classification="access" >	
                 <referenceLine>
-                    <geometry id="1" length="100"  type="line"/>
+                    <line id="1" length="100"/>
                 </referenceLine>
             </road>
             <road id="3" classification="access" >	
                 <referenceLine>
-                    <geometry id="1" length="100"  R="-70" type="arc"/>
+                    <arc id="1" length="100"  R="-70"/>
                 </referenceLine>
             </road>
             <intersectionPoint refRoad="1" s="200">
@@ -44,7 +44,7 @@
                 <connection type="all"/>
                 <additionalLanes>
                     <additionalLane roadId="103" type="left"/>
-                    <additionalLane roadId="101" type="left" length="-25"/>
+                    <additionalLane roadId="101" type="leftRestricted" length="25"/>
                     <additionalLane roadId="101" type="right" length="25"/>
                     <additionalLane roadId="102" type="right" length="1" verschwenkung="false"/>
                 </additionalLanes>
