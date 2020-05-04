@@ -32,8 +32,10 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     {
         pugi::xml_node widing = node.child("automaticWiding");
         if (widing.attribute("active").as_bool())
-        {
-            widing_s = node.child("automaticWiding").attribute("s").as_double();
+        {   
+            if (node.child("automaticWiding").attribute("s")) widing_s = node.child("automaticWiding").attribute("s").as_double();
+
+            if (node.child("automaticWiding").attribute("length")) 
             widing_ds = node.child("automaticWiding").attribute("length").as_double();
         }
         else{
@@ -41,6 +43,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
             widing_ds = 0;
         }
     }
+    //TODO add widing_ds in function
 
     // define intersection properties
     pugi::xml_node iP = node.child("intersectionPoint");
@@ -282,10 +285,22 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         if (addLane.attribute("length"))
             length = addLane.attribute("length").as_double();
 
+        double ds = 25;
+        if (addLane.attribute("ds"))
+            length = addLane.attribute("ds").as_double();
+        // TODO add this
+
         int type;
         string tmpType = addLane.attribute("type").value();
         if (tmpType == "left") type = 1;
         if (tmpType == "right") type = -1;
+
+        if (tmpType == "leftRestricted") type = 1;
+        if (tmpType == "rightRestricted") type = -1;
+
+        if (tmpType == "leftRestricted") length *= -1;
+        if (tmpType == "rightRestricted") length *= -1;
+        // TODO improve this
 
         int id = addLane.attribute("roadId").as_int();
         
@@ -314,17 +329,17 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         }
     }
 
-    //addSignal(r1, data, 1, INFINITY, "1000001", 1);
-    //addSignal(r1, data, 1, 5, "1000011", 3);
+    addSignal(r1, data, 1, INFINITY, "1000001", "-", 1);
+    addSignal(r1, data, 1, 5, "1000011", "-", 3);
 
-    //addSignal(r2, data, 1, INFINITY, "1000001", 2);
-    //addSignal(r2, data, 1, 2, "1000011", 4);
+    addSignal(r2, data, 1, INFINITY, "1000001", "-", 2);
+    addSignal(r2, data, 1, 2, "1000011", "-", 4);
 
-    //addSignal(r3, data, 1, INFINITY, "1000001", 1);
-    //addSignal(r3, data, 1, 8, "1000011", 3);
+    addSignal(r3, data, 1, INFINITY, "1000001", "-", 1);
+    addSignal(r3, data, 1, 8, "1000011", "-", 3);
 
-    //addSignal(r4, data, 1, INFINITY, "1000001", 2);
-    //addSignal(r4, data, 1, 5, "1000011", 4);
+    addSignal(r4, data, 1, INFINITY, "1000001", "-", 2);
+    addSignal(r4, data, 1, 5, "1000011", "-", 4);
 
     data.roads.push_back(r1);
     data.roads.push_back(r2);

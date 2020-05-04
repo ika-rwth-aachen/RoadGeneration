@@ -137,7 +137,7 @@
         <roundabout id="3">
             <circle id="1" classification="access" >	
                 <referenceLine>
-                    <circle id="1" length="320.5"/>
+                    <circle length="320.5"/>
                 </referenceLine>
                 <lanes>
                     <laneSection id="1" s="0">

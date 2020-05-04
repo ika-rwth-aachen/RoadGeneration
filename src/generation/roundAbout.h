@@ -23,9 +23,9 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
     }
 
     // store properties of mainRoad
-    double length = mainRoad.child("referenceLine").child("geometry").attribute("length").as_double();
+    double length = mainRoad.child("referenceLine").child("circle").attribute("length").as_double();
     double R = length / (2 * M_PI);
-    mainRoad.child("referenceLine").child("geometry").append_attribute("R") = R;
+    mainRoad.child("referenceLine").child("circle").append_attribute("R") = R;
 
     double sOld;
     road rOld;

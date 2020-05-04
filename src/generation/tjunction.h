@@ -248,10 +248,21 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         if (addLane.attribute("length"))
             length = addLane.attribute("length").as_double();
 
+        double ds = 25;
+        if (addLane.attribute("ds"))
+            length = addLane.attribute("ds").as_double();
+        // TODO add this
+
         int type;
         string tmpType = addLane.attribute("type").value();
         if (tmpType == "left") type = 1;
         if (tmpType == "right") type = -1;
+        if (tmpType == "leftRestricted") type = 1;
+        if (tmpType == "rightRestricted") type = -1;
+
+        if (tmpType == "leftRestricted") length *= -1;
+        if (tmpType == "rightRestricted") length *= -1;
+        // TODO improve this
 
         int id = addLane.attribute("roadId").as_int();
         

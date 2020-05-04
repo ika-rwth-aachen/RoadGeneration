@@ -53,19 +53,26 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
         double R = 0, R1 = 0, R2 = 0;
 
         // define type
-        if((string)it->attribute("type").value() == "line") type = line;
-        if((string)it->attribute("type").value() == "arc") type = arc;
-        if((string)it->attribute("type").value() == "spiral") type = spiral;
+        if((string)it->name() == "line") type = line;
+        if((string)it->name() == "spiral") type = spiral;
+        if((string)it->name() == "arc") type = arc;
+        if((string)it->name() == "circle") type = arc;
 
         double length = it->attribute("length").as_double();
 
         // define radi and curvatures
-        if (it->attribute("R"))  R = it->attribute("R").as_double();
-        if (it->attribute("Rs")) R1 = it->attribute("Rs").as_double();
-        if (it->attribute("Re")) R2 = it->attribute("Re").as_double();
-        if (R != 0) c = 1/R; 
-        if (R1 != 0) c1 = 1 / R1; 
-        if (R2 != 0) c2 = 1 / R2; 
+        if (type == spiral)
+        {
+            R1 = it->attribute("Rs").as_double();
+            R2 = it->attribute("Re").as_double();
+            if (R1 != 0) c1 = 1 / R1; 
+            if (R2 != 0) c2 = 1 / R2;
+        }
+        if (type == arc)
+        {
+            R = it->attribute("R").as_double();
+            if (R != 0) c = 1/R; 
+        }
            
         // create new geometry struct
         geometry geo;
@@ -356,15 +363,20 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
             // flip lanes for mode 1
             if (mode == 2) l.id *= -1;  
 
-            l.type = itt->attribute("type").value();
+            if (itt->attribute("type")) l.type = itt->attribute("type").value();
 
+            l.w.a = desWidth;
+            if (itt->attribute("width")) l.w.a = itt->attribute("width").as_double();
             if (l.id == 0) l.w.a = 0.0;
-            else l.w.a = desWidth;
+
+            l.speed = desSpeed;
+            if (itt->attribute("speed")) l.speed = itt->attribute("speed").as_double();
         
             pugi::xml_node rm = itt->child("roadMark");
             if (rm)
             {
-                l.rm.type = rm.attribute("type").value();
+                if (rm.attribute("type"))
+                    l.rm.type = rm.attribute("type").value();
                 if (rm.attribute("color"))
                     l.rm.color = rm.attribute("color").value();
                 if (rm.attribute("width"))
@@ -374,12 +386,13 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
             pugi::xml_node m = itt->child("material");
             if (m)
             {
-                l.m.surface = m.attribute("surface").value();
-                l.m.friction = m.attribute("friction").as_double();
-                l.m.roughness = m.attribute("roughness").as_double();
+                if (m.attribute("surface"))
+                    l.m.surface = m.attribute("surface").value();
+                if (m.attribute("friction"))
+                    l.m.friction = m.attribute("friction").as_double();
+                if (m.attribute("roughness"))
+                    l.m.roughness = m.attribute("roughness").as_double();
             }
-
-            l.speed = desSpeed;
 
             lane ltmp;
             int id = findLane(laneSec,ltmp,l.id);
@@ -409,32 +422,56 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, double sJunction)
     {   
         if ((string)itt->name() == "laneWidening")
         {
-            int lane = itt->attribute("lane").as_int();
+            int lane = itt->attribute("laneId").as_int();
+
+            if (lane == 0) 
+            {
+                cerr << "ERR: laneWidening with laneId = 0" << endl;
+                return 1;
+            }
+
             double s = itt->attribute("s").as_double();
-            double ds = itt->attribute("length").as_double();
+
+            double ds = 25;
+            if (itt->attribute("length")) itt->attribute("length").as_double();
 
             // only perform drop if not close to junction
             if (s < sJunction + 25) continue;
             if (s > r.length) continue;  
                  
             addLaneWidening(r.laneSections, lane, s, ds, false);
+
+            // TODO add restricted area here 
         }
         if ((string)itt->name() == "laneDrop")
         {
-            int lane = itt->attribute("lane").as_int();
+            int lane = itt->attribute("laneId").as_int();
+
+            if (lane == 0) 
+            {
+                cerr << "ERR: laneWidening with laneId = 0" << endl;
+                return 1;
+            }
+
             double s = itt->attribute("s").as_double();
-            double ds = itt->attribute("length").as_double();
+
+            double ds = 25;
+            if (itt->attribute("length")) itt->attribute("length").as_double();
 
             // only perform drop if not close to junction
             if (s < sJunction + 25) continue;       
-            if (s > r.length) continue;       
+            if (s > r.length) continue;    
+
             addLaneDrop(r.laneSections, lane, s, ds);  
 
             //restricted area
             if (itt->child("restrictedArea"))
             {
                 double s2 = itt->child("restrictedArea").attribute("s").as_int();
-                double ds2 = itt->child("restrictedArea").attribute("length").as_int();
+
+                double ds2 = 25;
+                if (itt->child("restrictedArea").attribute("length")) double ds2 = itt->child("restrictedArea").attribute("length").as_int();
+
                 addRestrictedArea(r.laneSections, lane, s, s2, ds, ds2);
             }              
         }
