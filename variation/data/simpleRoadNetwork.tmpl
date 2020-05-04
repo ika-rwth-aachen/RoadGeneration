@@ -1,4 +1,4 @@
-<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/home/geller/Dokumente/roadgeneration/xml/input.xsd">
+<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
     <vars>
         <var id="radiusCR" type="normal" mu="150" sd="11.5" />        
         <var id="angleT" type="normal" mu="1.57" sd="0.12" />
@@ -19,7 +19,7 @@
                     <geometry id="1" length="50" type="line"/>
                 </referenceLine>
             </road>
-            <intersectionPoint id="1" refId="1" s="100">
+            <intersectionPoint refRoad="1" s="100">
                 <adRoad id="2" s="0" angle="${angleT}"/>
             </intersectionPoint>
         </junction>
@@ -34,7 +34,7 @@
                     <geometry id="1" length="200"  type="line"/>
                 </referenceLine>
             </road>
-            <intersectionPoint id="1" refId="1" s="100">
+            <intersectionPoint refRoad="1" s="100">
                 <adRoad id="2" s="100" angle="1.57"/>
             </intersectionPoint>
         </junction>
@@ -49,7 +49,7 @@
             </road>
         </connectingRoad>        
     </segments>
-    <links referenceId="2" angleOffset="0.0" xOffset="0" yOffset="0">
+    <links refId="2" hdgOffset="0.0" xOffset="0" yOffset="0">
         <segmentLink fromSegment="2" toSegment="3" fromRoad="204" toRoad="301" fromPos="end" toPos="start" />
         <segmentLink fromSegment="3" toSegment="1" fromRoad="301" toRoad="103" fromPos="end" toPos="end" />
     </links>
