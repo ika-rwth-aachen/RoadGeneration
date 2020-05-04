@@ -336,7 +336,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         // signs format is different in version 1.4
         if (data.versionMajor >= 1 && data.versionMinor >= 5)
         {
-            pugi::xml_node signs = road.append_child("signs");
+            pugi::xml_node signs = road.append_child("signals");
 
             std::sort(it->signs.begin(), it->signs.end(), compareSignals);
             for (std::vector<sign>::iterator itt = it->signs.begin() ; itt != it->signs.end(); ++itt)

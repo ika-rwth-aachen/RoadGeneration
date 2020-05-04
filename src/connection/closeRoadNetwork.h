@@ -13,7 +13,7 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 {
     cout << "Processing closeRoadNetwork" << endl;
 
-	pugi::xml_node cRN = doc.child("roadNetwork").child("closeRoadNetwork");
+	pugi::xml_node cRN = doc.child("roadNetwork").child("closeRoads");
 
 	if(!cRN) 
 	{

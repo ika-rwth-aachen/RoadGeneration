@@ -219,10 +219,9 @@ int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
  * @param laneId    laneId of the lane where the laneDrop should be performed
  * @param s         position of laneDrop
  * @param ds        length of laneDrop
- * @param sign      id of signNumber
  * @return int      errorcode
  */
-int addRestrictedArea(vector<laneSection> &secs, int laneId, double s1, double s2, double ds1, double ds2, int sign)
+int addRestrictedArea(vector<laneSection> &secs, int laneId, double s1, double s2, double ds1, double ds2)
 {
     std::vector<laneSection>::iterator it;
     std::vector<lane>::iterator itt;

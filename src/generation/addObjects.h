@@ -331,11 +331,6 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
             addTrafficIsland(o, r);
         }
 
-        if (type == "marking")
-        {
-            // TODO: depends on type
-        }
-
         //--- Traffic Rule -----------------------------------------------------
         if (type != "trafficRule") continue;
 

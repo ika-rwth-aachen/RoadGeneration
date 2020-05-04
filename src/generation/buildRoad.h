@@ -287,9 +287,21 @@ void flipGeometries(road &r)
 
 int addLanes(pugi::xml_node roadIn, road &r, int mode)
 {
-    double desWidth = 3.5;
-    if ((string)roadIn.attribute("class").value() == "main") desWidth = 4.0;
-    if ((string)roadIn.attribute("class").value() == "access") desWidth = 3.0;
+    laneWidths tmpW;
+    laneSpeeds tmpS;
+    double desWidth = tmpW.standard;
+    double desSpeed = tmpS.standard;
+
+    if (r.classification == "main")
+    {   
+        desWidth = tmpW.main;
+        desSpeed = tmpS.main;
+    }
+    else if (r.classification == "access")
+    {   
+        desWidth = tmpW.access;
+        desSpeed = tmpS.access;
+    }
 
     // --- add basic laneSection to road ---------------------------------------
     laneSection laneSec;
@@ -298,7 +310,7 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
 
     lane l1;
     l1.id = 1;
-    l1.speed = 50;
+    l1.speed = desSpeed;
     l1.w.a = desWidth;
     l1.preId = 1;
     l1.sucId = 1;
@@ -307,13 +319,13 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
     lane l2;
     l2.id = 0;
     l2.rm.type = "broken";
-    l2.w.a = 0.0;
+    l2.w.a = 0;
     l2.turnStraight = false;
     laneSec.lanes.push_back(l2);
     
     lane l3;
     l3.id = -1;
-    l3.speed = 50;
+    l3.speed = desSpeed;
     l3.w.a = desWidth;
     l3.preId = -1;
     l3.sucId = -1;
@@ -329,7 +341,7 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
         laneSection laneSec;
         laneSec.id = it->attribute("id").as_int();
 
-        if (laneSec.id == 1) laneSec = r.laneSections.back();
+        if (laneSec.id == 1) laneSec = r.laneSections.front(); 
 
         laneSec.s = it->attribute("s").as_double();
 
@@ -347,11 +359,7 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
             l.type = itt->attribute("type").value();
 
             if (l.id == 0) l.w.a = 0.0;
-
-            if (itt->attribute("width"))
-                l.w.a = itt->attribute("width").as_double();
-            else if(l.type == "access") l.w.a = 3.0;
-            else if(l.type == "main") l.w.a = 4.0;
+            else l.w.a = desWidth;
         
             pugi::xml_node rm = itt->child("roadMark");
             if (rm)
@@ -371,9 +379,7 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
                 l.m.roughness = m.attribute("roughness").as_double();
             }
 
-            if (r.classification == "main") l.speed = 50;
-            if (r.classification == "access") l.speed = 50;
-            if (r.classification == "motorway") l.speed = 130;
+            l.speed = desSpeed;
 
             lane ltmp;
             int id = findLane(laneSec,ltmp,l.id);
@@ -386,7 +392,7 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
                 laneSec.lanes.erase(laneSec.lanes.begin() + id);
             }
         }
-        if (laneSec.id == 1) r.laneSections.back() = laneSec;
+        if (laneSec.id == 1) r.laneSections.front() = laneSec;
         else r.laneSections.push_back(laneSec);
     }
     
@@ -404,8 +410,8 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, double sJunction)
         if ((string)itt->name() == "laneWidening")
         {
             int lane = itt->attribute("lane").as_int();
-            double s = itt->attribute("sOffset").as_double();
-            double ds = itt->attribute("ds1").as_double();
+            double s = itt->attribute("s").as_double();
+            double ds = itt->attribute("length").as_double();
 
             // only perform drop if not close to junction
             if (s < sJunction + 25) continue;
@@ -416,8 +422,8 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, double sJunction)
         if ((string)itt->name() == "laneDrop")
         {
             int lane = itt->attribute("lane").as_int();
-            double s = itt->attribute("sOffset").as_double();
-            double ds = itt->attribute("ds1").as_double();
+            double s = itt->attribute("s").as_double();
+            double ds = itt->attribute("length").as_double();
 
             // only perform drop if not close to junction
             if (s < sJunction + 25) continue;       
@@ -427,10 +433,9 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, double sJunction)
             //restricted area
             if (itt->child("restrictedArea"))
             {
-                int signNumber = itt->child("restrictedArea").attribute("signNumber").as_int();
-                double s2 = itt->child("restrictedArea").attribute("sOffset").as_int();
-                double ds2 = itt->child("restrictedArea").attribute("ds2").as_int();
-                addRestrictedArea(r.laneSections, lane, s, s2, ds, ds2, signNumber);
+                double s2 = itt->child("restrictedArea").attribute("s").as_int();
+                double ds2 = itt->child("restrictedArea").attribute("length").as_int();
+                addRestrictedArea(r.laneSections, lane, s, s2, ds, ds2);
             }              
         }
     }

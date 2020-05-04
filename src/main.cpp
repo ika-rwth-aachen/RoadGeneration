@@ -14,9 +14,9 @@
 #endif
 
 std::string::size_type st;
-
 using namespace std;
 
+#include "utils/settings.h"
 #include "utils/interface.h"
 #include "utils/helper.h"
 #include "utils/io.h"
@@ -49,8 +49,8 @@ int main(int argc,  char** argv)
 	
 
 	// --- initialization ------------------------------------------------------
-  	freopen( "log.txt", "a", stderr );
-  	cerr << "\nError log for run with attribute: " << file << endl;
+  	//freopen( "log.txt", "a", stderr );
+  	//cerr << "\nError log for run with attribute: " << file << endl;
 
 	printLogo();
 

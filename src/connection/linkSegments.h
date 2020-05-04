@@ -23,23 +23,23 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 	}
 
 	// define reference system
-	int referenceId = links.attribute("referenceId").as_int();
-	double angleOffset = links.attribute("angleOffset").as_double();
+	int refId = links.attribute("refId").as_int();
+	double hdgOffset = links.attribute("hdgOffset").as_double();
 	double xOffset = links.attribute("xOffset").as_double();
 	double yOffset = links.attribute("yOffset").as_double();
 
 	for(auto&& r : data.roads)
 	{
-		if (r.junction != referenceId) continue;
+		if (r.junction != refId) continue;
 
 		for (auto&& g : r.geometries)
 		{
-			double x = g.x * cos(angleOffset) - g.y * sin(angleOffset);
-			double y = g.x * sin(angleOffset) + g.y * cos(angleOffset);
+			double x = g.x * cos(hdgOffset) - g.y * sin(hdgOffset);
+			double y = g.x * sin(hdgOffset) + g.y * cos(hdgOffset);
 
 			g.x = x + xOffset;
 			g.y = y + yOffset;
-			g.hdg = g.hdg + angleOffset;
+			g.hdg = g.hdg + hdgOffset;
 		}
 	}
 
@@ -118,7 +118,7 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 			// --- rotate and shift current road according to from position ----
 			double dx,dy;
 			
-			// compute angleOffset between the two segments
+			// compute hdgOffset between the two segments
 			double dPhi = fromHdg - toHdg + M_PI;
 			if (fromPos == "start") dPhi += M_PI;
 			if (toPos == "start") dPhi += M_PI;

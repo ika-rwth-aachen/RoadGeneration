@@ -14,15 +14,8 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
     junction junc;
     junc.id = node.attribute("id").as_int();
 
-    // search for referenceId
-    int refId = node.attribute("refId").as_int();
-    pugi::xml_node mainRoad;
-
-    for (pugi::xml_node road: node.children("road"))
-    {
-        if(road.attribute("id").as_int() == refId)
-            mainRoad = road;
-    }
+    pugi::xml_node mainRoad = node.child("circle");
+    int refId = mainRoad.attribute("id").as_int();
     if (!mainRoad)
     {
         cerr << "ERR: mainRoad is not found.";
@@ -47,7 +40,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
     }
 
     // get coupler
-    pugi::xml_node cA = node.child("coupler").child("couplerArea");
+    pugi::xml_node cA = node.child("coupler").child("junctionArea");
    
     // count intersectionPoints
     int nIp = 0;
@@ -77,17 +70,17 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
 
         // calculate offsets
         double sOffset = 0;
-        if (cA) sOffset = cA.attribute("sOffset").as_double();
+        if (cA) sOffset = cA.attribute("s").as_double();
 
         double sOffMain = sOffset;
         double sOffAdd = sOffset;
-        for (pugi::xml_node sB: cA.children("streetBorder"))
+        for (pugi::xml_node sB: cA.children("roadBorder"))
         {
             if (sB.attribute("id").as_int() == refId) 
-                sOffMain = sB.attribute("sOffset").as_double();
+                sOffMain = sB.attribute("s").as_double();
 
             if (sB.attribute("id").as_int() == adId) 
-                sOffAdd = sB.attribute("sOffset").as_double();
+                sOffAdd = sB.attribute("s").as_double();
         }
 
         // calculate width of mainRoad and addtionalRoad
@@ -147,7 +140,9 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         r1.junction = junc.id;
         r1.successor.id = junc.id;
         r1.successor.elementType = junctionType;
+        r1.successor.contactPoint = startType;
         if (cc == 1) sOld = sOffMain;
+
         buildRoad(mainRoad, r1, sOld, sMain-sOffMain, 0, sMain, iPx, iPy,iPhdg);       
         nCount++; 
 
@@ -156,6 +151,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         r2.junction = junc.id;
         r2.predecessor.id = junc.id;
         r2.predecessor.elementType = junctionType;
+        r2.predecessor.contactPoint = startType;
         buildRoad(additionalRoad, r2, sAdd+sOffAdd, INFINITY, 0, sAdd, iPx, iPy, iPhdg+phi); 
         addObjects(additionalRoad, r2, data);
         nCount++; 
@@ -173,9 +169,11 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
             helper = rOld;
             helper.successor.elementType = roadType;
             helper.successor.id = -101;
+            helper.successor.contactPoint = startType;
         }
         helper.predecessor.id = junc.id;
         helper.predecessor.elementType = junctionType;
+        helper.predecessor.contactPoint = startType;
 
         // --- generate connecting lanes ---------------------------------------
         cout << "\t Generate Connecting Lanes" << endl;
@@ -285,6 +283,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         // adjust precessor of first element, due to loop
         r1.predecessor.id = junc.id;
         r1.predecessor.elementType = junctionType;
+        r1.predecessor.contactPoint = startType;
 
         data.roads.push_back(r1);
         data.roads.push_back(r2);
