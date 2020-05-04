@@ -1,6 +1,6 @@
-<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/home/geller/Dokumente/roadgeneration/xml/input.xsd">
+<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
     <segments>
-        <junction id="1" type="MA" automaticWiding="0">
+        <junction id="1" type="MA">
             <road id="1" classification="main" >	
                 <referenceLine>
                     <geometry id="1" length="300" R ="400" type="arc"/>
@@ -25,16 +25,16 @@
                     <geometry id="1" length="100"  type="line"/>
                 </referenceLine>
             </road>
-            <intersectionPoint id="1" refId="1" s="150">
+            <intersectionPoint refRoad="1" s="150">
                 <adRoad id="2" s="0" angle="-1.48"/>
             </intersectionPoint>
-            <coupler id="1">
-                <couplerArea sOffset="10">
-                    <streetBorder id="2" sOffset="15"/>
-                </couplerArea>
+            <coupler>
+                <junctionArea s="10">
+                    <roadBorder id="2" s="15"/>
+                </junctionArea>
                 <connection type="all"/>
             </coupler>
         </junction>
     </segments>
-    <links referenceId="1" angleOffset="-1.7" xOffset="0" yOffset="0"></links>
+    <links refId="1" hdgOffset="-1.7" xOffset="0" yOffset="0"></links>
 </roadNetwork>
