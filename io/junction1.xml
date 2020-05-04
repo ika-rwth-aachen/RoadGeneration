@@ -3,14 +3,14 @@
         <junction id="1" type="MA">
             <road id="1" classification="main" >	
                 <referenceLine>
-                    <line id="1" length="400"/>
+                    <line length="400"/>
                 </referenceLine>
                 <lanes>
                 </lanes>
             </road>
             <road id="2" classification="access" >	
                 <referenceLine>
-                    <arc id="1" length="100"  R="-100"/>
+                    <arc length="100"  R="-100"/>
                 </referenceLine>
             </road>
             <intersectionPoint refRoad="1" s="200">

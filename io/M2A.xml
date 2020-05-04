@@ -3,12 +3,12 @@
         <junction id="1" type="M2A">
             <road id="1" classification="main">	
                 <referenceLine>
-                    <spiral id="1" length="200" Rs="-100" Re="0"/>
+                     <spiral length="200" Rs="-100" Re="0"/>
                 </referenceLine>
             </road>
             <road id="2" classification="access">	
                 <referenceLine>
-                    <arc id="1" length="100" R="100"/>
+                     <arc length="100" R="100"/>
                 </referenceLine>
                 <lanes>
                     <laneSection id="1" s="0">
@@ -23,7 +23,7 @@
             </road>
             <road id="3" classification="access">	
                 <referenceLine>
-                    <line id="1" length="100"/>
+                     <line length="100"/>
                 </referenceLine>
                 <lanes>
                     <laneSection id="1" s="0">

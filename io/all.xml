@@ -3,17 +3,17 @@
         <junction id="1" type="M2A">
             <road id="1" classification="main" >	
                 <referenceLine>
-                    <spiral id="1" length="400" Rs="-100" Re="0"/>
+                     <spiral length="400" Rs="-100" Re="0"/>
                 </referenceLine>
             </road>
             <road id="2" classification="access" >	
                 <referenceLine>
-                    <arc id="1" length="100"  R="100"/>
+                     <arc length="100"  R="100"/>
                 </referenceLine>
             </road>
             <road id="3" classification="access" >	
                 <referenceLine>
-                    <line id="1" length="500"/>
+                     <line length="500"/>
                 </referenceLine>
                 <lanes>
                     <laneSection id="1" s="0">
@@ -52,12 +52,12 @@
         <junction id="2" type="MA">
             <road id="1" classification="main" >	
                 <referenceLine>
-                    <spiral id="1" length="400"  Rs="-100" Re="0"/>
+                     <spiral length="400"  Rs="-100" Re="0"/>
                 </referenceLine>
             </road>
             <road id="2" classification="access" >	
                 <referenceLine>
-                    <arc id="1" length="200"  R="150"/>
+                     <arc length="200"  R="150"/>
                 </referenceLine>
             </road>
             <intersectionPoint refRoad="1" s="200">
@@ -73,7 +73,7 @@
         <junction id="6" type="3A">
             <road id="1" classification="access" >	
                 <referenceLine>
-                    <spiral id="1" length="200"  Rs="-100" Re="0"/>
+                     <spiral length="200"  Rs="-100" Re="0"/>
                 </referenceLine>
                 <lanes>
                     <laneSection id="1" s="0">
@@ -91,12 +91,12 @@
             </road>
             <road id="2" classification="access" >	
                 <referenceLine>
-                    <arc id="1" length="100"  R="100"/>
+                     <arc length="100"  R="100"/>
                 </referenceLine>
             </road>
             <road id="3" classification="access" >	
                 <referenceLine>
-                    <arc id="1" length="300"  R="250"/>
+                     <arc length="300"  R="250"/>
                 </referenceLine>
             </road>
             <intersectionPoint refRoad="1" s="100">
@@ -113,12 +113,12 @@
         <junction id="7" type="4A">
             <road id="1" classification="access">
                 <referenceLine>
-                    <line id="1" length="100"/>
+                     <line length="100"/>
                 </referenceLine>    
             </road>
             <road id="2" classification="access">
                 <referenceLine>
-                    <line id="1" length="150"/>
+                     <line length="150"/>
                 </referenceLine>   
                 <lanes>
                     <laneWidening laneId="1" s="50" length="20"/>
@@ -160,7 +160,7 @@
             </circle>
             <road id="2" classification="access" >	
                 <referenceLine>
-                    <line id="1" length="100"/>
+                     <line length="100"/>
                 </referenceLine>
             </road>
             <intersectionPoint refRoad="1" s="0.25">
@@ -185,7 +185,7 @@
         <connectingRoad id="4">
             <road id="1"  classification="main" >	
                 <referenceLine>
-                    <spiral id="1" length="800"  Rs="-150" Re="0"/>
+                     <spiral length="800"  Rs="-150" Re="0"/>
                 </referenceLine>
                 <lanes>
                     <laneWidening laneId="1" s="110" length="40" />
@@ -219,7 +219,7 @@
         <connectingRoad id="5">
             <road id="1" classification="main" >	
                 <referenceLine>
-                    <spiral id="1" length="800"  Rs="-150" Re="0"/>
+                     <spiral length="800"  Rs="-150" Re="0"/>
                 </referenceLine>
                 <lanes>
                     <laneWidening laneId="1" s="110" length="40" />
