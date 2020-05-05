@@ -55,8 +55,26 @@
                     </laneSection>
                 </lanes>
             </road>
+            <road id="4" classification="main">	
+                <referenceLine>
+                     <spiral length="200" Rs="-100" Re="0"/>
+                </referenceLine>
+                <lanes>
+                    <laneSection id="1" s="0">
+                        <lane id="1" type="driving">
+                            <roadMark type="solid" color="blue"/>
+                        </lane>
+                        <lane id="0" type="driving">
+                            <roadMark type="broken"/>
+                        </lane>
+                        <lane id="-1" type="driving">
+                            <roadMark type="solid" color="yellow"/>
+                        </lane>
+                    </laneSection>
+                </lanes>
+            </road>
             <intersectionPoint refRoad="1" s="100">
-                <adRoad id="1" s="50" angle="1.508"/>
+                <adRoad id="4" s="50" angle="1.508"/>
                 <adRoad id="2" s="50" angle="2.508"/>
                 <adRoad id="3" s="50" angle="3.508"/>
             </intersectionPoint>

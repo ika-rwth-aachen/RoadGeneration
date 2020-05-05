@@ -43,10 +43,10 @@
                 </junctionArea>
                 <connection type="all"/>
                 <additionalLanes>
-                    <additionalLane roadId="103" type="left"/>
-                    <additionalLane roadId="101" type="leftRestricted" length="25"/>
-                    <additionalLane roadId="101" type="right" length="25"/>
-                    <additionalLane roadId="102" type="right" length="1" verschwenkung="false"/>
+                    <additionalLane roadId="1" roadPos="end" type="left"/>
+                    <additionalLane roadId="1" roadPos="start" type="leftRestricted" length="25"/>
+                    <additionalLane roadId="1" roadPos="start" type="right" length="25"/>
+                    <additionalLane roadId="2" roadPos="end" type="right" length="1" verschwenkung="false"/>
                 </additionalLanes>
             </coupler>
         </junction>

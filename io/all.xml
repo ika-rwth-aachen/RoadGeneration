@@ -42,10 +42,10 @@
                 </junctionArea>
                 <connection type="all"/>
                 <additionalLanes>
-                    <additionalLane roadId="101" type="left" />
-                    <additionalLane roadId="101" type="right" />
-                    <additionalLane roadId="103" type="leftRestricted" length="10" verschwenkung="true" />
-                    <additionalLane roadId="103" type="right" length=".1" verschwenkung="false" />
+                    <additionalLane roadId="1" type="left" roadPos="start"/>
+                    <additionalLane roadId="1" type="right" roadPos="start"/>
+                    <additionalLane roadId="1" type="leftRestricted" length="10" verschwenkung="true" roadPos="end"/>
+                    <additionalLane roadId="1" type="right" length=".1" verschwenkung="false" roadPos="end"/>
                 </additionalLanes>
             </coupler>
         </junction>
@@ -118,6 +118,16 @@
             </road>
             <road id="2" classification="access">
                 <referenceLine>
+                     <line length="100"/>
+                </referenceLine>    
+            </road>
+            <road id="3" classification="access">
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>    
+            </road>
+            <road id="4" classification="access">
+                <referenceLine>
                      <line length="150"/>
                 </referenceLine>   
                 <lanes>
@@ -125,9 +135,9 @@
                 </lanes> 
             </road>
             <intersectionPoint refRoad="1" s="0">
-                <adRoad id="1" s="0" angle="1.57" />
-                <adRoad id="1" s="0" angle="3.14" />
-                <adRoad id="2" s="0" angle="-1.57" />
+                <adRoad id="2" s="0" angle="1.57" />
+                <adRoad id="3" s="0" angle="3.14" />
+                <adRoad id="4" s="0" angle="-1.57" />
             </intersectionPoint>
             <coupler>
                 <junctionArea s="1"/>
@@ -163,17 +173,32 @@
                      <line length="100"/>
                 </referenceLine>
             </road>
+            <road id="3" classification="access" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+            </road>
+            <road id="4" classification="access" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+            </road>
+            <road id="5" classification="access" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+            </road>
             <intersectionPoint refRoad="1" s="80">
                 <adRoad id="2" s="0" angle="-1.56"/>
             </intersectionPoint>
             <intersectionPoint refRoad="1" s="160">
-                <adRoad id="2" s="0" angle="-1.56"/>
+                <adRoad id="3" s="0" angle="-1.56"/>
             </intersectionPoint>
             <intersectionPoint refRoad="1" s="240">
-                <adRoad id="2" s="0" angle="-1.56"/>
+                <adRoad id="4" s="0" angle="-1.56"/>
             </intersectionPoint>
             <intersectionPoint refRoad="1" s="320">
-                <adRoad id="2" s="0" angle="-1.6"/>
+                <adRoad id="5" s="0" angle="-1.6"/>
             </intersectionPoint>
             <coupler>
                 <junctionArea s="10">
@@ -228,18 +253,18 @@
         </connectingRoad>
 	</segments>
     <links refId="1" hdgOffset="0.0" xOffset="0" yOffset="0">
-        <segmentLink fromSegment="1" toSegment="2" fromRoad="104" toRoad="201" fromPos="end" toPos="end" />
-        <segmentLink fromSegment="2" toSegment="4" fromRoad="203" toRoad="401" fromPos="end" toPos="end" />
-        <segmentLink fromSegment="1" toSegment="5" fromRoad="102" toRoad="501" fromPos="end" toPos="start" />
-        <segmentLink fromSegment="4" toSegment="3" fromRoad="401" toRoad="312" fromPos="start" toPos="end" />
-        <segmentLink fromSegment="3" toSegment="6" fromRoad="322" toRoad="603" fromPos="end" toPos="end" />
-        <segmentLink fromSegment="6" toSegment="7" fromRoad="602" toRoad="701" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="1" toSegment="5" fromRoad="2" toRoad="1" fromPos="end" toPos="start" />
+        <segmentLink fromSegment="1" toSegment="2" fromRoad="3" toRoad="1" fromPos="end" toPos="start" />
+        <segmentLink fromSegment="2" toSegment="4" fromRoad="2" toRoad="1" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="4" toSegment="3" fromRoad="1" toRoad="2" fromPos="start" toPos="end" />
+        <segmentLink fromSegment="3" toSegment="6" fromRoad="3" toRoad="3" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="6" toSegment="7" fromRoad="2" toRoad="1" fromPos="end" toPos="end" />
     </links>
     <closeRoads>
-        <segmentLink fromSegment="1" toSegment="2" fromRoad="103" toRoad="202" fromPos="end" toPos="end" />
-        <segmentLink fromSegment="3" toSegment="3" fromRoad="342" toRoad="332" fromPos="end" toPos="end" />
-        <segmentLink fromSegment="6" toSegment="5" fromRoad="601" toRoad="501" fromPos="end" toPos="end" />
-        <segmentLink fromSegment="7" toSegment="1" fromRoad="704" toRoad="101" fromPos="end" toPos="end" />
-        <segmentLink fromSegment="7" toSegment="7" fromRoad="702" toRoad="703" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="1" toSegment="2" fromRoad="1" toRoad="1" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="3" toSegment="3" fromRoad="5" toRoad="4" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="6" toSegment="5" fromRoad="1" toRoad="1" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="7" toSegment="1" fromRoad="4" toRoad="1" fromPos="end" toPos="start" />
+        <segmentLink fromSegment="7" toSegment="7" fromRoad="2" toRoad="3" fromPos="end" toPos="end" />
     </closeRoads>
 </roadNetwork>

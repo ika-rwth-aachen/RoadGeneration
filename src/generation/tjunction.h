@@ -256,29 +256,31 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         if (tmpType == "rightRestricted") length *= -1;
         // TODO improve this
 
-        int id = addLane.attribute("roadId").as_int();
+        int inputId = addLane.attribute("roadId").as_int();
+        string inputPos = addLane.attribute("roadPos").value();
         
-        if (id == r1.id)
+        if (inputId == r1.inputId && inputPos == r1.inputPos)
         {
             for (int i = 0; i < n; i++)
                 laneWideningJunction(r1, length, ds, type, verschwenkung);
         }
 
-        if (id == r2.id)
+        if (inputId == r2.inputId && inputPos == r2.inputPos)
         {
             for (int i = 0; i < n; i++)
                 laneWideningJunction(r2, length, ds, type, verschwenkung);
         }
         
-        if (id == r3.id)
+        if (inputId == r3.inputId && inputPos == r3.inputPos)
         {
             for (int i = 0; i < n; i++)
                 laneWideningJunction(r3, length, ds, type, verschwenkung);
         }
     }
-    ////addSignal(r1, data, 1, INFINITY, "1.000.001", "-", -1);
-    ////addSignal(r2, data, 1, INFINITY, "1.000.001", "-", -1);
-    ////addSignal(r3, data, 1, INFINITY, "1.000.001", "-", -1);
+
+    //addSignal(r1, data, 1, INFINITY, "1.000.001", "-", -1);
+    //addSignal(r2, data, 1, INFINITY, "1.000.001", "-", -1);
+    //addSignal(r3, data, 1, INFINITY, "1.000.001", "-", -1);
 
     data.roads.push_back(r1);
     data.roads.push_back(r2);

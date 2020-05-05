@@ -288,41 +288,42 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         if (tmpType == "rightRestricted") length *= -1;
         // TODO improve this
 
-        int id = addLane.attribute("roadId").as_int();
+        int inputId = addLane.attribute("roadId").as_int();
+        string inputPos = addLane.attribute("roadPos").value();
         
-        if (id == r1.id)
+        if (inputId == r1.inputId && inputPos == r1.inputPos)
         {
             for (int i = 0; i < n; i++)
                 laneWideningJunction(r1, length, ds, type, verschwenkung);
         }
 
-        if (id == r2.id)
+        if (inputId == r2.inputId && inputPos == r2.inputPos)
         {
             for (int i = 0; i < n; i++)
                 laneWideningJunction(r2, length, ds, type, verschwenkung);
         }
         
-        if (id == r3.id)
+        if (inputId == r3.inputId && inputPos == r3.inputPos)
         {
             for (int i = 0; i < n; i++)
                 laneWideningJunction(r3, length, ds, type, verschwenkung);
         }
 
-        if (id == r4.id)
+        if (inputId == r4.inputId && inputPos == r4.inputPos)
         {
             for (int i = 0; i < n; i++)
                 laneWideningJunction(r4, length, ds, type, verschwenkung);
         }
     }
 
-    ////addSignal(r1, data, 1, INFINITY, "1000001", "-", 1);
-    ////addSignal(r1, data, 1, 5, "1000011", "-", 3);
-    ////addSignal(r2, data, 1, INFINITY, "1000001", "-", 2);
-    ////addSignal(r2, data, 1, 2, "1000011", "-", 4);
-    ////addSignal(r3, data, 1, INFINITY, "1000001", "-", 1);
-    ////addSignal(r3, data, 1, 8, "1000011", "-", 3);
-    ////addSignal(r4, data, 1, INFINITY, "1000001", "-", 2);
-    ////addSignal(r4, data, 1, 5, "1000011", "-", 4);
+    //addSignal(r1, data, 1, INFINITY, "1000001", "-", 1);
+    //addSignal(r1, data, 1, 5, "1000011", "-", 3);
+    //addSignal(r2, data, 1, INFINITY, "1000001", "-", 2);
+    //addSignal(r2, data, 1, 2, "1000011", "-", 4);
+    //addSignal(r3, data, 1, INFINITY, "1000001", "-", 1);
+    //addSignal(r3, data, 1, 8, "1000011", "-", 3);
+    //addSignal(r4, data, 1, INFINITY, "1000001", "-", 2);
+    //addSignal(r4, data, 1, 5, "1000011", "-", 4);
 
     data.roads.push_back(r1);
     data.roads.push_back(r2);
@@ -404,7 +405,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
                 createRoadConnection(r1,r3,r,junc,from,to,bro,bro,bro);
             if (mode == 3)
                 createRoadConnection(r1,r3,r,junc,from,to,non,non,non);
-            ////addSignal(r, data, 1, -1, "1000011","30",1);
+            //addSignal(r, data, 1, -1, "1000011","30",1);
             
             data.roads.push_back(r);
 

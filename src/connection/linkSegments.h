@@ -17,8 +17,8 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 
 	if(!links) 
 	{
-		cerr << "ERR: 'links' are not specified in input file."  << endl;
-		cerr << "\t -> skip segment linking"  << endl;
+		cerr << "ERR: 'links' are not specified in input file." << endl;
+		cerr << "\t -> skip segment linking" << endl;
 		return 0;
 	}
 
@@ -48,23 +48,37 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 	{
 		int fromSegment = segmentLink.attribute("fromSegment").as_int();
 		int toSegment = segmentLink.attribute("toSegment").as_int();
-		int fromRoad = segmentLink.attribute("fromRoad").as_int();
-		int toRoad = segmentLink.attribute("toRoad").as_int();	
+		int fromRoadId = segmentLink.attribute("fromRoad").as_int();
+		int toRoadId = segmentLink.attribute("toRoad").as_int();	
 		string fromPos = (string)segmentLink.attribute("fromPos").value();
 		string toPos = (string)segmentLink.attribute("toPos").value();
-
-		// we assume that "fromSegement" was already linked to reference Frame
+		road fromRoad;
+		road toRoad; 
+		// we assume that "fromSegement" is already linked to reference Frame
 
 		double fromX,fromY,fromHdg;
 		double toX,toY,toHdg;
 
+		// check if fromSegment is junction
+		bool fromIsJunction = false;
+		for(auto&& j : data.junctions)
+			if (j.id == fromSegment) fromIsJunction = true;
+
+		// check if toSegment is junction
+		bool toIsJunction = false;
+		for(auto&& j : data.junctions)
+			if (j.id == toSegment) toIsJunction = true;
+
 		// save from position
 		for(auto&& r : data.roads)
 		{
-			if (r.junction != fromSegment || r.id != fromRoad) continue;
+			if (r.junction != fromSegment || r.inputId != fromRoadId) continue;
+			if (fromIsJunction && r.inputPos != fromPos) continue;
+		
+			fromRoad = r;
+			fromRoadId = r.id;
 
-			r.successor.id = toRoad;
-
+			if (fromIsJunction) fromPos = "end";
 			if (fromPos == "start")
 			{
 				fromX = r.geometries.front().x;
@@ -79,21 +93,18 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 				fromY = g.y;
 				fromHdg = g.hdg;
 			}
-			else
-			{
-				cerr << "ERR: wrong position for fromPos is specified." << endl;
-				cerr << "\t -> use 'start' or 'end'" << endl;
-				return 1;
-			}
 		}
 
 		// save to position
 		for(auto&& r : data.roads)
 		{
-			if (r.junction != toSegment || r.id != toRoad) continue;
+			if (r.junction != toSegment || r.inputId != toRoadId) continue;
+			if (toIsJunction && r.inputPos != toPos) continue;
+		
+			toRoad = r;
+			toRoadId = r.id;
 
-			r.predecessor.id = fromRoad;
-
+			if (toIsJunction) toPos = "end";
 			if (toPos == "start")
 			{
 				toX = r.geometries.front().x;
@@ -108,52 +119,52 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 				toHdg = g.hdg;
 				curve(g.length,g, toX, toY, toHdg, 1);				
 			}
-			else
-			{
-				cerr << "ERR: wrong position for toPos is specified." << endl;
-				cerr << "\t -> use 'start' or 'end'" << endl;
-				return 1;
-			}
-			
-			// --- rotate and shift current road according to from position ----
-			double dx,dy;
-			
-			// compute hdgOffset between the two segments
-			double dPhi = fromHdg - toHdg + M_PI;
-			if (fromPos == "start") dPhi += M_PI;
-			if (toPos == "start") dPhi += M_PI;
-			fixAngle(dPhi);
+		}
 
-			if (toPos == "end")
-			{
-				geometry g = r.geometries.back();
-				toX = g.x * cos(dPhi) - g.y * sin(dPhi);
-				toY = g.x * sin(dPhi) + g.y * cos(dPhi);
-				toHdg = g.hdg + dPhi;
-				curve(g.length,g, toX, toY, toHdg, 1);	
-			}
-			
-			// compute x/y offset between the two segments
-			dx = fromX - toX;
-			dy = fromY - toY;
+		// --- rotate and shift current road according to from position ----
+		double dx,dy;
+		
+		// compute hdgOffset between the two segments
+		double dPhi = fromHdg - toHdg + M_PI;
+		if (fromPos == "start") dPhi += M_PI;
+		if (toPos == "start") dPhi += M_PI;
+		fixAngle(dPhi);
 
-			
-			// shift all geometries which belong to the toSegment according two the offsets determined above
-			for(auto&& r2 : data.roads)
-			{
-				if (r2.junction != toSegment) continue;
-			
-				for (auto&& g : r2.geometries)
-				{
-					double x = g.x * cos(dPhi) - g.y * sin(dPhi);
-					double y = g.x * sin(dPhi) + g.y * cos(dPhi);
+		if (toPos == "end")
+		{
+			geometry g = toRoad.geometries.back();
+			toX = g.x * cos(dPhi) - g.y * sin(dPhi);
+			toY = g.x * sin(dPhi) + g.y * cos(dPhi);
+			toHdg = g.hdg + dPhi;
+			curve(g.length,g, toX, toY, toHdg, 1);	
+		}
+		
+		// compute x/y offset between the two segments
+		dx = fromX - toX;
+		dy = fromY - toY;
 
-					g.x = x + dx;
-					g.y = y + dy;
-					g.hdg = g.hdg + dPhi;
-					fixAngle(g.hdg);
-				}	
-			}
+		// shift all geometries which belong to the toSegment according two the offsets determined above
+		for(auto&& r : data.roads)
+		{
+			if (r.junction != toSegment) continue;
+		
+			for (auto&& g : r.geometries)
+			{
+				double x = g.x * cos(dPhi) - g.y * sin(dPhi);
+				double y = g.x * sin(dPhi) + g.y * cos(dPhi);
+
+				g.x = x + dx;
+				g.y = y + dy;
+				g.hdg = g.hdg + dPhi;
+				fixAngle(g.hdg);
+			}	
+		}
+
+		// update predecessor and successor
+		for(auto&& r : data.roads)
+		{
+			if (r.id == toRoadId) r.predecessor.id = fromRoadId;
+			if (r.id == fromRoadId) r.successor.id = toRoadId;
 		}
 	}
     return 0;

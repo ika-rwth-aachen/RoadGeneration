@@ -522,6 +522,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node  automa
 int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::xml_node automaticWiding, double s0, double x0, double y0, double phi0)
 {
     r.classification = roadIn.attribute("classification").value();
+    r.inputId = roadIn.attribute("id").as_int();
 
     // save geometry data from sStart - sEnd 
     // mode = 1 -> in s direction
@@ -531,6 +532,7 @@ int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::
     if (sEnd >= sStart)
     {   
         mode = 1;
+        r.inputPos = "end";
     }
     else if (sEnd < sStart)
     {   
@@ -539,6 +541,7 @@ int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::
         sStart = sEnd;
         sEnd = tmp;
         mode = 2;
+        r.inputPos = "start";
     }
 
     // generate geometries

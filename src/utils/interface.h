@@ -145,7 +145,9 @@ struct road
 {
     int id = -1;
     int inputId = -1;
+    string inputPos = "";
     int junction = -1;
+
     string type = "town";
     string classification = "";
     double length = 0;

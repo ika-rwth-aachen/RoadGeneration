@@ -14,9 +14,9 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 {
     cout << "Processing closeRoadNetwork" << endl;
 
-	pugi::xml_node cRN = doc.child("roadNetwork").child("closeRoads");
+	pugi::xml_node cr = doc.child("roadNetwork").child("closeRoads");
 
-	if(!cRN) 
+	if(!cr) 
 	{
 		cerr << "ERR: 'closeRoadNetwork' is not specified in input file."  << endl;
 		cerr << "\t -> skip closing"  << endl;
@@ -26,7 +26,7 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
     // we assume that all segments are already linked
 
 	// add other specified segments
-	for (pugi::xml_node segmentLink : cRN.children("segmentLink"))
+	for (pugi::xml_node segmentLink : cr.children("segmentLink"))
 	{
 		data.nSegment++;
         road rConnection;
@@ -34,25 +34,41 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
         
 		int fromSegment = segmentLink.attribute("fromSegment").as_int();
 		int toSegment = segmentLink.attribute("toSegment").as_int();
-		int fromRoad = segmentLink.attribute("fromRoad").as_int();
-		int toRoad = segmentLink.attribute("toRoad").as_int();	
+		int fromRoadId = segmentLink.attribute("fromRoad").as_int();
+		int toRoadId = segmentLink.attribute("toRoad").as_int();	
 		string fromPos = (string)segmentLink.attribute("fromPos").value();
 		string toPos = (string)segmentLink.attribute("toPos").value();
+		road fromRoad;
+		road toRoad; 
 
 		double fromX,fromY,fromHdg;
 		double toX,toY,toHdg;
         laneSection lS1, lS2;
-		bool found = false;
+		bool found;
+
+		// check if fromSegment is junction
+		bool fromIsJunction = false;
+		for(auto&& j : data.junctions)
+			if (j.id == fromSegment) fromIsJunction = true;
+
+		// check if toSegment is junction
+		bool toIsJunction = false;
+		for(auto&& j : data.junctions)
+			if (j.id == toSegment) toIsJunction = true;
+
 
 		// save from position
+		found = false;
 		for(auto&& r : data.roads)
 		{
-			if (r.id != fromRoad) continue;
-				
+			if (r.junction != fromSegment || r.inputId != fromRoadId) continue;
+			if (fromIsJunction && r.inputPos != fromPos) continue;
+			
+			fromRoad = r;
+			fromRoadId = r.id;
             found = true;
-            rConnection.predecessor.id = r.id;
-            rConnection.predecessor.contactPoint = endType;
 
+			if (fromIsJunction) fromPos = "end";
 			if (fromPos == "start")
 			{
 				fromX = r.geometries.front().x;
@@ -60,6 +76,8 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 				fromHdg = r.geometries.front().hdg;
                 r.predecessor.id = rConnection.id;
 				r.predecessor.contactPoint = startType;
+            	rConnection.predecessor.id = fromRoadId;
+				rConnection.predecessor.contactPoint = startType;
                 lS1 = r.laneSections.front();
 			}
 			else if (fromPos == "end")
@@ -71,6 +89,8 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 				fromHdg = g.hdg;
                 r.successor.id = rConnection.id;
 				r.successor.contactPoint = startType;
+            	rConnection.predecessor.id = fromRoadId;
+				rConnection.predecessor.contactPoint = endType;
                 lS1 = r.laneSections.back();
 			}
 			else
@@ -90,19 +110,23 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 		found = false;
 		for(auto&& r : data.roads)
 		{
-			if (r.junction != toSegment || r.id != toRoad) continue;
-            
+			if (r.junction != toSegment || r.inputId != toRoadId) continue;
+			if (toIsJunction && r.inputPos != toPos) continue;
+		
+			toRoad = r;
+			toRoadId = r.id;
 			found = true;
-            rConnection.successor.id = r.id;
-            rConnection.successor.contactPoint = endType;
 
+			if (fromIsJunction) toPos = "end";
 			if (toPos == "start")
 			{
 				toX = r.geometries.front().x;
 				toY = r.geometries.front().y;
 				toHdg = r.geometries.front().hdg;
                 r.predecessor.id = rConnection.id;
-				r.predecessor.contactPoint = endType;
+				r.predecessor.contactPoint = endType; 
+            	rConnection.successor.id = r.id;
+            	rConnection.successor.contactPoint = startType;
                 lS2 = r.laneSections.front();
 			}
 			else if (toPos == "end")
@@ -113,7 +137,9 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 				toHdg = g.hdg;
 				curve(g.length,g, toX, toY, toHdg, 1);
                 r.successor.id = rConnection.id;				
-				r.successor.contactPoint = endType;
+				r.successor.contactPoint = endType; // TODO improve
+            	rConnection.successor.id = r.id;
+            	rConnection.successor.contactPoint = endType;
                 lS2 = r.laneSections.back();
 			}
 			else
@@ -215,8 +241,8 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 		}
 		
 		road tmpRoad;
-		int fromRoadId = findRoad(data.roads,tmpRoad, fromRoad);
-		int toRoadId   = findRoad(data.roads,tmpRoad, toRoad);
+		int fr = findRoad(data.roads,tmpRoad, fromRoadId);
+		int tr   = findRoad(data.roads,tmpRoad, toRoadId);
 
 		// add lane links
 		for (int j = 0; j < secs.front().lanes.size(); j++) 
@@ -225,7 +251,7 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 			if (fromPos == "start") 
 			{
 				secs.front().lanes[j].preId *= -1;
-				data.roads[fromRoadId].laneSections.front().lanes[j].preId *= -1;
+				data.roads[fr].laneSections.front().lanes[j].preId *= -1;
 			}
 		}
 
@@ -235,7 +261,7 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 			if (toPos == "end") 
 			{
 				secs.back().lanes[j].sucId *= -1;
-				data.roads[toRoadId].laneSections.back().lanes[j].sucId *= -1;
+				data.roads[tr].laneSections.back().lanes[j].sucId *= -1;
 			}
 		}
 

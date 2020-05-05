@@ -29,18 +29,37 @@
                      <line length="100"/>
                 </referenceLine>
             </road>
+            <road id="3" classification="access" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+            </road>
+            <road id="4" classification="access" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+            </road>
+            <road id="5" classification="access" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+            </road>
             <intersectionPoint refRoad="1" s="80">
                 <adRoad id="2" s="0" angle="-1.56"/>
             </intersectionPoint>
             <intersectionPoint refRoad="1" s="160">
-                <adRoad id="2" s="0" angle="-1.56"/>
+                <adRoad id="3" s="0" angle="-1.56"/>
             </intersectionPoint>
             <intersectionPoint refRoad="1" s="240">
-                <adRoad id="2" s="0" angle="-1.56"/>
+                <adRoad id="4" s="0" angle="-1.56"/>
             </intersectionPoint>
             <intersectionPoint refRoad="1" s="320">
-                <adRoad id="2" s="0" angle="-1.6"/>
+                <adRoad id="5" s="0" angle="-1.6"/>
             </intersectionPoint>
         </roundabout>
     </segments>
+    <closeRoads>
+        <segmentLink fromSegment="1" toSegment="1" fromRoad="2" toRoad="3" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="1" toSegment="1" fromRoad="4" toRoad="5" fromPos="end" toPos="end" />
+    </closeRoads>
 </roadNetwork>
