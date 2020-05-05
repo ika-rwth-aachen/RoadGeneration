@@ -1,4 +1,4 @@
-<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../xml/input.xsd">
     <vars>
         <var id="radiusCR" type="normal" mu="150" sd="11.5" />        
         <var id="angleT" type="normal" mu="1.57" sd="0.12" />
@@ -7,16 +7,16 @@
         <junction id="1" type="MA">
             <road id="1" classification="main" >	
                 <referenceLine>
-                    <geometry id="1" length="50"  Rs="0" Re="-300" type="spiral"/>
-                    <geometry id="2" length="100" R="-300" type="arc"/>
-                    <geometry id="3" length="90"  Rs="-300" Re="0" type="spiral"/>
+                    <spiral length="50"  Rs="0" Re="-300"/>
+                    <arc length="100" R="-300"/>
+                    <spiral length="90"  Rs="-300" Re="0"/>
                 </referenceLine>
                 <lanes>
                 </lanes>
             </road>
             <road id="2" classification="access" >	
                 <referenceLine>
-                    <geometry id="1" length="50" type="line"/>
+                    <line length="50"/>
                 </referenceLine>
             </road>
             <intersectionPoint refRoad="1" s="100">
@@ -26,12 +26,12 @@
         <junction id="2" type="2M">
             <road id="1" classification="main" >	
                 <referenceLine>
-                    <geometry id="1" length="200" type="line"/>
+                    <line length="200"/>
                 </referenceLine>
             </road>
             <road id="2" classification="access" >	
                 <referenceLine>
-                    <geometry id="1" length="200"  type="line"/>
+                    <line length="200" />
                 </referenceLine>
             </road>
             <intersectionPoint refRoad="1" s="100">
@@ -41,10 +41,10 @@
         <connectingRoad id="3">
             <road id="1" classification="access" >	
                 <referenceLine>
-                    <geometry id="1" length="20" type="line"/>                    
-                    <geometry id="2" length="50"  Rs="0" Re="${radiusCR}" type="spiral"/>
-                    <geometry id="3" length="50" R="${radiusCR}" type="arc"/>
-                    <geometry id="4" length="50"  Rs="${radiusCR}" Re="0" type="spiral"/>
+                    <line length="20"/>                    
+                    <spiral length="50"  Rs="0" Re="${radiusCR}"/>
+                    <arc length="50" R="${radiusCR}"/>
+                    <spiral length="50"  Rs="${radiusCR}" Re="0"/>
                 </referenceLine>
             </road>
         </connectingRoad>        
