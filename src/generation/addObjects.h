@@ -220,11 +220,11 @@ void addBusStop(object o, road &r)
     if (o.t > 0) laneId = findMaxLaneId(lS);
     if (o.t < 0) laneId = findMinLaneId(lS);
 
-    double length = 20;
-    if (o.length != 0) length = o.length;
+    double length = setting.busStop.length;
+    double widing = setting.busStop.widing;
 
-    addLaneWidening(r.laneSections, laneId, o.s-length/2-7.5, 7.5, true);
-    addLaneDrop (r.laneSections, laneId+sgn(laneId), o.s+length/2, 7.5);
+    addLaneWidening(r.laneSections, laneId, o.s-length/2-widing, widing, true);
+    addLaneDrop (r.laneSections, laneId+sgn(laneId), o.s+length/2, widing);
 
     lane l;
     int id; 
@@ -346,8 +346,6 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
             s.type = ob.attribute("type").value();
             s.value = ob.attribute("value").as_double();
             s.dynamic = ob.attribute("dynamic").as_bool();
-            s.height = 2;
-            s.width = 0.4;
             s.s = ob.child("relativePosition").attribute("s").as_double();
             s.t = ob.child("relativePosition").attribute("t").as_double();
             s.z = ob.child("relativePosition").attribute("z").as_double();
