@@ -105,22 +105,22 @@ int fresnel(double s, double &x, double &y)
  */
 int curve(double s, geometry geo, double &x, double &y, double &phi, int fd)
 {
-    int type;
+    geometryType type;
     double c = geo.c;
     double c1 = geo.c1;
     double c2 = geo.c2;
     double ds = geo.length;
     
-    if (c == 0 && c1 == 0 && c2 == 0)   type = 1;   // line
-    if (c != 0 && c1 == 0 && c2 == 0)   type = 2;   // arc
-    if (c == 0 && (c1 != 0 || c2 != 0)) type = 3;   // spiral
+    if (c == 0 && c1 == 0 && c2 == 0)   type = line;    // line
+    if (c != 0 && c1 == 0 && c2 == 0)   type = arc;     // arc
+    if (c == 0 && (c1 != 0 || c2 != 0)) type = spiral;  // spiral
     
-    if (type == 1)
+    if (type == line)
     {
         x += s * cos(phi);
         y += s * sin(phi);
     }
-    if (type == 2)
+    if (type == arc)
     {
         double tmpPhi = fmod(phi + s * c, 2 * M_PI);
 
@@ -128,7 +128,7 @@ int curve(double s, geometry geo, double &x, double &y, double &phi, int fd)
         y += (-cos(tmpPhi) + cos(phi)) / c;
         phi += c*s;
     }
-    if (type == 3)
+    if (type == spiral)
     {
         double sigma = (c2-c1)/ds;
 

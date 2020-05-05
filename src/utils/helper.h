@@ -72,12 +72,10 @@ int findMaxLaneId(laneSection sec)
  */
 bool isBoundary(laneSection sec, int id)
 {
-    bool res = false;
-
-    if (id == findMaxLaneId(sec)) res = true;
-    if (id == findMinLaneId(sec)) res = true;
+    if (id == findMaxLaneId(sec)) return true;
+    if (id == findMinLaneId(sec)) return true;
     
-    return res;
+    return false;
 }
 
 /**
@@ -90,18 +88,15 @@ bool isBoundary(laneSection sec, int id)
  */
 int findLane(laneSection sec, lane &l, int id)
 {
-    int res = -1;
-
     for (int i = 0; i < sec.lanes.size(); i++)
     {
         if (sec.lanes[i].id == id) 
         {
             l = sec.lanes[i];
-            res = i;
-            break;
+            return i;
         }
     }
-    return res;
+    return -1;
 }
 
 
@@ -115,18 +110,15 @@ int findLane(laneSection sec, lane &l, int id)
  */
 int findRoad(vector<road> roads, road &r, int id)
 {
-    int res = -1;
-
     for (int i = 0; i < roads.size(); i++)
     {
         if (roads[i].id == id) 
         {
             r = roads[i];
-            res = i;
-            break;
+            return i;
         }
     }
-    return res;
+    return -1;
 }
 
 /**

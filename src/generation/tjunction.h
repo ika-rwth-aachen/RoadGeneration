@@ -7,6 +7,9 @@
  * @param data  roadNetwork structure where the generated roads and junctions are stored
  * @return int  errorcode
  */
+
+extern settings setting;
+
 int tjunction(pugi::xml_node &node, roadNetwork &data)
 {
     // check type of the junction (M = mainroad, A = accessroad)
@@ -25,21 +28,10 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     junc.id = node.attribute("id").as_int();
 
     // automatic widing
-    double widing_s = 25;
-    double widing_ds = 25;
-    if (node.child("automaticWiding"))
-    {
-        pugi::xml_node widing = node.child("automaticWiding");
-        if (widing.attribute("active").as_bool())
-        {
-            widing_s = node.child("automaticWiding").attribute("s").as_double();
-            widing_ds = node.child("automaticWiding").attribute("length").as_double();
-        }
-        else{
-            widing_s = 0;
-            widing_ds = 0;
-        }
-    }
+    pugi::xml_node dummy;
+    pugi::xml_node automaticWiding = node.child("automaticWiding");
+    pugi::xml_node automaticRestricted = node.child("automaticWiding");
+    automaticRestricted.append_attribute("restricted") = true;
 
     // define intersection properties
     pugi::xml_node iP = node.child("intersectionPoint");
@@ -96,13 +88,13 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     
      // calculate width of mainRoad and addtionalRoad
     road help1;
-    buildRoad(mainRoad, help1, 0, INFINITY, 0, 0, 0, 0, 0); 
+    buildRoad(mainRoad, help1, 0, INFINITY, dummy, 0, 0, 0, 0); 
 
     road help2;
-    buildRoad(additionalRoad1, help2, 0, INFINITY, 0, 0, 0, 0, 0); 
+    buildRoad(additionalRoad1, help2, 0, INFINITY, dummy, 0, 0, 0, 0); 
 
     road help3;
-    buildRoad(additionalRoad2, help3, 0, INFINITY, 0, 0, 0, 0, 0);
+    buildRoad(additionalRoad2, help3, 0, INFINITY, dummy, 0, 0, 0, 0);
 
  
     laneSection lS1 = help1.laneSections.front();
@@ -118,6 +110,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     double w1 = max(width2/2, width3/2) * 4;
     double w2 = max(width1/2, width3/2) * 4;
     double w3 = max(width1/2, width2/2) * 4;
+    // TODO check: why factor 4?
 
     bool changed = false;
     if (sOffMain < w1) {sOffMain = w1; changed = true;}
@@ -183,14 +176,14 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
 
         // add street is left from road 1
         if (phi > 0) 
-            buildRoad(mainRoad, r1, sMain-sOffMain, 0, widing_s, sMain, iPx, iPy, iPhdg);
+            buildRoad(mainRoad, r1, sMain-sOffMain, 0, automaticWiding, sMain, iPx, iPy, iPhdg);
         // add street is right from road 1
         if (phi < 0) 
-            buildRoad(mainRoad, r1, sMain-sOffMain, 0, -widing_s, sMain, iPx, iPy, iPhdg);
+            buildRoad(mainRoad, r1, sMain-sOffMain, 0, automaticRestricted, sMain, iPx, iPy, iPhdg);
     }
     if (mode == 2)
     {
-        buildRoad(mainRoad, r1, sMain+sOffMain, INFINITY, widing_s, sMain, iPx, iPy, iPhdg);
+        buildRoad(mainRoad, r1, sMain+sOffMain, INFINITY, automaticWiding, sMain, iPx, iPy, iPhdg);
     }
     addObjects(mainRoad,r1,data);
 
@@ -206,15 +199,15 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
 
         // add street is left from road 1
         if (phi > 0) 
-            buildRoad(mainRoad, r2, sMain+sOffMain, INFINITY, -widing_s, sMain, iPx, iPy, iPhdg);
+            buildRoad(mainRoad, r2, sMain+sOffMain, INFINITY, automaticRestricted, sMain, iPx, iPy, iPhdg);
         // add street is right from road 1
         if (phi < 0) 
-            buildRoad(mainRoad, r2, sMain+sOffMain, INFINITY, widing_s, sMain, iPx, iPy, iPhdg);
+            buildRoad(mainRoad, r2, sMain+sOffMain, INFINITY, automaticWiding, sMain, iPx, iPy, iPhdg);
         addObjects(mainRoad,r2,data);
     }
     if (mode == 2)
     {
-        buildRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, widing_s, sAdd1,iPx, iPy, iPhdg+phi1);
+        buildRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, automaticWiding, sAdd1,iPx, iPy, iPhdg+phi1);
         addObjects(additionalRoad1,r2,data);
     }
 
@@ -225,12 +218,12 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     r3.predecessor.id = junc.id;
     if (mode == 1)
     {
-        buildRoad(additionalRoad1, r3, sAdd1 + sOffAdd1, INFINITY, widing_s, sAdd1, iPx, iPy, iPhdg+phi1);
+        buildRoad(additionalRoad1, r3, sAdd1 + sOffAdd1, INFINITY, automaticWiding, sAdd1, iPx, iPy, iPhdg+phi1);
         addObjects(additionalRoad1,r3,data);
     }
     if (mode == 2)
     {
-        buildRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, widing_s, sAdd2, iPx, iPy, iPhdg+phi2);
+        buildRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, automaticWiding, sAdd2, iPx, iPy, iPhdg+phi2);
         addObjects(additionalRoad2,r3,data);
     }
 
@@ -251,7 +244,6 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         double ds = 25;
         if (addLane.attribute("ds"))
             length = addLane.attribute("ds").as_double();
-        // TODO add this
 
         int type;
         string tmpType = addLane.attribute("type").value();
@@ -269,24 +261,24 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         if (id == r1.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r1, length, type, verschwenkung);
+                laneWideningJunction(r1, length, ds, type, verschwenkung);
         }
 
         if (id == r2.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r2, length, type, verschwenkung);
+                laneWideningJunction(r2, length, ds, type, verschwenkung);
         }
         
         if (id == r3.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r3, length, type, verschwenkung);
+                laneWideningJunction(r3, length, ds, type, verschwenkung);
         }
     }
-    addSignal(r1, data, 1, INFINITY, "1.000.001", "-", -1);
-    addSignal(r2, data, 1, INFINITY, "1.000.001", "-", -1);
-    addSignal(r3, data, 1, INFINITY, "1.000.001", "-", -1);
+    ////addSignal(r1, data, 1, INFINITY, "1.000.001", "-", -1);
+    ////addSignal(r2, data, 1, INFINITY, "1.000.001", "-", -1);
+    ////addSignal(r3, data, 1, INFINITY, "1.000.001", "-", -1);
 
     data.roads.push_back(r1);
     data.roads.push_back(r2);

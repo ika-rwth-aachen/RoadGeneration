@@ -7,6 +7,9 @@
  * @param data  roadNetwork structure where the generated roads and junctions are stored
  * @return int  errorcode
  */
+
+extern settings setting;
+
 int xjunction(pugi::xml_node &node, roadNetwork &data)
 {
     // check type of the junction (M = mainroad, A = accessroad)
@@ -26,24 +29,8 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     junc.id = node.attribute("id").as_int();
 
     // automatic widing
-    double widing_s = 25;
-    double widing_ds = 25;
-    if (node.child("automaticWiding"))
-    {
-        pugi::xml_node widing = node.child("automaticWiding");
-        if (widing.attribute("active").as_bool())
-        {   
-            if (node.child("automaticWiding").attribute("s")) widing_s = node.child("automaticWiding").attribute("s").as_double();
-
-            if (node.child("automaticWiding").attribute("length")) 
-            widing_ds = node.child("automaticWiding").attribute("length").as_double();
-        }
-        else{
-            widing_s = 0;
-            widing_ds = 0;
-        }
-    }
-    //TODO add widing_ds in function
+    pugi::xml_node dummy;
+    pugi::xml_node automaticWiding = node.child("automaticWiding");
 
     // define intersection properties
     pugi::xml_node iP = node.child("intersectionPoint");
@@ -55,7 +42,6 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     pugi::xml_node cA = node.child("coupler").child("junctionArea");
     pugi::xml_node con = node.child("coupler").child("connection");
     pugi::xml_node addLanes = node.child("coupler").child("additionalLanes");
-
 
     // define junction roads
     pugi::xml_node mainRoad;
@@ -108,16 +94,16 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
 
     // calculate width of mainRoad and addtionalRoad
     road help1;
-    buildRoad(mainRoad, help1, 0, INFINITY, 0, 0, 0, 0, 0); 
+    buildRoad(mainRoad, help1, 0, INFINITY, dummy, 0, 0, 0, 0); 
 
     road help2;
-    buildRoad(additionalRoad1, help2, 0, INFINITY, 0, 0, 0, 0, 0); 
+    buildRoad(additionalRoad1, help2, 0, INFINITY, dummy, 0, 0, 0, 0);
 
     road help3;
-    buildRoad(additionalRoad2, help3, 0, INFINITY, 0, 0, 0, 0, 0);
+    buildRoad(additionalRoad2, help3, 0, INFINITY, dummy, 0, 0, 0, 0);
 
     road help4;
-    buildRoad(additionalRoad3, help4, 0, INFINITY, 0, 0, 0, 0, 0);
+    buildRoad(additionalRoad3, help4, 0, INFINITY, dummy, 0, 0, 0, 0);
  
     laneSection lS1 = help1.laneSections.front();
     double width1 = abs(findTOffset(lS1, findMinLaneId(lS1), 0))                              + abs(findTOffset(lS1, findMaxLaneId(lS1), 0));
@@ -136,6 +122,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     double w2 = max(width1/2, max(width3/2, width4/2)) * 4;
     double w3 = max(width1/2, max(width2/2, width4/2)) * 4;
     double w4 = max(width1/2, max(width2/2, width3/2)) * 4;
+    // TODO check: why factor 4?
 
     bool changed = false;
     if (sOffMain < w1) {sOffMain = w1; changed = true;}
@@ -210,11 +197,11 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r1.predecessor.elementType = junctionType;
     if (mode == 1 || mode == 2)
     {
-        buildRoad(mainRoad, r1, sMain-sOffMain, 0, widing_s, sMain, iPx, iPy, iPhdg);
+        buildRoad(mainRoad, r1, sMain-sOffMain, 0, automaticWiding, sMain, iPx, iPy, iPhdg);
     }
     if (mode == 3)
     {
-        buildRoad(mainRoad, r1, sMain+sOffMain, INFINITY, widing_s, sMain,iPx, iPy, iPhdg);
+        buildRoad(mainRoad, r1, sMain+sOffMain, INFINITY, automaticWiding, sMain,iPx, iPy, iPhdg);
     }
     addObjects(mainRoad,r1,data);
 
@@ -225,11 +212,11 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r2.predecessor.elementType = junctionType;
     if (mode == 1)
     {
-        buildRoad(additionalRoad1, r2, sAdd1-sOffAdd1, 0, widing_s, sAdd1, iPx, iPy, iPhdg+phi1);
+        buildRoad(additionalRoad1, r2, sAdd1-sOffAdd1, 0, automaticWiding, sAdd1, iPx, iPy, iPhdg+phi1);
     }
     if (mode == 2 || mode == 3)
     {
-        buildRoad(additionalRoad1, r2, sAdd1+sOffAdd1, INFINITY, widing_s, sAdd1, iPx, iPy, iPhdg+phi1);
+        buildRoad(additionalRoad1, r2, sAdd1+sOffAdd1, INFINITY, automaticWiding, sAdd1, iPx, iPy, iPhdg+phi1);
     }
     addObjects(additionalRoad1,r2,data);
 
@@ -240,12 +227,12 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r3.predecessor.elementType = junctionType;
     if (mode == 1 || mode == 2)
     {
-        buildRoad(mainRoad, r3, sMain+sOffMain, INFINITY, widing_s, sMain,iPx, iPy,iPhdg);
+        buildRoad(mainRoad, r3, sMain+sOffMain, INFINITY, automaticWiding, sMain,iPx, iPy,iPhdg);
         addObjects(mainRoad,r3,data);
     }
     if (mode == 3)
     {
-        buildRoad(additionalRoad2, r3, sAdd2+sOffAdd2, INFINITY, widing_s, sAdd2, iPx, iPy, iPhdg+phi2);
+        buildRoad(additionalRoad2, r3, sAdd2+sOffAdd2, INFINITY, automaticWiding, sAdd2, iPx, iPy, iPhdg+phi2);
         addObjects(additionalRoad2,r3,data);
     }
 
@@ -256,17 +243,17 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r4.predecessor.elementType = junctionType;
     if (mode == 1)
     {
-        buildRoad(additionalRoad1, r4, sAdd1+sOffAdd1, INFINITY, widing_s, sAdd1, iPx, iPy, iPhdg+phi1);
+        buildRoad(additionalRoad1, r4, sAdd1+sOffAdd1, INFINITY, automaticWiding, sAdd1, iPx, iPy, iPhdg+phi1);
         addObjects(additionalRoad1,r4,data);
     }
     if (mode == 2)
     {
-        buildRoad(additionalRoad2, r4, sAdd2+sOffAdd2, INFINITY, widing_s, sAdd2, iPx, iPy, iPhdg+phi2);
+        buildRoad(additionalRoad2, r4, sAdd2+sOffAdd2, INFINITY, automaticWiding, sAdd2, iPx, iPy, iPhdg+phi2);
         addObjects(additionalRoad2,r4,data);
     }
     if (mode == 3)
     {
-        buildRoad(additionalRoad3, r4, sAdd3+sOffAdd3, INFINITY, widing_s, sAdd3, iPx, iPy, iPhdg+phi3);
+        buildRoad(additionalRoad3, r4, sAdd3+sOffAdd3, INFINITY, automaticWiding, sAdd3, iPx, iPy, iPhdg+phi3);
         addObjects(additionalRoad3,r4,data);
     }
 
@@ -281,14 +268,13 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         if (addLane.attribute("verschwenkung"))
             verschwenkung = addLane.attribute("verschwenkung").as_bool();
 
-        double length = 25;
+        double length = setting.laneChange.s;
         if (addLane.attribute("length"))
             length = addLane.attribute("length").as_double();
 
-        double ds = 25;
+        double ds = setting.laneChange.ds;
         if (addLane.attribute("ds"))
             length = addLane.attribute("ds").as_double();
-        // TODO add this
 
         int type;
         string tmpType = addLane.attribute("type").value();
@@ -307,39 +293,36 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         if (id == r1.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r1, length, type, verschwenkung);
+                laneWideningJunction(r1, length, ds, type, verschwenkung);
         }
 
         if (id == r2.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r2, length, type, verschwenkung);
+                laneWideningJunction(r2, length, ds, type, verschwenkung);
         }
         
         if (id == r3.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r3, length, type, verschwenkung);
+                laneWideningJunction(r3, length, ds, type, verschwenkung);
         }
 
         if (id == r4.id)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r4, length, type, verschwenkung);
+                laneWideningJunction(r4, length, ds, type, verschwenkung);
         }
     }
 
-    addSignal(r1, data, 1, INFINITY, "1000001", "-", 1);
-    addSignal(r1, data, 1, 5, "1000011", "-", 3);
-
-    addSignal(r2, data, 1, INFINITY, "1000001", "-", 2);
-    addSignal(r2, data, 1, 2, "1000011", "-", 4);
-
-    addSignal(r3, data, 1, INFINITY, "1000001", "-", 1);
-    addSignal(r3, data, 1, 8, "1000011", "-", 3);
-
-    addSignal(r4, data, 1, INFINITY, "1000001", "-", 2);
-    addSignal(r4, data, 1, 5, "1000011", "-", 4);
+    ////addSignal(r1, data, 1, INFINITY, "1000001", "-", 1);
+    ////addSignal(r1, data, 1, 5, "1000011", "-", 3);
+    ////addSignal(r2, data, 1, INFINITY, "1000001", "-", 2);
+    ////addSignal(r2, data, 1, 2, "1000011", "-", 4);
+    ////addSignal(r3, data, 1, INFINITY, "1000001", "-", 1);
+    ////addSignal(r3, data, 1, 8, "1000011", "-", 3);
+    ////addSignal(r4, data, 1, INFINITY, "1000001", "-", 2);
+    ////addSignal(r4, data, 1, 5, "1000011", "-", 4);
 
     data.roads.push_back(r1);
     data.roads.push_back(r2);
@@ -421,7 +404,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
                 createRoadConnection(r1,r3,r,junc,from,to,bro,bro,bro);
             if (mode == 3)
                 createRoadConnection(r1,r3,r,junc,from,to,non,non,non);
-            addSignal(r, data, 1, -1, "1000011","30",1);
+            ////addSignal(r, data, 1, -1, "1000011","30",1);
             
             data.roads.push_back(r);
 
@@ -440,7 +423,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
             r.id = 100*junc.id + 50 + nCount;
 
             createRoadConnection(r2,r4,r,junc,from,to,non,non,non);            
-            addSignal(r, data, 1, -1, "1000011","30",2);
+            //addSignal(r, data, 1, -1, "1000011","30",2);
             
             data.roads.push_back(r);
 
@@ -462,7 +445,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
                 createRoadConnection(r3,r1,r,junc,from,to,bro,bro,bro);
             if (mode == 3)
                 createRoadConnection(r3,r1,r,junc,from,to,non,non,non);
-            addSignal(r, data, 1, -1, "1000011","30",1);
+            //addSignal(r, data, 1, -1, "1000011","30",1);
             
             data.roads.push_back(r);
 
@@ -481,7 +464,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
             r.id = 100*junc.id + 50 + nCount;
 
             createRoadConnection(r4,r2,r,junc,from,to,non,non,non);            
-            addSignal(r, data, 1, -1, "1000011","30",2);
+            //addSignal(r, data, 1, -1, "1000011","30",2);
             
             data.roads.push_back(r);
 
@@ -503,7 +486,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
                 createRoadConnection(r1,r2,r,junc,from,to,non,sol,non);
             else if (i != 0) 
                 createRoadConnection(r1,r2,r,junc,from,to,non,non,non);
-            addSignal(r, data, 1, -1, "1000011","20",1);
+            //addSignal(r, data, 1, -1, "1000011","20",1);
             
             data.roads.push_back(r);
 
@@ -522,7 +505,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
             r.id = 100*junc.id + 50 + nCount;
 
             createRoadConnection(r2,r1,r,junc,from,to,non,non,non);
-            addSignal(r, data, 1, -1, "1000011", "10", 4);
+            //addSignal(r, data, 1, -1, "1000011", "10", 4);
             
             data.roads.push_back(r);
 
@@ -544,7 +527,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
                 createRoadConnection(r2,r3,r,junc,from,to,non,sol,bro);
             else if (i != 0) 
                 createRoadConnection(r2,r3,r,junc,from,to,non,non,bro);
-            addSignal(r, data, 1, -1, "1000011","20", 2);
+            //addSignal(r, data, 1, -1, "1000011","20", 2);
             
             data.roads.push_back(r);
 
@@ -564,7 +547,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
             r.id = 100*junc.id + 50 + nCount;
 
             createRoadConnection(r3,r2,r,junc,from,to,non,non,non);            
-            addSignal(r, data, 1, -1, "1000011", "10", 3);
+            //addSignal(r, data, 1, -1, "1000011", "10", 3);
             
             data.roads.push_back(r);
 
@@ -587,7 +570,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
                 createRoadConnection(r3,r4,r,junc,from,to,non,sol,non);
             else if (i != 0) 
                 createRoadConnection(r3,r4,r,junc,from,to,non,non,non);
-            addSignal(r, data, 1, -1, "1000011","20", 1);
+            //addSignal(r, data, 1, -1, "1000011","20", 1);
             
             data.roads.push_back(r);
 
@@ -606,7 +589,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
             r.id = 100*junc.id + 50 + nCount;
 
             createRoadConnection(r4,r3,r,junc,from,to,non,non,non);
-            addSignal(r, data, 1, -1, "1000011", "10", 4);
+            //addSignal(r, data, 1, -1, "1000011", "10", 4);
             
             data.roads.push_back(r);
 
@@ -629,7 +612,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
                 createRoadConnection(r4,r1,r,junc,from,to,non,sol,non);
             else if (i != 0) 
                 createRoadConnection(r4,r1,r,junc,from,to,non,non,non);
-            addSignal(r, data, 1, -1, "1000011","20", 2);
+            //addSignal(r, data, 1, -1, "1000011","20", 2);
             
             data.roads.push_back(r);
 
@@ -648,7 +631,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
             r.id = 100*junc.id + 50 + nCount;
 
             createRoadConnection(r1,r4,r,junc,from,to,non,non,non);
-            addSignal(r, data, 1, -1, "1000011", "10", 3);
+            //addSignal(r, data, 1, -1, "1000011", "10", 3);
             
             data.roads.push_back(r);
 

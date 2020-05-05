@@ -55,7 +55,6 @@ int addArc(vector<geometry> &geo, double x1, double y1, double phi1, double x2, 
     if (abs(R) < 10)
     {
         cerr << "Radius is to small in arc generation." << endl;
-        //return 1;
     }
 
     geometry g;

@@ -1,8 +1,11 @@
 #include <iostream>
+#include <iomanip>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include <cmath>
+#include <ctime>
 
 #ifdef _WIN32
 #define NOMINMAX
@@ -23,6 +26,8 @@ using namespace std;
 #include "generation/buildSegments.h"
 #include "connection/linkSegments.h"
 #include "connection/closeRoadNetwork.h"
+
+settings setting;
 
 /**
  * @brief main function for the tool 'road-generation'
@@ -46,15 +51,15 @@ int main(int argc,  char** argv)
 		cerr << "ERR: no input file provided." << endl; 
 		return -1;
 	}
-	
-
-	// --- initialization ------------------------------------------------------
-  	//freopen( "log.txt", "a", stderr );
+		
+	//freopen( "log.txt", "a", stderr );
   	//cerr << "\nError log for run with attribute: " << file << endl;
-
+	// TODO remove
+	
 	printLogo();
 
-	pugi::xml_document in;
+	// --- initialization ------------------------------------------------------
+  	pugi::xml_document in;
 	pugi::xml_document out;
 	roadNetwork data;
 

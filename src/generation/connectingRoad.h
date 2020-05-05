@@ -13,6 +13,8 @@ int connectingRoad(pugi::xml_node &node, roadNetwork &data)
     data.nSegment++;
     pugi::xml_node mainRoad = node.child("road");
 
+    pugi::xml_node dummy;
+    
     if(!mainRoad)
     {
         cerr << "ERR: specified road is not found.";
@@ -27,7 +29,7 @@ int connectingRoad(pugi::xml_node &node, roadNetwork &data)
     r.id = 100 * node.attribute("id").as_int() + id;
     r.junction = node.attribute("id").as_int();
     
-    buildRoad(mainRoad, r, 0, INFINITY, 0, 0, 0, 0, 0);
+    buildRoad(mainRoad, r, 0, INFINITY, dummy, 0, 0, 0, 0);
     addObjects(mainRoad, r, data);
 
     data.roads.push_back(r);

@@ -1,5 +1,7 @@
 // file createLaneConnection.h
 
+extern settings setting;
+
 /**
  * @brief function creates a new lane connection
  * 
@@ -66,7 +68,7 @@ int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, in
     
     lane newLane;
     newLane.id = dir;
-    newLane.speed = 30;
+    newLane.speed = setting.speed.access;
     newLane.preId = from;
     newLane.sucId = to;
 

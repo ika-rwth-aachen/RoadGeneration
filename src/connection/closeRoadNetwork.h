@@ -2,6 +2,7 @@
 
 #include "closeRoadConnection.h"
 
+extern settings setting;
 /**
  * @brief function which closes all roads and add correct lane sections
  * 
@@ -163,30 +164,30 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
         double dPos = abs(findMaxLaneId(lS2)) - abs(findMaxLaneId(lS1));
         double dNeg = abs(findMinLaneId(lS2)) - abs(findMinLaneId(lS1));
     
-		double ds = 25;
-        double sNeeded = 0;
+		double ds = setting.laneChange.ds;
+        double s = 0;
         while (dPos > 0) 
         {   
-            addLaneWidening(secs, findMaxLaneId(lS1), sNeeded, ds, false);
-            sNeeded += ds;
+            addLaneWidening(secs, findMaxLaneId(lS1), s, ds, false);
+            s += ds;
             dPos--;
         }
         while (dNeg > 0) 
         {   
-            addLaneWidening(secs, findMinLaneId(lS1), sNeeded, ds, false);
-            sNeeded += ds;
+            addLaneWidening(secs, findMinLaneId(lS1), s, ds, false);
+            s += ds;
             dNeg--;
         }
         while (dPos < 0) 
         {   
-            addLaneDrop(secs, findMaxLaneId(lS1), sNeeded, ds);
-            sNeeded += ds;
+            addLaneDrop(secs, findMaxLaneId(lS1), s, ds);
+            s += ds;
             dPos++;
         }
         while (dNeg < 0) 
         {   
-            addLaneDrop(secs, findMinLaneId(lS1), sNeeded, ds);
-            sNeeded += ds;
+            addLaneDrop(secs, findMinLaneId(lS1), s, ds);
+            s += ds;
             dNeg++;
         }
 
@@ -203,7 +204,7 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 			double w2 = refLane.w.a;
 			if (w1 == w2) continue;
 
-			double length = rConnection.length - sNeeded; 
+			double length = rConnection.length - s; 
 
 			curLane.w.d = -2 * (w2 - w1) / pow(length,3);
     		curLane.w.c =  3 * (w2 - w1) / pow(length,2);

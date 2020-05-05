@@ -12,6 +12,8 @@
 
 using namespace xercesc;
 
+extern settings setting;
+
 /**
  * @brief function which checks the input file against the corresponding xsd
  * 
@@ -138,16 +140,29 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     
     // write header
     pugi::xml_node header = root.append_child("header");
-    header.append_attribute("revMajor") = data.versionMajor;
-    header.append_attribute("revMinor") = data.versionMinor;
+    header.append_attribute("revMajor") = setting.versionMajor;
+    header.append_attribute("revMinor") = setting.versionMinor;
+    header.append_attribute("north") = setting.north;
+    header.append_attribute("south") = setting.south;
+    header.append_attribute("west") = setting.west;
+    header.append_attribute("east") = setting.east;
+
+    auto t = std::time(nullptr);
+    auto tm = *std::localtime(&t);
+    std::ostringstream oss;
+    oss << std::put_time(&tm, "%Y-%m-%d %H:%M:%S");
+    header.append_attribute("date") = oss.str().c_str();
+
+    pugi::xml_node geoReference = header.append_child("geoReference");
+    geoReference.append_child(pugi::node_cdata).set_value("+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
 
     // --- write roads ---------------------------------------------------------
     for (std::vector<road>::iterator it = data.roads.begin() ; it != data.roads.end(); ++it)
     {
         pugi::xml_node road = root.append_child("road");
         
-        road.append_attribute("length") = it->length;
         road.append_attribute("id") = it->id;
+        road.append_attribute("length") = it->length;
         road.append_attribute("junction") = it->junction;
     
         pugi::xml_node pre = road.append_child("link").append_child("predecessor");
@@ -334,7 +349,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         // --- write signs ---------------------------------------------------
     
         // signs format is different in version 1.4
-        if (data.versionMajor >= 1 && data.versionMinor >= 5)
+        if (setting.versionMajor >= 1 && setting.versionMinor >= 5)
         {
             pugi::xml_node signs = road.append_child("signals");
 
@@ -367,7 +382,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     // --- write controllers ---------------------------------------------------
     
     // controllers format is different in version 1.4
-    if (data.versionMajor >= 1 && data.versionMinor >= 5)
+    if (setting.versionMajor >= 1 && setting.versionMinor >= 5)
     {        
         for (std::vector<control>::iterator it = data.controller.begin() ; it != data.controller.end(); ++it)
         {

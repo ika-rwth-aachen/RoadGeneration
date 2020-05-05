@@ -1,5 +1,7 @@
 // file interface.h
 
+extern settings setting;
+
 enum contactPointType {startType, endType};
 enum geometryType {line, spiral, arc};
 enum linkType {roadType, junctionType};
@@ -32,7 +34,7 @@ struct roadmark
 struct width
 {
     double s = 0;
-    double a = 3.5;
+    double a = setting.width.standard;
     double b = 0;
     double c = 0;
     double d = 0;
@@ -62,7 +64,7 @@ struct lane
     bool turnStraight = true;
     bool turnRight = false;
     bool level = true;          
-    double speed = 50;
+    double speed = setting.speed.standard;
     width w;
     roadmark rm;
     material m;
@@ -127,8 +129,8 @@ struct sign
     double t = 0;
     double z = 0;
     string orientation = "none";
-    double width = 0;
-    double height = 0;
+    double width = 0.4;
+    double height = 2;
     bool dynamic = false;
     string country = "OpenDRIVE";
 };
@@ -167,7 +169,4 @@ struct roadNetwork
 
     int nSignal = 0;
     int nSegment = 0;
-    
-    int versionMajor = 1;
-    int versionMinor = 5;
 };

@@ -14,6 +14,8 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
     junction junc;
     junc.id = node.attribute("id").as_int();
 
+    pugi::xml_node dummy;
+
     pugi::xml_node mainRoad = node.child("circle");
     int refId = mainRoad.attribute("id").as_int();
     if (!mainRoad)
@@ -85,12 +87,12 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
 
         // calculate width of mainRoad and addtionalRoad
         road helpMain;
-        buildRoad(mainRoad, helpMain, 0, INFINITY, 0, 0, 0, 0, 0);  
+        buildRoad(mainRoad, helpMain, 0, INFINITY, dummy, 0, 0, 0, 0);  
         laneSection lSMain = helpMain.laneSections.front();
         double widthMain = abs(findTOffset(lSMain, findMinLaneId(lSMain), 0));
         
         road helpAdd;
-        buildRoad(additionalRoad, helpAdd, 0, INFINITY, 0, 0, 0, 0, 0);  
+        buildRoad(additionalRoad, helpAdd, 0, INFINITY, dummy, 0, 0, 0, 0);  
         laneSection lSAdd = helpAdd.laneSections.front();
         double widthAdd = abs(findTOffset(lSAdd, findMinLaneId(lSAdd), 0)) +                      abs(findTOffset(lSAdd, findMaxLaneId(lSAdd), 0));
         
@@ -100,6 +102,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         {sOffMain = widthAdd/2 * 1.25; changed = true;}
         if (sOffAdd < widthMain   * 1.5) 
         {sOffAdd = widthMain * 1.5; changed = true;}        
+        // TODO check why 1.25 and 1.5 ? 
         
         if (changed)
         {
@@ -143,7 +146,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         r1.successor.contactPoint = startType;
         if (cc == 1) sOld = sOffMain;
 
-        buildRoad(mainRoad, r1, sOld, sMain-sOffMain, 0, sMain, iPx, iPy,iPhdg);       
+        buildRoad(mainRoad, r1, sOld, sMain-sOffMain, dummy, sMain, iPx, iPy,iPhdg);       
         nCount++; 
 
         road r2;
@@ -152,18 +155,18 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         r2.predecessor.id = junc.id;
         r2.predecessor.elementType = junctionType;
         r2.predecessor.contactPoint = startType;
-        buildRoad(additionalRoad, r2, sAdd+sOffAdd, INFINITY, 0, sAdd, iPx, iPy, iPhdg+phi); 
+        buildRoad(additionalRoad, r2, sAdd+sOffAdd, INFINITY, dummy, sAdd, iPx, iPy, iPhdg+phi); 
         addObjects(additionalRoad, r2, data);
         nCount++; 
 
         // add signal to outgoing roads
-        addSignal(r2, data, 1, INFINITY, "1.000.001", "-", -1);
+        //addSignal(r2, data, 1, INFINITY, "1.000.001", "-", -1);
 
         road helper;
         helper.id = 100*junc.id + cc * 10 + nCount; 
         helper.junction = junc.id;
         if (cc < nIp)
-            buildRoad(mainRoad, helper, sMain+sOffMain, sMain+2*sOffMain, 0, sMain, iPx, iPy,iPhdg);  
+            buildRoad(mainRoad, helper, sMain+sOffMain, sMain+2*sOffMain, dummy, sMain, iPx, iPy,iPhdg);  
         else // last segment
         {
             helper = rOld;
