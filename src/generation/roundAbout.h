@@ -103,7 +103,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         if (sOffAdd < widthMain   * 1.5) 
         {sOffAdd = widthMain * 1.5; changed = true;}        
         // TODO check why 1.25 and 1.5 ? 
-        
+
         if (changed)
         {
             cerr << "!!! sOffset of at least one road was changed, due to feasible road structure !!!" << endl;
@@ -116,7 +116,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         }
 
         // calculate s and phi at intersection
-        double sMain = iP.attribute("s").as_double() * length;
+        double sMain = iP.attribute("s").as_double();
         double sAdd = iP.child("adRoad").attribute("s").as_double();
         double phi = iP.child("adRoad").attribute("angle").as_double();
 

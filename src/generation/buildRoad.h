@@ -478,28 +478,30 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node  automa
     
     double widing_s = setting.laneChange.s;
     double widing_ds = setting.laneChange.ds;
+    string active = "main";
 
     if (automaticWiding)
     {
-        if (automaticWiding.attribute("active").as_bool())
+        if (automaticWiding.attribute("active"))
         {   
+            active = automaticWiding.attribute("active").value();
+
             if (automaticWiding.attribute("s")) widing_s = automaticWiding.attribute("s").as_double();
 
             if (automaticWiding.attribute("length")) widing_ds = automaticWiding.attribute("length").as_double();
-
-            if (automaticWiding.attribute("restricted").as_bool()) 
+        }
+        if (automaticWiding.attribute("restricted").as_bool()) 
                 widing_ds *= -1;
+
+        if (active == "all")
             laneWideningJunction(r,  widing_s, widing_ds, 1, true);
-        }
-    
-        else if (r.classification == "main")
-        {
-            if (automaticWiding.attribute("restricted").as_bool()) 
-                widing_ds *= -1;
-            laneWideningJunction(r, widing_s, widing_ds, 1, true);
-        }
-    }
 
+        else if (active == "main" && r.classification == "main")
+            laneWideningJunction(r, widing_s, widing_ds, 1, true);
+        
+        else if (active == "access" && r.classification == "access")
+            laneWideningJunction(r, widing_s, widing_ds, 1, true);
+    }  
     return 0;
 }
 
@@ -519,6 +521,8 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node  automa
  */
 int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::xml_node automaticWiding, double s0, double x0, double y0, double phi0)
 {
+    r.classification = roadIn.attribute("classification").value();
+
     // save geometry data from sStart - sEnd 
     // mode = 1 -> in s direction
     // mode = 2 -> in opposite s direction
