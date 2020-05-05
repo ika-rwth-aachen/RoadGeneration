@@ -206,7 +206,7 @@ elementFormDefault="qualified">
                 Element:
             </xs:documentation>
         </xs:annotation>
-        <xs:attribute name="active" type="xs:boolean" use="required"/>
+        <xs:attribute name="active" type="activeType" use="required"/>
         <xs:attribute name="s" type="xs:double" use="optional"/>
         <xs:attribute name="length" type="positiveDouble" use="optional"/>
     </xs:complexType>
@@ -355,16 +355,11 @@ elementFormDefault="qualified">
         <xs:annotation>
             <xs:documentation>
                 Element:
+                only the first 2 / 3 / 4 are considered
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:annotation>
-                <xs:documentation>
-                    additional roads will be added and get ID ..1, ..2, etc.
-                    notice that for linking process, there the new ID's are used
-                </xs:documentation>
-            </xs:annotation>
-            <xs:element name="adRoad" type="adRoadType" maxOccurs="unbounded"/>
+            <xs:element name="adRoad" type="adRoadType" maxOccurs="4"/>
         </xs:sequence>
         <xs:attribute name="refRoad" type="xs:positiveInteger" use="required"/>
         <xs:attribute name="s" type="xs:double" use="required"/>    
@@ -710,5 +705,19 @@ elementFormDefault="qualified">
             <xs:minInclusive value="0"/>
         </xs:restriction>
     </xs:simpleType>
+
+    <xs:simpleType name="activeType">
+        <xs:annotation>
+            <xs:documentation>
+                Element:
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="none"/>
+          <xs:enumeration value="all"/>
+          <xs:enumeration value="main"/>
+          <xs:enumeration value="access"/>
+        </xs:restriction>
+      </xs:simpleType>
 
 </xs:schema>

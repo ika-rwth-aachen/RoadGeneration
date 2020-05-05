@@ -155,7 +155,7 @@ int curve(double s, geometry geo, double &x, double &y, double &phi, int fd)
         x += a * (cos(phi-tau) * x2 - sin(phi-tau) * y2);
         y += a * (sin(phi-tau) * x2 + cos(phi-tau) * y2);
         
-        // calculate angle with finite differences -> TODO
+        // calculate angle with finite differences
         if (fd)
         {
             double xTmp1 = 0;
