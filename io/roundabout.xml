@@ -29,16 +29,16 @@
                      <line length="100"/>
                 </referenceLine>
             </road>
-            <intersectionPoint refRoad="1" s="0.25">
+            <intersectionPoint refRoad="1" s="80">
                 <adRoad id="2" s="0" angle="-1.56"/>
             </intersectionPoint>
-            <intersectionPoint refRoad="1" s="0.5">
+            <intersectionPoint refRoad="1" s="160">
                 <adRoad id="2" s="0" angle="-1.56"/>
             </intersectionPoint>
-            <intersectionPoint refRoad="1" s="0.75">
+            <intersectionPoint refRoad="1" s="240">
                 <adRoad id="2" s="0" angle="-1.56"/>
             </intersectionPoint>
-            <intersectionPoint refRoad="1" s="1">
+            <intersectionPoint refRoad="1" s="320">
                 <adRoad id="2" s="0" angle="-1.6"/>
             </intersectionPoint>
         </roundabout>

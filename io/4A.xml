@@ -1,25 +1,25 @@
 <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
 	<segments>
         <junction id="1" type="4A">
-            <road id="1" classification="access">	
+            <road id="1" classification="main">	
                 <referenceLine>
                      <spiral length="200" Rs="-100" Re="0"/>
                 </referenceLine>
                 <lanes>
                     <laneSection id="1" s="0">
                         <lane id="1" type="driving">
-                            <roadMark type="solid" color="white" width="0.13"/>
+                            <roadMark type="solid" color="blue"/>
                         </lane>
                         <lane id="0" type="driving">
-                            <roadMark type="broken" color="white" width="0.13"/>
+                            <roadMark type="broken"/>
                         </lane>
                         <lane id="-1" type="driving">
-                            <roadMark type="solid" color="white" width="0.13"/>
+                            <roadMark type="solid" color="yellow"/>
                         </lane>
                     </laneSection>
                 </lanes>
             </road>
-            <road id="2" classification="access">	
+            <road id="2" classification="main">	
                 <referenceLine>
                      <arc length="100" R="100"/>
                 </referenceLine>
@@ -68,6 +68,7 @@
                 </junctionArea>
                 <connection type="all"/>
             </coupler>
+            <automaticWiding active="main" s="20" length="10"/>
         </junction>
 	</segments>
 </roadNetwork>
