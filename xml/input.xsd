@@ -301,7 +301,6 @@ elementFormDefault="qualified">
                 Element:
             </xs:documentation>
         </xs:annotation>
-        <xs:attribute name="s" type="xs:double" use="required"/>        
         <xs:attribute name="length" type="positiveDouble" use="optional"/>  
     </xs:complexType>
 
@@ -617,7 +616,6 @@ elementFormDefault="qualified">
         </xs:annotation>
         <xs:choice>
             <xs:element name="relativePosition" type="relativeType" />
-            <xs:element name="repeatPosition" type="repeatType" />
         </xs:choice>
         <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
     </xs:complexType>
