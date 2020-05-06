@@ -5,8 +5,6 @@
                 <referenceLine>
                     <line length="400"/>
                 </referenceLine>
-                <lanes>
-                </lanes>
             </road>
             <road id="2" classification="access" >	
                 <referenceLine>

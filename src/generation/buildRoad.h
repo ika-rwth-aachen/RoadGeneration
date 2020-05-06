@@ -486,9 +486,9 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node  automa
         {   
             active = automaticWiding.attribute("active").value();
 
-            if (automaticWiding.attribute("s")) widing_s = automaticWiding.attribute("s").as_double();
+            if (automaticWiding.attribute("length")) widing_s = automaticWiding.attribute("length").as_double();
 
-            if (automaticWiding.attribute("length")) widing_ds = automaticWiding.attribute("length").as_double();
+            if (automaticWiding.attribute("ds")) widing_ds = automaticWiding.attribute("ds").as_double();
         }
         if (automaticWiding.attribute("restricted").as_bool()) 
                 widing_ds *= -1;

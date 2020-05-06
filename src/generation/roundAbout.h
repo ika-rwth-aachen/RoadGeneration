@@ -229,18 +229,18 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
             if (clockwise)
             {
                 if (i == 0)
-                    createRoadConnection(r1,helper,r,junc,from,to,non,sol,non);
+                    createRoadConnection(r1,helper,r,junc,from,to,non,sol);
                 if (i != 0)
-                    createRoadConnection(r1,helper,r,junc,from,to,bro,non,non);
+                    createRoadConnection(r1,helper,r,junc,from,to,bro,non);
                 from++;
                 to++;
             }
             if (!clockwise)
             {
                 if (i == 0)
-                    createRoadConnection(r1,helper,r,junc,from,to,sol,non,non);
+                    createRoadConnection(r1,helper,r,junc,from,to,sol,non);
                 if (i != 0)
-                    createRoadConnection(r1,helper,r,junc,from,to,bro,non,non);
+                    createRoadConnection(r1,helper,r,junc,from,to,bro,non);
                 from--;
                 to--;
             }
@@ -256,14 +256,14 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
             if (r2_F_R != 0) to = r2_F_R;
             else to = r2_F_MO;
 
-            createRoadConnection(r1,r2,r5,junc,from,to,sol,non,non);
+            createRoadConnection(r1,r2,r5,junc,from,to,sol,non);
         }
         if (!clockwise){
             from = outer1;
             if (r2_T_R != 0) to = r2_T_R;
             else to = r2_T_MO;
 
-            createRoadConnection(r1,r2,r5,junc,from,to,non,sol,non);
+            createRoadConnection(r1,r2,r5,junc,from,to,non,sol);
         }
         nCount++;
 
@@ -273,13 +273,13 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
             if (r2_T_R != 0) from = r2_T_R;
             else from = r2_T_MO;
             to = outer3;
-            createRoadConnection(r2,helper,r6,junc,from,to,sol,non,non);
+            createRoadConnection(r2,helper,r6,junc,from,to,sol,non);
         }
         if (!clockwise){
             if (r2_F_R != 0) from = r2_F_R;
             else from = r2_F_MO;
             to = outer3;
-            createRoadConnection(r2,helper,r6,junc,from,to,non,sol,non);
+            createRoadConnection(r2,helper,r6,junc,from,to,non,sol);
         }
         nCount++;
 

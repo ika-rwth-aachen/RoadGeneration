@@ -11,10 +11,9 @@
  * @param toId              end lane Id
  * @param laneMarkLeft      left roadmarking
  * @param laneMarkRight     right roadmarking
- * @param laneMarkMiddle    middle roadmarking
  * @return int              errorcode
  */
-int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, int toId, string laneMarkLeft, string laneMarkRight, string laneMarkMiddle)
+int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, int toId, string laneMarkLeft, string laneMarkRight)
 {
     laneSection lS;
     if (r.laneSections.size() == 0) r.laneSections.push_back(lS);

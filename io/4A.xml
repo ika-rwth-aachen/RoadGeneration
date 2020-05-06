@@ -84,9 +84,14 @@
                     <roadBorder id="2" s="15"/>
                     <roadBorder id="3" s="15"/>
                 </junctionArea>
-                <connection type="all"/>
+                <connection type="single">
+                    <roadLink fromId="1" toId="2">
+                        <laneLink fromId="2" toId="1"/>
+                        <laneLink fromId="-1" toId="-2"/>
+                    </roadLink>
+                </connection>
             </coupler>
-            <automaticWiding active="main" s="20" length="10"/>
+            <automaticWiding active="main" length="20" ds="10"/>
         </junction>
 	</segments>
 </roadNetwork>
