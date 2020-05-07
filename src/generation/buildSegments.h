@@ -1,4 +1,12 @@
-// file buildSegments.h
+/**
+ * @file buildSegments.h
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
 
 #include "buildRoad.h"
 #include "addObjects.h"
@@ -19,7 +27,7 @@
  * 
  * @param doc 	tree structure which contains the input data
  * @param data 	roadNetwork data where the openDrive structure should be generated
- * @return int 	errorcode
+ * @return int 	error code
  */
 int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 {

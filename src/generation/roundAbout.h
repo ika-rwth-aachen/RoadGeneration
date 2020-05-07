@@ -1,11 +1,19 @@
-// roundAbout.h
+/**
+ * @file roundAbout.h
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
 
 /**
  * @brief function generates the roads and junctions for a roundabout which is specified in the input file
  *  
  * @param node  input data from the input file for the roundAbout
  * @param data  roadNetwork structure where the generated roads and junctions are stored
- * @return int  errorcode
+ * @return int  error code
  */
 int roundAbout(pugi::xml_node &node, roadNetwork &data)
 {

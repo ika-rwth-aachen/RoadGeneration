@@ -1,10 +1,22 @@
-// junctionWrapper.h
+/**
+ * @file junctionWrapper.h
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
 
 #include "xjunction.h"
 #include "tjunction.h"
 
 /**
- * @brief function for junctionWrapper
+ * @brief 
+ * 
+ * @param node 
+ * @param data 
+ * @return int 
  */
 int junctionWrapper(pugi::xml_node &node, roadNetwork &data)
 {

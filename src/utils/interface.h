@@ -1,4 +1,12 @@
-// file interface.h
+/**
+ * @file interface.h
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
 
 extern settings setting;
 
@@ -6,6 +14,10 @@ enum contactPointType {startType, endType};
 enum geometryType {line, spiral, arc};
 enum linkType {roadType, junctionType};
 
+/**
+ * @brief 
+ * 
+ */
 struct connection
 {
     int id = -1;
@@ -16,12 +28,20 @@ struct connection
     int toLane = -1;
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct junction
 {
     int id = -1;
     vector<connection> connections;
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct roadmark
 {
     double s = 0;
@@ -31,6 +51,10 @@ struct roadmark
     double width = 0.15;
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct width
 {
     double s = 0;
@@ -40,6 +64,10 @@ struct width
     double d = 0;
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct offset
 {
     double a = 0;
@@ -48,6 +76,10 @@ struct offset
     double d = 0;
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct material
 {
     double s = 0;
@@ -56,6 +88,10 @@ struct material
     double roughness = 0.015;
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct lane
 {
     int id = -1;
@@ -72,6 +108,10 @@ struct lane
     int sucId = -1;
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct laneSection
 {
     int id = -1;
@@ -80,6 +120,10 @@ struct laneSection
     offset o;
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct geometry
 {
     geometryType type;
@@ -93,6 +137,10 @@ struct geometry
     double c2 = -1;
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct link
 {
     int id = -1;
@@ -100,6 +148,10 @@ struct link
     contactPointType contactPoint;
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct object
 {
     int id = -1;
@@ -118,6 +170,10 @@ struct object
     double distance = 0;
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct sign
 {
     int id = -1;
@@ -135,12 +191,20 @@ struct sign
     string country = "OpenDRIVE";
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct control
 {
     int id = -1;
     vector<sign> signs;
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct road
 {
     int id = -1;
@@ -161,6 +225,10 @@ struct road
     vector<sign> signs;
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct roadNetwork
 {
     string file;

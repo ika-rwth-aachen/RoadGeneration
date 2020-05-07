@@ -1,5 +1,17 @@
-// file settings.h
+/**
+ * @file settings.h
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
 
+/**
+ * @brief 
+ * 
+ */
 struct widths
 {
     double access = 3;
@@ -7,6 +19,10 @@ struct widths
     double standard = 3.5;
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct speeds
 {
     double access = 30;
@@ -14,18 +30,30 @@ struct speeds
     double standard = 50;
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct laneChanges
 {
     double s = 25;
     double ds = 25;
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct busStops
 {
     double length = 20;
     double widing = 7.5;
 };
 
+/**
+ * @brief 
+ * 
+ */
 struct settings
 {
     speeds speed;

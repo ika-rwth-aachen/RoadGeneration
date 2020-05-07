@@ -1,4 +1,13 @@
-// file helper.h
+/**
+ * @file helper.h
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
+
 /**
  * @brief signum function
  * 
@@ -18,7 +27,7 @@ int sgn(double d)
  * @brief function fixes the input angle in the range of [-M_PI, M_PI]
  * 
  * @param a     angle which should be fixed
- * @return int  errorcode
+ * @return int  error code
  */
 int fixAngle(double &a)
 {
@@ -165,7 +174,7 @@ double findTOffset(laneSection sec, int id, double s)
  * @param sec   lanesection which should be shifted
  * @param id    lane which is the start of the shift; all outer lanes are shifted one
  * @param dir   dir = 1 shift to outer side, die = -1 shift to inner side
- * @return int  errorcode 
+ * @return int  error code 
  */
 int shiftLanes(laneSection &sec, int id, int dir)
 {
@@ -394,7 +403,7 @@ int calcFromTo(road r1, road r2, int &from, int &to, int &nF, int &nT, int mode)
  * @param r2    first additional road
  * @param r3    second additional road
  * @param r4    third additional road
- * @return int  errorcode
+ * @return int  error code
  */
 int sortRoads(road r1, road &r2, road &r3, road &r4)
 {
@@ -462,7 +471,7 @@ int sortRoads(road r1, road &r2, road &r3, road &r4)
  * @param r1    reference road with reference angle
  * @param r2    first additional road
  * @param r3    second additional road
- * @return int  errorcode
+ * @return int  error code
  */
 int sortRoads(road r1, road &r2, road &r3)
 {
@@ -506,7 +515,7 @@ int sortRoads(road r1, road &r2, road &r3)
  * @param type2     type of second point (p,n,0)
  * @param iPx       x position of intersection point
  * @param iPy       y position of intersection point
- * @return int      errorcode
+ * @return int      error code
  */
 int computeIP(double x1,double y1,double phi1,double x2,double y2,double phi2,int &type, int &type1, int &type2,double &iPx,double &iPy)
 {
@@ -529,6 +538,7 @@ int computeIP(double x1,double y1,double phi1,double x2,double y2,double phi2,in
 }
 
 template<typename ... Args>
+
 /**
  * @brief function used for xsd checking output
  * 
@@ -545,7 +555,12 @@ std::string string_format(const std::string &format, Args ... args)
 	return std::string(buf, buf + size - 1); 
 }
 
-
+/**
+ * @brief Get the Contact Point Type object
+ * 
+ * @param t 
+ * @return std::string 
+ */
 std::string getContactPointType(contactPointType t)
 {
     if (t == startType) return "start";
@@ -553,7 +568,12 @@ std::string getContactPointType(contactPointType t)
     return "none";
 }
 
-
+/**
+ * @brief Get the Geometry Type object
+ * 
+ * @param t 
+ * @return std::string 
+ */
 std::string getGeometryType(geometryType t)
 {
     if (t == line) return "line";
@@ -562,6 +582,12 @@ std::string getGeometryType(geometryType t)
     return "none";
 }
 
+/**
+ * @brief Get the Link Type object
+ * 
+ * @param t 
+ * @return std::string 
+ */
 std::string getLinkType(linkType t)
 {
     if (t == roadType) return "road";
@@ -569,16 +595,40 @@ std::string getLinkType(linkType t)
     return "none";
 }
 
+/**
+ * @brief 
+ * 
+ * @param a 
+ * @param b 
+ * @return true 
+ * @return false 
+ */
 bool compareObjects(const object &a, const object &b)
 {
     return a.id < b.id;
 }
 
+/**
+ * @brief 
+ * 
+ * @param a 
+ * @param b 
+ * @return true 
+ * @return false 
+ */
 bool compareSignals(const sign &a, const sign &b)
 {
     return a.id < b.id;
 }
 
+/**
+ * @brief 
+ * 
+ * @param a 
+ * @param b 
+ * @return true 
+ * @return false 
+ */
 bool compareLanes(const lane &a, const lane &b)
 {
     return a.id < b.id;

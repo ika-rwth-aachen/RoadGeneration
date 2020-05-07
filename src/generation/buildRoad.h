@@ -1,10 +1,28 @@
-// file buildRoad.h
+/**
+ * @file buildRoad.h
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
 
 #include "../utils/curve.h"
 #include "addLaneSections.h"
 
 extern settings setting;
 
+/**
+ * @brief 
+ * 
+ * @param roadIn 
+ * @param foundfirst 
+ * @param foundlast 
+ * @param sStart 
+ * @param sEnd 
+ * @return int 
+ */
 int computeFirstLast(pugi::xml_node roadIn, int &foundfirst, int &foundlast, double &sStart, double &sEnd)
 {
     int cc = 0;
@@ -32,6 +50,15 @@ int computeFirstLast(pugi::xml_node roadIn, int &foundfirst, int &foundlast, dou
     return 0;
 }
 
+/**
+ * @brief
+ * 
+ * @param roadIn 
+ * @param r 
+ * @param sStart 
+ * @param sEnd 
+ * @return int 
+ */
 int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &sEnd)
 {
     // search first and last relevant geometry
@@ -179,6 +206,18 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
     return 0;
 }
 
+/**
+ * @brief 
+ * 
+ * @param r 
+ * @param sStart 
+ * @param sEnd 
+ * @param s0 
+ * @param x0 
+ * @param y0 
+ * @param phi0 
+ * @return int 
+ */
 int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, double y0, double phi0)
 {
     /* -> s0 is located at x0, y0, phi0 
@@ -261,6 +300,11 @@ int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, d
     return 0;
 }
 
+/**
+ * @brief 
+ * 
+ * @param r 
+ */
 void flipGeometries(road &r)
 {
     road rNew = r;
@@ -293,6 +337,14 @@ void flipGeometries(road &r)
     r.geometries = rNew.geometries;
 }
 
+/**
+ * @brief 
+ * 
+ * @param roadIn 
+ * @param r 
+ * @param mode 
+ * @return int 
+ */
 int addLanes(pugi::xml_node roadIn, road &r, int mode)
 {
     double desWidth = setting.width.standard;
@@ -411,6 +463,14 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
     return 0;
 }
 
+/**
+ * @brief 
+ * 
+ * @param roadIn 
+ * @param r 
+ * @param automaticWiding 
+ * @return int 
+ */
 int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node  automaticWiding)
 {
     // --- user defined lanedrops or lanewidenings -----------------------------

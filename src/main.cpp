@@ -1,3 +1,13 @@
+/**
+ * @file main.cpp
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -36,7 +46,7 @@ settings setting;
  * 
  * @param argc amount of parameter calls
  * @param argv argv[1] is the specified input file <file>.xml which will be converted to <file>.xodr
- * @return int errorcode
+ * @return int error code
  */
 int main(int argc,  char** argv)
 {   

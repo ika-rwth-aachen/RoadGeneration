@@ -1,15 +1,22 @@
-// xjunction.h
+/**
+ * @file xjunction.h
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
+
+extern settings setting;
 
 /**
  * @brief function generates the roads and junctions for a x junction which is specified in the input file
  *  
  * @param node  input data from the input file for the xjunction
  * @param data  roadNetwork structure where the generated roads and junctions are stored
- * @return int  errorcode
+ * @return int  error code
  */
-
-extern settings setting;
-
 int xjunction(pugi::xml_node &node, roadNetwork &data)
 {
     // check type of the junction (M = mainroad, A = accessroad)

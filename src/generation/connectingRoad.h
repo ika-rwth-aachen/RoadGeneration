@@ -1,11 +1,19 @@
-// connectingRoad.h
+/**
+ * @file connectingRoad.h
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
 
 /**
  * @brief function generates the road for a connecting road which is specified in the input file
  *  
  * @param node  input data from the input file for the connecting road
  * @param data  roadNetwork structure where the generated roads and junctions are stored
- * @return int  errorcode
+ * @return int  error code
  */
 int connectingRoad(pugi::xml_node &node, roadNetwork &data)
 {

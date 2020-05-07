@@ -1,4 +1,12 @@
-// file io.h
+/**
+ * @file io.cpp
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
 
 #include "pugixml.hpp"
 #include <xercesc/util/XMLString.hpp>
@@ -7,7 +15,6 @@
 #include <xercesc/sax/ErrorHandler.hpp>
 #include <xercesc/sax/SAXParseException.hpp>
 #include <xercesc/validators/common/Grammar.hpp>
-
 #include <algorithm>
 
 using namespace xercesc;
@@ -55,7 +62,7 @@ int validateInput(char *file)
 /**
  * @brief function which checks the output file against the corresponding xsd
  * 
- * @param file  output file
+ * @param data  
  * @return int  error code
  */
 int validateOutput(roadNetwork data)
@@ -100,7 +107,7 @@ int validateOutput(roadNetwork data)
  * @param doc   tree structure which contains the data of the xml input file
  * @param data  roadNetwork data which will be stored as openDrive format
  * @param file  xml input file
- * @return int  errorcode
+ * @return int  error code
  */
 int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file)
 {
@@ -124,7 +131,7 @@ int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file)
  * 
  * @param doc   tree structure which contains the generated data in openDrive format
  * @param data  generated data by this tool
- * @return int  errorcode
+ * @return int  error code
  */
 int createXML(pugi::xml_document &doc, roadNetwork data)
 {
@@ -437,6 +444,10 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     }
 }
 
+/**
+ * @brief 
+ * 
+ */
 void printLogo()
 {
     cout << "|‾\\  /‾\\  |‾‾| |‾\\       /‾‾  |‾‾  |\\  | |‾‾ |‾\\ |‾‾| ‾|‾ |  /‾\\  |\\  |" << endl;

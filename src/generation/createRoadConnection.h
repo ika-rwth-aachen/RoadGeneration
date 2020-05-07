@@ -1,4 +1,12 @@
-// file createRoadConnection.h
+/**
+ * @file createRoadConnection.h
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
 
 /**
  * @brief function creates a new road connection 
@@ -11,7 +19,7 @@
  * @param toId              end lane Id
  * @param laneMarkLeft      left roadmarking
  * @param laneMarkRight     right roadmarking
- * @return int              errorcode
+ * @return int              error code
  */
 int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, int toId, string laneMarkLeft, string laneMarkRight)
 {

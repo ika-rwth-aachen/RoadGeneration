@@ -1,4 +1,12 @@
-// file addObjects.h
+/**
+ * @file addObjects.h
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
 
 /**
  * @brief 
@@ -105,7 +113,7 @@ int addTrafficIsland(object o, road &r)
  * @param o         object containing length and position of roadwork   
  * @param r         road which contains the roadwork
  * @param laneId    lane which contains the roadwork
- * @return int      errorcode
+ * @return int      error code
  */
 int addRoadWork(object o, road &r, int laneId)
 {
@@ -274,7 +282,7 @@ int getPosition(pugi::xml_node node, object &o)
  * @param inRoad    road data from input file, containing the specified objects
  * @param r         resulting road with additional objects
  * @param data      roadNetwork structure where the generated roads and junctions are stored
- * @return int      errorcode
+ * @return int      error code
  */
 int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
 {
@@ -368,7 +376,7 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
  * @param t         t position of signal
  * @param type      type of signal
  * @param ori       orientation of signal
- * @return int      errorcode
+ * @return int      error code
  */
 int addSignal(road &r, roadNetwork &data, double s, double t, string type,  string subtype, int controller)
 {

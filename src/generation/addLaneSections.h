@@ -1,4 +1,12 @@
-// file addLaneSections.h
+/**
+ * @file addLaneSections.h
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
 
 /**
  * @brief function adds a laneSection with laneWiding  to a given lanesection set in s direction
@@ -8,7 +16,7 @@
  * @param s         position of lane widing
  * @param ds        length of lane widing
  * @param addouterLane  specifies if additional lane is on the outer side or not
- * @return int      errorcode
+ * @return int      error code
  */
 int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds, bool addOuterLane)
 { 
@@ -125,7 +133,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds, 
  * @param laneId    laneId of the lane where the laneDrop should be performed
  * @param s         position of laneDrop
  * @param ds        length of laneDrop
- * @return int      errorcode
+ * @return int      error code
  */
 int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
 {
@@ -210,8 +218,6 @@ int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
     return 0;
 }
 
-
-
 /**
  * @brief function adds a laneSection with restricted area to a given lanesection set in s direction
  * 
@@ -219,7 +225,7 @@ int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
  * @param laneId    laneId of the lane where the laneDrop should be performed
  * @param s         position of laneDrop
  * @param ds        length of laneDrop
- * @return int      errorcode
+ * @return int      error code
  */
 int addRestrictedArea(vector<laneSection> &secs, int laneId, double s, double ds1, double ds2)
 {
@@ -346,7 +352,7 @@ int addRestrictedArea(vector<laneSection> &secs, int laneId, double s, double ds
  * @param r 
  * @param sLaneWidening 
  * @param turn 
- * @return int 
+ * @return int error code
  */
 int laneWideningJunction(road &r, double  s, double ds, int turn, bool verschwenkung)
 {

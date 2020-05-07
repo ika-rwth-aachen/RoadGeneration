@@ -1,15 +1,22 @@
-// tjunction.h
+/**
+ * @file tjunction.h
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
+
+extern settings setting;
 
 /**
  * @brief function generates the roads and junctions for a t junction which is specified in the input file
  *  
  * @param node  input data from the input file for the tjunction
  * @param data  roadNetwork structure where the generated roads and junctions are stored
- * @return int  errorcode
+ * @return int  error code
  */
-
-extern settings setting;
-
 int tjunction(pugi::xml_node &node, roadNetwork &data)
 {
     // check type of the junction (M = mainroad, A = accessroad)

@@ -1,4 +1,12 @@
-// file createLaneConnection.h
+/**
+ * @file createLaneConnection.h
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
 
 extern settings setting;
 
@@ -12,7 +20,7 @@ extern settings setting;
  * @param to        end lane Id
  * @param left      left roadmarking 
  * @param right     right roadmarking
- * @return int      errorcode
+ * @return int      error code
  */
 int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, int to, string left, string right)
 {

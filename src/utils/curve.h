@@ -1,6 +1,14 @@
-// file curve.h
+/**
+ * @file curve.h
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
 
-#include <math.h>       /* atan2 */
+#include <math.h>
 
 /**
  * @brief function computes the fresnel integral
@@ -8,7 +16,7 @@
  * @param s     position s of spiral
  * @param x     result for x component
  * @param y     result for y component
- * @return int  errorcode
+ * @return int  error code
  */
 int fresnel(double s, double &x, double &y)
 {
@@ -101,7 +109,7 @@ int fresnel(double s, double &x, double &y)
  * @param y     start value of geometry and holds resulting value for y
  * @param phi   start value of geometry and holds resulting value for phi
  * @param fd    determines if finite differences should be used for derivation
- * @return int  errorcode
+ * @return int  error code
  */
 int curve(double s, geometry geo, double &x, double &y, double &phi, int fd)
 {

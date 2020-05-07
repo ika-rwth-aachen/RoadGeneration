@@ -1,4 +1,12 @@
-// file geometries.h
+/**
+ * @file geometries.h
+ *
+ * @brief This message displayed in Doxygen Files index
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
 
 /**
  * @brief function adds a geometry which is here a line
@@ -10,7 +18,7 @@
  * @param x2    x component of end point
  * @param y2    y component of end point
  * @param phi2  angle of end point
- * @return int  errorcode
+ * @return int  error code
  */
 int addLine(vector<geometry> &geo, double x1, double y1, double phi1, double x2, double y2, double phi2)
 {
@@ -42,7 +50,7 @@ int addLine(vector<geometry> &geo, double x1, double y1, double phi1, double x2,
  * @param x2    x component of end point
  * @param y2    y component of end point
  * @param phi2  angle of end point
- * @return int  errorcode
+ * @return int  error code
  */
 int addArc(vector<geometry> &geo, double x1, double y1, double phi1, double x2, double y2, double phi2)
 {
@@ -85,9 +93,10 @@ int addArc(vector<geometry> &geo, double x1, double y1, double phi1, double x2, 
  * @param x2    x component of end point
  * @param y2    y component of end point
  * @param phi2  angle of end point
- * @return int  errorcode
+ * @return int  error code
  */
 int addCompositeCurve(vector<geometry> &geo, double x1, double y1, double phi1, double x2, double y2, double phi2)
 {
+    // not yet implemented
     return 0;
 }
