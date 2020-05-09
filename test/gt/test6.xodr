@@ -10,38 +10,38 @@
 		</link>
 		<type s="0" type="town" />
 		<planView>
-			<geometry s="0.000000000" x="0.604643525" y="13.986479228" hdg="1.513592654" length="136.000000000">
-				<arc curvature="-0.002000000" />
+			<geometry s="0.000000000000000" x="0.604643525309840" y="13.986479228476624" hdg="1.513592653589793" length="136.000000000000000">
+				<arc curvature="-0.002000000000000" />
 			</geometry>
 		</planView>
 		<lanes>
-			<laneOffset s="0.000000000" a="0.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-			<laneOffset s="25.000000000" a="0.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-			<laneOffset s="50.000000000" a="0.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-			<laneSection s="0.000000000">
+			<laneOffset s="0.000000000000000" a="0.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+			<laneOffset s="25.000000000000000" a="0.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+			<laneOffset s="50.000000000000000" a="0.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+			<laneSection s="0.000000000000000">
 				<left>
 					<lane id="1" type="driving">
 						<link>
 							<successor id="1" />
 						</link>
-						<width sOffset="0.000000000" a="2.250000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-						<roadMark sOffset="0.000000000" type="broken" weight="standard" color="white" width="0.100000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="50.000000000" />
+						<width sOffset="0.000000000000000" a="2.250000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="broken" weight="standard" color="white" width="0.100000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="50.000000000000000" />
 					</lane>
 					<lane id="2" type="driving">
 						<link>
 							<successor id="2" />
 						</link>
-						<width sOffset="0.000000000" a="2.250000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.100000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="50.000000000" />
+						<width sOffset="0.000000000000000" a="2.250000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.100000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="50.000000000000000" />
 					</lane>
 				</left>
 				<center>
 					<lane id="0" type="driving">
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.150000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.150000000000000" />
 					</lane>
 				</center>
 				<right>
@@ -49,47 +49,47 @@
 						<link>
 							<successor id="-2" />
 						</link>
-						<width sOffset="0.000000000" a="5.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.100000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="50.000000000" />
+						<width sOffset="0.000000000000000" a="5.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.100000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="50.000000000000000" />
 					</lane>
 					<lane id="-1" type="restricted">
 						<link>
 							<successor id="-1" />
 						</link>
-						<width sOffset="0.000000000" a="4.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.100000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="50.000000000" />
+						<width sOffset="0.000000000000000" a="4.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.100000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="50.000000000000000" />
 					</lane>
 				</right>
 			</laneSection>
-			<laneSection s="25.000000000">
+			<laneSection s="25.000000000000000">
 				<left>
 					<lane id="1" type="driving">
 						<link>
 							<predecessor id="1" />
 						</link>
-						<width sOffset="0.000000000" a="2.250000000" b="-0.030000000" c="0.000000000" d="0.000000000" />
-						<roadMark sOffset="0.000000000" type="none" weight="standard" color="white" width="0.100000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="50.000000000" />
+						<width sOffset="0.000000000000000" a="2.250000000000000" b="-0.030000000000000" c="0.000000000000000" d="0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="none" weight="standard" color="white" width="0.100000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="50.000000000000000" />
 					</lane>
 					<lane id="2" type="driving">
 						<link>
 							<predecessor id="2" />
 							<successor id="1" />
 						</link>
-						<width sOffset="0.000000000" a="2.250000000" b="-0.030000000" c="0.000000000" d="0.000000000" />
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.100000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="50.000000000" />
+						<width sOffset="0.000000000000000" a="2.250000000000000" b="-0.030000000000000" c="0.000000000000000" d="0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.100000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="50.000000000000000" />
 					</lane>
 				</left>
 				<center>
 					<lane id="0" type="driving">
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.150000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.150000000000000" />
 					</lane>
 				</center>
 				<right>
@@ -98,39 +98,39 @@
 							<predecessor id="-2" />
 							<successor id="-2" />
 						</link>
-						<width sOffset="0.000000000" a="5.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.100000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="50.000000000" />
+						<width sOffset="0.000000000000000" a="5.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.100000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="50.000000000000000" />
 					</lane>
 					<lane id="-1" type="restricted">
 						<link>
 							<predecessor id="-1" />
 							<successor id="-1" />
 						</link>
-						<width sOffset="0.000000000" a="4.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.100000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="50.000000000" />
+						<width sOffset="0.000000000000000" a="4.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.100000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="50.000000000000000" />
 					</lane>
 				</right>
 			</laneSection>
-			<laneSection s="50.000000000">
+			<laneSection s="50.000000000000000">
 				<left>
 					<lane id="1" type="driving">
 						<link>
 							<predecessor id="2" />
 							<successor id="-1" />
 						</link>
-						<width sOffset="0.000000000" a="3.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.100000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="50.000000000" />
+						<width sOffset="0.000000000000000" a="3.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.100000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="50.000000000000000" />
 					</lane>
 				</left>
 				<center>
 					<lane id="0" type="driving">
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.150000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.150000000000000" />
 					</lane>
 				</center>
 				<right>
@@ -139,20 +139,20 @@
 							<predecessor id="-2" />
 							<successor id="2" />
 						</link>
-						<width sOffset="0.000000000" a="5.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.100000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="50.000000000" />
+						<width sOffset="0.000000000000000" a="5.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.100000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="50.000000000000000" />
 					</lane>
 					<lane id="-1" type="restricted">
 						<link>
 							<predecessor id="-1" />
 							<successor id="1" />
 						</link>
-						<width sOffset="0.000000000" a="4.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.100000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="50.000000000" />
+						<width sOffset="0.000000000000000" a="4.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.100000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="50.000000000000000" />
 					</lane>
 				</right>
 			</laneSection>
@@ -167,38 +167,38 @@
 		</link>
 		<type s="0" type="town" />
 		<planView>
-			<geometry s="0.000000000" x="-0.212836272" y="-13.997924693" hdg="4.711185307" length="136.000000000">
-				<arc curvature="0.002000000" />
+			<geometry s="0.000000000000000" x="-0.212836271994946" y="-13.997924693419080" hdg="4.711185307179587" length="136.000000000000000">
+				<arc curvature="0.002000000000000" />
 			</geometry>
 		</planView>
 		<lanes>
-			<laneOffset s="0.000000000" a="0.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-			<laneSection s="0.000000000">
+			<laneOffset s="0.000000000000000" a="0.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+			<laneSection s="0.000000000000000">
 				<left>
 					<lane id="1" type="restricted">
 						<link>
 							<predecessor id="1" />
 							<successor id="1" />
 						</link>
-						<width sOffset="0.000000000" a="4.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.100000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="50.000000000" />
+						<width sOffset="0.000000000000000" a="4.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.100000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="50.000000000000000" />
 					</lane>
 					<lane id="2" type="driving">
 						<link>
 							<predecessor id="2" />
 							<successor id="2" />
 						</link>
-						<width sOffset="0.000000000" a="5.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.100000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="50.000000000" />
+						<width sOffset="0.000000000000000" a="5.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.100000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="50.000000000000000" />
 					</lane>
 				</left>
 				<center>
 					<lane id="0" type="driving">
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.150000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.150000000000000" />
 					</lane>
 				</center>
 				<right>
@@ -207,10 +207,10 @@
 							<predecessor id="-1" />
 							<successor id="-1" />
 						</link>
-						<width sOffset="0.000000000" a="3.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.100000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="50.000000000" />
+						<width sOffset="0.000000000000000" a="3.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.100000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="50.000000000000000" />
 					</lane>
 				</right>
 			</laneSection>
@@ -225,28 +225,28 @@
 		</link>
 		<type s="0" type="town" />
 		<planView>
-			<geometry s="0.000000000" x="23.730505870" y="3.586515179" hdg="0.150000000" length="76.000000000">
+			<geometry s="0.000000000000000" x="23.730505870465013" y="3.586515179366377" hdg="0.150000000000000" length="76.000000000000000">
 				<line />
 			</geometry>
 		</planView>
 		<lanes>
-			<laneOffset s="0.000000000" a="0.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-			<laneSection s="0.000000000">
+			<laneOffset s="0.000000000000000" a="0.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+			<laneSection s="0.000000000000000">
 				<left>
 					<lane id="1" type="driving">
 						<link>
 							<predecessor id="1" />
 							<successor id="1" />
 						</link>
-						<width sOffset="0.000000000" a="3.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.150000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="30.000000000" />
+						<width sOffset="0.000000000000000" a="3.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.150000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="30.000000000000000" />
 					</lane>
 				</left>
 				<center>
 					<lane id="0" type="driving">
-						<roadMark sOffset="0.000000000" type="broken" weight="standard" color="white" width="0.150000000" />
+						<roadMark sOffset="0.000000000000000" type="broken" weight="standard" color="white" width="0.150000000000000" />
 					</lane>
 				</center>
 				<right>
@@ -255,10 +255,10 @@
 							<predecessor id="-1" />
 							<successor id="-1" />
 						</link>
-						<width sOffset="0.000000000" a="3.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.150000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="30.000000000" />
+						<width sOffset="0.000000000000000" a="3.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.150000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="30.000000000000000" />
 					</lane>
 				</right>
 			</laneSection>
@@ -273,16 +273,16 @@
 		</link>
 		<type s="0" type="town" />
 		<planView>
-			<geometry s="0.000000000" x="-1.641676186" y="14.115117310" hdg="-1.520015216" length="28.149328841">
+			<geometry s="0.000000000000000" x="-1.641676185669652" y="14.115117310182669" hdg="-1.520015215700071" length="28.149328840936626">
 				<line />
 			</geometry>
 		</planView>
 		<lanes>
-			<laneOffset s="0.000000000" a="0.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-			<laneSection s="0.000000000">
+			<laneOffset s="0.000000000000000" a="0.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+			<laneSection s="0.000000000000000">
 				<center>
 					<lane id="0" type="none">
-						<roadMark sOffset="0.000000000" type="broken" weight="standard" color="white" width="0.150000000" />
+						<roadMark sOffset="0.000000000000000" type="broken" weight="standard" color="white" width="0.150000000000000" />
 					</lane>
 				</center>
 				<right>
@@ -291,10 +291,10 @@
 							<predecessor id="2" />
 							<successor id="-1" />
 						</link>
-						<width sOffset="0.000000000" a="2.250000000" b="0.000000000" c="0.002839530" d="-0.000067249" />
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.150000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="30.000000000" />
+						<width sOffset="0.000000000000000" a="2.250000000000000" b="0.000000000000000" c="0.002839529788614" d="-0.000067249200497" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.150000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="30.000000000000000" />
 					</lane>
 				</right>
 			</laneSection>
@@ -309,16 +309,16 @@
 		</link>
 		<type s="0" type="town" />
 		<planView>
-			<geometry s="0.000000000" x="3.787160830" y="-14.002739385" hdg="-4.741592654" length="27.772370745">
+			<geometry s="0.000000000000000" x="3.787160830347033" y="-14.002739385076874" hdg="-4.741592653589790" length="27.772370744936360">
 				<line />
 			</geometry>
 		</planView>
 		<lanes>
-			<laneOffset s="0.000000000" a="0.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-			<laneSection s="0.000000000">
+			<laneOffset s="0.000000000000000" a="0.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+			<laneSection s="0.000000000000000">
 				<center>
 					<lane id="0" type="none">
-						<roadMark sOffset="0.000000000" type="broken" weight="standard" color="white" width="0.150000000" />
+						<roadMark sOffset="0.000000000000000" type="broken" weight="standard" color="white" width="0.150000000000000" />
 					</lane>
 				</center>
 				<right>
@@ -327,10 +327,10 @@
 							<predecessor id="2" />
 							<successor id="-2" />
 						</link>
-						<width sOffset="0.000000000" a="5.000000000" b="0.000000000" c="0.000000000" d="-0.000000000" />
-						<roadMark sOffset="0.000000000" type="broken" weight="standard" color="white" width="0.150000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="30.000000000" />
+						<width sOffset="0.000000000000000" a="5.000000000000000" b="0.000000000000000" c="0.000000000000000" d="-0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="broken" weight="standard" color="white" width="0.150000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="30.000000000000000" />
 					</lane>
 				</right>
 			</laneSection>
@@ -345,19 +345,19 @@
 		</link>
 		<type s="0" type="town" />
 		<planView>
-			<geometry s="0.000000000" x="3.787160830" y="-14.002739385" hdg="-4.713592654" length="24.086493140">
-				<arc curvature="-0.058937291" />
+			<geometry s="0.000000000000000" x="3.787160830347033" y="-14.002739385076874" hdg="-4.713592653589791" length="24.086493140355607">
+				<arc curvature="-0.058937290925566" />
 			</geometry>
-			<geometry s="24.086493140" x="18.218790275" y="2.753500841" hdg="0.150000000" length="5.574309078">
+			<geometry s="24.086493140355607" x="18.218790275040980" y="2.753500840976660" hdg="0.150000000000000" length="5.574309077617007">
 				<line />
 			</geometry>
 		</planView>
 		<lanes>
-			<laneOffset s="0.000000000" a="0.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-			<laneSection s="0.000000000">
+			<laneOffset s="0.000000000000000" a="0.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+			<laneSection s="0.000000000000000">
 				<center>
 					<lane id="0" type="none">
-						<roadMark sOffset="0.000000000" type="none" weight="standard" color="white" width="0.150000000" />
+						<roadMark sOffset="0.000000000000000" type="none" weight="standard" color="white" width="0.150000000000000" />
 					</lane>
 				</center>
 				<right>
@@ -366,10 +366,10 @@
 							<predecessor id="2" />
 							<successor id="-1" />
 						</link>
-						<width sOffset="0.000000000" a="5.000000000" b="0.000000000" c="-0.006820017" d="0.000153289" />
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.150000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="30.000000000" />
+						<width sOffset="0.000000000000000" a="5.000000000000000" b="0.000000000000000" c="-0.006820017114131" d="0.000153289113446" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.150000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="30.000000000000000" />
 					</lane>
 				</right>
 			</laneSection>
@@ -384,19 +384,19 @@
 		</link>
 		<type s="0" type="town" />
 		<planView>
-			<geometry s="0.000000000" x="23.730505870" y="3.586515179" hdg="-2.991592654" length="10.229940287">
+			<geometry s="0.000000000000000" x="23.730505870465013" y="3.586515179366377" hdg="-2.991592653589793" length="10.229940287049077">
 				<line />
 			</geometry>
-			<geometry s="10.229940287" x="13.615436786" y="2.057772008" hdg="-2.991592654" length="23.079486999">
-				<arc curvature="0.061508848" />
+			<geometry s="10.229940287049077" x="13.615436785618151" y="2.057772007553327" hdg="-2.991592653589793" length="23.079486999135995">
+				<arc curvature="0.061508847819838" />
 			</geometry>
 		</planView>
 		<lanes>
-			<laneOffset s="0.000000000" a="0.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-			<laneSection s="0.000000000">
+			<laneOffset s="0.000000000000000" a="0.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+			<laneSection s="0.000000000000000">
 				<center>
 					<lane id="0" type="none">
-						<roadMark sOffset="0.000000000" type="none" weight="standard" color="white" width="0.150000000" />
+						<roadMark sOffset="0.000000000000000" type="none" weight="standard" color="white" width="0.150000000000000" />
 					</lane>
 				</center>
 				<right>
@@ -405,10 +405,10 @@
 							<predecessor id="1" />
 							<successor id="-1" />
 						</link>
-						<width sOffset="0.000000000" a="3.000000000" b="0.000000000" c="0.000000000" d="-0.000000000" />
-						<roadMark sOffset="0.000000000" type="none" weight="standard" color="white" width="0.150000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="30.000000000" />
+						<width sOffset="0.000000000000000" a="3.000000000000000" b="0.000000000000000" c="0.000000000000000" d="-0.000000000000000" />
+						<roadMark sOffset="0.000000000000000" type="none" weight="standard" color="white" width="0.150000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="30.000000000000000" />
 					</lane>
 				</right>
 			</laneSection>
@@ -423,19 +423,19 @@
 		</link>
 		<type s="0" type="town" />
 		<planView>
-			<geometry s="0.000000000" x="23.730505870" y="3.586515179" hdg="-2.991592654" length="6.914352843">
+			<geometry s="0.000000000000000" x="23.730505870465013" y="3.586515179366377" hdg="-2.991592653589793" length="6.914352843079127">
 				<line />
 			</geometry>
-			<geometry s="6.914352843" x="16.893793757" y="2.553247203" hdg="-2.991592654" length="19.046606953">
-				<arc curvature="-0.093349960" />
+			<geometry s="6.914352843079127" x="16.893793756583527" y="2.553247203233110" hdg="-2.991592653589793" length="19.046606953246879">
+				<arc curvature="-0.093349960145889" />
 			</geometry>
 		</planView>
 		<lanes>
-			<laneOffset s="0.000000000" a="0.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-			<laneSection s="0.000000000">
+			<laneOffset s="0.000000000000000" a="0.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+			<laneSection s="0.000000000000000">
 				<center>
 					<lane id="0" type="none">
-						<roadMark sOffset="0.000000000" type="none" weight="standard" color="white" width="0.150000000" />
+						<roadMark sOffset="0.000000000000000" type="none" weight="standard" color="white" width="0.150000000000000" />
 					</lane>
 				</center>
 				<right>
@@ -444,10 +444,10 @@
 							<predecessor id="1" />
 							<successor id="-2" />
 						</link>
-						<width sOffset="0.000000000" a="3.000000000" b="0.000000000" c="0.008902454" d="-0.000228611" />
-						<roadMark sOffset="0.000000000" type="solid" weight="standard" color="white" width="0.150000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="30.000000000" />
+						<width sOffset="0.000000000000000" a="3.000000000000000" b="0.000000000000000" c="0.008902454468178" d="-0.000228611333788" />
+						<roadMark sOffset="0.000000000000000" type="solid" weight="standard" color="white" width="0.150000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="30.000000000000000" />
 					</lane>
 				</right>
 			</laneSection>
@@ -462,19 +462,19 @@
 		</link>
 		<type s="0" type="town" />
 		<planView>
-			<geometry s="0.000000000" x="0.604643525" y="13.986479228" hdg="-1.628000000" length="20.260077229">
-				<arc curvature="0.087758797" />
+			<geometry s="0.000000000000000" x="0.604643525309840" y="13.986479228476624" hdg="-1.628000000000001" length="20.260077228621597">
+				<arc curvature="0.087758796767477" />
 			</geometry>
-			<geometry s="20.260077229" x="13.683702158" y="2.068089310" hdg="0.150000000" length="10.160899663">
+			<geometry s="20.260077228621597" x="13.683702158094658" y="2.068089309508396" hdg="0.150000000000000" length="10.160899662783445">
 				<line />
 			</geometry>
 		</planView>
 		<lanes>
-			<laneOffset s="0.000000000" a="0.000000000" b="0.000000000" c="0.000000000" d="0.000000000" />
-			<laneSection s="0.000000000">
+			<laneOffset s="0.000000000000000" a="0.000000000000000" b="0.000000000000000" c="0.000000000000000" d="0.000000000000000" />
+			<laneSection s="0.000000000000000">
 				<center>
 					<lane id="0" type="none">
-						<roadMark sOffset="0.000000000" type="none" weight="standard" color="white" width="0.150000000" />
+						<roadMark sOffset="0.000000000000000" type="none" weight="standard" color="white" width="0.150000000000000" />
 					</lane>
 				</center>
 				<right>
@@ -483,10 +483,10 @@
 							<predecessor id="1" />
 							<successor id="-1" />
 						</link>
-						<width sOffset="0.000000000" a="2.250000000" b="0.000000000" c="0.002431287" d="-0.000053281" />
-						<roadMark sOffset="0.000000000" type="none" weight="standard" color="white" width="0.150000000" />
-						<material sOffset="0.000000000" surface="asphalt" friction="0.800000000" roughness="0.015000000" />
-						<speed sOffset="0" max="30.000000000" />
+						<width sOffset="0.000000000000000" a="2.250000000000000" b="0.000000000000000" c="0.002431286875695" d="-0.000053280929239" />
+						<roadMark sOffset="0.000000000000000" type="none" weight="standard" color="white" width="0.150000000000000" />
+						<material sOffset="0.000000000000000" surface="asphalt" friction="0.800000000000000" roughness="0.015000000000000" />
+						<speed sOffset="0" max="30.000000000000000" />
 					</lane>
 				</right>
 			</laneSection>

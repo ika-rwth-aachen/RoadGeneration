@@ -79,10 +79,10 @@
                 <adRoad id="3" s="50" angle="3.508"/>
             </intersectionPoint>
             <coupler>
-                <junctionArea s="0">
-                    <roadBorder id="1" s="15"/>     
-                    <roadBorder id="2" s="15"/>
-                    <roadBorder id="3" s="15"/>
+                <junctionArea gap="0">
+                    <roadGap id="1" gap="15"/>     
+                    <roadGap id="2" gap="15"/>
+                    <roadGap id="3" gap="15"/>
                 </junctionArea>
                 <connection type="single">
                     <roadLink fromId="1" toId="2">
@@ -91,7 +91,7 @@
                     </roadLink>
                 </connection>
             </coupler>
-            <automaticWiding active="main" length="20" ds="10"/>
+            <automaticWidening active="main" length="20" ds="10"/>
         </junction>
 	</segments>
 </roadNetwork>

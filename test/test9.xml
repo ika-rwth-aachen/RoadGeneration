@@ -28,7 +28,7 @@
                             <roadMark   type="solid" color="white" width="0.13"/>
                         </lane>
                     </laneSection>
-                    <laneDrop laneId="-2" s="100" length="50" />
+                    <laneDrop side="-2" s="100" length="50" />
                 </lanes>
             </road>
             <intersectionPoint refRoad="1" s="200">
@@ -36,9 +36,9 @@
                 <adRoad id="3" s="0" angle="2.11"/>
             </intersectionPoint>
             <coupler>
-                <junctionArea s="10">
-                    <roadBorder id="1" s="10"/>
-                    <roadBorder id="3" s="10"/>
+                <junctionArea gap="10">
+                    <roadGap id="1" gap="10"/>
+                    <roadGap id="3" gap="10"/>
                 </junctionArea>
                 <connection type="all"/>
                 <additionalLanes>
@@ -64,8 +64,8 @@
                 <adRoad id="2" s="0" angle="1.15"/>
             </intersectionPoint>
             <coupler>
-                <junctionArea s="1">
-                    <roadBorder id="2" s="1"/>
+                <junctionArea gap="1">
+                    <roadGap id="2" gap="1"/>
                 </junctionArea>
                 <connection type="all"/>
             </coupler>
@@ -104,8 +104,8 @@
                 <adRoad id="3" s="0" angle="3.0"/>
             </intersectionPoint>
             <coupler>
-                <junctionArea s="1">
-                    <roadBorder id="2" s="1"/>
+                <junctionArea gap="1">
+                    <roadGap id="2" gap="1"/>
                 </junctionArea>
                 <connection type="all"/>
             </coupler>
@@ -131,7 +131,7 @@
                      <line length="150"/>
                 </referenceLine>   
                 <lanes>
-                    <laneWidening laneId="1" s="50" length="20"/>
+                    <laneWidening side="1" s="50" length="20"/>
                 </lanes> 
             </road>
             <intersectionPoint refRoad="1" s="0">
@@ -140,7 +140,7 @@
                 <adRoad id="4" s="0" angle="-1.57" />
             </intersectionPoint>
             <coupler>
-                <junctionArea s="1"/>
+                <junctionArea gap="1"/>
                 <connection type="all"/>
             </coupler>
         </junction>
@@ -201,9 +201,9 @@
                 <adRoad id="5" s="0" angle="-1.6"/>
             </intersectionPoint>
             <coupler>
-                <junctionArea s="10">
-                    <roadBorder id="1" s="2" />
-                    <roadBorder id="2" s="10" />
+                <junctionArea gap="10">
+                    <roadGap id="1" gap="2" />
+                    <roadGap id="2" gap="10" />
                 </junctionArea> 
             </coupler>
         </roundabout>
@@ -213,8 +213,8 @@
                      <spiral length="800"  Rs="-150" Re="0"/>
                 </referenceLine>
                 <lanes>
-                    <laneWidening laneId="1" s="110" length="40" />
-                    <laneDrop laneId="2" s="300" length="30">
+                    <laneWidening side="1" s="110" length="40" />
+                    <laneDrop side="2" s="300" length="30">
                         <restrictedArea length="50" />
                     </laneDrop>
                 </lanes>
@@ -247,7 +247,7 @@
                      <spiral length="800"  Rs="-150" Re="0"/>
                 </referenceLine>
                 <lanes>
-                    <laneWidening laneId="1" s="110" length="40" />
+                    <laneWidening side="1" s="110" length="40" />
                 </lanes>
             </road>
         </connectingRoad>

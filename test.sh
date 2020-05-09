@@ -1,0 +1,9 @@
+./road-generation test/test1.xml
+./road-generation test/test2.xml
+./road-generation test/test3.xml
+./road-generation test/test4.xml
+./road-generation test/test5.xml
+./road-generation test/test6.xml
+./road-generation test/test7.xml
+./road-generation test/test8.xml
+./road-generation test/test9.xml
