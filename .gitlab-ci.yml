@@ -14,7 +14,8 @@ unitCase1:
     - cmake . 
     - make
     - ./road-generation test/test1.xml
-    - cmp --silent test/test1.xodr test/gt/test1.xodr && exit 0 || exit 1
+    - cmp --silent test/test1.xodr test/gt/test1.xodr && echo "succes"  || echo "no succes" 
+    - cmp --silent test/test1.xodr test/gt/test1.xodr
   
 unitCase2:
   stage: unitCases
