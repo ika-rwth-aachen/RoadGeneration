@@ -1,0 +1,29 @@
+<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+    <segments>
+        <junction id="1" type="MA">
+            <road id="1" classification="main" >	
+                <referenceLine>
+                    <line length="400"/>
+                </referenceLine>
+            </road>
+            <road id="2" classification="access" >	
+                <referenceLine>
+                    <arc length="100"  R="-100"/>
+                </referenceLine>
+            </road>
+            <intersectionPoint refRoad="1" s="200">
+                <adRoad id="2" s="0" angle="-1.57"/>
+            </intersectionPoint>
+            <coupler>
+                <junctionArea s="10">
+                    <roadBorder id="2" s="15"/>
+                </junctionArea>
+                <connection type="all"/>
+                <additionalLanes>
+                    <additionalLane roadId="2" roadPos="end" type="left" length="0.1" verschwenkung="false" />
+                </additionalLanes>
+            </coupler>
+        </junction>
+    </segments>
+    <links refId="1" hdgOffset="0.05" xOffset="0" yOffset="0" />
+</roadNetwork>
