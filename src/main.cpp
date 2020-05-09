@@ -62,8 +62,8 @@ int main(int argc,  char** argv)
 		return -1;
 	}
 		
-	freopen( "log.txt", "a", stderr );
-  	cerr << "\nError log for run with attribute: " << file << endl;
+	//freopen( "log.txt", "a", stderr );
+  	//cerr << "\nError log for run with attribute: " << file << endl;
 	
 	printLogo();
 
