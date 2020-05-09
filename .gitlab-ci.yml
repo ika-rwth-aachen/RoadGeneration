@@ -1,46 +1,14 @@
-# Based on image by raabf: https://github.com/raabf/dockertex
-image:
-  name: raabf/latex-versions:texlive2018
-
-# Only one stage here, latex
 stages:
-  - latex
+  - build
+  - unitCases
 
-# Display the used version beforehand
-before_script:
-  - lsb_release --all
-  - latex --version
-  
-# The build to run on the master and tagged releases
-make_texlive2018:
-  stage: latex
-  tags:
-    - docker
-  script:
-    - cd paper/tex
-    - pdflatex -interaction=nonstopmode root.tex
-    - bibtex root
-    - pdflatex -interaction=nonstopmode root.tex
-    - pdflatex -interaction=nonstopmode root.tex
-  artifacts:
-    paths:
-      - root.pdf
-    name: "newest_version"
-    expire_in: 1 week
-  only:
-    - paper
+basicBuildCase:
+  stage: build
+  script: 
+    - cmake . 
+    - make
 
-# The version to run on branches and MRs
-make_texlive2018_branch:
-  stage: latex
-  tags:
-    - docker
+unitCase1:
+  stage: unitCases
   script:
-    - pdflatex -interaction=nonstopmode root.tex
-    - bibtex root
-    - pdflatex -interaction=nonstopmode root.tex
-    - pdflatex -interaction=nonstopmode root.tex
-  except:
-    - master
-    - tags
-    
+    - ./road-generation io/junction1.xml
