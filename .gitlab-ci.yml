@@ -11,4 +11,23 @@ basicBuildCase:
 unitCase1:
   stage: unitCases
   script:
-    - ./road-generation io/junction1.xml
+    - cmake . 
+    - make
+    - ./road-generation test/test1.xml
+    - cmp --silent test/test1.xodr test/gt/test1.xodr && exit 0 || exit 1
+  
+unitCase2:
+  stage: unitCases
+  script:
+    - cmake . 
+    - make
+    - ./road-generation test/test2.xml
+    - cmp --silent test/test2.xodr test/gt/test2.xodr && exit 0 || exit 1
+
+unitCase3:
+  stage: unitCases
+  script:
+    - cmake . 
+    - make
+    - ./road-generation test/test3.xml
+    - cmp --silent test/test3.xodr test/gt/test3.xodr && exit 0 || exit 1

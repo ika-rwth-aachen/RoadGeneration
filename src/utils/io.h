@@ -158,7 +158,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     auto tm = *std::localtime(&t);
     std::ostringstream oss;
     oss << std::put_time(&tm, "%Y-%m-%d %H:%M:%S");
-    header.append_attribute("date") = oss.str().c_str();
+    //header.append_attribute("date") = oss.str().c_str();
 
     pugi::xml_node geoReference = header.append_child("geoReference");
     geoReference.append_child(pugi::node_cdata).set_value("+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
