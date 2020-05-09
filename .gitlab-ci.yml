@@ -14,6 +14,7 @@ unitCase1:
     - cmake . 
     - make
     - ./road-generation test/test1.xml
+    - cat test/test1.xml
     - cmp --silent test/test1.xodr test/gt/test1.xodr
   
 unitCase2:
@@ -22,6 +23,7 @@ unitCase2:
     - cmake . 
     - make
     - ./road-generation test/test2.xml
+    - cat test/test2.xml
     - cmp --silent test/test2.xodr test/gt/test2.xodr
 
 unitCase3:
@@ -30,6 +32,7 @@ unitCase3:
     - cmake . 
     - make
     - ./road-generation test/test3.xml
+    - cat test/test3.xml
     - cmp --silent test/test3.xodr test/gt/test3.xodr
 
 unitCase4:
@@ -38,6 +41,7 @@ unitCase4:
     - cmake . 
     - make
     - ./road-generation test/test4.xml
+    - cat test/test4.xml
     - cmp --silent test/test4.xodr test/gt/test4.xodr
 
 unitCase5:
@@ -46,6 +50,7 @@ unitCase5:
     - cmake . 
     - make
     - ./road-generation test/test5.xml
+    - cat test/test5.xml
     - cmp --silent test/test5.xodr test/gt/test5.xodr
 
 unitCase6:
@@ -54,6 +59,7 @@ unitCase6:
     - cmake . 
     - make
     - ./road-generation test/test6.xml
+    - cat test/test6.xml
     - cmp --silent test/test6.xodr test/gt/test6.xodr
 
 unitCase7:
@@ -62,6 +68,7 @@ unitCase7:
     - cmake . 
     - make
     - ./road-generation test/test7.xml
+    - cat test/test7.xml
     - cmp --silent test/test7.xodr test/gt/test7.xodr
 
 unitCase8:
@@ -70,6 +77,7 @@ unitCase8:
     - cmake . 
     - make
     - ./road-generation test/test8.xml
+    - cat test/test8.xml
     - cmp --silent test/test8.xodr test/gt/test8.xodr
 
 unitCase9:
@@ -78,4 +86,5 @@ unitCase9:
     - cmake . 
     - make
     - ./road-generation test/test9.xml
+    - cat test/test9.xml
     - cmp --silent test/test9.xodr test/gt/test9.xodr
