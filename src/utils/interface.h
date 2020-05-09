@@ -10,7 +10,7 @@
 
 extern settings setting;
 
-enum contactPointType {startType, endType};
+enum contactPointType {startType, endType, noneType};
 enum geometryType {line, spiral, arc};
 enum linkType {roadType, junctionType};
 
@@ -23,7 +23,7 @@ struct connection
     int id = -1;
     int from = -1;
     int to = -1;
-    contactPointType contactPoint;
+    contactPointType contactPoint = noneType;
     int fromLane = -1;
     int toLane = -1;
 };
@@ -145,7 +145,7 @@ struct link
 {
     int id = -1;
     linkType elementType = roadType;
-    contactPointType contactPoint;
+    contactPointType contactPoint = noneType;
 };
 
 /**

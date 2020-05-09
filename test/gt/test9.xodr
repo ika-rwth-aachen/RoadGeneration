@@ -1107,8 +1107,8 @@
 	</road>
 	<road id="201" length="186" junction="2">
 		<link>
-			<predecessor elementId="104" elementType="junction" contactPoint="start" />
-			<successor elementId="-1" elementType="road" contactPoint="start" />
+			<predecessor elementId="104" elementType="junction" contactPoint="none" />
+			<successor elementId="-1" elementType="road" contactPoint="none" />
 		</link>
 		<type s="0" type="town" />
 		<planView>
@@ -1203,8 +1203,8 @@
 	</road>
 	<road id="203" length="184" junction="2">
 		<link>
-			<predecessor elementId="2" elementType="junction" contactPoint="start" />
-			<successor elementId="401" elementType="road" contactPoint="start" />
+			<predecessor elementId="2" elementType="junction" contactPoint="none" />
+			<successor elementId="401" elementType="road" contactPoint="none" />
 		</link>
 		<type s="0" type="town" />
 		<planView>
@@ -1479,7 +1479,7 @@
 	</road>
 	<road id="601" length="88" junction="6">
 		<link>
-			<predecessor elementId="6" elementType="junction" contactPoint="start" />
+			<predecessor elementId="6" elementType="junction" contactPoint="none" />
 			<successor elementId="1001" elementType="road" contactPoint="start" />
 		</link>
 		<type s="0" type="town" />
@@ -1528,7 +1528,7 @@
 	<road id="602" length="81.5" junction="6">
 		<link>
 			<predecessor elementId="6" elementType="junction" contactPoint="none" />
-			<successor elementId="701" elementType="road" contactPoint="end" />
+			<successor elementId="701" elementType="road" contactPoint="none" />
 		</link>
 		<type s="0" type="town" />
 		<planView>
@@ -1575,8 +1575,8 @@
 	</road>
 	<road id="603" length="281.5" junction="6">
 		<link>
-			<predecessor elementId="322" elementType="junction" contactPoint="start" />
-			<successor elementId="-1" elementType="road" contactPoint="start" />
+			<predecessor elementId="322" elementType="junction" contactPoint="none" />
+			<successor elementId="-1" elementType="road" contactPoint="none" />
 		</link>
 		<type s="0" type="town" />
 		<planView>
@@ -1857,7 +1857,7 @@
 	</road>
 	<road id="701" length="88" junction="7">
 		<link>
-			<predecessor elementId="602" elementType="junction" contactPoint="start" />
+			<predecessor elementId="602" elementType="junction" contactPoint="none" />
 			<successor elementId="-1" elementType="road" contactPoint="none" />
 		</link>
 		<type s="0" type="town" />
@@ -2812,7 +2812,7 @@
 	<road id="312" length="82" junction="3">
 		<link>
 			<predecessor elementId="401" elementType="junction" contactPoint="start" />
-			<successor elementId="-1" elementType="road" contactPoint="start" />
+			<successor elementId="-1" elementType="road" contactPoint="none" />
 		</link>
 		<type s="0" type="town" />
 		<planView>
@@ -3160,7 +3160,7 @@
 	<road id="322" length="82" junction="3">
 		<link>
 			<predecessor elementId="3" elementType="junction" contactPoint="start" />
-			<successor elementId="603" elementType="road" contactPoint="start" />
+			<successor elementId="603" elementType="road" contactPoint="none" />
 		</link>
 		<type s="0" type="town" />
 		<planView>
@@ -3981,7 +3981,7 @@
 	</road>
 	<road id="401" length="800" junction="4">
 		<link>
-			<predecessor elementId="203" elementType="road" contactPoint="start" />
+			<predecessor elementId="203" elementType="road" contactPoint="none" />
 			<successor elementId="312" elementType="road" contactPoint="none" />
 		</link>
 		<type s="0" type="town" />
@@ -4690,7 +4690,7 @@
 	</road>
 	<road id="501" length="800" junction="5">
 		<link>
-			<predecessor elementId="102" elementType="road" contactPoint="start" />
+			<predecessor elementId="102" elementType="road" contactPoint="none" />
 			<successor elementId="1001" elementType="road" contactPoint="end" />
 		</link>
 		<type s="0" type="town" />

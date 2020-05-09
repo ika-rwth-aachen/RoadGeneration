@@ -565,6 +565,8 @@ std::string getContactPointType(contactPointType t)
 {
     if (t == startType) return "start";
     if (t == endType) return "end";
+    if (t == noneType) return "none";
+    
     return "none";
 }
 
