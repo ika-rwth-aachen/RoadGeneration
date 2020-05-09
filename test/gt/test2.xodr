@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <OpenDRIVE>
-	<header revMajor="1" revMinor="5" north="0" south="0" west="0" east="0" date="2020-05-09 18:06:34">
+	<header revMajor="1" revMinor="5" north="0" south="0" west="0" east="0">
 		<geoReference><![CDATA[+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs]]></geoReference>
 	</header>
 	<road id="101" length="136" junction="1">

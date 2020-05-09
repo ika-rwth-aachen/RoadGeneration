@@ -1,0 +1,270 @@
+<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+    <segments>
+        <junction id="1" type="M2A">
+            <road id="1" classification="main" >	
+                <referenceLine>
+                     <spiral length="400" Rs="-100" Re="0"/>
+                </referenceLine>
+            </road>
+            <road id="2" classification="access" >	
+                <referenceLine>
+                     <arc length="100"  R="100"/>
+                </referenceLine>
+            </road>
+            <road id="3" classification="access" >	
+                <referenceLine>
+                     <line length="500"/>
+                </referenceLine>
+                <lanes>
+                    <laneSection id="1" s="0">
+                        <lane id="-2" type="driving">
+                            <roadMark   type="solid" color="white" width="0.13"/>
+                        </lane>
+                        <lane id="-1" type="driving">
+                            <roadMark   type="broken" color="white" width="0.13"/>
+                        </lane>
+                        <lane id="0" type="driving" />
+                        <lane id="1" type="driving">
+                            <roadMark   type="solid" color="white" width="0.13"/>
+                        </lane>
+                    </laneSection>
+                    <laneDrop laneId="-2" s="100" length="50" />
+                </lanes>
+            </road>
+            <intersectionPoint refRoad="1" s="200">
+                <adRoad id="2" s="0" angle="-1.08"/>
+                <adRoad id="3" s="0" angle="2.11"/>
+            </intersectionPoint>
+            <coupler>
+                <junctionArea s="10">
+                    <roadBorder id="1" s="10"/>
+                    <roadBorder id="3" s="10"/>
+                </junctionArea>
+                <connection type="all"/>
+                <additionalLanes>
+                    <additionalLane roadId="1" type="left" roadPos="start"/>
+                    <additionalLane roadId="1" type="right" roadPos="start"/>
+                    <additionalLane roadId="1" type="leftRestricted" length="10" verschwenkung="true" roadPos="end"/>
+                    <additionalLane roadId="1" type="right" length=".1" verschwenkung="false" roadPos="end"/>
+                </additionalLanes>
+            </coupler>
+        </junction>
+        <junction id="2" type="MA">
+            <road id="1" classification="main" >	
+                <referenceLine>
+                     <spiral length="400"  Rs="-100" Re="0"/>
+                </referenceLine>
+            </road>
+            <road id="2" classification="access" >	
+                <referenceLine>
+                     <arc length="200"  R="150"/>
+                </referenceLine>
+            </road>
+            <intersectionPoint refRoad="1" s="200">
+                <adRoad id="2" s="0" angle="1.15"/>
+            </intersectionPoint>
+            <coupler>
+                <junctionArea s="1">
+                    <roadBorder id="2" s="1"/>
+                </junctionArea>
+                <connection type="all"/>
+            </coupler>
+        </junction>
+        <junction id="6" type="3A">
+            <road id="1" classification="access" >	
+                <referenceLine>
+                     <spiral length="200"  Rs="-100" Re="0"/>
+                </referenceLine>
+                <lanes>
+                    <laneSection id="1" s="0">
+                        <lane id="1" type="driving" width="6.25">
+                            <roadMark   type="solid" color="white" width="0.13"/>
+                        </lane>
+                        <lane id="0" type="driving" width="0">
+                            <roadMark  type="broken" color="white" width="0.13" />
+                        </lane>
+                        <lane id="-1" type="driving" >
+                            <roadMark   type="solid" color="white" width="0.13"/>
+                        </lane>
+                    </laneSection>
+                </lanes>
+            </road>
+            <road id="2" classification="access" >	
+                <referenceLine>
+                     <arc length="100"  R="100"/>
+                </referenceLine>
+            </road>
+            <road id="3" classification="access" >	
+                <referenceLine>
+                     <arc length="300"  R="250"/>
+                </referenceLine>
+            </road>
+            <intersectionPoint refRoad="1" s="100">
+                <adRoad id="2" s="0" angle="1.0"/>
+                <adRoad id="3" s="0" angle="3.0"/>
+            </intersectionPoint>
+            <coupler>
+                <junctionArea s="1">
+                    <roadBorder id="2" s="1"/>
+                </junctionArea>
+                <connection type="all"/>
+            </coupler>
+        </junction>
+        <junction id="7" type="4A">
+            <road id="1" classification="access">
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>    
+            </road>
+            <road id="2" classification="access">
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>    
+            </road>
+            <road id="3" classification="access">
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>    
+            </road>
+            <road id="4" classification="access">
+                <referenceLine>
+                     <line length="150"/>
+                </referenceLine>   
+                <lanes>
+                    <laneWidening laneId="1" s="50" length="20"/>
+                </lanes> 
+            </road>
+            <intersectionPoint refRoad="1" s="0">
+                <adRoad id="2" s="0" angle="1.57" />
+                <adRoad id="3" s="0" angle="3.14" />
+                <adRoad id="4" s="0" angle="-1.57" />
+            </intersectionPoint>
+            <coupler>
+                <junctionArea s="1"/>
+                <connection type="all"/>
+            </coupler>
+        </junction>
+        <roundabout id="3">
+            <circle id="1" classification="access" >	
+                <referenceLine>
+                    <circle length="320.5"/>
+                </referenceLine>
+                <lanes>
+                    <laneSection id="1" s="0">
+                        <lane id="1" type="delete" />
+                        <lane id="-4" type="driving">
+                            <roadMark   type="solid" color="white" width="0.13"/>
+                        </lane>
+                        <lane id="-3" type="driving">
+                            <roadMark   type="broken" color="white" width="0.13"/>
+                        </lane>
+                        <lane id="-2" type="driving">
+                            <roadMark   type="broken" color="white" width="0.13"/>
+                        </lane>
+                        <lane id="-1" type="driving">
+                            <roadMark   type="broken" color="white" width="0.13"/>
+                        </lane>
+                        <lane id="0" type="driving" />
+                    </laneSection>
+                </lanes>
+            </circle>
+            <road id="2" classification="access" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+            </road>
+            <road id="3" classification="access" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+            </road>
+            <road id="4" classification="access" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+            </road>
+            <road id="5" classification="access" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+            </road>
+            <intersectionPoint refRoad="1" s="80">
+                <adRoad id="2" s="0" angle="-1.56"/>
+            </intersectionPoint>
+            <intersectionPoint refRoad="1" s="160">
+                <adRoad id="3" s="0" angle="-1.56"/>
+            </intersectionPoint>
+            <intersectionPoint refRoad="1" s="240">
+                <adRoad id="4" s="0" angle="-1.56"/>
+            </intersectionPoint>
+            <intersectionPoint refRoad="1" s="320">
+                <adRoad id="5" s="0" angle="-1.6"/>
+            </intersectionPoint>
+            <coupler>
+                <junctionArea s="10">
+                    <roadBorder id="1" s="2" />
+                    <roadBorder id="2" s="10" />
+                </junctionArea> 
+            </coupler>
+        </roundabout>
+        <connectingRoad id="4">
+            <road id="1"  classification="main" >	
+                <referenceLine>
+                     <spiral length="800"  Rs="-150" Re="0"/>
+                </referenceLine>
+                <lanes>
+                    <laneWidening laneId="1" s="110" length="40" />
+                    <laneDrop laneId="2" s="300" length="30">
+                        <restrictedArea length="50" />
+                    </laneDrop>
+                </lanes>
+                <objects>
+                    <trafficRule id="1">
+                        <signal type="busStop" value="0" dynamic="true">
+                            <relativePosition s="50" t="7" z="0" hdg="0" />
+                        </signal>
+                    </trafficRule>
+                    <streetLamp id="1">
+                        <repeatPosition s="10" t="5" z="0" hdg="0" length="100" />
+                    </streetLamp>
+                    <roadWork id="2" s="200" length="100" laneId="-1" />
+                    <busStop id="1">
+                            <relativePosition s="50" t="7" z="0" hdg="0" />
+                    </busStop>
+                    <parkingSpace id="2" width="2.5" length="5">
+                        <relativePosition s="5" t="5" z="0" hdg="0" />
+                    </parkingSpace>
+                    <parkingSpace id="3" width="2.5" length="5">
+                        <repeatPosition s="5" t="-5" z="0" hdg="1" length="100" /> 
+                    </parkingSpace>
+                    <trafficIsland id="4" s="400" length="5" width="2" />
+                </objects>
+            </road>
+        </connectingRoad> 
+        <connectingRoad id="5">
+            <road id="1" classification="main" >	
+                <referenceLine>
+                     <spiral length="800"  Rs="-150" Re="0"/>
+                </referenceLine>
+                <lanes>
+                    <laneWidening laneId="1" s="110" length="40" />
+                </lanes>
+            </road>
+        </connectingRoad>
+	</segments>
+    <links refId="1" hdgOffset="0.0" xOffset="0" yOffset="0">
+        <segmentLink fromSegment="1" toSegment="5" fromRoad="2" toRoad="1" fromPos="end" toPos="start" />
+        <segmentLink fromSegment="1" toSegment="2" fromRoad="3" toRoad="1" fromPos="end" toPos="start" />
+        <segmentLink fromSegment="2" toSegment="4" fromRoad="2" toRoad="1" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="4" toSegment="3" fromRoad="1" toRoad="2" fromPos="start" toPos="end" />
+        <segmentLink fromSegment="3" toSegment="6" fromRoad="3" toRoad="3" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="6" toSegment="7" fromRoad="2" toRoad="1" fromPos="end" toPos="end" />
+    </links>
+    <closeRoads>
+        <segmentLink fromSegment="1" toSegment="2" fromRoad="1" toRoad="1" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="3" toSegment="3" fromRoad="5" toRoad="4" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="6" toSegment="5" fromRoad="1" toRoad="1" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="7" toSegment="1" fromRoad="4" toRoad="1" fromPos="end" toPos="start" />
+        <segmentLink fromSegment="7" toSegment="7" fromRoad="2" toRoad="3" fromPos="end" toPos="end" />
+    </closeRoads>
+</roadNetwork>
