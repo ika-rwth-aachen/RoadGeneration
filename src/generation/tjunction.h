@@ -34,10 +34,10 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     junction junc;
     junc.id = node.attribute("id").as_int();
 
-    // automatic widing
+    // automatic widening
     pugi::xml_node dummy;
-    pugi::xml_node automaticWiding = node.child("automaticWiding");
-    pugi::xml_node automaticRestricted = node.child("automaticWiding");
+    pugi::xml_node automaticWidening = node.child("automaticWidening");
+    pugi::xml_node automaticRestricted = node.child("automaticWidening");
     automaticRestricted.append_attribute("restricted") = true;
 
     // define intersection properties
@@ -80,17 +80,17 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
 
     // calculate offsets
     double sOffset = 0;
-    if (cA) sOffset = stod(cA.attribute("s").value(),&st);
+    if (cA) sOffset = stod(cA.attribute("gap").value(),&st);
     sOffMain = sOffset;
     sOffAdd1 = sOffset;
     sOffAdd2 = sOffset;
     for (pugi::xml_node_iterator sB = cA.begin(); sB != cA.end(); ++sB)
     {
-        if (sB->attribute("id").as_int() == mainRoad.attribute("id").as_int()) sOffMain = sB->attribute("s").as_double();
+        if (sB->attribute("id").as_int() == mainRoad.attribute("id").as_int()) sOffMain = sB->attribute("gap").as_double();
         
-        if (sB->attribute("id").as_int() == additionalRoad1.attribute("id").as_int()) sOffAdd1 = sB->attribute("s").as_double();
+        if (sB->attribute("id").as_int() == additionalRoad1.attribute("id").as_int()) sOffAdd1 = sB->attribute("gap").as_double();
         
-        if (sB->attribute("id").as_int() == additionalRoad2.attribute("id").as_int()) sOffAdd2 = sB->attribute("s").as_double();
+        if (sB->attribute("id").as_int() == additionalRoad2.attribute("id").as_int()) sOffAdd2 = sB->attribute("gap").as_double();
     }
     
      // calculate width of mainRoad and addtionalRoad
@@ -113,11 +113,10 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     laneSection lS3 = help3.laneSections.front();
     double width3 = abs(findTOffset(lS3, findMinLaneId(lS3), 0))                              + abs(findTOffset(lS3, findMaxLaneId(lS3), 0));
         
-    // check offsets and adjust them if necessary
+    // check offsets and adjust them if necessary (4 is safty factor)
     double w1 = max(width2/2, width3/2) * 4;
     double w2 = max(width1/2, width3/2) * 4;
     double w3 = max(width1/2, width2/2) * 4;
-    // TODO check: why factor 4?
 
     bool changed = false;
     if (sOffMain < w1) {sOffMain = w1; changed = true;}
@@ -183,14 +182,14 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
 
         // add street is left from road 1
         if (phi > 0) 
-            buildRoad(mainRoad, r1, sMain-sOffMain, 0, automaticWiding, sMain, iPx, iPy, iPhdg);
+            buildRoad(mainRoad, r1, sMain-sOffMain, 0, automaticWidening, sMain, iPx, iPy, iPhdg);
         // add street is right from road 1
         if (phi < 0) 
             buildRoad(mainRoad, r1, sMain-sOffMain, 0, automaticRestricted, sMain, iPx, iPy, iPhdg);
     }
     if (mode == 2)
     {
-        buildRoad(mainRoad, r1, sMain+sOffMain, INFINITY, automaticWiding, sMain, iPx, iPy, iPhdg);
+        buildRoad(mainRoad, r1, sMain+sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg);
     }
     addObjects(mainRoad,r1,data);
 
@@ -209,12 +208,12 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             buildRoad(mainRoad, r2, sMain+sOffMain, INFINITY, automaticRestricted, sMain, iPx, iPy, iPhdg);
         // add street is right from road 1
         if (phi < 0) 
-            buildRoad(mainRoad, r2, sMain+sOffMain, INFINITY, automaticWiding, sMain, iPx, iPy, iPhdg);
+            buildRoad(mainRoad, r2, sMain+sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg);
         addObjects(mainRoad,r2,data);
     }
     if (mode == 2)
     {
-        buildRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, automaticWiding, sAdd1,iPx, iPy, iPhdg+phi1);
+        buildRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1,iPx, iPy, iPhdg+phi1);
         addObjects(additionalRoad1,r2,data);
     }
 
@@ -225,12 +224,12 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     r3.predecessor.id = junc.id;
     if (mode == 1)
     {
-        buildRoad(additionalRoad1, r3, sAdd1 + sOffAdd1, INFINITY, automaticWiding, sAdd1, iPx, iPy, iPhdg+phi1);
+        buildRoad(additionalRoad1, r3, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg+phi1);
         addObjects(additionalRoad1,r3,data);
     }
     if (mode == 2)
     {
-        buildRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, automaticWiding, sAdd2, iPx, iPy, iPhdg+phi2);
+        buildRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg+phi2);
         addObjects(additionalRoad2,r3,data);
     }
 

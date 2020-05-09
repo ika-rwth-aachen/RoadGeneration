@@ -646,6 +646,6 @@ bool compareLanes(const lane &a, const lane &b)
 std::string tS(double input)
 {
     stringstream stream;
-    stream << std::fixed << setprecision(9) << input;
+    stream << std::fixed << setprecision(15) << input;
     return stream.str();
 }

@@ -38,8 +38,8 @@
                 <adRoad id="3" s="0" angle="1.57"/>
             </intersectionPoint>
             <coupler>
-                <junctionArea s="5">
-                    <roadBorder id="2" s="10"/>
+                <junctionArea gap="5">
+                    <roadGap id="2" gap="10"/>
                 </junctionArea>
                 <connection type="all"/>
                 <additionalLanes>

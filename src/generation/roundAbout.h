@@ -80,17 +80,17 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
 
         // calculate offsets
         double sOffset = 0;
-        if (cA) sOffset = cA.attribute("s").as_double();
+        if (cA) sOffset = cA.attribute("gap").as_double();
 
         double sOffMain = sOffset;
         double sOffAdd = sOffset;
-        for (pugi::xml_node sB: cA.children("roadBorder"))
+        for (pugi::xml_node sB: cA.children("roadGap"))
         {
             if (sB.attribute("id").as_int() == refId) 
-                sOffMain = sB.attribute("s").as_double();
+                sOffMain = sB.attribute("gap").as_double();
 
             if (sB.attribute("id").as_int() == adId) 
-                sOffAdd = sB.attribute("s").as_double();
+                sOffAdd = sB.attribute("gap").as_double();
         }
 
         // calculate width of mainRoad and addtionalRoad
@@ -102,15 +102,14 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         road helpAdd;
         buildRoad(additionalRoad, helpAdd, 0, INFINITY, dummy, 0, 0, 0, 0);  
         laneSection lSAdd = helpAdd.laneSections.front();
-        double widthAdd = abs(findTOffset(lSAdd, findMinLaneId(lSAdd), 0)) +                      abs(findTOffset(lSAdd, findMaxLaneId(lSAdd), 0));
+        double widthAdd = abs(findTOffset(lSAdd, findMinLaneId(lSAdd), 0)) + abs(findTOffset(lSAdd, findMaxLaneId(lSAdd), 0));
         
-        // check offsets and adjust them if necessary
+        // check offsets and adjust them if necessary (2 and 4 are safty factor)
         bool (changed) = false;
-        if (sOffMain < widthAdd/2 * 1.25) 
-        {sOffMain = widthAdd/2 * 1.25; changed = true;}
-        if (sOffAdd < widthMain   * 1.5) 
-        {sOffAdd = widthMain * 1.5; changed = true;}        
-        // TODO check why 1.25 and 1.5 ? 
+        if (sOffMain < widthAdd/2 * 4) 
+        {sOffMain = widthAdd/2 * 4; changed = true;}
+        if (sOffAdd < widthMain * 2) 
+        {sOffAdd = widthMain * 2; changed = true;}        
 
         if (changed)
         {

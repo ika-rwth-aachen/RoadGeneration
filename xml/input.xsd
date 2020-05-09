@@ -55,7 +55,7 @@ elementFormDefault="qualified">
                 - road: at least two roads have to be defined with different id's
                 - intersectionPoint: holds the main properties to connect the roads
                 - coupler: holds the detailed properties such as junction area or defined lane connections
-                - automaticWiding: defines wether or not automatic new lanes are created, e.g. left turning lane on main roads
+                - automaticWidening: defines wether or not automatic new lanes are created, e.g. left turning lane on main roads
 
                 - id: identifier of the segment
                 - type: junction type consists of "M" and "A"
@@ -67,7 +67,7 @@ elementFormDefault="qualified">
         <xs:element name="road" type="roadType" minOccurs="2" maxOccurs="unbounded"/>
         <xs:element name="intersectionPoint" type="intersectionPointType"/>
         <xs:element name="coupler" type="couplerType" minOccurs="0"/>
-        <xs:element name="automaticWiding" type="automaticWidingType" minOccurs="0"/>
+        <xs:element name="automaticWidening" type="automaticWideningType" minOccurs="0"/>
 </xs:sequence>
     <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
     <xs:attribute name="type" type="junctionTypeType" use="required"/>
@@ -291,7 +291,9 @@ elementFormDefault="qualified">
                 - lane: general lane structure
                 
                 - id: identifier for a lanesection
-                - s: position for a lanesection in m 
+                - s: position for a lanesection
+
+                note: the defined s is not the s on the original road, its the s coordinate after crossing the reference lines
         </xs:documentation>
     </xs:annotation>
     <xs:sequence>
@@ -406,15 +408,17 @@ elementFormDefault="qualified">
 
                 - restrictedArea: specifying a possible restricted field after widening (currently not implemented)
 
-                - laneId: specifying the identifier of the lane for widening
+                - side: specifying the side for the lane widening
                 - s: specifying the stating position for the lanewidening
                 - length: specifying the length for the lanewidening
+
+                note: the defined s is not the s on the original road, its the s coordinate after applying the previous drops/widenings ...
         </xs:documentation>
     </xs:annotation>
     <xs:sequence>
         <xs:element name="restrictedArea" type="restrictedAreaType" minOccurs="0"/>
     </xs:sequence>
-    <xs:attribute name="laneId" type="xs:int" use="required"/>      
+    <xs:attribute name="side" type="xs:int" use="required"/>      
     <xs:attribute name="s" type="xs:double" use="required"/>      
     <xs:attribute name="length" type="positiveDouble" use="optional"/>        
 </xs:complexType>
@@ -425,15 +429,17 @@ elementFormDefault="qualified">
             Element: specifying a lane drop 
                 - restrictedArea: specifying a possible restricted field after widening
 
-                - laneId: specifying the identifier of the lane for dropping
-                - s: specifying the stating position for the lanedrop
+                - side: specifying the side for the lanedrop (outer lane is dropped)
+                - s: specifying the starting position for the lanedrop
                 - length: specifying the length for the lanedrop
+
+                note: the defined s is not the s on the original road, its the s coordinate after applying the previous drops/widenings ...
         </xs:documentation>
     </xs:annotation>
     <xs:sequence>
         <xs:element name="restrictedArea" type="restrictedAreaType" minOccurs="0"/>
     </xs:sequence>
-    <xs:attribute name="laneId" type="xs:int" use="required"/>      
+    <xs:attribute name="side" type="xs:int" use="required"/>      
     <xs:attribute name="s" type="xs:double" use="required"/>    
     <xs:attribute name="length" type="positiveDouble" use="optional"/>    
 </xs:complexType>
@@ -443,7 +449,7 @@ elementFormDefault="qualified">
         <xs:documentation>
             Element: specifying a restricted area 
 
-                - length: specifying the length for the restriced area, this has to be longer than the length of the lanewiding or lanedrop! Stating position is defined by parent lanewiding or lanedrop.
+                - length: specifying the length for the restriced area, this has to be longer than the length of the lanewidening or lanedrop! Stating position is defined by parent lanewidening or lanedrop.
         </xs:documentation>
     </xs:annotation>
     <xs:attribute name="length" type="positiveDouble" use="optional"/>  
@@ -535,6 +541,8 @@ elementFormDefault="qualified">
                 - s: position on the road
                 - length: length of the roadwork
                 - laneId: lane with defined roadwork
+
+                note: the defined s is not the s on the original road, its the s coordinate after applying the previous drops/widenings ...
             </xs:documentation>
     </xs:annotation>
     <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
@@ -590,6 +598,8 @@ elementFormDefault="qualified">
                 - s: position on the road
                 - length: length of the trafficisland
                 - width: width of the trafficisland
+
+                note: the defined s is not the s on the original road, its the s coordinate after applying the previous drops/widenings ...
             </xs:documentation>
     </xs:annotation>
     <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
@@ -609,6 +619,8 @@ elementFormDefault="qualified">
 
                 - refRoad: identifier of fixed reference road
                 - s: position on the reference road determing the interesection point
+
+                note: the defined s is the s on the original road
         </xs:documentation>
     </xs:annotation>
     <xs:sequence>
@@ -626,6 +638,8 @@ elementFormDefault="qualified">
                 - id: identifier of additional road
                 - s: position on the additional road at the interesection point
                 - angle: angle between reference road and this additional road in interesction point
+
+                note: the defined s is the s on the original road
         </xs:documentation>
     </xs:annotation>
     <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
@@ -668,28 +682,28 @@ elementFormDefault="qualified">
         <xs:documentation>
             Element: specifying the junction area
 
-                - roadBoarder: detailed width for each road seperatly
+                - roadGap: detailed width for each road seperatly
 
-                - s: general width from midpoint to road beginning
+                - gap: general width from midpoint to road beginning
         </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-        <xs:element name="roadBorder" type="roadBorderType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="roadGap" type="roadGapType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
-    <xs:attribute name="s" type="xs:double" use="required"/>   
+    <xs:attribute name="gap" type="xs:double" use="required"/>   
 </xs:complexType>
 
-<xs:complexType name="roadBorderType">
+<xs:complexType name="roadGapType">
     <xs:annotation>
         <xs:documentation>
             Element: detailed junctionarea width for a specific road
 
                 - id: road identifier 
-                - s: width from midpoint to road beginning for specific road
+                - gap: width from midpoint to road beginning for specific road
         </xs:documentation>
     </xs:annotation>
     <xs:attribute name="id" type="xs:positiveInteger" use="required"/>   
-    <xs:attribute name="s" type="xs:double" use="required"/>   
+    <xs:attribute name="gap" type="xs:double" use="required"/>   
 </xs:complexType>
 
 <xs:complexType name="connectionType">
@@ -785,7 +799,7 @@ elementFormDefault="qualified">
                     (an additional lane is always next to the junction, but some roads are cut in the process - here one has to specify if the "start" or "end" part is equipped with an additional road; if no cut exists "end" is the value to choose)
                 - type: specifying position and type of additional lane
                 - length: specifying length of lane 
-                - ds: specifying length of widing
+                - ds: specifying length of widening
                 - amount: specifying the amount of additional lanes
                 - verschwenkung: specifying if a "verschwenkung" exists
         </xs:documentation>
@@ -813,14 +827,16 @@ elementFormDefault="qualified">
     </xs:restriction>
 </xs:simpleType>
 
-<xs:complexType name="automaticWidingType">
+<xs:complexType name="automaticWideningType">
     <xs:annotation>
         <xs:documentation>
             Element: spcifying wether or not automatic lanes are created,
 
-                - active: spcifying where automatic widing are applied
-                - length: spcifying length of the automatic widing lane 
-                - ds: specifying length of automatic widing
+                - active: spcifying where automatic widening are applied
+                - length: spcifying length of the automatic widening lane 
+                - ds: specifying length of the widening part
+
+                note: starting point is always at road beginning (s=0)
         </xs:documentation>
     </xs:annotation>
     <xs:attribute name="active" type="activeType" use="required"/>
@@ -831,7 +847,7 @@ elementFormDefault="qualified">
 <xs:simpleType name="activeType">
     <xs:annotation>
         <xs:documentation>
-            Element: holds an enumeration for determine where automatic widing is active
+            Element: holds an enumeration for determine where automatic widening is active
         </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">

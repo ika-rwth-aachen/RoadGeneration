@@ -224,25 +224,15 @@ void addBusStop(object o, road &r)
         if (r.laneSections[i].s < o.s) break;
     laneSection lS = r.laneSections[i];
 
-    int laneId;
-    if (o.t > 0) laneId = findMaxLaneId(lS);
-    if (o.t < 0) laneId = findMinLaneId(lS);
+    int side;
+    if (o.t > 0) side = 1;
+    if (o.t < 0) side = -1;
 
     double length = setting.busStop.length;
-    double widing = setting.busStop.widing;
+    double widening = setting.busStop.widening;
 
-    addLaneWidening(r.laneSections, laneId, o.s-length/2-widing, widing, true);
-    addLaneDrop (r.laneSections, laneId+sgn(laneId), o.s+length/2, widing);
-
-    lane l;
-    int id; 
-    // set type of additional lanes to "bus"
-    id = findLane(r.laneSections[i+1],l,laneId+sgn(laneId));
-    r.laneSections[i+1].lanes[id].type = "bus";
-    id = findLane(r.laneSections[i+2],l,laneId+sgn(laneId));
-    r.laneSections[i+2].lanes[id].type = "bus";
-    id = findLane(r.laneSections[i+3],l,laneId+sgn(laneId));
-    r.laneSections[i+3].lanes[id].type = "bus";
+    addLaneWidening(r.laneSections, side, o.s-length/2-widening, widening, true);
+    addLaneDrop (r.laneSections, side, o.s+length/2, widening);
 }
 
 /**

@@ -41,9 +41,9 @@
                 <adRoad id="2" s="50" angle="-1.508"/>
             </intersectionPoint>
             <coupler>
-                <junctionArea s="0">
-                    <roadBorder id="1" s="15"/>     
-                    <roadBorder id="2" s="15"/>
+                <junctionArea gap="0">
+                    <roadGap id="1" gap="15"/>     
+                    <roadGap id="2" gap="15"/>     
                 </junctionArea>
                 <connection type="all"/>
             </coupler>

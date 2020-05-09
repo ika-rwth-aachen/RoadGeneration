@@ -9,16 +9,16 @@
  */
 
 /**
- * @brief function adds a laneSection with laneWiding  to a given lanesection set in s direction
+ * @brief function adds a laneSection with laneWideing  to a given lanesection set in s direction
  * 
  * @param secs      vector of all lanesections of a road
- * @param laneId    laneId of the lane where the laneWiding should be performed
- * @param s         position of lane widing
- * @param ds        length of lane widing
+ * @param laneId    laneId of the lane where the laneWidening should be performed
+ * @param s         position of lane widening
+ * @param ds        length of lane widening
  * @param addouterLane  specifies if additional lane is on the outer side or not
  * @return int      error code
  */
-int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds, bool addOuterLane)
+int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bool addOuterLane)
 { 
     std::vector<laneSection>::iterator it;
     int i = 0;
@@ -41,6 +41,22 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds, 
 
     laneSection adLaneSec = *it;
 
+    int laneId = 0;
+
+    if (addOuterLane) 
+    {
+        if (side > 0) laneId = findMaxLaneId(adLaneSec);
+        if (side < 0) laneId = findMinLaneId(adLaneSec);
+    }
+    else{
+        laneId = sgn(side);
+    }
+
+    if (laneId == 0 || abs(laneId) >= 100)
+    {
+        cerr << "ERR: lane widening can not be performed" << endl;
+    }
+
     adLaneSec.id = it->id + 1;
     adLaneSec.s = s;
 
@@ -58,7 +74,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds, 
     // shift other lanes and add additional lane
     if (addOuterLane)
     {
-        l.id = laneId + sgn(laneId);
+        l.id = laneId + sgn(side);
         shiftLanes(adLaneSec, l.id, 1);
 
         adLaneSec.lanes.push_back(l);  
@@ -72,7 +88,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds, 
         adLaneSec.lanes.push_back(l);  
     }
 
-    // center line solid in laneWiding part
+    // center line solid in laneWidening part
     lane tmp;
     id = findLane(adLaneSec, tmp, 0);
     adLaneSec.lanes[id].rm.type = "solid";
@@ -82,7 +98,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds, 
     it = secs.insert(it, adLaneSec);
 
 
-    // --- adjust the section after the laneWiding ----------------------------
+    // --- adjust the section after the laneWidening ----------------------------
     l.w.d = 0;
     l.w.c = 0;
     l.w.a = w;
@@ -91,7 +107,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds, 
     adLaneSec.id++;
     adLaneSec.s += ds;
 
-    // center line broken after laneWiding part
+    // center line broken after laneWidening part
     id = findLane(adLaneSec, tmp, 0);
     adLaneSec.lanes[id].rm.type = "broken";
 
@@ -109,7 +125,7 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds, 
 
         if(addOuterLane)
         {
-            shiftLanes(secs[i], laneId+sgn(laneId), 1);
+            shiftLanes(secs[i], laneId + sgn(laneId), 1);
 
             if (abs(l.id) <= abs(laneId + sgn(laneId))) l.rm.type = "broken";
             it->lanes.push_back(l); 
@@ -130,13 +146,13 @@ int addLaneWidening(vector<laneSection> &secs, int laneId, double s, double ds, 
  * @brief function adds a laneSection with laneDrop  to a given lanesection set in s direction
  * 
  * @param secs      vector of all lanesections of a road
- * @param laneId    laneId of the lane where the laneDrop should be performed
+ * @param side    laneId of the lane where the laneDrop should be performed
  * @param s         position of laneDrop
  * @param ds        length of laneDrop
  * @return int      error code
  */
-int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
-{
+int addLaneDrop(vector<laneSection> &secs, int side, double s, double ds)
+{  
     std::vector<laneSection>::iterator it;
     std::vector<lane>::iterator itt;
 
@@ -159,12 +175,22 @@ int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
 
     laneSection adLaneSec = *it;
 
+    int laneId = 0;
+    if (side > 0) laneId = findMaxLaneId(adLaneSec);
+    if (side < 0) laneId = findMinLaneId(adLaneSec);
+    
+    if (laneId == 0 || abs(laneId) >= 100)
+    {
+        cerr << "ERR: lane drop can not be performed" << endl;
+    }
+
     adLaneSec.id = it->id + 1;
     adLaneSec.s = s;
 
     // find current lane in adLaneSec
     lane l;
     int id = findLane(adLaneSec, l, laneId);
+    if (id == -1) return 1;
 
     // adjust new width
     double w = laneWidth(l,adLaneSec.s);
@@ -219,22 +245,23 @@ int addLaneDrop(vector<laneSection> &secs, int laneId, double s, double ds)
 }
 
 /**
- * @brief function adds a laneSection with restricted area to a given lanesection set in s direction
+ * @brief 
  * 
- * @param secs      vector of all lanesections of a road
- * @param laneId    laneId of the lane where the laneDrop should be performed
- * @param s         position of laneDrop
- * @param ds        length of laneDrop
- * @return int      error code
+ * @param secs 
+ * @param side 
+ * @param s 
+ * @param ds1 
+ * @param ds2 
+ * @return int 
  */
-int addRestrictedArea(vector<laneSection> &secs, int laneId, double s, double ds1, double ds2)
+int addRestrictedAreaWidening(vector<laneSection> &secs, int side, double s, double ds1, double ds2)
 {
     std::vector<laneSection>::iterator it;
     std::vector<lane>::iterator itt;
 
     if (ds1 >= ds2)
     {
-        cerr << "ERR: ds in restricted area is to short." << endl;
+        cerr << "ERR: length in restricted area is to short." << endl;
         return 1;
     }
 
@@ -255,6 +282,126 @@ int addRestrictedArea(vector<laneSection> &secs, int laneId, double s, double ds
     }
 
     laneSection adLaneSec = *it;
+    
+    int laneId = 0;
+    if (side > 0) laneId = findMaxLaneId(adLaneSec);
+    if (side < 0) laneId = findMinLaneId(adLaneSec);
+    
+    if (laneId == 0 || abs(laneId) >= 100)
+    {
+        cerr << "ERR: restricted area widening can not be performed" << endl;
+    }
+
+    lane l, lTmp;
+    int id;
+    double dx;
+
+    // skip if previous part is too small
+    if (s-secs[i-1].s < ds2-ds1) return 1;
+
+    // --- Section 1 -----------------------------------------
+    id = findLane(adLaneSec, l, sgn(side));
+
+    double a = l.w.a;
+    double b = l.w.b;
+    double c = l.w.c;
+    double d = l.w.d;
+    
+    // addtional lane: w - droppingLane
+    double w = laneWidth(l,ds1);
+    l.w.a = w - a;
+    l.w.b = - b; 
+    l.w.c = - c; 
+    l.w.d = - d; 
+
+    // type
+    l.type = "restricted";
+    l.rm.type = "solid";
+    l.rm.color = "white";
+    l.id = sgn(side) + laneId;
+    adLaneSec.lanes.push_back(l);
+
+    secs[i] = adLaneSec;
+
+    // --- Section 2 -----------------------------------------
+    adLaneSec.s = s - (ds2-ds1);
+
+    // zero droppingLane
+    id = findLane(adLaneSec, l, sgn(side));
+    l.w.a = 0;
+    l.w.b = 0;
+    l.w.c = 0;
+    l.w.d = 0;
+    adLaneSec.lanes[id] = l;
+
+    // additional lane: shifted coordinates of original polynom
+    id = findLane(adLaneSec, l, laneId + sgn(side));
+    
+    // polynom
+    w = laneWidth(l,0);
+    l.w.d = - 2 * w / pow(ds2-ds1,3);
+    l.w.c = 3 * w / pow(ds2-ds1,2);
+    l.w.b = 0;
+    l.w.a = 0;
+
+    // type
+    l.type = "restricted";
+    l.rm.type = "solid";
+    l.rm.color = "white";
+    adLaneSec.lanes[id] = l;
+
+    secs.insert(it, adLaneSec);
+
+    return 0;
+}
+
+/**
+ * @brief function adds a laneSection with restricted area to a given lanesection set in s direction
+ * 
+ * @param secs      vector of all lanesections of a road
+ * @param side    laneId of the lane where the laneDrop should be performed
+ * @param s         position of laneDrop
+ * @param ds        length of laneDrop
+ * @return int      error code
+ */
+int addRestrictedAreaDrop(vector<laneSection> &secs, int side, double s, double ds1, double ds2)
+{
+    std::vector<laneSection>::iterator it;
+    std::vector<lane>::iterator itt;
+
+    if (ds1 >= ds2)
+    {
+        cerr << "ERR: length in restricted area is to short." << endl;
+        return 1;
+    }
+
+    // search corresponding lane Section
+    int i = 0;
+    bool found = false;
+    for (i = 0; i < secs.size()-1; i++)
+    {
+        if (secs[i].s <= s && secs[i+1].s > s) {
+            found = true;
+            it = secs.begin() + i;
+            break; 
+        }
+    }
+    if (!found) {
+        it = secs.begin() + secs.size()-1;
+        i = secs.size()-1;
+    }
+
+    laneSection adLaneSec = *it;
+
+     int laneId = 0;
+    if (side > 0) laneId = findMaxLaneId(adLaneSec);
+    if (side < 0) laneId = findMinLaneId(adLaneSec);
+    
+    if (laneId == 0 || abs(laneId) >= 100)
+    {
+        cerr << "ERR: restriced area drop can not be performed" << endl;
+    }
+
     lane l, lTmp;
     int id;
     double dx;
@@ -315,7 +462,7 @@ int addRestrictedArea(vector<laneSection> &secs, int laneId, double s, double ds
     adLaneSec.id++;
     adLaneSec.s = s + ds2;
 
-    // remove additional lane 
+    // remove restricted lane 
     id = findLane(adLaneSec, l, laneId + sgn(laneId));
     shiftLanes(adLaneSec, laneId + sgn(laneId), -1);
     itt = adLaneSec.lanes.begin() + id;
@@ -526,7 +673,6 @@ int laneWideningJunction(road &r, double  s, double ds, int turn, bool verschwen
     }
 
     // update lane links in next lane section
-
     it = r.laneSections.insert(it, adLaneSec);
     it++;
 
@@ -534,7 +680,7 @@ int laneWideningJunction(road &r, double  s, double ds, int turn, bool verschwen
     for (; it != r.laneSections.end(); ++it)
     {        
         it->id += 2;
-        it->s += ds + abs(s);
+        it->s += abs(s) + ds;
     }
     return 0;
 }

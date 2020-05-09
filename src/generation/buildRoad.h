@@ -468,10 +468,10 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
  * 
  * @param roadIn 
  * @param r 
- * @param automaticWiding 
+ * @param automaticWidening 
  * @return int 
  */
-int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node  automaticWiding)
+int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node  automaticWidening)
 {
     // --- user defined lanedrops or lanewidenings -----------------------------
     //      -> have to be defined in increasing s order !!!
@@ -480,47 +480,23 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node  automa
     {   
         if ((string)itt->name() == "laneWidening")
         {
-            int lane = itt->attribute("laneId").as_int();
+            int side = itt->attribute("side").as_int();
 
-            if (lane == 0) 
+            if (side == 0) 
             {
-                cerr << "ERR: laneWidening with laneId = 0" << endl;
+                cerr << "ERR: laneWidening with side = 0" << endl;
                 return 1;
             }
 
             double s = itt->attribute("s").as_double();
 
             double ds = setting.laneChange.ds;
-            if (itt->attribute("length")) itt->attribute("length").as_double();
+            if (itt->attribute("length")) ds = itt->attribute("length").as_double();
 
-            // only perform drop if not close to junction
-            if (s < setting.laneChange.s + setting.laneChange.ds) continue;
+            // only perform drop if on road length
             if (s > r.length) continue;  
                  
-            addLaneWidening(r.laneSections, lane, s, ds, false);
-
-            // TODO add restricted area here 
-        }
-        if ((string)itt->name() == "laneDrop")
-        {
-            int lane = itt->attribute("laneId").as_int();
-
-            if (lane == 0) 
-            {
-                cerr << "ERR: laneWidening with laneId = 0" << endl;
-                return 1;
-            }
-
-            double s = itt->attribute("s").as_double();
-
-            double ds = setting.laneChange.ds;
-            if (itt->attribute("length")) itt->attribute("length").as_double();
-
-            // only perform drop if not close to junction
-            if (s < setting.laneChange.s + setting.laneChange.ds) continue;       
-            if (s > r.length) continue;    
-
-            addLaneDrop(r.laneSections, lane, s, ds);  
+            addLaneWidening(r.laneSections, side, s, ds, false);
 
             //restricted area
             if (itt->child("restrictedArea"))
@@ -529,38 +505,69 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node  automa
                 if (itt->child("restrictedArea").attribute("length")) 
                     ds2 = itt->child("restrictedArea").attribute("length").as_int();
 
-                addRestrictedArea(r.laneSections, lane, s, ds, ds2);
+                addRestrictedAreaWidening(r.laneSections, side, s, ds, ds2);
+            }        
+
+        }
+        if ((string)itt->name() == "laneDrop")
+        {
+            int side = itt->attribute("side").as_int();
+
+            if (side == 0) 
+            {
+                cerr << "ERR: laneWidening with side = 0" << endl;
+                return 1;
+            }
+
+            double s = itt->attribute("s").as_double();
+
+            double ds = setting.laneChange.ds;
+            if (itt->attribute("length")) ds = itt->attribute("length").as_double();
+
+            // only perform drop if on road length
+            if (s > r.length) continue;    
+
+            addLaneDrop(r.laneSections, side, s, ds);  
+
+            //restricted area
+            if (itt->child("restrictedArea"))
+            {
+                double ds2 = setting.laneChange.ds;
+                if (itt->child("restrictedArea").attribute("length")) 
+                    ds2 = itt->child("restrictedArea").attribute("length").as_int();
+
+                addRestrictedAreaDrop(r.laneSections, side, s, ds, ds2);
             }              
         }
     }
 
-    // --- automatic generated laneWiding --------------------------------------
+    // --- automatic generated laneWidening --------------------------------------
     
-    double widing_s = setting.laneChange.s;
-    double widing_ds = setting.laneChange.ds;
+    double widening_s = setting.laneChange.s;
+    double widening_ds = setting.laneChange.ds;
     string active = "main";
 
-    if (automaticWiding)
-    {
-        if (automaticWiding.attribute("active"))
+    if (automaticWidening)
+    {   
+        if (automaticWidening.attribute("active"))
         {   
-            active = automaticWiding.attribute("active").value();
+            active = automaticWidening.attribute("active").value();
 
-            if (automaticWiding.attribute("length")) widing_s = automaticWiding.attribute("length").as_double();
+            if (automaticWidening.attribute("length")) widening_s = automaticWidening.attribute("length").as_double();
 
-            if (automaticWiding.attribute("ds")) widing_ds = automaticWiding.attribute("ds").as_double();
+            if (automaticWidening.attribute("ds")) widening_ds = automaticWidening.attribute("ds").as_double();
         }
-        if (automaticWiding.attribute("restricted").as_bool()) 
-                widing_ds *= -1;
+        if (automaticWidening.attribute("restricted").as_bool()) 
+                widening_ds *= -1;
 
         if (active == "all")
-            laneWideningJunction(r,  widing_s, widing_ds, 1, true);
+            laneWideningJunction(r,  widening_s, widening_ds, 1, true);
 
         else if (active == "main" && r.classification == "main")
-            laneWideningJunction(r, widing_s, widing_ds, 1, true);
+            laneWideningJunction(r, widening_s, widening_ds, 1, true);
         
         else if (active == "access" && r.classification == "access")
-            laneWideningJunction(r, widing_s, widing_ds, 1, true);
+            laneWideningJunction(r, widening_s, widening_ds, 1, true);
     }  
     return 0;
 }
@@ -572,14 +579,14 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node  automa
  * @param r                 resulting road
  * @param sStart            starting s position
  * @param sEnd              ending s position
- * @param sJunction         position of laneWiding (always on lane 1 - roads points away from junction)
+ * @param sJunction         position of laneWidening (always on lane 1 - roads points away from junction)
  * @param s0                position of s where x0, y0, phi0 should hold
  * @param x0                x0 should hold at s0 for the resulting road
  * @param y0                y0 should hold at s0 for the resulting road
  * @param phi0              phi0 should hold at s0 for the resulting road
  * @return int              errorcode
  */
-int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::xml_node automaticWiding, double s0, double x0, double y0, double phi0)
+int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::xml_node automaticWidening, double s0, double x0, double y0, double phi0)
 {
     r.classification = roadIn.attribute("classification").value();
     r.inputId = roadIn.attribute("id").as_int();
@@ -617,7 +624,7 @@ int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::
     addLanes(roadIn, r, mode);
 
     // add lane section changes
-    addLaneSectionChanges(roadIn, r, automaticWiding);
+    addLaneSectionChanges(roadIn, r, automaticWidening);
 
     return 0;
 }

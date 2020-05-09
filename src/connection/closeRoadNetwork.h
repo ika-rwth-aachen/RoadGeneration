@@ -146,7 +146,7 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 				toHdg = g.hdg;
 				curve(g.length,g, toX, toY, toHdg, 1);
                 r.successor.id = rConnection.id;				
-				r.successor.contactPoint = endType; // TODO improve
+				r.successor.contactPoint = endType;
             	rConnection.successor.id = r.id;
             	rConnection.successor.contactPoint = endType;
                 lS2 = r.laneSections.back();

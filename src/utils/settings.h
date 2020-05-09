@@ -47,7 +47,7 @@ struct laneChanges
 struct busStops
 {
     double length = 20;
-    double widing = 7.5;
+    double widening = 7.5;
 };
 
 /**
