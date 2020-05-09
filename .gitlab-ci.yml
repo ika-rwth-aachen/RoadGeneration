@@ -38,7 +38,6 @@ unitCase4:
     - cmake . 
     - make
     - ./road-generation test/test4.xml
-    - cat test/test4.xodr
     - cmp --silent test/test4.xodr test/gt/test4.xodr
 
 unitCase5:
@@ -79,4 +78,4 @@ unitCase9:
     - cmake . 
     - make
     - ./road-generation test/test9.xml
-    - cmp --silent test/test9.xodr test/gt/test8.xodr
+    - cmp --silent test/test9.xodr test/gt/test9.xodr

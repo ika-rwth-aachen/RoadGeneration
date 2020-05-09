@@ -635,3 +635,17 @@ bool compareLanes(const lane &a, const lane &b)
 {
     return a.id < b.id;
 }
+
+/**
+ * @brief to String
+ * 
+ * @param input 
+ * @param n 
+ * @return std::string 
+ */
+std::string tS(double input)
+{
+    stringstream stream;
+    stream << std::fixed << setprecision(9) << input;
+    return stream.str();
+}
