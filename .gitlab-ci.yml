@@ -14,6 +14,8 @@ unitCase1:
     - cmake . 
     - make
     - ./road-generation test/test1.xml
+    - cat test/test1.xodr
+    - cat test/gt/test1.xodr
     - cmp --silent test/test1.xodr test/gt/test1.xodr && echo "succes"  || echo "no succes" 
     - cmp --silent test/test1.xodr test/gt/test1.xodr
   
