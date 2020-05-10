@@ -16,12 +16,11 @@
  */
 int sgn(double d)
 {
-    if (d == 0)
-        return 0;
     if (d > 0)
         return 1;
     if (d < 0)
         return -1;
+    return 0;
 }
 
 /**
@@ -593,6 +592,8 @@ int computeIP(double x1, double y1, double phi1, double x2, double y2, double ph
     return 0;
 }
 
+template<typename ... Args>
+
 /**
  * @brief function used for xsd checking output
  * 
@@ -600,7 +601,6 @@ int computeIP(double x1, double y1, double phi1, double x2, double y2, double ph
  * @param args      here the project directory PROJ_DIR
  * @return          output buffer 
  */
-template <typename... Args>;
 std::string string_format(const std::string &format, Args... args)
 {
     auto size = snprintf(nullptr, 0, format.c_str(), args...) + 1;
