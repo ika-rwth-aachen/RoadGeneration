@@ -1,7 +1,7 @@
 /**
- * @file io.cpp
+ * @file xml.cpp
  *
- * @brief This message displayed in Doxygen Files index
+ * @brief file contains the import and export, as well as the validation, of xml files
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de
@@ -22,7 +22,7 @@ using namespace xercesc;
 extern settings setting;
 
 /**
- * @brief function which checks the input file against the corresponding xsd
+ * @brief function checks the input file against the corresponding input.xsd
  * 
  * @param file  input file
  * @return int  error code
@@ -60,22 +60,24 @@ int validateInput(char *file)
 }
 
 /**
- * @brief function which checks the output file against the corresponding xsd
+ * @brief function checks the output file against the corresponding output.xsd
  * 
- * @param data  
+ * @param data  output data
  * @return int  error code
  */
 int validateOutput(roadNetwork data)
 {
-    XMLPlatformUtils::Initialize();
-
+    // setup file
     string file = data.file;
     file.append(".xodr");
     const char *xml_file = file.c_str();
 
+    XMLPlatformUtils::Initialize();
+
     string schema = string_format("%s/xml/output.xsd", PROJ_DIR);
     const char *schema_path = schema.c_str();
 
+    // load output file
     XercesDOMParser domParser;
     if (domParser.loadGrammar(schema_path, Grammar::SchemaGrammarType) == NULL)
     {
@@ -83,6 +85,7 @@ int validateOutput(roadNetwork data)
         return 1;
     }
 
+    // check output file
     domParser.setValidationScheme(XercesDOMParser::Val_Auto);
     domParser.setDoNamespaces(true);
     domParser.setDoSchema(true);
@@ -105,7 +108,7 @@ int validateOutput(roadNetwork data)
  *  input is then accessable in a pugi::xml_document tree structure 
  * 
  * @param doc   tree structure which contains the data of the xml input file
- * @param data  roadNetwork data which will be stored as openDrive format
+ * @param data  roadNetwork data which holds the input file name
  * @param file  xml input file
  * @return int  error code
  */
@@ -127,10 +130,10 @@ int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file)
 }
 
 /**
- * @brief function stores the generated structure of type roadNetwork as a openDrive format
+ * @brief function stores the generated structure of type roadNetwork as OpenDrive format with the external tool pugi_xml
  * 
- * @param doc   tree structure which contains the generated data in openDrive format
- * @param data  generated data by this tool
+ * @param doc   tree structure which contains the generated output data in OpenDrive format
+ * @param data  roadNetwork data filled by the road generation tool
  * @return int  error code
  */
 int createXML(pugi::xml_document &doc, roadNetwork data)
@@ -158,8 +161,11 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     auto tm = *std::localtime(&t);
     std::ostringstream oss;
     oss << std::put_time(&tm, "%Y-%m-%d %H:%M:%S");
+
+    // uncomment that for allowing CI, due to same output files
     //header.append_attribute("date") = oss.str().c_str();
 
+    // geoReference tag
     pugi::xml_node geoReference = header.append_child("geoReference");
     geoReference.append_child(pugi::node_cdata).set_value("+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
 
@@ -445,13 +451,15 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
 }
 
 /**
- * @brief 
+ * @brief function for displaying the road generation header name
  * 
  */
-void printLogo()
+int printLogo()
 {
     cout << "|‾\\  /‾\\  |‾‾| |‾\\       /‾‾  |‾‾  |\\  | |‾‾ |‾\\ |‾‾| ‾|‾ |  /‾\\  |\\  |" << endl;
     cout << "|_/ |   | |--| |  |  -  |  _  |--  | | | |-- |_/ |--|  |  | |   | | | |" << endl;
     cout << "| \\  \\_/  |  | |_/       \\_/  |__  |  \\| |__ | \\ |  |  |  |  \\_/  |  \\|" << endl;
     cout << "=======================================================================" << endl;
+
+    return 0;
 }

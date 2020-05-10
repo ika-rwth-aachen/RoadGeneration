@@ -1,7 +1,7 @@
 /**
  * @file settings.h
  *
- * @brief This message displayed in Doxygen Files index
+ * @brief file contains the settings
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de
@@ -9,29 +9,32 @@
  */
 
 /**
- * @brief 
+ * @brief lane width settings
  * 
  */
 struct widths
 {
-    double access = 3;
-    double main = 4;
     double standard = 3.5;
+    double main = 4;
+    double access = 3;
 };
 
 /**
- * @brief 
+ * @brief speed limit settings
  * 
  */
 struct speeds
 {
-    double access = 30;
-    double main = 50;
     double standard = 50;
+    double main = 50;
+    double access = 30;
 };
 
 /**
- * @brief 
+ * @brief lane changes settings 
+ * 
+ * @param s     length of additional lane
+ * @param ds    length of widening part
  * 
  */
 struct laneChanges
@@ -41,7 +44,7 @@ struct laneChanges
 };
 
 /**
- * @brief 
+ * @brief bus stop settings
  * 
  */
 struct busStops
@@ -51,7 +54,7 @@ struct busStops
 };
 
 /**
- * @brief 
+ * @brief general settings
  * 
  */
 struct settings
@@ -61,10 +64,12 @@ struct settings
     laneChanges laneChange;
     busStops busStop;
 
-    int versionMajor = 1;
-    int versionMinor = 5;
+    int versionMajor = 1; // OpenDrive major version
+    int versionMinor = 5; // OpenDrive minor version
+
+    // basis in world coordinate system
     double north = 0;
-    double south = 0; 
+    double south = 0;
     double west = 0;
     double east = 0;
 };

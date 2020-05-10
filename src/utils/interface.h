@@ -1,7 +1,7 @@
 /**
  * @file interface.h
  *
- * @brief This message displayed in Doxygen Files index
+ * @brief file contains the interface
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de
@@ -10,12 +10,27 @@
 
 extern settings setting;
 
-enum contactPointType {startType, endType, noneType};
-enum geometryType {line, spiral, arc};
-enum linkType {roadType, junctionType};
+// definition of basic types
+enum contactPointType
+{
+    startType,
+    endType,
+    noneType
+};
+enum geometryType
+{
+    line,
+    spiral,
+    arc
+};
+enum linkType
+{
+    roadType,
+    junctionType
+};
 
 /**
- * @brief 
+ * @brief connection between two lanes
  * 
  */
 struct connection
@@ -29,7 +44,7 @@ struct connection
 };
 
 /**
- * @brief 
+ * @brief junction holding several connections
  * 
  */
 struct junction
@@ -39,7 +54,7 @@ struct junction
 };
 
 /**
- * @brief 
+ * @brief roadmark holding lane appearance properties
  * 
  */
 struct roadmark
@@ -52,7 +67,7 @@ struct roadmark
 };
 
 /**
- * @brief 
+ * @brief width holding the lanewidth with a 3rd order polynomial
  * 
  */
 struct width
@@ -65,7 +80,7 @@ struct width
 };
 
 /**
- * @brief 
+ * @brief offset holding the lanesection offset with a 3rd order polynomial
  * 
  */
 struct offset
@@ -77,7 +92,7 @@ struct offset
 };
 
 /**
- * @brief 
+ * @brief material holding the material properties of a lane
  * 
  */
 struct material
@@ -89,27 +104,28 @@ struct material
 };
 
 /**
- * @brief 
+ * @brief lane holding all properties of a lane
  * 
  */
 struct lane
 {
     int id = -1;
     string type = "driving";
-    bool turnLeft = false;
-    bool turnStraight = true;
-    bool turnRight = false;
-    bool level = true;          
+    bool turnLeft = false;    // determine if lane is special left turn lane
+    bool turnStraight = true; // determine if lane is normal lane
+    bool turnRight = false;   // determine if lane is special right turn lane
+    bool level = true;        // determine if lane is parallel to xy plane
+
     double speed = setting.speed.standard;
     width w;
     roadmark rm;
     material m;
-    int preId = -1;
-    int sucId = -1;
+    int preId = -1; // predecessor
+    int sucId = -1; // successor
 };
 
 /**
- * @brief 
+ * @brief laneSection holds several lanes in a defined s section
  * 
  */
 struct laneSection
@@ -121,7 +137,7 @@ struct laneSection
 };
 
 /**
- * @brief 
+ * @brief geometry holds all properties of a geometry on the reference line
  * 
  */
 struct geometry
@@ -138,7 +154,7 @@ struct geometry
 };
 
 /**
- * @brief 
+ * @brief link is either predecessor or successor and defines id and properties of previous/next element
  * 
  */
 struct link
@@ -149,13 +165,13 @@ struct link
 };
 
 /**
- * @brief 
+ * @brief object holds all object properties
  * 
  */
 struct object
 {
     int id = -1;
-    string type = "";
+    string type = ""; // special OpenDRIVE code to define type
     double s = 0;
     double t = 0;
     double z = 0;
@@ -165,19 +181,20 @@ struct object
     double width = 0;
     double height = 0;
 
+    // special parameters for repeating functionality
     bool repeat = false;
     double len = 0;
     double distance = 0;
 };
 
 /**
- * @brief 
+ * @brief sign holds all signal properties
  * 
  */
 struct sign
 {
     int id = -1;
-    string type = "";
+    string type = ""; // special OpenDRIVE code to define type
     string subtype = "-1";
     int rule = -1;
     double value = -1;
@@ -192,7 +209,7 @@ struct sign
 };
 
 /**
- * @brief 
+ * @brief control to define a controller with several signals
  * 
  */
 struct control
@@ -202,18 +219,18 @@ struct control
 };
 
 /**
- * @brief 
+ * @brief road holding all properties of a road
  * 
  */
 struct road
 {
     int id = -1;
-    int inputId = -1;
-    string inputPos = "";
+    int inputId = -1;     // original id from input file
+    string inputPos = ""; // specifying part of original road from input file
     int junction = -1;
 
     string type = "town";
-    string classification = "";
+    string classification = ""; // either 'main' or 'access'
     double length = 0;
 
     link predecessor;
@@ -226,17 +243,19 @@ struct road
 };
 
 /**
- * @brief 
+ * @brief roadNetwork is the overall struct holding all data
  * 
  */
 struct roadNetwork
 {
     string file;
 
+    // main data properties
     vector<road> roads;
     vector<junction> junctions;
     vector<control> controller;
 
+    // global counters
     int nSignal = 0;
     int nSegment = 0;
 };
