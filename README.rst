@@ -13,17 +13,17 @@ Overview
 --------
 This repository provides a tool for the generation of road networkds. Here, the main folders are named:
 
-* ``io``_: contains some sample input files
-* ``doc``_: contains the code and xsd input file documentation and the seminar thesis
-* ``lib``_s: contains the pugixml library
-* ``src``_: contains the source code
-* ``xml``_: contains the xsd validation files 
+* `io`_: contains some sample input files
+* `doc`_: contains the code and xsd input file documentation and the seminar thesis
+* `lib`_s: contains the pugixml library
+* `src`_: contains the source code
+* `xml`_: contains the xsd validation files 
 
-.. _``io``: io
-.. _``doc``: doc
-.. _``libs``: libs
-.. _``src``: src
-.. _``xml``: xml
+.. _`io`: io
+.. _`doc`: doc
+.. _`libs`: libs
+.. _`src`: src
+.. _`xml`: xml
 
 Abstract 
 --------
