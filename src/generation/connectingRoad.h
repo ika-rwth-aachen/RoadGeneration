@@ -1,7 +1,7 @@
 /**
  * @file connectingRoad.h
  *
- * @brief This message displayed in Doxygen Files index
+ * @brief function contains method for generating connecting road segment
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de
@@ -22,13 +22,13 @@ int connectingRoad(pugi::xml_node &node, roadNetwork &data)
     pugi::xml_node mainRoad = node.child("road");
 
     pugi::xml_node dummy;
-    
-    if(!mainRoad)
+
+    if (!mainRoad)
     {
         cerr << "ERR: specified road is not found.";
         return 1;
     }
-    
+
     // --- generate roads ------------------------------------------------------
     cout << "\t Generating Roads" << endl;
 
@@ -36,7 +36,7 @@ int connectingRoad(pugi::xml_node &node, roadNetwork &data)
     int id = mainRoad.attribute("id").as_int();
     r.id = 100 * node.attribute("id").as_int() + id;
     r.junction = node.attribute("id").as_int();
-    
+
     buildRoad(mainRoad, r, 0, INFINITY, dummy, 0, 0, 0, 0);
     addObjects(mainRoad, r, data);
 

@@ -1,8 +1,8 @@
 /**
  * @file buildSegments.h
  *
- * @brief This message displayed in Doxygen Files index
- *
+ * @brief function contains method for generating segments
+ * 
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de
  *
@@ -13,10 +13,10 @@
 #include "createLaneConnection.h"
 #include "createRoadConnection.h"
 
-#define all 0 
-#define non "none" 
-#define bro "broken" 
-#define sol "solid" 
+#define all 0
+#define non "none"
+#define bro "broken"
+#define sol "solid"
 
 #include "junctionWrapper.h"
 #include "roundAbout.h"
@@ -32,7 +32,8 @@
 int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 {
 	pugi::xml_node segments = doc.child("roadNetwork").child("segments");
-	if(!segments) cerr << "ERR: 'segments' not found in input file."  << endl;
+	if (!segments)
+		cerr << "ERR: 'segments' not found in input file." << endl;
 
 	for (pugi::xml_node_iterator it = segments.begin(); it != segments.end(); ++it)
 	{
@@ -44,9 +45,8 @@ int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 				cerr << "ERR: error in junction." << endl;
 				return 1;
 			}
-
 		}
-		
+
 		if ((string)it->name() == "tjunction")
 		{
 			cout << "Processing tjunction" << endl;
@@ -65,7 +65,6 @@ int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 				cerr << "ERR: error in xjunction." << endl;
 				return 1;
 			}
-
 		}
 
 		if ((string)it->name() == "njunction")
@@ -77,7 +76,7 @@ int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 				return 1;
 			}
 		}
-			
+
 		if ((string)it->name() == "roundabout")
 		{
 			cout << "Processing roundabout" << endl;
@@ -99,5 +98,5 @@ int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 		}
 	}
 
-    return 0;
+	return 0;
 }

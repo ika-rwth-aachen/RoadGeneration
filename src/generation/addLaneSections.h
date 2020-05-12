@@ -1,7 +1,7 @@
 /**
  * @file addLaneSections.h
  *
- * @brief This message displayed in Doxygen Files index
+ * @brief function contains methodology for lanesection changes such as lanedrop, lane widening or restricted lanes
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de
@@ -19,36 +19,41 @@
  * @return int      error code
  */
 int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bool addOuterLane)
-{ 
+{
     std::vector<laneSection>::iterator it;
     int i = 0;
 
     // search corresponding lane Section
     bool found = false;
     int n = secs.size();
-    for (i = n-1; i >= 0; i--)
+    for (i = n - 1; i >= 0; i--)
     {
-        if (secs[i].s <= s) {
+        if (secs[i].s <= s)
+        {
             found = true;
             it = secs.begin() + i;
-            break; 
+            break;
         }
     }
-    if (!found) {
-        it = secs.begin() + secs.size()-1;
-        i = secs.size()-1;
+    if (!found)
+    {
+        it = secs.begin() + secs.size() - 1;
+        i = secs.size() - 1;
     }
 
     laneSection adLaneSec = *it;
 
     int laneId = 0;
 
-    if (addOuterLane) 
+    if (addOuterLane)
     {
-        if (side > 0) laneId = findMaxLaneId(adLaneSec);
-        if (side < 0) laneId = findMinLaneId(adLaneSec);
+        if (side > 0)
+            laneId = findMaxLaneId(adLaneSec);
+        if (side < 0)
+            laneId = findMinLaneId(adLaneSec);
     }
-    else{
+    else
+    {
         laneId = sgn(side);
     }
 
@@ -65,9 +70,9 @@ int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bo
     int id = findLane(adLaneSec, l, laneId);
 
     // adjust new width
-    double w = laneWidth(l,0);
-    l.w.d = - 2 * w / pow(ds,3);
-    l.w.c = 3 * w / pow(ds,2);
+    double w = laneWidth(l, 0);
+    l.w.d = -2 * w / pow(ds, 3);
+    l.w.c = 3 * w / pow(ds, 2);
     l.w.b = 0;
     l.w.a = 0;
 
@@ -77,7 +82,7 @@ int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bo
         l.id = laneId + sgn(side);
         shiftLanes(adLaneSec, l.id, 1);
 
-        adLaneSec.lanes.push_back(l);  
+        adLaneSec.lanes.push_back(l);
         adLaneSec.lanes[id].rm.type = "broken";
     }
     else
@@ -85,7 +90,7 @@ int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bo
         shiftLanes(adLaneSec, laneId, 1);
 
         l.rm.type = "broken";
-        adLaneSec.lanes.push_back(l);  
+        adLaneSec.lanes.push_back(l);
     }
 
     // center line solid in laneWidening part
@@ -96,7 +101,6 @@ int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bo
     it++;
     i++;
     it = secs.insert(it, adLaneSec);
-
 
     // --- adjust the section after the laneWidening ----------------------------
     l.w.d = 0;
@@ -123,18 +127,20 @@ int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bo
     {
         secs[i].id += 2;
 
-        if(addOuterLane)
+        if (addOuterLane)
         {
             shiftLanes(secs[i], laneId + sgn(laneId), 1);
 
-            if (abs(l.id) <= abs(laneId + sgn(laneId))) l.rm.type = "broken";
-            it->lanes.push_back(l); 
+            if (abs(l.id) <= abs(laneId + sgn(laneId)))
+                l.rm.type = "broken";
+            it->lanes.push_back(l);
         }
         else
         {
             shiftLanes(secs[i], laneId, 1);
-            if (abs(l.id) <= abs(laneId)) l.rm.type = "broken";
-            it->lanes.push_back(l); 
+            if (abs(l.id) <= abs(laneId))
+                l.rm.type = "broken";
+            it->lanes.push_back(l);
         }
         i++;
     }
@@ -152,7 +158,7 @@ int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bo
  * @return int      error code
  */
 int addLaneDrop(vector<laneSection> &secs, int side, double s, double ds)
-{  
+{
     std::vector<laneSection>::iterator it;
     std::vector<lane>::iterator itt;
 
@@ -160,25 +166,29 @@ int addLaneDrop(vector<laneSection> &secs, int side, double s, double ds)
     int i = 0;
     bool found = false;
     int n = secs.size();
-    for (i = n-1; i >= 0; i--)
+    for (i = n - 1; i >= 0; i--)
     {
-        if (secs[i].s <= s) {
+        if (secs[i].s <= s)
+        {
             found = true;
             it = secs.begin() + i;
-            break; 
+            break;
         }
     }
-    if (!found) {
-        it = secs.begin() + secs.size()-1;
-        i = secs.size()-1;
+    if (!found)
+    {
+        it = secs.begin() + secs.size() - 1;
+        i = secs.size() - 1;
     }
 
     laneSection adLaneSec = *it;
 
     int laneId = 0;
-    if (side > 0) laneId = findMaxLaneId(adLaneSec);
-    if (side < 0) laneId = findMinLaneId(adLaneSec);
-    
+    if (side > 0)
+        laneId = findMaxLaneId(adLaneSec);
+    if (side < 0)
+        laneId = findMinLaneId(adLaneSec);
+
     if (laneId == 0 || abs(laneId) >= 100)
     {
         cerr << "ERR: lane drop can not be performed" << endl;
@@ -190,12 +200,13 @@ int addLaneDrop(vector<laneSection> &secs, int side, double s, double ds)
     // find current lane in adLaneSec
     lane l;
     int id = findLane(adLaneSec, l, laneId);
-    if (id == -1) return 1;
+    if (id == -1)
+        return 1;
 
     // adjust new width
-    double w = laneWidth(l,adLaneSec.s);
-    l.w.d = 2 * w / pow(ds,3);
-    l.w.c = - 3 * w / pow(ds,2);
+    double w = laneWidth(l, adLaneSec.s);
+    l.w.d = 2 * w / pow(ds, 3);
+    l.w.c = -3 * w / pow(ds, 2);
     l.w.b = 0;
     l.w.a = w;
 
@@ -213,7 +224,7 @@ int addLaneDrop(vector<laneSection> &secs, int side, double s, double ds)
     adLaneSec.s += ds;
     adLaneSec.lanes[id].rm.type = "broken";
 
-    // remove lane 
+    // remove lane
     id = findLane(adLaneSec, l, laneId);
     int idTmp = findLane(adLaneSec, l, laneId - sgn(laneId));
 
@@ -221,9 +232,9 @@ int addLaneDrop(vector<laneSection> &secs, int side, double s, double ds)
 
     // adjust the correct lane type
     adLaneSec.lanes[idTmp].rm.type = adLaneSec.lanes[id].rm.type;
-    
+
     itt = adLaneSec.lanes.begin() + id;
-    adLaneSec.lanes.erase(itt); 
+    adLaneSec.lanes.erase(itt);
 
     it++;
     it = secs.insert(it, adLaneSec);
@@ -232,13 +243,13 @@ int addLaneDrop(vector<laneSection> &secs, int side, double s, double ds)
 
     // --- shift all lanes in following lane sections --------------------------
     for (; it != secs.end(); ++it)
-    {        
+    {
         int id = findLane(*it, l, laneId);
 
         shiftLanes(*it, laneId, -1);
 
         itt = it->lanes.begin() + id;
-        it->lanes.erase(itt); 
+        it->lanes.erase(itt);
     }
 
     return 0;
@@ -268,25 +279,29 @@ int addRestrictedAreaWidening(vector<laneSection> &secs, int side, double s, dou
     // search corresponding lane Section
     int i = 0;
     bool found = false;
-    for (i = 0; i < secs.size()-1; i++)
+    for (i = 0; i < secs.size() - 1; i++)
     {
-        if (secs[i].s <= s && secs[i+1].s > s) {
+        if (secs[i].s <= s && secs[i + 1].s > s)
+        {
             found = true;
             it = secs.begin() + i;
-            break; 
+            break;
         }
     }
-    if (!found) {
-        it = secs.begin() + secs.size()-1;
-        i = secs.size()-1;
+    if (!found)
+    {
+        it = secs.begin() + secs.size() - 1;
+        i = secs.size() - 1;
     }
 
     laneSection adLaneSec = *it;
-    
+
     int laneId = 0;
-    if (side > 0) laneId = findMaxLaneId(adLaneSec);
-    if (side < 0) laneId = findMinLaneId(adLaneSec);
-    
+    if (side > 0)
+        laneId = findMaxLaneId(adLaneSec);
+    if (side < 0)
+        laneId = findMinLaneId(adLaneSec);
+
     if (laneId == 0 || abs(laneId) >= 100)
     {
         cerr << "ERR: restricted area widening can not be performed" << endl;
@@ -297,7 +312,8 @@ int addRestrictedAreaWidening(vector<laneSection> &secs, int side, double s, dou
     double dx;
 
     // skip if previous part is too small
-    if (s-secs[i-1].s < ds2-ds1) return 1;
+    if (s - secs[i - 1].s < ds2 - ds1)
+        return 1;
 
     // --- Section 1 -----------------------------------------
     id = findLane(adLaneSec, l, sgn(side));
@@ -306,13 +322,13 @@ int addRestrictedAreaWidening(vector<laneSection> &secs, int side, double s, dou
     double b = l.w.b;
     double c = l.w.c;
     double d = l.w.d;
-    
+
     // addtional lane: w - droppingLane
-    double w = laneWidth(l,ds1);
+    double w = laneWidth(l, ds1);
     l.w.a = w - a;
-    l.w.b = - b; 
-    l.w.c = - c; 
-    l.w.d = - d; 
+    l.w.b = -b;
+    l.w.c = -c;
+    l.w.d = -d;
 
     // type
     l.type = "restricted";
@@ -324,7 +340,7 @@ int addRestrictedAreaWidening(vector<laneSection> &secs, int side, double s, dou
     secs[i] = adLaneSec;
 
     // --- Section 2 -----------------------------------------
-    adLaneSec.s = s - (ds2-ds1);
+    adLaneSec.s = s - (ds2 - ds1);
 
     // zero droppingLane
     id = findLane(adLaneSec, l, sgn(side));
@@ -336,11 +352,11 @@ int addRestrictedAreaWidening(vector<laneSection> &secs, int side, double s, dou
 
     // additional lane: shifted coordinates of original polynom
     id = findLane(adLaneSec, l, laneId + sgn(side));
-    
+
     // polynom
-    w = laneWidth(l,0);
-    l.w.d = - 2 * w / pow(ds2-ds1,3);
-    l.w.c = 3 * w / pow(ds2-ds1,2);
+    w = laneWidth(l, 0);
+    l.w.d = -2 * w / pow(ds2 - ds1, 3);
+    l.w.c = 3 * w / pow(ds2 - ds1, 2);
     l.w.b = 0;
     l.w.a = 0;
 
@@ -378,25 +394,29 @@ int addRestrictedAreaDrop(vector<laneSection> &secs, int side, double s, double 
     // search corresponding lane Section
     int i = 0;
     bool found = false;
-    for (i = 0; i < secs.size()-1; i++)
+    for (i = 0; i < secs.size() - 1; i++)
     {
-        if (secs[i].s <= s && secs[i+1].s > s) {
+        if (secs[i].s <= s && secs[i + 1].s > s)
+        {
             found = true;
             it = secs.begin() + i;
-            break; 
+            break;
         }
     }
-    if (!found) {
-        it = secs.begin() + secs.size()-1;
-        i = secs.size()-1;
+    if (!found)
+    {
+        it = secs.begin() + secs.size() - 1;
+        i = secs.size() - 1;
     }
 
     laneSection adLaneSec = *it;
 
-     int laneId = 0;
-    if (side > 0) laneId = findMaxLaneId(adLaneSec);
-    if (side < 0) laneId = findMinLaneId(adLaneSec);
-    
+    int laneId = 0;
+    if (side > 0)
+        laneId = findMaxLaneId(adLaneSec);
+    if (side < 0)
+        laneId = findMinLaneId(adLaneSec);
+
     if (laneId == 0 || abs(laneId) >= 100)
     {
         cerr << "ERR: restriced area drop can not be performed" << endl;
@@ -413,13 +433,13 @@ int addRestrictedAreaDrop(vector<laneSection> &secs, int side, double s, double 
     double b = l.w.b;
     double c = l.w.c;
     double d = l.w.d;
-    
+
     // addtional lane: w - droppingLane
-    double w = laneWidth(l,0);
+    double w = laneWidth(l, 0);
     l.w.a = w - a;
-    l.w.b = - b; 
-    l.w.c = - c; 
-    l.w.d = - d; 
+    l.w.b = -b;
+    l.w.c = -c;
+    l.w.d = -d;
 
     // type
     l.type = "restricted";
@@ -442,12 +462,12 @@ int addRestrictedAreaDrop(vector<laneSection> &secs, int side, double s, double 
 
     // additional lane: shifted coordinates of original polynom
     id = findLane(adLaneSec, l, laneId + sgn(laneId));
-    
+
     // original polynoam
-    
-    w = laneWidth(l,ds1);
-    l.w.d = 2 * w / pow(ds2-ds1,3);
-    l.w.c = - 3 * w / pow(ds2-ds1,2);
+
+    w = laneWidth(l, ds1);
+    l.w.d = 2 * w / pow(ds2 - ds1, 3);
+    l.w.c = -3 * w / pow(ds2 - ds1, 2);
     l.w.b = 0;
     l.w.a = w;
 
@@ -462,21 +482,23 @@ int addRestrictedAreaDrop(vector<laneSection> &secs, int side, double s, double 
     adLaneSec.id++;
     adLaneSec.s = s + ds2;
 
-    // remove restricted lane 
+    // remove restricted lane
     id = findLane(adLaneSec, l, laneId + sgn(laneId));
     shiftLanes(adLaneSec, laneId + sgn(laneId), -1);
     itt = adLaneSec.lanes.begin() + id;
-    adLaneSec.lanes.erase(itt); 
+    adLaneSec.lanes.erase(itt);
 
-    // remove droppingLane 
+    // remove droppingLane
     id = findLane(adLaneSec, l, laneId);
     shiftLanes(adLaneSec, laneId, -1);
     itt = adLaneSec.lanes.begin() + id;
-    adLaneSec.lanes.erase(itt); 
+    adLaneSec.lanes.erase(itt);
 
     // --- make outer boundary solid -------------------------------------------
-    if(laneId > 0) id = findMaxLaneId(adLaneSec);
-    if(laneId < 0) id = findMinLaneId(adLaneSec);
+    if (laneId > 0)
+        id = findMaxLaneId(adLaneSec);
+    if (laneId < 0)
+        id = findMinLaneId(adLaneSec);
     id = findLane(adLaneSec, l, id);
     adLaneSec.lanes[id].rm.type = "solid";
 
@@ -487,7 +509,7 @@ int addRestrictedAreaDrop(vector<laneSection> &secs, int side, double s, double 
     it++;
     it = secs.insert(it, adLaneSec);
 
-    it++; 
+    it++;
     secs.erase(it);
 
     return 0;
@@ -501,7 +523,7 @@ int addRestrictedAreaDrop(vector<laneSection> &secs, int side, double s, double 
  * @param turn 
  * @return int error code
  */
-int laneWideningJunction(road &r, double  s, double ds, int turn, bool verschwenkung)
+int laneWideningJunction(road &r, double s, double ds, int turn, bool verschwenkung)
 {
     /*
         s > 0 -> laneWidening
@@ -515,7 +537,8 @@ int laneWideningJunction(road &r, double  s, double ds, int turn, bool verschwen
     */
 
     // if restricted area, always on left side (turn = 1)
-    if (s < 0) turn = 1;
+    if (s < 0)
+        turn = 1;
 
     vector<laneSection>::iterator it = r.laneSections.begin();
 
@@ -527,32 +550,33 @@ int laneWideningJunction(road &r, double  s, double ds, int turn, bool verschwen
     lane l;
     int laneId = 0;
 
-    
-    if (turn ==  1) 
+    if (turn == 1)
     {
-        laneId = findLeftLane(*it,1);
-        if (laneId == 0) laneId = findInnerMiddleLane(*it,1);
+        laneId = findLeftLane(*it, 1);
+        if (laneId == 0)
+            laneId = findInnerMiddleLane(*it, 1);
     }
-    if (turn == -1) 
+    if (turn == -1)
     {
-        laneId = findRightLane(*it,1);
-        if (laneId == 0) laneId = findOuterMiddleLane(*it,1);
+        laneId = findRightLane(*it, 1);
+        if (laneId == 0)
+            laneId = findOuterMiddleLane(*it, 1);
     }
 
     int id = findLane(adLaneSec, l, laneId);
-    double w = laneWidth(l,0);
+    double w = laneWidth(l, 0);
 
     l.w.a = w;
-    
+
     if (s > 0 && turn == 1)
-    { 
+    {
         l.rm.type = "broken";
         l.type = "driving";
         l.turnLeft = true;
         l.turnStraight = false;
     }
     if (s > 0 && turn == -1)
-    { 
+    {
         adLaneSec.lanes[id].rm.type = "broken";
         l.rm.type = "solid";
         l.type = "driving";
@@ -560,7 +584,7 @@ int laneWideningJunction(road &r, double  s, double ds, int turn, bool verschwen
         l.turnStraight = false;
     }
     if (s < 0)
-    { 
+    {
         l.rm.type = "solid";
         l.type = "restricted";
     }
@@ -573,11 +597,11 @@ int laneWideningJunction(road &r, double  s, double ds, int turn, bool verschwen
 
     if (turn == 1)
     {
-        shiftLanes(adLaneSec,laneId,1);
-         adLaneSec.lanes.push_back(l);   
+        shiftLanes(adLaneSec, laneId, 1);
+        adLaneSec.lanes.push_back(l);
     }
     if (turn == -1)
-    {   
+    {
         laneId += sgn(laneId);
         l.id = laneId;
         adLaneSec.lanes.push_back(l);
@@ -590,7 +614,7 @@ int laneWideningJunction(road &r, double  s, double ds, int turn, bool verschwen
 
     // laneOffset
     if (turn == 1 && verschwenkung)
-        adLaneSec.o.a = -abs(w)/2 + it->o.a;
+        adLaneSec.o.a = -abs(w) / 2 + it->o.a;
 
     // update lane links
     for (int i = 0; i < adLaneSec.lanes.size(); i++)
@@ -605,31 +629,34 @@ int laneWideningJunction(road &r, double  s, double ds, int turn, bool verschwen
 
     // ---------------------------------------------------------------------
     // widening lane
-    if(verschwenkung)
+    if (verschwenkung)
     {
-        l.w.d = 2 * w / pow(ds,3);
-        l.w.c = - 3 * w / pow(ds,2);
+        l.w.d = 2 * w / pow(ds, 3);
+        l.w.c = -3 * w / pow(ds, 2);
         l.w.b = 0;
     }
-    else{
+    else
+    {
         l.w.a = 0.75 * w;
-        l.w.b = - 0.25/ds * w;
+        l.w.b = -0.25 / ds * w;
         l.w.c = 0;
         l.w.d = 0;
 
         id = findLane(adLaneSec, lTmp, laneId + turn);
         adLaneSec.lanes[id].w = l.w;
 
-        if (turn ==  1) l.rm.type = "none";
-        if (turn == -1) adLaneSec.lanes[id].rm.type = "none";
+        if (turn == 1)
+            l.rm.type = "none";
+        if (turn == -1)
+            adLaneSec.lanes[id].rm.type = "none";
     }
 
     if (turn == 1 && verschwenkung)
     {
-        adLaneSec.o.a = - abs(w)/2 + it->o.a;
+        adLaneSec.o.a = -abs(w) / 2 + it->o.a;
         adLaneSec.o.b = 0;
-        adLaneSec.o.c = 3 * abs(w)/2 / pow(ds,2);
-        adLaneSec.o.d = - 2 * abs(w)/2 / pow(ds,3);
+        adLaneSec.o.c = 3 * abs(w) / 2 / pow(ds, 2);
+        adLaneSec.o.d = -2 * abs(w) / 2 / pow(ds, 3);
     }
 
     adLaneSec.id++;
@@ -669,7 +696,7 @@ int laneWideningJunction(road &r, double  s, double ds, int turn, bool verschwen
         {
             adLaneSec.lanes[i].sucId = id;
             it->lanes[idL].preId = id;
-        }        
+        }
     }
 
     // update lane links in next lane section
@@ -678,7 +705,7 @@ int laneWideningJunction(road &r, double  s, double ds, int turn, bool verschwen
 
     // --- shift all lanes in following lane sections --------------------------
     for (; it != r.laneSections.end(); ++it)
-    {        
+    {
         it->id += 2;
         it->s += abs(s) + ds;
     }

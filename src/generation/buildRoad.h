@@ -1,7 +1,7 @@
 /**
  * @file buildRoad.h
  *
- * @brief This message displayed in Doxygen Files index
+ * @brief function contains method for building up a road
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de
@@ -31,17 +31,19 @@ int computeFirstLast(pugi::xml_node roadIn, int &foundfirst, int &foundlast, dou
     for (pugi::xml_node_iterator it = roadIn.child("referenceLine").begin(); it != roadIn.child("referenceLine").end(); ++it)
     {
         double length = it->attribute("length").as_double();
-        
-        if (s + length > sStart && foundfirst == -1) foundfirst = cc;
-        
-        if (s + length >= sEnd  && foundlast == -1) foundlast = cc;
+
+        if (s + length > sStart && foundfirst == -1)
+            foundfirst = cc;
+
+        if (s + length >= sEnd && foundlast == -1)
+            foundlast = cc;
 
         cc++;
         s += length;
     }
 
     // set sEnd to last containing s value if it's set to inf
-    if (sEnd == INFINITY) 
+    if (sEnd == INFINITY)
     {
         foundlast = cc - 1;
         sEnd = s;
@@ -81,10 +83,14 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
         double R = 0, R1 = 0, R2 = 0;
 
         // define type
-        if((string)it->name() == "line") type = line;
-        if((string)it->name() == "spiral") type = spiral;
-        if((string)it->name() == "arc") type = arc;
-        if((string)it->name() == "circle") type = arc;
+        if ((string)it->name() == "line")
+            type = line;
+        if ((string)it->name() == "spiral")
+            type = spiral;
+        if ((string)it->name() == "arc")
+            type = arc;
+        if ((string)it->name() == "circle")
+            type = arc;
 
         double length = it->attribute("length").as_double();
 
@@ -93,15 +99,18 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
         {
             R1 = it->attribute("Rs").as_double();
             R2 = it->attribute("Re").as_double();
-            if (R1 != 0) c1 = 1 / R1; 
-            if (R2 != 0) c2 = 1 / R2;
+            if (R1 != 0)
+                c1 = 1 / R1;
+            if (R2 != 0)
+                c2 = 1 / R2;
         }
         if (type == arc)
         {
             R = it->attribute("R").as_double();
-            if (R != 0) c = 1/R; 
+            if (R != 0)
+                c = 1 / R;
         }
-           
+
         // create new geometry struct
         geometry geo;
         geo.s = s;
@@ -111,7 +120,7 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
         geo.length = length;
         geo.c = c;
         geo.c1 = c1;
-        geo.c2 = c2;  
+        geo.c2 = c2;
         geo.type = type;
 
         // actual length can vary if a cut has to be perfomed
@@ -120,11 +129,11 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
         if (cc < foundfirst)
         {
             // calculate new position and increase s but do not save this
-            curve(length, geo, x, y, hdg,1);
-            s += length;   
-            cc++;         
+            curve(length, geo, x, y, hdg, 1);
+            s += length;
+            cc++;
             continue;
-        } 
+        }
         if (cc > foundlast)
         {
             // do nothing and break the loop at the end
@@ -136,19 +145,19 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
         // |-------sStart--------|  sEnd
         if (cc == foundfirst && cc != foundlast)
         {
-            actuallength = length - (sStart-s);
+            actuallength = length - (sStart - s);
 
             // reset s to zero
             geo.s = 0;
 
             // normal calculation of full length
-            curve(length, geo, x, y,hdg,1);
+            curve(length, geo, x, y, hdg, 1);
 
             // calculate new start point of geometry
-            curve(sStart - s, geo, geo.x, geo.y, geo.hdg,1);
+            curve(sStart - s, geo, geo.x, geo.y, geo.hdg, 1);
 
             // update first curvature
-            geo.c1 += (sStart - s) * (geo.c2 - geo.c1) / length; 
+            geo.c1 += (sStart - s) * (geo.c2 - geo.c1) / length;
             // update length
             geo.length = actuallength;
         }
@@ -162,12 +171,12 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
             // update second curvature
             geo.c2 = geo.c1 + (actuallength) * (geo.c2 - geo.c1) / length;
             // update length
-            geo.length = actuallength;   
+            geo.length = actuallength;
             // update s
-            geo.s = s - sStart;         
+            geo.s = s - sStart;
         }
 
-        // |-----sStart------sEnd--------|   
+        // |-----sStart------sEnd--------|
         if (cc == foundfirst && cc == foundlast)
         {
             actuallength = sEnd - sStart;
@@ -176,24 +185,24 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
             geo.s = 0;
 
             // calculate new start point of geometry
-            curve(sStart - s, geo, geo.x, geo.y, geo.hdg,1);
+            curve(sStart - s, geo, geo.x, geo.y, geo.hdg, 1);
 
             // update curvatures
             double c1 = geo.c1;
             double c2 = geo.c2;
 
-            geo.c1 = c1 + (sStart - s) * (c2 - c1) / length; 
-            geo.c2 = c1 + (sEnd   - s) * (c2 - c1) / length;
+            geo.c1 = c1 + (sStart - s) * (c2 - c1) / length;
+            geo.c2 = c1 + (sEnd - s) * (c2 - c1) / length;
 
             // update length
-            geo.length = actuallength;            
+            geo.length = actuallength;
         }
         //   sStart |------------| sEnd
         if (cc != foundfirst && cc != foundlast)
         {
-            curve(length, geo, x, y, hdg,1);           
+            curve(length, geo, x, y, hdg, 1);
         }
-        
+
         // update road
         fixAngle(geo.hdg);
         r.length += actuallength;
@@ -231,13 +240,15 @@ int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, d
     // calculate x, y, hdg at s0
     double x, y, hdg, dphi;
 
-    int Case = 0; 
-    if (s0 < sStart) Case = 1;
-    if (s0 > sEnd)   Case = 2;
+    int Case = 0;
+    if (s0 < sStart)
+        Case = 1;
+    if (s0 > sEnd)
+        Case = 2;
 
     if (Case == 0 || Case == 2)
     {
-        for (int i = r.geometries.size()-1; i >= 0; i--)
+        for (int i = r.geometries.size() - 1; i >= 0; i--)
         {
             geometry g = r.geometries[i];
 
@@ -246,9 +257,9 @@ int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, d
                 x = g.x;
                 y = g.y;
                 hdg = g.hdg;
-                curve(s0-sStart-g.s,g,x,y,hdg,1);
+                curve(s0 - sStart - g.s, g, x, y, hdg, 1);
 
-                dphi = phi0-hdg;
+                dphi = phi0 - hdg;
                 break;
             }
         }
@@ -265,8 +276,9 @@ int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, d
         double c1 = g.c1;
         double c2 = g.c2;
 
-        if (g.type == 2) g.c *= -1;
-        if (g.type == 3) 
+        if (g.type == 2)
+            g.c *= -1;
+        if (g.type == 3)
         {
             g.c1 = -c2;
             g.c2 = -c1;
@@ -276,8 +288,8 @@ int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, d
         y = g.y;
         hdg = g.hdg;
 
-        curve(sStart-s0,g,x,y,hdg,1);
-        dphi = phi0-hdg+M_PI;
+        curve(sStart - s0, g, x, y, hdg, 1);
+        dphi = phi0 - hdg + M_PI;
     }
 
     // shift x,y,phi according to x0, y0, phi0
@@ -292,10 +304,9 @@ int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, d
         r.geometries[i].x = xtemp * cos(dphi) - ytemp * sin(dphi);
         r.geometries[i].y = xtemp * sin(dphi) + ytemp * cos(dphi);
 
-        // shift back with x0, y0 
+        // shift back with x0, y0
         r.geometries[i].x += x0;
         r.geometries[i].y += y0;
-
     }
     return 0;
 }
@@ -310,11 +321,11 @@ void flipGeometries(road &r)
     road rNew = r;
     rNew.geometries.clear();
 
-    for (int i = r.geometries.size()-1; i >= 0; i--)
+    for (int i = r.geometries.size() - 1; i >= 0; i--)
     {
         geometry g = r.geometries[i];
 
-        curve(g.length,g,g.x,g.y,g.hdg,1);
+        curve(g.length, g, g.x, g.y, g.hdg, 1);
 
         // flip angles and curvature
         g.hdg += M_PI;
@@ -325,8 +336,9 @@ void flipGeometries(road &r)
 
         double c1 = g.c1;
         double c2 = g.c2;
-        if (g.type == arc) g.c *= -1;
-        if (g.type == spiral) 
+        if (g.type == arc)
+            g.c *= -1;
+        if (g.type == spiral)
         {
             g.c1 = -c2;
             g.c2 = -c1;
@@ -351,12 +363,12 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
     double desSpeed = setting.speed.standard;
 
     if (r.classification == "main")
-    {   
+    {
         desWidth = setting.width.main;
         desSpeed = setting.speed.main;
     }
     else if (r.classification == "access")
-    {   
+    {
         desWidth = setting.width.access;
         desSpeed = setting.speed.access;
     }
@@ -373,14 +385,14 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
     l1.preId = 1;
     l1.sucId = 1;
     laneSec.lanes.push_back(l1);
-    
+
     lane l2;
     l2.id = 0;
     l2.rm.type = "broken";
     l2.w.a = 0;
     l2.turnStraight = false;
     laneSec.lanes.push_back(l2);
-    
+
     lane l3;
     l3.id = -1;
     l3.speed = desSpeed;
@@ -388,41 +400,48 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
     l3.preId = -1;
     l3.sucId = -1;
     laneSec.lanes.push_back(l3);
-        
+
     r.laneSections.push_back(laneSec);
 
     // --- add user defined laneSection to road --------------------------------
     for (pugi::xml_node_iterator it = roadIn.child("lanes").begin(); it != roadIn.child("lanes").end(); ++it)
     {
-        if ((string)it->name() != "laneSection") continue;
+        if ((string)it->name() != "laneSection")
+            continue;
 
         laneSection laneSec;
         laneSec.id = it->attribute("id").as_int();
 
-        if (laneSec.id == 1) laneSec = r.laneSections.front(); 
+        if (laneSec.id == 1)
+            laneSec = r.laneSections.front();
 
         laneSec.s = it->attribute("s").as_double();
 
         for (pugi::xml_node_iterator itt = it->begin(); itt != it->end(); ++itt)
         {
-            lane l; 
+            lane l;
 
             l.id = itt->attribute("id").as_int();
             l.preId = l.id;
             l.sucId = l.id;
 
             // flip lanes for mode 1
-            if (mode == 2) l.id *= -1;  
+            if (mode == 2)
+                l.id *= -1;
 
-            if (itt->attribute("type")) l.type = itt->attribute("type").value();
+            if (itt->attribute("type"))
+                l.type = itt->attribute("type").value();
 
             l.w.a = desWidth;
-            if (itt->attribute("width")) l.w.a = itt->attribute("width").as_double();
-            if (l.id == 0) l.w.a = 0.0;
+            if (itt->attribute("width"))
+                l.w.a = itt->attribute("width").as_double();
+            if (l.id == 0)
+                l.w.a = 0.0;
 
             l.speed = desSpeed;
-            if (itt->attribute("speed")) l.speed = itt->attribute("speed").as_double();
-        
+            if (itt->attribute("speed"))
+                l.speed = itt->attribute("speed").as_double();
+
             pugi::xml_node rm = itt->child("roadMark");
             if (rm)
             {
@@ -447,19 +466,23 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
 
             lane ltmp;
             int id = findLane(laneSec, ltmp, l.id);
-            if (id >= 0) laneSec.lanes[id] = l;
-            else laneSec.lanes.push_back(l);
+            if (id >= 0)
+                laneSec.lanes[id] = l;
+            else
+                laneSec.lanes.push_back(l);
 
             if (l.type == "delete")
             {
-                int id = findLane(laneSec,l,l.id);
+                int id = findLane(laneSec, l, l.id);
                 laneSec.lanes.erase(laneSec.lanes.begin() + id);
             }
         }
-        if (laneSec.id == 1) r.laneSections.front() = laneSec;
-        else r.laneSections.push_back(laneSec);
+        if (laneSec.id == 1)
+            r.laneSections.front() = laneSec;
+        else
+            r.laneSections.push_back(laneSec);
     }
-    
+
     return 0;
 }
 
@@ -471,18 +494,18 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
  * @param automaticWidening 
  * @return int 
  */
-int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node  automaticWidening)
+int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automaticWidening)
 {
     // --- user defined lanedrops or lanewidenings -----------------------------
     //      -> have to be defined in increasing s order !!!
 
     for (pugi::xml_node_iterator itt = roadIn.child("lanes").begin(); itt != roadIn.child("lanes").end(); ++itt)
-    {   
+    {
         if ((string)itt->name() == "laneWidening")
         {
             int side = itt->attribute("side").as_int();
 
-            if (side == 0) 
+            if (side == 0)
             {
                 cerr << "ERR: laneWidening with side = 0" << endl;
                 return 1;
@@ -491,29 +514,30 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node  automa
             double s = itt->attribute("s").as_double();
 
             double ds = setting.laneChange.ds;
-            if (itt->attribute("length")) ds = itt->attribute("length").as_double();
+            if (itt->attribute("length"))
+                ds = itt->attribute("length").as_double();
 
             // only perform drop if on road length
-            if (s > r.length) continue;  
-                 
+            if (s > r.length)
+                continue;
+
             addLaneWidening(r.laneSections, side, s, ds, false);
 
             //restricted area
             if (itt->child("restrictedArea"))
             {
                 double ds2 = setting.laneChange.ds;
-                if (itt->child("restrictedArea").attribute("length")) 
+                if (itt->child("restrictedArea").attribute("length"))
                     ds2 = itt->child("restrictedArea").attribute("length").as_int();
 
                 addRestrictedAreaWidening(r.laneSections, side, s, ds, ds2);
-            }        
-
+            }
         }
         if ((string)itt->name() == "laneDrop")
         {
             int side = itt->attribute("side").as_int();
 
-            if (side == 0) 
+            if (side == 0)
             {
                 cerr << "ERR: laneWidening with side = 0" << endl;
                 return 1;
@@ -522,53 +546,57 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node  automa
             double s = itt->attribute("s").as_double();
 
             double ds = setting.laneChange.ds;
-            if (itt->attribute("length")) ds = itt->attribute("length").as_double();
+            if (itt->attribute("length"))
+                ds = itt->attribute("length").as_double();
 
             // only perform drop if on road length
-            if (s > r.length) continue;    
+            if (s > r.length)
+                continue;
 
-            addLaneDrop(r.laneSections, side, s, ds);  
+            addLaneDrop(r.laneSections, side, s, ds);
 
             //restricted area
             if (itt->child("restrictedArea"))
             {
                 double ds2 = setting.laneChange.ds;
-                if (itt->child("restrictedArea").attribute("length")) 
+                if (itt->child("restrictedArea").attribute("length"))
                     ds2 = itt->child("restrictedArea").attribute("length").as_int();
 
                 addRestrictedAreaDrop(r.laneSections, side, s, ds, ds2);
-            }              
+            }
         }
     }
 
     // --- automatic generated laneWidening --------------------------------------
-    
+
     double widening_s = setting.laneChange.s;
     double widening_ds = setting.laneChange.ds;
     string active = "main";
 
     if (automaticWidening)
-    {   
+    {
         if (automaticWidening.attribute("active"))
-        {   
+        {
             active = automaticWidening.attribute("active").value();
 
-            if (automaticWidening.attribute("length")) widening_s = automaticWidening.attribute("length").as_double();
+            if (automaticWidening.attribute("length"))
+                widening_s = automaticWidening.attribute("length").as_double();
 
-            if (automaticWidening.attribute("ds")) widening_ds = automaticWidening.attribute("ds").as_double();
+            if (automaticWidening.attribute("ds"))
+                widening_ds = automaticWidening.attribute("ds").as_double();
         }
-        if (automaticWidening.attribute("restricted").as_bool()) 
-                widening_ds *= -1;
+        if (automaticWidening.attribute("restricted").as_bool())
+            widening_ds *= -1;
 
         if (active == "all")
-            laneWideningJunction(r,  widening_s, widening_ds, 1, true);
+            laneWideningJunction(r, widening_s, widening_ds, 1, true);
 
         else if (active == "main" && r.classification == "main")
             laneWideningJunction(r, widening_s, widening_ds, 1, true);
-        
+
         else if (active == "access" && r.classification == "access")
             laneWideningJunction(r, widening_s, widening_ds, 1, true);
-    }  
+    }
     return 0;
 }
 
@@ -591,18 +619,18 @@ int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::
     r.classification = roadIn.attribute("classification").value();
     r.inputId = roadIn.attribute("id").as_int();
 
-    // save geometry data from sStart - sEnd 
+    // save geometry data from sStart - sEnd
     // mode = 1 -> in s direction
     // mode = 2 -> in opposite s direction
     int mode;
 
     if (sEnd >= sStart)
-    {   
+    {
         mode = 1;
         r.inputPos = "end";
     }
     else if (sEnd < sStart)
-    {   
+    {
         // switch sStart and sEnd but store this with mode = 2
         double tmp = sStart;
         sStart = sEnd;
@@ -618,7 +646,8 @@ int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::
     shiftGeometries(r, sStart, sEnd, s0, x0, y0, phi0);
 
     // flip geometries (convention: all roads point away from junction)
-    if (mode == 2) flipGeometries(r);
+    if (mode == 2)
+        flipGeometries(r);
 
     // add lanes
     addLanes(roadIn, r, mode);
@@ -628,4 +657,3 @@ int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::
 
     return 0;
 }
-
