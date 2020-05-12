@@ -15,7 +15,7 @@ This repository provides a tool for the generation of road networkds. Here, the 
 
 * `io`_: contains some sample input files
 * `doc`_: contains the code and xsd input file documentation and the seminar thesis
-* `lib`_s: contains the pugixml library
+* `libs`_: contains the pugixml library
 * `src`_: contains the source code
 * `xml`_: contains the xsd validation files 
 
@@ -104,7 +104,7 @@ For usage the compiled application can be called from the ``PROJ_DIR`` folder:
 
 This generates the output XML file in the folder of the input file. The provided input file is checked against the ``input.xsd`` file. Please see this file for specific information about the input format. Analogous the output file is checked against the ``output.xsd`` file specifying the current openDRIVE standard.
 
-The file all.sh provides a generation of all sample input files in ``io``_.
+The file all.sh provides a generation of all sample input files in `io`_.
 
 Variation of Parameters
 -----------------------

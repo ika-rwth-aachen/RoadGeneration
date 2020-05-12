@@ -698,18 +698,3 @@ bool compareLanes(const lane &a, const lane &b)
 {
     return a.id < b.id;
 }
-
-/**
- * @brief function converts double to string
- * 
- * @param input     double which has to be converted
- * @return string   output with a precision of n = 15
- */
-std::string tS(double input)
-{
-    int n = 15;
-    stringstream stream;
-    stream << std::fixed << setprecision(n) << input;
-
-    return stream.str();
-}
