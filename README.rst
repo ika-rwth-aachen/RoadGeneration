@@ -4,7 +4,7 @@ Road Generation
 Generation of Complex Road Networks Using a Simplified Logical Description for the Validation of Automated Vehicles
 --------------------------------------------------------------------------------------------------------------------
 
-|version| |project|
+|pipeline| |version| |project|
 
 
 ``#road`` ``#openDRIVE`` ``#generic`` ``#generation``
@@ -145,3 +145,7 @@ Contact
 .. |project| image:: https://img.shields.io/badge/project-HDVMess-blue.svg
     :target: https://gitlab.ika.rwth-aachen.de/dbecker/road-generation
     :alt: Documentation Website
+
+.. |pipeline| image:: https://git.rwth-aachen.de/dbecker/road-generation/badges/master/pipeline.svg
+:target: https://git.rwth-aachen.de/dbecker/road-generation/commits/master
+:alt: Pipeline status

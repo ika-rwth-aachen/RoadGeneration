@@ -34,16 +34,7 @@ unitCase3:
     - ./road-generation test/test3.xml
     - cat test/test3.xml
     - cmp --silent test/test3.xodr test/gt/test3.xodr
-
-unitCase4:
-  stage: unitCasesDisabled
-  script:
-    - cmake . 
-    - make
-    - ./road-generation test/test4.xml
-    - cat test/test4.xml
-    - cmp --silent test/test4.xodr test/gt/test4.xodr
-
+    
 unitCase5:
   stage: unitCases
   script:
