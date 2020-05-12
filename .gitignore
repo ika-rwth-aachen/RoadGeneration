@@ -5,7 +5,7 @@ road-generation
 carmaker/
 roadRunnerProject/
 CMakeFiles/
-odrViewer64.1.9.1
+doc/doxygenDocumentation
 
 .vscode
 *.cmake
@@ -29,5 +29,3 @@ CMakeCache.txt
 *.run.xml
 *.DS_Store
 *main.pdf
-
-*/doxy
