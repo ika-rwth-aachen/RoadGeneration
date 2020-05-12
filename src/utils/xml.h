@@ -198,11 +198,11 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         {
             pugi::xml_node geo = planView.append_child("geometry");
 
-            geo.append_attribute("s") = tS(itt->s).c_str();
-            geo.append_attribute("x") = tS(itt->x).c_str();
-            geo.append_attribute("y") = tS(itt->y).c_str();
-            geo.append_attribute("hdg") = tS(itt->hdg).c_str();
-            geo.append_attribute("length") = tS(itt->length).c_str();
+            geo.append_attribute("s") = (itt->s);
+            geo.append_attribute("x") = (itt->x);
+            geo.append_attribute("y") = (itt->y);
+            geo.append_attribute("hdg") = (itt->hdg);
+            geo.append_attribute("length") = (itt->length);
 
             if (itt->type == line)
             {
@@ -210,13 +210,13 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
             }
             if (itt->type == arc)
             {
-                geo.append_child("arc").append_attribute("curvature") = tS(itt->c).c_str();
+                geo.append_child("arc").append_attribute("curvature") = (itt->c);
             }
             if (itt->type == spiral)
             {
                 pugi::xml_node spiral = geo.append_child("spiral");
-                spiral.append_attribute("curvStart") = tS(itt->c1).c_str();
-                spiral.append_attribute("curvEnd") = tS(itt->c2).c_str();
+                spiral.append_attribute("curvStart") = (itt->c1);
+                spiral.append_attribute("curvEnd") = (itt->c2);
             }
         }
 
@@ -227,17 +227,17 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         {
             pugi::xml_node laneOffset = lanes.append_child("laneOffset");
 
-            laneOffset.append_attribute("s") = tS(itt->s).c_str();
-            laneOffset.append_attribute("a") = tS(itt->o.a).c_str();
-            laneOffset.append_attribute("b") = tS(itt->o.b).c_str();
-            laneOffset.append_attribute("c") = tS(itt->o.c).c_str();
-            laneOffset.append_attribute("d") = tS(itt->o.d).c_str();
+            laneOffset.append_attribute("s") = (itt->s);
+            laneOffset.append_attribute("a") = (itt->o.a);
+            laneOffset.append_attribute("b") = (itt->o.b);
+            laneOffset.append_attribute("c") = (itt->o.c);
+            laneOffset.append_attribute("d") = (itt->o.d);
         }
 
         for (std::vector<laneSection>::iterator itt = it->laneSections.begin(); itt != it->laneSections.end(); ++itt)
         {
             pugi::xml_node laneSection = lanes.append_child("laneSection");
-            laneSection.append_attribute("s") = tS(itt->s).c_str();
+            laneSection.append_attribute("s") = (itt->s);
 
             pugi::xml_node left;
             pugi::xml_node center;
@@ -285,31 +285,31 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
                     }
 
                     pugi::xml_node width = lane.append_child("width");
-                    width.append_attribute("sOffset") = tS(ittt->w.s).c_str();
-                    width.append_attribute("a") = tS(ittt->w.a).c_str();
-                    width.append_attribute("b") = tS(ittt->w.b).c_str();
-                    width.append_attribute("c") = tS(ittt->w.c).c_str();
-                    width.append_attribute("d") = tS(ittt->w.d).c_str();
+                    width.append_attribute("sOffset") = (ittt->w.s);
+                    width.append_attribute("a") = (ittt->w.a);
+                    width.append_attribute("b") = (ittt->w.b);
+                    width.append_attribute("c") = (ittt->w.c);
+                    width.append_attribute("d") = (ittt->w.d);
                 }
 
                 pugi::xml_node roadmark = lane.append_child("roadMark");
-                roadmark.append_attribute("sOffset") = tS(ittt->rm.s).c_str();
+                roadmark.append_attribute("sOffset") = (ittt->rm.s);
                 roadmark.append_attribute("type") = ittt->rm.type.c_str();
                 roadmark.append_attribute("weight") = ittt->rm.weight.c_str();
                 roadmark.append_attribute("color") = ittt->rm.color.c_str();
-                roadmark.append_attribute("width") = tS(ittt->rm.width).c_str();
+                roadmark.append_attribute("width") = (ittt->rm.width);
 
                 if (ittt->id != 0)
                 {
                     pugi::xml_node material = lane.append_child("material");
-                    material.append_attribute("sOffset") = tS(ittt->m.s).c_str();
+                    material.append_attribute("sOffset") = (ittt->m.s);
                     material.append_attribute("surface") = ittt->m.surface.c_str();
-                    material.append_attribute("friction") = tS(ittt->m.friction).c_str();
-                    material.append_attribute("roughness") = tS(ittt->m.roughness).c_str();
+                    material.append_attribute("friction") = (ittt->m.friction);
+                    material.append_attribute("roughness") = (ittt->m.roughness);
 
                     pugi::xml_node speed = lane.append_child("speed");
                     speed.append_attribute("sOffset") = 0;
-                    speed.append_attribute("max") = tS(ittt->speed).c_str();
+                    speed.append_attribute("max") = (ittt->speed);
                 }
             }
         }
@@ -327,34 +327,34 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
             obj.append_attribute("name") = o.type.c_str();
             obj.append_attribute("dynamic") = "no";
             obj.append_attribute("id") = o.id;
-            obj.append_attribute("s") = tS(o.s).c_str();
-            obj.append_attribute("t") = tS(o.t).c_str();
-            obj.append_attribute("zOffset") = tS(o.z).c_str();
-            obj.append_attribute("hdg") = tS(o.hdg).c_str();
+            obj.append_attribute("s") = (o.s);
+            obj.append_attribute("t") = (o.t);
+            obj.append_attribute("zOffset") = (o.z);
+            obj.append_attribute("hdg") = (o.hdg);
             obj.append_attribute("pitch") = 0;
             obj.append_attribute("roll") = 0;
             obj.append_attribute("validLength") = 0;
             obj.append_attribute("orientation") = o.orientation.c_str();
-            obj.append_attribute("length") = tS(o.length).c_str();
-            obj.append_attribute("width") = tS(o.width).c_str();
-            obj.append_attribute("height") = tS(o.height).c_str();
+            obj.append_attribute("length") = (o.length);
+            obj.append_attribute("width") = (o.width);
+            obj.append_attribute("height") = (o.height);
 
             if (o.repeat)
             {
                 obj = obj.append_child("repeat");
-                obj.append_attribute("s") = tS(o.s).c_str();
-                obj.append_attribute("length") = tS(o.len).c_str();
-                obj.append_attribute("distance") = tS(o.distance).c_str();
-                obj.append_attribute("tStart") = tS(o.t).c_str();
-                obj.append_attribute("tEnd") = tS(o.t).c_str();
-                obj.append_attribute("widthStart") = tS(o.width).c_str();
-                obj.append_attribute("widthEnd") = tS(o.width).c_str();
-                obj.append_attribute("heightStart") = tS(o.height).c_str();
-                obj.append_attribute("heightEnd") = tS(o.height).c_str();
-                obj.append_attribute("zOffsetStart") = tS(o.z).c_str();
-                obj.append_attribute("zOffsetEnd") = tS(o.z).c_str();
-                obj.append_attribute("lengthStart") = tS(o.length).c_str();
-                obj.append_attribute("lengthEnd") = tS(o.length).c_str();
+                obj.append_attribute("s") = (o.s);
+                obj.append_attribute("length") = (o.len);
+                obj.append_attribute("distance") = (o.distance);
+                obj.append_attribute("tStart") = (o.t);
+                obj.append_attribute("tEnd") = (o.t);
+                obj.append_attribute("widthStart") = (o.width);
+                obj.append_attribute("widthEnd") = (o.width);
+                obj.append_attribute("heightStart") = (o.height);
+                obj.append_attribute("heightEnd") = (o.height);
+                obj.append_attribute("zOffsetStart") = (o.z);
+                obj.append_attribute("zOffsetEnd") = (o.z);
+                obj.append_attribute("lengthStart") = (o.length);
+                obj.append_attribute("lengthEnd") = (o.length);
             }
         }
 
@@ -378,17 +378,17 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
                 sig.append_attribute("type") = s.type.c_str();
                 sig.append_attribute("subtype") = s.subtype.c_str();
                 sig.append_attribute("country") = s.country.c_str();
-                sig.append_attribute("s") = tS(s.s).c_str();
-                sig.append_attribute("t") = tS(s.t).c_str();
-                sig.append_attribute("zOffset") = tS(s.z).c_str();
+                sig.append_attribute("s") = (s.s);
+                sig.append_attribute("t") = (s.t);
+                sig.append_attribute("zOffset") = (s.z);
                 sig.append_attribute("orientation") = s.orientation.c_str();
                 if (s.dynamic)
                     sig.append_attribute("dynamic") = "yes";
                 else
                     sig.append_attribute("dynamic") = "no";
-                sig.append_attribute("value") = tS(s.value).c_str();
-                sig.append_attribute("width") = tS(s.width).c_str();
-                sig.append_attribute("height") = tS(s.height).c_str();
+                sig.append_attribute("value") = (s.value);
+                sig.append_attribute("width") = (s.width);
+                sig.append_attribute("height") = (s.height);
             }
         }
     }

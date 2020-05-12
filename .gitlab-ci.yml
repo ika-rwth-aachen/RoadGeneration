@@ -36,7 +36,7 @@ unitCase3:
     - cmp --silent test/test3.xodr test/gt/test3.xodr
 
 unitCase4:
-  stage: unitCases
+  stage: unitCasesDisabled
   script:
     - cmake . 
     - make
