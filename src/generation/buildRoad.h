@@ -1,7 +1,7 @@
 /**
  * @file buildRoad.h
  *
- * @brief function contains method for building up a road
+ * @brief file contains method for building up a road
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de
@@ -410,8 +410,9 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
 
     for (pugi::xml_node_iterator itt = roadIn.child("lanes").begin(); itt != roadIn.child("lanes").end(); ++itt)
     {
-        if ((string)itt->name() != "lane") continue;
-    
+        if ((string)itt->name() != "lane")
+            continue;
+
         lane l;
         l.id = itt->attribute("id").as_int();
         l.preId = l.id;
@@ -522,7 +523,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
                 if (itt->child("restrictedArea").attribute("length"))
                     ds2 = itt->child("restrictedArea").attribute("length").as_int();
 
-                if(addRestrictedAreaWidening(r.laneSections, side, s, ds, ds2))
+                if (addRestrictedAreaWidening(r.laneSections, side, s, ds, ds2))
                 {
                     cerr << "ERR: error in addRestrictedAreaWidening";
                     return 1;
@@ -562,7 +563,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
                 if (itt->child("restrictedArea").attribute("length"))
                     ds2 = itt->child("restrictedArea").attribute("length").as_int();
 
-                if(addRestrictedAreaDrop(r.laneSections, side, s, ds, ds2))
+                if (addRestrictedAreaDrop(r.laneSections, side, s, ds, ds2))
                 {
                     cerr << "ERR: error in addRestrictedAreaDrop";
                     return 1;
@@ -612,7 +613,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
             }
         }
         else if (active == "access" && r.classification == "access")
-        {    
+        {
             if (laneWideningJunction(r, widening_s, widening_ds, 1, true, restricted))
             {
                 cerr << "ERR: error in laneWideningJunction";

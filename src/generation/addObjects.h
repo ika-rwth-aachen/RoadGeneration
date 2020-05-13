@@ -1,7 +1,7 @@
 /**
  * @file addObjects.h
  *
- * @brief function contains methodology for object creation
+ * @brief file contains methodology for object creation
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de
@@ -9,11 +9,11 @@
  */
 
 /**
- * @brief 
+ * @brief function adds a traffic island to the lane structure
  * 
- * @param o 
- * @param r 
- * @return int 
+ * @param o         object data
+ * @param r         road data
+ * @return int      error code
  */
 int addTrafficIsland(object o, road &r)
 {
@@ -27,12 +27,15 @@ int addTrafficIsland(object o, road &r)
 
     r.objects.push_back(o);
 
-    // find laneSection and lane
+    // find laneSection
     int i;
+    laneSection lS;
     for (i = r.laneSections.size() - 1; i >= 0; i--)
         if (r.laneSections[i].s < o.s)
+        {
+            lS = r.laneSections[i];
             break;
-    laneSection lS = r.laneSections[i];
+        }
 
     lane l;
     findLane(lS, l, 1);
@@ -115,7 +118,7 @@ int addTrafficIsland(object o, road &r)
 }
 
 /**
- * @brief function generates a roadwork at given position
+ * @brief function generates a roadwork
  * 
  * @param o         object containing length and position of roadwork   
  * @param r         road which contains the roadwork
@@ -168,7 +171,7 @@ int addRoadWork(object o, road &r, int laneId)
     }
     else
     {
-        cerr << "Length of roadwork is longer than  laneSection." << endl;
+        cerr << "Err: Length of roadwork is longer than  laneSection." << endl;
         return 1;
     }
 
@@ -182,11 +185,11 @@ int addRoadWork(object o, road &r, int laneId)
 }
 
 /**
- * @brief 
+ * @brief function adds parking splot objects
  * 
- * @param o 
- * @param r 
- * @return int 
+ * @param o         object data
+ * @param r         road data
+ * @return int      error code
  */
 int addParking(object o, road &r)
 {
@@ -222,13 +225,13 @@ int addParking(object o, road &r)
 }
 
 /**
- * @brief 
+ * @brief function adds a bus top
  * 
- * @param o 
- * @param r 
- * @return int 
+ * @param o     objct data
+ * @param r     road data
+ * @return int  error code
  */
-void addBusStop(object o, road &r)
+int addBusStop(object o, road &r)
 {
     // find starting laneSection
     int i;
@@ -246,16 +249,26 @@ void addBusStop(object o, road &r)
     double length = setting.busStop.length;
     double widening = setting.busStop.widening;
 
-    addLaneWidening(r.laneSections, side, o.s - length / 2 - widening, widening, true);
-    addLaneDrop(r.laneSections, side, o.s + length / 2, widening);
+    if (addLaneWidening(r.laneSections, side, o.s - length / 2 - widening, widening, true)))
+        {
+            cerr << "Err: error in addLaneWidening" << endl;
+            return 1;
+        }
+    if (addLaneDrop(r.laneSections, side, o.s + length / 2, widening))
+    {
+        cerr << "Err: error in addLaneDrop" << endl;
+        return 1;
+    }
+
+    return 0;
 }
 
 /**
- * @brief Get the Position object
+ * @brief function gets the object position
  * 
- * @param node 
- * @param o 
- * @return int 
+ * @param node      object input data
+ * @param o         object data
+ * @return int      error code
  */
 int getPosition(pugi::xml_node node, object &o)
 {
@@ -282,10 +295,10 @@ int getPosition(pugi::xml_node node, object &o)
 }
 
 /**
- * @brief function creates objects like parking spots, traffic signs or markings
+ * @brief function creates objects
  * 
- * @param inRoad    road data from input file, containing the specified objects
- * @param r         resulting road with additional objects
+ * @param inRoad    road input data from input file
+ * @param r         road data 
  * @param data      roadNetwork structure where the generated roads and junctions are stored
  * @return int      error code
  */
@@ -377,13 +390,14 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
 /**
  * @brief function creates a signal which is automatically generated
  * 
- * @param r         road which contains the signal
- * @param data      roadNetwork data, which holds the controls
- * @param s         s position of signal
- * @param t         t position of signal
- * @param type      type of signal
- * @param ori       orientation of signal
- * @return int      error code
+ * @param r             road which contains the signal
+ * @param data          roadNetwork data, which holds the controls
+ * @param s             s position of signal
+ * @param t             t position of signal
+ * @param type          type of signal
+ * @param subtype       subtype of signal
+ * @param controller    controllerof signal
+ * @return int          error code
  */
 int addSignal(road &r, roadNetwork &data, double s, double t, string type, string subtype, int controller)
 {
@@ -447,6 +461,8 @@ int addSignal(road &r, roadNetwork &data, double s, double t, string type, strin
         sig.value = 0;
         sig.z = 4;
     }
+
+    // TODO add more
 
     r.signs.push_back(sig);
     data.controller[i].signs.push_back(sig);

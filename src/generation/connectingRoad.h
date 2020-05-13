@@ -1,7 +1,7 @@
 /**
  * @file connectingRoad.h
  *
- * @brief function contains method for generating connecting road segment
+ * @brief file contains method for generating connecting road segment
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de

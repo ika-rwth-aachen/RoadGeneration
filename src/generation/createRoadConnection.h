@@ -1,7 +1,7 @@
 /**
  * @file createRoadConnection.h
  *
- * @brief function contains method for generating road connection in junction area
+ * @brief file contains method for generating road connection in junction area
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de

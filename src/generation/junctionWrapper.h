@@ -1,7 +1,7 @@
 /**
  * @file junctionWrapper.h
  *
- * @brief function contains method for generating junctions
+ * @brief file contains method for generating junctions
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de

@@ -1,7 +1,7 @@
 /**
  * @file addLaneSections.h
  *
- * @brief function contains methodology for lanesection changes such as lanedrop, lane widening or restricted lanes
+ * @brief file contains methodology for lanesection changes such as lanedrop, lane widening or restricted lanes
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de
@@ -9,14 +9,14 @@
  */
 
 /**
- * @brief function adds a laneSection with laneWideing  to a given lanesection set in s direction
+ * @brief function adds a laneSection with laneWideing to a given lanesection set
  * 
- * @param secs      vector of all lanesections of a road
- * @param laneId    laneId of the lane where the laneWidening should be performed
- * @param s         position of lane widening
- * @param ds        length of lane widening
+ * @param secs          vector of all lanesections of a road
+ * @param side          determines the road's side of the widening
+ * @param s             position of lane widening
+ * @param ds            length of lane widening
  * @param addouterLane  specifies if additional lane is on the outer side or not
- * @return int      error code
+ * @return int          error code
  */
 int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bool addOuterLane)
 {
@@ -102,7 +102,7 @@ int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bo
     i++;
     it = secs.insert(it, adLaneSec);
 
-    // --- adjust the section after the laneWidening ----------------------------
+    // --- adjust the section after the laneWidening ---------------------------
     l.w.d = 0;
     l.w.c = 0;
     l.w.a = w;
@@ -149,10 +149,10 @@ int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bo
 }
 
 /**
- * @brief function adds a laneSection with laneDrop  to a given lanesection set in s direction
+ * @brief function adds a laneSection with laneDrop to a given lanesection set
  * 
  * @param secs      vector of all lanesections of a road
- * @param side      laneId of the lane where the laneDrop should be performed
+ * @param side      determines the road's side of the drop
  * @param s         position of laneDrop
  * @param ds        length of laneDrop
  * @return int      error code
@@ -256,14 +256,14 @@ int addLaneDrop(vector<laneSection> &secs, int side, double s, double ds)
 }
 
 /**
- * @brief 
+ * @brief function adds a laneSection with restricted area after a lane widening
  * 
- * @param secs 
- * @param side 
- * @param s 
- * @param ds1 
- * @param ds2 
- * @return int 
+ * @param secs      vector of all lanesections of a road
+ * @param side      determines the road's side of the widening
+ * @param s         position of lane widening
+ * @param ds1       length of lane widening
+ * @param ds2       length of restricted areay (always lager than ds1)
+ * @return int      error code
  */
 int addRestrictedAreaWidening(vector<laneSection> &secs, int side, double s, double ds1, double ds2)
 {
@@ -372,12 +372,13 @@ int addRestrictedAreaWidening(vector<laneSection> &secs, int side, double s, dou
 }
 
 /**
- * @brief function adds a laneSection with restricted area to a given lanesection set in s direction
+ * @brief function adds a laneSection with restricted area after a lane drop
  * 
  * @param secs      vector of all lanesections of a road
- * @param side    laneId of the lane where the laneDrop should be performed
- * @param s         position of laneDrop
- * @param ds        length of laneDrop
+ * @param side      determines the road's side of the drop
+ * @param s         position of lane drop
+ * @param ds1       length of lane drop
+ * @param ds2       length of restricted areay (always lager than ds1)
  * @return int      error code
  */
 int addRestrictedAreaDrop(vector<laneSection> &secs, int side, double s, double ds1, double ds2)
@@ -516,12 +517,15 @@ int addRestrictedAreaDrop(vector<laneSection> &secs, int side, double s, double 
 }
 
 /**
- * @brief function creates laneWidenings in Junction areas (in opposite s direction)
+ * @brief function creates laneWidenings in junction areas (in opposite s direction), for additional turning lanes 
  * 
- * @param r 
- * @param sLaneWidening 
- * @param turn 
- * @return int error code
+ * @param r                 road data
+ * @param s                 start of widening
+ * @param s                 length of widening
+ * @param turn              1 = left lane turn, -1 = right lane turn
+ * @param verschwenkung     determines if a 'verschwenkung' exists
+ * @param restricted        determines if widening is a restricted area
+ * @return int              error code
  */
 int laneWideningJunction(road &r, double s, double ds, int turn, bool verschwenkung, bool restricted)
 {

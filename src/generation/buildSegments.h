@@ -1,7 +1,7 @@
 /**
  * @file buildSegments.h
  *
- * @brief function contains method for generating segments
+ * @brief file contains method for generating segments
  * 
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de

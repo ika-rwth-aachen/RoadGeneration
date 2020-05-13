@@ -1,7 +1,7 @@
 /**
  * @file tjunction.h
  *
- * @brief function contains method for generating t junction
+ * @brief file contains method for generating t junction
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de

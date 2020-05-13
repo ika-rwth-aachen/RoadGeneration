@@ -1,7 +1,7 @@
 /**
  * @file roundAbout.h
  *
- * @brief function contains method for generating roundabout
+ * @brief file contains method for generating roundabout
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de

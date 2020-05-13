@@ -1,7 +1,7 @@
 /**
  * @file xjunction.h
  *
- * @brief function contains method for generating x junction
+ * @brief file contains method for generating x junction
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de
@@ -319,7 +319,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         if (tmpType == "rightRestricted")
             type = -1;
 
-        bool restricted = false; 
+        bool restricted = false;
         if (tmpType == "leftRestricted" || tmpType == "rightRestricted")
             restricted = true;
 
@@ -399,7 +399,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
                 int from = laneLink.attribute("fromId").as_int();
                 int to = laneLink.attribute("toId").as_int();
 
-                // flip ids 
+                // flip ids
                 if (fromPos == "start")
                     from *= -1;
                 if (toPos == "end")

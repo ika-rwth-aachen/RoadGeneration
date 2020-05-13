@@ -1,7 +1,7 @@
 /**
  * @file closeRoadNetwork.h
  *
- * @brief function contains methods for closing two defined points by a new road
+ * @brief file contains methods for closing two defined points by a new road
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de
