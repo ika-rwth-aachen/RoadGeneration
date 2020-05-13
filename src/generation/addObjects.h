@@ -249,7 +249,7 @@ int addBusStop(object o, road &r)
     double length = setting.busStop.length;
     double widening = setting.busStop.widening;
 
-    if (addLaneWidening(r.laneSections, side, o.s - length / 2 - widening, widening, true)))
+    if (addLaneWidening(r.laneSections, side, o.s - length / 2 - widening, widening, true))
         {
             cerr << "Err: error in addLaneWidening" << endl;
             return 1;
