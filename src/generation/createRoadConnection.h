@@ -13,8 +13,8 @@
  * 
  * @param r1                road at start point
  * @param r2                road at end point
- * @param r                 resulting road which is the connection from r1 to r2
- * @param junc              current junction in which the connecting road lies 
+ * @param r                 resulting road which is connection from r1 to r2
+ * @param junc              current junction 
  * @param fromId            start lane Id
  * @param toId              end lane Id
  * @param laneMarkLeft      left roadmarking
@@ -40,7 +40,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     geometry g1, g2;
     laneSection lS1, lS2;
 
-    // compute starting point
+    // --- compute starting point ----------------------------------------------
     if (r1.predecessor.elementType == junctionType)
     {
         g1 = r1.geometries.front();
@@ -78,7 +78,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     con1.toLane = sgn(toId);
     junc.connections.push_back(con1);
 
-    // compute ending point
+    // --- compute ending point ------------------------------------------------
     if (r2.predecessor.elementType == junctionType)
     {
         g2 = r2.geometries.front();
@@ -129,7 +129,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     x2 += cos(g2.hdg + M_PI / 2) * w2;
     y2 += sin(g2.hdg + M_PI / 2) * w2;
 
-    // --- update start end endpoint according to lane -------------------------
+    // --- update start end endpoint according to lane position ----------------
     double phi1 = 0;
     double phi2 = 0;
     double t1 = findTOffset(lS1, fromId - sgn(fromId), 0);
@@ -176,6 +176,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         r.length = g.length;
     }
     // combine an arc with a line to connect both points
+    //  -> maybe better a composite curve
     else
     {
         double m1 = tan(hdg1);

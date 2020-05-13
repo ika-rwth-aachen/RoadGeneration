@@ -24,18 +24,18 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
 
     pugi::xml_node dummy;
 
-    pugi::xml_node mainRoad = node.child("circle");
-    int refId = mainRoad.attribute("id").as_int();
-    if (!mainRoad)
+    pugi::xml_node circleRoad = node.child("circle");
+    int refId = circleRoad.attribute("id").as_int();
+    if (!circleRoad)
     {
-        cerr << "ERR: mainRoad is not found.";
+        cerr << "ERR: circleRoad is not found.";
         return 1;
     }
 
-    // store properties of mainRoad
-    double length = mainRoad.child("referenceLine").child("circle").attribute("length").as_double();
+    // store properties of circleRoad
+    double length = circleRoad.child("referenceLine").child("circle").attribute("length").as_double();
     double R = length / (2 * M_PI);
-    mainRoad.child("referenceLine").child("circle").append_attribute("R") = R;
+    circleRoad.child("referenceLine").child("circle").append_attribute("R") = R;
 
     double sOld;
     road rOld;
@@ -97,14 +97,15 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
                 sOffAdd = sB.attribute("gap").as_double();
         }
 
-        // calculate width of mainRoad and addtionalRoad
+        // calculate width of circleRoad and addtionalRoad
         road helpMain;
-        buildRoad(mainRoad, helpMain, 0, INFINITY, dummy, 0, 0, 0, 0);
+        road helpAdd;
+        buildRoad(circleRoad, helpMain, 0, INFINITY, dummy, 0, 0, 0, 0);
+        buildRoad(additionalRoad, helpAdd, 0, INFINITY, dummy, 0, 0, 0, 0);
+
         laneSection lSMain = helpMain.laneSections.front();
         double widthMain = abs(findTOffset(lSMain, findMinLaneId(lSMain), 0));
 
-        road helpAdd;
-        buildRoad(additionalRoad, helpAdd, 0, INFINITY, dummy, 0, 0, 0, 0);
         laneSection lSAdd = helpAdd.laneSections.front();
         double widthAdd = abs(findTOffset(lSAdd, findMinLaneId(lSAdd), 0)) + abs(findTOffset(lSAdd, findMaxLaneId(lSAdd), 0));
 
@@ -164,7 +165,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         if (cc == 1)
             sOld = sOffMain;
 
-        buildRoad(mainRoad, r1, sOld, sMain - sOffMain, dummy, sMain, iPx, iPy, iPhdg);
+        buildRoad(circleRoad, r1, sOld, sMain - sOffMain, dummy, sMain, iPx, iPy, iPhdg);
         nCount++;
 
         road r2;
@@ -184,7 +185,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         helper.id = 100 * junc.id + cc * 10 + nCount;
         helper.junction = junc.id;
         if (cc < nIp)
-            buildRoad(mainRoad, helper, sMain + sOffMain, sMain + 2 * sOffMain, dummy, sMain, iPx, iPy, iPhdg);
+            buildRoad(circleRoad, helper, sMain + sOffMain, sMain + 2 * sOffMain, dummy, sMain, iPx, iPy, iPhdg);
         else // last segment
         {
             helper = rOld;
@@ -200,15 +201,15 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         cout << "\t Generate Connecting Lanes" << endl;
 
         // max and min id's of laneSections
-        int inner1, outer1, outer3, inner3, nLane;
+        int inner1, outer1, outer2, inner2, nLane;
 
         if (clockwise)
         {
             outer1 = findOuterMiddleLane(r1.laneSections.back(), 1);
             inner1 = findInnerMiddleLane(r1.laneSections.back(), 1);
 
-            outer3 = findOuterMiddleLane(helper.laneSections.back(), 1);
-            inner3 = findInnerMiddleLane(helper.laneSections.back(), 1);
+            outer2 = findOuterMiddleLane(helper.laneSections.back(), 1);
+            inner2 = findInnerMiddleLane(helper.laneSections.back(), 1);
 
             nLane = outer1 - inner1 + 1;
         }
@@ -217,8 +218,8 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
             outer1 = findOuterMiddleLane(r1.laneSections.back(), -1);
             inner1 = findInnerMiddleLane(r1.laneSections.back(), -1);
 
-            outer3 = findOuterMiddleLane(helper.laneSections.back(), -1);
-            inner3 = findInnerMiddleLane(helper.laneSections.back(), -1);
+            outer2 = findOuterMiddleLane(helper.laneSections.back(), -1);
+            inner2 = findInnerMiddleLane(helper.laneSections.back(), -1);
             nLane = inner1 - outer1 + 1;
         }
 
@@ -237,7 +238,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
 
         // 1) PART from R1 to HELPER
         from = inner1;
-        to = inner3;
+        to = inner2;
 
         for (int i = 0; i < nLane; i++)
         {
@@ -299,7 +300,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
                 from = r2_T_R;
             else
                 from = r2_T_MO;
-            to = outer3;
+            to = outer2;
             createRoadConnection(r2, helper, r6, junc, from, to, sol, non);
         }
         if (!clockwise)
@@ -308,7 +309,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
                 from = r2_F_R;
             else
                 from = r2_F_MO;
-            to = outer3;
+            to = outer2;
             createRoadConnection(r2, helper, r6, junc, from, to, non, sol);
         }
         nCount++;

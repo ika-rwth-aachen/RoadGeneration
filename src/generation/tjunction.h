@@ -19,7 +19,7 @@ extern settings setting;
  */
 int tjunction(pugi::xml_node &node, roadNetwork &data)
 {
-    // check type of the junction (M = mainroad, A = accessroad)
+    // check type of the junction (here: M = mainroad, A = accessroad)
     int mode = 0;
     if ((string)node.attribute("type").value() == "MA")
         mode = 1;
@@ -39,6 +39,8 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     // automatic widening
     pugi::xml_node dummy;
     pugi::xml_node automaticWidening = node.child("automaticWidening");
+
+    // create automatic restricted node based on defined automatic widening node
     pugi::xml_node automaticRestricted = node.child("automaticWidening");
     automaticRestricted.append_attribute("restricted") = true;
 
@@ -99,7 +101,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             sOffAdd2 = sB->attribute("gap").as_double();
     }
 
-    // calculate width of mainRoad and addtionalRoad
+    // calculate helper roads
     road help1;
     buildRoad(mainRoad, help1, 0, INFINITY, dummy, 0, 0, 0, 0);
 
@@ -109,6 +111,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     road help3;
     buildRoad(additionalRoad2, help3, 0, INFINITY, dummy, 0, 0, 0, 0);
 
+    // calculate width of mainRoad and addtionalRoad
     laneSection lS1 = help1.laneSections.front();
     double width1 = abs(findTOffset(lS1, findMinLaneId(lS1), 0)) + abs(findTOffset(lS1, findMaxLaneId(lS1), 0));
 
@@ -118,7 +121,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     laneSection lS3 = help3.laneSections.front();
     double width3 = abs(findTOffset(lS3, findMinLaneId(lS3), 0)) + abs(findTOffset(lS3, findMaxLaneId(lS3), 0));
 
-    // check offsets and adjust them if necessary (4 is safty factor)
+    // check offsets and adjust them if necessary (here: 4 is safty factor)
     double w1 = max(width2 / 2, width3 / 2) * 4;
     double w2 = max(width1 / 2, width3 / 2) * 4;
     double w3 = max(width1 / 2, width2 / 2) * 4;
@@ -274,16 +277,15 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             type = 1;
         if (tmpType == "right")
             type = -1;
+
         if (tmpType == "leftRestricted")
             type = 1;
         if (tmpType == "rightRestricted")
             type = -1;
 
-        if (tmpType == "leftRestricted")
-            length *= -1;
-        if (tmpType == "rightRestricted")
-            length *= -1;
-        // TODO improve this
+        bool restricted = false;
+        if (tmpType == "leftRestricted" || tmpType == "rightRestricted")
+            restricted = true;
 
         int inputId = addLane.attribute("roadId").as_int();
 
@@ -294,25 +296,21 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         if (inputId == r1.inputId && inputPos == r1.inputPos)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r1, length, ds, type, verschwenkung);
+                laneWideningJunction(r1, length, ds, type, verschwenkung, restricted);
         }
 
         if (inputId == r2.inputId && inputPos == r2.inputPos)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r2, length, ds, type, verschwenkung);
+                laneWideningJunction(r2, length, ds, type, verschwenkung, restricted);
         }
 
         if (inputId == r3.inputId && inputPos == r3.inputPos)
         {
             for (int i = 0; i < n; i++)
-                laneWideningJunction(r3, length, ds, type, verschwenkung);
+                laneWideningJunction(r3, length, ds, type, verschwenkung, restricted);
         }
     }
-
-    //addSignal(r1, data, 1, INFINITY, "1.000.001", "-", -1);
-    //addSignal(r2, data, 1, INFINITY, "1.000.001", "-", -1);
-    //addSignal(r3, data, 1, INFINITY, "1.000.001", "-", -1);
 
     data.roads.push_back(r1);
     data.roads.push_back(r2);
@@ -329,13 +327,22 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             int fromId = roadLink.attribute("fromId").as_int();
             int toId = roadLink.attribute("toId").as_int();
 
+            string fromPos = "end";
+            if (roadLink.attribute("fromPos"))
+                fromPos = roadLink.attribute("fromPos").value();
+
+            string toPos = "end";
+            if (roadLink.attribute("toPos"))
+                toPos = roadLink.attribute("toPos").value();
+
             road r1, r2;
             for (int i = 0; i < data.roads.size(); i++)
             {
-                if (data.roads[i].id == fromId)
-                    r1 = data.roads[i];
-                if (data.roads[i].id == toId)
-                    r2 = data.roads[i];
+                road tmp = data.roads[i];
+                if (tmp.inputId == fromId && tmp.inputPos == fromPos)
+                    r1 = tmp;
+                if (tmp.inputId == toId && tmp.inputPos == toPos)
+                    r2 = tmp;
             }
             if (r1.id == -1 || r2.id == -1)
             {
@@ -349,18 +356,20 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
                 int from = laneLink.attribute("fromId").as_int();
                 int to = laneLink.attribute("toId").as_int();
 
+                // flip ids
+                if (fromPos == "start")
+                    from *= -1;
+                if (toPos == "end")
+                    to *= -1;
+
                 string left = non;
                 string right = non;
-                string middle = non;
 
                 if (laneLink.attribute("left"))
                     left = laneLink.attribute("left").value();
 
                 if (laneLink.attribute("right"))
                     left = laneLink.attribute("right").value();
-
-                if (laneLink.attribute("middle"))
-                    middle = laneLink.attribute("middle").value();
 
                 road r;
                 r.id = 100 * junc.id + data.roads.size() + 1;
@@ -369,6 +378,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             }
         }
     }
+    // generate automatic connecting lanes
     else
     {
         // switch roads if necessary, so that

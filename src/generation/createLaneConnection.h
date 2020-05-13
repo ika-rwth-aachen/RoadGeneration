@@ -11,11 +11,11 @@
 extern settings setting;
 
 /**
- * @brief function creates a new lane connection
+ * @brief function creates a new lane for a connecting road
  * 
- * @param r         connecting road which contains reference line
- * @param lS1       lanesection at start 
- * @param lS2       lanesection at end
+ * @param r         connecting road
+ * @param lS1       lanesection of adjacent road at start 
+ * @param lS2       lanesection of adjacent road at end
  * @param from      start lane Id
  * @param to        end lane Id
  * @param left      left roadmarking 

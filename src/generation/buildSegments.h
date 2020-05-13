@@ -13,7 +13,6 @@
 #include "createLaneConnection.h"
 #include "createRoadConnection.h"
 
-#define all 0
 #define non "none"
 #define bro "broken"
 #define sol "solid"
@@ -23,7 +22,7 @@
 #include "connectingRoad.h"
 
 /**
- * @brief function creates all specified segments which can be either a junction, roundabout or connectingroad
+ * @brief function creates all segments which can be either a junction, roundabout or connectingroad
  * 
  * @param doc 	tree structure which contains the input data
  * @param data 	roadNetwork data where the openDrive structure should be generated
@@ -43,36 +42,6 @@ int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 			if (junctionWrapper(*it, data))
 			{
 				cerr << "ERR: error in junction." << endl;
-				return 1;
-			}
-		}
-
-		if ((string)it->name() == "tjunction")
-		{
-			cout << "Processing tjunction" << endl;
-			if (tjunction(*it, data))
-			{
-				cerr << "ERR: error in tjunction." << endl;
-				return 1;
-			}
-		}
-
-		if ((string)it->name() == "xjunction")
-		{
-			cout << "Processing xjunction" << endl;
-			if (xjunction(*it, data))
-			{
-				cerr << "ERR: error in xjunction." << endl;
-				return 1;
-			}
-		}
-
-		if ((string)it->name() == "njunction")
-		{
-			cout << "Processing njunction" << endl;
-			if (false)
-			{
-				cerr << "ERR: error in njunction." << endl;
 				return 1;
 			}
 		}

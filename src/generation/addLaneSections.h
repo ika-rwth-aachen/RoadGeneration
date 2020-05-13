@@ -523,7 +523,7 @@ int addRestrictedAreaDrop(vector<laneSection> &secs, int side, double s, double 
  * @param turn 
  * @return int error code
  */
-int laneWideningJunction(road &r, double s, double ds, int turn, bool verschwenkung)
+int laneWideningJunction(road &r, double s, double ds, int turn, bool verschwenkung, bool restricted)
 {
     /*
         s > 0 -> laneWidening
@@ -537,7 +537,7 @@ int laneWideningJunction(road &r, double s, double ds, int turn, bool verschwenk
     */
 
     // if restricted area, always on left side (turn = 1)
-    if (s < 0)
+    if (restricted)
         turn = 1;
 
     vector<laneSection>::iterator it = r.laneSections.begin();
@@ -583,7 +583,7 @@ int laneWideningJunction(road &r, double s, double ds, int turn, bool verschwenk
         l.turnRight = true;
         l.turnStraight = false;
     }
-    if (s < 0)
+    if (restricted)
     {
         l.rm.type = "solid";
         l.type = "restricted";
@@ -660,7 +660,7 @@ int laneWideningJunction(road &r, double s, double ds, int turn, bool verschwenk
     }
 
     adLaneSec.id++;
-    adLaneSec.s = abs(s);
+    adLaneSec.s = s;
     id = findLane(adLaneSec, lTmp, laneId);
     adLaneSec.lanes[id] = l;
 
@@ -707,7 +707,7 @@ int laneWideningJunction(road &r, double s, double ds, int turn, bool verschwenk
     for (; it != r.laneSections.end(); ++it)
     {
         it->id += 2;
-        it->s += abs(s) + ds;
+        it->s += s + ds;
     }
     return 0;
 }

@@ -12,11 +12,11 @@
 #include "tjunction.h"
 
 /**
- * @brief 
+ * @brief function takes the junction as input argument and calls the junction type function
  * 
- * @param node 
- * @param data 
- * @return int 
+ * @param node  input data from the input file for the tjunction
+ * @param data  roadNetwork structure where the generated roads and junctions are stored
+ * @return int  error code
  */
 int junctionWrapper(pugi::xml_node &node, roadNetwork &data)
 {

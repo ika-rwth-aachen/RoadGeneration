@@ -14,14 +14,14 @@
 extern settings setting;
 
 /**
- * @brief 
+ * @brief function computes first and last considered geometry in s interval 
  * 
- * @param roadIn 
- * @param foundfirst 
- * @param foundlast 
- * @param sStart 
- * @param sEnd 
- * @return int 
+ * @param roadIn        road input data
+ * @param foundfirst    id of the first considerd geometry
+ * @param foundlast     id of the last considerd geometry
+ * @param sStart        start of the s interval
+ * @param sEnd          end of the s interval
+ * @return int          error code
  */
 int computeFirstLast(pugi::xml_node roadIn, int &foundfirst, int &foundlast, double &sStart, double &sEnd)
 {
@@ -53,13 +53,13 @@ int computeFirstLast(pugi::xml_node roadIn, int &foundfirst, int &foundlast, dou
 }
 
 /**
- * @brief
+ * @brief function genetares the geometries of the reference line based on an s intervall
  * 
- * @param roadIn 
- * @param r 
- * @param sStart 
- * @param sEnd 
- * @return int 
+ * @param roadIn    road input data
+ * @param r         road data containing the reference line information
+ * @param sStart    start of the s interval
+ * @param sEnd      end of the s interval
+ * @return int      error code
  */
 int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &sEnd)
 {
@@ -69,13 +69,14 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
     computeFirstLast(roadIn, foundfirst, foundlast, sStart, sEnd);
 
     // start values (starting point at origin)
+    int cc = 0;
+    r.length = 0;
+
     double s = 0;
     double x = 0;
     double y = 0;
     double hdg = 0;
-    r.length = 0;
 
-    int cc = 0;
     for (pugi::xml_node_iterator it = roadIn.child("referenceLine").begin(); it != roadIn.child("referenceLine").end(); ++it)
     {
         geometryType type;
@@ -140,7 +141,7 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
             break;
         }
 
-        // 4 different cases has to be observed: |----| is the current geometry
+        // --- different cases has to be observed: |---| is the current geometry
 
         // |-------sStart--------|  sEnd
         if (cc == foundfirst && cc != foundlast)
@@ -216,16 +217,16 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
 }
 
 /**
- * @brief 
+ * @brief function shift the geometries of the reference line
  * 
- * @param r 
- * @param sStart 
- * @param sEnd 
- * @param s0 
- * @param x0 
- * @param y0 
- * @param phi0 
- * @return int 
+ * @param r         road input data 
+ * @param sStart    start of s interval 
+ * @param sEnd      end of s interval 
+ * @param s0        s0 is origin of reference line
+ * @param x0        global x position of origin
+ * @param y0        global y position of origin
+ * @param phi0      global angle of origin
+ * @return int      error code
  */
 int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, double y0, double phi0)
 {
@@ -233,8 +234,7 @@ int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, d
      * s0case 0: s0 lies between sStart and sEnd
      * s0case 1: s0 before sStart 
      * s0case 2: s0 after sEnd
-     * -> road geometry segment at  the end is also considered at s = s0 
-     *  (only valid for small offsets where the current geometry is valid)
+     * -> if s0 is outside s interval the ending geometry is used for the gap
      */
 
     // calculate x, y, hdg at s0
@@ -312,11 +312,12 @@ int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, d
 }
 
 /**
- * @brief 
+ * @brief function flips geometries of reference line
  * 
- * @param r 
+ * @param r     road data
+ * @int         error code
  */
-void flipGeometries(road &r)
+int flipGeometries(road &r)
 {
     road rNew = r;
     rNew.geometries.clear();
@@ -347,15 +348,17 @@ void flipGeometries(road &r)
     }
     r.geometries.clear();
     r.geometries = rNew.geometries;
+
+    return 0;
 }
 
 /**
- * @brief 
+ * @brief function adds lanes to the road structure
  * 
- * @param roadIn 
- * @param r 
- * @param mode 
- * @return int 
+ * @param roadIn    road input data
+ * @param r         road data
+ * @param mode      defines the mode (flipped or not)
+ * @return int      error code
  */
 int addLanes(pugi::xml_node roadIn, road &r, int mode)
 {
@@ -585,17 +588,19 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
             if (automaticWidening.attribute("ds"))
                 widening_ds = automaticWidening.attribute("ds").as_double();
         }
+
+        bool restricted = false;
         if (automaticWidening.attribute("restricted").as_bool())
-            widening_ds *= -1;
+            restricted = true;
 
         if (active == "all")
-            laneWideningJunction(r, widening_s, widening_ds, 1, true);
+            laneWideningJunction(r, widening_s, widening_ds, 1, true, restricted);
 
         else if (active == "main" && r.classification == "main")
-            laneWideningJunction(r, widening_s, widening_ds, 1, true);
+            laneWideningJunction(r, widening_s, widening_ds, 1, true, restricted);
 
         else if (active == "access" && r.classification == "access")
-            laneWideningJunction(r, widening_s, widening_ds, 1, true);
+            laneWideningJunction(r, widening_s, widening_ds, 1, true, restricted);
     }
     return 0;
 }
