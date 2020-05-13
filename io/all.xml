@@ -26,7 +26,7 @@
                         <lane id="1" type="driving">
                             <roadMark   type="solid" color="white" width="0.13"/>
                         </lane>
-                    <laneDrop side="-2" s="100" length="50" />
+                    <laneDrop side="-1" s="100" length="50" />
                 </lanes>
             </road>
             <intersectionPoint refRoad="1" s="200">
@@ -208,7 +208,7 @@
                 </referenceLine>
                 <lanes>
                     <laneWidening side="1" s="110" length="40" />
-                    <laneDrop side="2" s="300" length="30">
+                    <laneDrop side="1" s="300" length="30">
                         <restrictedArea length="50" />
                     </laneDrop>
                 </lanes>

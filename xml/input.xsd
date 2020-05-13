@@ -388,7 +388,7 @@ elementFormDefault="qualified">
 
                 - restrictedArea: specifying a possible restricted field after widening (currently not implemented)
 
-                - side: specifying the side for the lane widening
+                - side: specifying the side for the lane widening (inner lane is wided) -> -1 or 1 
                 - s: specifying the stating position for the lanewidening
                 - length: specifying the length for the lanewidening
 
@@ -409,7 +409,7 @@ elementFormDefault="qualified">
             Element: specifying a lane drop 
                 - restrictedArea: specifying a possible restricted field after widening
 
-                - side: specifying the side for the lanedrop (outer lane is dropped)
+                - side: specifying the side for the lanedrop (outer lane is dropped) -> -1 or 1 
                 - s: specifying the starting position for the lanedrop
                 - length: specifying the length for the lanedrop
 

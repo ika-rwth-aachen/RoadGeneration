@@ -66,7 +66,7 @@
                     <laneWidening side="-1" s="30" length="10">
                         <restrictedArea length="25" />
                     </laneWidening>
-                    <laneDrop side="-2" s="50" length="10">
+                    <laneDrop side="-1" s="50" length="10">
                         <restrictedArea length="25" />
                     </laneDrop>
                 </lanes>

@@ -475,17 +475,17 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
 }
 
 /**
- * @brief 
- * 
- * @param roadIn 
- * @param r 
- * @param automaticWidening 
- * @return int 
+ * @brief function adds additional lane sections for changing lane structure
+ *  
+ * @param roadIn                road input data
+ * @param r                     road data
+ * @param automaticWidening     automatic widing input data
+ * @return int                  error code
  */
 int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automaticWidening)
 {
     // --- user defined lanedrops or lanewidenings -----------------------------
-    //      -> have to be defined in increasing s order !!!
+    //      -> have to be defined in increasing s order, because the lane changes are concatenated in s direction
 
     for (pugi::xml_node_iterator itt = roadIn.child("lanes").begin(); itt != roadIn.child("lanes").end(); ++itt)
     {
@@ -509,7 +509,11 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
             if (s > r.length)
                 continue;
 
-            addLaneWidening(r.laneSections, side, s, ds, false);
+            if (addLaneWidening(r.laneSections, side, s, ds, false))
+            {
+                cerr << "ERR: error in addLaneWidening";
+                return 1;
+            }
 
             //restricted area
             if (itt->child("restrictedArea"))
@@ -518,7 +522,11 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
                 if (itt->child("restrictedArea").attribute("length"))
                     ds2 = itt->child("restrictedArea").attribute("length").as_int();
 
-                addRestrictedAreaWidening(r.laneSections, side, s, ds, ds2);
+                if(addRestrictedAreaWidening(r.laneSections, side, s, ds, ds2))
+                {
+                    cerr << "ERR: error in addRestrictedAreaWidening";
+                    return 1;
+                }
             }
         }
         if ((string)itt->name() == "laneDrop")
@@ -541,7 +549,11 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
             if (s > r.length)
                 continue;
 
-            addLaneDrop(r.laneSections, side, s, ds);
+            if (addLaneDrop(r.laneSections, side, s, ds))
+            {
+                cerr << "ERR: error in addLaneDrop";
+                return 1;
+            }
 
             //restricted area
             if (itt->child("restrictedArea"))
@@ -550,7 +562,11 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
                 if (itt->child("restrictedArea").attribute("length"))
                     ds2 = itt->child("restrictedArea").attribute("length").as_int();
 
-                addRestrictedAreaDrop(r.laneSections, side, s, ds, ds2);
+                if(addRestrictedAreaDrop(r.laneSections, side, s, ds, ds2))
+                {
+                    cerr << "ERR: error in addRestrictedAreaDrop";
+                    return 1;
+                }
             }
         }
     }
@@ -579,30 +595,47 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
             restricted = true;
 
         if (active == "all")
-            laneWideningJunction(r, widening_s, widening_ds, 1, true, restricted);
-
+        {
+            if (laneWideningJunction(r, widening_s, widening_ds, 1, true, restricted))
+            {
+                cerr << "ERR: error in laneWideningJunction";
+                return 1;
+            }
+        }
         else if (active == "main" && r.classification == "main")
-            laneWideningJunction(r, widening_s, widening_ds, 1, true, restricted);
+        {
 
+            if (laneWideningJunction(r, widening_s, widening_ds, 1, true, restricted))
+            {
+                cerr << "ERR: error in laneWideningJunction";
+                return 1;
+            }
+        }
         else if (active == "access" && r.classification == "access")
-            laneWideningJunction(r, widening_s, widening_ds, 1, true, restricted);
+        {    
+            if (laneWideningJunction(r, widening_s, widening_ds, 1, true, restricted))
+            {
+                cerr << "ERR: error in laneWideningJunction";
+                return 1;
+            }
+        }
     }
     return 0;
 }
 
 /**
- * @brief function builds a road based on the input data from xml file
+ * @brief function builds a road based on the input data
  * 
- * @param road              geometry data from the input file
- * @param r                 resulting road
+ * @param road              road input data
+ * @param r                 road data
  * @param sStart            starting s position
  * @param sEnd              ending s position
- * @param sJunction         position of laneWidening (always on lane 1 - roads points away from junction)
- * @param s0                position of s where x0, y0, phi0 should hold
- * @param x0                x0 should hold at s0 for the resulting road
- * @param y0                y0 should hold at s0 for the resulting road
- * @param phi0              phi0 should hold at s0 for the resulting road
- * @return int              errorcode
+ * @param automaticWidening automaticWiding input data
+ * @param s0                position of s where x0, y0, phi0 should be reached
+ * @param x0                reference x position
+ * @param y0                reference y position
+ * @param phi0              reference angle
+ * @return int              error code
  */
 int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::xml_node automaticWidening, double s0, double x0, double y0, double phi0)
 {
@@ -630,20 +663,40 @@ int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::
     }
 
     // generate geometries
-    generateGeometries(roadIn, r, sStart, sEnd);
+    if (generateGeometries(roadIn, r, sStart, sEnd))
+    {
+        cerr << "ERR: error in generateGeometries";
+        return 1;
+    }
 
     // shift geometries
-    shiftGeometries(r, sStart, sEnd, s0, x0, y0, phi0);
+    if (shiftGeometries(r, sStart, sEnd, s0, x0, y0, phi0))
+    {
+        cerr << "ERR: error in shiftGeometries";
+        return 1;
+    }
 
     // flip geometries (convention: all roads point away from junction)
     if (mode == 2)
-        flipGeometries(r);
+        if (flipGeometries(r))
+        {
+            cerr << "ERR: error in flipGeometries";
+            return 1;
+        }
 
     // add lanes
-    addLanes(roadIn, r, mode);
+    if (addLanes(roadIn, r, mode))
+    {
+        cerr << "ERR: error in addLanes";
+        return 1;
+    }
 
     // add lane section changes
-    addLaneSectionChanges(roadIn, r, automaticWidening);
+    if (addLaneSectionChanges(roadIn, r, automaticWidening))
+    {
+        cerr << "ERR: error in addLaneSectionChanges";
+        return 1;
+    }
 
     return 0;
 }

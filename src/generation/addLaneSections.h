@@ -152,7 +152,7 @@ int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bo
  * @brief function adds a laneSection with laneDrop  to a given lanesection set in s direction
  * 
  * @param secs      vector of all lanesections of a road
- * @param side    laneId of the lane where the laneDrop should be performed
+ * @param side      laneId of the lane where the laneDrop should be performed
  * @param s         position of laneDrop
  * @param ds        length of laneDrop
  * @return int      error code
