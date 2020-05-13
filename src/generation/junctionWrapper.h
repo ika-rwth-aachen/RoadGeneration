@@ -34,9 +34,22 @@ int junctionWrapper(pugi::xml_node &node, roadNetwork &data)
         mode = 2;
 
     if (mode == 1)
-        xjunction(node, data);
+    {
+        if (xjunction(node, data))
+        {
+            cerr << "ERR: error in xjunction." << endl;
+            return 1;
+        }
+    }
     if (mode == 2)
-        tjunction(node, data);
+    {
+        if (tjunction(node, data))
+        {
+            cerr << "ERR: error in tjunction." << endl;
+            return 1;
+        }
+    }
+
     if (mode == 0)
     {
         cerr << "ERR: junction type is not defined correct." << endl;

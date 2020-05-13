@@ -457,8 +457,8 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
                 l.m.roughness = m.attribute("roughness").as_double();
         }
 
-        lane ltmp;
-        int id = findLane(laneSec, ltmp, l.id);
+        lane tmp;
+        int id = findLane(laneSec, tmp, l.id);
         if (id >= 0)
             laneSec.lanes[id] = l;
         else
@@ -679,12 +679,13 @@ int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::
 
     // flip geometries (convention: all roads point away from junction)
     if (mode == 2)
+    {
         if (flipGeometries(r))
         {
             cerr << "ERR: error in flipGeometries";
             return 1;
         }
-
+    }
     // add lanes
     if (addLanes(roadIn, r, mode))
     {

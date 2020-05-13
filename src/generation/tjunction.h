@@ -520,7 +520,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
 
             if (i == 0)
                 createRoadConnection(r2, r3, r, junc, from, to, non, sol);
-            else if (i != 0)
+            else
                 createRoadConnection(r2, r3, r, junc, from, to, non, non);
 
             data.roads.push_back(r);
