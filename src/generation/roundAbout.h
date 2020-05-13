@@ -100,8 +100,16 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         // calculate width of circleRoad and addtionalRoad
         road helpMain;
         road helpAdd;
-        buildRoad(circleRoad, helpMain, 0, INFINITY, dummy, 0, 0, 0, 0);
-        buildRoad(additionalRoad, helpAdd, 0, INFINITY, dummy, 0, 0, 0, 0);
+        if (buildRoad(circleRoad, helpMain, 0, INFINITY, dummy, 0, 0, 0, 0))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+        if (buildRoad(additionalRoad, helpAdd, 0, INFINITY, dummy, 0, 0, 0, 0))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
 
         laneSection lSMain = helpMain.laneSections.front();
         double widthMain = abs(findTOffset(lSMain, findMinLaneId(lSMain), 0));
@@ -165,7 +173,11 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         if (cc == 1)
             sOld = sOffMain;
 
-        buildRoad(circleRoad, r1, sOld, sMain - sOffMain, dummy, sMain, iPx, iPy, iPhdg);
+        if (buildRoad(circleRoad, r1, sOld, sMain - sOffMain, dummy, sMain, iPx, iPy, iPhdg))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
         nCount++;
 
         road r2;
@@ -174,8 +186,16 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         r2.predecessor.id = junc.id;
         r2.predecessor.elementType = junctionType;
         r2.predecessor.contactPoint = startType;
-        buildRoad(additionalRoad, r2, sAdd + sOffAdd, INFINITY, dummy, sAdd, iPx, iPy, iPhdg + phi);
-        addObjects(additionalRoad, r2, data);
+        if (buildRoad(additionalRoad, r2, sAdd + sOffAdd, INFINITY, dummy, sAdd, iPx, iPy, iPhdg + phi))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+        if (addObjects(additionalRoad, r2, data))
+        {
+            cerr << "ERR: error in addObjects" << endl;
+            return 1;
+        }
         nCount++;
 
         // add signal to outgoing roads
@@ -185,7 +205,13 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         helper.id = 100 * junc.id + cc * 10 + nCount;
         helper.junction = junc.id;
         if (cc < nIp)
-            buildRoad(circleRoad, helper, sMain + sOffMain, sMain + 2 * sOffMain, dummy, sMain, iPx, iPy, iPhdg);
+        {
+            if (buildRoad(circleRoad, helper, sMain + sOffMain, sMain + 2 * sOffMain, dummy, sMain, iPx, iPy, iPhdg))
+            {
+                cerr << "ERR: error in buildRoad" << endl;
+                return 1;
+            }
+        }
         else // last segment
         {
             helper = rOld;

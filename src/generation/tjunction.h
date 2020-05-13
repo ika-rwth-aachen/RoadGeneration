@@ -103,13 +103,25 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
 
     // calculate helper roads
     road help1;
-    buildRoad(mainRoad, help1, 0, INFINITY, dummy, 0, 0, 0, 0);
+    if (buildRoad(mainRoad, help1, 0, INFINITY, dummy, 0, 0, 0, 0))
+    {
+        cerr << "ERR: error in buildRoad" << endl;
+        return 1;
+    }
 
     road help2;
-    buildRoad(additionalRoad1, help2, 0, INFINITY, dummy, 0, 0, 0, 0);
+    if (buildRoad(additionalRoad1, help2, 0, INFINITY, dummy, 0, 0, 0, 0))
+    {
+        cerr << "ERR: error in buildRoad" << endl;
+        return 1;
+    }
 
     road help3;
-    buildRoad(additionalRoad2, help3, 0, INFINITY, dummy, 0, 0, 0, 0);
+    if (buildRoad(additionalRoad2, help3, 0, INFINITY, dummy, 0, 0, 0, 0))
+    {
+        cerr << "ERR: error in buildRoad" << endl;
+        return 1;
+    }
 
     // calculate width of mainRoad and addtionalRoad
     laneSection lS1 = help1.laneSections.front();
@@ -202,16 +214,32 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
 
         // add street is left from road 1
         if (phi > 0)
-            buildRoad(mainRoad, r1, sMain - sOffMain, 0, automaticWidening, sMain, iPx, iPy, iPhdg);
+            if (buildRoad(mainRoad, r1, sMain - sOffMain, 0, automaticWidening, sMain, iPx, iPy, iPhdg))
+            {
+                cerr << "ERR: error in buildRoad" << endl;
+                return 1;
+            }
         // add street is right from road 1
         if (phi < 0)
-            buildRoad(mainRoad, r1, sMain - sOffMain, 0, automaticRestricted, sMain, iPx, iPy, iPhdg);
+            if (buildRoad(mainRoad, r1, sMain - sOffMain, 0, automaticRestricted, sMain, iPx, iPy, iPhdg))
+            {
+                cerr << "ERR: error in buildRoad" << endl;
+                return 1;
+            }
     }
     if (mode == 2)
     {
-        buildRoad(mainRoad, r1, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg);
+        if (buildRoad(mainRoad, r1, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
+            {
+                cerr << "ERR: error in buildRoad" << endl;
+                return 1;
+            }
     }
-    addObjects(mainRoad, r1, data);
+    if (addObjects(mainRoad, r1, data))
+    {
+        cerr << "ERR: error in addObjects" << endl;
+        return 1;
+    }
 
     road r2;
     r2.id = 100 * junc.id + 2;
@@ -225,16 +253,36 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
 
         // add street is left from road 1
         if (phi > 0)
-            buildRoad(mainRoad, r2, sMain + sOffMain, INFINITY, automaticRestricted, sMain, iPx, iPy, iPhdg);
+            if (buildRoad(mainRoad, r2, sMain + sOffMain, INFINITY, automaticRestricted, sMain, iPx, iPy, iPhdg))
+            {
+                cerr << "ERR: error in buildRoad" << endl;
+                return 1;
+            }
         // add street is right from road 1
         if (phi < 0)
-            buildRoad(mainRoad, r2, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg);
-        addObjects(mainRoad, r2, data);
+            if (buildRoad(mainRoad, r2, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
+            {
+                cerr << "ERR: error in buildRoad" << endl;
+                return 1;
+            }
+        if (addObjects(mainRoad, r2, data))
+        {
+            cerr << "ERR: error in addObjects" << endl;
+            return 1;
+        }
     }
     if (mode == 2)
     {
-        buildRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1);
-        addObjects(additionalRoad1, r2, data);
+        if (buildRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+        if (addObjects(additionalRoad1, r2, data))
+        {
+            cerr << "ERR: error in addObjects" << endl;
+            return 1;
+        }
     }
 
     road r3;
@@ -244,13 +292,29 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     r3.predecessor.id = junc.id;
     if (mode == 1)
     {
-        buildRoad(additionalRoad1, r3, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1);
-        addObjects(additionalRoad1, r3, data);
+        if (buildRoad(additionalRoad1, r3, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+        if (addObjects(additionalRoad1, r3, data))
+        {
+            cerr << "ERR: error in addObjects" << endl;
+            return 1;
+        }
     }
     if (mode == 2)
     {
-        buildRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2);
-        addObjects(additionalRoad2, r3, data);
+        if (buildRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+        if (addObjects(additionalRoad2, r3, data))
+        {
+            cerr << "ERR: error in addObjects" << endl;
+            return 1;
+        }
     }
 
     // add addtional lanes
@@ -259,15 +323,16 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         int n = 1;
         if (addLane.attribute("amount"))
             n = addLane.attribute("amount").as_int();
+
         bool verschwenkung = true;
         if (addLane.attribute("verschwenkung"))
             verschwenkung = addLane.attribute("verschwenkung").as_bool();
 
-        double length = 25;
+        double length = setting.laneChange.s;
         if (addLane.attribute("length"))
             length = addLane.attribute("length").as_double();
 
-        double ds = 25;
+        double ds = setting.laneChange.ds;
         if (addLane.attribute("ds"))
             length = addLane.attribute("ds").as_double();
 

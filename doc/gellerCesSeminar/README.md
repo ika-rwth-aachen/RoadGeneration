@@ -34,6 +34,4 @@ Der Befehl dafür lautet dann
 biber main
 ```
 
-# TODO
-
 Mehr Beschreibungen!

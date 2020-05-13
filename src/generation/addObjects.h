@@ -171,7 +171,7 @@ int addRoadWork(object o, road &r, int laneId)
     }
     else
     {
-        cerr << "Err: Length of roadwork is longer than  laneSection." << endl;
+        cerr << "ERR: Length of roadwork is longer than  laneSection." << endl;
         return 1;
     }
 
@@ -251,12 +251,12 @@ int addBusStop(object o, road &r)
 
     if (addLaneWidening(r.laneSections, side, o.s - length / 2 - widening, widening, true))
         {
-            cerr << "Err: error in addLaneWidening" << endl;
+            cerr << "ERR: error in addLaneWidening" << endl;
             return 1;
         }
     if (addLaneDrop(r.laneSections, side, o.s + length / 2, widening))
     {
-        cerr << "Err: error in addLaneDrop" << endl;
+        cerr << "ERR: error in addLaneDrop" << endl;
         return 1;
     }
 

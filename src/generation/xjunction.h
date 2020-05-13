@@ -109,16 +109,32 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
 
     // calculate helper roads
     road help1;
-    buildRoad(refRoad, help1, 0, INFINITY, dummy, 0, 0, 0, 0);
+    if (buildRoad(refRoad, help1, 0, INFINITY, dummy, 0, 0, 0, 0))
+    {
+        cerr << "ERR: error in buildRoad" << endl;
+        return 1;
+    }
 
     road help2;
-    buildRoad(additionalRoad1, help2, 0, INFINITY, dummy, 0, 0, 0, 0);
+    if (buildRoad(additionalRoad1, help2, 0, INFINITY, dummy, 0, 0, 0, 0))
+    {
+        cerr << "ERR: error in buildRoad" << endl;
+        return 1;
+    }
 
     road help3;
-    buildRoad(additionalRoad2, help3, 0, INFINITY, dummy, 0, 0, 0, 0);
+    if (buildRoad(additionalRoad2, help3, 0, INFINITY, dummy, 0, 0, 0, 0))
+    {
+        cerr << "ERR: error in buildRoad" << endl;
+        return 1;
+    }
 
     road help4;
-    buildRoad(additionalRoad3, help4, 0, INFINITY, dummy, 0, 0, 0, 0);
+    if (buildRoad(additionalRoad3, help4, 0, INFINITY, dummy, 0, 0, 0, 0))
+    {
+        cerr << "ERR: error in buildRoad" << endl;
+        return 1;
+    }
 
     // calculate width of refRoad and addtionalRoad
     laneSection lS1 = help1.laneSections.front();
@@ -228,13 +244,25 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r1.predecessor.elementType = junctionType;
     if (mode == 1 || mode == 2)
     {
-        buildRoad(refRoad, r1, sMain - sOffMain, 0, automaticWidening, sMain, iPx, iPy, iPhdg);
+        if (buildRoad(refRoad, r1, sMain - sOffMain, 0, automaticWidening, sMain, iPx, iPy, iPhdg))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
     }
     if (mode == 3)
     {
-        buildRoad(refRoad, r1, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg);
+        if (buildRoad(refRoad, r1, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
     }
-    addObjects(refRoad, r1, data);
+    if (addObjects(refRoad, r1, data))
+    {
+        cerr << "ERR: error in addObjects" << endl;
+        return 1;
+    }
 
     road r2;
     r2.id = 100 * junc.id + 2;
@@ -243,13 +271,25 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r2.predecessor.elementType = junctionType;
     if (mode == 1)
     {
-        buildRoad(additionalRoad1, r2, sAdd1 - sOffAdd1, 0, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1);
+        if (buildRoad(additionalRoad1, r2, sAdd1 - sOffAdd1, 0, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
     }
     if (mode == 2 || mode == 3)
     {
-        buildRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1);
+        if (buildRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
     }
-    addObjects(additionalRoad1, r2, data);
+    if (addObjects(additionalRoad1, r2, data))
+    {
+        cerr << "ERR: error in addObjects" << endl;
+        return 1;
+    }
 
     road r3;
     r3.id = 100 * junc.id + 3;
@@ -258,13 +298,29 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r3.predecessor.elementType = junctionType;
     if (mode == 1 || mode == 2)
     {
-        buildRoad(refRoad, r3, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg);
-        addObjects(refRoad, r3, data);
+        if (buildRoad(refRoad, r3, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+        if (addObjects(refRoad, r3, data))
+        {
+            cerr << "ERR: error in addObjects" << endl;
+            return 1;
+        }
     }
     if (mode == 3)
     {
-        buildRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2);
-        addObjects(additionalRoad2, r3, data);
+        if (buildRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+        if (addObjects(additionalRoad2, r3, data))
+        {
+            cerr << "ERR: error in addObjects" << endl;
+            return 1;
+        }
     }
 
     road r4;
@@ -274,18 +330,42 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r4.predecessor.elementType = junctionType;
     if (mode == 1)
     {
-        buildRoad(additionalRoad1, r4, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1);
-        addObjects(additionalRoad1, r4, data);
+        if (buildRoad(additionalRoad1, r4, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+        if (addObjects(additionalRoad1, r4, data))
+        {
+            cerr << "ERR: error in addObjects" << endl;
+            return 1;
+        }
     }
     if (mode == 2)
     {
-        buildRoad(additionalRoad2, r4, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2);
-        addObjects(additionalRoad2, r4, data);
+        if (buildRoad(additionalRoad2, r4, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+        if (addObjects(additionalRoad2, r4, data))
+        {
+            cerr << "ERR: error in addObjects" << endl;
+            return 1;
+        }
     }
     if (mode == 3)
     {
-        buildRoad(additionalRoad3, r4, sAdd3 + sOffAdd3, INFINITY, automaticWidening, sAdd3, iPx, iPy, iPhdg + phi3);
-        addObjects(additionalRoad3, r4, data);
+        if (buildRoad(additionalRoad3, r4, sAdd3 + sOffAdd3, INFINITY, automaticWidening, sAdd3, iPx, iPy, iPhdg + phi3))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+        if (addObjects(additionalRoad3, r4, data))
+        {
+            cerr << "ERR: error in addObjects" << endl;
+            return 1;
+        }
     }
 
     // add addtional lanes

@@ -37,8 +37,16 @@ int connectingRoad(pugi::xml_node &node, roadNetwork &data)
     r.id = 100 * node.attribute("id").as_int() + id;
     r.junction = node.attribute("id").as_int();
 
-    buildRoad(mainRoad, r, 0, INFINITY, dummy, 0, 0, 0, 0);
-    addObjects(mainRoad, r, data);
+    if (buildRoad(mainRoad, r, 0, INFINITY, dummy, 0, 0, 0, 0))
+    {
+        cerr << "ERR: error in buildRoad" << endl;
+        return 1;
+    }
+    if (addObjects(mainRoad, r, data))
+    {
+        cerr << "ERR: error in addObjects" << endl;
+        return 1;
+    }
 
     data.roads.push_back(r);
 

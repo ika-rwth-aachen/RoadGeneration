@@ -104,7 +104,7 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
                 double phiTmp = phi1 + M_PI / 2;
                 if (addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp))
                 {
-                    cerr << "ERR: error in addArc function." << endl;
+                    cerr << "ERR: error in addArc function." << std::endl;
                     return 1;
                 }
                 if (closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2))
