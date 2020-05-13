@@ -11,7 +11,6 @@
                      <line length="100"/>
                 </referenceLine>
                 <lanes>
-                    <laneSection id="1" s="0">
                         <lane id="2" type="driving">
                             <roadMark type="solid" color="white" width="0.1"/>
                         </lane>
@@ -25,7 +24,6 @@
                         <lane id="-2" type="driving">
                             <roadMark type="solid" color="white" width="0.1"/>
                         </lane>
-                    </laneSection>
                 </lanes>
             </road>
             <intersectionPoint refRoad="1" s="200">

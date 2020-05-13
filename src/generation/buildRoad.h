@@ -407,84 +407,69 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
     r.laneSections.push_back(laneSec);
 
     // --- add user defined laneSection to road --------------------------------
-    for (pugi::xml_node_iterator it = roadIn.child("lanes").begin(); it != roadIn.child("lanes").end(); ++it)
+
+    for (pugi::xml_node_iterator itt = roadIn.child("lanes").begin(); itt != roadIn.child("lanes").end(); ++itt)
     {
-        if ((string)it->name() != "laneSection")
-            continue;
+        if ((string)itt->name() != "lane") continue;
+    
+        lane l;
+        l.id = itt->attribute("id").as_int();
+        l.preId = l.id;
+        l.sucId = l.id;
 
-        laneSection laneSec;
-        laneSec.id = it->attribute("id").as_int();
+        // flip lanes for mode 1
+        if (mode == 2)
+            l.id *= -1;
 
-        if (laneSec.id == 1)
-            laneSec = r.laneSections.front();
+        if (itt->attribute("type"))
+            l.type = itt->attribute("type").value();
 
-        laneSec.s = it->attribute("s").as_double();
+        l.w.a = desWidth;
+        if (itt->attribute("width"))
+            l.w.a = itt->attribute("width").as_double();
+        if (l.id == 0)
+            l.w.a = 0.0;
 
-        for (pugi::xml_node_iterator itt = it->begin(); itt != it->end(); ++itt)
+        l.speed = desSpeed;
+        if (itt->attribute("speed"))
+            l.speed = itt->attribute("speed").as_double();
+
+        pugi::xml_node rm = itt->child("roadMark");
+        if (rm)
         {
-            lane l;
-
-            l.id = itt->attribute("id").as_int();
-            l.preId = l.id;
-            l.sucId = l.id;
-
-            // flip lanes for mode 1
-            if (mode == 2)
-                l.id *= -1;
-
-            if (itt->attribute("type"))
-                l.type = itt->attribute("type").value();
-
-            l.w.a = desWidth;
-            if (itt->attribute("width"))
-                l.w.a = itt->attribute("width").as_double();
-            if (l.id == 0)
-                l.w.a = 0.0;
-
-            l.speed = desSpeed;
-            if (itt->attribute("speed"))
-                l.speed = itt->attribute("speed").as_double();
-
-            pugi::xml_node rm = itt->child("roadMark");
-            if (rm)
-            {
-                if (rm.attribute("type"))
-                    l.rm.type = rm.attribute("type").value();
-                if (rm.attribute("color"))
-                    l.rm.color = rm.attribute("color").value();
-                if (rm.attribute("width"))
-                    l.rm.width = rm.attribute("width").as_double();
-            }
-
-            pugi::xml_node m = itt->child("material");
-            if (m)
-            {
-                if (m.attribute("surface"))
-                    l.m.surface = m.attribute("surface").value();
-                if (m.attribute("friction"))
-                    l.m.friction = m.attribute("friction").as_double();
-                if (m.attribute("roughness"))
-                    l.m.roughness = m.attribute("roughness").as_double();
-            }
-
-            lane ltmp;
-            int id = findLane(laneSec, ltmp, l.id);
-            if (id >= 0)
-                laneSec.lanes[id] = l;
-            else
-                laneSec.lanes.push_back(l);
-
-            if (l.type == "delete")
-            {
-                int id = findLane(laneSec, l, l.id);
-                laneSec.lanes.erase(laneSec.lanes.begin() + id);
-            }
+            if (rm.attribute("type"))
+                l.rm.type = rm.attribute("type").value();
+            if (rm.attribute("color"))
+                l.rm.color = rm.attribute("color").value();
+            if (rm.attribute("width"))
+                l.rm.width = rm.attribute("width").as_double();
         }
-        if (laneSec.id == 1)
-            r.laneSections.front() = laneSec;
+
+        pugi::xml_node m = itt->child("material");
+        if (m)
+        {
+            if (m.attribute("surface"))
+                l.m.surface = m.attribute("surface").value();
+            if (m.attribute("friction"))
+                l.m.friction = m.attribute("friction").as_double();
+            if (m.attribute("roughness"))
+                l.m.roughness = m.attribute("roughness").as_double();
+        }
+
+        lane ltmp;
+        int id = findLane(laneSec, ltmp, l.id);
+        if (id >= 0)
+            laneSec.lanes[id] = l;
         else
-            r.laneSections.push_back(laneSec);
+            laneSec.lanes.push_back(l);
+
+        if (l.type == "delete")
+        {
+            int id = findLane(laneSec, l, l.id);
+            laneSec.lanes.erase(laneSec.lanes.begin() + id);
+        }
     }
+    r.laneSections.front() = laneSec;
 
     return 0;
 }

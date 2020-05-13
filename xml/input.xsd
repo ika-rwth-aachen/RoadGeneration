@@ -271,36 +271,16 @@ elementFormDefault="qualified">
         <xs:documentation>
             Element: defining the entire lane structure
 
-                - laneSection: spcifying the general structure
+                - lane: spcifying the general lane type
                 - laneWidening: specifying a lane widening 
                 - laneDrop: specifying a lane drop 
         </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-        <xs:element name="laneSection" type="laneSectionType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="lane" type="laneType" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element name="laneWidening" type="laneWideningType" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element name="laneDrop" type="laneDropType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="laneSectionType">
-    <xs:annotation>
-        <xs:documentation>
-            Element: spcifying the general structure (default are one lane per side, but these can be overwritten or deleted in the following
-
-                - lane: general lane structure
-                
-                - id: identifier for a lanesection
-                - s: position for a lanesection
-
-                note: the defined s is not the s on the original road, its the s coordinate after crossing the reference lines
-        </xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-        <xs:element name="lane" type="laneType" minOccurs="1" maxOccurs="unbounded"/>
-    </xs:sequence>
-    <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
-    <xs:attribute name="s" type="xs:double" use="required"/>
 </xs:complexType>
 
 <xs:complexType name="laneType">

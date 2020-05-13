@@ -11,14 +11,12 @@
                      <arc length="100" R="100"/>
                 </referenceLine>
                 <lanes>
-                    <laneSection id="1" s="0">
                         <lane id="1" type="driving">
                         </lane>
                         <lane id="0" type="driving">
                         </lane>
                         <lane id="-1" type="driving">
                         </lane>
-                    </laneSection>
                 </lanes>
             </road>
             <road id="3" classification="access">	
@@ -26,13 +24,11 @@
                      <line length="100"/>
                 </referenceLine>
                 <lanes>
-                    <laneSection id="1" s="0">
                         <lane id="2" type="driving" />
                         <lane id="1" type="driving" />
                         <lane id="0" type="driving"/>
                         <lane id="-1" type="driving"/>
                         <lane id="-2" type="driving"/>
-                    </laneSection>
                 </lanes>
             </road>
             <intersectionPoint refRoad="1" s="100">

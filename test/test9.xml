@@ -16,7 +16,6 @@
                      <line length="500"/>
                 </referenceLine>
                 <lanes>
-                    <laneSection id="1" s="0">
                         <lane id="-2" type="driving">
                             <roadMark   type="solid" color="white" width="0.13"/>
                         </lane>
@@ -27,7 +26,6 @@
                         <lane id="1" type="driving">
                             <roadMark   type="solid" color="white" width="0.13"/>
                         </lane>
-                    </laneSection>
                     <laneDrop side="-2" s="100" length="50" />
                 </lanes>
             </road>
@@ -76,7 +74,6 @@
                      <spiral length="200"  Rs="-100" Re="0"/>
                 </referenceLine>
                 <lanes>
-                    <laneSection id="1" s="0">
                         <lane id="1" type="driving" width="6.25">
                             <roadMark   type="solid" color="white" width="0.13"/>
                         </lane>
@@ -86,7 +83,6 @@
                         <lane id="-1" type="driving" >
                             <roadMark   type="solid" color="white" width="0.13"/>
                         </lane>
-                    </laneSection>
                 </lanes>
             </road>
             <road id="2" classification="access" >	
@@ -150,7 +146,6 @@
                     <circle length="320.5"/>
                 </referenceLine>
                 <lanes>
-                    <laneSection id="1" s="0">
                         <lane id="1" type="delete" />
                         <lane id="-4" type="driving">
                             <roadMark   type="solid" color="white" width="0.13"/>
@@ -165,7 +160,6 @@
                             <roadMark   type="broken" color="white" width="0.13"/>
                         </lane>
                         <lane id="0" type="driving" />
-                    </laneSection>
                 </lanes>
             </circle>
             <road id="2" classification="access" >	

@@ -6,7 +6,6 @@
                      <spiral length="200" Rs="-100" Re="0"/>
                 </referenceLine>
                 <lanes>
-                    <laneSection id="1" s="0">
                         <lane id="1" type="driving">
                             <roadMark type="solid" color="white" width="0.13"  />
                         </lane>
@@ -16,7 +15,6 @@
                         <lane id="-1" type="driving">
                             <roadMark type="solid" color="white" width="0.13"  />
                         </lane>
-                    </laneSection>
                 </lanes>
             </road>
             <road id="2" classification="main">	
@@ -24,7 +22,6 @@
                      <arc length="100" R="100"/>
                 </referenceLine>
                 <lanes>
-                    <laneSection id="1" s="0">
                         <lane id="1" type="driving" width="3.75">
                             <roadMark type="solid" color="white" width="0.13"/>
                         </lane>
@@ -34,7 +31,6 @@
                         <lane id="-1" type="driving" width="3.75">
                             <roadMark type="solid" color="white" width="0.13"/>
                         </lane>
-                    </laneSection>
                 </lanes>
             </road>
             <intersectionPoint refRoad="1" s="100">

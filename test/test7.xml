@@ -6,8 +6,7 @@
                      <arc length="300" R ="400"/>
                 </referenceLine>
                 <lanes>
-                        <laneSection id="1" s="0">
-                            <lane id="2" type="driving">
+                                <lane id="2" type="driving">
                                 <roadMark type="solid" color="white" width="0.1"/>
                             </lane>
                             <lane id="1" type="restricted" width="1.5">
@@ -17,8 +16,7 @@
                             <lane id="-1" type="driving">
                                 <roadMark type="solid" color="white" width="0.1"/>
                             </lane>
-                        </laneSection>
-                    </lanes>
+                        </lanes>
             </road>
             <road id="2" classification="access" >	
                 <referenceLine>
