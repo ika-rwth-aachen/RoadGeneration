@@ -1,5 +1,5 @@
 build/
-libs/xerces-c-3.2.2
+libs/xerces-c*
 Makefile
 road-generation
 carmaker/
