@@ -1,8 +1,21 @@
+/**
+ * @file main.cpp
+ *
+ * @brief main file which starts the road generation
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
+
 #include <iostream>
+#include <iomanip>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include <cmath>
+#include <ctime>
 
 #ifdef _WIN32
 #define NOMINMAX
@@ -14,79 +27,77 @@
 #endif
 
 std::string::size_type st;
-
 using namespace std;
 
+#include "utils/settings.h"
 #include "utils/interface.h"
 #include "utils/helper.h"
-#include "utils/io.h"
+#include "utils/xml.h"
 #include "generation/buildSegments.h"
 #include "connection/linkSegments.h"
 #include "connection/closeRoadNetwork.h"
 
+settings setting;
+
 /**
  * @brief main function for the tool 'road-generation'
- * an input xml file with given structure (defined in input.xsd) is converted 
- * into a valid openDrive format (defined in output.xsd)
+ * an input xml file with given structure (defined in xml/input.xsd) is converted into a valid OpenDrive format (defined in xml/output.xsd)
  * 
- * @param argc amount of parameter calls
+ * @param argc amount of parameters
  * @param argv argv[1] is the specified input file <file>.xml which will be converted to <file>.xodr
- * @return int errorcode
+ * @return int error code
  */
-int main(int argc,  char** argv)
-{   
+int main(int argc, char **argv)
+{
+	char *file;
+
 	if (argc == 2)
 	{
-		//int iii = 3; //* file = argv[1];
+		file = argv[1];
 	}
 	else
 	{
-		cerr << "ERR: no input file provided." << endl; 
+		cerr << "ERR: no input file provided." << endl;
 		return -1;
 	}
-	
 
-	// --- initialization ------------------------------------------------------
-  	freopen( "log.txt", "a", stderr );
-  	cerr << "\nError log for run with attribute: " << argv[1] << endl;
+	freopen("log.txt", "a", stderr);
+	cerr << "\nError log for run with attribute: " << file << endl;
 
 	printLogo();
-	int iii = 3;
-	int jjj = 3;
-	jjj=6;
-	int iii4 = 3;
-	int per = 55;
+
+	// --- initialization ------------------------------------------------------
 	pugi::xml_document in;
 	pugi::xml_document out;
 	roadNetwork data;
 
 	// --- pipeline ------------------------------------------------------------
-	if (validateInput(argv[1])) 
+	if (validateInput(file))
 	{
 		cerr << "ERR: error in validateInput" << endl;
 		return -1;
 	}
-	if (parseXML(in, data, argv[1])) 
+	if (parseXML(in, data, file))
 	{
 		cerr << "ERR: error in parseXML" << endl;
 		return -1;
 	}
-	if (buildSegments(in, data)) 
+	if (buildSegments(in, data))
 	{
 		cerr << "ERR: error in buildSegments" << endl;
 		return -1;
 	}
-	if (linkSegments(in, data)) 
+	if (linkSegments(in, data))
 	{
 		cerr << "ERR: error in linkSegments" << endl;
 		return -1;
 	}
-	if (closeRoadNetwork(in, data)) 
+	if (closeRoadNetwork(in, data))
 	{
 		cerr << "ERR: error in closeRoadNetwork" << endl;
 		return -1;
 	}
-	if (createXML(out, data)) 
+	if (createXML(out, data))
 	{
 		cerr << "ERR: error during createXML" << endl;
 		return -1;
@@ -98,5 +109,4 @@ int main(int argc,  char** argv)
 	}
 
 	return 0;
-} 
-
+}

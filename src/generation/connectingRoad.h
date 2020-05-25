@@ -1,11 +1,19 @@
-// connectingRoad.h
+/**
+ * @file connectingRoad.h
+ *
+ * @brief file contains method for generating connecting road segment
+ *
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
 
 /**
  * @brief function generates the road for a connecting road which is specified in the input file
  *  
  * @param node  input data from the input file for the connecting road
  * @param data  roadNetwork structure where the generated roads and junctions are stored
- * @return int  errorcode
+ * @return int  error code
  */
 int connectingRoad(pugi::xml_node &node, roadNetwork &data)
 {
@@ -13,12 +21,14 @@ int connectingRoad(pugi::xml_node &node, roadNetwork &data)
     data.nSegment++;
     pugi::xml_node mainRoad = node.child("road");
 
-    if(!mainRoad)
+    pugi::xml_node dummy;
+
+    if (!mainRoad)
     {
         cerr << "ERR: specified road is not found.";
         return 1;
     }
-    
+
     // --- generate roads ------------------------------------------------------
     cout << "\t Generating Roads" << endl;
 
@@ -26,9 +36,17 @@ int connectingRoad(pugi::xml_node &node, roadNetwork &data)
     int id = mainRoad.attribute("id").as_int();
     r.id = 100 * node.attribute("id").as_int() + id;
     r.junction = node.attribute("id").as_int();
-    
-    buildRoad(mainRoad, r, 0, INFINITY, 0, 0, 0, 0, 0);
-    addObjects(mainRoad, r, data);
+
+    if (buildRoad(mainRoad, r, 0, INFINITY, dummy, 0, 0, 0, 0))
+    {
+        cerr << "ERR: error in buildRoad" << endl;
+        return 1;
+    }
+    if (addObjects(mainRoad, r, data))
+    {
+        cerr << "ERR: error in addObjects" << endl;
+        return 1;
+    }
 
     data.roads.push_back(r);
 

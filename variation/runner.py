@@ -63,7 +63,12 @@ def run():
         find_var(cpTree.getroot(), i, varDict)        
         tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'
         cpTree.write(tmpName)
-        os.system(os.getcwd() + '/bin/Release/roadGeneration.exe ' + tmpName)
+
+        if os.name == "posix":  # if MacOS
+            os.system(os.getcwd() + '/road-generation ' + tmpName)
+
+        else:                   # if Windows
+            os.system(os.getcwd() + '/roadGeneration.exe ' + tmpName)
 
     #clear input folder (again)
     files = glob.glob(inpDir+'*.xml')
@@ -73,3 +78,6 @@ def run():
     #count, bins, ignored = plt.hist(val, 30, density=True)
     #plt.plot(bins, 1/(sd * np.sqrt(2 * np.pi)) * np.exp( - (bins - mu)**2 / (2 * sd**2) ), linewidth=2, color='r')
     #plt.show()
+
+if __name__ == '__main__':
+    run()

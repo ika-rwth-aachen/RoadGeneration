@@ -54,25 +54,19 @@
                      <spiral length="200" Rs="-100" Re="0"/>
                 </referenceLine>
                 <lanes>
-                    <lane id="1" type="driving">
-                        <roadMark type="solid" color="blue"/>
-                    </lane>
-                    <lane id="0" type="driving">
-                        <roadMark type="broken"/>
-                    </lane>
-                    <lane id="-1" type="driving">
-                        <roadMark type="solid" color="yellow"/>
-                    </lane>
-                    <laneWidening side="-1" s="30" length="10">
-                        <restrictedArea length="25" />
-                    </laneWidening>
-                    <laneDrop side="-1" s="50" length="10">
-                        <restrictedArea length="25" />
-                    </laneDrop>
+                        <lane id="1" type="driving">
+                            <roadMark type="solid" color="blue"/>
+                        </lane>
+                        <lane id="0" type="driving">
+                            <roadMark type="broken"/>
+                        </lane>
+                        <lane id="-1" type="driving">
+                            <roadMark type="solid" color="yellow"/>
+                        </lane>
                 </lanes>
             </road>
             <intersectionPoint refRoad="1" s="100">
-                <adRoad id="4" s="0" angle="1.508"/>
+                <adRoad id="4" s="50" angle="1.508"/>
                 <adRoad id="2" s="50" angle="2.508"/>
                 <adRoad id="3" s="50" angle="3.508"/>
             </intersectionPoint>

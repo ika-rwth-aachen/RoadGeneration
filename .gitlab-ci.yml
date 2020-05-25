@@ -1,46 +1,81 @@
-# Based on image by raabf: https://github.com/raabf/dockertex
-image:
-  name: raabf/latex-versions:texlive2018
-
-# Only one stage here, latex
 stages:
-  - latex
+  - build
+  - unitCases
 
-# Display the used version beforehand
-before_script:
-  - lsb_release --all
-  - latex --version
+basicBuildCase:
+  stage: build
+  script: 
+    - cmake . 
+    - make
+
+unitCase1:
+  stage: unitCases
+  script:
+    - cmake . 
+    - make
+    - ./road-generation test/test1.xml
+    - cat test/test1.xml
+    - cmp --silent test/test1.xodr test/gt/test1.xodr
   
-# The build to run on the master and tagged releases
-make_texlive2018:
-  stage: latex
-  tags:
-    - docker
+unitCase2:
+  stage: unitCases
   script:
-    - cd paper/tex
-    - pdflatex -interaction=nonstopmode root.tex
-    - bibtex root
-    - pdflatex -interaction=nonstopmode root.tex
-    - pdflatex -interaction=nonstopmode root.tex
-  artifacts:
-    paths:
-      - root.pdf
-    name: "newest_version"
-    expire_in: 1 week
-  only:
-    - paper
+    - cmake . 
+    - make
+    - ./road-generation test/test2.xml
+    - cat test/test2.xml
+    - cmp --silent test/test2.xodr test/gt/test2.xodr
 
-# The version to run on branches and MRs
-make_texlive2018_branch:
-  stage: latex
-  tags:
-    - docker
+unitCase3:
+  stage: unitCases
   script:
-    - pdflatex -interaction=nonstopmode root.tex
-    - bibtex root
-    - pdflatex -interaction=nonstopmode root.tex
-    - pdflatex -interaction=nonstopmode root.tex
-  except:
-    - master
-    - tags
+    - cmake . 
+    - make
+    - ./road-generation test/test3.xml
+    - cat test/test3.xml
+    - cmp --silent test/test3.xodr test/gt/test3.xodr
     
+unitCase5:
+  stage: unitCases
+  script:
+    - cmake . 
+    - make
+    - ./road-generation test/test5.xml
+    - cat test/test5.xml
+    - cmp --silent test/test5.xodr test/gt/test5.xodr
+
+unitCase6:
+  stage: unitCases
+  script:
+    - cmake . 
+    - make
+    - ./road-generation test/test6.xml
+    - cat test/test6.xml
+    - cmp --silent test/test6.xodr test/gt/test6.xodr
+
+unitCase7:
+  stage: unitCases
+  script:
+    - cmake . 
+    - make
+    - ./road-generation test/test7.xml
+    - cat test/test7.xml
+    - cmp --silent test/test7.xodr test/gt/test7.xodr
+
+unitCase8:
+  stage: unitCases
+  script:
+    - cmake . 
+    - make
+    - ./road-generation test/test8.xml
+    - cat test/test8.xml
+    - cmp --silent test/test8.xodr test/gt/test8.xodr
+
+unitCase9:
+  stage: unitCases
+  script:
+    - cmake . 
+    - make
+    - ./road-generation test/test9.xml
+    - cat test/test9.xml
+    - cmp --silent test/test9.xodr test/gt/test9.xodr
