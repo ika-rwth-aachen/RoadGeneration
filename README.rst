@@ -119,7 +119,7 @@ A simple, but sufficient visualization can be processed by using the OpenDrive V
 Here are some basic informations about the input format:
 
 * segments: tjunction, xjunction, roundabout or connectingRoad
-* typ for an X-junction can be either 2M, 4A, M2A 
+* type for an X-junction can be either 2M, 4A, M2A 
 
 Further Work
 ------------
@@ -138,10 +138,10 @@ Contact
     | RWTH Aachen University
     | daniel.becker@ika.rwth-aachen.de
 
-.. |version| image:: https://img.shields.io/badge/version-0.1-blue.svg
+.. |version| image:: https://img.shields.io/badge/version-0.2-blue.svg
     :target: https://gitlab.ika.rwth-aachen.de/dbecker/road-generation
     :alt: Documentation Website
 
-.. |project| image:: https://img.shields.io/badge/project-HDVMess-blue.svg
+.. |project| image:: https://img.shields.io/badge/project-RoadGeneration-blue.svg
     :target: https://gitlab.ika.rwth-aachen.de/dbecker/road-generation
     :alt: Documentation Website
