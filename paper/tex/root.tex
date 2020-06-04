@@ -36,6 +36,15 @@
 \usepackage{subcaption} % using subfigures
 \usetikzlibrary{calc}   % using calculation feature of tikz
 
+% IEEE copyright
+\newcommand\copyrighttext{%
+	\footnotesize \copyright{ }2020 IEEE. Personal use of this material is permitted. Permission from IEEE must be obtained for all other uses, in any current or future media, including reprinting/republishing this material for advertising or promotional purposes, creating new collective works, for resale or redistribution to servers or lists, or reuse of any copyrighted component of this work in other works.}
+\newcommand\copyrightnotice{%
+	\begin{tikzpicture}[remember picture,overlay]
+	\node[anchor=south,yshift=10pt,xshift=7pt] at (current page.south) {\parbox{\dimexpr\textwidth-\fboxsep-\fboxrule\relax}{\copyrighttext}};
+	\end{tikzpicture}%
+}
+
 \title{\LARGE \bf
 Generation of Complex Road Networks Using a Simplified Logical Description for the Validation of Automated Vehicles*
 }
@@ -54,6 +63,7 @@ Generation of Complex Road Networks Using a Simplified Logical Description for t
 \maketitle
 \thispagestyle{empty}
 \pagestyle{empty}
+\copyrightnotice
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract} % TODO: write abstract
