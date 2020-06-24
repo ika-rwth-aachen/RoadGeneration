@@ -4,6 +4,8 @@ stages:
 
 basicBuildCase:
   stage: build
+  tags:
+    - test
   script: 
     - cmake . 
     - make
