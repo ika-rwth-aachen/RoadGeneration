@@ -30,7 +30,7 @@ unitCase2:
     - make
     - ./road-generation test/test2.xml
     - cat test/test2.xml
-    - cmp --silent test/test2.xodr test/gt/test2.xodr
+    - cmp test/test2.xodr test/gt/test2.xodr
 
 unitCase3:
   stage: unitCases
@@ -41,7 +41,7 @@ unitCase3:
     - make
     - ./road-generation test/test3.xml
     - cat test/test3.xml
-    - cmp --silent test/test3.xodr test/gt/test3.xodr
+    - cmp test/test3.xodr test/gt/test3.xodr
     
 unitCase5:
   stage: unitCases
@@ -63,7 +63,7 @@ unitCase6:
     - make
     - ./road-generation test/test6.xml
     - cat test/test6.xml
-    - cmp --silent test/test6.xodr test/gt/test6.xodr
+    - cmp test/test6.xodr test/gt/test6.xodr
 
 unitCase7:
   stage: unitCases
@@ -74,7 +74,7 @@ unitCase7:
     - make
     - ./road-generation test/test7.xml
     - cat test/test7.xml
-    - cmp --silent test/test7.xodr test/gt/test7.xodr
+    - cmp test/test7.xodr test/gt/test7.xodr
 
 unitCase8:
   stage: unitCases
@@ -85,7 +85,7 @@ unitCase8:
     - make
     - ./road-generation test/test8.xml
     - cat test/test8.xml
-    - cmp --silent test/test8.xodr test/gt/test8.xodr
+    - cmp test/test8.xodr test/gt/test8.xodr
 
 unitCase9:
   stage: unitCases
@@ -96,4 +96,4 @@ unitCase9:
     - make
     - ./road-generation test/test9.xml
     - cat test/test9.xml
-    - cmp --silent test/test9.xodr test/gt/test9.xodr
+    - cmp test/test9.xodr test/gt/test9.xodr
