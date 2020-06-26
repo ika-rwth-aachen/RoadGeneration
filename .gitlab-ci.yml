@@ -9,6 +9,9 @@ basicBuildCase:
   script: 
     - cmake . 
     - make
+  artifacts:
+      paths:
+	- /
 
 unitCase1:
   stage: unitCases
