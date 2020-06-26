@@ -11,7 +11,7 @@ basicBuildCase:
     - make
   artifacts:
       paths:
-        - /
+        - road-generation
 
 unitCase1:
   stage: unitCases
