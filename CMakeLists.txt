@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(road-generation1)
+project(road-generation)
 
 find_package (XercesC REQUIRED)
 
