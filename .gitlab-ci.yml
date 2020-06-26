@@ -11,7 +11,7 @@ basicBuildCase:
     - make
   artifacts:
       paths:
-	- /
+        - /
 
 unitCase1:
   stage: unitCases
