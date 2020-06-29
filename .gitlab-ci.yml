@@ -4,8 +4,6 @@ stages:
 
 basicBuildCase:
   stage: build
-  tags:
-    - test
   script: 
     - cmake . 
     - make
@@ -15,8 +13,6 @@ basicBuildCase:
 
 unitCase1:
   stage: unitCases
-  tags:
-    - test
   script:
     - ./road-generation test/test1.xml
     - cat test/test1.xml
@@ -24,8 +20,6 @@ unitCase1:
   
 unitCase2:
   stage: unitCases
-  tags:
-    - test
   script:
     - ./road-generation test/test2.xml
     - cat test/test2.xml
@@ -33,8 +27,6 @@ unitCase2:
 
 unitCase3:
   stage: unitCases
-  tags:
-    - test
   script:
     - ./road-generation test/test3.xml
     - cat test/test3.xml
@@ -42,8 +34,6 @@ unitCase3:
     
 unitCase5:
   stage: unitCases
-  tags:
-    - test
   script:
     - ./road-generation test/test5.xml
     - cat test/test5.xml
@@ -51,8 +41,6 @@ unitCase5:
 
 unitCase6:
   stage: unitCases
-  tags:
-    - test
   script:
     - ./road-generation test/test6.xml
     - cat test/test6.xml
@@ -60,8 +48,6 @@ unitCase6:
 
 unitCase7:
   stage: unitCases
-  tags:
-    - test
   script:
     - ./road-generation test/test7.xml
     - cat test/test7.xml
@@ -69,8 +55,6 @@ unitCase7:
 
 unitCase8:
   stage: unitCases
-  tags:
-    - test
   script:
     - ./road-generation test/test8.xml
     - cat test/test8.xml
@@ -78,8 +62,6 @@ unitCase8:
 
 unitCase9:
   stage: unitCases
-  tags:
-    - test
   script:
     - ./road-generation test/test9.xml
     - cat test/test9.xml
