@@ -4,6 +4,10 @@ image:
 # Only one stage here, latex
 stages:
   - latex
+# Display the used version beforehand
+before_script:
+  - lsb_release --all
+  - latex --version
 
 
 build_root:
