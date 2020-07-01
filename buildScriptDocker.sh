@@ -13,7 +13,9 @@ echo "bulding"
     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
 
     cmake --build .
-    echo "testttt"
+    
+    cd ..
+    ./all.sh
    
 #else
 #    echo "Windows?"
