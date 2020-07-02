@@ -4,6 +4,8 @@ stages:
 
 basicBuildCase:
   stage: build
+  tags:
+    - docker
   script: 
     - cmake . 
     - make
