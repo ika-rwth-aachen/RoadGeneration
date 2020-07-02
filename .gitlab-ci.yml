@@ -2,20 +2,6 @@ stages:
   - build
   - unitCases
   
-docker-build:
-  # Official docker image.
-  image: docker:19.03.0
-  stage: build
-  services:
-    - docker:18.09.7-dind
-  tags:
-    - docker
-  before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-  script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
-    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
-  
 
 basicBuildCase:
   stage: build
