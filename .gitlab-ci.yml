@@ -8,6 +8,8 @@ docker-build:
   stage: build
   services:
     - docker:dind
+  tags:
+    - docker
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
