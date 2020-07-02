@@ -4,7 +4,7 @@ stages:
   
 docker-build:
   # Official docker image.
-  image: docker:latest
+  image: docker:19.03.0
   stage: build
   services:
     - docker:dind
