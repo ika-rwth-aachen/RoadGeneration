@@ -12,6 +12,8 @@ before_script:
 
 build_root:
   stage: latex
+  tags:
+    - docker
   script:
     - pdflatex -interaction=nonstopmode root.tex
     - bibtex root
