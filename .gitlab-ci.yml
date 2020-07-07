@@ -1,4 +1,4 @@
-image: ubuntu:latest
+image: amytabb/docker_ubuntu16_essentialst
 
 stages:
   - build
