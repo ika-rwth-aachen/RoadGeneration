@@ -4,6 +4,9 @@ stages:
   - build
   - unitCases
   
+before_script:
+  - apt-get -y install libxerces-c-dev 
+  - apt-get -y install cmake
 
 basicBuildCase:
   stage: build
