@@ -1,4 +1,4 @@
-image: jannik97/ubuntu_xercesc:first
+image: jannik97/ubuntu_xercesc:latest
 
 stages:
   - build
