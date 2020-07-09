@@ -1,16 +1,14 @@
-image: amytabb/docker_ubuntu16_essentials
+image: my/hello:latest
 
 stages:
   - build
   - unitCases
   
-before_script:
-  - apt-get update
-  - apt-get -y install cmake
-  - apt-get -y install libxerces-c-dev 
 
 basicBuildCase:
   stage: build
+  tags:
+    - docker
   script: 
     - cmake . 
     - make
