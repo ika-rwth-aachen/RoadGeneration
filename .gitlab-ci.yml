@@ -21,54 +21,55 @@ basicBuildCase:
 junction_ma:
   stage: unitCases
   script:
-    - ./road-generation test/test1.xml
-    - cat test/test1.xml
-    - cmp --silent test/test1.xodr test/gt/test1.xodr
+    - ./road-generation test/junction_ma.xml
+    - cat test/junction_ma.xml
+    - cmp --silent test/junction_ma.xodr test/gt/junction_ma.xodr
   
 junction_ma_2:
   stage: unitCases
   script:
-    - ./road-generation test/test2.xml
-    - cat test/test2.xml
-    - cmp test/test2.xodr test/gt/test2.xodr
+    - ./road-generation test/junction_ma_2.xml
+    - cat test/junction_ma_2.xml
+    - cmp test/junction_ma_2.xodr test/gt/junction_ma_2.xodr
 
 junction_ma_3:
   stage: unitCases
   script:
-    - ./road-generation test/test3.xml
-    - cat test/test3.xml
-    - cmp test/test3.xodr test/gt/test3.xodr
+    - ./road-generation test/junction_ma_3.xml
+    - cat test/junction_ma_3.xml
+    - cmp test/junction_ma_3.xodr test/gt/junction_ma_3.xodr
     
 junction_ma_4:
   stage: unitCases
   script:
-    - ./road-generation test/test5.xml
-    - cat test/test5.xml
-    - cmp --silent test/test5.xodr test/gt/test5.xodr
+    - ./road-generation test/junction_ma_4.xml
+    - cat test/junction_ma_4.xml
+    - cmp --silent test/junction_ma_4.xodr test/gt/junction_ma_4.xodr
 
 junction_ma_5:
   stage: unitCases
   script:
-    - ./road-generation test/test6.xml
-    - cat test/test6.xml
-    - cmp test/test6.xodr test/gt/test6.xodr
+    - ./road-generation test/junction_ma_5.xml
+    - cat test/junction_ma_5.xml
+    - cmp test/junction_ma_5.xodr test/gt/junction_ma_5.xodr
 
 junction_ma_6:
   stage: unitCases
   script:
-    - ./road-generation test/test7.xml
-    - cat test/test7.xml
-    - cmp test/test7.xodr test/gt/test7.xodr
+    - ./road-generation test/junction_ma_6.xml
+    - cat test/junction_ma_6.xml
+    - cmp test/junction_ma_6.xodr test/gt/junction_ma_6.xodr
 
 junction_4a:
   stage: unitCases
   script:
-    - ./road-generation test/test8.xml
-    - cat test/test8.xml
-    - cmp test/test8.xodr test/gt/test8.xodr
+    - ./road-generation test/junction_4a.xml
+    - cat test/junction_4a.xml
+    - cmp test/junction_4a.xodr test/gt/junction_4a.xodr
 
 junction_m2a:
   stage: unitCases
   script:
-    - ./road-generation test/test9.xml
-    - cat test/test9.xml
+    - ./road-generation test/junction_m2a.xml
+    - cat test/junction_m2a.xml
+    - cmp test/junction_m2a.xodr test/gt/junction_m2a.xodr
