@@ -11,8 +11,6 @@ before_script:
 
 basicBuildCase:
   stage: build
-  tags:
-    - docker
   script: 
     - cmake . 
     - make
@@ -22,7 +20,6 @@ basicBuildCase:
 
 junction_ma:
   stage: unitCases
-  
   script:
     - ./road-generation test/test1.xml
     - cat test/test1.xml
