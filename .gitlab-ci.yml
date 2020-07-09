@@ -1,4 +1,4 @@
-image: amytabb/docker_ubuntu16_essentials
+image: jannik97/ubuntu_xercesc:first
 
 stages:
   - build
