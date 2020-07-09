@@ -1,4 +1,4 @@
-image: my/hello:latest
+image: hello:latest
 
 stages:
   - build
