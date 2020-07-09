@@ -1,9 +1,13 @@
-image: hello:latest
+image: amytabb/docker_ubuntu16_essentials
 
 stages:
   - build
   - unitCases
   
+before_script:
+  - apt-get update
+  - apt-get -y install cmake
+  - apt-get -y install libxerces-c-dev 
 
 basicBuildCase:
   stage: build
@@ -16,7 +20,7 @@ basicBuildCase:
       paths:
         - road-generation
 
-unitCase1:
+junction_ma:
   stage: unitCases
   
   script:
@@ -24,49 +28,49 @@ unitCase1:
     - cat test/test1.xml
     - cmp --silent test/test1.xodr test/gt/test1.xodr
   
-unitCase2:
+junction_ma_2:
   stage: unitCases
   script:
     - ./road-generation test/test2.xml
     - cat test/test2.xml
     - cmp test/test2.xodr test/gt/test2.xodr
 
-unitCase3:
+junction_ma_3:
   stage: unitCases
   script:
     - ./road-generation test/test3.xml
     - cat test/test3.xml
     - cmp test/test3.xodr test/gt/test3.xodr
     
-unitCase5:
+junction_ma_4:
   stage: unitCases
   script:
     - ./road-generation test/test5.xml
     - cat test/test5.xml
     - cmp --silent test/test5.xodr test/gt/test5.xodr
 
-unitCase6:
+junction_ma_5:
   stage: unitCases
   script:
     - ./road-generation test/test6.xml
     - cat test/test6.xml
     - cmp test/test6.xodr test/gt/test6.xodr
 
-unitCase7:
+junction_ma_6:
   stage: unitCases
   script:
     - ./road-generation test/test7.xml
     - cat test/test7.xml
     - cmp test/test7.xodr test/gt/test7.xodr
 
-unitCase8:
+junction_4a:
   stage: unitCases
   script:
     - ./road-generation test/test8.xml
     - cat test/test8.xml
     - cmp test/test8.xodr test/gt/test8.xodr
 
-unitCase9:
+junction_m2a:
   stage: unitCases
   script:
     - ./road-generation test/test9.xml
