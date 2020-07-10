@@ -22,7 +22,7 @@ build_root:
     - pdflatex -interaction=nonstopmode root.tex
   artifacts:
     paths:
-      - root.pdf
+      - paper/tex/root.pdf
     name: "newest_version"
     expire_in: 1 week
   only:
