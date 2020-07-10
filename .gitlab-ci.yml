@@ -15,7 +15,7 @@ build_root:
   tags:
     - docker
   script:
-    - ls -la
+    - cd paper/tex
     - pdflatex -interaction=nonstopmode root.tex
     - bibtex root
     - pdflatex -interaction=nonstopmode root.tex
