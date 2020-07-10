@@ -23,14 +23,14 @@ junction_ma:
   script:
     - ./road-generation test/junction_ma.xml
     - cat test/junction_ma.xml
-    - cmp --silent test/junction_ma.xodr test/gt/junction_ma.xodr
+    - python3 test/cmp.py test/junction_ma.xodr test/gt/junction_ma.xodr
   
 junction_ma_2:
   stage: unitCases
   script:
     - ./road-generation test/junction_ma_2.xml
     - cat test/junction_ma_2.xml
-    - cmp test/junction_ma_2.xodr test/gt/junction_ma_2.xodr
+    - python3 test/cmp.py test/junction_ma_2.xodr test/gt/junction_ma_2.xodr
 
 junction_ma_3:
   stage: unitCases
