@@ -93,6 +93,6 @@ print ("\nsmall numerical diffs :", n)
 print ("numerical diffs       :", e)
 print ("string diffs          :", s)
 
-sys.exit(n+e)
+sys.exit(s+e)
 
 
