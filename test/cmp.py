@@ -39,6 +39,8 @@ def print_childs_r(tree, lv):
 def is_number(s):
     try:
         float(s)
+
+
         return True
     except ValueError:
         return False
@@ -50,12 +52,14 @@ def cmp_xml_list(list1, list2):
     e_diff = 0
     if len(list1) != len(list2):
         print("missmatch ", len(list1), len(list2))
-        return 1     
+        sys.exit(1)     
   
     for i in range (len(list1)):
         if(list1[i] != list2[i]) : 
-            if not is_number(list1[i] or not is_number(list2[i])): 
+            print(list1[i] , "  " , list2[i])
+            if (not is_number(list1[i]) or not is_number(list2[i])): 
                 s_diff += 1
+                print ("diff: ", list1[i], list2[i])
                 continue
 
             number1 = float(list1[i])
@@ -63,9 +67,10 @@ def cmp_xml_list(list1, list2):
 
             if abs(number1-number2 > threshold): 
                 e_diff += 1
+                print ("diff: ", list1[i], list2[i])
             else:
                 n_diff += 1
-                print ("diff: ", list1[i], list2[i])
+                
    
     return (s_diff, n_diff, e_diff)
 
