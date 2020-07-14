@@ -5,10 +5,10 @@ import xml.etree.ElementTree as ET
 
 threshold = 0.0001
 
+print("testing with", threshold, "margin..\n" )
 
 def tree_to_list(tree):
     x = []
-
     return parse_tree_to_list(tree, x)
 
 
@@ -19,10 +19,10 @@ def parse_tree_to_list(tree, x):
         x.append(a)
         x.append(b)
 
-  
     for child in tree:
         parse_tree_to_list(child,x)
     return x
+
 
 def print_childs_r(tree, lv):
     intend = ""
@@ -50,8 +50,7 @@ def cmp_xml_list(list1, list2):
     e_diff = 0
     if len(list1) != len(list2):
         print("missmatch ", len(list1), len(list2))
-        return 1 
-    
+        return 1     
   
     for i in range (len(list1)):
         if(list1[i] != list2[i]) : 
@@ -67,7 +66,6 @@ def cmp_xml_list(list1, list2):
             else:
                 n_diff += 1
                 print ("diff: ", list1[i], list2[i])
-
    
     return (s_diff, n_diff, e_diff)
 
