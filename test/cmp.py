@@ -55,8 +55,8 @@ def cmp_xml_list(list1, list2):
         sys.exit(1)     
   
     for i in range (len(list1)):
-        if(list1[i] != list2[i]) : 
-            print(list1[i] , "  " , list2[i])
+
+        if(list1[i] != list2[i]) :             
             if (not is_number(list1[i]) or not is_number(list2[i])): 
                 s_diff += 1
                 print ("diff: ", list1[i], list2[i])
