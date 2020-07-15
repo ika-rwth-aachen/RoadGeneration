@@ -19,7 +19,5 @@ add_executable("${PROJECT_NAME}"
 
 add_definitions(-DPROJ_DIR=\"${PROJECT_SOURCE_DIR}\")
 
-
-
 target_link_libraries("${PROJECT_NAME}" ${XercesC_LIBRARIES})
 
