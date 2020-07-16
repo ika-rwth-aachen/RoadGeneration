@@ -3,18 +3,47 @@
 
 #include <string>
 #include <vector>
-#include <interface.h>
+#include "../../utils/interface.h"
 
-class roadNetwork
+class RoadNetwork
 {
-    std::string file;
+    std::string _file;
 
     std::vector<road> roads;
     std::vector<junction> junctions;
     std::vector<control> controller;
 
-    int nSignal = 0;
-    int nSegment = 0;
+ 
+
+    public:
+
+        RoadNetwork(std::string file);
+
+        std::string getFile(){
+            return _file;
+        }
+
+        std::vector<road> getRoads(){
+            return roads;
+        }
+
+         std::vector<junction> getJunctions(){
+            return junctions;
+        }
+
+         std::vector<control> getController(){
+            return controller;
+        }
+
+        void setFile(std::string file){
+            _file  = file;
+        }
+
+        int nSignal = 0;
+        int nSegment = 0;
+
+     
+
 
 
 };

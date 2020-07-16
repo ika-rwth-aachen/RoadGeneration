@@ -29,13 +29,15 @@
 std::string::size_type st;
 using namespace std;
 
+
+#include "headers/interface/roadNetwork.h"
 #include "utils/settings.h"
-#include "utils/interface.h"
 #include "utils/helper.h"
 #include "utils/xml.h"
 #include "generation/buildSegments.h"
 #include "connection/linkSegments.h"
 #include "connection/closeRoadNetwork.h"
+
 
 settings setting;
 

@@ -248,6 +248,8 @@ struct road
  */
 
 
+
+/*
 struct roadNetwork
 {
     string file;
@@ -261,3 +263,4 @@ struct roadNetwork
     int nSignal = 0;
     int nSegment = 0;
 };
+*/
