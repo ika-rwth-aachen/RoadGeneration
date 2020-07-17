@@ -65,10 +65,10 @@ int validateInput(char *file)
  * @param data  output data
  * @return int  error code
  */
-int validateOutput(roadNetwork data)
+int validateOutput(RoadNetwork data)
 {
     // setup file
-    string file = data.file;
+    string file = data.getFile();
     file.append(".xodr");
     const char *xml_file = file.c_str();
 
@@ -112,11 +112,11 @@ int validateOutput(roadNetwork data)
  * @param file  xml input file
  * @return int  error code
  */
-int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file)
+int parseXML(pugi::xml_document &doc, RoadNetwork &data, char *file)
 {
     // save file name in data
     string f = file;
-    data.file = f.substr(0, f.find(".xml"));
+    data.setFile( f.substr(0, f.find(".xml")));
 
     if (doc.load_file(file))
     {
@@ -136,7 +136,7 @@ int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file)
  * @param data  roadNetwork data filled by the road generation tool
  * @return int  error code
  */
-int createXML(pugi::xml_document &doc, roadNetwork data)
+int createXML(pugi::xml_document &doc, RoadNetwork data)
 {
     pugi::xml_node root = doc.append_child("OpenDRIVE");
 
@@ -170,7 +170,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     geoReference.append_child(pugi::node_cdata).set_value("+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
 
     // --- write roads ---------------------------------------------------------
-    for (std::vector<road>::iterator it = data.roads.begin(); it != data.roads.end(); ++it)
+    for (std::vector<road>::iterator it = data.getRoads().begin(); it != data.getRoads().end(); ++it)
     {
         pugi::xml_node road = root.append_child("road");
 
@@ -398,7 +398,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     // controllers format is different in version 1.4
     if (setting.versionMajor >= 1 && setting.versionMinor >= 5)
     {
-        for (std::vector<control>::iterator it = data.controller.begin(); it != data.controller.end(); ++it)
+        for (std::vector<control>::iterator it = data.getController().begin(); it != data.getController().end(); ++it)
         {
             pugi::xml_node controller = root.append_child("controller");
 
@@ -414,7 +414,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     }
 
     // --- write junctions -----------------------------------------------------
-    for (std::vector<junction>::iterator it = data.junctions.begin(); it != data.junctions.end(); ++it)
+    for (std::vector<junction>::iterator it = data.getJunctions().begin(); it != data.getJunctions().end(); ++it)
     {
         pugi::xml_node junc = root.append_child("junction");
 
@@ -436,7 +436,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     }
 
     // --- write doc structure to file -----------------------------------------
-    string file = data.file;
+    string file = data.getFile();
     file.append(".xodr");
 
     if (doc.save_file(file.c_str()))

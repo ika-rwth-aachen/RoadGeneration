@@ -8,6 +8,9 @@
  *
  */
 
+//#include "../headers/interface/roadNetwork.h"
+
+
 /**
  * @brief function generates the road for a connecting road which is specified in the input file
  *  
@@ -15,7 +18,7 @@
  * @param data  roadNetwork structure where the generated roads and junctions are stored
  * @return int  error code
  */
-int connectingRoad(pugi::xml_node &node, roadNetwork &data)
+int connectingRoad(pugi::xml_node &node, RoadNetwork &data)
 {
     // define segment
     data.nSegment++;
@@ -48,7 +51,7 @@ int connectingRoad(pugi::xml_node &node, roadNetwork &data)
         return 1;
     }
 
-    data.roads.push_back(r);
+    data.getRoads().push_back(r);
 
     return 0;
 }

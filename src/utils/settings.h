@@ -8,6 +8,9 @@
  *
  */
 
+#ifndef SETTINGS_H
+#define SETTINGS_H
+
 /**
  * @brief lane width settings
  * 
@@ -73,3 +76,5 @@ struct settings
     double west = 0;
     double east = 0;
 };
+
+#endif

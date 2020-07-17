@@ -10,6 +10,7 @@
 
 #include "xjunction.h"
 #include "tjunction.h"
+ //#include "../headers/interface/roadNetwork.h"
 
 /**
  * @brief function takes the junction as input argument and calls the junction type function
@@ -18,7 +19,8 @@
  * @param data  roadNetwork structure where the generated roads and junctions are stored
  * @return int  error code
  */
-int junctionWrapper(pugi::xml_node &node, roadNetwork &data)
+
+int junctionWrapper(pugi::xml_node &node, RoadNetwork &data)
 {
     // check type of the junction (M = mainroad, A = accessroad)
     int mode = 0;

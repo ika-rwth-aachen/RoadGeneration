@@ -17,7 +17,7 @@ extern settings setting;
  * @param data  roadNetwork structure where the generated roads and junctions are stored
  * @return int  error code
  */
-int tjunction(pugi::xml_node &node, roadNetwork &data)
+int tjunction(pugi::xml_node &node, RoadNetwork &data)
 {
     // check type of the junction (here: M = mainroad, A = accessroad)
     int mode = 0;
@@ -377,9 +377,9 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         }
     }
 
-    data.roads.push_back(r1);
-    data.roads.push_back(r2);
-    data.roads.push_back(r3);
+    data.getRoads().push_back(r1);
+    data.getRoads().push_back(r2);
+    data.getRoads().push_back(r3);
 
     // --- generate connecting lanes -------------------------------------------
     cout << "\t Generate Connecting Lanes" << endl;
@@ -401,9 +401,9 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
                 toPos = roadLink.attribute("toPos").value();
 
             road r1, r2;
-            for (int i = 0; i < data.roads.size(); i++)
+            for (int i = 0; i < data.getRoads().size(); i++)
             {
-                road tmp = data.roads[i];
+                road tmp = data.getRoads()[i];
                 if (tmp.inputId == fromId && tmp.inputPos == fromPos)
                     r1 = tmp;
                 if (tmp.inputId == toId && tmp.inputPos == toPos)
@@ -437,9 +437,9 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
                     left = laneLink.attribute("right").value();
 
                 road r;
-                r.id = 100 * junc.id + data.roads.size() + 1;
+                r.id = 100 * junc.id + data.getRoads().size() + 1;
                 createRoadConnection(r1, r2, r, junc, from, to, left, right);
-                data.roads.push_back(r);
+                data.getRoads().push_back(r);
             }
         }
     }
@@ -479,7 +479,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             else if (mode == 2 && i != 0)
                 createRoadConnection(r1, r2, r, junc, from, to, non, non);
 
-            data.roads.push_back(r);
+            data.getRoads().push_back(r);
 
             from--;
             to++;
@@ -502,7 +502,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             else if (mode == 2)
                 createRoadConnection(r2, r1, r, junc, from, to, non, non);
 
-            data.roads.push_back(r);
+            data.getRoads().push_back(r);
 
             from++;
             to--;
@@ -523,7 +523,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             else
                 createRoadConnection(r2, r3, r, junc, from, to, non, non);
 
-            data.roads.push_back(r);
+            data.getRoads().push_back(r);
 
             from--;
             to++;
@@ -541,7 +541,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
 
             createRoadConnection(r3, r2, r, junc, from, to, non, non);
 
-            data.roads.push_back(r);
+            data.getRoads().push_back(r);
 
             from++;
             to--;
@@ -570,7 +570,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             else if (mode == 2 && i != 0)
                 createRoadConnection(r3, r1, r, junc, from, to, non, non);
 
-            data.roads.push_back(r);
+            data.getRoads().push_back(r);
 
             from--;
             to++;
@@ -593,7 +593,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
             else if (mode == 2)
                 createRoadConnection(r1, r3, r, junc, from, to, non, non);
 
-            data.roads.push_back(r);
+            data.getRoads().push_back(r);
 
             from++;
             to--;
@@ -601,7 +601,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         }
     }
 
-    data.junctions.push_back(junc);
+    data.getJunctions().push_back(junc);
 
     return 0;
 }

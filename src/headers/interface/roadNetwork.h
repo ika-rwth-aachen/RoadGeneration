@@ -1,9 +1,4 @@
-#ifndef ROAD_NETWORK_H
-#define ROAD_NETWORK_H
 
-#include <string>
-#include <vector>
-#include "../../utils/interface.h"
 
 class RoadNetwork
 {
@@ -16,6 +11,7 @@ class RoadNetwork
  
 
     public:
+        RoadNetwork(){}
 
         RoadNetwork(std::string file);
 
@@ -42,10 +38,9 @@ class RoadNetwork
         int nSignal = 0;
         int nSegment = 0;
 
-     
+    
 
 
 
 };
 
-#endif

@@ -28,7 +28,7 @@
  * @param data 	roadNetwork data where the openDrive structure should be generated
  * @return int 	error code
  */
-int buildSegments(pugi::xml_document &doc, roadNetwork &data)
+int buildSegments(pugi::xml_document &doc, RoadNetwork &data)
 {
 	pugi::xml_node segments = doc.child("roadNetwork").child("segments");
 	if (!segments)

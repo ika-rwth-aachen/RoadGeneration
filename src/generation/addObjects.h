@@ -8,6 +8,9 @@
  *
  */
 
+//#include "../headers/interface/roadNetwork.h"
+
+
 /**
  * @brief function adds a traffic island to the lane structure
  * 
@@ -302,7 +305,7 @@ int getPosition(pugi::xml_node node, object &o)
  * @param data      roadNetwork structure where the generated roads and junctions are stored
  * @return int      error code
  */
-int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
+int addObjects(pugi::xml_node inRoad, road &r, RoadNetwork &data)
 {
     for (pugi::xml_node obj : inRoad.child("objects").children())
     {
@@ -382,7 +385,7 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
             if (s.dynamic)
                 c.signs.push_back(s);
         }
-        data.controller.push_back(c);
+        data.getController().push_back(c);
     }
     return 0;
 }
@@ -399,7 +402,7 @@ int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
  * @param controller    controllerof signal
  * @return int          error code
  */
-int addSignal(road &r, roadNetwork &data, double s, double t, string type, string subtype, int controller)
+int addSignal(road &r, RoadNetwork &data, double s, double t, string type, string subtype, int controller)
 {
     if (controller == -1)
         controller = 1000 + r.junction * 100;
@@ -415,9 +418,9 @@ int addSignal(road &r, roadNetwork &data, double s, double t, string type, strin
     // search controller for given junction
     bool found = false;
     int i;
-    for (i = 0; i < data.controller.size(); i++)
+    for (i = 0; i < data.getController().size(); i++)
     {
-        if (data.controller[i].id == controller)
+        if (data.getController()[i].id == controller)
         {
             found = true;
             break;
@@ -428,8 +431,8 @@ int addSignal(road &r, roadNetwork &data, double s, double t, string type, strin
     {
         control c;
         c.id = controller;
-        data.controller.push_back(c);
-        i = data.controller.size() - 1;
+        data.getController().push_back(c);
+        i = data.getController().size() - 1;
     }
 
     sign sig;
@@ -465,7 +468,7 @@ int addSignal(road &r, roadNetwork &data, double s, double t, string type, strin
     // TODO add more
 
     r.signs.push_back(sig);
-    data.controller[i].signs.push_back(sig);
+    data.getController()[i].signs.push_back(sig);
 
     return 0;
 }

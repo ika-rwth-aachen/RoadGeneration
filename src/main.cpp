@@ -30,8 +30,9 @@ std::string::size_type st;
 using namespace std;
 
 
-#include "headers/interface/roadNetwork.h"
 #include "utils/settings.h"
+#include "utils/interface.h"
+#include "headers/interface/roadNetwork.h"
 #include "utils/helper.h"
 #include "utils/xml.h"
 #include "generation/buildSegments.h"
@@ -71,9 +72,11 @@ int main(int argc, char **argv)
 	// --- initialization ------------------------------------------------------
 	pugi::xml_document in;
 	pugi::xml_document out;
-	roadNetwork data;
+	RoadNetwork data;
 
 	// --- pipeline ------------------------------------------------------------
+	
+	
 	if (validateInput(file))
 	{
 		cerr << "ERR: error in validateInput" << endl;

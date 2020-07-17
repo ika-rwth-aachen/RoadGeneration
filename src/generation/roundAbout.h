@@ -8,6 +8,9 @@
  *
  */
 
+//#include "../headers/interface/roadNetwork.h"
+
+
 /**
  * @brief function generates the roads and junctions for a roundabout which is specified in the input file
  *  
@@ -15,7 +18,7 @@
  * @param data  roadNetwork structure where the generated roads and junctions are stored
  * @return int  error code
  */
-int roundAbout(pugi::xml_node &node, roadNetwork &data)
+int roundAbout(pugi::xml_node &node, RoadNetwork &data)
 {
     // create segment
     data.nSegment++;
@@ -290,7 +293,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
                 to--;
             }
 
-            data.roads.push_back(r);
+            data.getRoads().push_back(r);
             nCount++;
         }
 
@@ -345,10 +348,10 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         r1.predecessor.elementType = junctionType;
         r1.predecessor.contactPoint = startType;
 
-        data.roads.push_back(r1);
-        data.roads.push_back(r2);
-        data.roads.push_back(r5);
-        data.roads.push_back(r6);
+        data.getRoads().push_back(r1);
+        data.getRoads().push_back(r2);
+        data.getRoads().push_back(r5);
+        data.getRoads().push_back(r6);
 
         // update for next step
         sOld = sMain + sOffMain;
@@ -356,7 +359,7 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
             rOld = r1;
     }
 
-    data.junctions.push_back(junc);
+    data.getJunctions().push_back(junc);
 
     return 0;
 }
