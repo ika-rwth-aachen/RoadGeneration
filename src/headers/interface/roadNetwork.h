@@ -4,9 +4,9 @@ class RoadNetwork
 {
     std::string _file;
 
-    std::vector<road> roads;
-    std::vector<junction> junctions;
-    std::vector<control> controller;
+    std::vector<road> _roads;
+    std::vector<junction> _junctions;
+    std::vector<control> _controller;
 
  
 
@@ -19,16 +19,28 @@ class RoadNetwork
             return _file;
         }
 
-        std::vector<road> getRoads(){
-            return roads;
+         std::vector<road>& getRoads(){
+            return _roads;
+        }
+
+        void pushRoad(road r){
+            _roads.push_back(r);
         }
 
          std::vector<junction> getJunctions(){
-            return junctions;
+            return _junctions;
+        }
+
+         void pushJunction(junction j){
+            _junctions.push_back(j);
         }
 
          std::vector<control> getController(){
-            return controller;
+            return _controller;
+        }
+
+         void pushControl(control c){
+            _controller.push_back(c);
         }
 
         void setFile(std::string file){
@@ -37,10 +49,6 @@ class RoadNetwork
 
         int nSignal = 0;
         int nSegment = 0;
-
-    
-
-
 
 };
 

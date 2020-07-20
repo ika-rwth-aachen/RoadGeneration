@@ -293,7 +293,7 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
                 to--;
             }
 
-            data.getRoads().push_back(r);
+            data.pushRoad(r);
             nCount++;
         }
 
@@ -348,10 +348,10 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         r1.predecessor.elementType = junctionType;
         r1.predecessor.contactPoint = startType;
 
-        data.getRoads().push_back(r1);
-        data.getRoads().push_back(r2);
-        data.getRoads().push_back(r5);
-        data.getRoads().push_back(r6);
+        data.pushRoad(r1);
+        data.pushRoad(r2);
+        data.pushRoad(r5);
+        data.pushRoad(r6);
 
         // update for next step
         sOld = sMain + sOffMain;
@@ -359,7 +359,7 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
             rOld = r1;
     }
 
-    data.getJunctions().push_back(junc);
+    data.pushJunction(junc);
 
     return 0;
 }

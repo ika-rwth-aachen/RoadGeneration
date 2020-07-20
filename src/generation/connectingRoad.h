@@ -51,7 +51,7 @@ int connectingRoad(pugi::xml_node &node, RoadNetwork &data)
         return 1;
     }
 
-    data.getRoads().push_back(r);
+    data.pushRoad(r);
 
     return 0;
 }

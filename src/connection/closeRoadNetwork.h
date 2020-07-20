@@ -288,7 +288,7 @@ int closeRoadNetwork(pugi::xml_document &doc, RoadNetwork &data)
 
 		rConnection.laneSections = secs;
 
-		data.getRoads().push_back(rConnection);
+		data.pushRoad(rConnection);
 	}
 	return 0;
 }

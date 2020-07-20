@@ -77,6 +77,7 @@ int main(int argc, char **argv)
 	// --- pipeline ------------------------------------------------------------
 	
 	
+
 	if (validateInput(file))
 	{
 		cerr << "ERR: error in validateInput" << endl;
@@ -86,12 +87,17 @@ int main(int argc, char **argv)
 	{
 		cerr << "ERR: error in parseXML" << endl;
 		return -1;
-	}
+	}	
+
+	
+
 	if (buildSegments(in, data))
 	{
 		cerr << "ERR: error in buildSegments" << endl;
 		return -1;
 	}
+
+	
 	if (linkSegments(in, data))
 	{
 		cerr << "ERR: error in linkSegments" << endl;
@@ -112,6 +118,8 @@ int main(int argc, char **argv)
 		cerr << "ERR: error in validateOutput" << endl;
 		return -1;
 	}
+
+		
 
 	return 0;
 }

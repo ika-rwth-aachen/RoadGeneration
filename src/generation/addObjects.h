@@ -385,7 +385,7 @@ int addObjects(pugi::xml_node inRoad, road &r, RoadNetwork &data)
             if (s.dynamic)
                 c.signs.push_back(s);
         }
-        data.getController().push_back(c);
+        data.pushControl(c);
     }
     return 0;
 }
@@ -431,7 +431,7 @@ int addSignal(road &r, RoadNetwork &data, double s, double t, string type, strin
     {
         control c;
         c.id = controller;
-        data.getController().push_back(c);
+        data.pushControl(c);
         i = data.getController().size() - 1;
     }
 
