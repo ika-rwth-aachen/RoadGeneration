@@ -35,12 +35,9 @@ def print_childs_r(tree, lv):
         print_childs_r(child, (lv+1))
     print (intend, " /" + tree.tag)
 
-
 def is_number(s):
     try:
         float(s)
-
-
         return True
     except ValueError:
         return False
@@ -51,7 +48,7 @@ def cmp_xml_list(list1, list2):
     n_diff = 0
     e_diff = 0
     if len(list1) != len(list2):
-        print("missmatch ", len(list1), len(list2))
+        print("document length missmatch ", len(list1), "<->" , len(list2))
         sys.exit(1)     
   
     for i in range (len(list1)):
@@ -67,7 +64,7 @@ def cmp_xml_list(list1, list2):
 
             if abs(number1-number2 > threshold): 
                 e_diff += 1
-                print ("diff: ", list1[i], list2[i])
+                print ("diff: ", list1[i], "<->" ,  list2[i])
             else:
                 n_diff += 1
                 
