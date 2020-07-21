@@ -19,7 +19,7 @@ class RoadNetwork
             return _file;
         }
 
-         std::vector<road>& getRoads(){
+         std::vector<road> &getRoads(){
             return _roads;
         }
 
@@ -27,7 +27,7 @@ class RoadNetwork
             _roads.push_back(r);
         }
 
-         std::vector<junction> getJunctions(){
+         std::vector<junction> &getJunctions(){
             return _junctions;
         }
 
@@ -35,7 +35,7 @@ class RoadNetwork
             _junctions.push_back(j);
         }
 
-         std::vector<control> getController(){
+         std::vector<control> &getController(){
             return _controller;
         }
 
