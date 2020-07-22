@@ -34,7 +34,6 @@ using namespace std;
 
 #include "headers/interface/roadNetwork.h"
 
-
 #include "utils/helper.h"
 #include "utils/xml.h"
 #include "generation/buildSegments.h"

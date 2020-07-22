@@ -1,3 +1,6 @@
+#ifndef XML
+#define XML
+
 /**
  * @file xml.cpp
  *
@@ -463,3 +466,5 @@ int printLogo()
 
     return 0;
 }
+
+#endif
