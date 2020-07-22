@@ -1,54 +1,49 @@
+#ifndef ROAD_NETWORK
+#define ROAD_NETWORK
+
+#include <string>
+#include <vector>
+#include "../../utils/settings.h"
+#include "../../utils/interface.h"
+
 
 
 class RoadNetwork
 {
-    std::string _file;
 
-    std::vector<road> _roads;
-    std::vector<junction> _junctions;
-    std::vector<control> _controller;
+    private:
 
- 
+        std::string file;
+        std::vector<road> roads;
+        std::vector<junction> junctions;
+        std::vector<control> controller; 
 
     public:
-        RoadNetwork(){}
-
-        RoadNetwork(std::string file);
-
-        std::string getFile(){
-            return _file;
-        }
-
-         std::vector<road> &getRoads(){
-            return _roads;
-        }
-
-        void pushRoad(road r){
-            _roads.push_back(r);
-        }
-
-         std::vector<junction> &getJunctions(){
-            return _junctions;
-        }
-
-         void pushJunction(junction j){
-            _junctions.push_back(j);
-        }
-
-         std::vector<control> &getController(){
-            return _controller;
-        }
-
-         void pushControl(control c){
-            _controller.push_back(c);
-        }
-
-        void setFile(std::string file){
-            _file  = file;
-        }
 
         int nSignal = 0;
         int nSegment = 0;
 
+        RoadNetwork();
+        RoadNetwork(std::string file);
+        ~RoadNetwork();
+
+        std::string getFile();
+
+         std::vector<road> &getRoads();
+
+        void pushRoad(road r);
+
+         std::vector<junction> &getJunctions();
+
+         void pushJunction(junction j);
+
+         std::vector<control> &getController();
+
+         void pushControl(control c);
+
+        void setFile(std::string file);
+
+
 };
 
+#endif

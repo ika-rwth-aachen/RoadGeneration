@@ -29,10 +29,12 @@
 std::string::size_type st;
 using namespace std;
 
-
 #include "utils/settings.h"
 #include "utils/interface.h"
+
 #include "headers/interface/roadNetwork.h"
+
+
 #include "utils/helper.h"
 #include "utils/xml.h"
 #include "generation/buildSegments.h"

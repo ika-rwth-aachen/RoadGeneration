@@ -464,6 +464,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
             road r1, r2;
             for (int i = 0; i < data.getRoads().size(); i++)
             {
+                
                 road tmp = data.getRoads()[i];
                 if (tmp.inputId == fromId && tmp.inputPos == fromPos)
                     r1 = tmp;
