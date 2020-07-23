@@ -1,4 +1,4 @@
-image: jannik97/ubuntu_xercesc:latest
+image: gitlab.ika.rwth-aachen.de:5050/dbecker/road-generation:latest
 
 stages:
   - build
