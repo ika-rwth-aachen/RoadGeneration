@@ -1,3 +1,6 @@
+#ifndef X_JUNCTION
+#define X_JUNCTION
+
 /**
  * @file xjunction.h
  *
@@ -9,8 +12,7 @@
  */
 
 extern settings setting;
-
-//#include "../headers/interface/roadNetwork.h"
+extern std::string::size_type st;
 
 
 /**
@@ -758,3 +760,5 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 
     return 0;
 }
+
+#endif

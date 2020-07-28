@@ -1,3 +1,6 @@
+#ifndef BUILD_ROAD
+#define BUILD_ROAD
+
 /**
  * @file buildRoad.h
  *
@@ -10,6 +13,8 @@
 
 #include "../utils/curve.h"
 #include "addLaneSections.h"
+
+using namespace std;
 
 extern settings setting;
 
@@ -84,13 +89,13 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
         double R = 0, R1 = 0, R2 = 0;
 
         // define type
-        if ((string)it->name() == "line")
+        if ((std::string)it->name() == "line")
             type = line;
-        if ((string)it->name() == "spiral")
+        if ((std::string)it->name() == "spiral")
             type = spiral;
-        if ((string)it->name() == "arc")
+        if ((std::string)it->name() == "arc")
             type = arc;
-        if ((string)it->name() == "circle")
+        if ((std::string)it->name() == "circle")
             type = arc;
 
         double length = it->attribute("length").as_double();
@@ -410,7 +415,7 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
 
     for (pugi::xml_node_iterator itt = roadIn.child("lanes").begin(); itt != roadIn.child("lanes").end(); ++itt)
     {
-        if ((string)itt->name() != "lane")
+        if ((std::string)itt->name() != "lane")
             continue;
 
         lane l;
@@ -490,13 +495,13 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
 
     for (pugi::xml_node_iterator itt = roadIn.child("lanes").begin(); itt != roadIn.child("lanes").end(); ++itt)
     {
-        if ((string)itt->name() == "laneWidening")
+        if ((std::string)itt->name() == "laneWidening")
         {
             int side = itt->attribute("side").as_int();
 
             if (side == 0)
             {
-                cerr << "ERR: laneWidening with side = 0" << endl;
+                std::cerr << "ERR: laneWidening with side = 0" << std::endl;
                 return 1;
             }
 
@@ -512,7 +517,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
 
             if (addLaneWidening(r.laneSections, side, s, ds, false))
             {
-                cerr << "ERR: error in addLaneWidening";
+                std::cerr << "ERR: error in addLaneWidening";
                 return 1;
             }
 
@@ -525,18 +530,18 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
 
                 if (addRestrictedAreaWidening(r.laneSections, side, s, ds, ds2))
                 {
-                    cerr << "ERR: error in addRestrictedAreaWidening";
+                    std::cerr << "ERR: error in addRestrictedAreaWidening";
                     return 1;
                 }
             }
         }
-        if ((string)itt->name() == "laneDrop")
+        if ((std::string)itt->name() == "laneDrop")
         {
             int side = itt->attribute("side").as_int();
 
             if (side == 0)
             {
-                cerr << "ERR: laneWidening with side = 0" << endl;
+                std::cerr << "ERR: laneWidening with side = 0" << std::endl;
                 return 1;
             }
 
@@ -552,7 +557,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
 
             if (addLaneDrop(r.laneSections, side, s, ds))
             {
-                cerr << "ERR: error in addLaneDrop";
+                std::cerr << "ERR: error in addLaneDrop";
                 return 1;
             }
 
@@ -565,7 +570,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
 
                 if (addRestrictedAreaDrop(r.laneSections, side, s, ds, ds2))
                 {
-                    cerr << "ERR: error in addRestrictedAreaDrop";
+                    std::cerr << "ERR: error in addRestrictedAreaDrop";
                     return 1;
                 }
             }
@@ -576,7 +581,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
 
     double widening_s = setting.laneChange.s;
     double widening_ds = setting.laneChange.ds;
-    string active = "main";
+    std::string active = "main";
 
     if (automaticWidening)
     {
@@ -599,7 +604,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
         {
             if (laneWideningJunction(r, widening_s, widening_ds, 1, true, restricted))
             {
-                cerr << "ERR: error in laneWideningJunction";
+                std::cerr << "ERR: error in laneWideningJunction";
                 return 1;
             }
         }
@@ -608,7 +613,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
 
             if (laneWideningJunction(r, widening_s, widening_ds, 1, true, restricted))
             {
-                cerr << "ERR: error in laneWideningJunction";
+                std::cerr << "ERR: error in laneWideningJunction";
                 return 1;
             }
         }
@@ -616,7 +621,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
         {
             if (laneWideningJunction(r, widening_s, widening_ds, 1, true, restricted))
             {
-                cerr << "ERR: error in laneWideningJunction";
+                std::cerr << "ERR: error in laneWideningJunction";
                 return 1;
             }
         }
@@ -666,14 +671,14 @@ int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::
     // generate geometries
     if (generateGeometries(roadIn, r, sStart, sEnd))
     {
-        cerr << "ERR: error in generateGeometries";
+        std::cerr << "ERR: error in generateGeometries";
         return 1;
     }
 
     // shift geometries
     if (shiftGeometries(r, sStart, sEnd, s0, x0, y0, phi0))
     {
-        cerr << "ERR: error in shiftGeometries";
+        std::cerr << "ERR: error in shiftGeometries";
         return 1;
     }
 
@@ -682,23 +687,25 @@ int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::
     {
         if (flipGeometries(r))
         {
-            cerr << "ERR: error in flipGeometries";
+            std::cerr << "ERR: error in flipGeometries";
             return 1;
         }
     }
     // add lanes
     if (addLanes(roadIn, r, mode))
     {
-        cerr << "ERR: error in addLanes";
+        std::cerr << "ERR: error in addLanes";
         return 1;
     }
 
     // add lane section changes
     if (addLaneSectionChanges(roadIn, r, automaticWidening))
     {
-        cerr << "ERR: error in addLaneSectionChanges";
+        std::cerr << "ERR: error in addLaneSectionChanges";
         return 1;
     }
 
     return 0;
 }
+
+#endif

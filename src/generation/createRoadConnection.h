@@ -1,3 +1,6 @@
+#ifndef CREATE_ROAD_CONNECTION
+#define CREATE_ROAD_CONNECTION
+
 /**
  * @file createRoadConnection.h
  *
@@ -276,3 +279,5 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
 
     return 0;
 }
+
+#endif

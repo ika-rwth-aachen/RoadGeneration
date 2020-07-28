@@ -1,3 +1,9 @@
+#ifndef HELPER
+#define HELPER
+
+#include <vector>
+#include <string>
+
 /**
  * @file helper.h
  *
@@ -98,7 +104,7 @@ bool isBoundary(laneSection sec, int id)
  * @param sec   lanesection in which the lane is stored
  * @param l     lane which has the laneId id
  * @param id    laneId of the lane to find
- * @return int  position in laneSection vector 
+ * @return int  position in laneSection std::vector 
  */
 int findLane(laneSection sec, lane &l, int id)
 {
@@ -116,12 +122,12 @@ int findLane(laneSection sec, lane &l, int id)
 /**
  * @brief function returns the road with the given id
  * 
- * @param roads road vector in which the road is stored
+ * @param roads road std::vector in which the road is stored
  * @param l     road which has the roadId id
  * @param id    roadId of the lane to find
- * @return int  position in road vector
+ * @return int  position in road std::vector
  */
-int findRoad(vector<road> roads, road &r, int id)
+int findRoad(std::vector<road> roads, road &r, int id)
 {
     for (int i = 0; i < roads.size(); i++)
     {
@@ -509,7 +515,7 @@ int sortRoads(road r1, road &r2, road &r3, road &r4)
     }
     else
     {
-        cerr << "ERR: angles at intersection point are not defined correct.";
+        std::cerr << "ERR: angles at intersection point are not defined correct.";
         return 1;
     }
     return 0;
@@ -545,7 +551,7 @@ int sortRoads(road r1, road &r2, road &r3)
     }
     else
     {
-        cerr << "ERR: angles at intersection point are not defined correct.";
+        std::cerr << "ERR: angles at intersection point are not defined correct.";
         return 1;
     }
     return 0;
@@ -698,3 +704,5 @@ bool compareLanes(const lane &a, const lane &b)
 {
     return a.id < b.id;
 }
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef ADD_OBJECT
+#define ADD_OBJECT
+
 /**
  * @file addObjects.h
  *
@@ -7,9 +10,6 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
-
-//#include "../headers/interface/roadNetwork.h"
-
 
 /**
  * @brief function adds a traffic island to the lane structure
@@ -472,3 +472,5 @@ int addSignal(road &r, RoadNetwork &data, double s, double t, string type, strin
 
     return 0;
 }
+
+#endif

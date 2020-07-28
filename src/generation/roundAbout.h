@@ -1,3 +1,6 @@
+#ifndef ROUNDABOUT
+#define ROUNDABOUT
+
 /**
  * @file roundAbout.h
  *
@@ -363,3 +366,5 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
 
     return 0;
 }
+
+#endif

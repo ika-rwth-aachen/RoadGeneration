@@ -36,7 +36,8 @@ using namespace std;
 
 #include "utils/helper.h"
 #include "utils/xml.h"
-#include "generation/buildSegments.h"
+//#include "generation/buildSegments.h"
+#include "includes.h"
 #include "connection/linkSegments.h"
 #include "connection/closeRoadNetwork.h"
 
@@ -92,7 +93,7 @@ int main(int argc, char **argv)
 
 	
 
-	if (buildSegments(in, data))
+	if (data.buildSegments(in))
 	{
 		cerr << "ERR: error in buildSegments" << endl;
 		return -1;

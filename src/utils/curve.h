@@ -1,3 +1,7 @@
+#ifndef CURVE
+#define CURVE
+
+
 /**
  * @file curve.h
  *
@@ -9,6 +13,7 @@
  */
 
 #include <math.h>
+#include "utils/helper.h"
 
 /**
  * @brief function computes the fresnel integral
@@ -175,3 +180,5 @@ int curve(double s, geometry geo, double &x, double &y, double &phi, int fd)
     }
     return 0;
 }
+
+#endif

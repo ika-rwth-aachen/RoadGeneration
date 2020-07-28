@@ -8,8 +8,7 @@
  *
  */
 
-//#include "../headers/interface/roadNetwork.h"
-
+#include "utils/curve.h"
 
 /**
  * @brief function links all specified segments 

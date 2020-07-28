@@ -1,3 +1,5 @@
+#ifndef CONNECTING_ROAD
+#define CONNECTING_ROAD
 /**
  * @file connectingRoad.h
  *
@@ -55,3 +57,5 @@ int connectingRoad(pugi::xml_node &node, RoadNetwork &data)
 
     return 0;
 }
+
+#endif

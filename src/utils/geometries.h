@@ -1,3 +1,6 @@
+#ifndef GEOMETRY
+#define GEOMETRY
+
 /**
  * @file geometries.h
  *
@@ -99,3 +102,5 @@ int addCompositeCurve(vector<geometry> &geo, double x1, double y1, double phi1, 
     // not yet implemented
     return 0;
 }
+
+#endif

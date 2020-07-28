@@ -1,3 +1,6 @@
+#ifndef CLOSE_ROAD_CONNECTION
+#define CLOSE_ROAD_CONNECTION
+
 /**
  * @file closeRoadConnection.h
  *
@@ -322,3 +325,5 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
 
     return 0;
 }
+
+#endif

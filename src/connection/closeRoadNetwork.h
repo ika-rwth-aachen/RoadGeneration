@@ -1,3 +1,6 @@
+#ifndef CLOSE_ROAD_NETWORK
+#define CLOSE_ROAD_NETWORK
+
 /**
  * @file closeRoadNetwork.h
  *
@@ -9,6 +12,7 @@
  */
 
 #include "closeRoadConnection.h"
+
 
 extern settings setting;
 
@@ -292,3 +296,5 @@ int closeRoadNetwork(pugi::xml_document &doc, RoadNetwork &data)
 	}
 	return 0;
 }
+
+#endif

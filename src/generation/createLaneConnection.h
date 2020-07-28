@@ -1,3 +1,6 @@
+#ifndef CREATE_LANE_CONNECTION
+#define CREATE_LANE_CONNECTION
+
 /**
  * @file createLaneConnection.h
  *
@@ -107,3 +110,5 @@ int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, in
 
     return 0;
 }
+
+#endif

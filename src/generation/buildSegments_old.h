@@ -8,6 +8,7 @@
  *
  */
 
+/*
 #include "buildRoad.h"
 #include "addObjects.h"
 #include "createLaneConnection.h"
@@ -20,6 +21,7 @@
 #include "junctionWrapper.h"
 #include "roundAbout.h"
 #include "connectingRoad.h"
+*/
 
 /**
  * @brief function creates all segments which can be either a junction, roundabout or connectingroad
@@ -28,6 +30,8 @@
  * @param data 	roadNetwork data where the openDrive structure should be generated
  * @return int 	error code
  */
+
+/*
 int buildSegments(pugi::xml_document &doc, RoadNetwork &data)
 {
 	pugi::xml_node segments = doc.child("roadNetwork").child("segments");
@@ -69,3 +73,4 @@ int buildSegments(pugi::xml_document &doc, RoadNetwork &data)
 
 	return 0;
 }
+*/
