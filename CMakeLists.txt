@@ -5,6 +5,7 @@ find_package (XercesC REQUIRED)
 
 # source code
 include_directories(src)
+include_directories(include)
 include_directories(${CMAKE_SOURCE_DIR}/libs/pugixml-1.9/src)
 include_directories (${XercesC_INCLUDE_DIR})
 

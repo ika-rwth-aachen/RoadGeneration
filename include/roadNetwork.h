@@ -3,8 +3,8 @@
 
 #include <string>
 #include <vector>
-#include "../../utils/settings.h"
-#include "../../utils/interface.h"
+#include "utils/settings.h"
+#include "utils/interface.h"
 #include "pugixml.hpp"
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
