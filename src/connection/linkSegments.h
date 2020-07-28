@@ -1,3 +1,6 @@
+#ifndef LINK_SEGMENT
+#define LINK_SEGMENT
+
 /**
  * @file linkSegments.h
  *
@@ -202,3 +205,5 @@ int linkSegments(pugi::xml_document &doc, RoadNetwork &data)
 	}
 	return 0;
 }
+
+#endif

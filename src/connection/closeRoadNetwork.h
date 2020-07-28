@@ -12,6 +12,7 @@
  */
 
 #include "closeRoadConnection.h"
+#include "generation/addLaneSections.h"
 
 
 extern settings setting;

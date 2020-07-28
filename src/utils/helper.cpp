@@ -1,8 +1,9 @@
-#ifndef HELPER
-#define HELPER
+#include "helper.h"
 
-#include <vector>
-#include <string>
+#include <stdio.h>
+#include <math.h>
+#include <iostream>
+
 
 /**
  * @file helper.h
@@ -37,7 +38,7 @@ int sgn(double d)
  */
 int fixAngle(double &a)
 {
-    a = fmod(a + 2 * M_PI, 2 * M_PI);
+    a = std::fmod(a + 2 * M_PI, 2 * M_PI);
     if (a > M_PI)
         a = a - 2 * M_PI;
 
@@ -705,4 +706,5 @@ bool compareLanes(const lane &a, const lane &b)
     return a.id < b.id;
 }
 
-#endif
+
+

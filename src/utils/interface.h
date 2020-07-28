@@ -12,7 +12,7 @@
  *
  */
 
-
+#include "utils/settings.h"
 
 extern settings setting;
 

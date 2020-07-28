@@ -10,11 +10,10 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
-
-#define p 1
-#define n -1
-#define o 0
-#define i 2
+const int p = 1;
+const int n = -1;
+const int o = 0;
+const int i = 2;
 
 #include "../utils/geometries.h"
 

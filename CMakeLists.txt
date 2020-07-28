@@ -18,6 +18,7 @@ add_executable("${PROJECT_NAME}"
     "${CMAKE_SOURCE_DIR}/libs/pugixml-1.9/src/pugixml.cpp"
     "${CMAKE_SOURCE_DIR}/src/interface/roadNetwork/roadNetwork.cpp"
     "${CMAKE_SOURCE_DIR}/src/interface/roadNetwork/buildSegments.cpp"
+    "${CMAKE_SOURCE_DIR}/src/utils/helper.cpp"
 )
 
 add_definitions(-DPROJ_DIR=\"${PROJECT_SOURCE_DIR}\")

@@ -13,7 +13,7 @@
  */
 
 #include <math.h>
-#include "utils/helper.h"
+#include "helper.h"
 
 /**
  * @brief function computes the fresnel integral
