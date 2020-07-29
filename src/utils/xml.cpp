@@ -1,5 +1,3 @@
-#ifndef XML
-#define XML
 
 /**
  * @file xml.cpp
@@ -11,6 +9,11 @@
  *
  */
 
+#include "xml.h"
+#include "roadNetwork.h"
+#include "utils/settings.h"
+#include "interface.h"
+#include "helper.h"
 #include "pugixml.hpp"
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
@@ -18,7 +21,14 @@
 #include <xercesc/sax/ErrorHandler.hpp>
 #include <xercesc/sax/SAXParseException.hpp>
 #include <xercesc/validators/common/Grammar.hpp>
+
+#include <ctime>
+#include <iomanip>
 #include <algorithm>
+#include <iostream>
+#include <stdio.h>
+//#include <string>
+#include <sstream>
 
 using namespace xercesc;
 
@@ -33,14 +43,14 @@ extern settings setting;
 int validateInput(char *file)
 {
     XMLPlatformUtils::Initialize();
-    string schema = string_format("%s/xml/input.xsd", PROJ_DIR);
+    std::string schema = string_format("%s/xml/input.xsd", PROJ_DIR);
     const char *schema_file = schema.c_str();
     const char *xml_file = file;
 
     XercesDOMParser domParser;
     if (domParser.loadGrammar(schema_file, Grammar::SchemaGrammarType) == NULL)
     {
-        cerr << "ERR: couldn't load schema" << endl;
+        std::cerr << "ERR: couldn't load schema" << std::endl;
         return 1;
     }
 
@@ -52,10 +62,10 @@ int validateInput(char *file)
     domParser.parse(xml_file);
 
     if (domParser.getErrorCount() == 0)
-        cout << "XML input file validated against the schema successfully" << endl;
+        std::cout << "XML input file validated against the schema successfully" << std::endl;
     else
     {
-        cerr << "ERR: XML input file doesn't conform to the schema" << endl;
+        std::cerr << "ERR: XML input file doesn't conform to the schema" << std::endl;
         return 1;
     }
 
@@ -71,20 +81,20 @@ int validateInput(char *file)
 int validateOutput(RoadNetwork data)
 {
     // setup file
-    string file = data.getFile();
+    std::string file = data.getFile();
     file.append(".xodr");
     const char *xml_file = file.c_str();
 
     XMLPlatformUtils::Initialize();
 
-    string schema = string_format("%s/xml/output.xsd", PROJ_DIR);
+    std::string schema = string_format("%s/xml/output.xsd", PROJ_DIR);
     const char *schema_path = schema.c_str();
 
     // load output file
     XercesDOMParser domParser;
     if (domParser.loadGrammar(schema_path, Grammar::SchemaGrammarType) == NULL)
     {
-        cerr << "ERR: couldn't load schema" << endl;
+        std::cerr << "ERR: couldn't load schema" << std::endl;
         return 1;
     }
 
@@ -96,10 +106,10 @@ int validateOutput(RoadNetwork data)
 
     domParser.parse(xml_file);
     if (domParser.getErrorCount() == 0)
-        cout << "XML output file validated against the schema successfully" << endl;
+        std::cout << "XML output file validated against the schema successfully" << std::endl;
     else
     {
-        cerr << "ERR: XML output file doesn't conform to the schema" << endl;
+        std::cerr << "ERR: XML output file doesn't conform to the schema" << std::endl;
         return 1;
     }
 
@@ -118,7 +128,7 @@ int validateOutput(RoadNetwork data)
 int parseXML(pugi::xml_document &doc, RoadNetwork &data, char *file)
 {
     // save file name in data
-    string f = file;
+    std::string f = file;
     data.setFile( f.substr(0, f.find(".xml")));
 
     if (doc.load_file(file))
@@ -127,7 +137,7 @@ int parseXML(pugi::xml_document &doc, RoadNetwork &data, char *file)
     }
     else
     {
-        cerr << "ERR: InputFile not found" << endl;
+        std::cerr << "ERR: InputFile not found" << std::endl;
         return 1;
     }
 }
@@ -147,7 +157,7 @@ int createXML(pugi::xml_document &doc, RoadNetwork data)
     if (false)
     {
         root.append_attribute("xmlns:xsi") = "http://www.w3.org/2001/XMLSchema-instance";
-        string tmp = string_format("%s/xml/output.xsd", PROJ_DIR);
+        std::string tmp = string_format("%s/xml/output.xsd", PROJ_DIR);
         root.append_attribute("xsi:noNamespaceSchemaLocation") = tmp.c_str();
     }
 
@@ -164,6 +174,7 @@ int createXML(pugi::xml_document &doc, RoadNetwork data)
     auto tm = *std::localtime(&t);
     std::ostringstream oss;
     oss << std::put_time(&tm, "%Y-%m-%d %H:%M:%S");
+
 
     // uncomment that for allowing CI, due to same output files
     //header.append_attribute("date") = oss.str().c_str();
@@ -439,7 +450,7 @@ int createXML(pugi::xml_document &doc, RoadNetwork data)
     }
 
     // --- write doc structure to file -----------------------------------------
-    string file = data.getFile();
+    std::string file = data.getFile();
     file.append(".xodr");
 
     if (doc.save_file(file.c_str()))
@@ -448,7 +459,7 @@ int createXML(pugi::xml_document &doc, RoadNetwork data)
     }
     else
     {
-        cerr << "ERR: file could not be saved." << endl;
+        std::cerr << "ERR: file could not be saved." << std::endl;
         return 1;
     }
 }
@@ -459,12 +470,11 @@ int createXML(pugi::xml_document &doc, RoadNetwork data)
  */
 int printLogo()
 {
-    cout << "|‾\\  /‾\\  |‾‾| |‾\\       /‾‾  |‾‾  |\\  | |‾‾ |‾\\ |‾‾| ‾|‾ |  /‾\\  |\\  |" << endl;
-    cout << "|_/ |   | |--| |  |  -  |  _  |--  | | | |-- |_/ |--|  |  | |   | | | |" << endl;
-    cout << "| \\  \\_/  |  | |_/       \\_/  |__  |  \\| |__ | \\ |  |  |  |  \\_/  |  \\|" << endl;
-    cout << "=======================================================================" << endl;
+    std::cout << "|‾\\  /‾\\  |‾‾| |‾\\       /‾‾  |‾‾  |\\  | |‾‾ |‾\\ |‾‾| ‾|‾ |  /‾\\  |\\  |" << std::endl;
+    std::cout << "|_/ |   | |--| |  |  -  |  _  |--  | | | |-- |_/ |--|  |  | |   | | | |" << std::endl;
+    std::cout << "| \\  \\_/  |  | |_/       \\_/  |__  |  \\| |__ | \\ |  |  |  |  \\_/  |  \\|" << std::endl;
+    std::cout << "=======================================================================" << std::endl;
 
     return 0;
 }
 
-#endif

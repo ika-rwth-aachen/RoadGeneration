@@ -35,7 +35,7 @@ using namespace std;
 #include "roadNetwork.h"
 
 #include "helper.h"
-#include "utils/xml.h"
+#include "xml.h"
 //#include "generation/buildSegments.h"
 #include "includes.h"
 #include "connection/linkSegments.h"

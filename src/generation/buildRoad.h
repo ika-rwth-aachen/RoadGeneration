@@ -11,7 +11,7 @@
  *
  */
 
-#include "../utils/curve.h"
+#include "curve.h"
 #include "addLaneSections.h"
 
 using namespace std;

@@ -11,7 +11,7 @@
  *
  */
 
-#include "utils/curve.h"
+#include "curve.h"
 
 /**
  * @brief function links all specified segments 

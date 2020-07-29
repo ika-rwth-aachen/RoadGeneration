@@ -1,6 +1,3 @@
-#ifndef CURVE
-#define CURVE
-
 
 /**
  * @file curve.h
@@ -11,7 +8,7 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
-
+#include "curve.h"
 #include <math.h>
 #include "helper.h"
 
@@ -181,4 +178,3 @@ int curve(double s, geometry geo, double &x, double &y, double &phi, int fd)
     return 0;
 }
 
-#endif

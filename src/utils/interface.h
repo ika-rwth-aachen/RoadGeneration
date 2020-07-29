@@ -13,6 +13,8 @@
  */
 
 #include "utils/settings.h"
+#include <string>
+#include <vector>
 
 extern settings setting;
 

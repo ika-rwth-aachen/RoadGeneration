@@ -16,9 +16,14 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR})
 add_executable("${PROJECT_NAME}"
     "${CMAKE_SOURCE_DIR}/src/main.cpp"
     "${CMAKE_SOURCE_DIR}/libs/pugixml-1.9/src/pugixml.cpp"
+    "${CMAKE_SOURCE_DIR}/src/generation/addLaneSections.cpp"
     "${CMAKE_SOURCE_DIR}/src/interface/roadNetwork/roadNetwork.cpp"
     "${CMAKE_SOURCE_DIR}/src/interface/roadNetwork/buildSegments.cpp"
     "${CMAKE_SOURCE_DIR}/src/utils/helper.cpp"
+    "${CMAKE_SOURCE_DIR}/src/utils/curve.cpp"
+    "${CMAKE_SOURCE_DIR}/src/utils/xml.cpp"
+
+
 )
 
 add_definitions(-DPROJ_DIR=\"${PROJECT_SOURCE_DIR}\")

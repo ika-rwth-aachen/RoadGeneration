@@ -1,9 +1,8 @@
-#ifndef ADD_LANE_SECTIONS
-#define ADD_LANE_SECTIONS
-
-
+#include "addLaneSections.h"
 #include <stdio.h>
 #include <vector>
+#include <iostream>
+#include <math.h>
 
 /**
  * @file addLaneSections.h
@@ -724,4 +723,3 @@ int laneWideningJunction(road &r, double s, double ds, int turn, bool verschwenk
     return 0;
 }
 
-#endif
