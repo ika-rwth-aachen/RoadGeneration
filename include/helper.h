@@ -20,6 +20,26 @@
  *
  */
 
+
+template<typename ... Args>
+
+/**
+ * @brief function used for xsd checking output
+ * 
+ * @param format    xsd validation file
+ * @param args      here the project directory PROJ_DIR
+ * @return          output buffer 
+ */
+std::string string_format(const std::string &format, Args... args)
+{
+    auto size = snprintf(nullptr, 0, format.c_str(), args...) + 1;
+    char *buf(new char[size]);
+    snprintf(buf, size, format.c_str(), args...);
+
+    return std::string(buf, buf + size - 1);
+}
+
+
 /**
  * @brief signum function
  * 
@@ -199,16 +219,6 @@ int sortRoads(road r1, road &r2, road &r3);
  */
 int computeIP(double x1, double y1, double phi1, double x2, double y2, double phi2, int &type, int &type1, int &type2, double &iPx, double &iPy);
 
-template<typename ... Args>
-
-/**
- * @brief function used for xsd checking output
- * 
- * @param format    xsd validation file
- * @param args      here the project directory PROJ_DIR
- * @return          output buffer 
- */
-std::string string_format(const std::string &format, Args... args);
 
 /**
  * @brief function get contactpoint name 

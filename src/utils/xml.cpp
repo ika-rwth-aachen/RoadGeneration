@@ -12,8 +12,6 @@
 #include "xml.h"
 #include "roadNetwork.h"
 #include "utils/settings.h"
-#include "interface.h"
-#include "helper.h"
 #include "pugixml.hpp"
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
@@ -29,6 +27,10 @@
 #include <stdio.h>
 #include <string>
 #include <sstream>
+#include "helper.h"
+#include "interface.h"
+
+
 
 using namespace xercesc;
 
@@ -42,7 +44,7 @@ extern settings setting;
  */
 int validateInput(char *file)
 {
-   /* XMLPlatformUtils::Initialize();
+    XMLPlatformUtils::Initialize();
     std::string schema = string_format("%s/xml/input.xsd", PROJ_DIR);
 
     const char *schema_file = schema.c_str();
@@ -69,7 +71,7 @@ int validateInput(char *file)
         std::cerr << "ERR: XML input file doesn't conform to the schema" << std::endl;
         return 1;
     }
-*/
+
     return 0;
 }
 
@@ -81,7 +83,6 @@ int validateInput(char *file)
  */
 int validateOutput(RoadNetwork data)
 {
-    /*
     // setup file
     std::string file = data.getFile();
     file.append(".xodr");
@@ -114,7 +115,6 @@ int validateOutput(RoadNetwork data)
         std::cerr << "ERR: XML output file doesn't conform to the schema" << std::endl;
         return 1;
     }
-    */
 
     return 0;
 }
