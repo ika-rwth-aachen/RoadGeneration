@@ -11,14 +11,7 @@
  *
  */
 
-#include "pugixml.hpp"
-#include <xercesc/util/XMLString.hpp>
-#include <xercesc/parsers/XercesDOMParser.hpp>
-#include <xercesc/framework/LocalFileInputSource.hpp>
-#include <xercesc/sax/ErrorHandler.hpp>
-#include <xercesc/sax/SAXParseException.hpp>
-#include <xercesc/validators/common/Grammar.hpp>
-#include <algorithm>
+
 #include "roadNetwork.h"
 
 

@@ -22,11 +22,11 @@ add_executable("${PROJECT_NAME}"
     "${CMAKE_SOURCE_DIR}/src/utils/helper.cpp"
     "${CMAKE_SOURCE_DIR}/src/utils/curve.cpp"
     "${CMAKE_SOURCE_DIR}/src/utils/xml.cpp"
-
-
 )
 
 add_definitions(-DPROJ_DIR=\"${PROJECT_SOURCE_DIR}\")
+add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
+
 
 target_link_libraries("${PROJECT_NAME}" ${XercesC_LIBRARIES})
 

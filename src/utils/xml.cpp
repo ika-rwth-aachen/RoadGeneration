@@ -27,7 +27,7 @@
 #include <algorithm>
 #include <iostream>
 #include <stdio.h>
-//#include <string>
+#include <string>
 #include <sstream>
 
 using namespace xercesc;
@@ -42,8 +42,9 @@ extern settings setting;
  */
 int validateInput(char *file)
 {
-    XMLPlatformUtils::Initialize();
+   /* XMLPlatformUtils::Initialize();
     std::string schema = string_format("%s/xml/input.xsd", PROJ_DIR);
+
     const char *schema_file = schema.c_str();
     const char *xml_file = file;
 
@@ -68,7 +69,7 @@ int validateInput(char *file)
         std::cerr << "ERR: XML input file doesn't conform to the schema" << std::endl;
         return 1;
     }
-
+*/
     return 0;
 }
 
@@ -80,6 +81,7 @@ int validateInput(char *file)
  */
 int validateOutput(RoadNetwork data)
 {
+    /*
     // setup file
     std::string file = data.getFile();
     file.append(".xodr");
@@ -112,6 +114,7 @@ int validateOutput(RoadNetwork data)
         std::cerr << "ERR: XML output file doesn't conform to the schema" << std::endl;
         return 1;
     }
+    */
 
     return 0;
 }
