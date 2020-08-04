@@ -24,6 +24,10 @@ add_executable("${PROJECT_NAME}"
     "${CMAKE_SOURCE_DIR}/src/utils/curve.cpp"
 )
 
+add_executable("test/cmp"
+    "${CMAKE_SOURCE_DIR}/tools/cmp/cmp.cpp"
+    "${CMAKE_SOURCE_DIR}/libs/pugixml-1.9/src/pugixml.cpp"
+)
 add_definitions(-DPROJ_DIR=\"${PROJECT_SOURCE_DIR}\")
 add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
 
