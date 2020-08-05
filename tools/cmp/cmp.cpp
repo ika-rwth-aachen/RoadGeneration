@@ -11,15 +11,7 @@ std::vector<std::string> list1, list2;
 
 float threshold = 0.0001f;
 
-/*
-const char* node_types[] =
-{
-    "null", "document", "element", "pcdata", "cdata", "comment", "pi", "declaration"
-};
-*/
-
-
-struct simple_walker: pugi::xml_tree_walker
+struct xml_walker: pugi::xml_tree_walker
 {
     std::vector<std::string> *list;
     virtual bool for_each(pugi::xml_node& node)
@@ -49,10 +41,12 @@ int loadXML( const char* path, pugi::xml_document& doc){
     pugi::xml_parse_result result;    
     result = doc.load_file(path);
 
-    if(result)
+    if(!result)
     {
-        std::cout << "no errors while parsing" << std::endl;
+        std::cout << "ERROR while parsing file " << path << std::endl;
+        return 1;
     }
+   
 }
 
 int isFloat(std::string s){
@@ -68,6 +62,9 @@ int isFloat(std::string s){
 }
 
 int compareLists(std::vector<std::string> l1, std::vector<std::string> l2){
+
+    std::cout << "comparing with " << threshold << " margin" << std::endl;
+
     if (l1.size() != l2.size()){
         std::cout << "ERROR: different number of elements" << std::endl;
         return 1;
@@ -80,56 +77,56 @@ int compareLists(std::vector<std::string> l1, std::vector<std::string> l2){
     for(int i = 0; i < l1.size(); i++){
         std::string s1 = l1.at(i), s2 = l2.at(i);
 
-        if(s1.compare(s2)){
-            if(isFloat(s1) && isFloat(s2)){
-                float f1 = std::stod(s1);
-                float f2 = std::stod(s2);
+        if(!s1.compare(s2)) 
+            continue;
 
-                if(fabs(f1 - f2) > threshold){
-                    error ++;
-                    std::cout << f1 << "  <<-->>  " << f2 << std::endl;
-                }else {
-                    n_error ++;
-                }
-            }
-            else{
-                s_error ++;
-                continue;
-            }
+        if(!(isFloat(s1) && isFloat(s2))){
+            s_error ++;
+            continue;
         }
-    }
+
+        float f1 = std::stod(s1);
+        float f2 = std::stod(s2);
+
+        if(fabs(f1 - f2) > threshold){
+            error ++;
+            std::cout << f1 << "  <<-->>  " << f2 << std::endl;
+        }else {
+            n_error ++;
+        }
+       
+    }    
 
     std::cout << "large numerical errors: " << error << "\nsmall numerical errors: " << n_error << "\nstring errors: " << s_error << std::endl;
     return error + s_error;
 }
 
+int main(int argc, char *argv[]){
 
-void printVector(std::vector<std::string> vector){
-    for (std::string it: vector){
-        std::cout << it << std::endl;
+    if(argc < 3){
+        std::cout << "ERROR: too few arguments.." << std::endl;
     }
-}
 
+    const char* file1 = argv[1];
+    const char* file2 = argv[2];
 
-int main(){
-    std::cout << "compare test tool" << std::endl;
+    if(argc == 4 && isFloat(argv[3])) {
+        threshold = std::stod(argv[3]);
+    }
+    int exit = 0;
+    exit += loadXML(file1,doc2);
+    exit += loadXML(file2,doc1);
 
+    if(exit > 0){
+        return exit;
+    }
 
-    loadXML("gt/junction_4a.xodr",doc1);
-    loadXML("junction_4a.xodr",doc2);
-    simple_walker walker;
+    xml_walker walker;
+
     walker.list = &list1;
     doc1.traverse(walker);
     walker.list = &list2;
     doc2.traverse(walker);
-
-    int i = 90;
-    std::cout << list1[i] << std::endl;
-    std::cout << list2[i] << std::endl;
-
-
-    //printVector(list1);
-    //printVector(list2);
 
     return compareLists(list1, list2);
 }
