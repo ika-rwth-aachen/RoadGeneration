@@ -72,9 +72,3 @@ junction_m2a:
     - test/cmp test/junction_m2a.xodr test/gt/junction_m2a.xodr
     
     
-this should fail:
-  stage: unitCases
-  script:
-    - ./road-generation test/junction_m2a.xml
-    - cat test/junction_m2a.xml
-    - test/cmp test/junction_m2a.xodr test/gt/junctio
