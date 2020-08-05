@@ -13,7 +13,7 @@ basicBuildCase:
   artifacts:
       paths:
         - road-generation
-        -test/cmp
+        - test/cmp
 
 junction_ma:
   stage: unitCases
