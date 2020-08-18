@@ -31,12 +31,9 @@ using namespace std;
 
 #include "settings.h"
 #include "interface.h"
-
 #include "roadNetwork.h"
-
 #include "helper.h"
 #include "xml.h"
-//#include "generation/buildSegments.h"
 #include "includes.h"
 #include "connection/linkSegments.h"
 

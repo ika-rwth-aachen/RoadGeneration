@@ -5,7 +5,7 @@
 #include <math.h>
 
 /**
- * @file addLaneSections.h
+ * @file addLaneSections.cpp
  *
  * @brief file contains methodology for lanesection changes such as lanedrop, lane widening or restricted lanes
  *

@@ -6,7 +6,7 @@
 
 
 /**
- * @file addObjects.h
+ * @file addObjects.cpp
  *
  * @brief file contains methodology for object creation
  *

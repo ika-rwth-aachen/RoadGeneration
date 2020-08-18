@@ -5,7 +5,7 @@
 #include "helper.h"
 
 /**
- * @file geometries.h
+ * @file geometries.cpp
  *
  * @brief file contains geometry functionalities
  *

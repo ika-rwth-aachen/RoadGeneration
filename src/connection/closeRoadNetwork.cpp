@@ -3,9 +3,8 @@
 #include "addLaneSections.h"
 #include "curve.h"
 
-
 /**
- * @file closeRoadNetwork.h
+ * @file closeRoadNetwork.cpp
  *
  * @brief file contains methods for closing two defined points by a new road
  *
@@ -13,8 +12,6 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
-
-
 
 extern settings setting;
 

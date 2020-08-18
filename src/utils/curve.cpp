@@ -1,6 +1,6 @@
 
 /**
- * @file curve.h
+ * @file curve.cpp
  *
  * @brief file contains curve function for calculating positions along geometries
  *
