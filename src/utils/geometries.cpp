@@ -1,5 +1,8 @@
-#ifndef GEOMETRY
-#define GEOMETRY
+#include "geometries.h"
+
+#include <math.h>
+#include "utils/interface.h"
+#include "helper.h"
 
 /**
  * @file geometries.h
@@ -10,6 +13,8 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
+
+
 
 /**
  * @brief function adds a line
@@ -23,7 +28,7 @@
  * @param phi2  angle of end point (not used here)
  * @return int  error code
  */
-int addLine(vector<geometry> &geo, double x1, double y1, double phi1, double x2, double y2, double phi2)
+int addLine(std::vector<geometry> &geo, double x1, double y1, double phi1, double x2, double y2, double phi2)
 {
     geometry g;
 
@@ -56,7 +61,7 @@ int addLine(vector<geometry> &geo, double x1, double y1, double phi1, double x2,
  * @param phi2  angle of end point
  * @return int  error code
  */
-int addArc(vector<geometry> &geo, double x1, double y1, double phi1, double x2, double y2, double phi2)
+int addArc(std::vector<geometry> &geo, double x1, double y1, double phi1, double x2, double y2, double phi2)
 {
     double a = phi2 - phi1;
     fixAngle(a);
@@ -97,10 +102,9 @@ int addArc(vector<geometry> &geo, double x1, double y1, double phi1, double x2, 
  * @param phi2  angle of end point
  * @return int  error code
  */
-int addCompositeCurve(vector<geometry> &geo, double x1, double y1, double phi1, double x2, double y2, double phi2)
+int addCompositeCurve(std::vector<geometry> &geo, double x1, double y1, double phi1, double x2, double y2, double phi2)
 {
     // not yet implemented
     return 0;
 }
 
-#endif
