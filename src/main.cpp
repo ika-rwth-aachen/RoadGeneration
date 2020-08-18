@@ -39,7 +39,6 @@ using namespace std;
 //#include "generation/buildSegments.h"
 #include "includes.h"
 #include "connection/linkSegments.h"
-#include "connection/closeRoadNetwork.h"
 
 
 settings setting;
@@ -105,7 +104,7 @@ int main(int argc, char **argv)
 		cerr << "ERR: error in linkSegments" << endl;
 		return -1;
 	}
-	if (closeRoadNetwork(in, data))
+	if (data.closeRoadNetwork(in))
 	{
 		cerr << "ERR: error in closeRoadNetwork" << endl;
 		return -1;
