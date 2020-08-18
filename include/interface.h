@@ -12,7 +12,7 @@
  *
  */
 
-#include "utils/settings.h"
+#include "settings.h"
 #include <string>
 #include <vector>
 

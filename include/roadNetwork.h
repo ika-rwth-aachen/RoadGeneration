@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
-#include "utils/settings.h"
+#include "settings.h"
 #include "interface.h"
 
 #include "pugixml.hpp"

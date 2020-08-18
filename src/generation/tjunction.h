@@ -18,7 +18,7 @@
 
 #include "interface.h"
 #include "roadNetwork.h"
-#include "utils/settings.h"
+#include "settings.h"
 #include "helper.h"
 
 

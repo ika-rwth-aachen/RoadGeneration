@@ -11,7 +11,7 @@
 
 #include "xml.h"
 #include "roadNetwork.h"
-#include "utils/settings.h"
+#include "settings.h"
 #include "pugixml.hpp"
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>

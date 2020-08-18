@@ -29,7 +29,7 @@
 std::string::size_type st;
 using namespace std;
 
-#include "utils/settings.h"
+#include "settings.h"
 #include "interface.h"
 
 #include "roadNetwork.h"
