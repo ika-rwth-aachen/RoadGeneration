@@ -181,12 +181,14 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         pugi::xml_node pre = road.append_child("link").append_child("predecessor");
         pre.append_attribute("elementId") = it->predecessor.id;
         pre.append_attribute("elementType") = getLinkType(it->predecessor.elementType).c_str();
-        pre.append_attribute("contactPoint") = getContactPointType(it->predecessor.contactPoint).c_str();
+        if(it->predecessor.contactPoint != noneType)
+            pre.append_attribute("contactPoint") = getContactPointType(it->predecessor.contactPoint).c_str();
 
         pugi::xml_node suc = road.child("link").append_child("successor");
         suc.append_attribute("elementId") = it->successor.id;
         suc.append_attribute("elementType") = getLinkType(it->successor.elementType).c_str();
-        suc.append_attribute("contactPoint") = getContactPointType(it->successor.contactPoint).c_str();
+        if(it->successor.contactPoint != noneType)
+            suc.append_attribute("contactPoint") = getContactPointType(it->successor.contactPoint).c_str();
 
         road.append_child("type").append_attribute("s") = "0";
         road.child("type").append_attribute("type") = it->type.c_str();
