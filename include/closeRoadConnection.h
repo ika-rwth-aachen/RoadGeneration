@@ -2,7 +2,7 @@
 #define CLOSE_ROAD_CONNECTION
 
 #include "geometries.h"
-#include "utils/interface.h"
+#include "interface.h"
 
 /**
  * @file closeRoadConnection.h

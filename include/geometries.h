@@ -2,7 +2,7 @@
 #define GEOMETRY
 
 #include <vector>
-#include "utils/interface.h"
+#include "interface.h"
 /**
  * @file geometries.h
  *

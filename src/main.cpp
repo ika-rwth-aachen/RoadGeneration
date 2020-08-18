@@ -30,7 +30,7 @@ std::string::size_type st;
 using namespace std;
 
 #include "utils/settings.h"
-#include "utils/interface.h"
+#include "interface.h"
 
 #include "roadNetwork.h"
 

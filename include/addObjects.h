@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "utils/interface.h"
+#include "interface.h"
 #include "roadNetwork.h"
 #include "pugixml.hpp"
 

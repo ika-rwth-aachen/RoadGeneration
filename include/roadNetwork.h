@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 #include "utils/settings.h"
-#include "utils/interface.h"
+#include "interface.h"
 
 #include "pugixml.hpp"
 #include <xercesc/util/XMLString.hpp>
