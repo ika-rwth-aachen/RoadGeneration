@@ -82,39 +82,38 @@ int main(int argc, char **argv)
 	{
 		cerr << "ERR: error in parseXML" << endl;
 		return -1;
-	}	
-
-	
+	}		
 
 	if (data.buildSegments(in))
 	{
 		cerr << "ERR: error in buildSegments" << endl;
 		return -1;
 	}
-
 	
 	if (data.linkSegments(in))
 	{
 		cerr << "ERR: error in linkSegments" << endl;
 		return -1;
 	}
+
 	if (data.closeRoadNetwork(in))
 	{
 		cerr << "ERR: error in closeRoadNetwork" << endl;
 		return -1;
 	}
+
 	if (createXML(out, data))
 	{
 		cerr << "ERR: error during createXML" << endl;
 		return -1;
 	}
+	
 	if (validateOutput(data))
 	{
 		cerr << "ERR: error in validateOutput" << endl;
 		return -1;
 	}
 
-	cout << "done1" << endl;
 
 	return 0;
 }
