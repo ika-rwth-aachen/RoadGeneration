@@ -35,7 +35,6 @@ using namespace std;
 #include "helper.h"
 #include "xml.h"
 #include "includes.h"
-#include "connection/linkSegments.h"
 
 
 settings setting;
@@ -72,9 +71,7 @@ int main(int argc, char **argv)
 	pugi::xml_document out;
 	RoadNetwork data;
 
-	// --- pipeline ------------------------------------------------------------
-	
-	
+	// --- pipeline ------------------------------------------------------------	
 
 	if (validateInput(file))
 	{
@@ -96,7 +93,7 @@ int main(int argc, char **argv)
 	}
 
 	
-	if (linkSegments(in, data))
+	if (data.linkSegments(in))
 	{
 		cerr << "ERR: error in linkSegments" << endl;
 		return -1;

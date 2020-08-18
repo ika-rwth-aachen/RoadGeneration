@@ -5,7 +5,7 @@
 #include "helper.h"
 
 /**
- * @file closeRoadConnection.h
+ * @file closeRoadConnection.cpp
  *
  * @brief file contains methods for building the geometry of a new road
  *
