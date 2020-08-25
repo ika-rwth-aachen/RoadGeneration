@@ -4,10 +4,6 @@
 		<geoReference><![CDATA[+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs]]></geoReference>
 	</header>
 	<road id="101" length="136" junction="1">
-		<link>
-			<predecessor elementId="1" elementType="junction" contactPoint="none" />
-			<successor elementId="-1" elementType="road" contactPoint="none" />
-		</link>
 		<type s="0" type="town" />
 		<planView>
 			<geometry s="0" x="-12.286155866465219" y="6.7119575404588421" hdg="2.6415926535897931" length="136">
@@ -62,10 +58,6 @@
 		<signals />
 	</road>
 	<road id="102" length="136" junction="1">
-		<link>
-			<predecessor elementId="1" elementType="junction" contactPoint="none" />
-			<successor elementId="-1" elementType="road" contactPoint="none" />
-		</link>
 		<type s="0" type="town" />
 		<planView>
 			<geometry s="0" x="12.286155866465219" y="-6.7119575404588439" hdg="-0.5" length="136">
@@ -120,10 +112,6 @@
 		<signals />
 	</road>
 	<road id="103" length="82" junction="1">
-		<link>
-			<predecessor elementId="1" elementType="junction" contactPoint="none" />
-			<successor elementId="-1" elementType="road" contactPoint="none" />
-		</link>
 		<type s="0" type="town" />
 		<planView>
 			<geometry s="0" x="-8.6170777948569679" y="-15.803353133983403" hdg="-2.0700000000000003" length="82">
@@ -245,7 +233,7 @@
 		<objects />
 		<signals />
 	</road>
-	<road id="153" length="25.984783104013719" junction="1">
+	<road id="153" length="25.984783104013715" junction="1">
 		<link>
 			<predecessor elementId="103" elementType="road" contactPoint="start" />
 			<successor elementId="102" elementType="road" contactPoint="start" />
@@ -255,8 +243,8 @@
 			<geometry s="0" x="-8.6170777948569679" y="-15.803353133983403" hdg="1.0715926535897928" length="4">
 				<line />
 			</geometry>
-			<geometry s="4" x="-6.7021716182220858" y="-12.291496881987092" hdg="1.0715926535897928" length="21.984783104013719">
-				<arc curvature="-0.071485474573677751" />
+			<geometry s="4" x="-6.7021716182220858" y="-12.291496881987092" hdg="1.0715926535897928" length="21.984783104013715">
+				<arc curvature="-0.071485474573677765" />
 			</geometry>
 		</planView>
 		<lanes>
@@ -273,7 +261,7 @@
 							<predecessor id="1" />
 							<successor id="-1" />
 						</link>
-						<width sOffset="0" a="3" b="0" c="0.0044430690482358086" d="-0.00011399156268884445" />
+						<width sOffset="0" a="3" b="0" c="0.0044430690482358103" d="-0.00011399156268884451" />
 						<roadMark sOffset="0" type="solid" weight="standard" color="white" width="0.14999999999999999" />
 						<material sOffset="0" surface="asphalt" friction="0.80000000000000004" roughness="0.014999999999999999" />
 						<speed sOffset="0" max="30" />
@@ -291,10 +279,10 @@
 		</link>
 		<type s="0" type="town" />
 		<planView>
-			<geometry s="0" x="12.286155866465219" y="-6.7119575404588439" hdg="2.6415926535897931" length="21.984783104013719">
-				<arc curvature="0.071485474573677751" />
+			<geometry s="0" x="12.286155866465219" y="-6.7119575404588439" hdg="2.6415926535897931" length="21.984783104013715">
+				<arc curvature="0.071485474573677765" />
 			</geometry>
-			<geometry s="21.984783104013719" x="-6.7021716182220867" y="-12.291496881987094" hdg="-2.0700000000000003" length="3.9999999999999982">
+			<geometry s="21.984783104013715" x="-6.7021716182220867" y="-12.291496881987094" hdg="-2.0700000000000003" length="3.9999999999999982">
 				<line />
 			</geometry>
 		</planView>

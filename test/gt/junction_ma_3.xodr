@@ -4,10 +4,6 @@
 		<geoReference><![CDATA[+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs]]></geoReference>
 	</header>
 	<road id="101" length="178" junction="1">
-		<link>
-			<predecessor elementId="1" elementType="junction" contactPoint="none" />
-			<successor elementId="-1" elementType="road" contactPoint="none" />
-		</link>
 		<type s="0" type="town" />
 		<planView>
 			<geometry s="0" x="-22" y="0" hdg="3.1415926535897931" length="178">
@@ -52,10 +48,6 @@
 		<signals />
 	</road>
 	<road id="102" length="178" junction="1">
-		<link>
-			<predecessor elementId="1" elementType="junction" contactPoint="none" />
-			<successor elementId="-1" elementType="road" contactPoint="none" />
-		</link>
 		<type s="0" type="town" />
 		<planView>
 			<geometry s="0" x="22" y="-2.6942229581241772e-15" hdg="0" length="178">
@@ -180,10 +172,6 @@
 		<signals />
 	</road>
 	<road id="103" length="84" junction="1">
-		<link>
-			<predecessor elementId="1" elementType="junction" contactPoint="none" />
-			<successor elementId="-1" elementType="road" contactPoint="none" />
-		</link>
 		<type s="0" type="town" />
 		<planView>
 			<geometry s="0" x="0.012741227371734174" y="15.999994926909354" hdg="1.5700000000000001" length="84">
@@ -319,7 +307,7 @@
 		<objects />
 		<signals />
 	</road>
-	<road id="153" length="26.840004781233201" junction="1">
+	<road id="153" length="26.840004781233198" junction="1">
 		<link>
 			<predecessor elementId="102" elementType="road" contactPoint="start" />
 			<successor elementId="103" elementType="road" contactPoint="start" />
@@ -329,8 +317,8 @@
 			<geometry s="0" x="22" y="3.9999999999999973" hdg="3.1415926535897931" length="7.9984079802100823">
 				<line />
 			</geometry>
-			<geometry s="7.9984079802100823" x="14.001592019789918" y="3.9999999999999982" hdg="3.1415926535897931" length="18.841596801023119">
-				<arc curvature="-0.083410799529711505" />
+			<geometry s="7.9984079802100823" x="14.001592019789918" y="3.9999999999999982" hdg="3.1415926535897931" length="18.841596801023115">
+				<arc curvature="-0.083410799529711518" />
 			</geometry>
 		</planView>
 		<lanes>
@@ -347,7 +335,7 @@
 							<predecessor id="2" />
 							<successor id="-2" />
 						</link>
-						<width sOffset="0" a="4" b="0" c="-0.00416443489593658" d="0.00010343850357901563" />
+						<width sOffset="0" a="4" b="0" c="-0.0041644348959365808" d="0.00010343850357901565" />
 						<roadMark sOffset="0" type="solid" weight="standard" color="white" width="0.14999999999999999" />
 						<material sOffset="0" surface="asphalt" friction="0.80000000000000004" roughness="0.014999999999999999" />
 						<speed sOffset="0" max="30" />
@@ -358,17 +346,17 @@
 		<objects />
 		<signals />
 	</road>
-	<road id="154" length="31.125466404587097" junction="1">
+	<road id="154" length="31.12546640458709" junction="1">
 		<link>
 			<predecessor elementId="103" elementType="road" contactPoint="start" />
 			<successor elementId="102" elementType="road" contactPoint="start" />
 		</link>
 		<type s="0" type="town" />
 		<planView>
-			<geometry s="0" x="0.012741227371734174" y="15.999994926909354" hdg="-1.5715926535897928" length="25.125466404587108">
-				<arc curvature="0.062549790251968024" />
+			<geometry s="0" x="0.012741227371734174" y="15.999994926909354" hdg="-1.5715926535897928" length="25.125466404587101">
+				<arc curvature="0.062549790251968038" />
 			</geometry>
-			<geometry s="25.125466404587108" x="16.000000000000011" y="-2.6942229581241772e-15" hdg="0" length="5.9999999999999893">
+			<geometry s="25.125466404587101" x="16.000000000000011" y="-2.6942229581241772e-15" hdg="0" length="5.9999999999999893">
 				<line />
 			</geometry>
 		</planView>
@@ -386,7 +374,7 @@
 							<predecessor id="1" />
 							<successor id="-1" />
 						</link>
-						<width sOffset="0" a="3" b="0" c="0.0030966314403474901" d="-6.6325783954434721e-05" />
+						<width sOffset="0" a="3" b="0" c="0.0030966314403474914" d="-6.6325783954434761e-05" />
 						<roadMark sOffset="0" type="none" weight="standard" color="white" width="0.14999999999999999" />
 						<material sOffset="0" surface="asphalt" friction="0.80000000000000004" roughness="0.014999999999999999" />
 						<speed sOffset="0" max="30" />

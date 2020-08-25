@@ -4,10 +4,6 @@
 		<geoReference><![CDATA[+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs]]></geoReference>
 	</header>
 	<road id="101" length="136" junction="1">
-		<link>
-			<predecessor elementId="1" elementType="junction" contactPoint="none" />
-			<successor elementId="-1" elementType="road" contactPoint="none" />
-		</link>
 		<type s="0" type="town" />
 		<planView>
 			<geometry s="0" x="0.60464352530984011" y="13.986479228476624" hdg="1.5135926535897926" length="136">
@@ -161,10 +157,6 @@
 		<signals />
 	</road>
 	<road id="102" length="136" junction="1">
-		<link>
-			<predecessor elementId="1" elementType="junction" contactPoint="none" />
-			<successor elementId="-1" elementType="road" contactPoint="none" />
-		</link>
 		<type s="0" type="town" />
 		<planView>
 			<geometry s="0" x="-0.21283627199494645" y="-13.99792469341908" hdg="4.7111853071795871" length="136">
@@ -219,10 +211,6 @@
 		<signals />
 	</road>
 	<road id="103" length="76" junction="1">
-		<link>
-			<predecessor elementId="1" elementType="junction" contactPoint="none" />
-			<successor elementId="-1" elementType="road" contactPoint="none" />
-		</link>
 		<type s="0" type="town" />
 		<planView>
 			<geometry s="0" x="23.730505870465013" y="3.5865151793663768" hdg="0.14999999999999991" length="76">
@@ -309,7 +297,7 @@
 		</link>
 		<type s="0" type="town" />
 		<planView>
-			<geometry s="0" x="3.787160830347033" y="-14.002739385076874" hdg="-4.7415926535897901" length="27.77237074493636">
+			<geometry s="0" x="3.787160830347033" y="-14.002739385076874" hdg="-4.741592653589791" length="27.77237074493636">
 				<line />
 			</geometry>
 		</planView>
@@ -384,10 +372,10 @@
 		</link>
 		<type s="0" type="town" />
 		<planView>
-			<geometry s="0" x="23.730505870465013" y="3.5865151793663768" hdg="-2.9915926535897932" length="10.229940287049077">
+			<geometry s="0" x="23.730505870465013" y="3.5865151793663768" hdg="-2.9915926535897932" length="10.229940287049079">
 				<line />
 			</geometry>
-			<geometry s="10.229940287049077" x="13.615436785618151" y="2.0577720075533268" hdg="-2.9915926535897932" length="23.079486999135995">
+			<geometry s="10.229940287049079" x="13.615436785618149" y="2.0577720075533263" hdg="-2.9915926535897932" length="23.079486999135995">
 				<arc curvature="0.061508847819838432" />
 			</geometry>
 		</planView>
