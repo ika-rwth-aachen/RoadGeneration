@@ -36,7 +36,7 @@ int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 
 	for (pugi::xml_node_iterator it = segments.begin(); it != segments.end(); ++it)
 	{
-		if ((string)it->name() == "junction")
+			if ((string)it->name() == "junction")
 		{
 			cout << "Processing junction" << endl;
 			if (junctionWrapper(*it, data))
