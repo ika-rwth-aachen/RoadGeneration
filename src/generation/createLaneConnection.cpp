@@ -1,8 +1,5 @@
-#ifndef CREATE_LANE_CONNECTION
-#define CREATE_LANE_CONNECTION
-
 /**
- * @file createLaneConnection.h
+ * @file createLaneConnection.cpp
  *
  * @brief file contains method for generating lane connection in junction area
  *
@@ -11,9 +8,13 @@
  *
  */
 
+#include "createLaneConnection.h"
 
+#include <math.h>
 #include <stdio.h>
 #include <iostream>
+
+
 extern settings setting;
 
 /**
@@ -114,4 +115,3 @@ int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, in
     return 0;
 }
 
-#endif

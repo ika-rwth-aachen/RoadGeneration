@@ -16,6 +16,11 @@
 #include <xercesc/sax/SAXParseException.hpp>
 #include <xercesc/validators/common/Grammar.hpp>
 
+#define non "none"
+#define bro "broken"
+#define sol "solid"
+
+
 
 
 class RoadNetwork

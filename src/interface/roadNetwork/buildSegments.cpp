@@ -3,19 +3,15 @@
 #include <iostream>
 #include <stdio.h>
 
-
 #include "buildRoad.h"
 #include "addObjects.h"
-#include "generation/createLaneConnection.h"
+#include "createLaneConnection.h"
 #include "generation/createRoadConnection.h"
-
-#define non "none"
-#define bro "broken"
-#define sol "solid"
-
 #include "generation/junctionWrapper.h"
 #include "generation/roundAbout.h"
 #include "connectingRoad.h"
+
+
 
 int RoadNetwork::buildSegments(pugi::xml_document &doc)
 {
