@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 
-#include "generation/buildRoad.h"
+#include "buildRoad.h"
 #include "addObjects.h"
 #include "generation/createLaneConnection.h"
 #include "generation/createRoadConnection.h"

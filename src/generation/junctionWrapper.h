@@ -10,8 +10,12 @@
  *
  */
 
+
+#include <stdio.h>
+#include <string>
 #include "xjunction.h"
 #include "tjunction.h"
+
  //#include "../headers/interface/roadNetwork.h"
 
 /**
@@ -26,22 +30,22 @@ int junctionWrapper(pugi::xml_node &node, RoadNetwork &data)
 {
     // check type of the junction (M = mainroad, A = accessroad)
     int mode = 0;
-    if ((string)node.attribute("type").value() == "2M")
+    if ((std::string)node.attribute("type").value() == "2M")
         mode = 1;
-    if ((string)node.attribute("type").value() == "M2A")
+    if ((std::string)node.attribute("type").value() == "M2A")
         mode = 1;
-    if ((string)node.attribute("type").value() == "4A")
+    if ((std::string)node.attribute("type").value() == "4A")
         mode = 1;
-    if ((string)node.attribute("type").value() == "MA")
+    if ((std::string)node.attribute("type").value() == "MA")
         mode = 2;
-    if ((string)node.attribute("type").value() == "3A")
+    if ((std::string)node.attribute("type").value() == "3A")
         mode = 2;
 
     if (mode == 1)
     {
         if (xjunction(node, data))
         {
-            cerr << "ERR: error in xjunction." << endl;
+            std::cerr << "ERR: error in xjunction." << std::endl;
             return 1;
         }
     }
@@ -49,14 +53,14 @@ int junctionWrapper(pugi::xml_node &node, RoadNetwork &data)
     {
         if (tjunction(node, data))
         {
-            cerr << "ERR: error in tjunction." << endl;
+            std::cerr << "ERR: error in tjunction." << std::endl;
             return 1;
         }
     }
 
     if (mode == 0)
     {
-        cerr << "ERR: junction type is not defined correct." << endl;
+        std::cerr << "ERR: junction type is not defined correct." << std::endl;
         return 1;
     }
     return 0;

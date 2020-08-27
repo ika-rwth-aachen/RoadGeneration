@@ -11,10 +11,13 @@
  *
  */
 
+#include <stdio.h>
+#include <iostream>
+#include "buildRoad.h"
 #include "curve.h"
 #include "addLaneSections.h"
+#include "pugixml.hpp"
 
-using namespace std;
 
 extern settings setting;
 

@@ -11,6 +11,8 @@
  *
  */
 
+#include <stdio.h>
+#include <string>
 extern settings setting;
 extern std::string::size_type st;
 
@@ -26,15 +28,15 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 {
     // check type of the junction (here: M = mainroad, A = accessroad)
     int mode = 0;
-    if ((string)node.attribute("type").value() == "2M")
+    if ((std::string)node.attribute("type").value() == "2M")
         mode = 1;
-    if ((string)node.attribute("type").value() == "M2A")
+    if ((std::string)node.attribute("type").value() == "M2A")
         mode = 2;
-    if ((string)node.attribute("type").value() == "4A")
+    if ((std::string)node.attribute("type").value() == "4A")
         mode = 3;
     if (mode == 0)
     {
-        cerr << "ERR: junction type is not defined correct." << endl;
+        std::cerr << "ERR: junction type is not defined correct." << std::endl;
         return 1;
     }
 
@@ -51,7 +53,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     pugi::xml_node iP = node.child("intersectionPoint");
     if (!iP)
     {
-        cerr << "ERR: intersection point is not defined correct.";
+        std::cerr << "ERR: intersection point is not defined correct.";
         return 1;
     }
     pugi::xml_node cA = node.child("coupler").child("junctionArea");
@@ -83,7 +85,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 
     if (!refRoad || (mode >= 1 && !additionalRoad1) || (mode >= 2 && !additionalRoad2) || (mode >= 3 && !additionalRoad3))
     {
-        cerr << "ERR: specified roads in intersection are not found.";
+        std::cerr << "ERR: specified roads in intersection are not found.";
         return 1;
     }
 
@@ -92,7 +94,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     // calculate offsets
     double sOffset = 0;
     if (cA)
-        sOffset = stod(cA.attribute("gap").value(), &st);
+        sOffset = std::stod(cA.attribute("gap").value(), &st);
     sOffMain = sOffset;
     sOffAdd1 = sOffset;
     sOffAdd2 = sOffset;
@@ -116,28 +118,28 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     road help1;
     if (buildRoad(refRoad, help1, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
-        cerr << "ERR: error in buildRoad" << endl;
+        std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
 
     road help2;
     if (buildRoad(additionalRoad1, help2, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
-        cerr << "ERR: error in buildRoad" << endl;
+        std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
 
     road help3;
     if (buildRoad(additionalRoad2, help3, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
-        cerr << "ERR: error in buildRoad" << endl;
+        std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
 
     road help4;
     if (buildRoad(additionalRoad3, help4, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
-        cerr << "ERR: error in buildRoad" << endl;
+        std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
 
@@ -155,10 +157,10 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     double width4 = abs(findTOffset(lS4, findMinLaneId(lS4), 0)) + abs(findTOffset(lS4, findMaxLaneId(lS4), 0));
 
     // check offsets and adjust them if necessary (here: 4 is safty factor)
-    double w1 = max(width2 / 2, max(width3 / 2, width4 / 2)) * 4;
-    double w2 = max(width1 / 2, max(width3 / 2, width4 / 2)) * 4;
-    double w3 = max(width1 / 2, max(width2 / 2, width4 / 2)) * 4;
-    double w4 = max(width1 / 2, max(width2 / 2, width3 / 2)) * 4;
+    double w1 = std::max(width2 / 2, std::max(width3 / 2, width4 / 2)) * 4;
+    double w2 = std::max(width1 / 2, std::max(width3 / 2, width4 / 2)) * 4;
+    double w3 = std::max(width1 / 2, std::max(width2 / 2, width4 / 2)) * 4;
+    double w4 = std::max(width1 / 2, std::max(width2 / 2, width3 / 2)) * 4;
 
     bool changed = false;
     if (sOffMain < w1)
@@ -184,7 +186,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 
     if (changed)
     {
-        cerr << "!!! sOffset of at least one road was changed, due to feasible road structure !!!" << endl;
+        std::cerr << "!!! sOffset of at least one road was changed, due to feasible road structure !!!" << std::endl;
     }
 
     // calculate s and phi at intersection
@@ -195,7 +197,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
         tmpNode = iP.child("adRoad");
         if (!tmpNode)
         {
-            cerr << "ERR: first 'adRoad' is missing." << endl;
+            std::cerr << "ERR: first 'adRoad' is missing." << std::endl;
             return 1;
         }
         sAdd1 = tmpNode.attribute("s").as_double();
@@ -206,7 +208,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     {
         if (!tmpNode)
         {
-            cerr << "ERR: second 'adRoad' is missing." << endl;
+            std::cerr << "ERR: second 'adRoad' is missing." << std::endl;
             return 1;
         }
         sAdd2 = tmpNode.attribute("s").as_double();
@@ -217,7 +219,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     {
         if (!tmpNode)
         {
-            cerr << "ERR: third 'adRoad' is missing." << endl;
+            std::cerr << "ERR: third 'adRoad' is missing." << std::endl;
             return 1;
         }
         sAdd3 = tmpNode.attribute("s").as_double();
@@ -240,7 +242,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
                        | id:2 |
                        |      |
     */
-    cout << "\t Generating Roads" << endl;
+    std::cout << "\t Generating Roads" << std::endl;
 
     road r1;
     r1.id = 100 * junc.id + 1;
@@ -251,7 +253,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     {
         if (buildRoad(refRoad, r1, sMain - sOffMain, 0, automaticWidening, sMain, iPx, iPy, iPhdg))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
     }
@@ -259,13 +261,13 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     {
         if (buildRoad(refRoad, r1, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
     }
     if (addObjects(refRoad, r1, data))
     {
-        cerr << "ERR: error in addObjects" << endl;
+        std::cerr << "ERR: error in addObjects" << std::endl;
         return 1;
     }
 
@@ -278,7 +280,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     {
         if (buildRoad(additionalRoad1, r2, sAdd1 - sOffAdd1, 0, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
     }
@@ -286,13 +288,13 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     {
         if (buildRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
     }
     if (addObjects(additionalRoad1, r2, data))
     {
-        cerr << "ERR: error in addObjects" << endl;
+        std::cerr << "ERR: error in addObjects" << std::endl;
         return 1;
     }
 
@@ -305,12 +307,12 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     {
         if (buildRoad(refRoad, r3, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         if (addObjects(refRoad, r3, data))
         {
-            cerr << "ERR: error in addObjects" << endl;
+            std::cerr << "ERR: error in addObjects" << std::endl;
             return 1;
         }
     }
@@ -318,12 +320,12 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     {
         if (buildRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         if (addObjects(additionalRoad2, r3, data))
         {
-            cerr << "ERR: error in addObjects" << endl;
+            std::cerr << "ERR: error in addObjects" << std::endl;
             return 1;
         }
     }
@@ -337,12 +339,12 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     {
         if (buildRoad(additionalRoad1, r4, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         if (addObjects(additionalRoad1, r4, data))
         {
-            cerr << "ERR: error in addObjects" << endl;
+            std::cerr << "ERR: error in addObjects" << std::endl;
             return 1;
         }
     }
@@ -350,12 +352,12 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     {
         if (buildRoad(additionalRoad2, r4, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         if (addObjects(additionalRoad2, r4, data))
         {
-            cerr << "ERR: error in addObjects" << endl;
+            std::cerr << "ERR: error in addObjects" << std::endl;
             return 1;
         }
     }
@@ -363,12 +365,12 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     {
         if (buildRoad(additionalRoad3, r4, sAdd3 + sOffAdd3, INFINITY, automaticWidening, sAdd3, iPx, iPy, iPhdg + phi3))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         if (addObjects(additionalRoad3, r4, data))
         {
-            cerr << "ERR: error in addObjects" << endl;
+            std::cerr << "ERR: error in addObjects" << std::endl;
             return 1;
         }
     }
@@ -393,7 +395,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
             length = addLane.attribute("ds").as_double();
 
         int type;
-        string tmpType = addLane.attribute("type").value();
+        std::string tmpType = addLane.attribute("type").value();
         if (tmpType == "left")
             type = 1;
         if (tmpType == "right")
@@ -410,7 +412,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 
         int inputId = addLane.attribute("roadId").as_int();
 
-        string inputPos = "end";
+        std::string inputPos = "end";
         if (addLane.attribute("roadPos"))
             inputPos = addLane.attribute("roadPos").value();
 
@@ -445,21 +447,21 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     data.pushRoad(r4);
 
     // --- generate connecting lanes -------------------------------------------
-    cout << "\t Generate Connecting Lanes" << endl;
+    std::cout << "\t Generate Connecting Lanes" << std::endl;
 
     // generate user-defined connecting lanes
-    if (con && (string)con.attribute("type").value() == "single")
+    if (con && (std::string)con.attribute("type").value() == "single")
     {
         for (pugi::xml_node roadLink : con.children("roadLink"))
         {
             int fromId = roadLink.attribute("fromId").as_int();
             int toId = roadLink.attribute("toId").as_int();
 
-            string fromPos = "end";
+            std::string fromPos = "end";
             if (roadLink.attribute("fromPos"))
                 fromPos = roadLink.attribute("fromPos").value();
 
-            string toPos = "end";
+            std::string toPos = "end";
             if (roadLink.attribute("toPos"))
                 toPos = roadLink.attribute("toPos").value();
 
@@ -475,8 +477,8 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
             }
             if (r1.id == -1 || r2.id == -1)
             {
-                cerr << "ERR: error in user-defined lane connecting:" << endl;
-                cerr << "\t road to 'fromId' or 'toId' can not be found" << endl;
+                std::cerr << "ERR: error in user-defined lane connecting:" << std::endl;
+                std::cerr << "\t road to 'fromId' or 'toId' can not be found" << std::endl;
                 return 1;
             }
 
@@ -491,8 +493,8 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
                 if (toPos == "end")
                     to *= -1;
 
-                string left = non;
-                string right = non;
+                std::string left = non;
+                std::string right = non;
 
                 if (laneLink.attribute("left"))
                     left = laneLink.attribute("left").value();
@@ -513,7 +515,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
         // switch roads if necessary, so that the angle to refRoad increases
         if (sortRoads(r1, r2, r3, r4))
         {
-            cerr << "ERR: roads can not be sorted." << endl;
+            std::cerr << "ERR: roads can not be sorted." << std::endl;
             return 1;
         }
 
@@ -525,7 +527,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 
         calcFromTo(r1, r3, from, to, nF, nT, 0);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;
@@ -546,7 +548,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 
         calcFromTo(r2, r4, from, to, nF, nT, 0);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;
@@ -564,7 +566,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 
         calcFromTo(r3, r1, from, to, nF, nT, 0);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;
@@ -585,7 +587,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 
         calcFromTo(r4, r2, from, to, nF, nT, 0);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;
@@ -603,7 +605,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 
         calcFromTo(r1, r2, from, to, nF, nT, -1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;
@@ -624,7 +626,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 
         calcFromTo(r2, r1, from, to, nF, nT, 1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;
@@ -642,7 +644,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 
         calcFromTo(r2, r3, from, to, nF, nT, -1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;
@@ -663,7 +665,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 
         calcFromTo(r3, r2, from, to, nF, nT, 1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;
@@ -681,7 +683,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 
         calcFromTo(r3, r4, from, to, nF, nT, -1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;
@@ -702,7 +704,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 
         calcFromTo(r4, r3, from, to, nF, nT, 1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;
@@ -720,7 +722,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 
         calcFromTo(r4, r1, from, to, nF, nT, -1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;
@@ -741,7 +743,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 
         calcFromTo(r1, r4, from, to, nF, nT, 1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;

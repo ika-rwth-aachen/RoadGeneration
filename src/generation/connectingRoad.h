@@ -30,12 +30,12 @@ int connectingRoad(pugi::xml_node &node, RoadNetwork &data)
 
     if (!mainRoad)
     {
-        cerr << "ERR: specified road is not found.";
+        std::cerr << "ERR: specified road is not found.";
         return 1;
     }
 
     // --- generate roads ------------------------------------------------------
-    cout << "\t Generating Roads" << endl;
+    std::cout << "\t Generating Roads" << std::endl;
 
     road r;
     int id = mainRoad.attribute("id").as_int();
@@ -44,12 +44,12 @@ int connectingRoad(pugi::xml_node &node, RoadNetwork &data)
 
     if (buildRoad(mainRoad, r, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
-        cerr << "ERR: error in buildRoad" << endl;
+        std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
     if (addObjects(mainRoad, r, data))
     {
-        cerr << "ERR: error in addObjects" << endl;
+        std::cerr << "ERR: error in addObjects" << std::endl;
         return 1;
     }
 

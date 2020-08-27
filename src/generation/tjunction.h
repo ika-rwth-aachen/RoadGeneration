@@ -14,7 +14,7 @@
  */
 
 #include <stdio.h>
-
+#include <math.h>
 
 #include "interface.h"
 #include "roadNetwork.h"
@@ -149,9 +149,9 @@ int tjunction(pugi::xml_node &node, RoadNetwork &data)
     double width3 = abs(findTOffset(lS3, findMinLaneId(lS3), 0)) + abs(findTOffset(lS3, findMaxLaneId(lS3), 0));
 
     // check offsets and adjust them if necessary (here: 4 is safty factor)
-    double w1 = max(width2 / 2, width3 / 2) * 4;
-    double w2 = max(width1 / 2, width3 / 2) * 4;
-    double w3 = max(width1 / 2, width2 / 2) * 4;
+    double w1 = std::max(width2 / 2, width3 / 2) * 4;
+    double w2 = std::max(width1 / 2, width3 / 2) * 4;
+    double w3 = std::max(width1 / 2, width2 / 2) * 4;
 
     bool changed = false;
     if (sOffMain < w1)
@@ -186,8 +186,8 @@ int tjunction(pugi::xml_node &node, RoadNetwork &data)
             std::cerr << "ERR: first 'adRoad' is missing." << std::endl;
             return 1;
         }
-        sAdd1 = stod(tmpNode.attribute("s").value(), &st);
-        phi1 = stod(tmpNode.attribute("angle").value(), &st);
+        sAdd1 = std::stod(tmpNode.attribute("s").value(), &st);
+        phi1 = std::stod(tmpNode.attribute("angle").value(), &st);
     }
 
     if (mode >= 2)
@@ -197,8 +197,8 @@ int tjunction(pugi::xml_node &node, RoadNetwork &data)
             std::cerr << "ERR: second 'adRoad' is missing." << std::endl;
             return 1;
         }
-        sAdd2 = stod(tmpNode.next_sibling("adRoad").attribute("s").value(), &st);
-        phi2 = stod(tmpNode.next_sibling("adRoad").attribute("angle").value(), &st);
+        sAdd2 = std::stod(tmpNode.next_sibling("adRoad").attribute("s").value(), &st);
+        phi2 = std::stod(tmpNode.next_sibling("adRoad").attribute("angle").value(), &st);
     }
 
     // set coordinates of intersectionPoint
@@ -476,7 +476,7 @@ int tjunction(pugi::xml_node &node, RoadNetwork &data)
 
         calcFromTo(r1, r2, from, to, nF, nT, -1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;
@@ -505,7 +505,7 @@ int tjunction(pugi::xml_node &node, RoadNetwork &data)
 
         calcFromTo(r2, r1, from, to, nF, nT, 1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;
@@ -528,7 +528,7 @@ int tjunction(pugi::xml_node &node, RoadNetwork &data)
 
         calcFromTo(r2, r3, from, to, nF, nT, -1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;
@@ -549,7 +549,7 @@ int tjunction(pugi::xml_node &node, RoadNetwork &data)
 
         calcFromTo(r3, r2, from, to, nF, nT, 1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;
@@ -567,7 +567,7 @@ int tjunction(pugi::xml_node &node, RoadNetwork &data)
 
         calcFromTo(r3, r1, from, to, nF, nT, -1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;
@@ -596,7 +596,7 @@ int tjunction(pugi::xml_node &node, RoadNetwork &data)
 
         calcFromTo(r1, r3, from, to, nF, nT, 1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.id = 100 * junc.id + 50 + nCount;

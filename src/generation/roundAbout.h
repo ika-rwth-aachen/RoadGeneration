@@ -34,7 +34,7 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
     int refId = circleRoad.attribute("id").as_int();
     if (!circleRoad)
     {
-        cerr << "ERR: circleRoad is not found.";
+        std::cerr << "ERR: circleRoad is not found.";
         return 1;
     }
 
@@ -53,7 +53,7 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         clockwise = true;
     if (abs(R) < 3)
     {
-        cerr << "ERR: radius of reference road in a roundabout have to be larger than 3.";
+        std::cerr << "ERR: radius of reference road in a roundabout have to be larger than 3.";
         return 1;
     }
 
@@ -83,7 +83,7 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
 
         if (!additionalRoad)
         {
-            cerr << "ERR: specified road in intersection" << cc << " is not found.";
+            std::cerr << "ERR: specified road in intersection" << cc << " is not found.";
             return 1;
         }
 
@@ -108,12 +108,12 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         road helpAdd;
         if (buildRoad(circleRoad, helpMain, 0, INFINITY, dummy, 0, 0, 0, 0))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         if (buildRoad(additionalRoad, helpAdd, 0, INFINITY, dummy, 0, 0, 0, 0))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
 
@@ -138,12 +138,12 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
 
         if (changed)
         {
-            cerr << "!!! sOffset of at least one road was changed, due to feasible road structure !!!" << endl;
+            std::cerr << "!!! sOffset of at least one road was changed, due to feasible road structure !!!" << std::endl;
         }
 
         if (sOffMain * 2 > length / nIp)
         {
-            cerr << "Length of roundabout is too short, overlapping roads." << endl;
+            std::cerr << "Length of roundabout is too short, overlapping roads." << std::endl;
             return 1;
         }
 
@@ -159,7 +159,7 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         double iPhdg = curPhi;
 
         // --- generate roads --------------------------------------------------
-        cout << "\t Generating Roads" << endl;
+        std::cout << "\t Generating Roads" << std::endl;
         /*           
                     \___       ____/
                  id: 1         id: helper
@@ -181,7 +181,7 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
 
         if (buildRoad(circleRoad, r1, sOld, sMain - sOffMain, dummy, sMain, iPx, iPy, iPhdg))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         nCount++;
@@ -194,12 +194,12 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         r2.predecessor.contactPoint = startType;
         if (buildRoad(additionalRoad, r2, sAdd + sOffAdd, INFINITY, dummy, sAdd, iPx, iPy, iPhdg + phi))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         if (addObjects(additionalRoad, r2, data))
         {
-            cerr << "ERR: error in addObjects" << endl;
+            std::cerr << "ERR: error in addObjects" << std::endl;
             return 1;
         }
         nCount++;
@@ -214,7 +214,7 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         {
             if (buildRoad(circleRoad, helper, sMain + sOffMain, sMain + 2 * sOffMain, dummy, sMain, iPx, iPy, iPhdg))
             {
-                cerr << "ERR: error in buildRoad" << endl;
+                std::cerr << "ERR: error in buildRoad" << std::endl;
                 return 1;
             }
         }
@@ -230,7 +230,7 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         helper.predecessor.contactPoint = startType;
 
         // --- generate connecting lanes ---------------------------------------
-        cout << "\t Generate Connecting Lanes" << endl;
+        std::cout << "\t Generate Connecting Lanes" << std::endl;
 
         // max and min id's of laneSections
         int inner1, outer1, outer2, inner2, nLane;
