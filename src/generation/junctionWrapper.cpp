@@ -1,5 +1,3 @@
-#ifndef JUNCTION_WRAPPER
-#define JUNCTION_WRAPPER
 /**
  * @file junctionWrapper.h
  *
@@ -10,11 +8,11 @@
  *
  */
 
-
+#include "junctionWrapper.h"
 #include <stdio.h>
 #include <string>
-#include "xjunction.h"
-#include "tjunction.h"
+#include "roadNetwork.h"
+
 
  //#include "../headers/interface/roadNetwork.h"
 
@@ -65,5 +63,3 @@ int junctionWrapper(pugi::xml_node &node, RoadNetwork &data)
     }
     return 0;
 }
-
-#endif

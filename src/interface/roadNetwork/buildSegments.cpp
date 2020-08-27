@@ -7,7 +7,7 @@
 #include "addObjects.h"
 #include "createLaneConnection.h"
 #include "createRoadConnection.h"
-#include "generation/junctionWrapper.h"
+#include "junctionWrapper.h"
 #include "generation/roundAbout.h"
 #include "connectingRoad.h"
 
