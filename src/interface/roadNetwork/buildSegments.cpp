@@ -3,8 +3,8 @@
 #include <iostream>
 #include <stdio.h>
 
-#include "buildRoad.h"
-#include "addObjects.h"
+#include "generation/buildRoad.h"
+#include "generation/addObjects.h"
 #include "createLaneConnection.h"
 #include "createRoadConnection.h"
 #include "junctionWrapper.h"
