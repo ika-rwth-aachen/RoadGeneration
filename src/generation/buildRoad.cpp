@@ -1,5 +1,5 @@
 /**
- * @file buildRoad.h
+ * @file buildRoad.cpp
  *
  * @brief file contains method for building up a road
  *

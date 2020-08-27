@@ -1,6 +1,3 @@
-#ifndef CREATE_ROAD_CONNECTION
-#define CREATE_ROAD_CONNECTION
-
 /**
  * @file createRoadConnection.h
  *
@@ -11,6 +8,16 @@
  *
  */
 
+
+#include <stdio.h>
+#include <iostream>
+#include <string>
+#include <math.h>
+
+#include "createRoadConnection.h"
+#include "helper.h"
+#include "curve.h"
+#include "createLaneConnection.h"
 
 /**
  * @brief function creates a new road connection 
@@ -280,5 +287,3 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
 
     return 0;
 }
-
-#endif

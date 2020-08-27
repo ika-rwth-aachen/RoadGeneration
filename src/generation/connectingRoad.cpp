@@ -1,5 +1,5 @@
 /**
- * @file connectingRoad.h
+ * @file connectingRoad.cpp
  *
  * @brief file contains method for generating connecting road segment
  *

@@ -1,3 +1,6 @@
+#ifndef SETTINGS_H
+#define SETTINGS_H
+
 /**
  * @file settings.h
  *
@@ -7,9 +10,6 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
-
-#ifndef SETTINGS_H
-#define SETTINGS_H
 
 /**
  * @brief lane width settings
