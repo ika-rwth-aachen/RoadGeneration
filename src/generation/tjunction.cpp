@@ -1,10 +1,5 @@
-#ifndef T_JUNCTION
-#define T_JUNCTION
-
-
-
 /**
- * @file tjunction.h
+ * @file tjunction.cpp
  *
  * @brief file contains method for generating t junction
  *
@@ -620,5 +615,3 @@ int tjunction(pugi::xml_node &node, RoadNetwork &data)
 
     return 0;
 }
-
-#endif

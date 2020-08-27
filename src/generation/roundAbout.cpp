@@ -1,8 +1,5 @@
-#ifndef ROUNDABOUT
-#define ROUNDABOUT
-
 /**
- * @file roundAbout.h
+ * @file roundAbout.cpp
  *
  * @brief file contains method for generating roundabout
  *
@@ -11,8 +8,11 @@
  *
  */
 
-//#include "../headers/interface/roadNetwork.h"
-
+#include "roundAbout.h"
+#include "helper.h"
+#include "buildRoad.h"
+#include "addObjects.h"
+#include "createRoadConnection.h"
 
 /**
  * @brief function generates the roads and junctions for a roundabout which is specified in the input file
@@ -366,5 +366,3 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
 
     return 0;
 }
-
-#endif

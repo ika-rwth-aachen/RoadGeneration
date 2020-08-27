@@ -1,8 +1,5 @@
-#ifndef X_JUNCTION
-#define X_JUNCTION
-
 /**
- * @file xjunction.h
+ * @file xjunction.cpp
  *
  * @brief file contains method for generating x junction
  *
@@ -767,4 +764,3 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     return 0;
 }
 
-#endif
