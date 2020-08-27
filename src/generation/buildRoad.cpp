@@ -1,6 +1,3 @@
-#ifndef BUILD_ROAD
-#define BUILD_ROAD
-
 /**
  * @file buildRoad.h
  *
@@ -710,5 +707,3 @@ int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::
 
     return 0;
 }
-
-#endif

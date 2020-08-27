@@ -15,7 +15,7 @@
 
 #include "generation/junctionWrapper.h"
 #include "generation/roundAbout.h"
-#include "generation/connectingRoad.h"
+#include "connectingRoad.h"
 
 int RoadNetwork::buildSegments(pugi::xml_document &doc)
 {

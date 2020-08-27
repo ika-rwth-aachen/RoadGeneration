@@ -13,6 +13,7 @@
 
 #include "curve.h"
 #include "addLaneSections.h"
+#include "pugixml.hpp"
 
 extern settings setting;
 
