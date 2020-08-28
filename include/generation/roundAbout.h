@@ -1,8 +1,6 @@
 #ifndef ROUNDABOUT
 #define ROUNDABOUT
 
-
-
 /**
  * @file roundAbout.h
  *
@@ -14,7 +12,6 @@
  */
 
 #include "roadNetwork.h"
-
 
 /**
  * @brief function generates the roads and junctions for a roundabout which is specified in the input file

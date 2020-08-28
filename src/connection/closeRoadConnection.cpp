@@ -1,9 +1,3 @@
-#include "closeRoadConnection.h"
-#include <math.h>
-#include <stdio.h>
-#include <iostream>
-#include "helper.h"
-
 /**
  * @file closeRoadConnection.cpp
  *
@@ -14,13 +8,17 @@
  *
  */
 
+#include "closeRoadConnection.h"
+#include "helper.h"
+
+#include <math.h>
+#include <stdio.h>
+#include <iostream>
 
 const int P = 1;
 const int N = -1;
 const int O = 0;
 const int I = 2;
-
-
 
 /**
  * @brief function generates geometries recursivly so that the two input points are connected with a feasible geometry
@@ -56,9 +54,9 @@ int closeRoadConnection(std::vector<geometry> &geo, double x1, double y1, double
     if (m1 == m2)
     {
         if (b1 != b2)
-            type = p;
+            type = P;
         if (b1 == b2)
-            type = i;
+            type = I;
     }
     else
     {
@@ -71,7 +69,7 @@ int closeRoadConnection(std::vector<geometry> &geo, double x1, double y1, double
     }
 
     // --- case i -------------------------------------------------------------
-    if (type == i)
+    if (type == I)
     {
         double beta = phi1 - phi2;
         fixAngle(beta);

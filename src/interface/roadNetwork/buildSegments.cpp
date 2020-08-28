@@ -1,8 +1,14 @@
+/**
+ * @file buildSegments.cpp
+ *
+ * @brief file contains method for generating segments
+ * 
+ * @author Christian Geller
+ * Contact: christian.geller@rwth-aachen.de
+ *
+ */
+
 #include "roadNetwork.h"
-
-#include <iostream>
-#include <stdio.h>
-
 #include "generation/buildRoad.h"
 #include "generation/addObjects.h"
 #include "createLaneConnection.h"
@@ -11,8 +17,16 @@
 #include "roundAbout.h"
 #include "connectingRoad.h"
 
+#include <iostream>
+#include <stdio.h>
 
 
+ /**
+         * @brief function creates all segments which can be either a junction, roundabout or connectingroad
+         * 
+         * @param doc 	tree structure which contains the input data         
+         * @return int 	error code
+*/
 int RoadNetwork::buildSegments(pugi::xml_document &doc)
 {
     RoadNetwork& data = *this;

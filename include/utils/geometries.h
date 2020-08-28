@@ -1,8 +1,6 @@
 #ifndef GEOMETRY
 #define GEOMETRY
 
-#include <vector>
-#include "interface.h"
 /**
  * @file geometries.h
  *
@@ -12,6 +10,11 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
+
+#include "interface.h"
+
+#include <vector>
+
 
 /**
  * @brief function adds a line

@@ -7,12 +7,12 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
+
 #include "junctionWrapper.h"
+#include "pugixml.hpp"
 
 #include <stdio.h>
 #include <string>
-
-#include "pugixml.hpp"
 
 extern settings setting;
 extern std::string::size_type st;

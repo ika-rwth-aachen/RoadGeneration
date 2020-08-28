@@ -1,15 +1,6 @@
 #ifndef HELPER
 #define HELPER
 
-#include <vector>
-#include <string>
-
-#include "interface.h"
-
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
 /**
  * @file helper.h
  *
@@ -20,6 +11,10 @@
  *
  */
 
+#include "interface.h"
+
+#include <vector>
+#include <string>
 
 template<typename ... Args>
 

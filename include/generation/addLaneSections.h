@@ -1,11 +1,6 @@
 #ifndef ADD_LANE_SECTIONS
 #define ADD_LANE_SECTIONS
 
-#include "interface.h"
-#include "helper.h"
-#include <stdio.h>
-#include <vector>
-
 /**
  * @file addLaneSections.h
  *
@@ -15,6 +10,12 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
+
+#include "interface.h"
+#include "helper.h"
+
+#include <stdio.h>
+#include <vector>
 
 /**
  * @brief function adds a laneSection with laneWideing to a given lanesection set

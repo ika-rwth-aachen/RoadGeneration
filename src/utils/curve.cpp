@@ -8,9 +8,11 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
+
 #include "curve.h"
-#include <math.h>
 #include "helper.h"
+
+#include <math.h>
 
 /**
  * @brief function computes the fresnel integral

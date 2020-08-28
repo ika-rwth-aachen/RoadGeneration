@@ -12,7 +12,10 @@
 #include "xml.h"
 #include "roadNetwork.h"
 #include "settings.h"
+#include "helper.h"
+#include "interface.h"
 #include "pugixml.hpp"
+
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/framework/LocalFileInputSource.hpp>
@@ -27,10 +30,6 @@
 #include <stdio.h>
 #include <string>
 #include <sstream>
-#include "helper.h"
-#include "interface.h"
-
-
 
 using namespace xercesc;
 

@@ -2,7 +2,7 @@
 #define LINK_SEGMENT
 
 /**
- * @file linkSegments.h
+ * @file linkSegments.cpp
  *
  * @brief file contains methodology for linking two segments 
  *

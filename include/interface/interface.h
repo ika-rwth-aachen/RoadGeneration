@@ -1,7 +1,6 @@
 #ifndef INTERFACE
 #define INTERFACE
 
-
 /**
  * @file interface.h
  *
@@ -13,6 +12,7 @@
  */
 
 #include "settings.h"
+
 #include <string>
 #include <vector>
 

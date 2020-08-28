@@ -1,9 +1,3 @@
-#include "geometries.h"
-
-#include <math.h>
-#include "interface.h"
-#include "helper.h"
-
 /**
  * @file geometries.cpp
  *
@@ -14,7 +8,11 @@
  *
  */
 
+#include "geometries.h"
+#include "interface.h"
+#include "helper.h"
 
+#include <math.h>
 
 /**
  * @brief function adds a line

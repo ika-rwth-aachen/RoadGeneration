@@ -1,10 +1,3 @@
-#include "helper.h"
-
-#include <stdio.h>
-#include <math.h>
-#include <iostream>
-
-
 /**
  * @file helper.cpp
  *
@@ -14,6 +7,12 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
+
+#include "helper.h"
+
+#include <stdio.h>
+#include <math.h>
+#include <iostream>
 
 /**
  * @brief signum function

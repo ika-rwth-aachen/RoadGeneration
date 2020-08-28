@@ -1,31 +1,27 @@
 #ifndef ROAD_NETWORK
 #define ROAD_NETWORK
 
-#include <iostream>
-#include <stdio.h>
-#include <string>
-#include <vector>
 #include "settings.h"
 #include "interface.h"
-
 #include "pugixml.hpp"
+
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/framework/LocalFileInputSource.hpp>
 #include <xercesc/sax/ErrorHandler.hpp>
 #include <xercesc/sax/SAXParseException.hpp>
 #include <xercesc/validators/common/Grammar.hpp>
+#include <iostream>
+#include <stdio.h>
+#include <string>
+#include <vector>
 
 #define non "none"
 #define bro "broken"
 #define sol "solid"
 
-
-
-
 class RoadNetwork
 {
-
     private:
 
         std::string file;
@@ -62,15 +58,9 @@ class RoadNetwork
          * @brief function creates all segments which can be either a junction, roundabout or connectingroad
          * 
          * @param doc 	tree structure which contains the input data
-         * @param data 	roadNetwork data where the openDrive structure should be generated
          * @return int 	error code
          */
         int buildSegments(pugi::xml_document &doc);
-
-        
-
-
-
 };
 
 #endif

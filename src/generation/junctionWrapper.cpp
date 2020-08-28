@@ -1,5 +1,5 @@
 /**
- * @file junctionWrapper.h
+ * @file junctionWrapper.cpp
  *
  * @brief file contains method for generating junctions
  *
@@ -9,12 +9,10 @@
  */
 
 #include "junctionWrapper.h"
-#include <stdio.h>
-#include <string>
 #include "roadNetwork.h"
 
-
- //#include "../headers/interface/roadNetwork.h"
+#include <stdio.h>
+#include <string>
 
 /**
  * @brief function takes the junction as input argument and calls the junction type function

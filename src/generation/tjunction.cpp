@@ -7,15 +7,15 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
-#include "junctionWrapper.h"
-#include <stdio.h>
-#include <math.h>
 
+#include "junctionWrapper.h"
 #include "interface.h"
 #include "roadNetwork.h"
 #include "settings.h"
 #include "helper.h"
 
+#include <stdio.h>
+#include <math.h>
 
 extern settings setting;
 extern std::string::size_type st;

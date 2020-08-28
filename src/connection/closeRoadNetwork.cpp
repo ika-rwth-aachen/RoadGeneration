@@ -1,8 +1,3 @@
-#include "roadNetwork.h"
-#include "closeRoadConnection.h"
-#include "addLaneSections.h"
-#include "curve.h"
-
 /**
  * @file closeRoadNetwork.cpp
  *
@@ -12,6 +7,11 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
+
+#include "roadNetwork.h"
+#include "closeRoadConnection.h"
+#include "addLaneSections.h"
+#include "curve.h"
 
 extern settings setting;
 

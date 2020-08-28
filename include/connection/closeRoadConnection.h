@@ -1,9 +1,6 @@
 #ifndef CLOSE_ROAD_CONNECTION
 #define CLOSE_ROAD_CONNECTION
 
-#include "geometries.h"
-#include "interface.h"
-
 /**
  * @file closeRoadConnection.h
  *
@@ -14,14 +11,8 @@
  *
  */
 
-
-
-const int p = 1;
-const int n = -1;
-const int o = 0;
-const int i = 2;
-
-
+#include "geometries.h"
+#include "interface.h"
 
 /**
  * @brief function generates geometries recursivly so that the two input points are connected with a feasible geometry

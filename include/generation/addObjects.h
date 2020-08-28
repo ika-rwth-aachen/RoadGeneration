@@ -1,12 +1,11 @@
 #ifndef ADD_OBJECT
 #define ADD_OBJECT
 
-#include <string>
-
 #include "interface.h"
 #include "roadNetwork.h"
 #include "pugixml.hpp"
 
+#include <string>
 
 /**
  * @file addObjects.h

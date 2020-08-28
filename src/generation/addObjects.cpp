@@ -1,10 +1,3 @@
-#include "addObjects.h"
-
-#include <math.h>
-#include "helper.h"
-#include "addLaneSections.h"
-
-
 /**
  * @file addObjects.cpp
  *
@@ -14,6 +7,12 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
+
+#include "addObjects.h"
+#include "helper.h"
+#include "addLaneSections.h"
+
+#include <math.h>
 
 /**
  * @brief function adds a traffic island to the lane structure

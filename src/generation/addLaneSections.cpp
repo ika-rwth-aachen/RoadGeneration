@@ -1,9 +1,3 @@
-#include "addLaneSections.h"
-#include <stdio.h>
-#include <vector>
-#include <iostream>
-#include <math.h>
-
 /**
  * @file addLaneSections.cpp
  *
@@ -13,6 +7,13 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
+
+#include "addLaneSections.h"
+
+#include <stdio.h>
+#include <vector>
+#include <iostream>
+#include <math.h>
 
 /**
  * @brief function adds a laneSection with laneWideing to a given lanesection set

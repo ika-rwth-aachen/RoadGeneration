@@ -14,7 +14,6 @@
 #include <stdio.h>
 #include <iostream>
 
-
 extern settings setting;
 
 /**

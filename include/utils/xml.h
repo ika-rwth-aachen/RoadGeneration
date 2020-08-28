@@ -11,10 +11,7 @@
  *
  */
 
-
 #include "roadNetwork.h"
-
-
 
 /**
  * @brief function checks the input file against the corresponding input.xsd

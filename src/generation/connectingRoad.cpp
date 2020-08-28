@@ -8,12 +8,9 @@
  *
  */
 
-
 #include "connectingRoad.h"
 #include "buildRoad.h"
 #include "addObjects.h"
-
-
 
 /**
  * @brief function generates the road for a connecting road which is specified in the input file

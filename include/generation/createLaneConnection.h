@@ -11,8 +11,6 @@
  *
  */
 
-
-
 #include "interface.h"
 #include "helper.h"
 
