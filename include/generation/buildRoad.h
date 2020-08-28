@@ -15,7 +15,7 @@
 #include "addLaneSections.h"
 #include "pugixml.hpp"
 
-extern settings setting;
+//extern settings setting;
 
 /**
  * @brief function computes first and last considered geometry in s interval 

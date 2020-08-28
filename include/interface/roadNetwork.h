@@ -45,9 +45,7 @@ class RoadNetwork
 
         int buildSegments(pugi::xml_document &doc());
         int linkSegments(pugi::xml_document &doc);
-        //Implement as member function ?
         int closeRoadNetwork(pugi::xml_document &doc);
-
 
         void pushRoad(road r);
         void pushJunction(junction j);

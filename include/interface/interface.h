@@ -251,27 +251,4 @@ struct road
     std::vector<sign> signs;
 };
 
-/**
- * @brief roadNetwork is the overall struct holding all data
- * 
- */
-
-
-
-/*
-struct roadNetwork
-{
-    string file;
-
-    // main data properties
-    vector<road> roads;
-    vector<junction> junctions;
-    vector<control> controller;
-
-    // global counters
-    int nSignal = 0;
-    int nSegment = 0;
-};
-*/
-
 #endif
