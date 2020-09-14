@@ -4,10 +4,6 @@
 		<geoReference><![CDATA[+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs]]></geoReference>
 	</header>
 	<road id="101" length="186" junction="1">
-		<link>
-			<predecessor elementId="1" elementType="junction" contactPoint="none" />
-			<successor elementId="-1" elementType="road" contactPoint="none" />
-		</link>
 		<type s="0" type="town" />
 		<planView>
 			<geometry s="0" x="-13.982503645529528" y="-0.69970836978949658" hdg="3.1915926535897929" length="186">
@@ -52,10 +48,6 @@
 		<signals />
 	</road>
 	<road id="102" length="186" junction="1">
-		<link>
-			<predecessor elementId="1" elementType="junction" contactPoint="none" />
-			<successor elementId="-1" elementType="road" contactPoint="none" />
-		</link>
 		<type s="0" type="town" />
 		<planView>
 			<geometry s="0" x="13.982503645529528" y="0.69970836978949491" hdg="0.050000000000000003" length="186">
@@ -100,10 +92,6 @@
 		<signals />
 	</road>
 	<road id="103" length="84" junction="1">
-		<link>
-			<predecessor elementId="1" elementType="junction" contactPoint="none" />
-			<successor elementId="-1" elementType="road" contactPoint="none" />
-		</link>
 		<type s="0" type="town" />
 		<planView>
 			<geometry s="0" x="-0.4666941777507102" y="-15.976123717345052" hdg="-1.6800000000000004" length="84">

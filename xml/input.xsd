@@ -16,7 +16,7 @@ elementFormDefault="qualified">
     <xs:annotation>
         <xs:documentation>
             Main Element:
-                - segments: junction, roundabout or co nnecting road
+                - segments: junction, roundabout or connecting road
                 - links: joining two segments
                 - closeRoads: connecting two segments automatically 
         </xs:documentation>
@@ -233,7 +233,7 @@ elementFormDefault="qualified">
             Element: spiral 
 
                 - length: length of spiral in m 
-                - Re: starting radius in m 
+                - Rs: starting radius in m 
                 - Re: ending radius in m 
         </xs:documentation>
     </xs:annotation>

@@ -143,6 +143,32 @@ int parseXML(pugi::xml_document &doc, RoadNetwork &data, char *file)
     }
 }
 
+
+/**
+ * @brief helper function to append the link node to road node
+ * 
+ * @param road the road xml node 
+ * @param sucessor the potential successor to the road segment
+ * @param sucessor the potential predecessor to the road segment * 
+ */
+
+void appendLinkToNode(pugi::xml_node road, link &successor, link &predecessor)
+{
+    if(successor.id == -1 || predecessor.id == -1) return;
+
+    pugi::xml_node pre = road.append_child("link").append_child("predecessor");
+    pre.append_attribute("elementId") = predecessor.id;
+    pre.append_attribute("elementType") = getLinkType(predecessor.elementType).c_str();
+    if(predecessor.contactPoint != noneType)
+        pre.append_attribute("contactPoint") = getContactPointType(predecessor.contactPoint).c_str();
+        
+    pugi::xml_node suc = road.child("link").append_child("successor");
+    suc.append_attribute("elementId") = successor.id;
+    suc.append_attribute("elementType") = getLinkType(successor.elementType).c_str();
+    if(successor.contactPoint != noneType)
+        suc.append_attribute("contactPoint") = getContactPointType(successor.contactPoint).c_str();
+}
+
 /**
  * @brief function stores the generated structure of type roadNetwork as OpenDrive format with the external tool pugi_xml
  * 
@@ -193,15 +219,7 @@ int createXML(pugi::xml_document &doc, RoadNetwork data)
         road.append_attribute("length") = it->length;
         road.append_attribute("junction") = it->junction;
 
-        pugi::xml_node pre = road.append_child("link").append_child("predecessor");
-        pre.append_attribute("elementId") = it->predecessor.id;
-        pre.append_attribute("elementType") = getLinkType(it->predecessor.elementType).c_str();
-        pre.append_attribute("contactPoint") = getContactPointType(it->predecessor.contactPoint).c_str();
-
-        pugi::xml_node suc = road.child("link").append_child("successor");
-        suc.append_attribute("elementId") = it->successor.id;
-        suc.append_attribute("elementType") = getLinkType(it->successor.elementType).c_str();
-        suc.append_attribute("contactPoint") = getContactPointType(it->successor.contactPoint).c_str();
+        appendLinkToNode(road, it->successor, it->predecessor);
 
         road.append_child("type").append_attribute("s") = "0";
         road.child("type").append_attribute("type") = it->type.c_str();
