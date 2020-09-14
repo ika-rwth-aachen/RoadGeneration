@@ -142,16 +142,16 @@ void appendLinkToRoad(pugi::xml_node road, link &successor, link &predecessor){
     if(successor.id == -1 || predecessor.id == -1) return;
 
     pugi::xml_node pre = road.append_child("link").append_child("predecessor");
-            pre.append_attribute("elementId") = predecessor.id;
-            pre.append_attribute("elementType") = getLinkType(predecessor.elementType).c_str();
-            if(predecessor.contactPoint != noneType)
-                pre.append_attribute("contactPoint") = getContactPointType(predecessor.contactPoint).c_str();
-
-            pugi::xml_node suc = road.child("link").append_child("successor");
-            suc.append_attribute("elementId") = successor.id;
-            suc.append_attribute("elementType") = getLinkType(successor.elementType).c_str();
-            if(successor.contactPoint != noneType)
-                suc.append_attribute("contactPoint") = getContactPointType(successor.contactPoint).c_str();
+    pre.append_attribute("elementId") = predecessor.id;
+    pre.append_attribute("elementType") = getLinkType(predecessor.elementType).c_str();
+    if(predecessor.contactPoint != noneType)
+        pre.append_attribute("contactPoint") = getContactPointType(predecessor.contactPoint).c_str();
+        
+    pugi::xml_node suc = road.child("link").append_child("successor");
+    suc.append_attribute("elementId") = successor.id;
+    suc.append_attribute("elementType") = getLinkType(successor.elementType).c_str();
+    if(successor.contactPoint != noneType)
+        suc.append_attribute("contactPoint") = getContactPointType(successor.contactPoint).c_str();
 }
 
 /**
