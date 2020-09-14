@@ -138,7 +138,8 @@ int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file)
  * @param sucessor the potential predecessor to the road segment * 
  */
 
-void appendLinkToNode(pugi::xml_node road, link &successor, link &predecessor){
+void appendLinkToNode(pugi::xml_node road, link &successor, link &predecessor)
+{
     if(successor.id == -1 || predecessor.id == -1) return;
 
     pugi::xml_node pre = road.append_child("link").append_child("predecessor");
