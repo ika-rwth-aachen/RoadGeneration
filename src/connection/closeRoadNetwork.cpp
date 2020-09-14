@@ -12,6 +12,7 @@
 #include "closeRoadConnection.h"
 #include "addLaneSections.h"
 #include "curve.h"
+#include "road.h"
 
 extern settings setting;
 
@@ -40,9 +41,9 @@ int RoadNetwork::closeRoadNetwork(pugi::xml_document &doc)
 
 	for (pugi::xml_node segmentLink : closeRoad.children("segmentLink"))
 	{
-		road rConnection;
+		Road rConnection;
 		data.nSegment++;
-		rConnection.id = data.nSegment * 100 + 1;
+		rConnection.setID(data.nSegment * 100 + 1);
 
 		int fromSegment = segmentLink.attribute("fromSegment").as_int();
 		int toSegment = segmentLink.attribute("toSegment").as_int();
@@ -50,8 +51,8 @@ int RoadNetwork::closeRoadNetwork(pugi::xml_document &doc)
 		int toRoadId = segmentLink.attribute("toRoad").as_int();
 		std::string fromPos = (std::string)segmentLink.attribute("fromPos").value();
 		std::string toPos = (std::string)segmentLink.attribute("toPos").value();
-		road fromRoad;
-		road toRoad;
+		Road fromRoad;
+		Road toRoad;
 
 		double fromX, fromY, fromHdg;
 		double toX, toY, toHdg;
@@ -74,13 +75,13 @@ int RoadNetwork::closeRoadNetwork(pugi::xml_document &doc)
 		found = false;
 		for (auto &&r : data.getRoads())
 		{
-			if (r.junction != fromSegment || r.inputId != fromRoadId)
+			if (r.getJunction() != fromSegment || r.getInputID() != fromRoadId)
 				continue;
-			if (fromIsJunction && r.inputPos != fromPos)
+			if (fromIsJunction && r.getInputPos() != fromPos)
 				continue;
 
 			fromRoad = r;
-			fromRoadId = r.id;
+			fromRoadId = r.getID();
 			found = true;
 
 			// if junction, the contact point is always at "end" of a road
@@ -89,27 +90,27 @@ int RoadNetwork::closeRoadNetwork(pugi::xml_document &doc)
 
 			if (fromPos == "start")
 			{
-				fromX = r.geometries.front().x;
-				fromY = r.geometries.front().y;
-				fromHdg = r.geometries.front().hdg;
-				r.predecessor.id = rConnection.id;
-				r.predecessor.contactPoint = startType;
-				rConnection.predecessor.id = fromRoadId;
-				rConnection.predecessor.contactPoint = startType;
-				lS1 = r.laneSections.front();
+				fromX = r.getGeometries().front().x;
+				fromY = r.getGeometries().front().y;
+				fromHdg = r.getGeometries().front().hdg;
+				r.getPredecessor().id = rConnection.getID();
+				r.getPredecessor().contactPoint = startType;
+				rConnection.getPredecessor().id = fromRoadId;
+				rConnection.getPredecessor().contactPoint = startType;
+				lS1 = r.getLaneSections().front();
 			}
 			else if (fromPos == "end")
 			{
-				geometry g = r.geometries.back();
+				geometry g = r.getGeometries().back();
 				curve(g.length, g, g.x, g.y, g.hdg, 1);
 				fromX = g.x;
 				fromY = g.y;
 				fromHdg = g.hdg;
-				r.successor.id = rConnection.id;
-				r.successor.contactPoint = startType;
-				rConnection.predecessor.id = fromRoadId;
-				rConnection.predecessor.contactPoint = endType;
-				lS1 = r.laneSections.back();
+				r.getSucessor().id = rConnection.getID();
+				r.getSucessor().contactPoint = startType;
+				rConnection.getPredecessor().id = fromRoadId;
+				rConnection.getPredecessor().contactPoint = endType;
+				lS1 = r.getLaneSections().back();
 			}
 			else
 			{
@@ -128,13 +129,13 @@ int RoadNetwork::closeRoadNetwork(pugi::xml_document &doc)
 		found = false;
 		for (auto &&r : data.getRoads())
 		{
-			if (r.junction != toSegment || r.inputId != toRoadId)
+			if (r.getJunction() != toSegment || r.getInputID() != toRoadId)
 				continue;
-			if (toIsJunction && r.inputPos != toPos)
+			if (toIsJunction && r.getInputPos() != toPos)
 				continue;
 
 			toRoad = r;
-			toRoadId = r.id;
+			toRoadId = r.getID();
 			found = true;
 
 			// if junction, the contact point is always at "end" of a road
@@ -143,27 +144,27 @@ int RoadNetwork::closeRoadNetwork(pugi::xml_document &doc)
 
 			if (toPos == "start")
 			{
-				toX = r.geometries.front().x;
-				toY = r.geometries.front().y;
-				toHdg = r.geometries.front().hdg;
-				r.predecessor.id = rConnection.id;
-				r.predecessor.contactPoint = endType;
-				rConnection.successor.id = r.id;
-				rConnection.successor.contactPoint = startType;
-				lS2 = r.laneSections.front();
+				toX = r.getGeometries().front().x;
+				toY = r.getGeometries().front().y;
+				toHdg = r.getGeometries().front().hdg;
+				r.getPredecessor().id = rConnection.getID();
+				r.getPredecessor().contactPoint = endType;
+				rConnection.getSucessor().id = r.getID();
+				rConnection.getSucessor().contactPoint = startType;
+				lS2 = r.getLaneSections().front();
 			}
 			else if (toPos == "end")
 			{
-				geometry g = r.geometries.back();
+				geometry g = r.getGeometries().back();
 				toX = g.x;
 				toY = g.y;
 				toHdg = g.hdg;
 				curve(g.length, g, toX, toY, toHdg, 1);
-				r.successor.id = rConnection.id;
-				r.successor.contactPoint = endType;
-				rConnection.successor.id = r.id;
-				rConnection.successor.contactPoint = endType;
-				lS2 = r.laneSections.back();
+				r.getSucessor().id = rConnection.getID();
+				r.getSucessor().contactPoint = endType;
+				rConnection.getSucessor().id = r.getID();
+				rConnection.getSucessor().contactPoint = endType;
+				lS2 = r.getLaneSections().back();
 			}
 			else
 			{
@@ -183,16 +184,16 @@ int RoadNetwork::closeRoadNetwork(pugi::xml_document &doc)
 		fixAngle(toHdg);
 
 		// --- build new geometry ----------------------------------------------
-		if (closeRoadConnection(rConnection.geometries, fromX, fromY, fromHdg, toX, toY, toHdg))
+		if (closeRoadConnection(rConnection.getGeometries(), fromX, fromY, fromHdg, toX, toY, toHdg))
 		{
 			std::cerr << "ERR: error in closeRoadConnection function." << std::endl;
 			return 1;
 		}
 
 		// --- compute length --------------------------------------------------
-		for (int j = 0; j < rConnection.geometries.size(); j++)
+		for (int j = 0; j < rConnection.getGeometries().size(); j++)
 		{
-			rConnection.length += rConnection.geometries[j].length;
+			rConnection.setLength(rConnection.getLength() + rConnection.getGeometries()[j].length);
 		}
 
 		// --- add lanes -------------------------------------------------------
@@ -255,7 +256,7 @@ int RoadNetwork::closeRoadNetwork(pugi::xml_document &doc)
 			if (w1 == w2)
 				continue;
 
-			double length = rConnection.length - s;
+			double length = rConnection.getLength() - s;
 
 			curLane.w.d = -2 * (w2 - w1) / pow(length, 3);
 			curLane.w.c = 3 * (w2 - w1) / pow(length, 2);
@@ -265,7 +266,7 @@ int RoadNetwork::closeRoadNetwork(pugi::xml_document &doc)
 			secs.back().lanes[j] = curLane;
 		}
 
-		road tmpRoad;
+		Road tmpRoad;
 		int fr = findRoad(data.getRoads(), tmpRoad, fromRoadId);
 		int tr = findRoad(data.getRoads(), tmpRoad, toRoadId);
 
@@ -276,7 +277,7 @@ int RoadNetwork::closeRoadNetwork(pugi::xml_document &doc)
 			if (fromPos == "start")
 			{
 				secs.front().lanes[j].preId *= -1;
-				data.getRoads()[fr].laneSections.front().lanes[j].preId *= -1;
+				data.getRoads()[fr].getLaneSections().front().lanes[j].preId *= -1;
 			}
 		}
 
@@ -286,11 +287,11 @@ int RoadNetwork::closeRoadNetwork(pugi::xml_document &doc)
 			if (toPos == "end")
 			{
 				secs.back().lanes[j].sucId *= -1;
-				data.getRoads()[tr].laneSections.back().lanes[j].sucId *= -1;
+				data.getRoads()[tr].getLaneSections().back().lanes[j].sucId *= -1;
 			}
 		}
 
-		rConnection.laneSections = secs;
+		rConnection.setLaneSection(secs);
 
 		data.pushRoad(rConnection);
 	}

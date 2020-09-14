@@ -24,7 +24,7 @@
  * @param r         road data
  * @return int      error code
  */
-int addTrafficIsland(object o, road &r);
+int addTrafficIsland(object o, Road &r);
 
 /**
  * @brief function generates a roadwork
@@ -34,7 +34,7 @@ int addTrafficIsland(object o, road &r);
  * @param laneId    lane which contains the roadwork
  * @return int      error code
  */
-int addRoadWork(object o, road &r, int laneId);
+int addRoadWork(object o, Road &r, int laneId);
 
 /**
  * @brief function adds parking splot objects
@@ -43,7 +43,7 @@ int addRoadWork(object o, road &r, int laneId);
  * @param r         road data
  * @return int      error code
  */
-int addParking(object o, road &r);
+int addParking(object o, Road &r);
 
 /**
  * @brief function adds a bus top
@@ -52,7 +52,7 @@ int addParking(object o, road &r);
  * @param r     road data
  * @return int  error code
  */
-int addBusStop(object o, road &r);
+int addBusStop(object o, Road &r);
 
 /**
  * @brief function gets the object position
@@ -71,7 +71,7 @@ int getPosition(pugi::xml_node node, object &o);
  * @param data      roadNetwork structure where the generated roads and junctions are stored
  * @return int      error code
  */
-int addObjects(pugi::xml_node inRoad, road &r, RoadNetwork &data);
+int addObjects(pugi::xml_node inRoad, Road &r, RoadNetwork &data);
 
 /**
  * @brief function creates a signal which is automatically generated
@@ -85,6 +85,6 @@ int addObjects(pugi::xml_node inRoad, road &r, RoadNetwork &data);
  * @param controller    controllerof signal
  * @return int          error code
  */
-int addSignal(road &r, RoadNetwork &data, double s, double t, std::string type, std::string subtype, int controller);
+int addSignal(Road &r, RoadNetwork &data, double s, double t, std::string type, std::string subtype, int controller);
 
 #endif

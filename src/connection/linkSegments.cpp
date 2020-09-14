@@ -45,10 +45,10 @@ int RoadNetwork::linkSegments(pugi::xml_document &doc)
 
 	for (auto &&r : data.getRoads())
 	{
-		if (r.junction != refId)
+		if (r.getJunction() != refId)
 			continue;
 
-		for (auto &&g : r.geometries)
+		for (auto &&g : r.getGeometries())
 		{
 
 			// transform geometries of reference segement into reference system
@@ -71,8 +71,8 @@ int RoadNetwork::linkSegments(pugi::xml_document &doc)
 		int toRoadId = segmentLink.attribute("toRoad").as_int();
 		std::string fromPos = (std::string)segmentLink.attribute("fromPos").value();
 		std::string toPos = (std::string)segmentLink.attribute("toPos").value();
-		road fromRoad;
-		road toRoad;
+		Road fromRoad;
+		Road toRoad;
 
 		// assumption is that "fromSegement" is already linked to reference frame
 
@@ -94,13 +94,13 @@ int RoadNetwork::linkSegments(pugi::xml_document &doc)
 		// save from position
 		for (auto &&r : data.getRoads())
 		{
-			if (r.junction != fromSegment || r.inputId != fromRoadId)
+			if (r.getJunction() != fromSegment || r.getInputID() != fromRoadId)
 				continue;
-			if (fromIsJunction && r.inputPos != fromPos)
+			if (fromIsJunction && r.getInputPos() != fromPos)
 				continue;
 
 			fromRoad = r;
-			fromRoadId = r.id;
+			fromRoadId = r.getID();
 
 			// if junction, the contact point is always at "end" of a road
 			if (fromIsJunction)
@@ -108,13 +108,13 @@ int RoadNetwork::linkSegments(pugi::xml_document &doc)
 
 			if (fromPos == "start")
 			{
-				fromX = r.geometries.front().x;
-				fromY = r.geometries.front().y;
-				fromHdg = r.geometries.front().hdg;
+				fromX = r.getGeometries().front().x;
+				fromY = r.getGeometries().front().y;
+				fromHdg = r.getGeometries().front().hdg;
 			}
 			else if (fromPos == "end")
 			{
-				geometry g = r.geometries.back();
+				geometry g = r.getGeometries().back();
 				curve(g.length, g, g.x, g.y, g.hdg, 1);
 				fromX = g.x;
 				fromY = g.y;
@@ -125,13 +125,13 @@ int RoadNetwork::linkSegments(pugi::xml_document &doc)
 		// save to position
 		for (auto &&r : data.getRoads())
 		{
-			if (r.junction != toSegment || r.inputId != toRoadId)
+			if (r.getJunction() != toSegment || r.getInputID() != toRoadId)
 				continue;
-			if (toIsJunction && r.inputPos != toPos)
+			if (toIsJunction && r.getInputPos() != toPos)
 				continue;
 
 			toRoad = r;
-			toRoadId = r.id;
+			toRoadId = r.getID();
 
 			// if junction, the contact point is always at "end" of a road
 			if (toIsJunction)
@@ -139,13 +139,13 @@ int RoadNetwork::linkSegments(pugi::xml_document &doc)
 
 			if (toPos == "start")
 			{
-				toX = r.geometries.front().x;
-				toY = r.geometries.front().y;
-				toHdg = r.geometries.front().hdg;
+				toX = r.getGeometries().front().x;
+				toY = r.getGeometries().front().y;
+				toHdg = r.getGeometries().front().hdg;
 			}
 			else if (toPos == "end")
 			{
-				geometry g = r.geometries.back();
+				geometry g = r.getGeometries().back();
 				toX = g.x;
 				toY = g.y;
 				toHdg = g.hdg;
@@ -167,7 +167,7 @@ int RoadNetwork::linkSegments(pugi::xml_document &doc)
 		// if toPos is end, the actual toPos has to be computed
 		if (toPos == "end")
 		{
-			geometry g = toRoad.geometries.back();
+			geometry g = toRoad.getGeometries().back();
 			toX = g.x * cos(dPhi) - g.y * sin(dPhi);
 			toY = g.x * sin(dPhi) + g.y * cos(dPhi);
 			toHdg = g.hdg + dPhi;
@@ -181,10 +181,10 @@ int RoadNetwork::linkSegments(pugi::xml_document &doc)
 		// shift all geometries which belong to the toSegment according two the offsets determined above
 		for (auto &&r : data.getRoads())
 		{
-			if (r.junction != toSegment)
+			if (r.getJunction() != toSegment)
 				continue;
 
-			for (auto &&g : r.geometries)
+			for (auto &&g : r.getGeometries())
 			{
 				double x = g.x * cos(dPhi) - g.y * sin(dPhi);
 				double y = g.x * sin(dPhi) + g.y * cos(dPhi);
@@ -199,10 +199,10 @@ int RoadNetwork::linkSegments(pugi::xml_document &doc)
 		// update predecessor and successor
 		for (auto &&r : data.getRoads())
 		{
-			if (r.id == toRoadId)
-				r.predecessor.id = fromRoadId;
-			if (r.id == fromRoadId)
-				r.successor.id = toRoadId;
+			if (r.getID() == toRoadId)
+				r.getPredecessor().id = fromRoadId;
+			if (r.getID() == fromRoadId)
+				r.getSucessor().id = toRoadId;
 		}
 	}
 	return 0;

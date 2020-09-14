@@ -12,6 +12,7 @@
  */
 
 #include "interface.h"
+#include "road.h"
 #include "helper.h"
 
 #include <stdio.h>
@@ -20,8 +21,8 @@
 /**
  * @brief function adds a laneSection with laneWideing to a given lanesection set
  * 
- * @param secs          std::vector of all lanesections of a road
- * @param side          determines the road's side of the widening
+ * @param secs          std::vector of all lanesections of a Road
+ * @param side          determines the Road's side of the widening
  * @param s             position of lane widening
  * @param ds            length of lane widening
  * @param addouterLane  specifies if additional lane is on the outer side or not
@@ -32,8 +33,8 @@ int addLaneWidening(std::vector<laneSection> &secs, int side, double s, double d
 /**
  * @brief function adds a laneSection with laneDrop to a given lanesection set
  * 
- * @param secs      std::vector of all lanesections of a road
- * @param side      determines the road's side of the drop
+ * @param secs      std::vector of all lanesections of a Road
+ * @param side      determines the Road's side of the drop
  * @param s         position of laneDrop
  * @param ds        length of laneDrop
  * @return int      error code
@@ -43,8 +44,8 @@ int addLaneDrop(std::vector<laneSection> &secs, int side, double s, double ds);
 /**
  * @brief function adds a laneSection with restricted area after a lane widening
  * 
- * @param secs      std::vector of all lanesections of a road
- * @param side      determines the road's side of the widening
+ * @param secs      std::vector of all lanesections of a Road
+ * @param side      determines the Road's side of the widening
  * @param s         position of lane widening
  * @param ds1       length of lane widening
  * @param ds2       length of restricted areay (always lager than ds1)
@@ -55,8 +56,8 @@ int addRestrictedAreaWidening(std::vector<laneSection> &secs, int side, double s
 /**
  * @brief function adds a laneSection with restricted area after a lane drop
  * 
- * @param secs      std::vector of all lanesections of a road
- * @param side      determines the road's side of the drop
+ * @param secs      std::vector of all lanesections of a Road
+ * @param side      determines the Road's side of the drop
  * @param s         position of lane drop
  * @param ds1       length of lane drop
  * @param ds2       length of restricted areay (always lager than ds1)
@@ -67,7 +68,7 @@ int addRestrictedAreaDrop(std::vector<laneSection> &secs, int side, double s, do
 /**
  * @brief function creates laneWidenings in junction areas (in opposite s direction), for additional turning lanes 
  * 
- * @param r                 road data
+ * @param r                 Road data
  * @param s                 start of widening
  * @param s                 length of widening
  * @param turn              1 = left lane turn, -1 = right lane turn
@@ -75,6 +76,6 @@ int addRestrictedAreaDrop(std::vector<laneSection> &secs, int side, double s, do
  * @param restricted        determines if widening is a restricted area
  * @return int              error code
  */
-int laneWideningJunction(road &r, double s, double ds, int turn, bool verschwenkung, bool restricted);
+int laneWideningJunction(Road &r, double s, double ds, int turn, bool verschwenkung, bool restricted);
 
 #endif

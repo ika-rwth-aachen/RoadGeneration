@@ -12,6 +12,7 @@
  */
 
 #include "interface.h"
+#include "road.h"
 
 #include <vector>
 #include <string>
@@ -94,7 +95,7 @@ int findLane(laneSection sec, lane &l, int id);
  * @param id    roadId of the lane to find
  * @return int  position in road std::vector
  */
-int findRoad(std::vector<road> roads, road &r, int id);
+int findRoad(std::vector<Road> roads, Road &r, int id);
 
 /**
  * @brief function determines lanewidth of the given lane at positon s
@@ -173,7 +174,7 @@ int findOuterMiddleLane(laneSection sec, int side);
  * @param mode  either right-right / middle-middle / left-left
  * @return int  error code
  */
-int calcFromTo(road r1, road r2, int &from, int &to, int &nF, int &nT, int mode);
+int calcFromTo(Road r1, Road r2, int &from, int &to, int &nF, int &nT, int mode);
 
 /**
  * @brief function sorts the roads r2,r3,r4 to their corresponding angle
@@ -184,7 +185,7 @@ int calcFromTo(road r1, road r2, int &from, int &to, int &nF, int &nT, int mode)
  * @param r4    third additional road
  * @return int  error code
  */
-int sortRoads(road r1, road &r2, road &r3, road &r4);
+int sortRoads(Road r1, Road &r2, Road &r3, Road &r4);
 
 /**
  * @brief function sorts the roads r2,r3 to their corresponding angle
@@ -194,7 +195,7 @@ int sortRoads(road r1, road &r2, road &r3, road &r4);
  * @param r3    second additional road
  * @return int  error code
  */
-int sortRoads(road r1, road &r2, road &r3);
+int sortRoads(Road r1, Road &r2, Road &r3);
 
 /**
  * @brief function computes intersection point

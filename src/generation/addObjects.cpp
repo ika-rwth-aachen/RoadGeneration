@@ -21,7 +21,7 @@
  * @param r         road data
  * @return int      error code
  */
-int addTrafficIsland(object o, road &r)
+int addTrafficIsland(object o, Road &r)
 {
     /*  design of a trafficIsland
      *          __________
@@ -31,15 +31,15 @@ int addTrafficIsland(object o, road &r)
      *         \__________/
      */
 
-    r.objects.push_back(o);
+    r.getObjects().push_back(o);
 
     // find laneSection
     int i;
     laneSection lS;
-    for (i = r.laneSections.size() - 1; i >= 0; i--)
-        if (r.laneSections[i].s < o.s)
+    for (i = r.getLaneSections().size() - 1; i >= 0; i--)
+        if (r.getLaneSections()[i].s < o.s)
         {
-            lS = r.laneSections[i];
+            lS = r.getLaneSections()[i];
             break;
         }
 
@@ -52,7 +52,7 @@ int addTrafficIsland(object o, road &r)
     laneSection sec;
 
     // --- part 1 (opening)
-    sec = r.laneSections[i];
+    sec = r.getLaneSections()[i];
     sec.s = o.s - o.length;
 
     l.w.d = -2 * w / pow(ds, 3);
@@ -70,10 +70,10 @@ int addTrafficIsland(object o, road &r)
     l.id = -1;
     sec.lanes.push_back(l);
 
-    r.laneSections.push_back(sec);
+    r.getLaneSections().push_back(sec);
 
     // --- part 2 (straight)
-    sec = r.laneSections[i];
+    sec = r.getLaneSections()[i];
     sec.s = o.s - o.length / 2;
 
     l.w.d = 0;
@@ -91,10 +91,10 @@ int addTrafficIsland(object o, road &r)
     l.id = -1;
     sec.lanes.push_back(l);
 
-    r.laneSections.push_back(sec);
+    r.getLaneSections().push_back(sec);
 
     // --- part 3 (closing)
-    sec = r.laneSections[i];
+    sec = r.getLaneSections()[i];
     sec.s = o.s + o.length / 2;
 
     l.w.d = 2 * w / pow(ds, 3);
@@ -112,13 +112,13 @@ int addTrafficIsland(object o, road &r)
     l.id = -1;
     sec.lanes.push_back(l);
 
-    r.laneSections.push_back(sec);
+    r.getLaneSections().push_back(sec);
 
     // --- part 4 (after trafficIsland)
-    sec = r.laneSections[i];
+    sec = r.getLaneSections()[i];
     sec.s = o.s + o.length;
 
-    r.laneSections.push_back(sec);
+    r.getLaneSections().push_back(sec);
 
     return 0;
 }
@@ -131,30 +131,30 @@ int addTrafficIsland(object o, road &r)
  * @param laneId    lane which contains the roadwork
  * @return int      error code
  */
-int addRoadWork(object o, road &r, int laneId)
+int addRoadWork(object o, Road &r, int laneId)
 {
     std::vector<laneSection>::iterator it;
 
     // find lane section of starting point
     int i = 0;
     bool found = false;
-    for (i = 0; i < r.laneSections.size() - 1; i++)
+    for (i = 0; i < r.getLaneSections().size() - 1; i++)
     {
-        if (r.laneSections[i].s <= o.s && r.laneSections[i + 1].s > o.s)
+        if (r.getLaneSections()[i].s <= o.s && r.getLaneSections()[i + 1].s > o.s)
         {
             found = true;
-            it = r.laneSections.begin() + i;
+            it = r.getLaneSections().begin() + i;
             break;
         }
     }
     if (!found)
     {
-        it = r.laneSections.begin() + r.laneSections.size() - 1;
-        i = r.laneSections.size() - 1;
+        it = r.getLaneSections().begin() + r.getLaneSections().size() - 1;
+        i = r.getLaneSections().size() - 1;
     }
 
     // if laneSection does not end before end of roadwork
-    if (i == r.laneSections.size() - 1 || r.laneSections[i + 1].s - it->s > o.len)
+    if (i == r.getLaneSections().size() - 1 || r.getLaneSections()[i + 1].s - it->s > o.len)
     {
         laneSection adLaneSec = *it;
         adLaneSec.id++;
@@ -162,18 +162,18 @@ int addRoadWork(object o, road &r, int laneId)
 
         it++;
         i++;
-        r.laneSections.insert(it, adLaneSec);
+        r.getLaneSections().insert(it, adLaneSec);
 
         lane l;
-        int id = findLane(r.laneSections[i], l, laneId);
-        r.laneSections[i].lanes[id].type = "roadWorks";
+        int id = findLane(r.getLaneSections()[i], l, laneId);
+        r.getLaneSections()[i].lanes[id].type = "roadWorks";
 
         adLaneSec.id++;
         adLaneSec.s += o.len;
 
         it++;
         i++;
-        r.laneSections.insert(it, adLaneSec);
+        r.getLaneSections().insert(it, adLaneSec);
     }
     else
     {
@@ -183,9 +183,9 @@ int addRoadWork(object o, road &r, int laneId)
 
     // shift remaining sections
     i++;
-    for (; i < r.laneSections.size(); i++)
+    for (; i < r.getLaneSections().size(); i++)
     {
-        r.laneSections[i].id++;
+        r.getLaneSections()[i].id++;
     }
     return 0;
 }
@@ -197,15 +197,15 @@ int addRoadWork(object o, road &r, int laneId)
  * @param r         road data
  * @return int      error code
  */
-int addParking(object o, road &r)
+int addParking(object o, Road &r)
 {
     // find laneSection
     int i;
-    for (i = r.laneSections.size() - 1; i >= 0; i--)
-        if (r.laneSections[i].s < o.s)
+    for (i = r.getLaneSections().size() - 1; i >= 0; i--)
+        if (r.getLaneSections()[i].s < o.s)
             break;
 
-    laneSection lS = r.laneSections[i];
+    laneSection lS = r.getLaneSections()[i];
 
     int laneId;
     if (o.t > 0)
@@ -225,7 +225,7 @@ int addParking(object o, road &r)
         o.t = t + sgn(laneId) * abs(o.width / (2 * cos(o.hdg)));
         o.distance = abs(o.length / cos(o.hdg));
     }
-    r.objects.push_back(o);
+    r.getObjects().push_back(o);
 
     return 0;
 }
@@ -237,14 +237,14 @@ int addParking(object o, road &r)
  * @param r     road data
  * @return int  error code
  */
-int addBusStop(object o, road &r)
+int addBusStop(object o, Road &r)
 {
     // find starting laneSection
     int i;
-    for (i = r.laneSections.size() - 1; i >= 0; i--)
-        if (r.laneSections[i].s < o.s)
+    for (i = r.getLaneSections().size() - 1; i >= 0; i--)
+        if (r.getLaneSections()[i].s < o.s)
             break;
-    laneSection lS = r.laneSections[i];
+    laneSection lS = r.getLaneSections()[i];
 
     int side;
     if (o.t > 0)
@@ -255,12 +255,12 @@ int addBusStop(object o, road &r)
     double length = setting.busStop.length;
     double widening = setting.busStop.widening;
 
-    if (addLaneWidening(r.laneSections, side, o.s - length / 2 - widening, widening, true))
+    if (addLaneWidening(r.getLaneSections(), side, o.s - length / 2 - widening, widening, true))
         {
             std::cerr << "ERR: error in addLaneWidening" << std::endl;
             return 1;
         }
-    if (addLaneDrop(r.laneSections, side, o.s + length / 2, widening))
+    if (addLaneDrop(r.getLaneSections(), side, o.s + length / 2, widening))
     {
         std::cerr << "ERR: error in addLaneDrop" << std::endl;
         return 1;
@@ -308,7 +308,7 @@ int getPosition(pugi::xml_node node, object &o)
  * @param data      roadNetwork structure where the generated roads and junctions are stored
  * @return int      error code
  */
-int addObjects(pugi::xml_node inRoad, road &r, RoadNetwork &data)
+int addObjects(pugi::xml_node inRoad, Road &r, RoadNetwork &data)
 {
     for (pugi::xml_node obj : inRoad.child("objects").children())
     {
@@ -335,7 +335,7 @@ int addObjects(pugi::xml_node inRoad, road &r, RoadNetwork &data)
         {
             o.type = type;
             o.distance = 20;
-            r.objects.push_back(o);
+            r.getObjects().push_back(o);
         }
 
         if (type == "roadWork")
@@ -383,7 +383,7 @@ int addObjects(pugi::xml_node inRoad, road &r, RoadNetwork &data)
             s.t = ob.child("relativePosition").attribute("t").as_double();
             s.z = ob.child("relativePosition").attribute("z").as_double();
 
-            r.signs.push_back(s);
+            r.getSigns().push_back(s);
 
             if (s.dynamic)
                 c.signs.push_back(s);
@@ -405,18 +405,18 @@ int addObjects(pugi::xml_node inRoad, road &r, RoadNetwork &data)
  * @param controller    controllerof signal
  * @return int          error code
  */
-int addSignal(road &r, RoadNetwork &data, double s, double t, std::string type, std::string subtype, int controller)
+int addSignal(Road &r, RoadNetwork &data, double s, double t, std::string type, std::string subtype, int controller)
 {
     if (controller == -1)
-        controller = 1000 + r.junction * 100;
+        controller = 1000 + r.getJunction() * 100;
 
-    laneSection lS = r.laneSections.front();
+    laneSection lS = r.getLaneSections().front();
 
     if (t == INFINITY)
         t = findTOffset(lS, findMaxLaneId(lS), s) + 1;
     if (t == -INFINITY)
         t = findTOffset(lS, findMinLaneId(lS), s) - 1;
-    t += r.laneSections.front().o.a;
+    t += r.getLaneSections().front().o.a;
 
     // search controller for given junction
     bool found = false;
@@ -470,7 +470,7 @@ int addSignal(road &r, RoadNetwork &data, double s, double t, std::string type, 
 
     // TODO add more
 
-    r.signs.push_back(sig);
+    r.getSigns().push_back(sig);
     data.getController()[i].signs.push_back(sig);
 
     return 0;

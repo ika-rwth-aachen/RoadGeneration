@@ -231,7 +231,9 @@ struct control
  * @brief road holding all properties of a road
  * 
  */
-struct road
+
+
+/**struct road
 {
     int id = -1;
     int inputId = -1;     // original id from input file
@@ -250,5 +252,6 @@ struct road
     std::vector<object> objects;
     std::vector<sign> signs;
 };
+*/
 
 #endif

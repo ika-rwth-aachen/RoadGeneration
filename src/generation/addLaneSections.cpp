@@ -535,7 +535,7 @@ int addRestrictedAreaDrop(std::vector<laneSection> &secs, int side, double s, do
  * @param restricted        determines if widening is a restricted area
  * @return int              error code
  */
-int laneWideningJunction(road &r, double s, double ds, int turn, bool verschwenkung, bool restricted)
+int laneWideningJunction(Road &r, double s, double ds, int turn, bool verschwenkung, bool restricted)
 {
     /*
         s > 0 -> laneWidening
@@ -552,7 +552,7 @@ int laneWideningJunction(road &r, double s, double ds, int turn, bool verschwenk
     if (restricted)
         turn = 1;
 
-    std::vector<laneSection>::iterator it = r.laneSections.begin();
+    std::vector<laneSection>::iterator it = r.getLaneSections().begin();
 
     laneSection adLaneSec = *it;
     adLaneSec.s = 0;
@@ -636,7 +636,7 @@ int laneWideningJunction(road &r, double s, double ds, int turn, bool verschwenk
     }
 
     // insert lane section
-    it = r.laneSections.insert(it, adLaneSec);
+    it = r.getLaneSections().insert(it, adLaneSec);
     it++;
 
     // ---------------------------------------------------------------------
@@ -712,11 +712,11 @@ int laneWideningJunction(road &r, double s, double ds, int turn, bool verschwenk
     }
 
     // update lane links in next lane section
-    it = r.laneSections.insert(it, adLaneSec);
+    it = r.getLaneSections().insert(it, adLaneSec);
     it++;
 
     // --- shift all lanes in following lane sections --------------------------
-    for (; it != r.laneSections.end(); ++it)
+    for (; it != r.getLaneSections().end(); ++it)
     {
         it->id += 2;
         it->s += s + ds;

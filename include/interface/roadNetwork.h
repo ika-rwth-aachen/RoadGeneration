@@ -3,6 +3,7 @@
 
 #include "settings.h"
 #include "interface.h"
+#include "road.h"
 #include "pugixml.hpp"
 
 #include <xercesc/util/XMLString.hpp>
@@ -25,7 +26,7 @@ class RoadNetwork
     private:
 
         std::string file;
-        std::vector<road> roads;
+        std::vector<Road> roads;
         std::vector<junction> junctions;
         std::vector<control> controller; 
 
@@ -39,7 +40,7 @@ class RoadNetwork
         ~RoadNetwork();
 
         std::string getFile();
-        std::vector<road> &getRoads();
+        std::vector<Road> &getRoads();
         std::vector<control> &getController();
         std::vector<junction> &getJunctions();
 
@@ -47,7 +48,7 @@ class RoadNetwork
         int linkSegments(pugi::xml_document &doc);
         int closeRoadNetwork(pugi::xml_document &doc);
 
-        void pushRoad(road r);
+        void pushRoad(Road r);
         void pushJunction(junction j);
         void pushControl(control c);
         void setFile(std::string file);
