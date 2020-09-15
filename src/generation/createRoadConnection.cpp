@@ -18,7 +18,7 @@
 #include "helper.h"
 #include "curve.h"
 #include "createLaneConnection.h"
-
+#include "road.h"
 /**
  * @brief function creates a new road connection 
  * 
@@ -32,19 +32,19 @@
  * @param laneMarkRight     right roadmarking
  * @return int              error code
  */
-int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, int toId, std::string laneMarkLeft, std::string laneMarkRight)
+int createRoadConnection(Road r1, Road r2, Road &r, junction &junc, int fromId, int toId, std::string laneMarkLeft, std::string laneMarkRight)
 {
     laneSection lS;
-    if (r.laneSections.size() == 0)
-        r.laneSections.push_back(lS);
+    if (r.getLaneSections().size() == 0)
+        r.getLaneSections().push_back(lS);
 
-    r.junction = junc.id;
-    r.predecessor.id = r1.id;
-    r.successor.id = r2.id;
-    r.predecessor.elementType = roadType;
-    r.successor.elementType = roadType;
-    r.predecessor.contactPoint = startType;
-    r.successor.contactPoint = startType;
+    r.setJunction(junc.id);
+    r.getPredecessor().id = r1.getID();
+    r.getSucessor().id = r1.getID();
+    r.getPredecessor().elementType = roadType;
+    r.getSucessor().elementType = roadType;
+    r.getPredecessor().contactPoint = startType;
+    r.getSucessor().contactPoint = startType;
 
     // connect r1 with r2 at reference points
     double x1, y1, hdg1, x2, y2, hdg2, s1, s2;
@@ -52,10 +52,10 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     laneSection lS1, lS2;
 
     // --- compute starting point ----------------------------------------------
-    if (r1.predecessor.elementType == junctionType)
+    if (r1.getPredecessor().elementType == junctionType)
     {
-        g1 = r1.geometries.front();
-        lS1 = r1.laneSections.front();
+        g1 = r1.getGeometries().front();
+        lS1 = r1.getLaneSections().front();
         x1 = g1.x;
         y1 = g1.y;
         s1 = 0;
@@ -65,13 +65,13 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         fixAngle(hdg1);
     }
 
-    if (r1.successor.elementType == junctionType)
+    if (r1.getSucessor().elementType == junctionType)
     {
-        g1 = r1.geometries.back();
-        lS1 = r1.laneSections.back();
+        g1 = r1.getGeometries().back();
+        lS1 = r1.getLaneSections().back();
         x1 = g1.x;
         y1 = g1.y;
-        s1 = r1.length - lS1.s;
+        s1 = r1.getLength() - lS1.s;
         hdg1 = g1.hdg;
         curve(g1.length, g1, x1, y1, hdg1, 1);
 
@@ -83,17 +83,17 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     connection con1;
     con1.id = junc.connections.size() + 1;
     con1.contactPoint = startType;
-    con1.from = r1.id;
-    con1.to = r.id;
+    con1.from = r1.getID();
+    con1.to = r.getID();
     con1.fromLane = fromId;
     con1.toLane = sgn(toId);
     junc.connections.push_back(con1);
 
     // --- compute ending point ------------------------------------------------
-    if (r2.predecessor.elementType == junctionType)
+    if (r2.getPredecessor().elementType == junctionType)
     {
-        g2 = r2.geometries.front();
-        lS2 = r2.laneSections.front();
+        g2 = r2.getGeometries().front();
+        lS2 = r2.getLaneSections().front();
         x2 = g2.x;
         y2 = g2.y;
         s2 = 0;
@@ -103,13 +103,13 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         g2.hdg = hdg2;
     }
 
-    if (r2.successor.elementType == junctionType)
+    if (r2.getSucessor().elementType == junctionType)
     {
-        g2 = r2.geometries.back();
-        lS2 = r2.laneSections.back();
+        g2 = r2.getGeometries().back();
+        lS2 = r2.getLaneSections().back();
         x2 = g2.x;
         y2 = g2.y;
-        s2 = r2.length - lS2.s;
+        s2 = r2.getLength() - lS2.s;
         hdg2 = g2.hdg;
         curve(g2.length, g2, x2, y2, hdg2, 1);
 
@@ -124,8 +124,8 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     connection con2;
     con2.id = junc.connections.size() + 1;
     con2.contactPoint = endType;
-    con2.from = r.id;
-    con2.to = r2.id;
+    con2.from = r.getID();
+    con2.to = r2.getID();
     con2.fromLane = sgn(toId);
     con2.toLane = toId;
     junc.connections.push_back(con2);
@@ -183,8 +183,8 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         g.length = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
         g.type = line;
 
-        r.geometries.push_back(g);
-        r.length = g.length;
+        r.getGeometries().push_back(g);
+        r.setLength(g.length);
     }
     // combine an arc with a line to connect both points
     //  -> maybe better a composite curve
@@ -256,25 +256,25 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         if (d1 > d2)
         {
             g2.s = g1.length;
-            r.geometries.push_back(g1);
-            r.geometries.push_back(g2);
+            r.getGeometries().push_back(g1);
+            r.getGeometries().push_back(g2);
         }
         // first arc then line
         else if (d1 < d2)
         {
             g1.s = g2.length;
-            r.geometries.push_back(g2);
-            r.geometries.push_back(g1);
+            r.getGeometries().push_back(g2);
+            r.getGeometries().push_back(g1);
         }
         // only arc is necessary
         else
         {
-            r.geometries.push_back(g2);
+            r.getGeometries().push_back(g2);
         }
 
         if (d1 != d2)
-            r.length += g1.length;
-        r.length += g2.length;
+            r.setLength(r.getLength() + g1.length);
+        r.setLength(r.getLength()+ g2.length);
     }
 
     // --- lanemarkings in crossing section ------------------------------------

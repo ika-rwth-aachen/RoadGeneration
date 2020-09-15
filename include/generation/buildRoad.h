@@ -38,7 +38,7 @@ int computeFirstLast(pugi::xml_node roadIn, int &foundfirst, int &foundlast, dou
  * @param sEnd      end of the s interval
  * @return int      error code
  */
-int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &sEnd);
+int generateGeometries(pugi::xml_node roadIn, Road &r, double &sStart, double &sEnd);
 
 /**
  * @brief function shift the geometries of the reference line
@@ -52,7 +52,7 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
  * @param phi0      global angle of origin
  * @return int      error code
  */
-int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, double y0, double phi0);
+int shiftGeometries(Road &r, double sStart, double sEnd, double s0, double x0, double y0, double phi0);
 
 /**
  * @brief function flips geometries of reference line
@@ -60,7 +60,7 @@ int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, d
  * @param r     road data
  * @int         error code
  */
-int flipGeometries(road &r);
+int flipGeometries(Road &r);
 
 /**
  * @brief function adds lanes to the road structure
@@ -70,7 +70,7 @@ int flipGeometries(road &r);
  * @param mode      defines the mode (flipped or not)
  * @return int      error code
  */
-int addLanes(pugi::xml_node roadIn, road &r, int mode);
+int addLanes(pugi::xml_node roadIn, Road &r, int mode);
 
 /**
  * @brief function adds additional lane sections for changing lane structure
@@ -80,7 +80,7 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode);
  * @param automaticWidening     automatic widing input data
  * @return int                  error code
  */
-int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automaticWidening);
+int addLaneSectionChanges(pugi::xml_node roadIn, Road &r, pugi::xml_node automaticWidening);
 
 /**
  * @brief function builds a road based on the input data
@@ -96,6 +96,6 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
  * @param phi0              reference angle
  * @return int              error code
  */
-int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::xml_node automaticWidening, double s0, double x0, double y0, double phi0);
+int buildRoad(pugi::xml_node roadIn, Road &r, double sStart, double sEnd, pugi::xml_node automaticWidening, double s0, double x0, double y0, double phi0);
 
 #endif

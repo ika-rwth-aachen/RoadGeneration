@@ -28,7 +28,7 @@ extern settings setting;
  * @param right     right roadmarking
  * @return int      error code
  */
-int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, int to, std::string left, std::string right)
+int createLaneConnection(Road &r, laneSection lS1, laneSection lS2, int from, int to, std::string left, std::string right)
 {
     if (from == 0 || to == 0)
     {
@@ -65,12 +65,12 @@ int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, in
 
     // check if center already contained in laneSection
     bool foundCenter = false;
-    for (int i = 0; i < r.laneSections.back().lanes.size(); i++)
+    for (int i = 0; i < r.getLaneSections().back().lanes.size(); i++)
     {
-        if (r.laneSections.back().lanes[i].id == 0)
+        if (r.getLaneSections().back().lanes[i].id == 0)
         {
             foundCenter = true;
-            r.laneSections.back().lanes[i].rm.type = "none";
+            r.getLaneSections().back().lanes[i].rm.type = "none";
             break;
         }
     }
@@ -98,18 +98,18 @@ int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, in
     }
 
     // width of newLane
-    newLane.w.d = -2 * (w2 - w1) / pow(r.length, 3);
-    newLane.w.c = 3 * (w2 - w1) / pow(r.length, 2);
+    newLane.w.d = -2 * (w2 - w1) / pow(r.getLength(), 3);
+    newLane.w.c = 3 * (w2 - w1) / pow(r.getLength(), 2);
     newLane.w.b = 0;
     newLane.w.a = w1;
 
     // add lanes to laneSection
     if (!foundCenter)
     {
-        r.laneSections.back().lanes.push_back(center);
+        r.getLaneSections().back().lanes.push_back(center);
     }
 
-    r.laneSections.back().lanes.push_back(newLane);
+    r.getLaneSections().back().lanes.push_back(newLane);
 
     return 0;
 }

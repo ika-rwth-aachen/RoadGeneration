@@ -26,6 +26,6 @@
  * @param right     right roadmarking
  * @return int      error code
  */
-int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, int to, std::string left, std::string right);
+int createLaneConnection(Road &r, laneSection lS1, laneSection lS2, int from, int to, std::string left, std::string right);
 
 #endif

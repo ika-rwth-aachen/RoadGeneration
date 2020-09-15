@@ -36,10 +36,10 @@ int connectingRoad(pugi::xml_node &node, RoadNetwork &data)
     // --- generate roads ------------------------------------------------------
     std::cout << "\t Generating Roads" << std::endl;
 
-    road r;
+    Road r;
     int id = mainRoad.attribute("id").as_int();
-    r.id = 100 * node.attribute("id").as_int() + id;
-    r.junction = node.attribute("id").as_int();
+    r.setID( 100 * node.attribute("id").as_int() + id);
+    r.setJunction(node.attribute("id").as_int());
 
     if (buildRoad(mainRoad, r, 0, INFINITY, dummy, 0, 0, 0, 0))
     {

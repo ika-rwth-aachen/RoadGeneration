@@ -28,6 +28,14 @@ class Road
 
     public:
 
+    std::string getClassification(){
+        return _classification;
+    }
+
+    void setClassification(std::string classification){
+        _classification = classification;
+    }
+
     std::vector<sign>& getSigns(){
         return _signs;
     }

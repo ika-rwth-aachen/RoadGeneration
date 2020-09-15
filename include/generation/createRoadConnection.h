@@ -12,7 +12,7 @@
  */
 
 #include "interface.h"
-
+#include "road.h"
 #include <string>
 
 /**
@@ -28,6 +28,6 @@
  * @param laneMarkRight     right roadmarking
  * @return int              error code
  */
-int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, int toId, std::string laneMarkLeft, std::string laneMarkRight);
+int createRoadConnection(Road r1, Road r2, Road &r, junction &junc, int fromId, int toId, std::string laneMarkLeft, std::string laneMarkRight);
 
 #endif
