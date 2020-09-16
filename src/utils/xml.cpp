@@ -215,7 +215,7 @@ int createXML(pugi::xml_document &doc, RoadNetwork data)
     {
         pugi::xml_node road = root.append_child("road");
 
-        road.append_attribute("id") = it->getLength();
+        road.append_attribute("id") = it->getID();
         road.append_attribute("length") = it->getLength();
         road.append_attribute("junction") = it->getJunction();
 
