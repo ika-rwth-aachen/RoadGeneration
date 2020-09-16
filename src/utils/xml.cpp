@@ -219,7 +219,7 @@ int createXML(pugi::xml_document &doc, RoadNetwork data)
         road.append_attribute("length") = it->getLength();
         road.append_attribute("junction") = it->getJunction();
 
-        appendLinkToNode(road, it->getSucessor(), it->getPredecessor());
+        appendLinkToNode(road, it->getSuccessor(), it->getPredecessor());
 
         road.append_child("type").append_attribute("s") = "0";
         road.child("type").append_attribute("type") = it->getType().c_str();

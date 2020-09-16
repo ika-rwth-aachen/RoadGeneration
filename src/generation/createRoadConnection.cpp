@@ -40,11 +40,11 @@ int createRoadConnection(Road r1, Road r2, Road &r, junction &junc, int fromId, 
 
     r.setJunction(junc.id);
     r.getPredecessor().id = r1.getID();
-    r.getSucessor().id = r1.getID();
+    r.getSuccessor().id = r2.getID();
     r.getPredecessor().elementType = roadType;
-    r.getSucessor().elementType = roadType;
+    r.getSuccessor().elementType = roadType;
     r.getPredecessor().contactPoint = startType;
-    r.getSucessor().contactPoint = startType;
+    r.getSuccessor().contactPoint = startType;
 
     // connect r1 with r2 at reference points
     double x1, y1, hdg1, x2, y2, hdg2, s1, s2;
@@ -65,7 +65,7 @@ int createRoadConnection(Road r1, Road r2, Road &r, junction &junc, int fromId, 
         fixAngle(hdg1);
     }
 
-    if (r1.getSucessor().elementType == junctionType)
+    if (r1.getSuccessor().elementType == junctionType)
     {
         g1 = r1.getGeometries().back();
         lS1 = r1.getLaneSections().back();
@@ -103,7 +103,7 @@ int createRoadConnection(Road r1, Road r2, Road &r, junction &junc, int fromId, 
         g2.hdg = hdg2;
     }
 
-    if (r2.getSucessor().elementType == junctionType)
+    if (r2.getSuccessor().elementType == junctionType)
     {
         g2 = r2.getGeometries().back();
         lS2 = r2.getLaneSections().back();

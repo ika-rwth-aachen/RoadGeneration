@@ -202,7 +202,7 @@ int RoadNetwork::linkSegments(pugi::xml_document &doc)
 			if (r.getID() == toRoadId)
 				r.getPredecessor().id = fromRoadId;
 			if (r.getID() == fromRoadId)
-				r.getSucessor().id = toRoadId;
+				r.getSuccessor().id = toRoadId;
 		}
 	}
 	return 0;

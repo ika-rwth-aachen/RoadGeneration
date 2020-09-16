@@ -68,11 +68,15 @@ class Road
         _predecessor = pre;
     }
 
+     void setSuccessor(link suc){
+        _successor = suc;
+    }
+
     link& getPredecessor(){
         return _predecessor;
     }
 
-    link& getSucessor(){
+    link& getSuccessor(){
         return _successor;
     }
 

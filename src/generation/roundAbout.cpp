@@ -173,9 +173,9 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         Road r1;
         r1.setID(100 * junc.id + cc * 10 + nCount);
         r1.setJunction(junc.id);
-        r1.getSucessor().id = junc.id;
-        r1.getSucessor().elementType = junctionType;
-        r1.getSucessor().contactPoint = startType;
+        r1.getSuccessor().id = junc.id;
+        r1.getSuccessor().elementType = junctionType;
+        r1.getSuccessor().contactPoint = startType;
         if (cc == 1)
             sOld = sOffMain;
 
@@ -221,9 +221,9 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         else // last segment
         {
             helper = rOld;
-            helper.getSucessor().elementType = roadType;
-            helper.getSucessor().id = -101;
-            helper.getSucessor().contactPoint = startType;
+            helper.getSuccessor().elementType = roadType;
+            helper.getSuccessor().id = -101;
+            helper.getSuccessor().contactPoint = startType;
         }
         helper.getPredecessor().id = junc.id;
         helper.getPredecessor().elementType = junctionType;

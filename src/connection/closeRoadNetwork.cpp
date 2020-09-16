@@ -106,8 +106,8 @@ int RoadNetwork::closeRoadNetwork(pugi::xml_document &doc)
 				fromX = g.x;
 				fromY = g.y;
 				fromHdg = g.hdg;
-				r.getSucessor().id = rConnection.getID();
-				r.getSucessor().contactPoint = startType;
+				r.getSuccessor().id = rConnection.getID();
+				r.getSuccessor().contactPoint = startType;
 				rConnection.getPredecessor().id = fromRoadId;
 				rConnection.getPredecessor().contactPoint = endType;
 				lS1 = r.getLaneSections().back();
@@ -149,8 +149,8 @@ int RoadNetwork::closeRoadNetwork(pugi::xml_document &doc)
 				toHdg = r.getGeometries().front().hdg;
 				r.getPredecessor().id = rConnection.getID();
 				r.getPredecessor().contactPoint = endType;
-				rConnection.getSucessor().id = r.getID();
-				rConnection.getSucessor().contactPoint = startType;
+				rConnection.getSuccessor().id = r.getID();
+				rConnection.getSuccessor().contactPoint = startType;
 				lS2 = r.getLaneSections().front();
 			}
 			else if (toPos == "end")
@@ -160,10 +160,10 @@ int RoadNetwork::closeRoadNetwork(pugi::xml_document &doc)
 				toY = g.y;
 				toHdg = g.hdg;
 				curve(g.length, g, toX, toY, toHdg, 1);
-				r.getSucessor().id = rConnection.getID();
-				r.getSucessor().contactPoint = endType;
-				rConnection.getSucessor().id = r.getID();
-				rConnection.getSucessor().contactPoint = endType;
+				r.getSuccessor().id = rConnection.getID();
+				r.getSuccessor().contactPoint = endType;
+				rConnection.getSuccessor().id = r.getID();
+				rConnection.getSuccessor().contactPoint = endType;
 				lS2 = r.getLaneSections().back();
 			}
 			else
