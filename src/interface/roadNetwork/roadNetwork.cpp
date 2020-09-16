@@ -1,5 +1,6 @@
 
 #include "roadNetwork.h"
+#include "road.h"
 
         RoadNetwork::RoadNetwork(){}
         RoadNetwork::RoadNetwork(std::string f){
@@ -12,11 +13,11 @@
             return file;
         }
 
-         std::vector<road>& RoadNetwork::getRoads(){
+         std::vector<Road>& RoadNetwork::getRoads(){
             return roads;
         }
 
-        void RoadNetwork::pushRoad(road r){
+        void RoadNetwork::pushRoad(Road r){
             roads.push_back(r);
         }
 

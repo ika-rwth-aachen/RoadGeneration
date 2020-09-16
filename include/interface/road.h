@@ -28,6 +28,10 @@ class Road
 
     public:
 
+    std::string getType(){
+        return _type;
+    }
+
     std::string getClassification(){
         return _classification;
     }

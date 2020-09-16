@@ -211,23 +211,23 @@ int createXML(pugi::xml_document &doc, RoadNetwork data)
     geoReference.append_child(pugi::node_cdata).set_value("+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
 
     // --- write roads ---------------------------------------------------------
-    for (std::vector<road>::iterator it = data.getRoads().begin(); it != data.getRoads().end(); ++it)
+    for (std::vector<Road>::iterator it = data.getRoads().begin(); it != data.getRoads().end(); ++it)
     {
         pugi::xml_node road = root.append_child("road");
 
-        road.append_attribute("id") = it->id;
-        road.append_attribute("length") = it->length;
-        road.append_attribute("junction") = it->junction;
+        road.append_attribute("id") = it->getLength();
+        road.append_attribute("length") = it->getLength();
+        road.append_attribute("junction") = it->getJunction();
 
-        appendLinkToNode(road, it->successor, it->predecessor);
+        appendLinkToNode(road, it->getSucessor(), it->getPredecessor());
 
         road.append_child("type").append_attribute("s") = "0";
-        road.child("type").append_attribute("type") = it->type.c_str();
+        road.child("type").append_attribute("type") = it->getType().c_str();
 
         // --- write geometries ------------------------------------------------
         pugi::xml_node planView = road.append_child("planView");
 
-        for (std::vector<geometry>::iterator itt = it->geometries.begin(); itt != it->geometries.end(); ++itt)
+        for (std::vector<geometry>::iterator itt = it->getGeometries().begin(); itt != it->getGeometries().end(); ++itt)
         {
             pugi::xml_node geo = planView.append_child("geometry");
 
@@ -256,7 +256,7 @@ int createXML(pugi::xml_document &doc, RoadNetwork data)
         // --- write lanes -----------------------------------------------------
         pugi::xml_node lanes = road.append_child("lanes");
 
-        for (std::vector<laneSection>::iterator itt = it->laneSections.begin(); itt != it->laneSections.end(); ++itt)
+        for (std::vector<laneSection>::iterator itt = it->getLaneSections().begin(); itt != it->getLaneSections().end(); ++itt)
         {
             pugi::xml_node laneOffset = lanes.append_child("laneOffset");
 
@@ -267,7 +267,7 @@ int createXML(pugi::xml_document &doc, RoadNetwork data)
             laneOffset.append_attribute("d") = (itt->o.d);
         }
 
-        for (std::vector<laneSection>::iterator itt = it->laneSections.begin(); itt != it->laneSections.end(); ++itt)
+        for (std::vector<laneSection>::iterator itt = it->getLaneSections().begin(); itt != it->getLaneSections().end(); ++itt)
         {
             pugi::xml_node laneSection = lanes.append_child("laneSection");
             laneSection.append_attribute("s") = (itt->s);
@@ -350,8 +350,8 @@ int createXML(pugi::xml_document &doc, RoadNetwork data)
         // --- write objects ---------------------------------------------------
         pugi::xml_node objects = road.append_child("objects");
 
-        std::sort(it->objects.begin(), it->objects.end(), compareObjects);
-        for (std::vector<object>::iterator itt = it->objects.begin(); itt != it->objects.end(); ++itt)
+        std::sort(it->getObjects().begin(), it->getObjects().end(), compareObjects);
+        for (std::vector<object>::iterator itt = it->getObjects().begin(); itt != it->getObjects().end(); ++itt)
         {
             object o = *itt;
             pugi::xml_node obj = objects.append_child("object");
@@ -398,8 +398,8 @@ int createXML(pugi::xml_document &doc, RoadNetwork data)
         {
             pugi::xml_node signs = road.append_child("signals");
 
-            std::sort(it->signs.begin(), it->signs.end(), compareSignals);
-            for (std::vector<sign>::iterator itt = it->signs.begin(); itt != it->signs.end(); ++itt)
+            std::sort(it->getSigns().begin(), it->getSigns().end(), compareSignals);
+            for (std::vector<sign>::iterator itt = it->getSigns().begin(); itt != it->getSigns().end(); ++itt)
             {
                 sign s = *itt;
                 pugi::xml_node sig = signs.append_child("signal");

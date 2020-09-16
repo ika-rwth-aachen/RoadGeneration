@@ -9,7 +9,7 @@
  */
 
 #include "helper.h"
-
+#include "road.h"
 #include <stdio.h>
 #include <math.h>
 #include <iostream>
@@ -127,11 +127,11 @@ int findLane(laneSection sec, lane &l, int id)
  * @param id    roadId of the lane to find
  * @return int  position in road std::vector
  */
-int findRoad(std::vector<road> roads, road &r, int id)
+int findRoad(std::vector<Road> roads, Road &r, int id)
 {
     for (int i = 0; i < roads.size(); i++)
     {
-        if (roads[i].id == id)
+        if (roads[i].getID() == id)
         {
             r = roads[i];
             return i;
@@ -363,27 +363,27 @@ int findOuterMiddleLane(laneSection sec, int side)
  * @param mode  either right-right / middle-middle / left-left
  * @return int  error code
  */
-int calcFromTo(road r1, road r2, int &from, int &to, int &nF, int &nT, int mode)
+int calcFromTo(Road r1, Road r2, int &from, int &to, int &nF, int &nT, int mode)
 {
-    int r1_F_L = findLeftLane(r1.laneSections.front(), 1);
-    int r1_F_MI = findInnerMiddleLane(r1.laneSections.front(), 1);
-    int r1_F_MO = findOuterMiddleLane(r1.laneSections.front(), 1);
-    int r1_F_R = findRightLane(r1.laneSections.front(), 1);
+    int r1_F_L = findLeftLane(r1.getLaneSections().front(), 1);
+    int r1_F_MI = findInnerMiddleLane(r1.getLaneSections().front(), 1);
+    int r1_F_MO = findOuterMiddleLane(r1.getLaneSections().front(), 1);
+    int r1_F_R = findRightLane(r1.getLaneSections().front(), 1);
 
-    int r1_T_L = findLeftLane(r1.laneSections.front(), -1);
-    int r1_T_MI = findInnerMiddleLane(r1.laneSections.front(), -1);
-    int r1_T_MO = findOuterMiddleLane(r1.laneSections.front(), -1);
-    int r1_T_R = findRightLane(r1.laneSections.front(), -1);
+    int r1_T_L = findLeftLane(r1.getLaneSections().front(), -1);
+    int r1_T_MI = findInnerMiddleLane(r1.getLaneSections().front(), -1);
+    int r1_T_MO = findOuterMiddleLane(r1.getLaneSections().front(), -1);
+    int r1_T_R = findRightLane(r1.getLaneSections().front(), -1);
 
-    int r2_F_L = findLeftLane(r2.laneSections.front(), 1);
-    int r2_F_MI = findInnerMiddleLane(r2.laneSections.front(), 1);
-    int r2_F_MO = findOuterMiddleLane(r2.laneSections.front(), 1);
-    int r2_F_R = findRightLane(r2.laneSections.front(), 1);
+    int r2_F_L = findLeftLane(r2.getLaneSections().front(), 1);
+    int r2_F_MI = findInnerMiddleLane(r2.getLaneSections().front(), 1);
+    int r2_F_MO = findOuterMiddleLane(r2.getLaneSections().front(), 1);
+    int r2_F_R = findRightLane(r2.getLaneSections().front(), 1);
 
-    int r2_T_L = findLeftLane(r2.laneSections.front(), -1);
-    int r2_T_MI = findInnerMiddleLane(r2.laneSections.front(), -1);
-    int r2_T_MO = findOuterMiddleLane(r2.laneSections.front(), -1);
-    int r2_T_R = findRightLane(r2.laneSections.front(), -1);
+    int r2_T_L = findLeftLane(r2.getLaneSections().front(), -1);
+    int r2_T_MI = findInnerMiddleLane(r2.getLaneSections().front(), -1);
+    int r2_T_MO = findOuterMiddleLane(r2.getLaneSections().front(), -1);
+    int r2_T_R = findRightLane(r2.getLaneSections().front(), -1);
 
     // left to left
     if (mode == 1)
@@ -458,18 +458,18 @@ int calcFromTo(road r1, road r2, int &from, int &to, int &nF, int &nT, int mode)
  * @param r4    third additional road
  * @return int  error code
  */
-int sortRoads(road r1, road &r2, road &r3, road &r4)
+int sortRoads(Road r1, Road &r2, Road &r3, Road &r4)
 {
-    double phi1 = r2.geometries.front().hdg - r1.geometries.front().hdg + M_PI;
-    double phi2 = r3.geometries.front().hdg - r1.geometries.front().hdg + M_PI;
-    double phi3 = r4.geometries.front().hdg - r1.geometries.front().hdg + M_PI;
+    double phi1 = r2.getGeometries().front().hdg - r1.getGeometries().front().hdg + M_PI;
+    double phi2 = r3.getGeometries().front().hdg - r1.getGeometries().front().hdg + M_PI;
+    double phi3 = r4.getGeometries().front().hdg - r1.getGeometries().front().hdg + M_PI;
     fixAngle(phi1);
     fixAngle(phi2);
     fixAngle(phi3);
 
-    road tmpR2 = r2;
-    road tmpR3 = r3;
-    road tmpR4 = r4;
+    Road tmpR2 = r2;
+    Road tmpR3 = r3;
+    Road tmpR4 = r4;
 
     if (phi1 < phi2 && phi1 < phi3)
     {
@@ -529,15 +529,15 @@ int sortRoads(road r1, road &r2, road &r3, road &r4)
  * @param r3    second additional road
  * @return int  error code
  */
-int sortRoads(road r1, road &r2, road &r3)
+int sortRoads(Road r1, Road &r2, Road &r3)
 {
-    double phi1 = r2.geometries.front().hdg - r1.geometries.front().hdg + M_PI;
-    double phi2 = r3.geometries.front().hdg - r1.geometries.front().hdg + M_PI;
+    double phi1 = r2.getGeometries().front().hdg - r1.getGeometries().front().hdg + M_PI;
+    double phi2 = r3.getGeometries().front().hdg - r1.getGeometries().front().hdg + M_PI;
     fixAngle(phi1);
     fixAngle(phi2);
 
-    road tmpR2 = r2;
-    road tmpR3 = r3;
+    Road tmpR2 = r2;
+    Road tmpR3 = r3;
 
     if (phi1 < phi2)
     {

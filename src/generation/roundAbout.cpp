@@ -44,7 +44,7 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
     circleRoad.child("referenceLine").child("circle").append_attribute("R") = R;
 
     double sOld;
-    road rOld;
+    Road rOld;
 
     bool clockwise;
     if (R > 0)
@@ -104,8 +104,8 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         }
 
         // calculate width of circleRoad and addtionalRoad
-        road helpMain;
-        road helpAdd;
+        Road helpMain;
+        Road helpAdd;
         if (buildRoad(circleRoad, helpMain, 0, INFINITY, dummy, 0, 0, 0, 0))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
@@ -117,10 +117,10 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
             return 1;
         }
 
-        laneSection lSMain = helpMain.laneSections.front();
+        laneSection lSMain = helpMain.getLaneSections().front();
         double widthMain = abs(findTOffset(lSMain, findMinLaneId(lSMain), 0));
 
-        laneSection lSAdd = helpAdd.laneSections.front();
+        laneSection lSAdd = helpAdd.getLaneSections().front();
         double widthAdd = abs(findTOffset(lSAdd, findMinLaneId(lSAdd), 0)) + abs(findTOffset(lSAdd, findMaxLaneId(lSAdd), 0));
 
         // check offsets and adjust them if necessary (2 and 4 are safty factor)
@@ -170,12 +170,12 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         */
         int nCount = 1;
 
-        road r1;
-        r1.id = 100 * junc.id + cc * 10 + nCount;
-        r1.junction = junc.id;
-        r1.successor.id = junc.id;
-        r1.successor.elementType = junctionType;
-        r1.successor.contactPoint = startType;
+        Road r1;
+        r1.setID(100 * junc.id + cc * 10 + nCount);
+        r1.setJunction(junc.id);
+        r1.getSucessor().id = junc.id;
+        r1.getSucessor().elementType = junctionType;
+        r1.getSucessor().contactPoint = startType;
         if (cc == 1)
             sOld = sOffMain;
 
@@ -186,12 +186,12 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         }
         nCount++;
 
-        road r2;
-        r2.id = 100 * junc.id + cc * 10 + nCount;
-        r2.junction = junc.id;
-        r2.predecessor.id = junc.id;
-        r2.predecessor.elementType = junctionType;
-        r2.predecessor.contactPoint = startType;
+        Road r2;
+        r2.setID(100 * junc.id + cc * 10 + nCount);
+        r2.setJunction(junc.id);
+        r2.getPredecessor().id = junc.id;
+        r2.getPredecessor().elementType = junctionType;
+        r2.getPredecessor().contactPoint = startType;
         if (buildRoad(additionalRoad, r2, sAdd + sOffAdd, INFINITY, dummy, sAdd, iPx, iPy, iPhdg + phi))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
@@ -207,9 +207,9 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         // add signal to outgoing roads
         //addSignal(r2, data, 1, INFINITY, "1.000.001", "-", -1);
 
-        road helper;
-        helper.id = 100 * junc.id + cc * 10 + nCount;
-        helper.junction = junc.id;
+        Road helper;
+        helper.setID(100 * junc.id + cc * 10 + nCount);
+        helper.setJunction(junc.id);
         if (cc < nIp)
         {
             if (buildRoad(circleRoad, helper, sMain + sOffMain, sMain + 2 * sOffMain, dummy, sMain, iPx, iPy, iPhdg))
@@ -221,13 +221,13 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         else // last segment
         {
             helper = rOld;
-            helper.successor.elementType = roadType;
-            helper.successor.id = -101;
-            helper.successor.contactPoint = startType;
+            helper.getSucessor().elementType = roadType;
+            helper.getSucessor().id = -101;
+            helper.getSucessor().contactPoint = startType;
         }
-        helper.predecessor.id = junc.id;
-        helper.predecessor.elementType = junctionType;
-        helper.predecessor.contactPoint = startType;
+        helper.getPredecessor().id = junc.id;
+        helper.getPredecessor().elementType = junctionType;
+        helper.getPredecessor().contactPoint = startType;
 
         // --- generate connecting lanes ---------------------------------------
         std::cout << "\t Generate Connecting Lanes" << std::endl;
@@ -237,33 +237,33 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
 
         if (clockwise)
         {
-            outer1 = findOuterMiddleLane(r1.laneSections.back(), 1);
-            inner1 = findInnerMiddleLane(r1.laneSections.back(), 1);
+            outer1 = findOuterMiddleLane(r1.getLaneSections().back(), 1);
+            inner1 = findInnerMiddleLane(r1.getLaneSections().back(), 1);
 
-            outer2 = findOuterMiddleLane(helper.laneSections.back(), 1);
-            inner2 = findInnerMiddleLane(helper.laneSections.back(), 1);
+            outer2 = findOuterMiddleLane(helper.getLaneSections().back(), 1);
+            inner2 = findInnerMiddleLane(helper.getLaneSections().back(), 1);
 
             nLane = outer1 - inner1 + 1;
         }
         if (!clockwise)
         {
-            outer1 = findOuterMiddleLane(r1.laneSections.back(), -1);
-            inner1 = findInnerMiddleLane(r1.laneSections.back(), -1);
+            outer1 = findOuterMiddleLane(r1.getLaneSections().back(), -1);
+            inner1 = findInnerMiddleLane(r1.getLaneSections().back(), -1);
 
-            outer2 = findOuterMiddleLane(helper.laneSections.back(), -1);
-            inner2 = findInnerMiddleLane(helper.laneSections.back(), -1);
+            outer2 = findOuterMiddleLane(helper.getLaneSections().back(), -1);
+            inner2 = findInnerMiddleLane(helper.getLaneSections().back(), -1);
             nLane = inner1 - outer1 + 1;
         }
 
-        int r2_F_L = findLeftLane(r2.laneSections.front(), 1);
-        int r2_F_MI = findInnerMiddleLane(r2.laneSections.front(), 1);
-        int r2_F_MO = findOuterMiddleLane(r2.laneSections.front(), 1);
-        int r2_F_R = findRightLane(r2.laneSections.front(), 1);
+        int r2_F_L = findLeftLane(r2.getLaneSections().front(), 1);
+        int r2_F_MI = findInnerMiddleLane(r2.getLaneSections().front(), 1);
+        int r2_F_MO = findOuterMiddleLane(r2.getLaneSections().front(), 1);
+        int r2_F_R = findRightLane(r2.getLaneSections().front(), 1);
 
-        int r2_T_L = findLeftLane(r2.laneSections.front(), -1);
-        int r2_T_MI = findInnerMiddleLane(r2.laneSections.front(), -1);
-        int r2_T_MO = findOuterMiddleLane(r2.laneSections.front(), -1);
-        int r2_T_R = findRightLane(r2.laneSections.front(), -1);
+        int r2_T_L = findLeftLane(r2.getLaneSections().front(), -1);
+        int r2_T_MI = findInnerMiddleLane(r2.getLaneSections().front(), -1);
+        int r2_T_MO = findOuterMiddleLane(r2.getLaneSections().front(), -1);
+        int r2_T_R = findRightLane(r2.getLaneSections().front(), -1);
 
         // generate connections
         int from, to;
@@ -274,8 +274,8 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
 
         for (int i = 0; i < nLane; i++)
         {
-            road r;
-            r.id = 100 * junc.id + cc * 10 + nCount;
+            Road r;
+            r.setID(100 * junc.id + cc * 10 + nCount);
 
             if (clockwise)
             {
@@ -300,8 +300,8 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
             nCount++;
         }
 
-        road r5;
-        r5.id = 100 * junc.id + cc * 10 + nCount;
+        Road r5;
+        r5.setID(100 * junc.id + cc * 10 + nCount);
         if (clockwise)
         {
             from = outer1;
@@ -324,8 +324,8 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         }
         nCount++;
 
-        road r6;
-        r6.id = 100 * junc.id + cc * 10 + nCount;
+        Road r6;
+        r6.setID(100 * junc.id + cc * 10 + nCount);
         if (clockwise)
         {
             if (r2_T_R != 0)
@@ -347,9 +347,9 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         nCount++;
 
         // adjust precessor of first element, due to loop
-        r1.predecessor.id = junc.id;
-        r1.predecessor.elementType = junctionType;
-        r1.predecessor.contactPoint = startType;
+        r1.getPredecessor().id = junc.id;
+        r1.getPredecessor().elementType = junctionType;
+        r1.getPredecessor().contactPoint = startType;
 
         data.pushRoad(r1);
         data.pushRoad(r2);
