@@ -9,8 +9,9 @@
  */
 
 #include "connectingRoad.h"
-#include "buildRoad.h"
+#include "road.h"
 #include "addObjects.h"
+#include <math.h>
 
 /**
  * @brief function generates the road for a connecting road which is specified in the input file
@@ -41,7 +42,7 @@ int connectingRoad(pugi::xml_node &node, RoadNetwork &data)
     r.setID( 100 * node.attribute("id").as_int() + id);
     r.setJunction(node.attribute("id").as_int());
 
-    if (buildRoad(mainRoad, r, 0, INFINITY, dummy, 0, 0, 0, 0))
+    if (r.buildRoad(mainRoad, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
         std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;

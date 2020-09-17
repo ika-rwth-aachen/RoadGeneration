@@ -9,7 +9,7 @@
  */
 
 #include "roadNetwork.h"
-#include "generation/buildRoad.h"
+#include "road.h"
 #include "generation/addObjects.h"
 #include "createLaneConnection.h"
 #include "createRoadConnection.h"

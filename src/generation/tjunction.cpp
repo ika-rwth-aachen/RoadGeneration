@@ -13,6 +13,7 @@
 #include "roadNetwork.h"
 #include "settings.h"
 #include "helper.h"
+#include "addLaneSections.h"
 
 #include <stdio.h>
 #include <math.h>
@@ -113,21 +114,21 @@ int tjunction(pugi::xml_node &node, RoadNetwork &data)
 
     // calculate helper roads
     Road help1;
-    if (buildRoad(mainRoad, help1, 0, INFINITY, dummy, 0, 0, 0, 0))
+    if (help1.buildRoad(mainRoad, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
         std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
 
     Road help2;
-    if (buildRoad(additionalRoad1, help2, 0, INFINITY, dummy, 0, 0, 0, 0))
+    if (help2.buildRoad(additionalRoad1, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
         std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
 
     Road help3;
-    if (buildRoad(additionalRoad2, help3, 0, INFINITY, dummy, 0, 0, 0, 0))
+    if (help3.buildRoad(additionalRoad2, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
         std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
@@ -224,14 +225,14 @@ int tjunction(pugi::xml_node &node, RoadNetwork &data)
 
         // add street is left from road 1
         if (phi > 0)
-            if (buildRoad(mainRoad, r1, sMain - sOffMain, 0, automaticWidening, sMain, iPx, iPy, iPhdg))
+            if (r1.buildRoad(mainRoad, sMain - sOffMain, 0, automaticWidening, sMain, iPx, iPy, iPhdg))
             {
                 std::cerr << "ERR: error in buildRoad" << std::endl;
                 return 1;
             }
         // add street is right from road 1
         if (phi < 0)
-            if (buildRoad(mainRoad, r1, sMain - sOffMain, 0, automaticRestricted, sMain, iPx, iPy, iPhdg))
+            if (r1.buildRoad(mainRoad, sMain - sOffMain, 0, automaticRestricted, sMain, iPx, iPy, iPhdg))
             {
                 std::cerr << "ERR: error in buildRoad" << std::endl;
                 return 1;
@@ -239,7 +240,7 @@ int tjunction(pugi::xml_node &node, RoadNetwork &data)
     }
     if (mode == 2)
     {
-        if (buildRoad(mainRoad, r1, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
+        if (r1.buildRoad(mainRoad, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
             {
                 std::cerr << "ERR: error in buildRoad" << std::endl;
                 return 1;
@@ -263,14 +264,14 @@ int tjunction(pugi::xml_node &node, RoadNetwork &data)
 
         // add street is left from road 1
         if (phi > 0)
-            if (buildRoad(mainRoad, r2, sMain + sOffMain, INFINITY, automaticRestricted, sMain, iPx, iPy, iPhdg))
+            if (r2.buildRoad(mainRoad, sMain + sOffMain, INFINITY, automaticRestricted, sMain, iPx, iPy, iPhdg))
             {
                 std::cerr << "ERR: error in buildRoad" << std::endl;
                 return 1;
             }
         // add street is right from road 1
         if (phi < 0)
-            if (buildRoad(mainRoad, r2, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
+            if (r2.buildRoad(mainRoad, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
             {
                 std::cerr << "ERR: error in buildRoad" << std::endl;
                 return 1;
@@ -283,7 +284,7 @@ int tjunction(pugi::xml_node &node, RoadNetwork &data)
     }
     if (mode == 2)
     {
-        if (buildRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
+        if (r2.buildRoad(additionalRoad1, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
@@ -302,7 +303,7 @@ int tjunction(pugi::xml_node &node, RoadNetwork &data)
     r3.getPredecessor().id = junc.id;
     if (mode == 1)
     {
-        if (buildRoad(additionalRoad1, r3, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
+        if (r3.buildRoad(additionalRoad1, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
@@ -315,7 +316,7 @@ int tjunction(pugi::xml_node &node, RoadNetwork &data)
     }
     if (mode == 2)
     {
-        if (buildRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
+        if (r3.buildRoad(additionalRoad2, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;

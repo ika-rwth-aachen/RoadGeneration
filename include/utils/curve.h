@@ -1,7 +1,6 @@
 #ifndef CURVE
 #define CURVE
 
-
 /**
  * @file curve.h
  *
@@ -11,6 +10,7 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
+
 
 #include "helper.h"
 

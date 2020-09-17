@@ -10,9 +10,10 @@
 
 #include "roundAbout.h"
 #include "helper.h"
-#include "buildRoad.h"
+#include "road.h"
 #include "addObjects.h"
 #include "createRoadConnection.h"
+#include <math.h>
 
 /**
  * @brief function generates the roads and junctions for a roundabout which is specified in the input file
@@ -106,12 +107,12 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         // calculate width of circleRoad and addtionalRoad
         Road helpMain;
         Road helpAdd;
-        if (buildRoad(circleRoad, helpMain, 0, INFINITY, dummy, 0, 0, 0, 0))
+        if (helpMain.buildRoad(circleRoad, 0, INFINITY, dummy, 0, 0, 0, 0))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
-        if (buildRoad(additionalRoad, helpAdd, 0, INFINITY, dummy, 0, 0, 0, 0))
+        if (helpAdd.buildRoad(additionalRoad, 0, INFINITY, dummy, 0, 0, 0, 0))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
@@ -179,7 +180,7 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         if (cc == 1)
             sOld = sOffMain;
 
-        if (buildRoad(circleRoad, r1, sOld, sMain - sOffMain, dummy, sMain, iPx, iPy, iPhdg))
+        if (r1.buildRoad(circleRoad, sOld, sMain - sOffMain, dummy, sMain, iPx, iPy, iPhdg))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
@@ -192,7 +193,7 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         r2.getPredecessor().id = junc.id;
         r2.getPredecessor().elementType = junctionType;
         r2.getPredecessor().contactPoint = startType;
-        if (buildRoad(additionalRoad, r2, sAdd + sOffAdd, INFINITY, dummy, sAdd, iPx, iPy, iPhdg + phi))
+        if (r2.buildRoad(additionalRoad, sAdd + sOffAdd, INFINITY, dummy, sAdd, iPx, iPy, iPhdg + phi))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
@@ -212,7 +213,7 @@ int roundAbout(pugi::xml_node &node, RoadNetwork &data)
         helper.setJunction(junc.id);
         if (cc < nIp)
         {
-            if (buildRoad(circleRoad, helper, sMain + sOffMain, sMain + 2 * sOffMain, dummy, sMain, iPx, iPy, iPhdg))
+            if (helper.buildRoad(circleRoad, sMain + sOffMain, sMain + 2 * sOffMain, dummy, sMain, iPx, iPy, iPhdg))
             {
                 std::cerr << "ERR: error in buildRoad" << std::endl;
                 return 1;

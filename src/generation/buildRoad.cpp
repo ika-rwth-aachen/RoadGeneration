@@ -9,7 +9,7 @@
  */
 
 
-#include "buildRoad.h"
+#include "road.h"
 #include "curve.h"
 #include "addLaneSections.h"
 #include "pugixml.hpp"
@@ -29,7 +29,7 @@ extern settings setting;
  * @param sEnd          end of the s interval
  * @return int          error code
  */
-int computeFirstLast(pugi::xml_node roadIn, int &foundfirst, int &foundlast, double &sStart, double &sEnd)
+int Road::computeFirstLast(pugi::xml_node roadIn, int &foundfirst, int &foundlast, double &sStart, double &sEnd)
 {
     int cc = 0;
     double s = 0;
@@ -67,7 +67,7 @@ int computeFirstLast(pugi::xml_node roadIn, int &foundfirst, int &foundlast, dou
  * @param sEnd      end of the s interval
  * @return int      error code
  */
-int generateGeometries(pugi::xml_node roadIn, Road &r, double &sStart, double &sEnd)
+int Road::generateGeometries(pugi::xml_node roadIn, Road &r, double &sStart, double &sEnd)
 {
     // search first and last relevant geometry
     int foundfirst = -1;
@@ -234,7 +234,7 @@ int generateGeometries(pugi::xml_node roadIn, Road &r, double &sStart, double &s
  * @param phi0      global angle of origin
  * @return int      error code
  */
-int shiftGeometries(Road &r, double sStart, double sEnd, double s0, double x0, double y0, double phi0)
+int Road::shiftGeometries(Road &r, double sStart, double sEnd, double s0, double x0, double y0, double phi0)
 {
     /* -> s0 is located at x0, y0, phi0 
      * s0case 0: s0 lies between sStart and sEnd
@@ -323,7 +323,7 @@ int shiftGeometries(Road &r, double sStart, double sEnd, double s0, double x0, d
  * @param r     road data
  * @int         error code
  */
-int flipGeometries(Road &r)
+int Road::flipGeometries(Road &r)
 {
     Road rNew = r;
     rNew.getGeometries().clear();
@@ -366,7 +366,7 @@ int flipGeometries(Road &r)
  * @param mode      defines the mode (flipped or not)
  * @return int      error code
  */
-int addLanes(pugi::xml_node roadIn, Road &r, int mode)
+int Road::addLanes(pugi::xml_node roadIn, Road &r, int mode)
 {
     double desWidth = setting.width.standard;
     double desSpeed = setting.speed.standard;
@@ -489,7 +489,7 @@ int addLanes(pugi::xml_node roadIn, Road &r, int mode)
  * @param automaticWidening     automatic widing input data
  * @return int                  error code
  */
-int addLaneSectionChanges(pugi::xml_node roadIn, Road &r, pugi::xml_node automaticWidening)
+int Road::addLaneSectionChanges(pugi::xml_node roadIn, Road &r, pugi::xml_node automaticWidening)
 {
     // --- user defined lanedrops or lanewidenings -----------------------------
     //      -> have to be defined in increasing s order, because the lane changes are concatenated in s direction
@@ -644,8 +644,9 @@ int addLaneSectionChanges(pugi::xml_node roadIn, Road &r, pugi::xml_node automat
  * @param phi0              reference angle
  * @return int              error code
  */
-int buildRoad(pugi::xml_node roadIn, Road &r, double sStart, double sEnd, pugi::xml_node automaticWidening, double s0, double x0, double y0, double phi0)
+int Road::buildRoad(pugi::xml_node roadIn, double sStart, double sEnd, pugi::xml_node automaticWidening, double s0, double x0, double y0, double phi0)
 {
+    Road& r = *this;
     r.setClassification(roadIn.attribute("classification").value());
     r.setInputID(roadIn.attribute("id").as_int());
 

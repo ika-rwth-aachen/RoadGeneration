@@ -10,9 +10,11 @@
 
 #include "junctionWrapper.h"
 #include "pugixml.hpp"
+#include "addLaneSections.h"
 
 #include <stdio.h>
 #include <string>
+#include <math.h>
 
 extern settings setting;
 extern std::string::size_type st;
@@ -117,28 +119,28 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
 
     // calculate helper roads
     Road help1;
-    if (buildRoad(refRoad, help1, 0, INFINITY, dummy, 0, 0, 0, 0))
+    if (help1.buildRoad(refRoad, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
         std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
 
     Road help2;
-    if (buildRoad(additionalRoad1, help2, 0, INFINITY, dummy, 0, 0, 0, 0))
+    if (help2.buildRoad(additionalRoad1, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
         std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
 
     Road help3;
-    if (buildRoad(additionalRoad2, help3, 0, INFINITY, dummy, 0, 0, 0, 0))
+    if (help3.buildRoad(additionalRoad2, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
         std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
 
     Road help4;
-    if (buildRoad(additionalRoad3, help4, 0, INFINITY, dummy, 0, 0, 0, 0))
+    if (help4.buildRoad(additionalRoad3, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
         std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
@@ -252,7 +254,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     r1.getPredecessor().elementType = junctionType;
     if (mode == 1 || mode == 2)
     {
-        if (buildRoad(refRoad, r1, sMain - sOffMain, 0, automaticWidening, sMain, iPx, iPy, iPhdg))
+        if (r1.buildRoad(refRoad, sMain - sOffMain, 0, automaticWidening, sMain, iPx, iPy, iPhdg))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
@@ -260,7 +262,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     }
     if (mode == 3)
     {
-        if (buildRoad(refRoad, r1, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
+        if (r1.buildRoad(refRoad, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
@@ -279,7 +281,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     r2.getPredecessor().elementType = junctionType;
     if (mode == 1)
     {
-        if (buildRoad(additionalRoad1, r2, sAdd1 - sOffAdd1, 0, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
+        if (r2.buildRoad(additionalRoad1, sAdd1 - sOffAdd1, 0, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
@@ -287,7 +289,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     }
     if (mode == 2 || mode == 3)
     {
-        if (buildRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
+        if (r2.buildRoad(additionalRoad1, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
@@ -306,7 +308,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     r3.getPredecessor().elementType = junctionType;
     if (mode == 1 || mode == 2)
     {
-        if (buildRoad(refRoad, r3, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
+        if (r3.buildRoad(refRoad, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
@@ -319,7 +321,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     }
     if (mode == 3)
     {
-        if (buildRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
+        if (r3.buildRoad(additionalRoad2, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
@@ -338,7 +340,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     r4.getPredecessor().elementType = junctionType;
     if (mode == 1)
     {
-        if (buildRoad(additionalRoad1, r4, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
+        if (r4.buildRoad(additionalRoad1, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
@@ -351,7 +353,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     }
     if (mode == 2)
     {
-        if (buildRoad(additionalRoad2, r4, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
+        if (r4.buildRoad(additionalRoad2, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
@@ -364,7 +366,7 @@ int xjunction(pugi::xml_node &node, RoadNetwork& data)
     }
     if (mode == 3)
     {
-        if (buildRoad(additionalRoad3, r4, sAdd3 + sOffAdd3, INFINITY, automaticWidening, sAdd3, iPx, iPy, iPhdg + phi3))
+        if (r4.buildRoad(additionalRoad3, sAdd3 + sOffAdd3, INFINITY, automaticWidening, sAdd3, iPx, iPy, iPhdg + phi3))
         {
             std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
