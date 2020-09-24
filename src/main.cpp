@@ -50,16 +50,25 @@ settings setting;
 int main(int argc, char **argv)
 {
 	char *file;
+	char *targetFolder;
 
-	if (argc == 2)
-	{
-		file = argv[1];
-	}
-	else
-	{
-		cerr << "ERR: no input file provided." << endl;
+	//if (argc == 2)
+	//{
+	//	file = argv[1];
+	//}
+	//else
+	//{
+	//	cerr << "ERR: no input file provided." << endl;
+	//	return -1;
+	//}
+	if (parseArgs(argc, argv, file, targetFolder)){
+		printWrongArgsMessage();
 		return -1;
 	}
+
+	cout << "file: " << file << endl;
+	cout << "folder: " << targetFolder << endl;
+
 
 	freopen("log.txt", "a", stderr);
 	cerr << "\nError log for run with attribute: " << file << endl;

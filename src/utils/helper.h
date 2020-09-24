@@ -8,6 +8,10 @@
  *
  */
 
+#include <stdio.h>
+#include <string.h>
+std::string HELP_MESSAGE = "this will be a great help message!!";
+
 /**
  * @brief signum function
  * 
@@ -697,4 +701,43 @@ bool compareSignals(const sign &a, const sign &b)
 bool compareLanes(const lane &a, const lane &b)
 {
     return a.id < b.id;
+}
+
+
+void printWrongArgsMessage()
+{
+    std::cout << "ERR: too few arguments!" << std::endl;
+    std::cout << HELP_MESSAGE << std:: endl;       
+}
+
+int parseArgs(int argc, char **argv, char* &file, char* &targetFolder)
+{
+    bool foundFile = false;
+    char defaultFolder[]="";
+    targetFolder = defaultFolder;
+
+    if(argc < 2){
+        return -1;
+    }
+    for(int i = 1; i < argc; i++){
+        if(argv[i][0] == '-'){
+            if(strlen(argv[i]) < 2) return -1;
+            
+            switch(argv[i][1]){  // look for params
+                case 'f': 
+                    targetFolder = argv[++i];
+                break;
+            }
+        }
+        else{
+            foundFile = true;
+            file = argv[i];
+        }
+    }
+
+    if(!foundFile){
+        return -1;
+    }
+
+    return 0;
 }
