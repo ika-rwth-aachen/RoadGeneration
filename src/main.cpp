@@ -106,7 +106,7 @@ int main(int argc, char **argv)
 		cerr << "ERR: error in closeRoadNetwork" << endl;
 		return -1;
 	}
-	if (createXML(out, data))
+	if (createXML(out, data, file, targetFolder))
 	{
 		cerr << "ERR: error during createXML" << endl;
 		return -1;
