@@ -717,11 +717,28 @@ void printHelpMessage()
     std::cout << HELP_MESSAGE << std:: endl;       
 }
 
-int parseArgs(int argc, char **argv, char* &file, char* &targetFolder,char* &outputName)
+int generateOutputName(char* fileLocation, string &outputName)
+{
+    string file;
+    outputName = outputName.substr(0, outputName.find(".xodr"));
+    if(strlen(fileLocation) <= 0) return 0;
+    
+    string name = outputName;
+    name = name.substr(name.find_last_of("\\/")+1);
+    file = strcat(fileLocation,"/");
+    file.append(name);
+       
+
+    
+    outputName = file;
+    return 0;
+}
+
+int parseArgs(int argc, char **argv, char* &file, std::string &outputName)
 {
     bool foundFile = false, setOutputName = false;
     char defaultPath[]="";
-    targetFolder = defaultPath;
+    char* targetFolder = defaultPath;
     outputName = defaultPath;
     
 
@@ -767,6 +784,8 @@ int parseArgs(int argc, char **argv, char* &file, char* &targetFolder,char* &out
     }
 
     if(!setOutputName) outputName = file;
+
+    generateOutputName(targetFolder, outputName);
 
     return 0;
 }

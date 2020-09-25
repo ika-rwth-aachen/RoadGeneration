@@ -50,8 +50,8 @@ settings setting;
 int main(int argc, char **argv)
 {
 	char *file;
-	char *targetFolder;
-	char *outputName;
+	//char *targetFolder;
+	string outputName;
 
 	//if (argc == 2)
 	//{
@@ -62,14 +62,10 @@ int main(int argc, char **argv)
 	//	cerr << "ERR: no input file provided." << endl;
 	//	return -1;
 	//}
-	if (parseArgs(argc, argv, file, targetFolder, outputName)){
+	if (parseArgs(argc, argv, file, outputName)){
 		printHelpMessage();
 		return -1;
 	}
-
-	cout << "file: " << file << endl;
-	cout << "folder: " << targetFolder << endl;
-	cout << "outputname: " << outputName << endl;
 
 
 	freopen("log.txt", "a", stderr);
@@ -108,12 +104,12 @@ int main(int argc, char **argv)
 		cerr << "ERR: error in closeRoadNetwork" << endl;
 		return -1;
 	}
-	if (createXML(out, data, targetFolder, outputName))
+	if (createXML(out, data, outputName))
 	{
 		cerr << "ERR: error during createXML" << endl;
 		return -1;
 	}
-	if (validateOutput(data))
+	if (validateOutput(data, outputName))
 	{
 		cerr << "ERR: error in validateOutput" << endl;
 		return -1;

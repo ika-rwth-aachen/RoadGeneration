@@ -65,10 +65,10 @@ int validateInput(char *file)
  * @param data  output data
  * @return int  error code
  */
-int validateOutput(roadNetwork data) //TDODO
+int validateOutput(roadNetwork data, string outputName) //TDODO
 {
     // setup file
-    string file = data.file;
+    string file = outputName;
     file.append(".xodr");
     const char *xml_file = file.c_str();
 
@@ -162,7 +162,7 @@ void appendLinkToNode(pugi::xml_node road, link &successor, link &predecessor)
  * @param data  roadNetwork data filled by the road generation tool
  * @return int  error code
  */
-int createXML(pugi::xml_document &doc, roadNetwork data, char* fileLocation, char* outputName)
+int createXML(pugi::xml_document &doc, roadNetwork data, string outputName)
 {
     pugi::xml_node root = doc.append_child("OpenDRIVE");
 
@@ -454,25 +454,9 @@ int createXML(pugi::xml_document &doc, roadNetwork data, char* fileLocation, cha
     }
 
     // --- write doc structure to file -----------------------------------------
-    string file;
-    if(strlen(fileLocation) <= 0){
-        //file = data.file;
-        file = outputName;
-        cout << "DEBUGINFO" << endl;
-
-       
-    }else{
-        string name = outputName;
-        name = name.substr(name.find_last_of("\\/")+1);
-        file = strcat(fileLocation,"/");
-        file.append(name);
-       
-
-    }
-    file = file.substr(0, file.find(".xodr"));
+    string file = outputName;
+ 
     file.append(".xodr");
-    cout << file << endl;
-
 
     if (doc.save_file(file.c_str()))
     {
