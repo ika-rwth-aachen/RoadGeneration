@@ -10,7 +10,15 @@
 
 #include <stdio.h>
 #include <string.h>
-std::string HELP_MESSAGE = "this will be a great help message!!";
+const char *HELP_MESSAGE =
+  "\nRoad Generation \n\n"
+  "Usage: \n"
+  "    roadGeneration <fileName>        Generates a .xodr file from input file.\n"
+  "\nOptions:\n"
+  "    -h                               Display help message.\n"
+  "    -d <fileDir>                     Specify output file directory.\n"
+  "    -o <fileName>                    Specify output file name.\n\n";
+
 
 /**
  * @brief signum function
@@ -704,29 +712,47 @@ bool compareLanes(const lane &a, const lane &b)
 }
 
 
-void printWrongArgsMessage()
+void printHelpMessage()
 {
-    std::cout << "ERR: too few arguments!" << std::endl;
     std::cout << HELP_MESSAGE << std:: endl;       
 }
 
-int parseArgs(int argc, char **argv, char* &file, char* &targetFolder)
+int parseArgs(int argc, char **argv, char* &file, char* &targetFolder,char* &outputName)
 {
-    bool foundFile = false;
-    char defaultFolder[]="";
-    targetFolder = defaultFolder;
+    bool foundFile = false, setOutputName = false;
+    char defaultPath[]="";
+    targetFolder = defaultPath;
+    outputName = defaultPath;
+    
 
     if(argc < 2){
+        std::cout << "ERR: too few arguments!" << std::endl;
         return -1;
     }
     for(int i = 1; i < argc; i++){
         if(argv[i][0] == '-'){
-            if(strlen(argv[i]) < 2) return -1;
+            if(strlen(argv[i]) != 2) {
+                std::cout << "ERR: wrong args!" << std::endl;
+                return -1;
+            }
             
             switch(argv[i][1]){  // look for params
-                case 'f': 
+                case 'd': 
                     targetFolder = argv[++i];
                 break;
+
+                case 'o':
+                    outputName = argv[++i];
+                    setOutputName = true;
+                break;
+                
+                case 'h':
+                    return 1;
+                break; //is not neccessary
+
+                default:
+                    std::cout << "ERR: wrong args!" << std::endl;
+                    return -1;
             }
         }
         else{
@@ -736,8 +762,11 @@ int parseArgs(int argc, char **argv, char* &file, char* &targetFolder)
     }
 
     if(!foundFile){
+        std::cout << "ERR: too few arguments!" << std::endl;
         return -1;
     }
+
+    if(!setOutputName) outputName = file;
 
     return 0;
 }
