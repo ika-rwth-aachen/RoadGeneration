@@ -13,7 +13,7 @@
 const char *HELP_MESSAGE =
   "\nRoad Generation \n\n"
   "Usage: \n"
-  "    roadGeneration <fileName>        Generates a .xodr file from input file.\n"
+  "    road-generation <fileName>       Generates a .xodr file from input file.\n"
   "\nOptions:\n"
   "    -h                               Display help message.\n"
   "    -d <fileDir>                     Specify output file directory.\n"
@@ -720,7 +720,7 @@ void printHelpMessage()
 int generateOutputName(char* fileLocation, string &outputName)
 {
     string file;
-    outputName = outputName.substr(0, outputName.find(".xodr"));
+    outputName = outputName.substr(0, outputName.find("."));
     if(strlen(fileLocation) <= 0) return 0;
     
     string name = outputName;
