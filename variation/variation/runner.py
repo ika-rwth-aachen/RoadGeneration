@@ -15,6 +15,7 @@ def is_var(arg):
         return True
 
 def get_var_val(key, ii, varDict):
+    print(varDict.get(key[2:-1], '0'))
     res = varDict.get(key[2:-1], '0')[ii]
     return str(res)
 
@@ -24,6 +25,17 @@ def find_var(item, idx, vars):
         for key, val in child.attrib.items():
             if is_var(val):
                 child.attrib[key] = get_var_val(val, idx, vars)
+
+def generateVar(var, n):    
+    #print("generating var: ", var.get('id'))
+    dist = var.get('type')
+    if dist == 'normal':
+        val = np.random.normal(float(var.get('mu')), float(var.get('sd')), n)
+    elif dist == 'uniform':            
+        val = np.random.uniform(float(var.get('min')), float(var.get('max')), n)
+    else:
+        raise ValueError("A wrong or invalid distribution type was provided")
+    return val
 
 def run():
     print("-- Let's start the road network variation")
@@ -35,22 +47,16 @@ def run():
     n = args.n
     fname = args.fname
     nwName = str.split(str.split(fname,'/')[-1],'.')[0]
-    inpDir = 'variation/data/inputs/'
+    inpDir = 'variation/data/inputs/'    
     tree = ET.parse(args.fname)
     vars = tree.getroot().find('vars')
     varDict = {}
+
     for var in vars:
-        print("generating var: ", var.get('id'))
-        dist = var.get('type')
-        if dist == 'normal':
-            val = np.random.normal(float(var.get('mu')), float(var.get('sd')), n)
-        elif dist == 'uniform':            
-            val = np.random.uniform(float(var.get('min')), float(var.get('max')), n)
-        else:
-            raise ValueError("A wrong or invalid distribution type was provided")
+        val = generateVar(var, n)
         varDict.update({var.get('id'): val})
 
-    #print(varDict)
+    print(varDict)
     #clear input folder
     files = glob.glob(inpDir+'*')
     for f in files:
@@ -64,6 +70,7 @@ def run():
         tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'
         cpTree.write(tmpName)
 
+        return# delete this ----------------------------------------------------------------------------------
         if os.name == "posix":  # if MacOS
             os.system(os.getcwd() + '/road-generation ' + tmpName)
 
@@ -71,9 +78,9 @@ def run():
             os.system(os.getcwd() + '/roadGeneration.exe ' + tmpName)
 
     #clear input folder (again)
-    files = glob.glob(inpDir+'*.xml')
-    for f in files:
-        os.remove(f)
+    #files = glob.glob(inpDir+'*.xml')
+    #for f in files:
+    #    os.remove(f)
 
     #count, bins, ignored = plt.hist(val, 30, density=True)
     #plt.plot(bins, 1/(sd * np.sqrt(2 * np.pi)) * np.exp( - (bins - mu)**2 / (2 * sd**2) ), linewidth=2, color='r')
