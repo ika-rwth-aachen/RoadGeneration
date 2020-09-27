@@ -50,18 +50,8 @@ settings setting;
 int main(int argc, char **argv)
 {
 	char *file;
-	//char *targetFolder;
 	string outputName;
 
-	//if (argc == 2)
-	//{
-	//	file = argv[1];
-	//}
-	//else
-	//{
-	//	cerr << "ERR: no input file provided." << endl;
-	//	return -1;
-	//}
 	if (parseArgs(argc, argv, file, outputName)){
 		printHelpMessage();
 		return -1;
@@ -84,7 +74,7 @@ int main(int argc, char **argv)
 		cerr << "ERR: error in validateInput" << endl;
 		return -1;
 	}
-	if (parseXML(in, data, file))
+	if (parseXML(in, data, file, outputName))
 	{
 		cerr << "ERR: error in parseXML" << endl;
 		return -1;
@@ -104,12 +94,12 @@ int main(int argc, char **argv)
 		cerr << "ERR: error in closeRoadNetwork" << endl;
 		return -1;
 	}
-	if (createXML(out, data, outputName))
+	if (createXML(out, data))
 	{
 		cerr << "ERR: error during createXML" << endl;
 		return -1;
 	}
-	if (validateOutput(data, outputName))
+	if (validateOutput(data))
 	{
 		cerr << "ERR: error in validateOutput" << endl;
 		return -1;
