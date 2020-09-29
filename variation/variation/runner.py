@@ -1,4 +1,5 @@
 import numpy as np
+import numexpr as ne
 import argparse
 import re
 import xml.etree.ElementTree as ET
@@ -6,6 +7,8 @@ import matplotlib.pyplot as plt
 import copy
 import os
 import glob
+
+dependendVars = []
 
 def is_var(arg):
     m = re.search('\$\{.*\}', arg)
@@ -15,7 +18,6 @@ def is_var(arg):
         return True
 
 def get_var_val(key, ii, varDict):
-    print(varDict.get(key[2:-1], '0'))
     res = varDict.get(key[2:-1], '0')[ii]
     return str(res)
 
@@ -26,16 +28,59 @@ def find_var(item, idx, vars):
             if is_var(val):
                 child.attrib[key] = get_var_val(val, idx, vars)
 
+def hasValue(key, varDict):
+    return key in varDict
+
 def generateVar(var, n):    
     #print("generating var: ", var.get('id'))
+    generatedValue = True
     dist = var.get('type')
     if dist == 'normal':
         val = np.random.normal(float(var.get('mu')), float(var.get('sd')), n)
     elif dist == 'uniform':            
         val = np.random.uniform(float(var.get('min')), float(var.get('max')), n)
+    elif dist == 'lindep':
+        generatedValue = False
+        print("found linear dependency")
+        val = np.zeros(n)
+        dependendVars.append(var)
+        
+        #print(var.get("dp"))
+        
     else:
+        generatedValue = False
         raise ValueError("A wrong or invalid distribution type was provided")
-    return val
+    #print(type(val[0])) 
+    return val, generatedValue
+
+def resolveDependencies(varDict, n):
+
+    while len(dependendVars) > 0:
+        resolvedVal = False
+        for var in dependendVars:
+            print("resolving " + str(var.get("id")))
+            li = np.zeros(n)
+            for i in range(n) :                
+                try:
+                    tmp = float((eval(var.get("dp"), varDict.copy())))
+                    li[i] = tmp
+                    resolvedVal = True
+                except:
+                    resolvedVal = False          
+            if resolvedVal :
+                dependendVars.remove(var)
+                varDict.update({var.get('id'): li})
+                continue    
+        if not resolvedVal :
+            raise ValueError("Could not resolve dependencies!")
+        
+
+            
+            
+                
+                
+
+    val = li
 
 def run():
     print("-- Let's start the road network variation")
@@ -53,10 +98,11 @@ def run():
     varDict = {}
 
     for var in vars:
-        val = generateVar(var, n)
-        varDict.update({var.get('id'): val})
+        val, b = generateVar(var, n)
+        if b:
+            varDict.update({var.get('id'): val})
+    resolveDependencies(varDict, n)
 
-    print(varDict)
     #clear input folder
     files = glob.glob(inpDir+'*')
     for f in files:
@@ -70,6 +116,9 @@ def run():
         tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'
         cpTree.write(tmpName)
 
+        print(varDict.get("halfAngleT")*0.3+varDict.get("radiusCR"))
+
+        print(varDict)
         return# delete this ----------------------------------------------------------------------------------
         if os.name == "posix":  # if MacOS
             os.system(os.getcwd() + '/road-generation ' + tmpName)
