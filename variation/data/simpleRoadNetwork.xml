@@ -4,6 +4,8 @@
         <var id="radiusCR" type="normal" mu="150" sd="11.5" />        
         <var id="angleT" type="normal" mu="1.57" sd="0.12" />
         <var id="halfAngleT" type="lindep" dp="angleT/2" />
+        <var id="half" type="normal" mu="150" sd="11.5" />
+        <var id="sameAsHalfAngleT" type="lindep" dp="halfAngleT" />
         
     </vars>
     <segments>

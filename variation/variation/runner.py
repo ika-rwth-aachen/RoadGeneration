@@ -1,6 +1,7 @@
 import numpy as np
 import numexpr as ne
 import argparse
+import sympy as sym
 import re
 import xml.etree.ElementTree as ET
 import matplotlib.pyplot as plt
@@ -72,15 +73,7 @@ def resolveDependencies(varDict, n):
                 varDict.update({var.get('id'): li})
                 continue    
         if not resolvedVal :
-            raise ValueError("Could not resolve dependencies!")
-        
-
-            
-            
-                
-                
-
-    val = li
+            raise ValueError("Could not resolve dependencies!") 
 
 def run():
     print("-- Let's start the road network variation")
