@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import copy
 import os
 import glob
+import dependencySolver as ds
 
 dependendVars = []
 
@@ -94,7 +95,9 @@ def run():
         val, b = generateVar(var, n)
         if b:
             varDict.update({var.get('id'): val})
-    resolveDependencies(varDict, n)
+
+    ds.fun(varDict, dependendVars, n)
+    #resolveDependencies(varDict, n)
 
     #clear input folder
     files = glob.glob(inpDir+'*')
@@ -109,9 +112,8 @@ def run():
         tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'
         cpTree.write(tmpName)
 
-        print(varDict.get("halfAngleT")*0.3+varDict.get("radiusCR"))
 
-        print(varDict)
+        
         return# delete this ----------------------------------------------------------------------------------
         if os.name == "posix":  # if MacOS
             os.system(os.getcwd() + '/road-generation ' + tmpName)

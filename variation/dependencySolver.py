@@ -1,29 +1,34 @@
 import sympy as sy
 
-ab = 5
-b = 4
-dep = "a + 0.5 * x"
-transDep = "3+dep"
+def fun(varDict, toSolve, n):
+    print("\n\n\n")
+    print(varDict)
+    print(toSolve)
+    newDict ={}
 
-var = ("c", dep)
-unresDep = []
-unresDep.append(var)
+    for key in varDict.keys():
+        res = [[]]
 
-varDict = {}
+        for i in range(n):
+            print(str(key) +" : " + str(varDict.get(key)))
+            sym = sy.Symbol(str(key))
+            val = str(varDict.get(key)[i]) + "-" + str(key)
+            res.append(val) #TODO - doesnt work!
+        newDict.update({key: res})
+    
+    print(newDict)
 
-varDict.update({"a": ab})
-varDict.update({"b": b})
+   
 
-print(varDict)
-print(unresDep)
+
 x = sy.Symbol('x')
 a = sy.Symbol('a')
 b = sy.Symbol('b')
 lindep = sy.Symbol('lindep')
 
-sol = sy.solve(["3-x" , "a-x+1", dep+"-"+"lindep"],  (x,a, lindep))
-print(len(sol))
-print(sol[a])
+sol = sy.solve(["3-x"],  (x))
+#print(len(sol))
 print(sol[x])
-print(sol[lindep])
+#print(sol[x])
+#print(sol[lindep])
 
