@@ -10,7 +10,7 @@ import os
 import glob
 import dependencySolver as ds
 
-dependendVars = []
+
 
 def is_var(arg):
     m = re.search('\$\{.*\}', arg)
@@ -35,46 +35,22 @@ def hasValue(key, varDict):
 
 def generateVar(var, n):    
     #print("generating var: ", var.get('id'))
-    generatedValue = True
+    
     dist = var.get('type')
     if dist == 'normal':
         val = np.random.normal(float(var.get('mu')), float(var.get('sd')), n)
     elif dist == 'uniform':            
         val = np.random.uniform(float(var.get('min')), float(var.get('max')), n)
     elif dist == 'lindep':
-        generatedValue = False
+    
         print("found linear dependency")
-        val = np.zeros(n)
-        dependendVars.append(var)
+        val = np.full(n, str(var.get("dp")))              
         
-        #print(var.get("dp"))
-        
-    else:
-        generatedValue = False
+    else:       
         raise ValueError("A wrong or invalid distribution type was provided")
-    #print(type(val[0])) 
-    return val, generatedValue
 
-def resolveDependencies(varDict, n):
+    return val
 
-    while len(dependendVars) > 0:
-        resolvedVal = False
-        for var in dependendVars:
-            print("resolving " + str(var.get("id")))
-            li = np.zeros(n)
-            for i in range(n) :                
-                try:
-                    tmp = float((eval(var.get("dp"), varDict.copy())))
-                    li[i] = tmp
-                    resolvedVal = True
-                except:
-                    resolvedVal = False          
-            if resolvedVal :
-                dependendVars.remove(var)
-                varDict.update({var.get('id'): li})
-                continue    
-        if not resolvedVal :
-            raise ValueError("Could not resolve dependencies!") 
 
 def run():
     print("-- Let's start the road network variation")
@@ -92,12 +68,11 @@ def run():
     varDict = {}
 
     for var in vars:
-        val, b = generateVar(var, n)
-        if b:
-            varDict.update({var.get('id'): val})
+        val = generateVar(var, n)
+        varDict.update({var.get('id'): val})
 
-    ds.fun(varDict, dependendVars, n)
-    #resolveDependencies(varDict, n)
+    ds.fun(varDict, n)
+    
 
     #clear input folder
     files = glob.glob(inpDir+'*')

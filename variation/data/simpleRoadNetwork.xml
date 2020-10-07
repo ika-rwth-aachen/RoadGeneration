@@ -1,12 +1,10 @@
 <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../xml/input.xsd">
     <vars>
-        <var id="half+rad" type="lindep" dp="halfAngleT*0.3 + radiusCR" />        
+        <var id="halfhalf" type="lindep" dp="halfANDrad/2" /> 
+        <var id="halfANDrad" type="lindep" dp="angleT*0.3 + radiusCR" />        
         <var id="radiusCR" type="normal" mu="150" sd="11.5" />        
         <var id="angleT" type="normal" mu="1.57" sd="0.12" />
-        <var id="halfAngleT" type="lindep" dp="angleT/2" />
-        <var id="half" type="normal" mu="150" sd="11.5" />
-        <var id="sameAsHalfAngleT" type="lindep" dp="halfAngleT" />
-        
+             
     </vars>
     <segments>
 
