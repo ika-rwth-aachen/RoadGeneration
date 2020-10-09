@@ -1,8 +1,7 @@
 import sympy as sy
+import datetime as dt
 
-def fun(varDict, n):
-    print("\n\n\n")
-    print(varDict)
+def getVarLists(varDict, n):
     #print(toSolve)
     equationList = []
     
@@ -18,29 +17,26 @@ def fun(varDict, n):
             symbols.append(sym)            
     
         equationList.append([symbols, strings])
-    print("\n\nLIST:")
-    print(equationList)
-    solveEQ(equationList, n)
+   
+    return equationList
 
 
 def solveEQ(outerList, n):
     solutions = []
-    print("\n\nsolution vectors----------------------")
     for i in range(n):
-        print("\n\nsolving:")
         sol = sy.solve(outerList[i][1], outerList[i][0])
         solutions.append(sol)
-        print(sol)
+   
+    return getDict(solutions)
+
+def getDict(symbolDictList):
+    stringDict = {}
+
+    for i in range(len(symbolDictList)):
+        for key in symbolDictList[i].keys():
+            stringDict.setdefault(key, []).append(symbolDictList[i].get(key))
+    
+    return stringDict
 
 
-x = sy.Symbol('x')
-a = sy.Symbol('a')
-b = sy.Symbol('b')
-lindep = sy.Symbol('lindep')
-
-sol = sy.solve(["3-x"],  (x))
-#print(len(sol))
-print(sol[x])
-#print(sol[x])
-#print(sol[lindep])
 

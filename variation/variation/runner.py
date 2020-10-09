@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import copy
 import os
 import glob
+import datetime as dt
 import dependencySolver as ds
 
 
@@ -52,7 +53,9 @@ def generateVar(var, n):
     return val
 
 
-def run():
+def run():#
+    stamp1 = dt.datetime.now()
+
     print("-- Let's start the road network variation")
     argParse = argparse.ArgumentParser()
     argParse.add_argument('-fname', required=True, help='filename of the road network template', metavar='TemplateFilename')
@@ -71,9 +74,22 @@ def run():
         val = generateVar(var, n)
         varDict.update({var.get('id'): val})
 
-    ds.fun(varDict, n)
-    
+    stamp2 = dt.datetime.now()
 
+    varList = ds.getVarLists(varDict, n)
+    stamp3 = dt.datetime.now()
+
+    varDict = ds.solveEQ(varList, n)
+
+    stamp4 = dt.datetime.now()
+
+    print("segment 1: " +str(stamp2 - stamp1))
+    print("segment 2: " +str(stamp3 - stamp2))
+    print("segment 3: " +str(stamp4 - stamp3))
+   
+
+
+    print(varDict)
     #clear input folder
     files = glob.glob(inpDir+'*')
     for f in files:
