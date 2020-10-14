@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import copy
 import os
 import glob
-import datetime as dt
+import datetime as dt#delte this ---------------
 import dependencySolver as ds
 
 
@@ -21,7 +21,6 @@ def is_var(arg):
         return True
 
 def get_var_val(key, ii, varDict):
-    
     res = varDict.get(key[2:-1], '0')[ii]
     return str(res)
 
@@ -54,9 +53,10 @@ def generateVar(var, n):
     return val
 
 
-def run():#
-    stamp1 = dt.datetime.now()# delete this --------------------
+def run():
+    stamp1 = dt.datetime.now()# delete this 
 
+    #parsing args---------------------------------
     print("-- Let's start the road network variation")
     argParse = argparse.ArgumentParser()
     argParse.add_argument('-fname', required=True, help='filename of the road network template', metavar='TemplateFilename')
@@ -67,30 +67,29 @@ def run():#
     fname = args.fname
     nwName = str.split(str.split(fname,'/')[-1],'.')[0]
     inpDir = 'variation/data/inputs/'    
+
+    #init ---------------------------
     tree = ET.parse(args.fname)
     vars = tree.getroot().find('vars')
     varDict = {}
+    #reading values-----------------------------------
 
     for var in vars:
         val = generateVar(var, n)
         varDict.update({var.get('id'): val})
 
-    stamp2 = dt.datetime.now()# delete this --------------------
+    #solving equations----------------------------------------
 
+    stamp2 = dt.datetime.now()# delete this 
     varList = ds.getVarLists(varDict, n)
-    stamp3 = dt.datetime.now()# delete this --------------------
-
+    stamp3 = dt.datetime.now()# delete this 
     varDict = ds.solveEQ(varList, n)
-
-    stamp4 = dt.datetime.now()# delete this --------------------
+    stamp4 = dt.datetime.now()# delete this 
 
     print("segment 1: " +str(stamp2 - stamp1))# delete this --------------------
     print("segment 2: " +str(stamp3 - stamp2))# delete this --------------------
     print("segment 3: " +str(stamp4 - stamp3))# delete this --------------------
-   
 
-
-    print(varDict)
     #clear input folder
     files = glob.glob(inpDir+'*')
     for f in files:
@@ -103,10 +102,7 @@ def run():#
         find_var(cpTree.getroot(), i, varDict)        
         tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'
         cpTree.write(tmpName)
-
-
         
-       # return# delete this ----------------------------------------------------------------------------------
         if os.name == "posix":  # if MacOS
             os.system(os.getcwd() + '/road-generation ' + tmpName)
 
@@ -114,9 +110,9 @@ def run():#
             os.system(os.getcwd() + '/roadGeneration.exe ' + tmpName)
 
     #clear input folder (again)
-    #files = glob.glob(inpDir+'*.xml')
-    #for f in files:
-    #    os.remove(f)
+    files = glob.glob(inpDir+'*.xml')
+    for f in files:
+        os.remove(f)
 
     #count, bins, ignored = plt.hist(val, 30, density=True)
     #plt.plot(bins, 1/(sd * np.sqrt(2 * np.pi)) * np.exp( - (bins - mu)**2 / (2 * sd**2) ), linewidth=2, color='r')

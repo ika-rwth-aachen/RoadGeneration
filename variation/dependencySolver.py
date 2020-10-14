@@ -1,7 +1,7 @@
 import sympy as sy
 import datetime as dt
 
-def getVarLists(varDict, n):
+def getVarLists(varDict, n):#returns preprocessed lists to be used in sympy library    
     #print(toSolve)
     equationList = []
     
@@ -29,12 +29,12 @@ def solveEQ(outerList, n):
    
     return getDict(solutions)
 
-def getDict(symbolDictList):
+def getDict(symbolDictList):#returns postprocessed dict from sympy solver that can be used in runner.py
     stringDict = {}
 
     for i in range(len(symbolDictList)):
         for key in symbolDictList[i].keys():
-            stringDict.setdefault(key, []).append(symbolDictList[i].get(key))
+            stringDict.setdefault(str(key), []).append(symbolDictList[i].get(key))
     
     return stringDict
 
