@@ -21,6 +21,7 @@ def is_var(arg):
         return True
 
 def get_var_val(key, ii, varDict):
+    
     res = varDict.get(key[2:-1], '0')[ii]
     return str(res)
 
@@ -54,7 +55,7 @@ def generateVar(var, n):
 
 
 def run():#
-    stamp1 = dt.datetime.now()
+    stamp1 = dt.datetime.now()# delete this --------------------
 
     print("-- Let's start the road network variation")
     argParse = argparse.ArgumentParser()
@@ -74,18 +75,18 @@ def run():#
         val = generateVar(var, n)
         varDict.update({var.get('id'): val})
 
-    stamp2 = dt.datetime.now()
+    stamp2 = dt.datetime.now()# delete this --------------------
 
     varList = ds.getVarLists(varDict, n)
-    stamp3 = dt.datetime.now()
+    stamp3 = dt.datetime.now()# delete this --------------------
 
     varDict = ds.solveEQ(varList, n)
 
-    stamp4 = dt.datetime.now()
+    stamp4 = dt.datetime.now()# delete this --------------------
 
-    print("segment 1: " +str(stamp2 - stamp1))
-    print("segment 2: " +str(stamp3 - stamp2))
-    print("segment 3: " +str(stamp4 - stamp3))
+    print("segment 1: " +str(stamp2 - stamp1))# delete this --------------------
+    print("segment 2: " +str(stamp3 - stamp2))# delete this --------------------
+    print("segment 3: " +str(stamp4 - stamp3))# delete this --------------------
    
 
 
@@ -105,7 +106,7 @@ def run():#
 
 
         
-        return# delete this ----------------------------------------------------------------------------------
+       # return# delete this ----------------------------------------------------------------------------------
         if os.name == "posix":  # if MacOS
             os.system(os.getcwd() + '/road-generation ' + tmpName)
 
