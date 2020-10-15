@@ -1,5 +1,24 @@
 <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../xml/input.xsd">
     <vars>
+        <var id="halfhalf8" type="lindep" dp="(halfhalf7/3)*4*1666*7" />
+        <var id="halfhalf7" type="lindep" dp="(halfhalf6/3)*4*6*7" />
+        <var id="halfhalf6" type="lindep" dp="(halfhalf5/3)*4*6*7" />
+        <var id="halfhalf5" type="lindep" dp="(halfhalf4/3)*4*6*7" />
+        <var id="halfhalf4" type="lindep" dp="(halfhalf3/3)*4*6*7" />
+        <var id="halfhalf3" type="lindep" dp="(halfhalf2/3)*4*6*7" />
+        <var id="halfhalf9" type="lindep" dp="(halfhalf2/3)*4*6*7" />
+        <var id="halfhalf3a" type="lindep" dp="(halfhalf2/3)*4*6*7" />
+        <var id="halfhalf3b" type="lindep" dp="(halfhalf2/3)*4*6*7" />
+        <var id="halfhalf3c" type="lindep" dp="(halfhalf2/3)*4*6*7" />
+        <var id="halfhalf3d" type="lindep" dp="(halfhalf2/3)*4*6*7" />
+        <var id="halfhalf3e" type="lindep" dp="(halfhalf2/3)*4*6*7" />
+        <var id="halfhalf3f" type="lindep" dp="(halfhalf2/3)*4*6*7" />
+        <var id="halfhalf3r" type="lindep" dp="(halfhalf2/3)*4*6*7" />
+        <var id="halfhalf3g" type="lindep" dp="(halfhalf2/3)*4*6*7" />
+        <var id="halfhalf3h" type="lindep" dp="(halfhalf2/3)*4*6*7" />
+        <var id="halfhalf3i" type="lindep" dp="(halfhalf2/3)*4*6*7" />
+        <var id="halfhalf3j" type="lindep" dp="(halfhalf2/3)*4*6*7" />
+        <var id="halfhalf2" type="lindep" dp="halfhalf/3" />
         <var id="halfhalf" type="lindep" dp="halfANDrad/2" /> 
         <var id="halfANDrad" type="lindep" dp="angleT*0.3 + radiusCR" />        
         <var id="radiusCR" type="normal" mu="150" sd="11.5" />        

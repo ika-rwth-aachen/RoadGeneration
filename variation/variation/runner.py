@@ -43,10 +43,7 @@ def generateVar(var, n):
     elif dist == 'uniform':            
         val = np.random.uniform(float(var.get('min')), float(var.get('max')), n)
     elif dist == 'lindep':
-    
-        print("found linear dependency")
-        val = np.full(n, str(var.get("dp")))              
-        
+        val = np.full(n, str(var.get("dp")))       
     else:       
         raise ValueError("A wrong or invalid distribution type was provided")
 
@@ -56,19 +53,21 @@ def generateVar(var, n):
 def run():
     stamp1 = dt.datetime.now()# delete this 
 
-    #parsing args---------------------------------
+    #parsing args-------------------------------------
     print("-- Let's start the road network variation")
     argParse = argparse.ArgumentParser()
     argParse.add_argument('-fname', required=True, help='filename of the road network template', metavar='TemplateFilename')
     argParse.add_argument('-n', help='number of variations to be generated', metavar='count', type=int, default=20)
-    args = argParse.parse_args()
-    
+    argParse.add_argument('-k', help='keep intermediate xml files after generation', action='store_false')
+
+    args = argParse.parse_args()    
     n = args.n
+    clearOutputFolder = args.k   
     fname = args.fname
     nwName = str.split(str.split(fname,'/')[-1],'.')[0]
     inpDir = 'variation/data/inputs/'    
 
-    #init ---------------------------
+    #init --------------------------------------------
     tree = ET.parse(args.fname)
     vars = tree.getroot().find('vars')
     varDict = {}
@@ -78,19 +77,20 @@ def run():
         val = generateVar(var, n)
         varDict.update({var.get('id'): val})
 
-    #solving equations----------------------------------------
+    #solving equations------------------------------------
 
-    stamp2 = dt.datetime.now()# delete this 
+    stamp2 = dt.datetime.now()# <delete this 
     varList = ds.getVarLists(varDict, n)
-    stamp3 = dt.datetime.now()# delete this 
+    stamp3 = dt.datetime.now()# <delete this 
     varDict = ds.solveEQ(varList, n)
-    stamp4 = dt.datetime.now()# delete this 
+    stamp4 = dt.datetime.now()# <delete this 
 
-    print("segment 1: " +str(stamp2 - stamp1))# delete this --------------------
-    print("segment 2: " +str(stamp3 - stamp2))# delete this --------------------
-    print("segment 3: " +str(stamp4 - stamp3))# delete this --------------------
+    print("segment 1 (parsing args, init & generating random values): " +str(stamp2 - stamp1))# delete this <--------------------
+    print("segment 2 (pre processing var list)                      : " +str(stamp3 - stamp2))# delete this <--------------------
+    print("segment 3 (solving EQ & post processing the dict)        : " +str(stamp4 - stamp3))# delete this <--------------------
 
-    #clear input folder
+
+     #clear input folder
     files = glob.glob(inpDir+'*')
     for f in files:
         os.remove(f)
@@ -110,9 +110,10 @@ def run():
             os.system(os.getcwd() + '/roadGeneration.exe ' + tmpName)
 
     #clear input folder (again)
-    files = glob.glob(inpDir+'*.xml')
-    for f in files:
-        os.remove(f)
+    if clearOutputFolder :
+        files = glob.glob(inpDir+'*.xml')
+        for f in files:
+            os.remove(f)
 
     #count, bins, ignored = plt.hist(val, 30, density=True)
     #plt.plot(bins, 1/(sd * np.sqrt(2 * np.pi)) * np.exp( - (bins - mu)**2 / (2 * sd**2) ), linewidth=2, color='r')
