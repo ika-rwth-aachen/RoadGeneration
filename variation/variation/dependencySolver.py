@@ -1,5 +1,4 @@
 import sympy as sy
-import datetime as dt
 
 def getVarLists(varDict, n):#returns preprocessed lists to be used in sympy library    
     equationList = []

@@ -1,10 +1,9 @@
 <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../xml/input.xsd">
     <vars>
-        <var id="halfhalf" type="lindep" dp="halfANDrad/2" /> 
-        <var id="halfANDrad" type="lindep" dp="angleT*0.3 + radiusCR" />        
-        <var id="radiusCR" type="normal" mu="150" sd="11.5" />        
-        <var id="angleT" type="normal" mu="1.57" sd="0.12" />
-             
+        <var id="transDepVar" type="lindep" dp="depVar/2" /> 
+        <var id="depVar" type="lindep" dp="uniformVar*0.3 + normalVar" />        
+        <var id="uniformVar" type="uniform" min="100" max="150" />        
+        <var id="normalVar" type="normal" mu="1.57" sd="0.12" />     
     </vars>
     <segments>
 
@@ -20,11 +19,11 @@
             </road>
             <road id="2" classification="access" >	
                 <referenceLine>
-                    <line length="${halfhalf}"/>
+                    <line length="${uniformVar}"/>
                 </referenceLine>
             </road>
             <intersectionPoint refRoad="1" s="100">
-                <adRoad id="2" s="0" angle="${angleT}"/>
+                <adRoad id="2" s="0" angle="${normalVar}"/>
             </intersectionPoint>
         </junction>
 
@@ -47,9 +46,9 @@
             <road id="1" classification="access" >	
                 <referenceLine>
                     <line length="20"/>                    
-                    <spiral length="50"  Rs="0" Re="${radiusCR}"/>
-                    <arc length="50" R="${radiusCR}"/>
-                    <spiral length="50"  Rs="${radiusCR}" Re="0"/>
+                    <spiral length="50"  Rs="0" Re="${transDepVar}"/>
+                    <arc length="50" R="${transDepVar}"/>
+                    <spiral length="50"  Rs="${transDepVar}" Re="0"/>
                 </referenceLine>
             </road>
         </connectingRoad>        

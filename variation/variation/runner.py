@@ -1,10 +1,8 @@
 import numpy as np
 import numexpr as ne
 import argparse
-import sympy as sym
 import re
 import xml.etree.ElementTree as ET
-import matplotlib.pyplot as plt
 import copy
 import os
 import glob
