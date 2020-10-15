@@ -51,6 +51,9 @@ def generateVar(var, n):
 
 
 def run():
+    """runs the program"""
+
+    help(run)
     stamp1 = dt.datetime.now()# delete this 
 
     #parsing args-------------------------------------
