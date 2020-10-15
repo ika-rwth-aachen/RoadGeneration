@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 import copy
 import os
 import glob
-import datetime as dt#delte this ---------------
 import dependencySolver as ds
 
 
@@ -35,7 +34,6 @@ def hasValue(key, varDict):
     return key in varDict
 
 def generateVar(var, n):    
-    #print("generating var: ", var.get('id'))
     
     dist = var.get('type')
     if dist == 'normal':
@@ -53,8 +51,6 @@ def generateVar(var, n):
 def run():
     """runs the program"""
 
-    help(run)
-    stamp1 = dt.datetime.now()# delete this 
 
     #parsing args-------------------------------------
     print("-- Let's start the road network variation")
@@ -68,7 +64,7 @@ def run():
     clearOutputFolder = args.k   
     fname = args.fname
     nwName = str.split(str.split(fname,'/')[-1],'.')[0]
-    inpDir = 'variation/data/inputs/'    
+    inpDir = 'data/inputs/'    
 
     #init --------------------------------------------
     tree = ET.parse(args.fname)
@@ -82,16 +78,8 @@ def run():
 
     #solving equations------------------------------------
 
-    stamp2 = dt.datetime.now()# <delete this 
     varList = ds.getVarLists(varDict, n)
-    stamp3 = dt.datetime.now()# <delete this 
     varDict = ds.solveEQ(varList, n)
-    stamp4 = dt.datetime.now()# <delete this 
-
-    print("segment 1 (parsing args, init & generating random values): " +str(stamp2 - stamp1))# delete this <--------------------
-    print("segment 2 (pre processing var list)                      : " +str(stamp3 - stamp2))# delete this <--------------------
-    print("segment 3 (solving EQ & post processing the dict)        : " +str(stamp4 - stamp3))# delete this <--------------------
-
 
      #clear input folder
     files = glob.glob(inpDir+'*')
@@ -107,20 +95,16 @@ def run():
         cpTree.write(tmpName)
         
         if os.name == "posix":  # if MacOS
-            os.system(os.getcwd() + '/road-generation ' + tmpName)
+            os.system(os.getcwd() + '/../road-generation ' + tmpName)
 
         else:                   # if Windows
-            os.system(os.getcwd() + '/roadGeneration.exe ' + tmpName)
+            os.system(os.getcwd() + '/../roadGeneration.exe ' + tmpName)
 
     #clear input folder (again)
     if clearOutputFolder :
         files = glob.glob(inpDir+'*.xml')
         for f in files:
             os.remove(f)
-
-    #count, bins, ignored = plt.hist(val, 30, density=True)
-    #plt.plot(bins, 1/(sd * np.sqrt(2 * np.pi)) * np.exp( - (bins - mu)**2 / (2 * sd**2) ), linewidth=2, color='r')
-    #plt.show()
 
 if __name__ == '__main__':
     run()

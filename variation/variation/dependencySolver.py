@@ -2,7 +2,6 @@ import sympy as sy
 import datetime as dt
 
 def getVarLists(varDict, n):#returns preprocessed lists to be used in sympy library    
-    #print(toSolve)
     equationList = []
 
     #list structure [[[<var1>, <var2>][<stringvar1>, <stringvar2>]], ...] outer layer = n entries, inner layer one entry per var. 
@@ -35,7 +34,6 @@ def getDict(symbolDictList):#returns postprocessed dict from sympy solver that c
     for i in range(len(symbolDictList)):
         for key in symbolDictList[i].keys():
             stringDict.setdefault(str(key), []).append(symbolDictList[i].get(key))
-    print(stringDict)
     return stringDict
 
 
