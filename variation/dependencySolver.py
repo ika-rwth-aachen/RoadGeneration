@@ -4,7 +4,7 @@ import datetime as dt
 def getVarLists(varDict, n):#returns preprocessed lists to be used in sympy library    
     #print(toSolve)
     equationList = []
-    
+        
     #list structure [[[<var1>, <var2>][<stringvar1>, <stringvar2>]], ...] outer layer = n entries, inner layer one entry per var. 
 
     for i in range(n):
