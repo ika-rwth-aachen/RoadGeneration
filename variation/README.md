@@ -1,30 +1,35 @@
-#Variation Tool
+Variation Tool
+========
 
 The Variation tool is used to (randomly) generate a multitude of slightly different scenarios based on the same general road network. A template file is provided to specify all variables aswell as the general road network structure. 
 
-##Requirements
+Requirements
+--------
 The following modules need to be installed:
 
 - `ElementTree`
 - `sympy`
+- `numpy`
 
-##Usage
+Usage
+--------
 The tool can be accessed via the command line:
 
 	$python3 variation -fname <filename> 
 	
 
-######A variety of parameters and flaggs can be specified:
+A variety of parameters and flaggs can be specified:
 
-- `fname ` `<input file path>` input template file
+- `-fname ` `<input file path>` input template file
 - `-n` `<integer>`number of generated outputs
 - `-h --help` display the help message
 - `-k` keep the inetmediate `.xml` output files
 
 
-##Template File
+Template File
+---------------
 
-The template file is structured similar to a `road-generation`input file with the addition of the ` <vars> ... </vars>` tag, which cointains variables that will be generated.
+The template file is structured similarly to .xml file for the  road-generation tool, with the addition of the ` <vars> ... </vars>` tag, which cointains variables that will be generated.
 
 
 ```xml
@@ -35,7 +40,7 @@ The template file is structured similar to a `road-generation`input file with th
 	<var id="normalVar" type="normal" mu="1.57" sd="0.12" />     
 </vars>
 ```
-These variables can then be referenced by placeholder values. We would reference the `uniformVar` like this: 
+These variables can then be referenced by their name, surrounded by `${...} `. An example  template file can be found in the `data` directory.
 ```xml
 <referenceLine>
 	<line length="${uniformVar}"/>
@@ -43,24 +48,26 @@ These variables can then be referenced by placeholder values. We would reference
 ```
 
 
-A sample template file can be found in the `data` directory.
 
 
-##Variable Types
+
+Variable Types
+-----------------
 For each variable we need to specify an `id` and `type`attribute.  At the moment there are three types of variables that require different attributes:
 
-- `type = normal`  drawn from a normal distribution  with mean value `mu` and standard deviation `sd`.
-- `type = uniform`  drawn from an uniform distribution with a `min` and a `max` value.
-- `type = lindep`  that is linear dependent on other variables or constants with  a dependency equation `dp` in string form.
+- `normal`  distribution with mean value `mu` and standard deviation `sd`.
+- `uniform`  distribution with a `min` and a `max` value.
+- `lindep`  defines a variable that is linear dependent on other variables or constants with  a dependency  `dp` in string form.
 
 
 
-##Issues
-This is small list of known issues with the variation tool in no particular order:
+Issues
+-------
+This is list of known issues with the variation tool in no particular order:
 
 - Variation tool does not check if a referenced variable exists
-- Performance gets poor on larger files and high variation counts
-- A lot of unnecessary console output
+- Slow performance when a lot of variables are used 
+
 
 
 
