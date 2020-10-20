@@ -32,6 +32,21 @@ def hasValue(key, varDict):
     return key in varDict
 
 def generateVar(var, n):    
+    """Generates a value for a given var node
+
+    Parameters
+    ----------
+    var: xml.etree.ElementTree.Element
+        Tree node containing info about the variable
+    n: int
+        number of output files
+
+    Returns
+    -------
+    array[n]
+        n dimensional array containing the values (or linear equation) for the variable
+
+    """
     
     dist = var.get('type')
     if dist == 'normal':
@@ -47,9 +62,7 @@ def generateVar(var, n):
 
 
 def run():
-    """runs the program"""
-
-
+    
     #parsing args-------------------------------------
     print("-- Let's start the road network variation")
     argParse = argparse.ArgumentParser()
@@ -79,7 +92,7 @@ def run():
     varList = ds.getVarLists(varDict, n)
     varDict = ds.solveEQ(varList, n)
 
-     #clear input folder
+    #clear input folder
     files = glob.glob(inpDir+'*')
     for f in files:
         os.remove(f)
