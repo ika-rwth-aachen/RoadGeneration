@@ -10,7 +10,7 @@ import dependencySolver as ds
 
 
 
-def is_var(arg):
+def is_var(arg): #this method just checks if the string validates against the RE
     m = re.search('\$\{.*\}', arg)
     if m==None:
         return False
@@ -18,10 +18,40 @@ def is_var(arg):
         return True
 
 def get_var_val(key, ii, varDict):
+    """Gets an input in the likes of ${var} and returns the corresponding var value from the dict
+
+    Parameters
+    ----------
+    key: string
+        unparsed key of var
+    ii: int
+        current iteration idx
+    varDict: dict
+        variable dictionary
+
+    Returns
+    -------
+    string
+        variable value as string
+
+    """
     res = varDict.get(key[2:-1], '0')[ii]
     return str(res)
 
 def find_var(item, idx, vars):
+    """Recursively fills in the values of variables in the given data tree 
+
+    Parameters
+    ----------
+    item: xml.etree.ElementTree.Element
+        Tree item to traverse recursively
+    idx: int
+        current iteration idx
+    vars: dict
+        variable dictionary
+
+    """
+    print(type(item))
     for child in item.getchildren():
         find_var(child, idx, vars)
         for key, val in child.attrib.items():
