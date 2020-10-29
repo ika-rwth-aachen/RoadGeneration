@@ -35,9 +35,10 @@ int validateOutput(RoadNetwork data);
  * @param doc   tree structure which contains the data of the xml input file
  * @param data  roadNetwork data which holds the input file name
  * @param file  xml input file
+ * @param outputFile  xml output file
  * @return int  error code
  */
-int parseXML(pugi::xml_document &doc, RoadNetwork &data, char *file);
+int parseXML(pugi::xml_document &doc, RoadNetwork &data, char *file, std::string outputFile);
 
 /**
  * @brief function stores the generated structure of type roadNetwork as OpenDrive format with the external tool pugi_xml

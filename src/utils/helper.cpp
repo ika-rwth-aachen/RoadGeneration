@@ -705,13 +705,13 @@ void printHelpMessage()
     std::cout << HELP_MESSAGE << std:: endl;       
 }
 
-int generateOutputName(char* fileLocation, string &outputName)
+int generateOutputName(char* fileLocation, std::string &outputName)
 {
-    string file;
+    std::string file;
     outputName = outputName.substr(0, outputName.find("."));
     if(strlen(fileLocation) <= 0) return 0;
     
-    string name = outputName;
+    std::string name = outputName;
     name = name.substr(name.find_last_of("\\/")+1);
     file = strcat(fileLocation,"/");
     file.append(name);

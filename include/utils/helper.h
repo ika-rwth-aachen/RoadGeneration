@@ -270,4 +270,13 @@ bool compareSignals(const sign &a, const sign &b);
  */
 bool compareLanes(const lane &a, const lane &b);
 
+
+
+void printHelpMessage();
+
+int generateOutputName(char* fileLocation, std::string &outputName);
+
+int parseArgs(int argc, char **argv, char* &file, std::string &outputName);
+
+
 #endif
