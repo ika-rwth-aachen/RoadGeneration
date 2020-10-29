@@ -26,6 +26,7 @@ class RoadNetwork
     private:
 
         std::string file;
+        std::string outputFile;
         std::vector<Road> roads;
         std::vector<junction> junctions;
         std::vector<control> controller; 
@@ -40,6 +41,7 @@ class RoadNetwork
         ~RoadNetwork();
 
         std::string getFile();
+        std::string getOutputFile();
         std::vector<Road> &getRoads();
         std::vector<control> &getController();
         std::vector<junction> &getJunctions();
@@ -52,6 +54,8 @@ class RoadNetwork
         void pushJunction(junction j);
         void pushControl(control c);
         void setFile(std::string file);
+        void setOutputFile(std::string file);
+
 
         /**
          * @brief function creates all segments which can be either a junction, roundabout or connectingroad

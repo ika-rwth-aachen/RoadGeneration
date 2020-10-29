@@ -13,6 +13,17 @@
 #include <stdio.h>
 #include <math.h>
 #include <iostream>
+#include <string.h>
+
+const char *HELP_MESSAGE =
+  "\nRoad Generation \n\n"
+  "Usage: \n"
+  "    road-generation <fileName>       Generates a .xodr file from input file.\n"
+  "\nOptions:\n"
+  "    -h                               Display help message.\n"
+  "    -d <fileDir>                     Specify output file directory.\n"
+  "    -o <fileName>                    Specify output file name.\n\n";
+
 
 /**
  * @brief signum function
@@ -689,4 +700,80 @@ bool compareLanes(const lane &a, const lane &b)
 }
 
 
+void printHelpMessage()
+{
+    std::cout << HELP_MESSAGE << std:: endl;       
+}
 
+int generateOutputName(char* fileLocation, string &outputName)
+{
+    string file;
+    outputName = outputName.substr(0, outputName.find("."));
+    if(strlen(fileLocation) <= 0) return 0;
+    
+    string name = outputName;
+    name = name.substr(name.find_last_of("\\/")+1);
+    file = strcat(fileLocation,"/");
+    file.append(name);
+       
+
+    
+    outputName = file;
+    return 0;
+}
+
+int parseArgs(int argc, char **argv, char* &file, std::string &outputName)
+{
+    bool foundFile = false, setOutputName = false;
+    char defaultPath[]="";
+    char* targetFolder = defaultPath;
+    outputName = defaultPath;
+    
+
+    if(argc < 2){
+        std::cout << "ERR: too few arguments!" << std::endl;
+        return -1;
+    }
+    for(int i = 1; i < argc; i++){
+        if(argv[i][0] == '-'){
+            if(strlen(argv[i]) != 2) {
+                std::cout << "ERR: wrong args!" << std::endl;
+                return -1;
+            }
+            
+            switch(argv[i][1]){  // look for params
+                case 'd': 
+                    targetFolder = argv[++i];
+                break;
+
+                case 'o':
+                    outputName = argv[++i];
+                    setOutputName = true;
+                break;
+                
+                case 'h':
+                    return 1;
+                break; //is not neccessary
+
+                default:
+                    std::cout << "ERR: wrong args!" << std::endl;
+                    return -1;
+            }
+        }
+        else{
+            foundFile = true;
+            file = argv[i];
+        }
+    }
+
+    if(!foundFile){
+        std::cout << "ERR: too few arguments!" << std::endl;
+        return -1;
+    }
+
+    if(!setOutputName) outputName = file;
+
+    generateOutputName(targetFolder, outputName);
+
+    return 0;
+}

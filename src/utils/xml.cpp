@@ -82,7 +82,7 @@ int validateInput(char *file)
 int validateOutput(RoadNetwork data)
 {
     // setup file
-    std::string file = data.getFile();
+    string file = data.getOutputFile();
     file.append(".xodr");
     const char *xml_file = file.c_str();
 
@@ -126,11 +126,13 @@ int validateOutput(RoadNetwork data)
  * @param file  xml input file
  * @return int  error code
  */
-int parseXML(pugi::xml_document &doc, RoadNetwork &data, char *file)
+int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file, string outputFile)
 {
     // save file name in data
-    std::string f = file;
-    data.setFile( f.substr(0, f.find(".xml")));
+    string f = file;
+    data.file = f.substr(0, f.find(".xml"));
+    data.setOutputFile( outputFile.substr(0, outputFile.find(".xodr")));
+
 
     if (doc.load_file(file))
     {
@@ -469,7 +471,12 @@ int createXML(pugi::xml_document &doc, RoadNetwork data)
     }
 
     // --- write doc structure to file -----------------------------------------
+<<<<<<< HEAD:src/utils/xml.cpp
     std::string file = data.getFile();
+=======
+    string file = data.outputFile;
+ 
+>>>>>>> arg-parsing:src/utils/xml.h
     file.append(".xodr");
 
     if (doc.save_file(file.c_str()))

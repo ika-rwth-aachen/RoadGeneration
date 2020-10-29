@@ -13,6 +13,10 @@
             return file;
         }
 
+        std::string RoadNetwork::getOutputFile(){
+            return outputFile;
+        }
+
          std::vector<Road>& RoadNetwork::getRoads(){
             return roads;
         }
@@ -39,6 +43,10 @@
 
         void RoadNetwork::setFile(std::string file){
             this -> file  = file;
+        }
+
+        void RoadNetwork::setOutputFile(std::string file){
+            this -> outputFile  = file;
         }
 
 
