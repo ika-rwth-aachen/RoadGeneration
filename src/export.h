@@ -1,1 +1,1 @@
-int callMain(char* fileName);
+extern "C" int callMain(char* fileName);

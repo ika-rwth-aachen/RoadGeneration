@@ -92,7 +92,7 @@ def generateVar(var, n):
 
 def run():
     path = os.path.abspath("../build/libroadgen.so")  
-    libc = cdll.LoadLibrary(path) #TODO: this works under linux only!!
+    roadgen = cdll.LoadLibrary(path) #TODO: this works under linux only!!
 
     #parsing args-------------------------------------
     print("-- Let's start the road network variation")
@@ -137,7 +137,8 @@ def run():
         cpTree.write(tmpName)
         
         if os.name == "posix":  # if MacOS
-            os.system(os.getcwd() + '/../road-generation ' + tmpName)
+            arg = c_char_p(tmpName.encode('utf-8'))
+            roadgen.callMain(arg)
 
         else:                   # TODO: handle windows os
             os.system(os.getcwd() + '/../roadGeneration.exe ' + tmpName)
