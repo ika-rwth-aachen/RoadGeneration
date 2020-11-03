@@ -1,1 +1,1 @@
-int callMain(int argc, char **argv);
+int callMain(char* fileName);

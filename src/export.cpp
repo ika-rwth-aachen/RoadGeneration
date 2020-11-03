@@ -47,19 +47,9 @@ settings setting;
  * @param argv argv[1] is the specified input file <file>.xml which will be converted to <file>.xodr
  * @return int error code
  */
-int callMain(int argc, char **argv)
+int callMain(char* fileName)
 {
-	char *file;
-
-	if (argc == 2)
-	{
-		file = argv[1];
-	}
-	else
-	{
-		cerr << "ERR: no input file provided." << endl;
-		return -1;
-	}
+	char *file = fileName;	
 
 	freopen("log.txt", "a", stderr);
 	cerr << "\nError log for run with attribute: " << file << endl;
