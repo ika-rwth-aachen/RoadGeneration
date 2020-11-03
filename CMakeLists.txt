@@ -17,6 +17,9 @@ add_library("roadgen" SHARED
     "${CMAKE_SOURCE_DIR}/libs/pugixml-1.9/src/pugixml.cpp"
 )
 
+target_link_libraries("roadgen" ${XercesC_LIBRARIES})
+
+
 add_executable("${PROJECT_NAME}"
     "${CMAKE_SOURCE_DIR}/src/main.cpp"
     "${CMAKE_SOURCE_DIR}/libs/pugixml-1.9/src/pugixml.cpp"

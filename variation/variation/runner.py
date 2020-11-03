@@ -7,7 +7,7 @@ import copy
 import os
 import glob
 import dependencySolver as ds
-
+from ctypes import *
 
 
 def is_var(arg): #this method just checks if the string validates against the RE
@@ -51,7 +51,6 @@ def find_var(item, idx, vars):
         variable dictionary
 
     """
-    print(type(item))
     for child in item.getchildren():
         find_var(child, idx, vars)
         for key, val in child.attrib.items():
@@ -92,7 +91,9 @@ def generateVar(var, n):
 
 
 def run():
-    
+    path = os.path.abspath("../build/libroadgen.so")  
+    libc = cdll.LoadLibrary(path) #TODO: this works under linux only!!
+
     #parsing args-------------------------------------
     print("-- Let's start the road network variation")
     argParse = argparse.ArgumentParser()
@@ -138,7 +139,7 @@ def run():
         if os.name == "posix":  # if MacOS
             os.system(os.getcwd() + '/../road-generation ' + tmpName)
 
-        else:                   # if Windows
+        else:                   # TODO: handle windows os
             os.system(os.getcwd() + '/../roadGeneration.exe ' + tmpName)
 
     #clear input folder (again)
