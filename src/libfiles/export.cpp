@@ -49,10 +49,10 @@ int execPipeline(){
 
 int executePipeline(char* file)
 {
+	cout << "Executing on " << file << endl;
 
 	freopen("log.txt", "a", stderr);
 	cerr << "\nError log for run with attribute: " << file << endl;
-
 
 	// --- initialization ------------------------------------------------------
 	pugi::xml_document in;
