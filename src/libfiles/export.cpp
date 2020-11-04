@@ -39,22 +39,20 @@ using namespace std;
 
 settings setting;
 
-/**
- * @brief main function for the tool 'road-generation'
- * an input xml file with given structure (defined in xml/input.xsd) is converted into a valid OpenDrive format (defined in xml/output.xsd)
- * 
- * @param argc amount of parameters
- * @param argv argv[1] is the specified input file <file>.xml which will be converted to <file>.xodr
- * @return int error code
- */
-extern "C" int callMain(char* fileName)
+void setFileName(char* file){
+	_fileName = file;
+}
+
+int execPipeline(){
+	return executePipeline(_fileName);
+}
+
+int executePipeline(char* file)
 {
-	char *file = fileName;	
-	cout << file << endl;
+
 	freopen("log.txt", "a", stderr);
 	cerr << "\nError log for run with attribute: " << file << endl;
 
-	printLogo();
 
 	// --- initialization ------------------------------------------------------
 	pugi::xml_document in;
@@ -74,7 +72,7 @@ extern "C" int callMain(char* fileName)
 	}
 	if (buildSegments(in, data))
 	{
-		cerr << "ERR: error in buildSegments" << endl;
+		cerr << "EcallMainRR: error in buildSegments" << endl;
 		return -1;
 	}
 	if (linkSegments(in, data))

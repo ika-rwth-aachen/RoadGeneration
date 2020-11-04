@@ -13,7 +13,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR})
 
 add_library("roadgen" SHARED
-    "${CMAKE_SOURCE_DIR}/src/export.cpp"
+    "${CMAKE_SOURCE_DIR}/src/libfiles/export.cpp"
     "${CMAKE_SOURCE_DIR}/libs/pugixml-1.9/src/pugixml.cpp"
 )
 
@@ -25,6 +25,9 @@ add_executable("${PROJECT_NAME}"
     "${CMAKE_SOURCE_DIR}/libs/pugixml-1.9/src/pugixml.cpp"
 )
 
+target_link_libraries("roadgen" ${XercesC_LIBRARIES})
+target_link_libraries("${PROJECT_NAME}" ${XercesC_LIBRARIES})
+
 add_definitions(-DPROJ_DIR=\"${PROJECT_SOURCE_DIR}\")
 
-target_link_libraries("${PROJECT_NAME}" ${XercesC_LIBRARIES})
+
