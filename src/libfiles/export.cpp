@@ -50,6 +50,7 @@ int execPipeline(){
 int executePipeline(char* file)
 {
 
+	
 	freopen("log.txt", "a", stderr);
 	cerr << "\nError log for run with attribute: " << file << endl;
 
@@ -95,6 +96,5 @@ int executePipeline(char* file)
 		cerr << "ERR: error in validateOutput" << endl;
 		return -1;
 	}
-	cout << "done!" << endl;
 	return 0;
 }

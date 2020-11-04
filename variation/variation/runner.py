@@ -137,8 +137,8 @@ def run():
         if os.name == "posix":  # if MacOS
             roadgen = cdll.LoadLibrary(libpath) #load shared lib
             arg = c_char_p(tmpName.encode('utf-8')) #execute "main" function from lib
-            #roadgen.setFile(arg)
-            roadgen.executePipeline(arg)
+            roadgen.setFileName(arg)
+            roadgen.execPipeline(arg)
 
         else:                   # TODO: handle windows os
             os.system(os.getcwd() + '/../roadGeneration.exe ' + tmpName)
