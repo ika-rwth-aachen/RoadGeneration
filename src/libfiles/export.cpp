@@ -43,7 +43,7 @@ void setFileName(char* file){
 	_fileName = file;
 }
 
-void setLogFile(std::string file){
+void setLogFile(char* file){
 	_logfile = file;
 }
 
