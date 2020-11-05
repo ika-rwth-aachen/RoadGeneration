@@ -8,6 +8,8 @@
  *
  */
 
+extern settings setting;
+
 /**
  * @brief function links all specified segments 
  *  	the reference frame has to be specified
@@ -19,7 +21,8 @@
  */
 int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 {
-	cout << "Processing linkSegments" << endl;
+	if(!setting.silentMode)
+		cout << "Processing linkSegments" << endl;
 
 	pugi::xml_node links = doc.child("roadNetwork").child("links");
 

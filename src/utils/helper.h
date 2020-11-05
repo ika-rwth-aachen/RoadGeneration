@@ -736,6 +736,7 @@ int generateOutputName(char* fileLocation, string &outputName)
 
 int parseArgs(int argc, char **argv, char* &file, std::string &outputName)
 {
+    extern settings setting;
     bool foundFile = false, setOutputName = false;
     char defaultPath[]="";
     char* targetFolder = defaultPath;
@@ -765,7 +766,10 @@ int parseArgs(int argc, char **argv, char* &file, std::string &outputName)
                 
                 case 'h':
                     return 1;
-                break; //is not neccessary
+                
+                case 's':
+                    setting.silentMode = true;
+                break;
 
                 default:
                     std::cout << "ERR: wrong args!" << std::endl;

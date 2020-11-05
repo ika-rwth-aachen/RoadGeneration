@@ -21,6 +21,7 @@
 #include "roundAbout.h"
 #include "connectingRoad.h"
 
+extern settings setting;
 /**
  * @brief function creates all segments which can be either a junction, roundabout or connectingroad
  * 
@@ -38,7 +39,8 @@ int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 	{
 			if ((string)it->name() == "junction")
 		{
-			cout << "Processing junction" << endl;
+			if(!setting.silentMode)
+				cout << "Processing junction" << endl;
 			if (junctionWrapper(*it, data))
 			{
 				cerr << "ERR: error in junction." << endl;
@@ -47,8 +49,9 @@ int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 		}
 
 		if ((string)it->name() == "roundabout")
-		{
-			cout << "Processing roundabout" << endl;
+		{	
+			if(!setting.silentMode)
+				cout << "Processing roundabout" << endl;
 			if (roundAbout(*it, data))
 			{
 				cerr << "ERR: error in roundabout." << endl;
@@ -58,7 +61,8 @@ int buildSegments(pugi::xml_document &doc, roadNetwork &data)
 
 		if ((string)it->name() == "connectingRoad")
 		{
-			cout << "Processing connectingRoad" << endl;
+			if(!setting.silentMode)
+				cout << "Processing connectingRoad" << endl;
 			if (connectingRoad(*it, data))
 			{
 				cerr << "ERR: error in connectingRoad." << endl;
