@@ -90,6 +90,44 @@ def generateVar(var, n):
     return val
 
 
+def executePipeline(n, tree, inpDir, nwName, varDict):
+    """This method calls the roadGen Lib function for every rev
+
+    Parameters
+    ----------
+    n: int 
+        number of revs
+    tree: ElementTree
+        the tree struct generated from input
+    inpDir: str
+        input dir
+    nwName: str
+        new name generate from input name
+    varDict: dict
+        dict containing array of vars
+    
+    """
+    for i in range(n):
+        cpTree = copy.deepcopy(tree)
+        cpTree.getroot().remove(cpTree.getroot().find('vars'))        
+        
+        find_var(cpTree.getroot(), i, varDict)        
+        tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'
+        cpTree.write(tmpName)
+        
+        libpath = os.path.abspath("../build/libroadgen.so")  
+        if os.name == "posix":  # if MacOS
+            roadgen = cdll.LoadLibrary(libpath) #load shared lib
+            arg = c_char_p(tmpName.encode('utf-8')) #execute "main" function from lib
+            logarg = c_char_p("data/logg.txt".encode("utf-8"))
+            roadgen.setLogFile(logarg)
+            roadgen.setFileName(arg)
+            roadgen.execPipeline(arg)
+
+        else:                   # TODO: handle windows os
+            os.system(os.getcwd() + '/../roadGeneration.exe ' + tmpName)
+
+
 def run():
     #parsing args-------------------------------------
     print("-- Let's start the road network variation")
@@ -125,25 +163,7 @@ def run():
     for f in files:
         os.remove(f)
 
-    for i in range(n):
-        cpTree = copy.deepcopy(tree)
-        cpTree.getroot().remove(cpTree.getroot().find('vars'))        
-        
-        find_var(cpTree.getroot(), i, varDict)        
-        tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'
-        cpTree.write(tmpName)
-        
-        libpath = os.path.abspath("../build/libroadgen.so")  
-        if os.name == "posix":  # if MacOS
-            roadgen = cdll.LoadLibrary(libpath) #load shared lib
-            arg = c_char_p(tmpName.encode('utf-8')) #execute "main" function from lib
-            logarg = c_char_p("data/logg.txt".encode("utf-8"))
-            roadgen.setLogFile(logarg)
-            roadgen.setFileName(arg)
-            roadgen.execPipeline(arg)
-
-        else:                   # TODO: handle windows os
-            os.system(os.getcwd() + '/../roadGeneration.exe ' + tmpName)
+    executePipeline(n, tree, inpDir, nwName, varDict)
 
     #clear input folder (again)
     if clearOutputFolder :
