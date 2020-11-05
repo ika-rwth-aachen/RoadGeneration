@@ -16,6 +16,7 @@ const char *HELP_MESSAGE =
   "    road-generation <fileName>       Generates a .xodr file from input file.\n"
   "\nOptions:\n"
   "    -h                               Display help message.\n"
+  "    -s                               Disable console output.\n"
   "    -d <fileDir>                     Specify output file directory.\n"
   "    -o <fileName>                    Specify output file name.\n\n";
 
