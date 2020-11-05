@@ -137,6 +137,8 @@ def run():
         if os.name == "posix":  # if MacOS
             roadgen = cdll.LoadLibrary(libpath) #load shared lib
             arg = c_char_p(tmpName.encode('utf-8')) #execute "main" function from lib
+            logarg = c_char_p("data/logg.txt".encode("utf-8"))
+            roadgen.setLogFile(logarg)
             roadgen.setFileName(arg)
             roadgen.execPipeline(arg)
 

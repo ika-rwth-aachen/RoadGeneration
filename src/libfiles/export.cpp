@@ -43,17 +43,21 @@ void setFileName(char* file){
 	_fileName = file;
 }
 
+void setLogFile(char* file){
+	_logfile = file;
+}
+
+
 int execPipeline(){
 	return executePipeline(_fileName);
 }
 
 int executePipeline(char* file)
 {
+	cout << "Executing on " << file << "." << endl;
 
-	
-	freopen("log.txt", "a", stderr);
+	freopen(_logfile.c_str(), "a", stderr);
 	cerr << "\nError log for run with attribute: " << file << endl;
-
 
 	// --- initialization ------------------------------------------------------
 	pugi::xml_document in;
