@@ -64,6 +64,8 @@ struct settings
     laneChanges laneChange;
     busStops busStop;
 
+    bool silentMode = false; //silent mode disables console outputs
+
     int versionMajor = 1; // OpenDrive major version
     int versionMinor = 5; // OpenDrive minor version
 

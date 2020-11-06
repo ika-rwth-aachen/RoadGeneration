@@ -50,21 +50,18 @@ settings setting;
 int main(int argc, char **argv)
 {
 	char *file;
+	string outputName;
 
-	if (argc == 2)
-	{
-		file = argv[1];
-	}
-	else
-	{
-		cerr << "ERR: no input file provided." << endl;
+	if (parseArgs(argc, argv, file, outputName)){
+		printHelpMessage();
 		return -1;
 	}
 
 	freopen("log.txt", "a", stderr);
 	cerr << "\nError log for run with attribute: " << file << endl;
 
-	printLogo();
+	if(!setting.silentMode)
+		printLogo();
 
 	// --- initialization ------------------------------------------------------
 	pugi::xml_document in;
@@ -77,7 +74,7 @@ int main(int argc, char **argv)
 		cerr << "ERR: error in validateInput" << endl;
 		return -1;
 	}
-	if (parseXML(in, data, file))
+	if (parseXML(in, data, file, outputName))
 	{
 		cerr << "ERR: error in parseXML" << endl;
 		return -1;

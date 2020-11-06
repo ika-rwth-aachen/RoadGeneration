@@ -8,6 +8,8 @@
  *
  */
 
+extern settings setting;
+
 /**
  * @brief function generates the road for a connecting road which is specified in the input file
  *  
@@ -30,7 +32,8 @@ int connectingRoad(pugi::xml_node &node, roadNetwork &data)
     }
 
     // --- generate roads ------------------------------------------------------
-    cout << "\t Generating Roads" << endl;
+    if(!setting.silentMode)
+        cout << "\t Generating Roads" << endl;
 
     road r;
     int id = mainRoad.attribute("id").as_int();

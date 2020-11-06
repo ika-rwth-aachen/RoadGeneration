@@ -235,7 +235,8 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
                        | id:2 |
                        |      |
     */
-    cout << "\t Generating Roads" << endl;
+    if(!setting.silentMode)
+        cout << "\t Generating Roads" << endl;
 
     road r1;
     r1.id = 100 * junc.id + 1;
@@ -440,7 +441,8 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     data.roads.push_back(r4);
 
     // --- generate connecting lanes -------------------------------------------
-    cout << "\t Generate Connecting Lanes" << endl;
+    if(!setting.silentMode)
+        cout << "\t Generate Connecting Lanes" << endl;
 
     // generate user-defined connecting lanes
     if (con && (string)con.attribute("type").value() == "single")
