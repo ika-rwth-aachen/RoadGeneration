@@ -198,7 +198,8 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         id: 1               id: 2
         __________        ___________    
      */
-    cout << "\t Generating Roads" << endl;
+    if(!setting.silentMode)
+        cout << "\t Generating Roads" << endl;
     laneSection lS;
     double t;
 
@@ -382,7 +383,8 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
     data.roads.push_back(r3);
 
     // --- generate connecting lanes -------------------------------------------
-    cout << "\t Generate Connecting Lanes" << endl;
+    if(!setting.silentMode)
+        cout << "\t Generate Connecting Lanes" << endl;
 
     // --- generate user-defined connecting lanes
     if (con && (string)con.attribute("type").value() == "single")

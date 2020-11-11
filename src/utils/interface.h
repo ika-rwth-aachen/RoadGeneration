@@ -249,7 +249,7 @@ struct road
 struct roadNetwork
 {
     string file;
-
+    string outputFile;
     // main data properties
     vector<road> roads;
     vector<junction> junctions;
