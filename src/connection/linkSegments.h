@@ -94,7 +94,6 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 
 			fromRoad = r;
 			fromRoadId = r.id;
-
 			// if junction, the contact point is always at "end" of a road
 			if (fromIsJunction)
 				fromPos = "end";
@@ -160,6 +159,11 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 		// if toPos is end, the actual toPos has to be computed
 		if (toPos == "end")
 		{
+			if(toRoad.id == -1){
+				std::cerr << "ERR: 'Road linking is wrong!'" << std::endl;
+				std::cerr << "    couldn't find toSegment " << toSegment << " or toRoadID " << toRoadId << std::endl;
+				return -1;
+			}
 			geometry g = toRoad.geometries.back();
 			toX = g.x * cos(dPhi) - g.y * sin(dPhi);
 			toY = g.x * sin(dPhi) + g.y * cos(dPhi);
@@ -198,5 +202,6 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 				r.successor.id = toRoadId;
 		}
 	}
+	
 	return 0;
 }
