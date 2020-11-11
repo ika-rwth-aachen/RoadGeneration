@@ -735,7 +735,7 @@ int generateOutputName(char* fileLocation, string &outputName)
     return 0;
 }
 
-int parseArgs(int argc, char **argv, char* &file, std::string &outputName)
+int parseArgs(int argc, char **argv, char* &file, std::string &outputName) //TODO: this method makes no sense to keep in lib export 
 {
     extern settings setting;
     bool foundFile = false, setOutputName = false;
