@@ -65,11 +65,6 @@ int executePipeline(char* file)
 		cout << "ERR: no file has been provided!" << endl;
 	}
 	
-	cout << "Executing on " << file << "." << endl;
-	cout << "OUTPUT" << _outName << "." << endl;
-
-
-
 	freopen(_logfile.c_str(), "a", stderr);
 	cerr << "\nError log for run with attribute: " << file << endl;
 

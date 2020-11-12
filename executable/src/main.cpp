@@ -14,8 +14,6 @@ int main(int argc, char** argv){
         return -1;
     }
 
-    cout << settings.fileName << "\n" << settings.outputName << "\n" << settings.silentMode << endl; 
-
     setFileName(settings.fileName);
     setOutputName(settings.outputName);
     setSilentMode(settings.silentMode);
