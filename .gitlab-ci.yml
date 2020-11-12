@@ -13,6 +13,7 @@ basicBuildCase:
   artifacts:
       paths:
         - road-generation_exec
+        - libroad-generation.so
 
 junction_ma:
   stage: unitCases
