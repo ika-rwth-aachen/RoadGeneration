@@ -51,6 +51,7 @@ int main(int argc, char **argv)
 {
 	char *file;
 	string outputName;
+	
 
 	if (parseArgs(argc, argv, file, outputName)){
 		printHelpMessage();
