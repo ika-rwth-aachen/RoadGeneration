@@ -47,15 +47,24 @@ void setLogFile(char* file){
 	_logfile = file;
 }
 
+void setOutputName(char* outName){
+	_outName = outName;
+}
 
 int execPipeline(){
 	return executePipeline(_fileName);
 }
 
+void setSilentMode(bool sMode){
+	setting.silentMode = sMode;
+}
+
 int executePipeline(char* file)
 {
-	cout << "Executing on " << file << "." << endl;
-
+	if (_fileName == NULL){
+		cout << "ERR: no file has been provided!" << endl;
+	}
+	
 	freopen(_logfile.c_str(), "a", stderr);
 	cerr << "\nError log for run with attribute: " << file << endl;
 
@@ -63,6 +72,10 @@ int executePipeline(char* file)
 	pugi::xml_document in;
 	pugi::xml_document out;
 	roadNetwork data;
+
+	string outputFile = _outName;
+	data.outputFile = outputFile.substr(0, outputFile.find(".xml"));
+    data.outputFile = data.outputFile.substr(0, outputFile.find(".xodr"));
 
 	// --- pipeline ------------------------------------------------------------
 	if (validateInput(file))
