@@ -116,13 +116,11 @@ int validateOutput(roadNetwork data)
  * @param file  xml input file
  * @return int  error code
  */
-int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file, string outputFile)
+int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file)
 {
     // save file name in data
     string f = file;
     data.file = f.substr(0, f.find(".xml"));
-    data.outputFile = outputFile.substr(0, outputFile.find(".xodr"));
-
 
     if (doc.load_file(file))
     {

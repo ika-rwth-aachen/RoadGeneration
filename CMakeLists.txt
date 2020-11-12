@@ -18,12 +18,12 @@ add_library("${PROJECT_NAME}" SHARED
 )
 
 add_executable("${PROJECT_NAME}_exec"
-    "${CMAKE_SOURCE_DIR}/src/main.cpp"
-    "${CMAKE_SOURCE_DIR}/libs/pugixml-1.9/src/pugixml.cpp"
+    "${CMAKE_SOURCE_DIR}/executable/src/main.cpp"
+    "${CMAKE_SOURCE_DIR}/executable/src/helper.cpp"
 )
 
 target_link_libraries("${PROJECT_NAME}" ${XercesC_LIBRARIES})
-target_link_libraries("${PROJECT_NAME}_exec" ${XercesC_LIBRARIES})
+target_link_libraries("${PROJECT_NAME}_exec" ${PROJECT_NAME})
 
 add_definitions(-DPROJ_DIR=\"${PROJECT_SOURCE_DIR}\")
 
