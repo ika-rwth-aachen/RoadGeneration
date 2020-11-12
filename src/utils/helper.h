@@ -735,7 +735,7 @@ int generateOutputName(char* fileLocation, string &outputName)
     return 0;
 }
 
-int parseArgs(int argc, char **argv, char* &file, std::string &outputName)
+int parseArgs(int argc, char **argv, char* &file, std::string &outputName) //TODO: this method makes no sense to keep in lib export 
 {
     extern settings setting;
     bool foundFile = false, setOutputName = false;
@@ -757,10 +757,20 @@ int parseArgs(int argc, char **argv, char* &file, std::string &outputName)
             
             switch(argv[i][1]){  // look for params
                 case 'd': 
+                    std::cout << i << "  " <<argc << std::endl;
+
+                    if(argc <= i +1){
+                        std::cout <<"ERR: wrong args!" << std::endl;
+                        return -1;
+                    }
                     targetFolder = argv[++i];
                 break;
 
                 case 'o':
+                    if(argc <= i +1){
+                        std::cout <<"ERR: wrong args!" << std::endl;
+                        return -1;
+                    }
                     outputName = argv[++i];
                     setOutputName = true;
                 break;

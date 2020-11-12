@@ -70,7 +70,7 @@ int executePipeline(char* file)
 		cerr << "ERR: error in validateInput" << endl;
 		return -1;
 	}
-	if (parseXML(in, data, file))
+	if (parseXML(in, data, file, file))
 	{
 		cerr << "ERR: error in parseXML" << endl;
 		return -1;
