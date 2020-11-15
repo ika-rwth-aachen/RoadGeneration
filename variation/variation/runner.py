@@ -9,6 +9,7 @@ import glob
 import dependencySolver as ds
 from ctypes import *
 
+args = None #global args object
 
 def is_var(arg): #this method just checks if the string validates against the RE
     m = re.search('\$\{.*\}', arg)
@@ -107,12 +108,15 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
         dict containing array of vars
     
     """
+
     for i in range(n):
         cpTree = copy.deepcopy(tree)
         cpTree.getroot().remove(cpTree.getroot().find('vars'))        
         
         find_var(cpTree.getroot(), i, varDict)        
         tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'
+        
+
         cpTree.write(tmpName)
         
         libpath = os.path.abspath("../build/libroad-generation.so")  
@@ -120,10 +124,12 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
             
             roadgen = cdll.LoadLibrary(libpath) #load shared lib
             
-            arg = c_char_p(tmpName.encode('utf-8')) #execute "main" function from lib
-            
+            argFilename = c_char_p(tmpName.encode('utf-8')) #execute "main" function from lib            
             roadgen.setSilentMode(c_bool(True))
-            roadgen.setFileName(arg)
+            roadgen.setFileName(argFilename)
+            if args.o:
+                outArgs = c_char_p((args.o+"_rev"+str(i)).encode('utf-8'))
+                roadgen.setOutputName(outArgs)
             roadgen.execPipeline()
 
         else:                   # TODO: handle windows os
@@ -132,11 +138,15 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
 
 def run():
     #parsing args-------------------------------------
+    global args
     print("-- Let's start the road network variation")
     argParse = argparse.ArgumentParser()
     argParse.add_argument('-fname', required=True, help='filename of the road network template', metavar='TemplateFilename')
+    argParse.add_argument('-o', help='set output name scheme')
     argParse.add_argument('-n', help='number of variations to be generated', metavar='count', type=int, default=20)
     argParse.add_argument('-k', help='keep intermediate xml files after generation', action='store_false')
+
+
 
     args = argParse.parse_args()    
     n = args.n
