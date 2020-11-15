@@ -115,15 +115,16 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
         tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'
         cpTree.write(tmpName)
         
-        libpath = os.path.abspath("../build/libroadgen.so")  
+        libpath = os.path.abspath("../build/libroad-generation.so")  
         if os.name == "posix":  # if MacOS
             
             roadgen = cdll.LoadLibrary(libpath) #load shared lib
+            
             arg = c_char_p(tmpName.encode('utf-8')) #execute "main" function from lib
-            logarg = c_char_p("data/logg.txt".encode("utf-8"))
-            roadgen.setLogFile(logarg)
+            
+            roadgen.setSilentMode(c_bool(True))
             roadgen.setFileName(arg)
-            roadgen.execPipeline(arg)
+            roadgen.execPipeline()
 
         else:                   # TODO: handle windows os
             os.system(os.getcwd() + '/../roadGeneration.exe ' + tmpName)

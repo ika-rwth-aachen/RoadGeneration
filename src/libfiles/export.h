@@ -3,9 +3,10 @@
 
 #include<string>
 
+bool _setOutput = false;
 
 char* _fileName;
-char* _outName;
+std::string _outName = "";
 std::string _logfile = "log.txt";
 
 

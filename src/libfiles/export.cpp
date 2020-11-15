@@ -49,6 +49,7 @@ void setLogFile(char* file){
 
 void setOutputName(char* outName){
 	_outName = outName;
+	_setOutput = true;
 }
 
 int execPipeline(){
@@ -61,12 +62,18 @@ void setSilentMode(bool sMode){
 
 int executePipeline(char* file)
 {
-	if (_fileName == NULL){
+
+	if (file == NULL){
 		cout << "ERR: no file has been provided!" << endl;
+	}
+
+	if(!_setOutput){
+		_outName = file;
 	}
 	
 	freopen(_logfile.c_str(), "a", stderr);
 	cerr << "\nError log for run with attribute: " << file << endl;
+
 
 	// --- initialization ------------------------------------------------------
 	pugi::xml_document in;
@@ -76,6 +83,7 @@ int executePipeline(char* file)
 	string outputFile = _outName;
 	data.outputFile = outputFile.substr(0, outputFile.find(".xml"));
     data.outputFile = data.outputFile.substr(0, outputFile.find(".xodr"));
+
 
 	// --- pipeline ------------------------------------------------------------
 	if (validateInput(file))
@@ -113,5 +121,6 @@ int executePipeline(char* file)
 		cerr << "ERR: error in validateOutput" << endl;
 		return -1;
 	}
+
 	return 0;
 }
