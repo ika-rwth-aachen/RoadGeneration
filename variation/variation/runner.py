@@ -115,6 +115,7 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
         
         find_var(cpTree.getroot(), i, varDict)        
         tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'
+        print("Running on " + tmpName)
         
 
         cpTree.write(tmpName)
