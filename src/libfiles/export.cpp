@@ -63,6 +63,8 @@ void setSilentMode(bool sMode){
 int executePipeline(char* file)
 {
 
+	printLogo();
+
 	if (file == NULL){
 		cout << "ERR: no file has been provided!" << endl;
 	}
@@ -121,6 +123,6 @@ int executePipeline(char* file)
 		cerr << "ERR: error in validateOutput" << endl;
 		return -1;
 	}
-
+	cout << "\n";
 	return 0;
 }

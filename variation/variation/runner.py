@@ -115,8 +115,7 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
         
         find_var(cpTree.getroot(), i, varDict)        
         tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'
-        print("Running on " + tmpName)
-        
+        print("Running on " + tmpName)        
 
         cpTree.write(tmpName)
         
@@ -126,7 +125,7 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
             roadgen = cdll.LoadLibrary(libpath) #load shared lib
             
             argFilename = c_char_p(tmpName.encode('utf-8')) #execute "main" function from lib            
-            roadgen.setSilentMode(c_bool(True))
+            roadgen.setSilentMode(c_bool(args.s))
             roadgen.setFileName(argFilename)
             if args.o:
                 outArgs = c_char_p((args.o+"_rev"+str(i)).encode('utf-8'))
@@ -146,8 +145,7 @@ def run():
     argParse.add_argument('-o', help='set output name scheme')
     argParse.add_argument('-n', help='number of variations to be generated', metavar='count', type=int, default=20)
     argParse.add_argument('-k', help='keep intermediate xml files after generation', action='store_false')
-
-
+    argParse.add_argument('-s', help='run roadgen in silent mode', action='store_true')
 
     args = argParse.parse_args()    
     n = args.n
