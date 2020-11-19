@@ -23,8 +23,10 @@ A variety of parameters and flaggs can be specified:
 
 - `-fname ` `<input file path>` input template file
 - `-n` `<integer>`number of generated outputs
+- `-o` `<string>` output file name
 - `-h --help` display the help message
 - `-k` keep the inetmediate `.xml` output files
+- `-s` run the roadgen lib in silent mode	
 
 
 Template File

@@ -132,8 +132,16 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
                 roadgen.setOutputName(outArgs)
             roadgen.execPipeline()
 
-        else:                   # TODO: handle windows os
-            os.system(os.getcwd() + '/../roadGeneration.exe ' + tmpName)
+        else:  # TODO: handle windows os 
+            roadgen = cdll.LoadLibrary(libpath) 
+            
+            argFilename = c_char_p(tmpName.encode('utf-8'))          
+            roadgen.setSilentMode(c_bool(args.s))
+            roadgen.setFileName(argFilename)
+            if args.o:
+                outArgs = c_char_p((args.o+"_rev"+str(i)).encode('utf-8'))
+                roadgen.setOutputName(outArgs)
+            roadgen.execPipeline()
 
 
 def run():
