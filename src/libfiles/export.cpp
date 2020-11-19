@@ -100,7 +100,7 @@ int executePipeline(char* file)
 	}
 	if (buildSegments(in, data))
 	{
-		cerr << "EcallMainRR: error in buildSegments" << endl;
+		cerr << "ERR: error in buildSegments" << endl;
 		return -1;
 	}
 	if (linkSegments(in, data))
