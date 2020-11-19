@@ -63,7 +63,7 @@ void setSilentMode(bool sMode){
 int executePipeline(char* file)
 {
 
-	printLogo();
+	
 
 	if (file == NULL){
 		cout << "ERR: no file has been provided!" << endl;
@@ -75,6 +75,10 @@ int executePipeline(char* file)
 	
 	freopen(_logfile.c_str(), "a", stderr);
 	cerr << "\nError log for run with attribute: " << file << endl;
+
+	if(!setting.silentMode){
+		printLogo();
+	}
 
 
 	// --- initialization ------------------------------------------------------

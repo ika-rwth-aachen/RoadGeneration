@@ -111,7 +111,8 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
 
     for i in range(n):
         cpTree = copy.deepcopy(tree)
-        cpTree.getroot().remove(cpTree.getroot().find('vars'))        
+        if not cpTree.getroot().find('vars') == None:
+            cpTree.getroot().remove(cpTree.getroot().find('vars'))        
         
         find_var(cpTree.getroot(), i, varDict)        
         tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'
@@ -167,16 +168,18 @@ def run():
     vars = tree.getroot().find('vars')
     varDict = {}
     #reading values-----------------------------------
-
-    for var in vars:
-        val = generateVar(var, n)
-        varDict.update({var.get('id'): val})
+    if not vars == None:
+        for var in vars:
+            val = generateVar(var, n)
+            varDict.update({var.get('id'): val})
 
     #solving equations------------------------------------
 
-    varList = ds.getVarLists(varDict, n)
-    varDict = ds.solveEQ(varList, n)
-
+        varList = ds.getVarLists(varDict, n)
+        varDict = ds.solveEQ(varList, n)
+    else:
+        print("No variables detected. Running only one iteration!")
+        n = 1
     #clear input folder
     files = glob.glob(inpDir+'*')
     for f in files:
