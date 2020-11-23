@@ -117,10 +117,9 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
         find_var(cpTree.getroot(), i, varDict)        
         tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'
         print("Running on " + tmpName)        
-
         cpTree.write(tmpName)
-        
-        libpath = os.path.abspath("../build/libroad-generation.so")  
+        libpath = os.path.join(os.path.dirname(__file__), "libroad-generation_py.so")
+        #libpath = os.path.abspath("variation/variation/libroad-generation_py.so")  
         if os.name == "posix":  # if MacOS
             
             roadgen = cdll.LoadLibrary(libpath) #load shared lib
@@ -133,7 +132,7 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
                 roadgen.setOutputName(outArgs)
             roadgen.execPipeline()
 
-        else:  # TODO: handle windows os 
+        else:  # handle windows os 
             roadgen = cdll.LoadLibrary(libpath) 
             
             argFilename = c_char_p(tmpName.encode('utf-8'))          
@@ -161,7 +160,9 @@ def run():
     clearOutputFolder = args.k   
     fname = args.fname
     nwName = str.split(str.split(fname,'/')[-1],'.')[0]
-    inpDir = 'data/inputs/'    
+
+    inpDir = os.path.join(os.path.dirname(__file__), "../data/inputs/")
+    #inpDir = 'variation/data/inputs/'    
 
     #init --------------------------------------------
     tree = ET.parse(args.fname)
