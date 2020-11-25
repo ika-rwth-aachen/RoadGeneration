@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ET
 import copy
 import os
 import glob
-import dependencySolver as ds
+from variation import dependencySolver as ds
 from ctypes import *
 
 args = None #global args object
@@ -143,6 +143,11 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
                 roadgen.setOutputName(outArgs)
             roadgen.execPipeline()
 
+def initDirectories(inpDir):
+    if not os.path.exists(inpDir ):
+        os.makedirs(inpDir )
+
+
 
 def run():
     #parsing args-------------------------------------
@@ -160,9 +165,12 @@ def run():
     clearOutputFolder = args.k   
     fname = args.fname
     nwName = str.split(str.split(fname,'/')[-1],'.')[0]
+    tDir = str.split(fname, '/')[:-1]
+    print(tDir)
+    #inpDir = os.path.join(os.path.dirname(__file__), "../data/inputs/")
+    inpDir = os.path.join(os.path.dirname(fname), "variation_output/")
 
-    inpDir = os.path.join(os.path.dirname(__file__), "../data/inputs/")
-    #inpDir = 'variation/data/inputs/'    
+    initDirectories(inpDir)  
 
     #init --------------------------------------------
     tree = ET.parse(args.fname)
