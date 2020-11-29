@@ -120,7 +120,7 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
 
         cpTree.write(tmpName)
         
-        libpath = os.path.abspath("../build/libroad-generation.so")  
+        libpath = os.path.abspath("libroad-generation.so")  
         if os.name == "posix":  # if MacOS
             
             roadgen = cdll.LoadLibrary(libpath) #load shared lib
@@ -133,7 +133,7 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
                 roadgen.setOutputName(outArgs)
             roadgen.execPipeline()
 
-        else:  # TODO: handle windows os 
+        else:   
             roadgen = cdll.LoadLibrary(libpath) 
             
             argFilename = c_char_p(tmpName.encode('utf-8'))          
