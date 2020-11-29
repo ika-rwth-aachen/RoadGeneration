@@ -6,8 +6,10 @@ import xml.etree.ElementTree as ET
 import copy
 import os
 import glob
+import shutil
 from variation import dependencySolver as ds
 from ctypes import *
+
 
 args = None #global args object
 
@@ -148,28 +150,37 @@ def initDirectories(inpDir):
         os.makedirs(inpDir )
 
 
+def copyTemplate(path):
+    shutil.copy(os.path.join(os.path.dirname(__file__), "network.tmpl"), path)
 
 def run():
     #parsing args-------------------------------------
     global args
     print("-- Let's start the road network variation")
     argParse = argparse.ArgumentParser()
-    argParse.add_argument('-fname', required=True, help='filename of the road network template', metavar='TemplateFilename')
-    argParse.add_argument('-o', help='set output name scheme')
-    argParse.add_argument('-n', help='number of variations to be generated', metavar='count', type=int, default=20)
+    argParse.add_argument('-fname', help='filename of the road network template', metavar='<TemplateFilename>')
+    argParse.add_argument('-o', help='set output name scheme', metavar='<out filename>')
+    argParse.add_argument('-n', help='number of variations to be generated', metavar='<int>', type=int, default=20)
+    argParse.add_argument('-e', help='generate an example template file', metavar='<file location>')
     argParse.add_argument('-k', help='keep intermediate xml files after generation', action='store_false')
     argParse.add_argument('-s', help='run roadgen in silent mode', action='store_true')
-
     args = argParse.parse_args()    
+
+    
+    if not args.e == None:
+            copyTemplate(args.e)
+            print("copied tmpl file to " + args.e)
+
+    if args.fname == None:
+        if args.e == None:
+            print("Error:\n-fname <FileName> required.\nUse -h for further help.")
+        return
+
     n = args.n
     clearOutputFolder = args.k   
     fname = args.fname
     nwName = str.split(str.split(fname,'/')[-1],'.')[0]
-    tDir = str.split(fname, '/')[:-1]
-    print(tDir)
-    #inpDir = os.path.join(os.path.dirname(__file__), "../data/inputs/")
     inpDir = os.path.join(os.path.dirname(fname), "variation_output/")
-
     initDirectories(inpDir)  
 
     #init --------------------------------------------

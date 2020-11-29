@@ -13,6 +13,11 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://gitlab.ika.rwth-aachen.de/dbecker/road-generation",
     packages=setuptools.find_packages(),
+    install_requires=[
+          'sympy',
+          'numexpr',
+          'numpy',
+    ],
     scripts=['bin/road-variation'],
     classifiers=[
         "Programming Language :: Python :: 3",
