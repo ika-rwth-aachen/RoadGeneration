@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ET
 import copy
 import os
 import glob
-import dependencySolver as ds
+from variation import dependencySolver as ds
 from ctypes import *
 
 args = None #global args object
@@ -117,10 +117,9 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
         find_var(cpTree.getroot(), i, varDict)        
         tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'
         print("Running on " + tmpName)        
-
         cpTree.write(tmpName)
-        
-        libpath = os.path.abspath("libroad-generation.so")  
+        libpath = os.path.join(os.path.dirname(__file__), "libroad-generation_py.so")
+        #libpath = os.path.abspath("variation/variation/libroad-generation_py.so")  
         if os.name == "posix":  # if MacOS
             
             roadgen = cdll.LoadLibrary(libpath) #load shared lib
@@ -144,6 +143,11 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
                 roadgen.setOutputName(outArgs)
             roadgen.execPipeline()
 
+def initDirectories(inpDir):
+    if not os.path.exists(inpDir ):
+        os.makedirs(inpDir )
+
+
 
 def run():
     #parsing args-------------------------------------
@@ -161,7 +165,12 @@ def run():
     clearOutputFolder = args.k   
     fname = args.fname
     nwName = str.split(str.split(fname,'/')[-1],'.')[0]
-    inpDir = 'data/inputs/'    
+    tDir = str.split(fname, '/')[:-1]
+    print(tDir)
+    #inpDir = os.path.join(os.path.dirname(__file__), "../data/inputs/")
+    inpDir = os.path.join(os.path.dirname(fname), "variation_output/")
+
+    initDirectories(inpDir)  
 
     #init --------------------------------------------
     tree = ET.parse(args.fname)
