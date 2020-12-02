@@ -1,0 +1,3 @@
+recursive-include variation *.so *.tmpl
+
+

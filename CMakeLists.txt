@@ -12,12 +12,30 @@ set(BIN_DIR ${CMAKE_SOURCE_DIR} CACHE PATH "BIN_DIR")
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR})
 
-add_executable("${PROJECT_NAME}"
-    "${CMAKE_SOURCE_DIR}/src/main.cpp"
+add_library("${PROJECT_NAME}" SHARED
+    "${CMAKE_SOURCE_DIR}/src/libfiles/export.cpp"
     "${CMAKE_SOURCE_DIR}/libs/pugixml-1.9/src/pugixml.cpp"
 )
 
+add_library("${PROJECT_NAME}_py" SHARED  #This is not optimal. Delete this, when the pip deploy is done
+    "${CMAKE_SOURCE_DIR}/src/libfiles/export.cpp"
+    "${CMAKE_SOURCE_DIR}/libs/pugixml-1.9/src/pugixml.cpp"
+)
+
+set_target_properties("${PROJECT_NAME}_py"#This is not optimal. Delete this, when the pip deploy is done
+    PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY "${BIN_DIR}/variation"    
+)
+
+add_executable("${PROJECT_NAME}_exec"
+    "${CMAKE_SOURCE_DIR}/executable/src/main.cpp"
+    "${CMAKE_SOURCE_DIR}/executable/src/helper.cpp"
+)
+
+target_link_libraries("${PROJECT_NAME}_py" ${PROJECT_NAME})#This is not optimal. Delete this, when the pip deploy is done
+target_link_libraries("${PROJECT_NAME}" ${XercesC_LIBRARIES})
+target_link_libraries("${PROJECT_NAME}_exec" ${PROJECT_NAME})
+
 add_definitions(-DPROJ_DIR=\"${PROJECT_SOURCE_DIR}\")
 
-target_link_libraries("${PROJECT_NAME}" ${XercesC_LIBRARIES})
 

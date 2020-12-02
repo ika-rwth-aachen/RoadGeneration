@@ -8,6 +8,8 @@
  *
  */
 
+extern settings setting;
+
 /**
  * @brief function generates the roads and junctions for a roundabout which is specified in the input file
  *  
@@ -153,7 +155,8 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         double iPhdg = curPhi;
 
         // --- generate roads --------------------------------------------------
-        cout << "\t Generating Roads" << endl;
+        if(!setting.silentMode)
+            cout << "\t Generating Roads" << endl;
         /*           
                     \___       ____/
                  id: 1         id: helper
@@ -224,7 +227,8 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         helper.predecessor.contactPoint = startType;
 
         // --- generate connecting lanes ---------------------------------------
-        cout << "\t Generate Connecting Lanes" << endl;
+        if(!setting.silentMode)
+            cout << "\t Generate Connecting Lanes" << endl;
 
         // max and min id's of laneSections
         int inner1, outer1, outer2, inner2, nLane;

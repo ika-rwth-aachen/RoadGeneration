@@ -48,8 +48,10 @@ int validateInput(char *file)
 
     domParser.parse(xml_file);
 
-    if (domParser.getErrorCount() == 0)
-        cout << "XML input file validated against the schema successfully" << endl;
+    if (domParser.getErrorCount() == 0){
+        if(!setting.silentMode)
+            cout << "XML input file validated against the schema successfully" << endl;
+    }
     else
     {
         cerr << "ERR: XML input file doesn't conform to the schema" << endl;
@@ -68,7 +70,7 @@ int validateInput(char *file)
 int validateOutput(roadNetwork data)
 {
     // setup file
-    string file = data.file;
+    string file = data.outputFile;
     file.append(".xodr");
     const char *xml_file = file.c_str();
 
@@ -92,8 +94,10 @@ int validateOutput(roadNetwork data)
     domParser.setValidationConstraintFatal(true);
 
     domParser.parse(xml_file);
-    if (domParser.getErrorCount() == 0)
-        cout << "XML output file validated against the schema successfully" << endl;
+    if (domParser.getErrorCount() == 0){
+        if(!setting.silentMode)
+            cout << "XML output file validated against the schema successfully" << endl;
+    }
     else
     {
         cerr << "ERR: XML output file doesn't conform to the schema" << endl;
@@ -454,7 +458,8 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     }
 
     // --- write doc structure to file -----------------------------------------
-    string file = data.file;
+    string file = data.outputFile;
+ 
     file.append(".xodr");
 
     if (doc.save_file(file.c_str()))

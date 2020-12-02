@@ -7,7 +7,7 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
-
+#include "export.h"
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -39,37 +39,57 @@ using namespace std;
 
 settings setting;
 
-/**
- * @brief main function for the tool 'road-generation'
- * an input xml file with given structure (defined in xml/input.xsd) is converted into a valid OpenDrive format (defined in xml/output.xsd)
- * 
- * @param argc amount of parameters
- * @param argv argv[1] is the specified input file <file>.xml which will be converted to <file>.xodr
- * @return int error code
- */
-int main(int argc, char **argv)
+void setFileName(char* file){
+	_fileName = file;
+}
+
+void setLogFile(char* file){
+	_logfile = file;
+}
+
+void setOutputName(char* outName){
+	_outName = outName;
+	_setOutput = true;
+}
+
+int execPipeline(){
+	return executePipeline(_fileName);
+}
+
+void setSilentMode(bool sMode){
+	setting.silentMode = sMode;
+}
+
+int executePipeline(char* file)
 {
-	char *file;
 
-	if (argc == 2)
-	{
-		file = argv[1];
-	}
-	else
-	{
-		cerr << "ERR: no input file provided." << endl;
-		return -1;
+	
+
+	if (file == NULL){
+		cout << "ERR: no file has been provided!" << endl;
 	}
 
-	freopen("log.txt", "a", stderr);
+	if(!_setOutput){
+		_outName = file;
+	}
+	
+	freopen(_logfile.c_str(), "a", stderr);
 	cerr << "\nError log for run with attribute: " << file << endl;
 
-	printLogo();
+	if(!setting.silentMode){
+		printLogo();
+	}
+
 
 	// --- initialization ------------------------------------------------------
 	pugi::xml_document in;
 	pugi::xml_document out;
 	roadNetwork data;
+
+	string outputFile = _outName;
+	data.outputFile = outputFile.substr(0, outputFile.find(".xml"));
+    data.outputFile = data.outputFile.substr(0, outputFile.find(".xodr"));
+
 
 	// --- pipeline ------------------------------------------------------------
 	if (validateInput(file))
@@ -107,6 +127,6 @@ int main(int argc, char **argv)
 		cerr << "ERR: error in validateOutput" << endl;
 		return -1;
 	}
-
+	cout << "\n";
 	return 0;
 }
