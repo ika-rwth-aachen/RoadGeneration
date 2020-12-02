@@ -49,6 +49,7 @@ def run():
         else:
             raise ValueError("A wrong or invalid distribution type was provided")
         varDict.update({var.get('id'): val})
+        
 
     #print(varDict)
     #clear input folder
