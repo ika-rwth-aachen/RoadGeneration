@@ -1,21 +1,30 @@
 #ifndef EXPORT_H
 #define EXPORT_H
 
+#ifdef _WIN32
+# ifdef WIN_EXPORT
+#   define EXPORTED  __declspec( dllexport )
+# else
+#   define EXPORTED  __declspec( dllimport )
+# endif
+#else
+# define EXPORTED
+#endif
+
 #include<string>
 
 bool _setOutput = false;
-
 char* _fileName;
 std::string _outName = "";
 std::string _logfile = "log.txt";
 
 
-extern "C" void setFileName(char* file);
-extern "C" void setLogFile(char* file);
-extern "C" int execPipeline();
-extern "C" int executePipeline(char* file);
-extern "C" void setOutputName(char* file);
-extern "C" void setSilentMode(bool sMode);
+extern "C" EXPORTED void setFileName(char* file);
+extern "C" EXPORTED void setLogFile(char* file);
+extern "C" EXPORTED int execPipeline();
+extern "C" EXPORTED int executePipeline(char* file);
+extern "C" EXPORTED void setOutputName(char* file);
+extern "C" EXPORTED void setSilentMode(bool sMode);
 
 
 #endif

@@ -13,7 +13,7 @@ from ctypes import *
 
 args = None #global args object
 
-def is_var(arg): #this method just checks if the string validates against the RE
+def is_var(arg): #method just checks if the string validates against the RE
     m = re.search('\$\{.*\}', arg)
     if m==None:
         return False
@@ -119,6 +119,7 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
         find_var(cpTree.getroot(), i, varDict)        
         tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'
         print("Running on " + tmpName)        
+        
         cpTree.write(tmpName)
         libpath = os.path.join(os.path.dirname(__file__), "libroad-generation_py.so")
         #libpath = os.path.abspath("variation/variation/libroad-generation_py.so")  
@@ -126,7 +127,7 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
             
             roadgen = cdll.LoadLibrary(libpath) #load shared lib
             
-            argFilename = c_char_p(tmpName.encode('utf-8')) #execute "main" function from lib            
+            argFilename = c_char_p(tmpName.encode('utf-8')) #execute "main" function from lib   
             roadgen.setSilentMode(c_bool(args.s))
             roadgen.setFileName(argFilename)
             if args.o:

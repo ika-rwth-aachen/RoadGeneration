@@ -39,31 +39,31 @@ using namespace std;
 
 settings setting;
 
-void setFileName(char* file){
+EXPORTED void setFileName(char* file){
 	_fileName = file;
 }
 
-void setLogFile(char* file){
+EXPORTED void setLogFile(char* file){
 	_logfile = file;
 }
 
-void setOutputName(char* outName){
+EXPORTED void setOutputName(char* outName){
 	_outName = outName;
 	_setOutput = true;
 }
 
-int execPipeline(){
+EXPORTED int execPipeline(){
 	return executePipeline(_fileName);
 }
 
-void setSilentMode(bool sMode){
+EXPORTED void setSilentMode(bool sMode){
 	setting.silentMode = sMode;
 }
 
-int executePipeline(char* file)
+EXPORTED int executePipeline(char* file)
 {
 
-	
+	cout << file << endl;
 
 	if (file == NULL){
 		cout << "ERR: no file has been provided!" << endl;
@@ -73,7 +73,7 @@ int executePipeline(char* file)
 		_outName = file;
 	}
 	
-	freopen(_logfile.c_str(), "a", stderr);
+	(void)! freopen(_logfile.c_str(), "a", stderr); //(void)! suppresses the unused return warning..
 	cerr << "\nError log for run with attribute: " << file << endl;
 
 	if(!setting.silentMode){
