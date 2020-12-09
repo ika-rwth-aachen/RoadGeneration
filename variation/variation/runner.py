@@ -118,13 +118,11 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
         
         find_var(cpTree.getroot(), i, varDict)        
         tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'
-        print("Running on " + tmpName)        
-        
+        print("Running on " + tmpName)               
         cpTree.write(tmpName)
-        libpath = os.path.join(os.path.dirname(__file__), "libroad-generation_py.so")
-        #libpath = os.path.abspath("variation/variation/libroad-generation_py.so")  
+        
         if os.name == "posix":  # if MacOS
-            
+            libpath = os.path.join(os.path.dirname(__file__), "resources/libroad-generation_py.so")  
             roadgen = cdll.LoadLibrary(libpath) #load shared lib
             
             argFilename = c_char_p(tmpName.encode('utf-8')) #execute "main" function from lib   
@@ -136,6 +134,7 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
             roadgen.execPipeline()
 
         else:   
+            libpath = os.path.join(os.path.dirname(__file__), "resources/road-generation_py.dll")  
             roadgen = cdll.LoadLibrary(libpath) 
             
             argFilename = c_char_p(tmpName.encode('utf-8'))          
@@ -152,7 +151,7 @@ def initDirectories(inpDir):
 
 
 def copyTemplate(path):
-    shutil.copy(os.path.join(os.path.dirname(__file__), "network.tmpl"), path)
+    shutil.copy(os.path.join(os.path.dirname(__file__), "resources/network.tmpl"), path)
 
 def run():
     #parsing args-------------------------------------
