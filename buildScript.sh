@@ -1,5 +1,9 @@
 # update or create build directory
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+
+UNAME=$( command -v uname)
+
+case $( "${UNAME}" | tr '[:upper:]' '[:lower:]') in
+  linux*)
     echo "Linux"
     sudo apt install libxerces-c-dev
     mkdir -p build
@@ -8,7 +12,8 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
     cmake --build .
     cd ..
-else
+    ;;
+  msys*|cygwin*|mingw*|nt|win*)
     echo "Windows?"
     rm -r build 
     mkdir build
@@ -18,4 +23,8 @@ else
     # make
     cmake --build . --config Release
     cd ..
-fi 
+    ;;
+  *)
+    echo 'unknown os!\n'
+    ;;
+esac 
