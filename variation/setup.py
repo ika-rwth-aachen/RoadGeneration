@@ -16,7 +16,7 @@ setuptools.setup(
     install_requires=[
           'sympy',
           'numexpr',
-          'numpy',
+          'numpy<=1.19.3',
     ],
     scripts=['bin/variation'],
     classifiers=[

@@ -13,11 +13,19 @@ case $( "${UNAME}" | tr '[:upper:]' '[:lower:]') in
     ;;
   msys*|cygwin*|mingw*|nt|win*)
     printf 'windows\n'
-    build_xercesc_win64.sh
-    buildScript.sh
+    ./build_xercesc_win64.sh
+    ./buildScript.sh
+    cp ./Release/road-generation_py.dll ./variation/variation/resources/road-generation_py.dll
+    cd variation
+    python -m pip install wheel
+    python -m setup.py bdist_wheel
+    cd dist 
+    pip3 install roadvariation-0.1-py3-none-any.whl
     ;;
   *)
     printf 'unknown\n'
     ;;
 
 esac
+
+sleep 50
