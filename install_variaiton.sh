@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 UNAME=$( command -v uname)
 
 case $( "${UNAME}" | tr '[:upper:]' '[:lower:]') in
@@ -28,4 +29,3 @@ case $( "${UNAME}" | tr '[:upper:]' '[:lower:]') in
 
 esac
 
-sleep 50

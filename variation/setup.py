@@ -16,7 +16,7 @@ setuptools.setup(
     install_requires=[
           'sympy',
           'numexpr',
-          'numpy<=1.19.3',
+          'numpy<=1.19.3', #the recent version has a bug in the windows rte
     ],
     scripts=['bin/variation'],
     classifiers=[

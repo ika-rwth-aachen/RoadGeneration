@@ -59,6 +59,7 @@ Installation
 The following requirements have to be satisfied:
 
 - ``C++11``
+- ``CMake``
 - ``Python 3.6``
 - ``xercesC``
 - ...
@@ -85,6 +86,11 @@ The actual source code can be compiled with the familiar cmake procedure.
     # Compile
     cmake .
     make
+
+Variation tool
+------------
+The Variation tool is used to (randomly) generate a multitude of slightly different scenarios based on the same general road network. A template file is provided to specify all variables aswell as the general road network structure. For further information refer to the corresponding subdirectory.
+
 
 Tests
 -----
