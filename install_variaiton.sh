@@ -21,7 +21,7 @@ case $( "${UNAME}" | tr '[:upper:]' '[:lower:]') in
     python -m pip install wheel
     python -m setup.py bdist_wheel
     cd dist 
-    pip3 install roadvariation-0.1-py3-none-any.whl
+    python -m pip install roadvariation-0.1-py3-none-any.whl
     ;;
   *)
     printf 'unknown\n'
