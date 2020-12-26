@@ -59,7 +59,7 @@ Installation
 The following requirements have to be satisfied:
 
 - ``C++11``
-- ``CMake``
+- ``CMake 2.6 or higher``
 - ``Python 3.6``
 - ``xercesC``
 - ...

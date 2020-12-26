@@ -5,8 +5,7 @@ The Variation tool is used to (randomly) generate a multitude of slightly differ
 
 Installation
 --------
-
-Run the install script from the project's root directory. __On Windows__  you need to have a visual studio compiler installed.
+First download Xerces-C++ 3.2.3 from: http://xerces.apache.org/xerces-c/download.cgi and extract it to the libs folder in the root directory. Then you can run the install script from the project's root directory. __On Windows__  you need to have a visual studio compiler installed.
 
 	 $install-variation.sh
 

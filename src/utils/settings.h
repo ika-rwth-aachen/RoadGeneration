@@ -64,6 +64,8 @@ struct settings
     laneChanges laneChange;
     busStops busStop;
 
+    std::string xmlSchemaLocation = PROJ_DIR;
+
     bool silentMode = false; //silent mode disables console outputs
 
     int versionMajor = 1; // OpenDrive major version

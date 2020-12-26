@@ -60,6 +60,13 @@ EXPORTED void setSilentMode(bool sMode){
 	setting.silentMode = sMode;
 }
 
+
+EXPORTED void setXMLSchemaLocation(char* file){
+	setting.xmlSchemaLocation = file;
+}
+
+
+
 EXPORTED int executePipeline(char* file)
 {
 
@@ -80,6 +87,7 @@ EXPORTED int executePipeline(char* file)
 		printLogo();
 	}
 
+	cout << "Location::::" <<  setting.xmlSchemaLocation << endl;
 
 	// --- initialization ------------------------------------------------------
 	pugi::xml_document in;

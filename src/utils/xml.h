@@ -30,7 +30,7 @@ extern settings setting;
 int validateInput(char *file)
 {
     XMLPlatformUtils::Initialize();
-    string schema = string_format("%s/xml/input.xsd", PROJ_DIR);
+    string schema =  setting.xmlSchemaLocation + "input.xsd";
     const char *schema_file = schema.c_str();
     const char *xml_file = file;
 
@@ -76,7 +76,7 @@ int validateOutput(roadNetwork data)
 
     XMLPlatformUtils::Initialize();
 
-    string schema = string_format("%s/xml/output.xsd", PROJ_DIR);
+    string schema  =  setting.xmlSchemaLocation +  "output.xsd";
     const char *schema_path = schema.c_str();
 
     // load output file
@@ -174,7 +174,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     if (false)
     {
         root.append_attribute("xmlns:xsi") = "http://www.w3.org/2001/XMLSchema-instance";
-        string tmp = string_format("%s/xml/output.xsd", PROJ_DIR);
+        string tmp =  setting.xmlSchemaLocation + "output.xsd";
         root.append_attribute("xsi:noNamespaceSchemaLocation") = tmp.c_str();
     }
 

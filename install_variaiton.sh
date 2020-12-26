@@ -16,7 +16,7 @@ case $( "${UNAME}" | tr '[:upper:]' '[:lower:]') in
     printf 'windows\n'
     ./build_xercesc_win64.sh
     ./buildScript.sh
-    cp ./Release/road-generation_py.dll ./variation/variation/resources/road-generation_py.dll
+    cp ./Release/road-generation_py.dll ./variation/variation/resources/road-generation.dll
     cd variation
     python -m pip install wheel
     python -m setup.py bdist_wheel

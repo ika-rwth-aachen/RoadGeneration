@@ -122,19 +122,23 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
         cpTree.write(tmpName)
         
         if os.name == "posix":  # if MacOS
-            libpath = os.path.join(os.path.dirname(__file__), "resources/libroad-generation_py.so")  
+            libpath = os.path.join(os.path.dirname(__file__), "resources/libroad-generation.so")  
+            xml_path = os.path.join(os.path.dirname(__file__), "resources/xml/") 
+
             roadgen = cdll.LoadLibrary(libpath) #load shared lib
             
-            argFilename = c_char_p(tmpName.encode('utf-8')) #execute "main" function from lib   
+            argFilename = c_char_p(tmpName.encode('utf-8')) #execute "main" function from lib 
+            argXMLPath = c_char_p(xml_path.encode('utf-8'))  
             roadgen.setSilentMode(c_bool(args.s))
             roadgen.setFileName(argFilename)
+            roadgen.setXMLSchemaLocation(argXMLPath)
             if args.o:
                 outArgs = c_char_p((args.o+"_rev"+str(i)).encode('utf-8'))
                 roadgen.setOutputName(outArgs)
             roadgen.execPipeline()
 
         else:   
-            libpath = os.path.join(os.path.dirname(__file__), "resources/road-generation_py.dll")  
+            libpath = os.path.join(os.path.dirname(__file__), "resources/road-generation.dll")  
             roadgen = cdll.LoadLibrary(libpath) 
             
             argFilename = c_char_p(tmpName.encode('utf-8'))          
