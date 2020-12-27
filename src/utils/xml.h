@@ -77,7 +77,6 @@ int validateOutput(roadNetwork data)
     XMLPlatformUtils::Initialize();
 
     string schema  =  setting.xmlSchemaLocation +  "/output.xsd";
-    std::cout << schema << std::endl;
     const char *schema_path = schema.c_str();
 
     // load output file

@@ -61,7 +61,7 @@ EXPORTED void setSilentMode(bool sMode){
 }
 
 
-EXPORTED void setXMLSchemaLocation(char* file){
+EXPORTED void setXMLSchemaLocation(string file){
 	setting.xmlSchemaLocation = file;
 }
 
@@ -71,9 +71,11 @@ EXPORTED int executePipeline(char* file)
 {
 
 	cout <<"File: " << file << endl; //TODO delete this
+	cout <<"XML: " << setting.xmlSchemaLocation << endl; //TODO delete this
 
 	if (file == NULL){
 		cout << "ERR: no file has been provided!" << endl;
+		return -1;
 	}
 
 	if(!_setOutput){
@@ -82,13 +84,20 @@ EXPORTED int executePipeline(char* file)
 	
 	(void)! freopen(_logfile.c_str(), "a", stderr); //(void)! suppresses the unused return warning..
 	cerr << "\nError log for run with attribute: " << file << endl;
+	
+
+
+	if (setting.xmlSchemaLocation == ""){
+		cerr << "ERROR; NOT SET" << endl;
+		return -1;
+	}
 
 	if(!setting.silentMode){
 		printLogo();
 	}
 
-	cout << "Location::::" <<  setting.xmlSchemaLocation << endl;
-
+	
+	
 	// --- initialization ------------------------------------------------------
 	pugi::xml_document in;
 	pugi::xml_document out;
@@ -98,7 +107,7 @@ EXPORTED int executePipeline(char* file)
 	data.outputFile = outputFile.substr(0, outputFile.find(".xml"));
     data.outputFile = data.outputFile.substr(0, outputFile.find(".xodr"));
 
-
+	
 	// --- pipeline ------------------------------------------------------------
 	if (validateInput(file))
 	{
@@ -135,6 +144,6 @@ EXPORTED int executePipeline(char* file)
 		cerr << "ERR: error in validateOutput" << endl;
 		return -1;
 	}
-	cout << "\n";
+	
 	return 0;
 }

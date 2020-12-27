@@ -1,4 +1,4 @@
-#include "helper_exec.h"
+#include "helperExec.h"
 
 using namespace std;
 
@@ -18,7 +18,7 @@ void printHelpMessage()
     std::cout << HELP_MESSAGE << std:: endl;       
 }
 
-int parseArgs(int argc, char **argv, settings &settings) {
+int parseArgs(int argc, char **argv, settingsExec &settings) {
     bool foundFile = false, setOutputName = false;
     char defaultPath[]="";
     settings.outputName = defaultPath;    

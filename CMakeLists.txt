@@ -20,7 +20,7 @@ add_library("${PROJECT_NAME}" SHARED
 
 add_executable("${PROJECT_NAME}_exec"
     "${CMAKE_SOURCE_DIR}/src/executable/main.cpp"
-    "${CMAKE_SOURCE_DIR}/src/executable/helper_exec.cpp"
+    "${CMAKE_SOURCE_DIR}/src/executable/helperExec.cpp"
 )
 
 target_link_libraries("${PROJECT_NAME}" ${XercesC_LIBRARIES})

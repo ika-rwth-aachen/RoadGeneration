@@ -7,7 +7,7 @@
 #include <vector>
 
 
-struct settings{
+struct settingsExec{
     char* fileName;
     char* outputName;
     bool silentMode = false;
