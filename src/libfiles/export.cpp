@@ -70,7 +70,7 @@ EXPORTED void setXMLSchemaLocation(char* file){
 EXPORTED int executePipeline(char* file)
 {
 
-	cout << file << endl;
+	cout <<"File: " << file << endl; //TODO delete this
 
 	if (file == NULL){
 		cout << "ERR: no file has been provided!" << endl;
