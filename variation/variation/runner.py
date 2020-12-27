@@ -123,7 +123,7 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
         
         if os.name == "posix":  # if MacOS
             libpath = os.path.join(os.path.dirname(__file__), "resources/libroad-generation.so")  
-            xml_path = os.path.join(os.path.dirname(__file__), "resources/xml/") 
+            xml_path = os.path.join(os.path.dirname(__file__), "resources/xml") 
 
             roadgen = cdll.LoadLibrary(libpath) #load shared lib
             
@@ -139,11 +139,16 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
 
         else:   
             libpath = os.path.join(os.path.dirname(__file__), "resources/road-generation.dll")  
+            xml_path = os.path.join(os.path.dirname(__file__), "resources/xml") 
+
             roadgen = cdll.LoadLibrary(libpath) 
-            
-            argFilename = c_char_p(tmpName.encode('utf-8'))          
+
+            argXMLPath = c_char_p(xml_path.encode('utf-8'))  
+            argFilename = c_char_p(tmpName.encode('utf-8'))     
+
             roadgen.setSilentMode(c_bool(args.s))
             roadgen.setFileName(argFilename)
+            roadgen.setXMLSchemaLocation(argXMLPath)
             if args.o:
                 outArgs = c_char_p((args.o+"_rev"+str(i)).encode('utf-8'))
                 roadgen.setOutputName(outArgs)
