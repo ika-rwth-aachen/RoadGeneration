@@ -33,7 +33,6 @@ int validateInput(char *file)
     string schema =  setting.xmlSchemaLocation + "/input.xsd";
     const char *schema_file = schema.c_str();
     const char *xml_file = file;
-
     XercesDOMParser domParser;
     if (domParser.loadGrammar(schema_file, Grammar::SchemaGrammarType) == NULL)
     {

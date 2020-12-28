@@ -16,7 +16,7 @@ std::string _logfile = "log.txt";
 
 
 extern "C" EXPORTED void setFileName(char* file);
-extern "C" EXPORTED void setXMLSchemaLocation(std::string file);
+extern "C" EXPORTED void setXMLSchemaLocation(char* file);
 extern "C" EXPORTED void setLogFile(char* file);
 extern "C" EXPORTED int execPipeline();
 extern "C" EXPORTED int executePipeline(char* file);

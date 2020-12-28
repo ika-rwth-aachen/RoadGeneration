@@ -61,7 +61,7 @@ EXPORTED void setSilentMode(bool sMode){
 }
 
 
-EXPORTED void setXMLSchemaLocation(string file){
+EXPORTED void setXMLSchemaLocation(char* file){
 	setting.xmlSchemaLocation = file;
 }
 
@@ -69,9 +69,6 @@ EXPORTED void setXMLSchemaLocation(string file){
 
 EXPORTED int executePipeline(char* file)
 {
-
-	cout <<"File: " << file << endl; //TODO delete this
-	cout <<"XML: " << setting.xmlSchemaLocation << endl; //TODO delete this
 
 	if (file == NULL){
 		cout << "ERR: no file has been provided!" << endl;

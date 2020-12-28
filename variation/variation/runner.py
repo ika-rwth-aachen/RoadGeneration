@@ -93,7 +93,19 @@ def generateVar(var, n):
     return val
 
 
-def executePipeline(n, tree, inpDir, nwName, varDict):
+def writeTreesToXML(n, tree, inpDir, nwName, varDict):
+
+    cpTree = copy.deepcopy(tree)
+    if not cpTree.getroot().find('vars') == None:
+        cpTree.getroot().remove(cpTree.getroot().find('vars'))
+
+    for i in range(n):
+        find_var(cpTree.getroot(), i, varDict)        
+        tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'               
+        cpTree.write(tmpName)
+
+
+def executePipeline(n, tree, inpDir, varDict):
     """This method calls the roadGen Lib function for every rev
 
     Parameters
@@ -111,48 +123,36 @@ def executePipeline(n, tree, inpDir, nwName, varDict):
     
     """
 
-    for i in range(n):
-        cpTree = copy.deepcopy(tree)
-        if not cpTree.getroot().find('vars') == None:
-            cpTree.getroot().remove(cpTree.getroot().find('vars'))        
-        
-        find_var(cpTree.getroot(), i, varDict)        
-        tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'
-        print("Running on " + tmpName)               
-        cpTree.write(tmpName)
-        
-        if os.name == "posix":  # if MacOS
-            libpath = os.path.join(os.path.dirname(__file__), "resources/libroad-generation.so")  
-            xml_path = os.path.join(os.path.dirname(__file__), "resources/xml") 
+    libpath = ""
+    c = 0
 
-            roadgen = cdll.LoadLibrary(libpath) #load shared lib
+    if os.name == "posix":  # if MacOS
+        libpath = os.path.join(os.path.dirname(__file__), "resources/libroad-generation.so")          
+        
+    else:   
+        libpath = os.path.join(os.path.dirname(__file__), "resources/road-generation.dll")           
+
+    roadgen = cdll.LoadLibrary(libpath) #load shared lib
+
+    xml_path = os.path.join(os.path.dirname(__file__), "resources/xml")#xml path argument for lib
+    argXMLPath = c_char_p(xml_path.encode('utf-8'))
+
+
+    for filename in os.listdir(inpDir):
+        if filename.endswith(".xml"): 
             
-            argFilename = c_char_p(tmpName.encode('utf-8')) #execute "main" function from lib 
-            argXMLPath = c_char_p(xml_path.encode('utf-8'))  
+            argName = (inpDir+filename)        
+            argFilename = c_char_p(argName.encode('utf-8')) #execute "main" function from lib 
+               
             roadgen.setSilentMode(c_bool(args.s))
             roadgen.setFileName(argFilename)
             roadgen.setXMLSchemaLocation(argXMLPath)
             if args.o:
-                outArgs = c_char_p((args.o+"_rev"+str(i)).encode('utf-8'))
+                outArgs = c_char_p((args.o+"_rev"+str(c)).encode('utf-8'))
                 roadgen.setOutputName(outArgs)
             roadgen.execPipeline()
-
-        else:   
-            libpath = os.path.join(os.path.dirname(__file__), "resources/road-generation.dll")  
-            xml_path = os.path.join(os.path.dirname(__file__), "resources/xml") 
-
-            roadgen = cdll.LoadLibrary(libpath) 
-
-            argXMLPath = c_char_p(xml_path.encode('utf-8'))  
-            argFilename = c_char_p(tmpName.encode('utf-8'))     
-
-            roadgen.setSilentMode(c_bool(args.s))
-            roadgen.setFileName(argFilename)
-            roadgen.setXMLSchemaLocation(argXMLPath)
-            if args.o:
-                outArgs = c_char_p((args.o+"_rev"+str(i)).encode('utf-8'))
-                roadgen.setOutputName(outArgs)
-            roadgen.execPipeline()
+            c += 1
+            
 
 def initDirectories(inpDir):
     if not os.path.exists(inpDir ):
@@ -214,7 +214,9 @@ def run():
     for f in files:
         os.remove(f)
 
-    executePipeline(n, tree, inpDir, nwName, varDict)
+    writeTreesToXML(n, tree, inpDir, nwName, varDict)
+
+    executePipeline(n, tree, inpDir, varDict)
 
     #clear input folder (again)
     if clearOutputFolder :
