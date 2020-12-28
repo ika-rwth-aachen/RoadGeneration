@@ -160,7 +160,7 @@ def executePipeline(tree, inpDir, varDict):
             roadgen.setFileName(argFilename)
             roadgen.setXMLSchemaLocation(argXMLPath)
             if args.o:
-                outArgs = c_char_p((args.o+"_rev"+str(c)).encode('utf-8'))
+                outArgs = c_char_p((inpDir + args.o+"_rev"+str(c)).encode('utf-8'))
                 roadgen.setOutputName(outArgs)
             roadgen.execPipeline()
             c += 1
