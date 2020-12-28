@@ -15,7 +15,7 @@ extern "C" int execPipeline();
 extern "C" int executePipeline(char* file);
 extern "C" void setOutputName(char* file);
 extern "C" void setSilentMode(bool sMode);
-extern "C" void setXMLSchemaLocation(std::string file);
+extern "C" void setXMLSchemaLocation(char* file);
 
 
 #endif

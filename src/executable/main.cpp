@@ -19,7 +19,7 @@ int main(int argc, char** argv){
     }
 
     setFileName(settings.fileName);
-    setXMLSchemaLocation(schemaLocation);
+    setXMLSchemaLocation(&schemaLocation[0]);
     setOutputName(settings.outputName);
     setSilentMode(settings.silentMode);
 
