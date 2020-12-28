@@ -10,7 +10,7 @@ case $( "${UNAME}" | tr '[:upper:]' '[:lower:]') in
     pip3 install wheel
     python3 setup.py bdist_wheel
     cd dist 
-    pip3 install roadvariation-0.1-py3-none-any.whl
+    pip3 install roadvariation-0.1-py3-none-any.whl --force-reinstall
     ;;
   msys*|cygwin*|mingw*|nt|win*)
     printf 'windows\n'
@@ -21,7 +21,7 @@ case $( "${UNAME}" | tr '[:upper:]' '[:lower:]') in
     python -m pip install wheel
     python -m setup.py bdist_wheel
     cd dist 
-    python -m pip install roadvariation-0.1-py3-none-any.whl
+    python -m pip install roadvariation-0.1-py3-none-any.whl --force-reinstall
     ;;
   *)
     printf 'unknown\n'
