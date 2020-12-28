@@ -94,6 +94,22 @@ def generateVar(var, n):
 
 
 def writeTreesToXML(n, tree, inpDir, nwName, varDict):
+    """Saves n revs of the tree to the inpDir as an xml file
+
+    Parameters
+    ----------
+    n:int
+        number of revs that will be saved
+    tree: ElementTree
+        the tree struct generated from input
+    inpDir: str
+        input dir which contains the xml files
+    nwName: str
+        name of the output xml file
+    varDict: dict
+        dict containing array of vars
+    
+    """
 
     cpTree = copy.deepcopy(tree)
     if not cpTree.getroot().find('vars') == None:
@@ -105,19 +121,15 @@ def writeTreesToXML(n, tree, inpDir, nwName, varDict):
         cpTree.write(tmpName)
 
 
-def executePipeline(n, tree, inpDir, varDict):
-    """This method calls the roadGen Lib function for every rev
+def executePipeline(tree, inpDir, varDict):
+    """This method calls the roadGen Lib function for every xml file in the input dir
 
     Parameters
     ----------
-    n: int 
-        number of revs
     tree: ElementTree
         the tree struct generated from input
     inpDir: str
-        input dir
-    nwName: str
-        new name generate from input name
+        input dir which contains the xml files
     varDict: dict
         dict containing array of vars
     
@@ -155,11 +167,25 @@ def executePipeline(n, tree, inpDir, varDict):
             
 
 def initDirectories(inpDir):
+    """This method inits the input directory
+
+    Parameters
+    ----------    
+    inpDir: str
+        input directory that will be created
+    """
     if not os.path.exists(inpDir ):
         os.makedirs(inpDir )
 
 
 def copyTemplate(path):
+    """This method copies the example template to given location
+
+    Parameters
+    ----------    
+    path: str
+        defines the location to which to copy
+    """
     shutil.copy(os.path.join(os.path.dirname(__file__), "resources/network.tmpl"), path)
 
 def run():
@@ -207,7 +233,7 @@ def run():
         varList = ds.getVarLists(varDict, n)
         varDict = ds.solveEQ(varList, n)
     else:
-        print("No variables detected. Running only one iteration!")
+        print("No variables declared. Running only one iteration!")
         n = 1
     #clear input folder
     files = glob.glob(inpDir+'*')
@@ -215,8 +241,7 @@ def run():
         os.remove(f)
 
     writeTreesToXML(n, tree, inpDir, nwName, varDict)
-
-    executePipeline(n, tree, inpDir, varDict)
+    executePipeline(tree, inpDir, varDict)
 
     #clear input folder (again)
     if clearOutputFolder :
