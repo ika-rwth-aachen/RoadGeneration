@@ -24,7 +24,7 @@ case $( "${UNAME}" | tr '[:upper:]' '[:lower:]') in
     python -m pip install roadvariation-0.1-py3-none-any.whl --force-reinstall
     ;;
   *)
-    printf 'unknown\n'
+    printf 'unknown os\n'
     ;;
 
 esac

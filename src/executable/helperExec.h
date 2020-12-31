@@ -7,9 +7,19 @@
 #include <stdio.h>
 #include "settingsExec.h"
 
-
+/**
+ * @brief functions prints the help message for the executable 
+ */
 void printHelpMessage();
-int generateOutputName(char* fileLocation, std::string &outputName);
+
+/**
+ * @brief parses the args for the executable
+ * 
+ * @param argc      argc from command line
+ * @param argv      argv from command line
+ * @param settings  settings struct to store settings 
+ * @return int  error code
+ */
 int parseArgs(int argc, char** argv, settingsExec& settings);
 
 
