@@ -1,5 +1,9 @@
 # update or create build directory
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+
+UNAME=$( command -v uname)
+
+case $( "${UNAME}" | tr '[:upper:]' '[:lower:]') in
+  linux*)
     echo "Linux"
     sudo apt install libxerces-c-dev
     mkdir -p build
@@ -7,7 +11,9 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     rm -rf *
     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
     cmake --build .
-else
+    cd ..
+    ;;
+  msys*|cygwin*|mingw*|nt|win*)
     echo "Windows?"
     rm -r build 
     mkdir build
@@ -16,4 +22,9 @@ else
     cmake -G "Visual Studio 16 2019" -DCMAKE_INSTALL_PREFIX=../bin -DXercesC_INCLUDE_DIR="../libs/xerces-c-3.2.3/bin/include" -DXercesC_LIBRARY="../libs/xerces-c-3.2.3/bin/lib/xerces-c_3" ..
     # make
     cmake --build . --config Release
-fi 
+    cd ..
+    ;;
+  *)
+    echo 'unknown os!\n'
+    ;;
+esac 

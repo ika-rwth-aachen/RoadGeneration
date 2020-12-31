@@ -8,6 +8,10 @@
  *
  */
 
+#include <stdio.h>
+#include <string.h>
+
+
 /**
  * @brief signum function
  * 
@@ -698,3 +702,5 @@ bool compareLanes(const lane &a, const lane &b)
 {
     return a.id < b.id;
 }
+
+

@@ -30,10 +30,9 @@ extern settings setting;
 int validateInput(char *file)
 {
     XMLPlatformUtils::Initialize();
-    string schema = string_format("%s/xml/input.xsd", PROJ_DIR);
+    string schema =  setting.xmlSchemaLocation + "/input.xsd";
     const char *schema_file = schema.c_str();
     const char *xml_file = file;
-
     XercesDOMParser domParser;
     if (domParser.loadGrammar(schema_file, Grammar::SchemaGrammarType) == NULL)
     {
@@ -48,8 +47,10 @@ int validateInput(char *file)
 
     domParser.parse(xml_file);
 
-    if (domParser.getErrorCount() == 0)
-        cout << "XML input file validated against the schema successfully" << endl;
+    if (domParser.getErrorCount() == 0){
+        if(!setting.silentMode)
+            cout << "XML input file validated against the schema successfully" << endl;
+    }
     else
     {
         cerr << "ERR: XML input file doesn't conform to the schema" << endl;
@@ -68,13 +69,13 @@ int validateInput(char *file)
 int validateOutput(roadNetwork data)
 {
     // setup file
-    string file = data.file;
+    string file = data.outputFile;
     file.append(".xodr");
     const char *xml_file = file.c_str();
 
     XMLPlatformUtils::Initialize();
 
-    string schema = string_format("%s/xml/output.xsd", PROJ_DIR);
+    string schema  =  setting.xmlSchemaLocation +  "/output.xsd";
     const char *schema_path = schema.c_str();
 
     // load output file
@@ -92,8 +93,10 @@ int validateOutput(roadNetwork data)
     domParser.setValidationConstraintFatal(true);
 
     domParser.parse(xml_file);
-    if (domParser.getErrorCount() == 0)
-        cout << "XML output file validated against the schema successfully" << endl;
+    if (domParser.getErrorCount() == 0){
+        if(!setting.silentMode)
+            cout << "XML output file validated against the schema successfully" << endl;
+    }
     else
     {
         cerr << "ERR: XML output file doesn't conform to the schema" << endl;
@@ -170,7 +173,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     if (false)
     {
         root.append_attribute("xmlns:xsi") = "http://www.w3.org/2001/XMLSchema-instance";
-        string tmp = string_format("%s/xml/output.xsd", PROJ_DIR);
+        string tmp =  setting.xmlSchemaLocation + "/output.xsd";
         root.append_attribute("xsi:noNamespaceSchemaLocation") = tmp.c_str();
     }
 
@@ -454,7 +457,8 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     }
 
     // --- write doc structure to file -----------------------------------------
-    string file = data.file;
+    string file = data.outputFile;
+ 
     file.append(".xodr");
 
     if (doc.save_file(file.c_str()))

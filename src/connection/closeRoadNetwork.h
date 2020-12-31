@@ -21,7 +21,8 @@ extern settings setting;
  */
 int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 {
-	cout << "Processing closeRoadNetwork" << endl;
+	if(!setting.silentMode)
+		cout << "Processing closeRoadNetwork" << endl;
 
 	pugi::xml_node closeRoad = doc.child("roadNetwork").child("closeRoads");
 

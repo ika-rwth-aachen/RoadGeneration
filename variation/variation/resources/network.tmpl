@@ -1,9 +1,12 @@
 <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../xml/input.xsd">
     <vars>
-        <var id="radiusCR" type="normal" mu="150" sd="11.5" />        
-        <var id="angleT" type="normal" mu="1.57" sd="0.12" />
+        <var id="transDepVar" type="lindep" dp="depVar/2" /> 
+        <var id="depVar" type="lindep" dp="uniformVar*0.3 + normalVar" />        
+        <var id="uniformVar" type="uniform" min="100" max="150" />        
+        <var id="normalVar" type="normal" mu="1.57" sd="0.12" />     
     </vars>
     <segments>
+
         <junction id="1" type="MA">
             <road id="1" classification="main" >	
                 <referenceLine>
@@ -16,13 +19,14 @@
             </road>
             <road id="2" classification="access" >	
                 <referenceLine>
-                    <line length="50"/>
+                    <line length="${uniformVar}"/>
                 </referenceLine>
             </road>
             <intersectionPoint refRoad="1" s="100">
-                <adRoad id="2" s="0" angle="${angleT}"/>
+                <adRoad id="2" s="0" angle="${normalVar}"/>
             </intersectionPoint>
         </junction>
+
         <junction id="2" type="2M">
             <road id="1" classification="main" >	
                 <referenceLine>
@@ -42,15 +46,15 @@
             <road id="1" classification="access" >	
                 <referenceLine>
                     <line length="20"/>                    
-                    <spiral length="50"  Rs="0" Re="${radiusCR}"/>
-                    <arc length="50" R="${radiusCR}"/>
-                    <spiral length="50"  Rs="${radiusCR}" Re="0"/>
+                    <spiral length="50"  Rs="0" Re="${transDepVar}"/>
+                    <arc length="50" R="${transDepVar}"/>
+                    <spiral length="50"  Rs="${transDepVar}" Re="0"/>
                 </referenceLine>
             </road>
         </connectingRoad>        
     </segments>
     <links refId="2" hdgOffset="0.0" xOffset="0" yOffset="0">
-        <segmentLink fromSegment="2" toSegment="3" fromRoad="204" toRoad="301" fromPos="end" toPos="start" />
-        <segmentLink fromSegment="3" toSegment="1" fromRoad="301" toRoad="103" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="2" toSegment="3" fromRoad="1" toRoad="1" fromPos="end" toPos="start" />
+        <segmentLink fromSegment="3" toSegment="1" fromRoad="1" toRoad="1" fromPos="end" toPos="end" />
     </links>
 </roadNetwork>
