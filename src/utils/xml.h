@@ -30,9 +30,10 @@ extern settings setting;
 int validateInput(char *file)
 {
     XMLPlatformUtils::Initialize();
-    string schema =  setting.xmlSchemaLocation + "/input.xsd";
+    string schema = string_format("%s/xml/input.xsd", PROJ_DIR);
     const char *schema_file = schema.c_str();
     const char *xml_file = file;
+
     XercesDOMParser domParser;
     if (domParser.loadGrammar(schema_file, Grammar::SchemaGrammarType) == NULL)
     {
@@ -75,7 +76,7 @@ int validateOutput(roadNetwork data)
 
     XMLPlatformUtils::Initialize();
 
-    string schema  =  setting.xmlSchemaLocation +  "/output.xsd";
+    string schema = string_format("%s/xml/output.xsd", PROJ_DIR);
     const char *schema_path = schema.c_str();
 
     // load output file
@@ -143,19 +144,22 @@ int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file)
 
 void appendLinkToNode(pugi::xml_node road, link &successor, link &predecessor)
 {
-    if(successor.id == -1 || predecessor.id == -1) return;
 
-    pugi::xml_node pre = road.append_child("link").append_child("predecessor");
-    pre.append_attribute("elementId") = predecessor.id;
-    pre.append_attribute("elementType") = getLinkType(predecessor.elementType).c_str();
-    if(predecessor.contactPoint != noneType)
-        pre.append_attribute("contactPoint") = getContactPointType(predecessor.contactPoint).c_str();
-        
-    pugi::xml_node suc = road.child("link").append_child("successor");
-    suc.append_attribute("elementId") = successor.id;
-    suc.append_attribute("elementType") = getLinkType(successor.elementType).c_str();
-    if(successor.contactPoint != noneType)
-        suc.append_attribute("contactPoint") = getContactPointType(successor.contactPoint).c_str();
+    if( predecessor.id != -1){
+        pugi::xml_node pre = road.append_child("link").append_child("predecessor");
+        pre.append_attribute("elementId") = predecessor.id;
+        pre.append_attribute("elementType") = getLinkType(predecessor.elementType).c_str();
+        if(predecessor.contactPoint != noneType)
+            pre.append_attribute("contactPoint") = getContactPointType(predecessor.contactPoint).c_str();
+    }
+
+    if( successor.id != -1){
+        pugi::xml_node suc = road.append_child("link").append_child("successor");
+        suc.append_attribute("elementId") = successor.id;
+        suc.append_attribute("elementType") = getLinkType(successor.elementType).c_str();
+        if(successor.contactPoint != noneType)
+            suc.append_attribute("contactPoint") = getContactPointType(successor.contactPoint).c_str();
+    }
 }
 
 /**
@@ -173,7 +177,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     if (false)
     {
         root.append_attribute("xmlns:xsi") = "http://www.w3.org/2001/XMLSchema-instance";
-        string tmp =  setting.xmlSchemaLocation + "/output.xsd";
+        string tmp = string_format("%s/xml/output.xsd", PROJ_DIR);
         root.append_attribute("xsi:noNamespaceSchemaLocation") = tmp.c_str();
     }
 

@@ -201,8 +201,10 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 		{
 			if (r.id == toRoadId)
 				r.predecessor.id = fromRoadId;
+				r.predecessor.contactPoint = (fromPos == "start") ? startType : endType ;
 			if (r.id == fromRoadId)
 				r.successor.id = toRoadId;
+				r.successor.contactPoint = (fromPos == "start") ? startType : endType;
 		}
 	}
 	
