@@ -69,7 +69,7 @@ struct settings
     bool silentMode = false; //silent mode disables console outputs
 
     int versionMajor = 1; // OpenDrive major version
-    int versionMinor = 5; // OpenDrive minor version
+    int versionMinor = 4; // OpenDrive minor version
 
     // basis in world coordinate system
     double north = 0;

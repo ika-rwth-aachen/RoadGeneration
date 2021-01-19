@@ -521,7 +521,7 @@ int addRestrictedAreaDrop(vector<laneSection> &secs, int side, double s, double 
  * 
  * @param r                 road data
  * @param s                 start of widening
- * @param s                 length of widening
+ * @param ds                 length of widening
  * @param turn              1 = left lane turn, -1 = right lane turn
  * @param verschwenkung     determines if a 'verschwenkung' exists
  * @param restricted        determines if widening is a restricted area

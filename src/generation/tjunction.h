@@ -108,7 +108,7 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         cerr << "ERR: error in buildRoad" << endl;
         return 1;
     }
-
+    
     road help2;
     if (buildRoad(additionalRoad1, help2, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
@@ -462,7 +462,6 @@ int tjunction(pugi::xml_node &node, roadNetwork &data)
         // 1) PART from R1 To R2 -> Right to Right (if exist)
 
         calcFromTo(r1, r2, from, to, nF, nT, -1);
-
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
