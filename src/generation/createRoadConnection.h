@@ -160,6 +160,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     // simple line if angles are almost the same
     if (abs(a) < 0.1)
     {
+        
         geometry g;
         g.s = 0;
         g.c = 0;
@@ -171,7 +172,6 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
 
         g.length = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
         g.type = line;
-
         r.geometries.push_back(g);
         r.length = g.length;
     }
@@ -199,6 +199,8 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         g1.c1 = 0;
         g1.c2 = 0;
         g1.type = line;
+        g1.length = abs(d2 - d1);
+        double minLength = 0.00001; //min length for line segment. below that it will get disregarded
 
         // line at start
         if (d1 > d2)
@@ -206,8 +208,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
             g1.x = x1;
             g1.y = y1;
             g1.hdg = hdg1;
-            g1.length = d1 - d2;
-
+            
             x1 = g1.x + cos(hdg1) * (d1 - d2);
             y1 = g1.y + sin(hdg1) * (d1 - d2);
         }
@@ -217,7 +218,6 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
             g1.x = x2 - cos(hdg2) * (d2 - d1);
             g1.y = y2 - sin(hdg2) * (d2 - d1);
             g1.hdg = hdg2;
-            g1.length = d2 - d1;
 
             x2 = g1.x;
             y2 = g1.y;
@@ -240,16 +240,16 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         g2.c = 1 / R;
         g2.length = abs(R * a);
         g2.type = arc;
-
+        
         // first line then arc
-        if (d1 > d2)
+        if (d1 - d2 > minLength)
         {
             g2.s = g1.length;
             r.geometries.push_back(g1);
             r.geometries.push_back(g2);
         }
         // first arc then line
-        else if (d1 < d2)
+        else if (d2 - d1 > minLength)
         {
             g1.s = g2.length;
             r.geometries.push_back(g2);
