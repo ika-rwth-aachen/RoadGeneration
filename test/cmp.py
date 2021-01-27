@@ -51,7 +51,7 @@ def cmp_xml_list(list1, list2):
     n_diff = 0
     e_diff = 0
     if len(list1) != len(list2):
-        print("missmatch ", len(list1), len(list2))
+        print("missmatch in document length ", len(list1), len(list2))
         sys.exit(1)     
   
     for i in range (len(list1)):
