@@ -120,7 +120,7 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 		// save to position
 		for (auto &&r : data.roads)
 		{
-			if (r.junction != toSegment || r.inputId != toRoadId)
+			if (r.junction != toSegment || r.inputId != toRoadId) // TODO: here might be a bug. Why is r.junction used?
 				continue;
 			if (toIsJunction && r.inputPos != toPos)
 				continue;
@@ -202,12 +202,19 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 			if (r.id == toRoadId){
 				r.predecessor.id = fromRoadId;
 				r.predecessor.contactPoint = (fromPos == "start") ? startType : endType ;
+				if(!toIsJunction) //trying out this fix for the junction -1 problem
+					r.junction = -1;
 			}
+			
 			if (r.id == fromRoadId){
 				r.successor.id = toRoadId;
 				r.successor.contactPoint = (toPos == "start") ? startType : endType;
+				if(!fromIsJunction){//trying out this fix for the junction -1 problem
+					r.junction = -1;
+				}
 			}
 		}
+
 	}
 	
 	return 0;
