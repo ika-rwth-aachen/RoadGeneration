@@ -199,12 +199,14 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 		// update predecessor and successor
 		for (auto &&r : data.roads)
 		{
-			if (r.id == toRoadId)
+			if (r.id == toRoadId){
 				r.predecessor.id = fromRoadId;
 				r.predecessor.contactPoint = (fromPos == "start") ? startType : endType ;
-			if (r.id == fromRoadId)
+			}
+			if (r.id == fromRoadId){
 				r.successor.id = toRoadId;
-				r.successor.contactPoint = (fromPos == "start") ? startType : endType;
+				r.successor.contactPoint = (toPos == "start") ? startType : endType;
+			}
 		}
 	}
 	
