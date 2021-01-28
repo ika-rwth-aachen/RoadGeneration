@@ -144,7 +144,7 @@ int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file)
 
 void appendLinkToNode(pugi::xml_node road, link &successor, link &predecessor)
 {
-
+   
     if( predecessor.id != -1){
         pugi::xml_node pre = road.append_child("link").append_child("predecessor");
         pre.append_attribute("elementId") = predecessor.id;
@@ -210,7 +210,7 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         road.append_attribute("id") = it->id;
         road.append_attribute("length") = it->length;
         road.append_attribute("junction") = it->junction;
-
+        std::cout << it->id << std::endl;
         appendLinkToNode(road, it->successor, it->predecessor);
 
         road.append_child("type").append_attribute("s") = "0";
