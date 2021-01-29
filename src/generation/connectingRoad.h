@@ -38,7 +38,8 @@ int connectingRoad(pugi::xml_node &node, roadNetwork &data)
     road r;
     int id = mainRoad.attribute("id").as_int();
     r.id = 100 * node.attribute("id").as_int() + id;
-    r.junction = node.attribute("id").as_int(); // <- might cause a bug
+    r.junction = node.attribute("id").as_int(); // <- might cause a bug in linging. 
+    r.isConnectingRoad = true; // <- is needed to fix the bug that is caused by using junction attribute to store segment id in linking segments
     //r.junction = -1;
 
     if (buildRoad(mainRoad, r, 0, INFINITY, dummy, 0, 0, 0, 0))

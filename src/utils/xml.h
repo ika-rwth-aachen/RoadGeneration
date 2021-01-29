@@ -144,9 +144,13 @@ int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file)
 
 void appendLinkToNode(pugi::xml_node road, link &successor, link &predecessor)
 {
+    if (successor.id == -1 && predecessor.id == -1){
+        return;
+    }
+    pugi::xml_node link = road.append_child("link");
    
     if( predecessor.id != -1){
-        pugi::xml_node pre = road.append_child("link").append_child("predecessor");
+        pugi::xml_node pre = link.append_child("predecessor");
         pre.append_attribute("elementId") = predecessor.id;
         pre.append_attribute("elementType") = getLinkType(predecessor.elementType).c_str();
         if(predecessor.contactPoint != noneType)
@@ -154,7 +158,7 @@ void appendLinkToNode(pugi::xml_node road, link &successor, link &predecessor)
     }
 
     if( successor.id != -1){
-        pugi::xml_node suc = road.append_child("link").append_child("successor");
+        pugi::xml_node suc = link.append_child("successor");
         suc.append_attribute("elementId") = successor.id;
         suc.append_attribute("elementType") = getLinkType(successor.elementType).c_str();
         if(successor.contactPoint != noneType)
