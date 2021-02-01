@@ -214,12 +214,7 @@ int linkSegments(pugi::xml_document &doc, roadNetwork &data)
 
 	}
 
-	for (auto &&r : data.roads) //this is part the (quick) fix for the bug that led to a ton of 
-	{							//linking errors because junction attribute of connecting roads was "missused".
-		if(r.isConnectingRoad){
-			r.junction = -1;
-		}
-	}
+	
 	
 	return 0;
 }
