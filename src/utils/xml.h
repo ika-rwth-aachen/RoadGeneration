@@ -210,10 +210,11 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
     for (std::vector<road>::iterator it = data.roads.begin(); it != data.roads.end(); ++it)
     {
         pugi::xml_node road = root.append_child("road");
-
         road.append_attribute("id") = it->id;
         road.append_attribute("length") = it->length;
-        road.append_attribute("junction") = it->junction;
+       
+        //below is a fix for the reuse of the junction attribute. Before this was just set to it->junction
+        road.append_attribute("junction") = (it->isConnectingRoad) ? -1 : it->junction;
         std::cout << it->id << std::endl;
         appendLinkToNode(road, it->successor, it->predecessor);
 
