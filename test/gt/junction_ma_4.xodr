@@ -1,9 +1,12 @@
 <?xml version="1.0"?>
 <OpenDRIVE>
-	<header revMajor="1" revMinor="5" north="0" south="0" west="0" east="0">
+	<header revMajor="1" revMinor="4" north="0" south="0" west="0" east="0">
 		<geoReference><![CDATA[+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs]]></geoReference>
 	</header>
-	<road id="101" length="186" junction="1">
+	<road id="101" length="186" junction="-1">
+		<link>
+			<predecessor elementId="1" elementType="junction" />
+		</link>
 		<type s="0" type="town" />
 		<planView>
 			<geometry s="0" x="-13.999542671148504" y="0.09799839934375143" hdg="3.1275926535897938" length="186">
@@ -65,9 +68,11 @@
 			</laneSection>
 		</lanes>
 		<objects />
-		<signals />
 	</road>
-	<road id="102" length="186" junction="1">
+	<road id="102" length="186" junction="-1">
+		<link>
+			<predecessor elementId="1" elementType="junction" />
+		</link>
 		<type s="0" type="town" />
 		<planView>
 			<geometry s="0" x="13.999542671148305" y="0.097998399343786957" hdg="6.2971853071795856" length="186">
@@ -129,9 +134,11 @@
 			</laneSection>
 		</lanes>
 		<objects />
-		<signals />
 	</road>
-	<road id="103" length="68" junction="1">
+	<road id="103" length="68" junction="-1">
+		<link>
+			<predecessor elementId="1" elementType="junction" />
+		</link>
 		<type s="0" type="town" />
 		<planView>
 			<geometry s="0" x="0.025482454743453401" y="-31.999989853818708" hdg="-1.5700000000000003" length="68">
@@ -253,7 +260,6 @@
 			</laneSection>
 		</lanes>
 		<objects />
-		<signals />
 	</road>
 	<road id="151" length="36.045141857321909" junction="1">
 		<link>
@@ -292,7 +298,6 @@
 			</laneSection>
 		</lanes>
 		<objects />
-		<signals />
 	</road>
 	<road id="152" length="40.011297417542998" junction="1">
 		<link>
@@ -331,7 +336,6 @@
 			</laneSection>
 		</lanes>
 		<objects />
-		<signals />
 	</road>
 	<road id="153" length="34.757242069054612" junction="1">
 		<link>
@@ -370,7 +374,6 @@
 			</laneSection>
 		</lanes>
 		<objects />
-		<signals />
 	</road>
 	<road id="154" length="39.99861497385119" junction="1">
 		<link>
@@ -409,7 +412,6 @@
 			</laneSection>
 		</lanes>
 		<objects />
-		<signals />
 	</road>
 	<road id="155" length="27.887089000927624" junction="1">
 		<link>
@@ -445,7 +447,6 @@
 			</laneSection>
 		</lanes>
 		<objects />
-		<signals />
 	</road>
 	<road id="156" length="27.999085342296809" junction="1">
 		<link>
@@ -481,7 +482,6 @@
 			</laneSection>
 		</lanes>
 		<objects />
-		<signals />
 	</road>
 	<road id="157" length="27.999085342296809" junction="1">
 		<link>
@@ -517,7 +517,6 @@
 			</laneSection>
 		</lanes>
 		<objects />
-		<signals />
 	</road>
 	<road id="158" length="28.111081683665994" junction="1">
 		<link>
@@ -553,7 +552,6 @@
 			</laneSection>
 		</lanes>
 		<objects />
-		<signals />
 	</road>
 	<junction id="1">
 		<connection id="1" incomingRoad="101" connectingRoad="151" contactPoint="start">
