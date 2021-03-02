@@ -215,7 +215,6 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
        
         //below is a fix for the reuse of the junction attribute. Before this was just set to it->junction
         road.append_attribute("junction") = (it->isConnectingRoad) ? -1 : it->junction;
-        std::cout << it->id << std::endl;
         appendLinkToNode(road, it->successor, it->predecessor);
 
         road.append_child("type").append_attribute("s") = "0";

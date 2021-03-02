@@ -34,7 +34,8 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     r.successor.elementType = roadType;
     r.predecessor.contactPoint = startType;
     r.successor.contactPoint = startType;
-
+    
+   
     // connect r1 with r2 at reference points
     double x1, y1, hdg1, x2, y2, hdg2, s1, s2;
     geometry g1, g2;
