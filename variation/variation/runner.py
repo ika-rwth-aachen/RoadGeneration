@@ -41,7 +41,7 @@ def get_var_val(key, ii, varDict):
     res = varDict.get(key[2:-1], '0')[ii]
     return str(res)
 
-def find_var(item, idx, vars):
+def find_var(item, idx, varDict):
     """Recursively fills in the values of variables in the given data tree 
 
     Parameters
@@ -55,10 +55,10 @@ def find_var(item, idx, vars):
 
     """
     for child in item.getchildren():
-        find_var(child, idx, vars)
+        find_var(child, idx, varDict)
         for key, val in child.attrib.items():
             if is_var(val):
-                child.attrib[key] = get_var_val(val, idx, vars)
+                child.attrib[key] = get_var_val(val, idx, varDict)
 
 def hasValue(key, varDict):
     return key in varDict
@@ -111,11 +111,13 @@ def writeTreesToXML(n, tree, inpDir, nwName, varDict):
     
     """
 
-    cpTree = copy.deepcopy(tree)
-    if not cpTree.getroot().find('vars') == None:
-        cpTree.getroot().remove(cpTree.getroot().find('vars'))
-
+  
     for i in range(n):
+        cpTree = copy.deepcopy(tree)
+
+        if not cpTree.getroot().find('vars') == None:
+            cpTree.getroot().remove(cpTree.getroot().find('vars'))
+
         find_var(cpTree.getroot(), i, varDict)        
         tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'               
         cpTree.write(tmpName)
