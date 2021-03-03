@@ -71,6 +71,8 @@ struct settings
     int versionMajor = 1; // OpenDrive major version
     int versionMinor = 4; // OpenDrive minor version
 
+    float minConnectingRoadLength = 0.01f;
+
     // basis in world coordinate system
     double north = 0;
     double south = 0;

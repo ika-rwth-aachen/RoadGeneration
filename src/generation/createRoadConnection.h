@@ -7,7 +7,7 @@
  * Contact: christian.geller@rwth-aachen.de
  *
  */
-
+extern settings setting;
 /**
  * @brief function creates a new road connection 
  * 
@@ -201,7 +201,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         g1.c2 = 0;
         g1.type = line;
         g1.length = abs(d2 - d1);
-        double minLength = 0.00001; //min length for line segment. below that it will get disregarded
+        double minLength = setting.minConnectingRoadLength;  //min length for line segment. below that it will get disregarded
 
         // line at start
         if (d1 > d2)
