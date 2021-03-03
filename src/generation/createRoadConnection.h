@@ -113,9 +113,9 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     // connection between current road and ending road
     connection con2;
     con2.id = junc.connections.size() + 1;
-    con2.contactPoint = endType;
-    con2.from = r.id;
-    con2.to = r2.id;
+    con2.contactPoint = startType; //Switched this from endpoint to startpoint!
+    con2.from = r2.id; //switched r to r2 here to be consistent with the user guide. 
+    con2.to = r.id;    //switched r2 to r
     con2.fromLane = sgn(toId);
     con2.toLane = toId;
     junc.connections.push_back(con2);
