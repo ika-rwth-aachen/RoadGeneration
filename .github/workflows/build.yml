@@ -24,6 +24,9 @@ jobs:
       
     - name: Install Xerces
       run: sudo apt install libxerces-c-dev
+      
+    - name: Checkout submodules
+      uses: textbook/git-checkout-submodule-action@master
 
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
