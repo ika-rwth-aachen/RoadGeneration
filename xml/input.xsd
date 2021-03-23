@@ -1,0 +1,962 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xs3p.xsl"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+elementFormDefault="qualified">
+
+<xs:annotation>
+    <xs:documentation>
+        XSD Schema 1.0 Definition for road-generation input files 
+        Christian Geller
+        (c)2020 by Institute for Automotive Engineering (ika), Germany
+    </xs:documentation>
+</xs:annotation>
+
+<!-- Used types for road-generation input file -->
+<xs:element name="roadNetwork">
+    <xs:annotation>
+        <xs:documentation>
+            Main Element:
+                - segments: junction, roundabout or connecting road
+                - links: joining two segments
+                - closeRoads: connecting two segments automatically 
+        </xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true"> 
+        <xs:sequence>
+            <xs:element name="segments" type="segmentsType"/>
+            <xs:element name="links" type="linksType" minOccurs="0"/>
+            <xs:element name="closeRoads" type="closeRoadsType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:complexType name="segmentsType">
+    <xs:annotation>
+        <xs:documentation>
+            Element:    hold all defined segments
+
+                - junction: X-junction(2M, M2A, 4A) or T-junction(MA, 3A)
+                - roundabout: circle with joining roads
+                - connectingRoad: simple road
+        </xs:documentation>
+    </xs:annotation>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="junction" type="junctionType" />
+        <xs:element name="roundabout" type="roundaboutType" />
+        <xs:element name="connectingRoad" type="connectingRoadType" /> 
+    </xs:choice>
+</xs:complexType>
+
+<xs:complexType name="junctionType">
+    <xs:annotation>
+        <xs:documentation>
+            Element:    X-junction(2M, M2A, 4A) or T-junction(MA, 3A)
+                
+                - road: at least two roads have to be defined with different id's
+                - intersectionPoint: holds the main properties to connect the roads
+                - coupler: holds the detailed properties such as junction area or defined lane connections
+                - automaticWidening: defines wether or not automatic new lanes are created, e.g. left turning lane on main roads
+
+                - id: identifier of the segment
+                - type: junction type consists of "M" and "A"
+                    - "M" ist a main reference line which crosses the junction
+                    - "A" is an additional reference line adjecent to the junction
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="road" type="roadType" minOccurs="2" maxOccurs="unbounded"/>
+        <xs:element name="intersectionPoint" type="intersectionPointType"/>
+        <xs:element name="coupler" type="couplerType" minOccurs="0"/>
+        <xs:element name="automaticWidening" type="automaticWideningType" minOccurs="0"/>
+</xs:sequence>
+    <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="type" type="junctionTypeType" use="required"/>
+</xs:complexType>
+
+<xs:simpleType name="junctionTypeType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: holds an enumeration for all possible junction types
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="3A"/>
+        <xs:enumeration value="MA"/>
+        <xs:enumeration value="2M"/>
+        <xs:enumeration value="M2A"/>
+        <xs:enumeration value="4A"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="roundaboutType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: circle with joining roads
+
+                - circle: special road with attributes
+                - road: adjacent roads with attributes
+                - intersectionPoint: holds the main properties to connect the roads, one for each adjacent road
+                - coupler: holds the detailed properties such as junction area or defined lane connections
+
+                - id: identifier of the segment
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="circle" type="roadTypeRoundAbout" />
+        <xs:element name="road" type="roadType" minOccurs="1" maxOccurs="unbounded"/>
+        <xs:element name="intersectionPoint" type="intersectionPointType" minOccurs="1" maxOccurs="unbounded" />
+        <xs:element name="coupler" type="couplerRoundAboutType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="connectingRoadType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: simple road
+
+                - road: attributes of the road
+
+                - id: identifier of the segment 
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="road" type="roadType"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="roadType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: general road type 
+
+                - referenceLine: series of gemometries (line, spiral, arc)
+                - lanes: defining the entire lane structure
+                - objects: further objects (signs, parking space, road work, bus stop, traffic island)
+
+                - id: identifier of the road 
+                - classifier: type of the road, influences futher dependecies
+                    - "main": main road, e.g., 4m width, 50km/h speed, addiditional lanes
+                    - "access": access road, e.g., 3m width, 30/h speed
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="referenceLine" type="referenceLineType"/>
+        <xs:element name="lanes" type="lanesType" minOccurs="0"/>
+        <xs:element name="objects" type="objectsType" minOccurs="0" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="classification" type="classificationType" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="roadTypeRoundAbout">
+    <xs:annotation>
+        <xs:documentation>
+            Element: special roundabout circular road type 
+
+                - referenceLine: spcial reference line with only one arc 
+                - lanes: defining the entire lane structure
+                - objects: further objects (signs, parking space, road work, bus stop, traffic island)
+
+                - id: identifier of the road 
+                - classifier: type of the road, influences futher dependecies
+                    - "main": main road, e.g., 4m width, 50km/h speed, addiditional lanes
+                    - "access": access road, e.g., 3m width, 30/h speed
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="referenceLine" type="referenceLineTypeRoundAbout"/>
+        <xs:element name="lanes" type="lanesType" minOccurs="0"/>
+        <xs:element name="objects" type="objectsType" minOccurs="0" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="classification" type="classificationType" use="required"/>
+</xs:complexType>
+
+<xs:simpleType name="classificationType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: holds an enumeration for all road classification types
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="main"/>
+        <xs:enumeration value="access"/>
+    </xs:restriction>
+    </xs:simpleType>
+
+<xs:complexType name="referenceLineType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: series of gemometries (line, spiral, arc)
+
+                - line: special type for line definition 
+                - spiral: special type for spiral definition 
+                - arc: special type for arc definition 
+        </xs:documentation>
+    </xs:annotation>
+    <xs:choice maxOccurs="unbounded">
+        <xs:element name="line" type="lineType"/>
+        <xs:element name="spiral" type="spiralType"/>
+        <xs:element name="arc" type="arcType"/>
+    </xs:choice>
+</xs:complexType>
+
+<xs:complexType name="referenceLineTypeRoundAbout">
+    <xs:annotation>
+        <xs:documentation>
+            Element: spcial reference line consisting of only one arc (circle)
+
+                - circle: in roundabout case the arc is an circle and only specified by the length, not by radius to ensure a full circle
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="circle" type="circleType"/>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="lineType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: straight line
+
+                - length: length of straight line in m
+        </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="length" type="positiveDouble" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="spiralType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: spiral 
+
+                - length: length of spiral in m 
+                - Rs: starting radius in m 
+                - Re: ending radius in m 
+        </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="length" type="positiveDouble" use="required"/>
+    <xs:attribute name="Rs" type="xs:double" use="required"/>
+    <xs:attribute name="Re" type="xs:double" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="arcType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: arc
+
+                - length: length of arc in m 
+                - R: constant radius 
+        </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="length" type="positiveDouble" use="required"/>
+    <xs:attribute name="R" type="xs:double" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="circleType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: circle (equivalent to arc but without defined radius
+
+                - length: length of circle in m, radius can be calculated from that (r = length / 2pi)
+        </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="length" type="positiveDouble" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="lanesType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: defining the entire lane structure
+
+                - lane: spcifying the general lane type
+                - laneWidening: specifying a lane widening 
+                - laneDrop: specifying a lane drop 
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="lane" type="laneType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="laneWidening" type="laneWideningType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="laneDrop" type="laneDropType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="laneType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: general lane structure
+
+                - roadMark: specifying the lane roadmarking
+                - material: specifying the lane material
+
+                - id: identifier for the lane
+                - type: specifying the type, if "delete" this lane is removed
+                - width: specifying the general lane width in m 
+                - speed: specifying the general lane speed in km/h
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="roadMark" type="roadMarkType" minOccurs="0"/>
+        <xs:element name="material" type="materialType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:int" use="required"/>
+    <xs:attribute name="type" type="laneTypeType" use="optional"/>        
+    <xs:attribute name="width" type="positiveDouble" use="optional"/>        
+    <xs:attribute name="speed" type="positiveDouble" use="optional"/>        
+</xs:complexType>
+
+<xs:simpleType name="laneTypeType">
+    <xs:annotation>
+        <xs:documentation>
+            Element:  holds an enumeration for all lane types
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="driving"/>
+        <xs:enumeration value="restricted"/>
+        <xs:enumeration value="none"/>
+        <xs:enumeration value="delete"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="roadMarkType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying the lane roadmarking
+
+                - type: roadmark type which can be solid, broken, or none
+                - color: roadmark color
+                - width: roadmark width in m 
+        </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="type" type="roadMarkTypeType" use="optional"/>    
+    <xs:attribute name="color" type="colorType" use="optional"/>    
+    <xs:attribute name="width" type="positiveDouble" use="optional"/>    
+</xs:complexType>
+
+<xs:simpleType name="roadMarkTypeType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: holds an enumeration for all road marking types
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="solid"/>
+        <xs:enumeration value="broken"/>
+        <xs:enumeration value="none"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="colorType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: holds an enumeration for all road marking colors
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="standard"/>
+        <xs:enumeration value="blue"/>
+        <xs:enumeration value="green"/>
+        <xs:enumeration value="red"/>
+        <xs:enumeration value="white"/>
+        <xs:enumeration value="yellow"/>
+        <xs:enumeration value="orange"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="materialType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying the lane material
+
+                - surface: material structure
+                - friction: material friction coefficient
+                - roughness: material roughness coefficient
+        </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="surface" type="xs:string" use="optional"/>    
+    <xs:attribute name="friction" type="positiveDouble" use="optional"/>    
+    <xs:attribute name="roughness" type="positiveDouble" use="optional"/>    
+</xs:complexType>
+
+<xs:complexType name="laneWideningType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying a lane widening 
+
+                - restrictedArea: specifying a possible restricted field after widening (currently not implemented)
+
+                - side: specifying the side for the lane widening (inner lane is wided) -> -1 or 1 
+                - s: specifying the stating position for the lanewidening
+                - length: specifying the length for the lanewidening
+
+                note: the defined s is not the s on the original road, its the s coordinate after applying the previous drops/widenings ...
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="restrictedArea" type="restrictedAreaType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="side" type="xs:int" use="required"/>      
+    <xs:attribute name="s" type="xs:double" use="required"/>      
+    <xs:attribute name="length" type="positiveDouble" use="optional"/>        
+</xs:complexType>
+
+<xs:complexType name="laneDropType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying a lane drop 
+                - restrictedArea: specifying a possible restricted field after widening
+
+                - side: specifying the side for the lanedrop (outer lane is dropped) -> -1 or 1 
+                - s: specifying the starting position for the lanedrop
+                - length: specifying the length for the lanedrop
+
+                note: the defined s is not the s on the original road, its the s coordinate after applying the previous drops/widenings ...
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="restrictedArea" type="restrictedAreaType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="side" type="xs:int" use="required"/>      
+    <xs:attribute name="s" type="xs:double" use="required"/>    
+    <xs:attribute name="length" type="positiveDouble" use="optional"/>    
+</xs:complexType>
+
+<xs:complexType name="restrictedAreaType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying a restricted area 
+
+                - length: specifying the length for the restriced area, this has to be longer than the length of the lanewidening or lanedrop! Stating position is defined by parent lanewidening or lanedrop.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="length" type="positiveDouble" use="optional"/>  
+</xs:complexType>
+
+<xs:complexType name="objectsType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: further objects (signs, parking space, road work, bus stop, traffic island)
+
+                - trafficRule: specifying rule with corresponding traffic signs
+                - streetLamp: specifying a streelamp or a chain of streetlamps
+                - roadWork: specifying a road work on a lane
+                - busStop: specifying a busStop
+                - parkingSpace: specifying a parkingspace or a chain of parkingspaces
+                - trafficIsland: specifying a trafficIsland
+        </xs:documentation>
+    </xs:annotation>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="trafficRule" type="trafficRuleType" />
+        <xs:element name="streetLamp" type="streetLampType" />
+        <xs:element name="roadWork" type="roadworkType" />
+        <xs:element name="busStop" type="busStopType" />
+        <xs:element name="parkingSpace" type="parkingSpaceType" />
+        <xs:element name="trafficIsland" type="trafficIslandType" />
+    </xs:choice>
+</xs:complexType>
+
+<xs:complexType name="trafficRuleType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying rule with corresponding traffic signs
+
+                signal: sign which defines a specific signal
+
+                id: identifier for the object
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="signal" type="signalType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="signalType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: sign which defines a specific signal
+                
+                - relativePosition: determines the position on the road
+
+                - type: signal type according to the openDRIVE documentation
+                - value: signal value, e.g., speed limit value
+                - dynamic: determines if signal is dynamic like traffic lights
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="relativePosition" type="relativeType"/>
+    </xs:sequence>
+    <xs:attribute name="type" type="xs:string" use="required"/>
+    <xs:attribute name="value" type="xs:double" use="required"/>
+    <xs:attribute name="dynamic" type="xs:boolean" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="streetLampType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying a streelamp or a chain of streetlamps
+
+                - relativePosition: determines the position on the road
+                - repeatPosition: determines multiple positions on the road in a fixed interval over s
+                
+                - id: identifier for the object
+        </xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+        <xs:element name="relativePosition" type="relativeType" />
+        <xs:element name="repeatPosition" type="repeatType" />
+    </xs:choice>
+    <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="roadworkType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying a road work on a lane
+
+                - id: identifier for the object
+                - s: position on the road
+                - length: length of the roadwork
+                - laneId: lane with defined roadwork
+
+                note: the defined s is not the s on the original road, its the s coordinate after applying the previous drops/widenings ...
+            </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="s" type="xs:double" use="required"/>
+    <xs:attribute name="length" type="positiveDouble" use="required"/>
+    <xs:attribute name="laneId" type="xs:int" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="busStopType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying a bustop
+
+                - relativePosition: determines the position on the road
+
+                - id: identifier for the object
+            </xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+        <xs:element name="relativePosition" type="relativeType" />
+    </xs:choice>
+    <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="parkingSpaceType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying a parkingspace or a chain of parkingspaces
+                
+                - relativePosition: determines the position on the road
+                - repeatPosition: determines multiple positions on the road in a fixed interval over s
+
+                - id: identifier for the object
+                - length: length of the parkingspace
+                - width: width of the parkingspace
+            </xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+        <xs:element name="relativePosition" type="relativeType" />
+        <xs:element name="repeatPosition" type="repeatType" />
+    </xs:choice>
+    <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="length" type="positiveDouble" use="required"/>
+    <xs:attribute name="width" type="positiveDouble" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="trafficIslandType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying a trafficisland
+
+                - id: identifier for the object
+                - s: position on the road
+                - length: length of the trafficisland
+                - width: width of the trafficisland
+
+                note: the defined s is not the s on the original road, its the s coordinate after applying the previous drops/widenings ...
+            </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="s" type="xs:double" use="required"/>
+    <xs:attribute name="length" type="positiveDouble" use="required"/>
+    <xs:attribute name="width" type="positiveDouble" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="intersectionPointType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: determines the way how the roads intersect on a junction
+
+                - adRoad: road identifier of additional road
+                        (ensure that a road do not occur twice!)
+                        in a t junction up to 2 instances, in a x junction up to 3 instances are considered
+
+                - refRoad: identifier of fixed reference road
+                - s: position on the reference road determing the interesection point
+
+                note: the defined s is the s on the original road
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="adRoad" type="adRoadType" maxOccurs="4"/>
+    </xs:sequence>
+    <xs:attribute name="refRoad" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="s" type="xs:double" use="required"/>    
+</xs:complexType>
+
+<xs:complexType name="adRoadType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: additional road which crosses at intersection point
+
+                - id: identifier of additional road
+                - s: position on the additional road at the interesection point
+                - angle: angle between reference road and this additional road in interesction point
+
+                note: the defined s is the s on the original road
+        </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="s" type="xs:double" use="required"/>
+    <xs:attribute name="angle" type="xs:double" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="couplerType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: holds the detailed junction properties
+
+                - junctionArea: specifying the junction area
+                - connection: specifying which lanes are connected in the junction area 
+                - additionalLanes: specifying additional lanes for left/right turns
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="junctionArea" type="junctionAreaType" minOccurs="0"/>
+        <xs:element name="connection" type="connectionType" minOccurs="0"/>
+        <xs:element name="additionalLanes" type="additionalLanesType" minOccurs="0"/>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="couplerRoundAboutType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: holds the detailed junction properties for a roundabout
+
+                - junctionArea: specifying the junction area
+            </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="junctionArea" type="junctionAreaType" minOccurs="0"/>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="junctionAreaType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying the junction area
+
+                - roadGap: detailed width for each road seperatly
+
+                - gap: general width from midpoint to road beginning
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="roadGap" type="roadGapType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="gap" type="xs:double" use="required"/>   
+</xs:complexType>
+
+<xs:complexType name="roadGapType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: detailed junctionarea width for a specific road
+
+                - id: road identifier 
+                - gap: width from midpoint to road beginning for specific road
+        </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="id" type="xs:positiveInteger" use="required"/>   
+    <xs:attribute name="gap" type="xs:double" use="required"/>   
+</xs:complexType>
+
+<xs:complexType name="connectionType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying which lanes are connected in the junction area
+
+                - roadLink: specifying the connecting lanes between two roads
+
+                - type: type defines if a automatic connection is enabled
+                    - "all": automatic connection of all possible lanes 
+                    - "single": only proceed the defined connections
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="roadLink" type="roadLinkType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="type" type="connectionTypeType" use="required"/>   
+</xs:complexType>
+
+<xs:simpleType name="connectionTypeType">
+    <xs:annotation>
+        <xs:documentation>
+            Element:  holds an enumeration for all junction connection types
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="all"/>
+        <xs:enumeration value="single"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="roadLinkType">
+    <xs:annotation>
+        <xs:documentation>
+            Element:  specifying the connecting lanes between two roads
+
+                - laneLink: specifying connecting lane
+
+                - fromId: road identifier of first road
+                - toId: road identifier of second road
+                - fromPos: part of starting road
+                - toPos: part of ending road
+                    (the part is either "start" or "end" - some roads are cut in the process - here one has to specify if the "start" or "end" part is used; if no cut exists "end" is the value to choose)
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="laneLink" type="laneLinkType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="fromId" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="toId"  type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="fromPos" type="posType" use="optional"/>
+    <xs:attribute name="toPos" type="posType" use="optional"/>
+</xs:complexType>
+
+<xs:complexType name="laneLinkType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying connecting lane in junction area
+
+                - fromId: lane identifier of first lane
+                - toId: lane identifier of second lane
+                - left: lane marking on left side
+                - right: lane marking on right side
+        </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="fromId" type="xs:int" use="required"/>
+    <xs:attribute name="toId" type="xs:int" use="required"/>
+    <xs:attribute name="left" type="roadMarkTypeType" use="optional"/>
+    <xs:attribute name="right" type="roadMarkTypeType" use="optional"/>
+</xs:complexType>
+
+<xs:complexType name="additionalLanesType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying additional lanes for left/right turns
+
+                - additionalLane: additional lane 
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="additionalLane" type="additionalLaneType" maxOccurs="unbounded"/>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="additionalLaneType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: additional lane for left or right turn
+
+                - roadId: specifying the road identifier containing the new lane
+                - roadPos: specifying which part of the road holds the lane 
+                    (an additional lane is always next to the junction, but some roads are cut in the process - here one has to specify if the "start" or "end" part is equipped with an additional road; if no cut exists "end" is the value to choose)
+                - type: specifying position and type of additional lane
+                - length: specifying length of lane 
+                - ds: specifying length of widening
+                - amount: specifying the amount of additional lanes
+                - verschwenkung: specifying if a "verschwenkung" exists
+        </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="roadId" type="xs:positiveInteger" use="required"/>   
+    <xs:attribute name="roadPos" type="posType" use="optional"/>   
+    <xs:attribute name="type" type="leftRight" use="required"/>   
+    <xs:attribute name="length" type="positiveDouble" use="optional"/>   
+    <xs:attribute name="ds" type="positiveDouble" use="optional"/>   
+    <xs:attribute name="amount" type="xs:positiveInteger" use="optional"/>   
+    <xs:attribute name="verschwenkung" type="xs:boolean" use="optional"/>   
+</xs:complexType> 
+
+<xs:simpleType name="leftRight">
+    <xs:annotation>
+        <xs:documentation>
+            Element: holds an enumeration for all positions for additional lanes
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="left"/>
+        <xs:enumeration value="right"/>
+        <xs:enumeration value="leftRestricted"/>
+        <xs:enumeration value="rightRestricted"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="automaticWideningType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: spcifying wether or not automatic lanes are created,
+
+                - active: spcifying where automatic widening are applied
+                - length: spcifying length of the automatic widening lane 
+                - ds: specifying length of the widening part
+
+                note: starting point is always at road beginning (s=0)
+        </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="active" type="activeType" use="required"/>
+    <xs:attribute name="length" type="xs:double" use="optional"/>
+    <xs:attribute name="ds" type="positiveDouble" use="optional"/>
+</xs:complexType>
+
+<xs:simpleType name="activeType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: holds an enumeration for determine where automatic widening is active
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="none"/>
+        <xs:enumeration value="all"/>
+        <xs:enumeration value="main"/>
+        <xs:enumeration value="access"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="linksType">
+    <xs:annotation>
+        <xs:documentation>
+                Element: for joining two segments
+
+                    - segementLink: specifying two linking segements
+                        (assumption is that the from segment is already linked to the global reference segment)
+
+                    - refId: specifying the global reference segment
+                    - xOffset: specifying a global x offset
+                    - yOffset: specifying a global y offset
+                    - hdgOffset: specifying a global angle offset
+                assumption: from segment is already linked to reference segment
+                Element:
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="segmentLink" type="segmentLinkType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="refId" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="xOffset" type="xs:double" use="required"/>
+    <xs:attribute name="yOffset" type="xs:double" use="required"/>
+    <xs:attribute name="hdgOffset" type="xs:double" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="closeRoadsType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: connecting two segments automatically by new road structure
+
+                - segmentLink: specifying two segements for connecting process
+        </xs:documentation>
+    </xs:annotation>            
+    <xs:sequence>
+        <xs:element name="segmentLink" type="segmentLinkType" maxOccurs="unbounded"/>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="segmentLinkType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying two segments for linking or connecting
+
+                - fromSegment: identifier for starting segment
+                - toSegment: identifier for ending segment
+                - fromRoad: identifier for starting road
+                - toRoad: identifier for ending road
+                - fromPos: position for starting road
+                - toPos: position for ending road
+                    (the position is either "start" or "end" and defines the contact point on the original input road) 
+                    for roads belonging to a junction only the outer contact points are valid
+        </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="fromSegment" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="toSegment" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="fromRoad" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="toRoad" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="fromPos" type="posType" use="required"/>
+    <xs:attribute name="toPos" type="posType" use="required"/>
+</xs:complexType>
+
+<!-- General simple types -->
+<xs:simpleType name="posType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: holds an enumeration for all contact positions
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="start"/>
+        <xs:enumeration value="end"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="relativeType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying a position relative to a road
+
+                s: specifying position in s direction
+                t: specifying position in t direction
+                z: specifying position in z direction (not used)
+                hdg: specifying angle defintion
+        </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="s" type="xs:double" use="required"/>
+    <xs:attribute name="t" type="xs:double" use="required"/>
+    <xs:attribute name="z" type="xs:double" use="required"/>
+    <xs:attribute name="hdg" type="xs:double" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="repeatType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: specifying multiple positions relative to a road
+
+                s: specifying position in s direction
+                t: specifying position in t direction
+                z: specifying position in z direction (not used)
+                hdg: specifying angle defintion
+                length: specifying length for the repetition
+        </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="s" type="xs:double" use="required"/>
+    <xs:attribute name="t" type="xs:double" use="required"/>
+    <xs:attribute name="z" type="xs:double" use="required"/>
+    <xs:attribute name="hdg" type="xs:double" use="required"/>
+    <xs:attribute name="length" type="positiveDouble" use="required"/>
+</xs:complexType>
+
+<xs:simpleType name="positiveDouble">
+    <xs:annotation>
+        <xs:documentation>
+            Element: restrict double to postive range
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:double">
+        <xs:minInclusive value="0"/>
+    </xs:restriction>
+</xs:simpleType>
+
+</xs:schema>
