@@ -118,7 +118,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     con2.to = r.id;    //switched r2 to r
     con2.fromLane = sgn(toId);
     con2.toLane = toId;
-    junc.connections.push_back(con2);
+    //junc.connections.push_back(con2); // trying to just leave this out. It might introduce unintended bugs down the line. 
 
     // --- correct laneOffset --------------------------------------------------
     double w1 = lS1.o.a + s1 * lS1.o.b + s1 * s1 * lS1.o.c + s1 * s1 * s1 * lS.o.d;
