@@ -1,5 +1,9 @@
 image: gitlab.ika.rwth-aachen.de:5050/dbecker/road-generation
 
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+
 stages:
   - build
   - unitCases
