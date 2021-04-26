@@ -507,14 +507,8 @@
 		<connection id="1" incomingRoad="101" connectingRoad="105" contactPoint="start">
 			<laneLink from="2" to="-1" />
 		</connection>
-		<connection id="2" incomingRoad="105" connectingRoad="103" contactPoint="end">
-			<laneLink from="-1" to="-1" />
-		</connection>
-		<connection id="3" incomingRoad="101" connectingRoad="106" contactPoint="start">
+		<connection id="2" incomingRoad="101" connectingRoad="106" contactPoint="start">
 			<laneLink from="-1" to="1" />
-		</connection>
-		<connection id="4" incomingRoad="106" connectingRoad="103" contactPoint="end">
-			<laneLink from="1" to="2" />
 		</connection>
 	</junction>
 </OpenDRIVE>

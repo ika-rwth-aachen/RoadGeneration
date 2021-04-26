@@ -623,74 +623,38 @@
 		<connection id="1" incomingRoad="101" connectingRoad="105" contactPoint="start">
 			<laneLink from="1" to="-1" />
 		</connection>
-		<connection id="2" incomingRoad="105" connectingRoad="102" contactPoint="end">
-			<laneLink from="-1" to="-1" />
-		</connection>
-		<connection id="3" incomingRoad="101" connectingRoad="106" contactPoint="start">
+		<connection id="2" incomingRoad="101" connectingRoad="106" contactPoint="start">
 			<laneLink from="-1" to="1" />
 		</connection>
-		<connection id="4" incomingRoad="106" connectingRoad="102" contactPoint="end">
-			<laneLink from="1" to="1" />
-		</connection>
-		<connection id="5" incomingRoad="101" connectingRoad="107" contactPoint="start">
+		<connection id="3" incomingRoad="101" connectingRoad="107" contactPoint="start">
 			<laneLink from="1" to="-1" />
 		</connection>
-		<connection id="6" incomingRoad="107" connectingRoad="103" contactPoint="end">
-			<laneLink from="-1" to="-1" />
-		</connection>
-		<connection id="7" incomingRoad="101" connectingRoad="108" contactPoint="start">
+		<connection id="4" incomingRoad="101" connectingRoad="108" contactPoint="start">
 			<laneLink from="-1" to="1" />
 		</connection>
-		<connection id="8" incomingRoad="108" connectingRoad="103" contactPoint="end">
-			<laneLink from="1" to="1" />
-		</connection>
-		<connection id="9" incomingRoad="103" connectingRoad="109" contactPoint="start">
+		<connection id="5" incomingRoad="103" connectingRoad="109" contactPoint="start">
 			<laneLink from="1" to="-1" />
 		</connection>
-		<connection id="10" incomingRoad="109" connectingRoad="102" contactPoint="end">
-			<laneLink from="-1" to="-1" />
-		</connection>
-		<connection id="11" incomingRoad="103" connectingRoad="110" contactPoint="start">
+		<connection id="6" incomingRoad="103" connectingRoad="110" contactPoint="start">
 			<laneLink from="-1" to="1" />
 		</connection>
-		<connection id="12" incomingRoad="110" connectingRoad="102" contactPoint="end">
-			<laneLink from="1" to="1" />
-		</connection>
-		<connection id="13" incomingRoad="102" connectingRoad="111" contactPoint="start">
+		<connection id="7" incomingRoad="102" connectingRoad="111" contactPoint="start">
 			<laneLink from="1" to="-1" />
 		</connection>
-		<connection id="14" incomingRoad="111" connectingRoad="104" contactPoint="end">
-			<laneLink from="-1" to="-1" />
-		</connection>
-		<connection id="15" incomingRoad="102" connectingRoad="112" contactPoint="start">
+		<connection id="8" incomingRoad="102" connectingRoad="112" contactPoint="start">
 			<laneLink from="-1" to="1" />
 		</connection>
-		<connection id="16" incomingRoad="112" connectingRoad="104" contactPoint="end">
-			<laneLink from="1" to="1" />
-		</connection>
-		<connection id="17" incomingRoad="104" connectingRoad="113" contactPoint="start">
+		<connection id="9" incomingRoad="104" connectingRoad="113" contactPoint="start">
 			<laneLink from="1" to="-1" />
 		</connection>
-		<connection id="18" incomingRoad="113" connectingRoad="101" contactPoint="end">
-			<laneLink from="-1" to="-1" />
-		</connection>
-		<connection id="19" incomingRoad="104" connectingRoad="114" contactPoint="start">
+		<connection id="10" incomingRoad="104" connectingRoad="114" contactPoint="start">
 			<laneLink from="-1" to="1" />
 		</connection>
-		<connection id="20" incomingRoad="114" connectingRoad="101" contactPoint="end">
-			<laneLink from="1" to="1" />
-		</connection>
-		<connection id="21" incomingRoad="104" connectingRoad="115" contactPoint="start">
+		<connection id="11" incomingRoad="104" connectingRoad="115" contactPoint="start">
 			<laneLink from="1" to="-1" />
 		</connection>
-		<connection id="22" incomingRoad="115" connectingRoad="103" contactPoint="end">
-			<laneLink from="-1" to="-1" />
-		</connection>
-		<connection id="23" incomingRoad="104" connectingRoad="116" contactPoint="start">
+		<connection id="12" incomingRoad="104" connectingRoad="116" contactPoint="start">
 			<laneLink from="-1" to="1" />
-		</connection>
-		<connection id="24" incomingRoad="116" connectingRoad="103" contactPoint="end">
-			<laneLink from="1" to="1" />
 		</connection>
 	</junction>
 </OpenDRIVE>
