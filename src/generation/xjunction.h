@@ -570,7 +570,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
             r.id = 100 * junc.id + 50 + nCount;
 
             if (mode == 1 || mode == 2)
-                createRoadConnection(r3, r1, r, junc, from, to, bro, bro);
+                createRoadConnection(r3, r1, r, junc, from, to, non, non);
             if (mode == 3)
                 createRoadConnection(r3, r1, r, junc, from, to, non, non);
 
