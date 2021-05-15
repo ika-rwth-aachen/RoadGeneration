@@ -228,7 +228,7 @@ struct road
     int inputId = -1;     // original id from input file
     string inputPos = ""; // specifying part of original road from input file
     int junction = -1;
-    bool isConnectingRoad = false; // this variable fixes the problem, that junction is used in linkSegments as placeholder for "inputSegmentId". 
+    bool isConnectingRoad = false; // this variable fixes the problem that junction is used in linkSegments as placeholder for "inputSegmentId". 
     string type = "town";
     string classification = ""; // either 'main' or 'access'
     double length = 0;

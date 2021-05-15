@@ -65,8 +65,6 @@ EXPORTED void setXMLSchemaLocation(char* file){
 	setting.xmlSchemaLocation = file;
 }
 
-
-
 EXPORTED int executePipeline(char* file)
 {
 
@@ -90,6 +88,7 @@ EXPORTED int executePipeline(char* file)
 	}
 
 	if(!setting.silentMode){
+		cout << file << endl;
 		printLogo();
 	}
 

@@ -42,8 +42,8 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
     // type1 / type2 defines how point1 / point2 lie to the intersetion point
     int type1, type2, type = 0;
 
-    double d1, d2, d;
-    double iPx, iPy;
+    double d1, d2, d; //d1 distance p1 - ip, d2 distance p2 - ip, d distance p1 - p2
+    double iPx, iPy; //intersection point
 
     // determine type and compute intersection point if it exists
     if (m1 == m2)
