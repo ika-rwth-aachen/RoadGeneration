@@ -728,7 +728,7 @@
 			<laneSection s="0">
 				<center>
 					<lane id="0" type="none">
-						<roadMark sOffset="0" type="broken" weight="standard" color="white" width="0.14999999999999999" />
+						<roadMark sOffset="0" type="none" weight="standard" color="white" width="0.14999999999999999" />
 					</lane>
 				</center>
 				<right>
@@ -738,7 +738,7 @@
 							<successor id="-1" />
 						</link>
 						<width sOffset="0" a="3" b="0" c="0.0023121302204397731" d="-4.2792390574437646e-05" />
-						<roadMark sOffset="0" type="broken" weight="standard" color="white" width="0.14999999999999999" />
+						<roadMark sOffset="0" type="none" weight="standard" color="white" width="0.14999999999999999" />
 						<material sOffset="0" surface="asphalt" friction="0.80000000000000004" roughness="0.014999999999999999" />
 						<speed sOffset="0" max="30" />
 					</lane>
