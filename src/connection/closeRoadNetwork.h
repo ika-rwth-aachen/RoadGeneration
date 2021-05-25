@@ -176,16 +176,20 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 		}
 
 		// adjust toHdg
-		toHdg += M_PI;
+		if(toHdg != 0) //testing
+			toHdg += M_PI;
 		fixAngle(toHdg);
+		cout << toHdg << endl;
 
 		// --- build new geometry ----------------------------------------------
-		if (closeRoadConnection(rConnection.geometries, fromX, fromY, fromHdg, toX, toY, toHdg))
+		if (closeRoadConnection(rConnection.geometries, fromX, fromY, fromHdg, toX, toY, toHdg)) //the tohdg angle is wrong some of the time
 		{
 			cerr << "ERR: error in closeRoadConnection function." << endl;
 			return 1;
 		}
 
+
+		
 		// --- compute length --------------------------------------------------
 		for (int j = 0; j < rConnection.geometries.size(); j++)
 		{
@@ -237,6 +241,9 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 			s += ds;
 			dNeg++;
 		}
+
+		
+
 
 		// --- adjust lanewidth of last section to be equal to lS2 -------------
 		for (int j = 0; j < secs.back().lanes.size(); j++)
