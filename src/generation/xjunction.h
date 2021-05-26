@@ -196,6 +196,22 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         sAdd1 = tmpNode.attribute("s").as_double();
         phi1 = tmpNode.attribute("angle").as_double();
         tmpNode = tmpNode.next_sibling("adRoad");
+
+        //some sanity checks---
+
+        if(sAdd1 - sOffAdd1 <= 0)
+        {
+            cerr << "ERR: error in generating junction road. Intersection point is too close to add. road start" << endl;
+            return 1;
+        }
+
+        if(sAdd1 >  help2.length)
+        {
+            cerr << "ERR: error in generating junction road. Intersection point is too close to add. road end " << endl;
+            return 1;
+        }
+
+        //---------
     }
     if (mode >= 2)
     {
@@ -274,6 +290,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r2.predecessor.elementType = junctionType;
     if (mode == 1)
     {
+        
         if (buildRoad(additionalRoad1, r2, sAdd1 - sOffAdd1, 0, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
         {
             cerr << "ERR: error in buildRoad" << endl;
@@ -333,7 +350,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     r4.predecessor.id = junc.id;
     r4.isConnectingRoad = true;
     r4.predecessor.elementType = junctionType;
-    if (mode == 1)
+    if (mode == 1) //check here
     {
         if (buildRoad(additionalRoad1, r4, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
         {
