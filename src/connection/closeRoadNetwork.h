@@ -179,7 +179,6 @@ int closeRoadNetwork(pugi::xml_document &doc, roadNetwork &data)
 		if(toHdg != 0) //testing
 			toHdg += M_PI;
 		fixAngle(toHdg);
-		cout << toHdg << endl;
 
 		// --- build new geometry ----------------------------------------------
 		if (closeRoadConnection(rConnection.geometries, fromX, fromY, fromHdg, toX, toY, toHdg)) //the tohdg angle is wrong some of the time

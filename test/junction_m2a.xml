@@ -30,8 +30,8 @@
                 </lanes>
             </road>
             <intersectionPoint refRoad="1" s="200">
-                <adRoad id="2" s="0" angle="-1.08"/>
-                <adRoad id="3" s="0" angle="2.11"/>
+                <adRoad id="2" s="20" angle="-1.08"/>
+                <adRoad id="3" s="20" angle="2.11"/>
             </intersectionPoint>
             <coupler>
                 <junctionArea gap="10">
@@ -59,7 +59,7 @@
                 </referenceLine>
             </road>
             <intersectionPoint refRoad="1" s="200">
-                <adRoad id="2" s="0" angle="1.15"/>
+                <adRoad id="2" s="20" angle="1.15"/>
             </intersectionPoint>
             <coupler>
                 <junctionArea gap="1">
@@ -96,8 +96,8 @@
                 </referenceLine>
             </road>
             <intersectionPoint refRoad="1" s="100">
-                <adRoad id="2" s="0" angle="1.0"/>
-                <adRoad id="3" s="0" angle="3.0"/>
+                <adRoad id="2" s="20" angle="1.0"/>
+                <adRoad id="3" s="20" angle="3.0"/>
             </intersectionPoint>
             <coupler>
                 <junctionArea gap="1">
@@ -130,10 +130,10 @@
                     <laneWidening side="1" s="50" length="20"/>
                 </lanes> 
             </road>
-            <intersectionPoint refRoad="1" s="0">
-                <adRoad id="2" s="0" angle="1.57" />
-                <adRoad id="3" s="0" angle="3.14" />
-                <adRoad id="4" s="0" angle="-1.57" />
+            <intersectionPoint refRoad="1" s="20">
+                <adRoad id="2" s="20" angle="1.57" />
+                <adRoad id="3" s="20" angle="3.14" />
+                <adRoad id="4" s="20" angle="-1.57" />
             </intersectionPoint>
             <coupler>
                 <junctionArea gap="1"/>
@@ -183,16 +183,16 @@
                 </referenceLine>
             </road>
             <intersectionPoint refRoad="1" s="80">
-                <adRoad id="2" s="0" angle="-1.56"/>
+                <adRoad id="2" s="20" angle="-1.56"/>
             </intersectionPoint>
             <intersectionPoint refRoad="1" s="160">
-                <adRoad id="3" s="0" angle="-1.56"/>
+                <adRoad id="3" s="20" angle="-1.56"/>
             </intersectionPoint>
             <intersectionPoint refRoad="1" s="240">
-                <adRoad id="4" s="0" angle="-1.56"/>
+                <adRoad id="4" s="20" angle="-1.56"/>
             </intersectionPoint>
             <intersectionPoint refRoad="1" s="320">
-                <adRoad id="5" s="0" angle="-1.6"/>
+                <adRoad id="5" s="20" angle="-1.6"/>
             </intersectionPoint>
             <coupler>
                 <junctionArea gap="10">
