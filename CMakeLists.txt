@@ -5,7 +5,7 @@ find_package (XercesC REQUIRED)
 
 # source code
 include_directories(src)
-include_directories(${CMAKE_SOURCE_DIR}/libs/pugixml-1.9/src)
+include_directories(${CMAKE_SOURCE_DIR}/libs/pugixml/src)
 include_directories (${XercesC_INCLUDE_DIR})
 
 set(BIN_DIR ${CMAKE_SOURCE_DIR} CACHE PATH "BIN_DIR")
@@ -14,7 +14,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR})
 
 add_library("${PROJECT_NAME}" SHARED
     "${CMAKE_SOURCE_DIR}/src/libfiles/export.cpp"
-    "${CMAKE_SOURCE_DIR}/libs/pugixml-1.9/src/pugixml.cpp"
+    "${CMAKE_SOURCE_DIR}/libs/pugixml/src/pugixml.cpp"
 )
 
 
