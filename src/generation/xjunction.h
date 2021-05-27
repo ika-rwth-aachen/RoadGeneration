@@ -211,6 +211,17 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
             return 1;
         }
 
+        if(sMain > help1.length)
+        {
+            cerr << "ERR: error in generating junction road. Intersection point is too close to main road end " << endl;
+            return 1;
+        }
+        if(sMain <= sOffMain)
+        {
+            cerr << "ERR: error in generating junction road. Intersection point is too close to main road start " << endl;
+            return 1;
+        }
+
         //---------
     }
     if (mode >= 2)
