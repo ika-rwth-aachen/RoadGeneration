@@ -17,8 +17,6 @@ jobs:
     - uses: actions/checkout@v2
       with:
          submodules: true
-         name: road-generation
-         path: road-generation_exec
     - name: Build
       # Build your program with the given configuration
       run: |
