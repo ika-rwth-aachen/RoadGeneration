@@ -37,4 +37,12 @@ jobs:
       with:
         name: road-generation
         path: road-generation_exec
-
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+         name: road-generation
+         run: |
+              ./road-generation -h
+        
