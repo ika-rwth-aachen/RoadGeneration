@@ -23,7 +23,7 @@ jobs:
 
     - name: Build
       # Build your program with the given configuration
-    - run: |
+      run: |
            sudo apt install libxerces-c-dev
            mkdir -p build
            cd build
