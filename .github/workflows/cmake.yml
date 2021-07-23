@@ -14,19 +14,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Build executable
-      run: |
-            sudo apt install libxerces-c-dev
-            mkdir -p build
-            cd build
-            cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
-            cmake --build .
-            echo Compiled!
     - uses: actions/checkout@v2
       with:
-        submodules: true
-        name: road-generation
-        path: road-generation_exec
+         submodules: true
+         name: road-generation
+         path: road-generation_exec
+    - name: Build
+      # Build your program with the given configuration
+      run: |
+           sudo apt install libxerces-c-dev
+           mkdir -p build
+           cd build
+           rm -rf *
+           cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
+           cmake --build .
+           echo Compiled!
+
         
   test:
     needs: [build]
