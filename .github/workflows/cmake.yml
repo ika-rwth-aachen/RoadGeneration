@@ -24,10 +24,10 @@ jobs:
     - name: Build
       # Build your program with the given configuration
       run: sudo apt install libxerces-c-dev
-            mkdir -p build
-            cd build
-            rm -rf *
-            cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
-            cmake --build .
-            echo Compiled!
+           mkdir -p build
+           cd build
+           rm -rf *
+           cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
+           cmake --build .
+           echo Compiled!
       
