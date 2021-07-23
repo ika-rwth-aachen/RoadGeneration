@@ -32,4 +32,9 @@ jobs:
            cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
            cmake --build .
            echo Compiled!
-      
+    - name: Upload executable
+      uses: actions/upload-artifact@v2
+      with:
+        name: road-generation
+        path: road-generation_exec
+
