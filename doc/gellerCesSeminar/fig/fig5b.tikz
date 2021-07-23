@@ -1,0 +1,35 @@
+\begin{tikzpicture}
+
+    \coordinate[label=below:$A$] (A) at (0,0);
+    \coordinate[label=135:$B$] (B) at (4,2);
+    \coordinate[] (iP) at (2,0);
+    \coordinate[] (H) at (3.41421,1.41421);
+    \coordinate[] (E) at (0,4.8284);
+    \coordinate[] (F) at ($(A)!0.5!(H)$);
+
+    \draw[dashed, line width=0.2] (-1,0) -- (5,0);
+    \draw[dashed, line width=0.2] (5,3) -- (1,-1);
+
+    \draw[blue, line width = 1] (H) -- (B);
+
+    \draw[->, black, line width=1] (A) -- (0.5,0);
+    \draw[->, black, line width=1] (H) -- (3.7676,1.7676);
+
+    \draw[label=below:$d$] (A) -- (H);
+    \draw[line width=1] (A) arc (-90:-45:4.8284);
+    \draw (0,4.3284) arc (-90:-45:0.5);
+    \draw[dashed] (A) -- (E) -- (H);
+    \draw[] (E) -- (F);
+
+    \fill[red] (A) circle (0.075);
+    \fill[red] (B) circle (0.075);
+    \fill[blue] (iP) circle (0.075);
+    \fill[orange] (H) circle (0.075);
+    \fill[black] (E) circle (0.05);
+
+    \draw (-0.35,2)  node {R};
+    \draw (2.4,1.4) node {d};
+    \draw (0.25,4.5) -- (0.6,4.7);
+    \draw (0.75, 4.7) node {$\frac{\alpha}{2}$};
+
+\end{tikzpicture}
