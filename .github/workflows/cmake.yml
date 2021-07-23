@@ -33,7 +33,7 @@ jobs:
            cmake --build .
            echo Compiled!
     - name: Upload executable
-      uses: actions/upload-artifact@v2
+      uses: actions/checkout@v2
       with:
         name: road-generation
         path: road-generation_exec
