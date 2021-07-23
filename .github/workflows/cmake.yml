@@ -43,10 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Testing
-      run: |
-           ls
-           pwd
-           ./road-generation_exec -h
+      run: pwd
     - uses: actions/checkout@v2
       with:
          name: road-generation
