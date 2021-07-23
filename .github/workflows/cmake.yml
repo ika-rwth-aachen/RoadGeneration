@@ -23,8 +23,6 @@ jobs:
             cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
             cmake --build .
             echo Compiled!
-            cd ..
-            ls
     - uses: actions/checkout@v2
       with:
         submodules: true
