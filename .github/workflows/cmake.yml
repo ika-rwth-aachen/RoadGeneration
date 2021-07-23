@@ -43,6 +43,5 @@ jobs:
     - uses: actions/checkout@v2
       with:
          name: road-generation
-         run: |
-              ./road-generation -h
+         run: ./road-generation -h
         
