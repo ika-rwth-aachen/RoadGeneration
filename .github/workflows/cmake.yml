@@ -44,8 +44,9 @@ jobs:
     steps:
     - name: Testing
       run: |
-        ls
-        ./road-generation_exec -h
+           ls
+           pwd
+           ./road-generation_exec -h
     - uses: actions/checkout@v2
       with:
          name: road-generation
