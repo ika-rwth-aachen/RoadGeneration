@@ -32,18 +32,19 @@ jobs:
            cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
            cmake --build .
            echo Compiled!
+           cd ..
     - name: Upload executable
       uses: actions/checkout@v2
       with:
         name: road-generation
-        path: road-generation_exec
+        path: ./road-generation_exec
         
   test:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
     - name: Testing
-      run: ls
+      run: ./road-generation_exec
     - uses: actions/checkout@v2
       with:
          name: road-generation
