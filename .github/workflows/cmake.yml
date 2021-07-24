@@ -32,3 +32,14 @@ jobs:
       with:
           name: road-generation
           path: road-generation_exec
+  test:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/download-artifact@v2
+      with:
+         name: road-generation
+    - name: Run test
+      run: ./road-generation_exec -h
+
+        
