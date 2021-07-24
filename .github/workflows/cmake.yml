@@ -12,9 +12,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Build
     - uses: actions/checkout@v2
       with:
          submodules: true
