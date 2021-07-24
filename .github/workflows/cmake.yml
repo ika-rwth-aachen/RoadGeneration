@@ -27,15 +27,22 @@ jobs:
            cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
            cmake --build .
            echo Compiled!
-
+           
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+          name: road-generation
+          path: road-generation_exec
         
   test:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
     - name: Testing
-      run: ./road-generation_exec
-    - uses: actions/checkout@v2
+    - uses: actions/download-artifact@v2
       with:
          name: road-generation
+    - shell: bash
+      run: ./road-generation_exec
+
         
