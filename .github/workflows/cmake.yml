@@ -14,10 +14,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Build
     - uses: actions/checkout@v2
       with:
          submodules: true
-    - name: Build
+    - name: Compile
+    - shell: bash
       # Build your program with the given configuration
       run: |
            sudo apt install libxerces-c-dev
@@ -38,11 +40,12 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-    - name: Testing
+    - name: Download executable
     - uses: actions/download-artifact@v2
       with:
          name: road-generation
+    - name: Run test
     - shell: bash
-      run: ./road-generation_exec
+      run: ./road-generation_exec -h
 
         
