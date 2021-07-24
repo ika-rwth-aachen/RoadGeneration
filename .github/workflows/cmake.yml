@@ -19,7 +19,6 @@ jobs:
       with:
          submodules: true
     - name: Compile
-    - shell: bash
       # Build your program with the given configuration
       run: |
            sudo apt install libxerces-c-dev
@@ -35,17 +34,3 @@ jobs:
       with:
           name: road-generation
           path: road-generation_exec
-        
-  test:
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-    - name: Download executable
-    - uses: actions/download-artifact@v2
-      with:
-         name: road-generation
-    - name: Run test
-    - shell: bash
-      run: ./road-generation_exec -h
-
-        
