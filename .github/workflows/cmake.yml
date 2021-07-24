@@ -42,6 +42,7 @@ jobs:
     - name: Run test
       run: |
         ls -la
+        chmod +x road-generation_exec
         ./road-generation_exec -h
 
         
