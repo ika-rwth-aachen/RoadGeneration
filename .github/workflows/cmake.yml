@@ -40,6 +40,8 @@ jobs:
       with:
          name: road-generation
     - name: Run test
-      run: ./road-generation_exec -h
+      run: |
+        ls -la
+        ./road-generation_exec -h
 
         
