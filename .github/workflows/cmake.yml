@@ -49,8 +49,9 @@ jobs:
         chmod +x road-generation_exec
         
     - name: test 1
-      run: ./road-generation_exec test/4a_fixed.xml
-    
+      run: |
+        ./road-generation_exec test/4a_fixed.xml
+        python3 test/cmp.py test/4a_fixed.xodr test/gt/4a_fixed.xodr
     - name: test 2
       run: ./road-generation_exec test/junction_m2a.xml
 
@@ -59,6 +60,18 @@ jobs:
     
     - name: test 4
       run: ./road-generation_exec test/junction_ma_2.xml
+      
+    - name: test 5
+      run: ./road-generation_exec test/junction_ma_3.xml
+    
+    - name: test 6
+      run: ./road-generation_exec test/junction_ma_4.xml
+
+    - name: test 7
+      run: ./road-generation_exec test/junction_ma_5.xml
+    
+    - name: test 8
+      run: ./road-generation_exec test/junction_ma_6.xml
         
 
         
