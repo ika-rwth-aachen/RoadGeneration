@@ -49,16 +49,16 @@ jobs:
         chmod +x road-generation_exec
         
     - name: test 1
-      run: ./road_generation_exec test/4a_fixed.xml
+      run: ./road-generation_exec test/4a_fixed.xml
     
     - name: test 2
-      run: ./road_generation_exec test/junction_m2a.xml
+      run: ./road-generation_exec test/junction_m2a.xml
 
     - name: test 3
-      run: ./road_generation_exec test/junction_ma.xml
+      run: ./road-generation_exec test/junction_ma.xml
     
     - name: test 4
-      run: ./road_generation_exec test/junction_ma_2.xml
+      run: ./road-generation_exec test/junction_ma_2.xml
         
 
         
