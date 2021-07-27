@@ -19,6 +19,7 @@ jobs:
     - name: Compile
       # Build your program with the given configuration
       run: |
+           sudo apt install libxerces-c-dev
            mkdir -p build
            cd build
            rm -rf *
@@ -43,6 +44,7 @@ jobs:
          name: road-generation
     - name: Run test
       run: |
+        sudo apt install libxerces-c-dev
         ls -la
         chmod +x road-generation_exec
         ./road-generation_exec -h
