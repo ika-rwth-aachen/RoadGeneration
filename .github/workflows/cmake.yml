@@ -43,11 +43,22 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
          name: road-generation
-    - name: Run test
+    - name: Prep test
       run: |
         sudo apt install libxerces-c-dev
-        ls -la
         chmod +x road-generation_exec
-        ./road-generation_exec -h
+        
+    - name: test 1
+    - run: ./road_generation_exec test/4a_fixed.xml
+    
+    - name: test 2
+    - run: ./road_generation_exec test/junction_m2a.xml
+
+    - name: test 3
+    - run: ./road_generation_exec test/junction_ma.xml
+    
+    - name: test 4
+    - run: ./road_generation_exec test/junction_ma_2.xml
+        
 
         
