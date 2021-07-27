@@ -86,7 +86,7 @@ jobs:
     - name: test 8
       run: |
         ./road-generation_exec test/junction_ma_6.xml
-        python3 test/cmp.py test/junction_ma_6.xodr test/gt/junction_ma_6.xodr
+        python3 test/cmp.py test/junction_ma_6.xodr test/gt/junction_ma_5.xodr
         
 
         
