@@ -25,13 +25,16 @@ jobs:
            rm -rf *
            cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
            cmake --build .
+           cd ..
            echo Compiled!
            
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
           name: road-generation
-          path: road-generation_exec
+          path: |
+            road-generation_exec
+            build/libroad-generation.so
   test:
     needs: [build]
     runs-on: ubuntu-latest
