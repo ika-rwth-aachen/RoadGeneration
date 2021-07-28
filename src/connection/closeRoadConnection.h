@@ -1,4 +1,13 @@
 /**
+ * Road-Generation
+ * --------------------------------------------------------
+ * Copyright (c) 2021 Institut für Kraftfahrzeuge, RWTH Aachen, ika
+ * Report bugs and download new versions https://github.com/ika-rwth-aachen/RoadGeneration
+ *
+ * This library is distributed under the MIT License.
+ */
+
+/**
  * @file closeRoadConnection.h
  *
  * @brief file contains methods for building the geometry of a new road

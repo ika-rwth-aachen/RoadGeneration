@@ -1,4 +1,13 @@
 /**
+ * Road-Generation
+ * --------------------------------------------------------
+ * Copyright (c) 2021 Institut für Kraftfahrzeuge, RWTH Aachen, ika
+ * Report bugs and download new versions https://github.com/ika-rwth-aachen/RoadGeneration
+ *
+ * This library is distributed under the MIT License.
+ */
+
+/**
  * @file closeRoadNetwork.h
  *
  * @brief file contains methods for closing two defined points by a new road
