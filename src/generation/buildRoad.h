@@ -5,9 +5,7 @@
  * Report bugs and download new versions https://github.com/ika-rwth-aachen/RoadGeneration
  *
  * This library is distributed under the MIT License.
- */
-
-/**
+ * 
  * @file buildRoad.h
  *
  * @brief file contains method for building up a road

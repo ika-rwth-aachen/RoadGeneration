@@ -5,9 +5,7 @@
  * Report bugs and download new versions https://github.com/ika-rwth-aachen/RoadGeneration
  *
  * This library is distributed under the MIT License.
- */
-
-/**
+ * 
  * @file geometries.h
  *
  * @brief file contains geometry functionalities

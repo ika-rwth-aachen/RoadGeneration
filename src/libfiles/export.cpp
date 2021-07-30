@@ -5,15 +5,13 @@
  * Report bugs and download new versions https://github.com/ika-rwth-aachen/RoadGeneration
  *
  * This library is distributed under the MIT License.
- */
-
-/**
- * @file main.cpp
+ * 
+ * @file export.cpp
  *
- * @brief main file which starts the road generation
+ * @brief This file contains the most important functions for using the road generation library
  *
- * @author Christian Geller
- * Contact: christian.geller@rwth-aachen.de
+ * @author Jannik Busse
+ * Contact: jannik.busse@rwth-aachen.de
  *
  */
 #include "export.h"
@@ -88,8 +86,6 @@ EXPORTED int executePipeline(char* file)
 	
 	(void)! freopen(_logfile.c_str(), "a", stderr); //(void)! suppresses the unused return warning..
 	cerr << "\nError log for run with attribute: " << file << endl;
-	
-
 
 	if (setting.xmlSchemaLocation == ""){
 		cerr << "ERROR; NOT SET" << endl;
@@ -100,8 +96,6 @@ EXPORTED int executePipeline(char* file)
 		cout << file << endl;
 		printLogo();
 	}
-
-	
 	
 	// --- initialization ------------------------------------------------------
 	pugi::xml_document in;
@@ -111,7 +105,6 @@ EXPORTED int executePipeline(char* file)
 	string outputFile = _outName;
 	data.outputFile = outputFile.substr(0, outputFile.find(".xml"));
     data.outputFile = data.outputFile.substr(0, outputFile.find(".xodr"));
-
 	
 	// --- pipeline ------------------------------------------------------------
 	if (validateInput(file))
