@@ -76,7 +76,7 @@ The actual source code can be compiled with cmake.
 
 Variation tool
 ------------
-The Variation tool is used to generate a variety of different scenarios based on the same general road network. A template file is provided to specify all variables aswell as the general road network structure.
+The Variation tool is used to generate a variety of different scenarios based on the same general road network. A template file is provided to specify variables aswell as the general road network structure.
 
 
 Usage
@@ -90,20 +90,6 @@ For usage the compiled application can be called from the ``PROJ_DIR`` folder:
 
 This generates the output XML file in the folder of the input file. The provided input file is checked against the ``input.xsd`` file. Analogous the output file is checked against the ``output.xsd`` file specifying the current openDRIVE standard.
 
-Variation of Parameters
------------------------
-
-A simple variation python-based tool is provided in variation. This tool generated input files from a given template by disturbing specific parameters in a defined manner. The input files are translated to the OpenDRIVE output in the familiar way. 
-
-Notes
------
-
-A simple, but sufficient visualization can be processed by using the OpenDrive Viewer, maintained by VIRES. Other visualization tools are CarMaker or Roadrunner.
-
-Here are some basic informations about the input format:
-
-* segments: tjunction, xjunction, roundabout or connectingRoad
-* type for an X-junction can be either 2M, 4A, M2A 
 
 Further Work
 ------------
