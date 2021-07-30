@@ -42,50 +42,50 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/download-artifact@v2
       with:
-         name: road-generation
+         name: road-generation_executable
     - name: Prep test
       run: |
         sudo apt install libxerces-c-dev
-        chmod +x road-generation
+        chmod +x road-generation_executable
         
     - name: test 1
       run: |
-        ./road-generation test/4a_fixed.xml
+        ./road-generation_executable test/4a_fixed.xml
         python3 test/cmp.py test/4a_fixed.xodr test/gt/4a_fixed.xodr
     - name: test 2
       run: |
-        ./road-generation test/junction_m2a.xml
+        ./road-generation_executable test/junction_m2a.xml
         python3 test/cmp.py test/junction_m2a.xodr test/gt/junction_m2a.xodr
 
 
     - name: test 3
       run: |
-        ./road-generation test/junction_ma.xml
+        ./road-generation_executable test/junction_ma.xml
         python3 test/cmp.py test/junction_ma.xodr test/gt/junction_ma.xodr
     
     - name: test 4
       run: |
-        ./road-generation test/junction_ma_2.xml
+        ./road-generation_executable test/junction_ma_2.xml
         python3 test/cmp.py test/junction_ma_2.xodr test/gt/junction_ma_2.xodr
       
     - name: test 5
       run: |
-        ./road-generation test/junction_ma_3.xml
+        ./road-generation_executable test/junction_ma_3.xml
         python3 test/cmp.py test/junction_ma_3.xodr test/gt/junction_ma_3.xodr
     
     - name: test 6
       run: |
-        ./road-generation test/junction_ma_4.xml
+        ./road-generation_executable test/junction_ma_4.xml
         python3 test/cmp.py test/junction_ma_4.xodr test/gt/junction_ma_4.xodr
 
     - name: test 7
       run: |
-        ./road-generation test/junction_ma_5.xml
+        ./road-generation_executable test/junction_ma_5.xml
         python3 test/cmp.py test/junction_ma_5.xodr test/gt/junction_ma_5.xodr
     
     - name: test 8
       run: |
-        ./road-generation test/junction_ma_6.xml
+        ./road-generation_executable test/junction_ma_6.xml
         python3 test/cmp.py test/junction_ma_6.xodr test/gt/junction_ma_6.xodr
         
 
