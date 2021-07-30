@@ -99,19 +99,13 @@ Further Work
   
 Contact
 -------
-:Author:
+- Authors:
     | Christian Geller
     | christian.geller@rwth-aachen.de
-:Supervisor:
+- Supervisor:
     | Daniel Becker
     | Institute for Automotive Engineering (ika)
     | RWTH Aachen University
     | daniel.becker@ika.rwth-aachen.de
 
-.. |version| image:: https://img.shields.io/badge/version-0.2-blue.svg
-    :target: https://gitlab.ika.rwth-aachen.de/dbecker/road-generation
-    :alt: Documentation Website
 
-.. |project| image:: https://img.shields.io/badge/project-RoadGeneration-blue.svg
-    :target: https://gitlab.ika.rwth-aachen.de/dbecker/road-generation
-    :alt: Documentation Website
