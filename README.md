@@ -4,7 +4,7 @@ Road Generation
 Generation of Complex Road Networks Using a Simplified Logical Description for the Validation of Automated Vehicles
 --------------------------------------------------------------------------------------------------------------------
 
-![Build](https://github.com/ika-rwth-aachen/RoadGeneration/actions/workflows/cmake.yml/badge.svg?branch=license)
+![Build](https://github.com/ika-rwth-aachen/RoadGeneration/actions/workflows/build.yml/badge.svg?branch=license)
 
 
 |version| |project|
