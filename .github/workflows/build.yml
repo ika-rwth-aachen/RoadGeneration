@@ -33,7 +33,7 @@ jobs:
       with:
           name: road-generation
           path: |
-            road-generation
+            road-generation_executable
             build/libroad-generation.so
   Road_Generation_Tests:
     needs: [build]
