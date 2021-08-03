@@ -60,19 +60,27 @@ Download the repository as a zip-file and un-zip, or use git with
     git clone git@github.com:ika-rwth-aachen/RoadGeneration.git
     cd road-generation
 ```
-The installation of [`xercesC`](https://xerces.apache.org/xerces-c/) is required and can be conducted by:
+<details><summary><b>Show instructions</b></summary>
 
-```bash
-    # Install xercesC
-    ./build_xercesc_win64
-```
-The actual source code can be compiled with cmake.
+1. Install [`xercesC`](https://xerces.apache.org/xerces-c/):
+    ```bash
+    sudo apt install libxerces-c-dev
+    ```
+    Or download the source directly
+    ```bash
+    curl https://mirrors.gigenet.com/apache//xerces/c/3/sources/xerces-c-3.2.3.tar.gz --output xerces-c-3.2.3.tar.gz
+    ```
+    and unpack it with
+    ```bash
+    gzip -d xerces-c-3.2.3.tar.gz
+    tar -xf xerces-c-3.2.3.tar
+    ```
+    Finally build the source files as instructed [here](https://xerces.apache.org/xerces-c/build-3.html)
 
-```bash
-    # Compile
-    cmake .
-    make
-```
+</details>
+
+
+
 
 Variation tool
 ------------
