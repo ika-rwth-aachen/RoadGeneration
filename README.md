@@ -63,6 +63,7 @@ Download the repository as a zip-file and un-zip, or use git with
 <details><summary><b>Show instructions</b></summary>
 
 1. Install [`xercesC`](https://xerces.apache.org/xerces-c/):
+    You can use a packet manager
     ```bash
     sudo apt install libxerces-c-dev
     ```
@@ -75,7 +76,7 @@ Download the repository as a zip-file and un-zip, or use git with
     gzip -d xerces-c-3.2.3.tar.gz
     tar -xf xerces-c-3.2.3.tar
     ```
-    Finally build the source files as instructed [here](https://xerces.apache.org/xerces-c/build-3.html)
+    Finally build the source files as instructed [here](https://xerces.apache.org/xerces-c/build-3.html).
 
 </details>
 
