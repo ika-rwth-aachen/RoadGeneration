@@ -46,7 +46,7 @@ Download the repository as a zip-file and un-zip, or use git with
     git clone git@github.com:ika-rwth-aachen/RoadGeneration.git
     cd road-generation
 ```
-<details><summary><b>Show instructions</b></summary>
+<details><summary><b>Install on Linux</b></summary>
 
 1. Install [`xercesC`](https://xerces.apache.org/xerces-c/):
     You can use a packet manager
@@ -64,6 +64,13 @@ Download the repository as a zip-file and un-zip, or use git with
     ```
     Finally build the source files as instructed [here](https://xerces.apache.org/xerces-c/build-3.html).
 
+2. Build the Road-generation tool
+```bash
+    mkdir -p build
+    cd build
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
+    cmake --build .
+```
 </details>
 
 Documentation
