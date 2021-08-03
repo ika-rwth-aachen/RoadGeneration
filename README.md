@@ -46,6 +46,15 @@ Download the repository as a zip-file and un-zip, or use git with
     git clone git@github.com:ika-rwth-aachen/RoadGeneration.git
     cd road-generation
 ```
+
+A build script is provided and can be executed with
+
+```bash
+sh buildScript.sh
+```
+
+Alternatively you can install the project manually.
+
 <details><summary><b>Install on Linux</b></summary>
 
 1. Install [`xercesC`](https://xerces.apache.org/xerces-c/):
@@ -73,6 +82,20 @@ Download the repository as a zip-file and un-zip, or use git with
 ```
 </details>
 
+
+Usage
+---------------
+
+For usage the compiled application can be called from the ``PROJ_DIR`` folder:
+
+```bash
+    ./roadGeneration <input>
+```
+
+This generates the output XML file in the folder of the input file. The provided input file is checked against the ``input.xsd`` file. Analogous the output file is checked against the ``output.xsd`` file specifying the current openDRIVE standard.
+
+
+
 Documentation
 -------------
 A simple but well designed code documentation is provided by using [`Doxygen`](http://www.doxygen.nl/).
@@ -93,17 +116,6 @@ Variation tool
 ------------
 The Variation tool is used to generate a variety of different scenarios based on the same general road network. A template file is provided to specify variables aswell as the general road network structure.
 
-
-Usage
----------------
-
-For usage the compiled application can be called from the ``PROJ_DIR`` folder:
-
-```bash
-    ./roadGeneration <input>
-```
-
-This generates the output XML file in the folder of the input file. The provided input file is checked against the ``input.xsd`` file. Analogous the output file is checked against the ``output.xsd`` file specifying the current openDRIVE standard.
 
 
 Further Work
