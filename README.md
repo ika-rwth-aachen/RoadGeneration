@@ -53,7 +53,7 @@ A build script is provided and can be executed with
 sh buildScript.sh
 ```
 
-Alternatively you can install the project manually.
+Alternatively you can build the project manually:
 
 <details><summary><b>Install on Linux</b></summary>
 
