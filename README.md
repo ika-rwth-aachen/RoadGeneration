@@ -17,12 +17,11 @@ The idea is to derive the description from a commonly used, standardized format 
 ## Overview
 This repository provides a tool for the generation of road networkds. Here, the main folders are named:
 
-- `io`: contains some sample input files
-- `doc`: contains the code and xsd input file documentation and the seminar thesis
-- `libs`: contains the pugixml library
+- `io`: contains sample input files
+- `doc`: contains the code and xsd input file documentation 
 - `src`: contains the source code
 - `xml`: contains the xsd validation files 
-- `variation`: contains the variation project
+- `variation`: contains the variation tool
 
 
 ## Installation
