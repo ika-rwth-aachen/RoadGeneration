@@ -12,8 +12,9 @@ You can run the code from the `variation subfolder`, however, the variation tool
 ```
 Alternatively you can install the module directly from the wheel file.
 
-	$pip3 install variation/wheel/roadvariation-0.1-py3-none-any.whl
-
+```bash
+	pip3 install variation/wheel/roadvariation-0.1-py3-none-any.whl
+```
 Usage
 --------
 The tool can be accessed via the command line:
