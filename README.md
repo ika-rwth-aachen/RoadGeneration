@@ -10,10 +10,8 @@
 ``#road`` ``#openDRIVE`` ``#generic`` ``#generation``
 
 
-![Alt text](/doc/logo.jpg)
-
 <div align="center">
-    <img src="/doc/logo.jpg" width="400px"</img> 
+    <img src="/doc/logo.jpg" width="350px"</img> 
 </div>
 
 ## About 
