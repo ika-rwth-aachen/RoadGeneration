@@ -118,13 +118,13 @@ THIS IS SUBJECT TO CHANGE
 The compiled application can be called from the root folder:
 
 ```bash
-    ./roadGeneration <input>
+    ./road-generation_executable <input>
 ```
 
 This generates the output XML file next to the input file. The provided input file is checked against ``input.xsd``. Analogous the output file is checked against the ``output.xsd`` file which specifies the current openDRIVE standard. For a list of all parameters use the help flag of the tool.
 
 ```bash
-    ./roadGeneration -h
+    ./road-generation_executable -h
 ```
 
 
