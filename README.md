@@ -116,7 +116,11 @@ The compiled application can be called from the root folder:
     ./roadGeneration <input>
 ```
 
-This generates the output XML file in the folder of the input file. The provided input file is checked against the ``input.xsd`` file. Analogous the output file is checked against the ``output.xsd`` file specifying the current openDRIVE standard.
+This generates the output XML file next to the input file. The provided input file is checked against ``input.xsd``. Analogous the output file is checked against the ``output.xsd`` file which specifies the current openDRIVE standard. For a list of all parameters use the help flag of the tool.
+
+```bash
+    ./roadGeneration -h
+```
 
 
 
@@ -140,11 +144,6 @@ The Variation tool is used to generate a variety of different scenarios based on
 
 
 
-## Further Work
-
-* specific road markings
-* documentation for the input file
-  
 ## Contact
 - Authors:
     | Christian Geller
