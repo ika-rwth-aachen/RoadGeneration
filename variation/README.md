@@ -8,7 +8,7 @@ Installation
 You can run the code from the `variation subfolder`, however, the variation tool can be installed system wide by using the install script in the root directory.
 
 ```bash
-	install-variation.sh
+	sh install-variation.sh
 ```
 Alternatively you can install the module directly from the wheel file.
 
