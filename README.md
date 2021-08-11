@@ -1,23 +1,16 @@
-# Road Generation
-
-## Generation of Complex Road Networks Using a Simplified Logical Description for the Validation of Automated Vehicles
-
-![Build](https://github.com/ika-rwth-aachen/RoadGeneration/actions/workflows/build.yml/badge.svg?branch=license) ![MIT](https://img.shields.io/badge/license-MIT-blue.svg)
-
-
-
-
+# Road Generation Tool for Basic OpenDRIVE Road Networks
+![Build](https://github.com/ika-rwth-aachen/RoadGeneration/actions/workflows/build.yml/badge.svg?branch=license) ![MIT](https://img.shields.io/badge/license-MIT-blue.svg)  
 ``#road`` ``#openDRIVE`` ``#generic`` ``#generation``
 
-
-<div align="center">
+<!--<div align="center">
     <img src="/doc/logo.jpg" width="350px"</img> 
-</div>
+</div>-->
 
 ## About 
-Simulation is a valuable building block for the verification and validation of automated driving functions (ADF). When simulating urban driving scenarios, simulation maps are one important component. Often, the generation of those road networks is a time consuming and manual effort. Furthermore, typically many variations of a distinct junction or road section are demanded to ensure that an ADF can be validated in the process of releasing those functions to the public.
+<!--Simulation is a valuable building block for the verification and validation of automated driving functions (ADF). When simulating urban driving scenarios, simulation maps are one important component. Often, the generation of those road networks is a time consuming and manual effort. Furthermore, typically many variations of a distinct junction or road section are demanded to ensure that an ADF can be validated in the process of releasing those functions to the public.
 Therefore, we present a prototypical solution for a logical road network description which is easy to maintain and modify. The concept aims to be non-redundant so that changes of distinct quantities do not affect other places in the code and thus the variation of maps is straightforward. In addition, the simple definition of junctions is a focus of the work. Intersecting roads are defined separately and then set in relation, finally a junction is generated automatically.
-The idea is to derive the description from a commonly used, standardized format for simulation maps in order to generate this format from the introduced logical description. Consequently, we developed a command-line tool that generates the standardized simulation map format OpenDRIVE.
+The idea is to derive the description from a commonly used, standardized format for simulation maps in order to generate this format from the introduced logical description. Consequently, we developed a command-line tool that generates the standardized simulation map format OpenDRIVE.-->
+WIP
 
 ## Overview
 This repository provides a tool for the generation of road networkds. Here, the main folders are named:
