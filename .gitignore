@@ -12,6 +12,7 @@ doc/doxygenDocumentation
 *.cmake
 CMakeCache.txt
 
+*.so
 *.pyc
 *.xodr
 *.txt

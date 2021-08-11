@@ -180,15 +180,10 @@ def initDirectories(inpDir):
         os.makedirs(inpDir )
 
 
-def copyTemplate(path):
-    """This method copies the example template to given location
-
-    Parameters
-    ----------    
-    path: str
-        defines the location to which to copy
+def copyTemplate():
+    """This method copies the example template to the current directory
     """
-    shutil.copy(os.path.join(os.path.dirname(__file__), "resources/network.tmpl"), path)
+    shutil.copy(os.path.join(os.path.dirname(__file__), "resources/network.tmpl"), "network_example.tmpl")
 
 def run():
     #parsing args-------------------------------------
@@ -198,14 +193,14 @@ def run():
     argParse.add_argument('-fname', help='filename of the road network template', metavar='<TemplateFilename>')
     argParse.add_argument('-o', help='set output name scheme', metavar='<out filename>')
     argParse.add_argument('-n', help='number of variations to be generated', metavar='<int>', type=int, default=20)
-    argParse.add_argument('-e', help='generate an example template file', metavar='<file location>')
-    argParse.add_argument('-k', help='keep intermediate xml files after generation', action='store_false')
-    argParse.add_argument('-s', help='run roadgen in silent mode', action='store_true')
+    argParse.add_argument('-e', help='generate an example template file', action='store_true')
+    argParse.add_argument('-k', help='keep xml files', action='store_false')
+    argParse.add_argument('-s', help='suppress most console output', action='store_true')
     args = argParse.parse_args()    
 
     
-    if not args.e == None:
-            copyTemplate(args.e)
+    if args.e:
+            copyTemplate()
             print("copied tmpl file to " + args.e)
 
     if args.fname == None:
