@@ -108,9 +108,7 @@ def writeTreesToXML(n, tree, inpDir, nwName, varDict):
         name of the output xml file
     varDict: dict
         dict containing array of vars
-    
     """
-
   
     for i in range(n):
         cpTree = copy.deepcopy(tree)
