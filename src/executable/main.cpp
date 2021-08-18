@@ -10,8 +10,7 @@ using namespace std;
 int main(int argc, char** argv){
 
     string schemaLocation = PROJ_DIR;
-    string xml = "/xml";
-    schemaLocation += xml;    
+    schemaLocation += "/xml";    
 
     settingsExec settings;
     if (parseArgs(argc, argv, settings)){
