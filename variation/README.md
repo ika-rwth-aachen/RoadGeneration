@@ -5,16 +5,12 @@ The variation tool makes use of the road-generation library and generates severa
 
 Installation
 --------
-You can run the code from the `variation subfolder`, however, the variation tool can be installed system wide by using the install script in the root directory.
+You can run the code from the `variation` subfolder, however, the variation tool can be installed system wide by using the install script in the root directory.
 
 ```bash
 	sh install-variation.sh
 ```
-Alternatively you can install the module directly from the wheel file.
 
-```bash
-	pip3 install variation/wheel/roadvariation-0.1-py3-none-any.whl
-```
 Usage
 --------
 The tool can be accessed via the command line:
@@ -23,9 +19,10 @@ The tool can be accessed via the command line:
 	variation -fname <filename> 
 ```
 __On Windows:__ 
-
+```bash
 	python -m variation -fname <filename> 
-	
+```	
+
 A variety of parameters and flaggs can be specified:
 
 - `-fname ` `<input file path>` input template file
@@ -38,7 +35,7 @@ A variety of parameters and flaggs can be specified:
 
 Template File
 ---------------
-The variation tool takes a template file as an input which extends the syntax of the road-generation library input scheme. Additionally a `<vars> ... </vars>` tag declares variables that will be drawn from a random distribution. The variables are provided in a `<vars> ... </vars>` tag and use attributes to define the distribution from whiche these variables will be drawn. The random variables can then be referenced in the description of the road network.
+The variation tool takes a template file as an input which extends the syntax of the road-generation library input scheme. Additionally a `<vars> ... </vars>` tag declares variables that will be drawn from a random distribution. The variables are provided in a `<var> ... </var>` tag and use attributes to define the distribution from whiche these variables will be drawn. The random variables can then be referenced in the description of the road network.
 
 ```xml
 <vars>
@@ -66,7 +63,7 @@ For each variable we need to specify an `id` and `type`attribute. There are thre
 
 - `normal`  distribution with mean value `mu` and standard deviation `sd`.
 - `uniform`  distribution with a `min` and a `max` value.
-- `lindep`  defines a variable that is linear dependent on other variables or constants with  a dependency  `dp` in string form.
+- `lindep`  a linearly dependent variable that uses an equation string as `dp` attribute. The equation can reference other variables transitively.
 
 
 
