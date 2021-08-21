@@ -54,7 +54,7 @@ def find_var(item, idx, varDict):
         variable dictionary
 
     """
-    for child in item.getchildren():
+    for child in list(item):
         find_var(child, idx, varDict)
         for key, val in child.attrib.items():
             if is_var(val):
@@ -199,7 +199,7 @@ def run():
     
     if args.e:
             copyTemplate()
-            print("copied tmpl file to " + args.e)
+            print("copied tmpl file!")
 
     if args.fname == None:
         if args.e == None:
