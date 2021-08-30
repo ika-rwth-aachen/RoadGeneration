@@ -61,8 +61,8 @@ EXPORTED void setSilentMode(bool sMode){
 }
 
 
-EXPORTED void setXMLSchemaLocation(char* file){
-	setting.xmlSchemaLocation = file;
+EXPORTED void setXMLSchemeLocation(char* file){
+	setting.xmlSchemeLocation = file;
 }
 
 EXPORTED int executePipeline(char* file)
@@ -82,8 +82,8 @@ EXPORTED int executePipeline(char* file)
 	
 
 
-	if (setting.xmlSchemaLocation == ""){
-		cerr << "ERROR; NOT SET" << endl;
+	if (setting.xmlSchemeLocation == ""){
+		cerr << "ERR: xml scheme  NOT SET" << endl;
 		return -1;
 	}
 

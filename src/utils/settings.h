@@ -64,7 +64,7 @@ struct settings
     laneChanges laneChange;
     busStops busStop;
 
-    std::string xmlSchemaLocation; //this has to be set to the xml schema input path
+    std::string xmlSchemeLocation; //this has to be set to the xml schema input path
 
     bool silentMode = false; //silent mode disables console outputs
 
