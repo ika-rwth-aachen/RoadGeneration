@@ -1,3 +1,11 @@
+/**
+ * @file libimports.h
+ * @brief This file calls the library functions from the Road-Generation library.
+ * @author Jannik Busse (jannik.busse@ika.rwth-aachen.de)
+ * @date 2021-08-30
+ * 
+ */
+
 #ifndef EXPORT_H
 #define EXPORT_H
 

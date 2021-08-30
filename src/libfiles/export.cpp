@@ -1,12 +1,11 @@
 /**
- * @file main.cpp
- *
- * @brief main file which starts the road generation
- *
- * @author Christian Geller
- * Contact: christian.geller@rwth-aachen.de
- *
+ * @file export.cpp
+ * @brief file contains the functions that provide the api for the library.
+ * @author Jannik Busse (jannik.busse@ika.rwth-aachen.de)
+ * @date 2021-08-30
+ * 
  */
+
 #include "export.h"
 #include <iostream>
 #include <iomanip>

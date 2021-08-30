@@ -1,3 +1,11 @@
+/**
+ * @file main.cpp
+ * @brief This file is the main file for the Road-Generation executable. It makes use of the Road-Generation library.
+ * @author Jannik Busse (jannik.busse@ika.rwth-aachen.de)
+ * @date 2021-08-30
+ * 
+ */
+
 #include <stdio.h>
 #include <iostream>
 #include "libImports.h"
