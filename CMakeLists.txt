@@ -23,8 +23,14 @@ add_executable("${PROJECT_NAME}_executable"
     "${CMAKE_SOURCE_DIR}/src/executable/helperExec.cpp"
 )
 
+add_executable("xmlt"
+    "${CMAKE_SOURCE_DIR}/src/utils/xmlParser.cpp"    
+)
+
 target_link_libraries("${PROJECT_NAME}" ${XercesC_LIBRARIES})
+target_link_libraries("xmlt" ${XercesC_LIBRARIES})
 target_link_libraries("${PROJECT_NAME}_executable" ${PROJECT_NAME})
+
 
 add_definitions(-DPROJ_DIR=\"${PROJECT_SOURCE_DIR}\")
 
