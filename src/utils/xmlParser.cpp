@@ -7,13 +7,15 @@
 
 
 using namespace XERCES_CPP_NAMESPACE;
+using namespace std;
+
+DOMImplementation* impl;
+DOMDocument* doc;
 
 
 int errorCode = 0;
-// ---------------------------------------------------------------------------
-//  This is a simple class that lets us do easy (though not terribly efficient)
-//  trancoding of char* data to XMLCh data.
-// ---------------------------------------------------------------------------
+bool initialized = false;
+
 class XStr
 {
 public :
@@ -53,10 +55,6 @@ private :
 #define X(str) XStr(str).unicodeForm()
 
 
-// ---------------------------------------------------------------------------
-//  main
-// ---------------------------------------------------------------------------
-
 
 /**
  * @brief inits the xml parser library
@@ -78,18 +76,71 @@ int init()
         XMLString::release(&pMsg);
         return 1;
     }
+
+    impl =  DOMImplementationRegistry::getDOMImplementation(X("Core"));
+
+    if (impl != NULL)
+    {
+        try
+        {
+            doc = impl->createDocument(
+                        0,                    // root element namespace URI.
+                        X("company"),         // root element name
+                        0);                   // document type object (DTD).
+        }
+        catch (const OutOfMemoryException&)
+        {
+            std::cerr << "OutOfMemoryException" << std::endl;
+            errorCode = 5;
+        }
+        catch (const DOMException& e)
+        {
+            std::cerr << "DOMException code is:  " << e.code << std::endl;
+            errorCode = 2;
+        }
+        catch (...)
+        {
+            std::cerr << "An error occurred creating the document" << std::endl;
+            errorCode = 3;
+        }
+    }
+
+    initialized = true;
     return 0;
+}
+
+int createNode( const char* elemName, DOMElement* res)
+{
+    if(!initialized)
+    {
+        cout << "error, xml parser not initialized" << endl;
+        return 1;
+    }
+
+    DOMElement* rootElem = doc->getDocumentElement();
+
+    res = doc->createElement(X("node"));
+    rootElem->appendChild(res);
+
+    return 0;
+}
+
+int createNodeWithText(const char* elemName, const char* textNode, DOMElement* res)
+{
+        createNode(elemName, res);
+
+        DOMText*    prodDataVal = doc->createTextNode(X("Xerces-C"));
+        res->appendChild(prodDataVal);
+
+        return 0;
 }
 
 int main(int argC, char*[])
 {
 
     init();
-
-   {
-       //  Nest entire test in an inner block.
-       //  The tree we create below is the same that the XercesDOMParser would
-       //  have created, except that no whitespace text nodes would be created.
+    try
+    {
 
        // <company>
        //     <product>Xerces-C</product>
@@ -97,16 +148,7 @@ int main(int argC, char*[])
        //     <developedBy>Apache Software Foundation</developedBy>
        // </company>
 
-       DOMImplementation* impl =  DOMImplementationRegistry::getDOMImplementation(X("Core"));
-
-       if (impl != NULL)
-       {
-           try
-           {
-               DOMDocument* doc = impl->createDocument(
-                           0,                    // root element namespace URI.
-                           X("company"),         // root element name
-                           0);                   // document type object (DTD).
+       
 
                DOMElement* rootElem = doc->getDocumentElement();
 
@@ -129,6 +171,9 @@ int main(int argC, char*[])
 
                DOMText*    devByDataVal = doc->createTextNode(X("Apache Software Foundation"));
                devByElem->appendChild(devByDataVal);
+
+               DOMElement* res;
+               createNodeWithText("node", "hallo test string", res);
 
                //
                // Now count the number of elements in the above DOM tree.
@@ -175,13 +220,9 @@ int main(int argC, char*[])
                std::cerr << "An error occurred creating the document" << std::endl;
                errorCode = 3;
            }
-       }  // (inpl != NULL)
-       else
-       {
-           std::cerr << "Requested implementation is not supported" << std::endl;
-           errorCode = 4;
-       }
-   }
+         // (inpl != NULL)
+     
+   
 
    XMLPlatformUtils::Terminate();
    return errorCode;
