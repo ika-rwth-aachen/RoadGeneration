@@ -109,7 +109,7 @@ int init()
     return 0;
 }
 
-int createNode( const char* elemName, DOMElement* res)
+int createNode( const char* elemName, DOMElement** res)
 {
     if(!initialized)
     {
@@ -119,20 +119,47 @@ int createNode( const char* elemName, DOMElement* res)
 
     DOMElement* rootElem = doc->getDocumentElement();
 
-    res = doc->createElement(X("node"));
-    rootElem->appendChild(res);
+    DOMElement* out = doc->createElement(X("node"));
+    rootElem->appendChild(out);
+    *res = out;
+
 
     return 0;
 }
 
-int createNodeWithText(const char* elemName, const char* textNode, DOMElement* res)
+int createNodeWithText(const char* elemName, const char* textNode, DOMElement** res)
 {
         createNode(elemName, res);
-
-        DOMText*    prodDataVal = doc->createTextNode(X("Xerces-C"));
-        res->appendChild(prodDataVal);
+        DOMText*    prodDataVal = doc->createTextNode(X(textNode));
+        (*res)->appendChild(prodDataVal);
 
         return 0;
+}
+
+int serialize(const char* outname)
+{
+    DOMLSSerializer * theSerializer = impl->createLSSerializer();
+
+    DOMLSOutput       *theOutputDesc = ((DOMImplementationLS*)impl)->createLSOutput();
+    XMLFormatTarget *myFormTarget  = new LocalFileFormatTarget(XMLString::transcode(outname));
+    theOutputDesc->setByteStream(myFormTarget);
+    theOutputDesc->setEncoding(XMLString::transcode("ISO-8859-1"));
+
+    theSerializer->getDomConfig()->setParameter(XMLUni::fgDOMXMLDeclaration, true);
+
+    theSerializer->getDomConfig()->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
+    theSerializer->write(doc, theOutputDesc);
+
+    myFormTarget->flush();
+
+    delete myFormTarget;
+
+    theOutputDesc->release();
+    theSerializer->release();
+
+    doc->release();
+
+    return 0;
 }
 
 int main(int argC, char*[])
@@ -142,29 +169,7 @@ int main(int argC, char*[])
     try
     {
 
-       // <company>
-       //     <product>Xerces-C</product>
-       //     <category idea='great'>XML Parsing Tools</category>
-       //     <developedBy>Apache Software Foundation</developedBy>
-       // </company>
-
-       
-
                DOMElement* rootElem = doc->getDocumentElement();
-
-               DOMElement*  prodElem = doc->createElement(X("product"));
-               rootElem->appendChild(prodElem);
-
-               DOMText*    prodDataVal = doc->createTextNode(X("Xerces-C"));
-               prodElem->appendChild(prodDataVal);
-
-               DOMElement*  catElem = doc->createElement(X("category"));
-               rootElem->appendChild(catElem);
-
-               catElem->setAttribute(X("idea"), X("great"));
-
-               DOMText*    catDataVal = doc->createTextNode(X("XML Parsing Tools"));
-               catElem->appendChild(catDataVal);
 
                DOMElement*  devByElem = doc->createElement(X("developedBy"));
                rootElem->appendChild(devByElem);
@@ -173,37 +178,14 @@ int main(int argC, char*[])
                devByElem->appendChild(devByDataVal);
 
                DOMElement* res;
-               createNodeWithText("node", "hallo test string", res);
+               createNodeWithText("node", "hallo test string", &res);
 
-               //
-               // Now count the number of elements in the above DOM tree.
-               //
+               rootElem->appendChild(res);
 
-               const XMLSize_t elementCount = doc->getElementsByTagName(X("*"))->getLength();
-               std::cout << "The tree just created contains: " << elementCount
-                    << " elements." << std::endl;
+     
 
 
-                    DOMLSSerializer * theSerializer = impl->createLSSerializer();
-
-                    DOMLSOutput       *theOutputDesc = ((DOMImplementationLS*)impl)->createLSOutput();
-                    XMLFormatTarget *myFormTarget  = new LocalFileFormatTarget(XMLString::transcode("out.xml"));
-                    theOutputDesc->setByteStream(myFormTarget);
-                    theOutputDesc->setEncoding(XMLString::transcode("ISO-8859-1"));
-
-                    theSerializer->getDomConfig()->setParameter(XMLUni::fgDOMXMLDeclaration, true);
-
-                    theSerializer->getDomConfig()->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
-                    theSerializer->write(doc, theOutputDesc);
-
-                    myFormTarget->flush();
-
-                    delete myFormTarget;
-
-                    theOutputDesc->release();
-                    theSerializer->release();
-
-               doc->release();
+                  
            }
            catch (const OutOfMemoryException&)
            {
@@ -221,6 +203,8 @@ int main(int argC, char*[])
                errorCode = 3;
            }
          // (inpl != NULL)
+
+    serialize("outdoc.xml");
      
    
 
