@@ -137,6 +137,11 @@ EXPORTED int executePipeline(char* file)
 		cerr << "ERR: error during createXML" << endl;
 		return -1;
 	}
+
+	cout << "TEST XML OUT" <<endl;
+
+	createXMLXercesC(data);
+
 	if (validateOutput(data))
 	{
 		cerr << "ERR: error in validateOutput" << endl;

@@ -34,7 +34,10 @@
 #include <xercesc/sax/SAXParseException.hpp>
 #include <xercesc/validators/common/Grammar.hpp>
 #include <algorithm>
+#include "xmlParser.h"
 
+using namespace XERCES_CPP_NAMESPACE;
+using namespace std;
 using namespace xercesc;
 
 extern settings setting;
@@ -496,6 +499,38 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
         cerr << "ERR: file could not be saved." << endl;
         return 1;
     }
+}
+
+
+
+int createXMLXercesC(roadNetwork data)
+{
+
+    init("OpenDRIVE");
+
+    DOMElement *root = getRootElement();
+
+    nodeElement header("header");
+
+    header.addAttribute("revMajor", to_string(setting.versionMajor).c_str());
+    header.addAttribute("revMinor", to_string(setting.versionMinor).c_str());
+    header.addAttribute("north", to_string(setting.north).c_str());
+    header.addAttribute("south", to_string(setting.south).c_str());
+    header.addAttribute("west", to_string(setting.west).c_str());
+    header.addAttribute("east", to_string(setting.east).c_str());
+
+    header.appendToNode(root);
+
+     // geoReference tag
+    nodeElement geoReference("geoReference");
+    geoReference.addTextNode("<![CDATA[+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs]]>"); //FIXME format bad! CDATA not written properly
+    geoReference.appendToNode(header);
+
+
+    cout << (data.outputFile) << endl;
+    serialize((data.outputFile + ".testxml").c_str());
+
+    return 0;
 }
 
 /**

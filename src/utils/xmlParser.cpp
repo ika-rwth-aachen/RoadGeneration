@@ -15,10 +15,12 @@ using namespace std;
 int main(int argC, char*[])
 {
 
-    init();
+    init("roadNetwork");
 
     DOMElement* rootElem = getRootElement();
 
+    rootElem->setAttribute(X("xmlns:xsi"), X("http://www.w3.org/2001/XMLSchema-instance"));
+    rootElem->setAttribute(X("noNamespaceSchemaLocation"), X("../xml/input.xsd"));
 
     nodeElement person("Persona");
     person.addTextNode("Manfred");
