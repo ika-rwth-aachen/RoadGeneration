@@ -12,135 +12,33 @@ using namespace std;
 
 
 
-
-/**
- * @brief inits the xml parser library
- * 
- * @return int Error code
- */
-int init()
-{
- try
-    {
-        XMLPlatformUtils::Initialize();
-    }
-    catch(const XMLException& toCatch)
-    {
-        char *pMsg = XMLString::transcode(toCatch.getMessage());
-        std::cerr << "Error during Xerces-c Initialization.\n"
-             << "  Exception message:"
-             << pMsg;
-        XMLString::release(&pMsg);
-        return 1;
-    }
-
-    impl =  DOMImplementationRegistry::getDOMImplementation(X("Core"));
-
-    if (impl != NULL)
-    {
-        try
-        {
-            doc = impl->createDocument(
-                        0,                    // root element namespace URI.
-                        X("company"),         // root element name
-                        0);                   // document type object (DTD).
-        }
-        catch (const OutOfMemoryException&)
-        {
-            std::cerr << "OutOfMemoryException" << std::endl;
-            errorCode = 5;
-        }
-        catch (const DOMException& e)
-        {
-            std::cerr << "DOMException code is:  " << e.code << std::endl;
-            errorCode = 2;
-        }
-        catch (...)
-        {
-            std::cerr << "An error occurred creating the document" << std::endl;
-            errorCode = 3;
-        }
-    }
-
-    initialized = true;
-    return 0;
-}
-
-
-
-int serialize(const char* outname)
-{
-    DOMLSSerializer * theSerializer = impl->createLSSerializer();
-
-    DOMLSOutput       *theOutputDesc = ((DOMImplementationLS*)impl)->createLSOutput();
-    XMLFormatTarget *myFormTarget  = new LocalFileFormatTarget(XMLString::transcode(outname));
-    theOutputDesc->setByteStream(myFormTarget);
-    theOutputDesc->setEncoding(XMLString::transcode("ISO-8859-1"));
-
-    theSerializer->getDomConfig()->setParameter(XMLUni::fgDOMXMLDeclaration, true);
-
-    theSerializer->getDomConfig()->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
-    theSerializer->write(doc, theOutputDesc);
-
-    myFormTarget->flush();
-
-    delete myFormTarget;
-
-    theOutputDesc->release();
-    theSerializer->release();
-
-    doc->release();
-
-    return 0;
-}
-
 int main(int argC, char*[])
 {
 
     init();
-    try
-    {
 
-               DOMElement* rootElem = doc->getDocumentElement();
-
-               DOMElement*  devByElem = doc->createElement(X("developedBy"));
-               rootElem->appendChild(devByElem);
-
-               DOMText*    devByDataVal = doc->createTextNode(X("Apache Software Foundation"));
-               devByElem->appendChild(devByDataVal);
-
-               DOMElement* res;
+    DOMElement* rootElem = getRootElement();
 
 
-               rootElem->appendChild(res);
+    nodeElement person("Persona");
+    person.addTextNode("Manfred");
+    person.addAttribute("gewicht", "100");
+    person.appendToNode(rootElem);
 
+    nodeElement person1("Persona1");
+    person1.addTextNode("Manfred1");
+    person1.addAttribute("gewicht1", "1001");
+    person1.appendToNode(person);
 
-     
 
 
                   
-           }
-           catch (const OutOfMemoryException&)
-           {
-               std::cerr << "OutOfMemoryException" << std::endl;
-               errorCode = 5;
-           }
-           catch (const DOMException& e)
-           {
-               std::cerr << "DOMException code is:  " << e.code << std::endl;
-               errorCode = 2;
-           }
-           catch (...)
-           {
-               std::cerr << "An error occurred creating the document" << std::endl;
-               errorCode = 3;
-           }
+    
          // (inpl != NULL)
 
     serialize("outdoc.xml");
      
    
-
-   XMLPlatformUtils::Terminate();
-   return errorCode;
+    terminateParser();
+    return 0;
 }
