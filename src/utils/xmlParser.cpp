@@ -4,55 +4,12 @@
 #include <xercesc/util/OutOfMemoryException.hpp>
 #include <xercesc/framework/LocalFileFormatTarget.hpp>
 #include <iostream>
-
+#include "xmlParser.h"
 
 using namespace XERCES_CPP_NAMESPACE;
 using namespace std;
 
-DOMImplementation* impl;
-DOMDocument* doc;
 
-
-int errorCode = 0;
-bool initialized = false;
-
-class XStr
-{
-public :
-    // -----------------------------------------------------------------------
-    //  Constructors and Destructor
-    // -----------------------------------------------------------------------
-    XStr(const char* const toTranscode)
-    {
-        // Call the private transcoding method
-        fUnicodeForm = XMLString::transcode(toTranscode);
-    }
-
-    ~XStr()
-    {
-        XMLString::release(&fUnicodeForm);
-    }
-
-
-    // -----------------------------------------------------------------------
-    //  Getter methods
-    // -----------------------------------------------------------------------
-    const XMLCh* unicodeForm() const
-    {
-        return fUnicodeForm;
-    }
-
-private :
-    // -----------------------------------------------------------------------
-    //  Private data members
-    //
-    //  fUnicodeForm
-    //      This is the Unicode XMLCh format of the string.
-    // -----------------------------------------------------------------------
-    XMLCh*   fUnicodeForm;
-};
-
-#define X(str) XStr(str).unicodeForm()
 
 
 
@@ -109,32 +66,7 @@ int init()
     return 0;
 }
 
-int createNode( const char* elemName, DOMElement** res)
-{
-    if(!initialized)
-    {
-        cout << "error, xml parser not initialized" << endl;
-        return 1;
-    }
 
-    DOMElement* rootElem = doc->getDocumentElement();
-
-    DOMElement* out = doc->createElement(X("node"));
-    rootElem->appendChild(out);
-    *res = out;
-
-
-    return 0;
-}
-
-int createNodeWithText(const char* elemName, const char* textNode, DOMElement** res)
-{
-        createNode(elemName, res);
-        DOMText*    prodDataVal = doc->createTextNode(X(textNode));
-        (*res)->appendChild(prodDataVal);
-
-        return 0;
-}
 
 int serialize(const char* outname)
 {
@@ -178,9 +110,10 @@ int main(int argC, char*[])
                devByElem->appendChild(devByDataVal);
 
                DOMElement* res;
-               createNodeWithText("node", "hallo test string", &res);
+
 
                rootElem->appendChild(res);
+
 
      
 
