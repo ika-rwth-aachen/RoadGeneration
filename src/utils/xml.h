@@ -523,8 +523,11 @@ int createXMLXercesC(roadNetwork data)
 
      // geoReference tag
     nodeElement geoReference("geoReference");
-    geoReference.addTextNode("<![CDATA[+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs]]>"); //FIXME format bad! CDATA not written properly
-    geoReference.appendToNode(header);
+
+    DOMCDATASection *cdata;
+    generateCDATA("+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs", &cdata);
+    geoReference.domelement->appendChild(cdata);
+    geoReference.appendToNode(root);
 
 
     cout << (data.outputFile) << endl;
