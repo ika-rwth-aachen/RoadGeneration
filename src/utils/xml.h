@@ -502,6 +502,33 @@ int createXML(pugi::xml_document &doc, roadNetwork data)
 }
 
 
+void appendLinkToNodeXercesC(nodeElement road, link &successor, link &predecessor)
+{
+    if (successor.id == -1 && predecessor.id == -1){
+        return;
+    }
+    nodeElement link("link");
+    link.appendToNode(road);
+
+    if( predecessor.id != -1){
+        nodeElement pre("predecessor");
+        pre.appendToNode(link);
+        pre.addAttribute("elementId", predecessor.id);
+        pre.addAttribute("elementType", getLinkType(predecessor.elementType).c_str());
+        if(predecessor.contactPoint != noneType)
+            pre.addAttribute("contactPoint", getContactPointType(predecessor.contactPoint).c_str());
+    }
+
+    if( successor.id != -1){
+        nodeElement suc("successor");
+        suc.appendToNode(link);
+        suc.addAttribute("elementId", successor.id);
+        suc.addAttribute("elementType", getLinkType(successor.elementType));
+        if(successor.contactPoint != noneType)
+            suc.addAttribute("contactPoint", getContactPointType(successor.contactPoint));
+    }
+}
+
 
 int createXMLXercesC(roadNetwork data)
 {
@@ -528,6 +555,167 @@ int createXMLXercesC(roadNetwork data)
     generateCDATA("+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs", &cdata);
     geoReference.domelement->appendChild(cdata);
     geoReference.appendToNode(root);
+
+     // --- write roads ---------------------------------------------------------
+    for (std::vector<road>::iterator it = data.roads.begin(); it != data.roads.end(); ++it)
+    {
+
+        nodeElement road("road");
+        road.appendToNode(root);
+        road.addAttribute("id", it->id);
+        road.addAttribute("length", it->length);
+       
+        //it has to be checked if it is a connecting road, since the junction attribute is missused as the original ID for connecting roads.
+        road.addAttribute("junction" ,(it->isConnectingRoad) ? -1 : it->junction);
+        appendLinkToNodeXercesC(road, it->successor, it->predecessor); //FIXME COMMENT IN AN IMPLEMENT XERCES PARSER
+
+
+        nodeElement type("type");
+        type.addAttribute("s", 0);
+        type.addAttribute("type", it->type);
+        type.appendToNode(road);
+
+
+        // --- write geometries ------------------------------------------------
+        nodeElement planView("planView");
+        planView.appendToNode(road);
+
+        for (std::vector<geometry>::iterator itt = it->geometries.begin(); itt != it->geometries.end(); ++itt)
+        {
+            nodeElement geo("geometry");
+            geo.appendToNode(planView);
+
+            geo.addAttribute("s", itt->s);
+            geo.addAttribute("x", itt->x);
+            geo.addAttribute("y", itt->y);
+            geo.addAttribute("hdg", itt->hdg);
+            geo.addAttribute("length", itt->length);
+
+            if (itt->type == line)
+            {
+                nodeElement line("line");
+                line.appendToNode(geo);
+            }
+            if (itt->type == arc)
+            {
+                nodeElement arc("arc");
+                arc.addAttribute("curvature", itt->c);
+                arc.appendToNode(geo);
+            }
+            if (itt->type == spiral)
+            {
+                nodeElement arc("spiral");
+                arc.addAttribute("curvStart", itt->c1);
+                arc.addAttribute("curvEnd", itt->c2);
+                arc.appendToNode(geo);
+
+            }
+        }
+
+        // --- write lanes -----------------------------------------------------
+        nodeElement lanes("lanes");
+        lanes.appendToNode(road);
+
+        for (std::vector<laneSection>::iterator itt = it->laneSections.begin(); itt != it->laneSections.end(); ++itt)
+        {
+            nodeElement laneOffset("laneOffset");
+            laneOffset.appendToNode(lanes);
+
+            laneOffset.addAttribute("s", itt->s);
+            laneOffset.addAttribute("a", itt->o.a);
+            laneOffset.addAttribute("b", itt->o.b);
+            laneOffset.addAttribute("c", itt->o.c);
+            laneOffset.addAttribute("d", itt->o.d);
+        }
+
+        for (std::vector<laneSection>::iterator itt = it->laneSections.begin(); itt != it->laneSections.end(); ++itt)
+        {
+            nodeElement laneSection("laneSection");
+            laneSection.appendToNode(lanes);
+            laneSection.addAttribute("s", itt->s);
+
+            nodeElement left("left");
+            nodeElement center("center");
+            nodeElement right("right");
+
+            if (findMaxLaneId(*itt) > 0)
+                left.appendToNode(laneSection);
+            center.appendToNode(laneSection);
+            if (findMinLaneId(*itt) < 0)
+                right.appendToNode(laneSection);
+
+            std::sort(itt->lanes.begin(), itt->lanes.end(), compareLanes);
+            for (std::vector<lane>::iterator ittt = itt->lanes.begin(); ittt != itt->lanes.end(); ++ittt)
+            {
+                nodeElement lane("lane");
+
+                if (ittt->id > 0)
+                {
+                    lane.appendToNode(left);
+                }
+                if (ittt->id < 0)
+                {
+                    lane.appendToNode(right);
+                }
+                if (ittt->id == 0)
+                {
+                    lane.appendToNode(center);
+                }
+
+                lane.addAttribute("id", ittt->id);
+                lane.addAttribute("type", ittt->type);
+
+                if (ittt->id != 0)
+                {
+                    nodeElement link("link");
+                    link.appendToNode(lane);
+                    if (ittt->preId != 0)
+                    {
+                        nodeElement pre ("predecessor");
+                        pre.appendToNode(link);
+                        pre.addAttribute("id", ittt->preId);
+                    }
+                    if (ittt->sucId != 0)
+                    {
+                        nodeElement suc("successor");
+                        suc.appendToNode(link);
+                        suc.addAttribute("id", ittt->sucId);
+                    }
+
+                    nodeElement width ("width");
+                    width.appendToNode(lane);
+                    width.addAttribute("sOffset", ittt->w.s);
+                    width.addAttribute("a", ittt->w.a);
+                    width.addAttribute("b", ittt->w.b);
+                    width.addAttribute("c", ittt->w.c);
+                    width.addAttribute("d", ittt->w.d);
+                }
+
+                nodeElement roadmark = ("roadMark");
+                roadmark.appendToNode(lane);
+                roadmark.addAttribute("sOffset", ittt->rm.s);
+                roadmark.addAttribute("type", ittt->rm.type.c_str());
+                roadmark.addAttribute("weight", ittt->rm.weight.c_str());
+                roadmark.addAttribute("color", ittt->rm.color.c_str());
+                roadmark.addAttribute("width", (ittt->rm.width));
+
+                if (ittt->id != 0)
+                {
+                    nodeElement material("material");
+                    material.appendToNode(lane);
+                    material.addAttribute("sOffset", ittt->m.s);
+                    material.addAttribute("surface", ittt->m.surface);
+                    material.addAttribute("friction", ittt->m.friction);
+                    material.addAttribute("roughness", ittt->m.roughness);
+
+                    nodeElement speed("speed");
+                    speed.appendToNode(lane);
+                    speed.addAttribute("sOffset", 0);
+                    speed.addAttribute("max", ittt->speed);
+                }
+            }
+        }
+    }
 
 
     cout << (data.outputFile) << endl;
