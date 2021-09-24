@@ -715,6 +715,127 @@ int createXMLXercesC(roadNetwork data)
                 }
             }
         }
+    
+
+        //write objects
+        nodeElement objects("objects");
+        objects.appendToNode(road);
+
+        std::sort(it->objects.begin(), it->objects.end(), compareObjects);
+        for (std::vector<object>::iterator itt = it->objects.begin(); itt != it->objects.end(); ++itt)
+        {
+            object o = *itt;
+            nodeElement obj("object");
+            obj.appendToNode(objects);
+            obj.addAttribute("type", o.type);
+            obj.addAttribute("name", o.type);
+            obj.addAttribute("dynamic", "no");
+            obj.addAttribute("id", o.id);
+            obj.addAttribute("s", (o.s));
+            obj.addAttribute("t", (o.t));
+            obj.addAttribute("zOffset", (o.z));
+            obj.addAttribute("hdg", (o.hdg));
+            obj.addAttribute("pitch", 0);
+            obj.addAttribute("roll", 0);
+            obj.addAttribute("validLength", 0);
+            obj.addAttribute("orientation", o.orientation);
+            obj.addAttribute("length", o.length);
+            obj.addAttribute("width", o.width);
+            obj.addAttribute("height", o.height);
+
+            if (o.repeat)
+            {
+                nodeElement objj("repeat");
+                objj.appendToNode(obj);
+                objj.addAttribute("s", o.s);
+                objj.addAttribute("length", o.len);
+                objj.addAttribute("distance", o.distance);
+                objj.addAttribute("tStart", o.t);
+                objj.addAttribute("tEnd", o.t);
+                objj.addAttribute("widthStart", o.width);
+                objj.addAttribute("widthEnd", o.width);
+                objj.addAttribute("heightStart", o.height);
+                objj.addAttribute("heightEnd", o.height);
+                objj.addAttribute("zOffsetStart", o.z);
+                objj.addAttribute("zOffsetEnd", o.z);
+                objj.addAttribute("lengthStart", o.length);
+                objj.addAttribute("lengthEnd", o.length);
+            }
+        }
+
+        // --- write signs ---------------------------------------------------
+
+        // signs format is different in version 1.4
+        if (setting.versionMajor >= 1 && setting.versionMinor >= 5)
+        {
+            nodeElement signs("signals", road);
+
+            std::sort(it->signs.begin(), it->signs.end(), compareSignals);
+            for (std::vector<sign>::iterator itt = it->signs.begin(); itt != it->signs.end(); ++itt)
+            {
+                sign s = *itt;
+                nodeElement sig("signal", signs);
+                //pugi::xml_node sig = objects.append_child("object");
+
+                sig.addAttribute("id", s.id);
+                sig.addAttribute("name", s.type);
+                sig.addAttribute("type", s.type);
+                sig.addAttribute("subtype", s.subtype);
+                sig.addAttribute("country", s.country);
+                sig.addAttribute("s", s.s);
+                sig.addAttribute("t", s.t);
+                sig.addAttribute("zOffset", s.z);
+                sig.addAttribute("orientation", s.orientation);
+                if (s.dynamic)
+                    sig.addAttribute("dynamic", "yes");
+                else
+                    sig.addAttribute("dynamic", "no");
+                sig.addAttribute("value", s.value);
+                sig.addAttribute("width", s.width);
+                sig.addAttribute("height", s.height);
+            }
+        }
+    }
+
+    // --- write controllers ---------------------------------------------------
+
+    // controllers format is different in version 1.4
+    if (setting.versionMajor >= 1 && setting.versionMinor >= 5)
+    {
+        for (std::vector<control>::iterator it = data.controller.begin(); it != data.controller.end(); ++it)
+        {
+            nodeElement controller("controller");
+            controller.appendToNode(root);
+            controller.addAttribute("id", it->id);
+
+            for (std::vector<sign>::iterator itt = it->signs.begin(); itt != it->signs.end(); ++itt)
+            {
+                nodeElement con("control", controller);
+                con.addAttribute("signalId", itt->id);
+            }
+        }
+    }
+
+    // --- write junctions -----------------------------------------------------
+    for (std::vector<junction>::iterator it = data.junctions.begin(); it != data.junctions.end(); ++it)
+    {
+        nodeElement junc("junction");
+        junc.appendToNode(root);
+        junc.addAttribute("id", it->id);
+
+        for (std::vector<connection>::iterator itt = it->connections.begin(); itt != it->connections.end(); ++itt)
+        {
+            nodeElement con("connection", junc);
+
+            con.addAttribute("id", itt->id);
+            con.addAttribute("incomingRoad", itt->from);
+            con.addAttribute("connectingRoad", itt->to);
+            con.addAttribute("contactPoint", getContactPointType(itt->contactPoint));
+
+            nodeElement ll("laneLink", con);
+            ll.addAttribute("from", itt->fromLane);
+            ll.addAttribute("to", itt->toLane);
+        }
     }
 
 
