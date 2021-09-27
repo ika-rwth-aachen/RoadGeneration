@@ -24,7 +24,7 @@ add_executable("${PROJECT_NAME}_executable"
 )
 
 add_executable("xmlt"
-    "${CMAKE_SOURCE_DIR}/src/utils/xmlParser.cpp"    
+    "${CMAKE_SOURCE_DIR}/src/utils/xmlreader.cpp"    
 )
 
 target_link_libraries("${PROJECT_NAME}" ${XercesC_LIBRARIES})
