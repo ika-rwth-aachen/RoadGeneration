@@ -48,25 +48,24 @@ extern settings setting;
  * @param file  input file
  * @return int  error code
  */
-int validateInput(char *file)
+int validateInput(char *file, xmlTree &xmlInput)
 {
 
     string schema = string_format("%s/xml/input.xsd", PROJ_DIR);
     const char *schema_file = schema.c_str();
     const char *xml_file = file;
 
-    xmlTree *docTree = new xmlTree();
-    docTree->parseDocument("example.xml");
+    xmlInput.parseDocument("example.xml");
 
-    if (docTree->loadGrammar(schema_file) == NULL)
+    if (xmlInput.loadGrammar(schema_file) == NULL)
     {
         cerr << "ERR: couldn't load schema" << endl;
         return 1;
     }
 
-    docTree->parseDocument(xml_file);
+    xmlInput.parseDocument(xml_file);
 
-    if (docTree->getErrorCount() == 0){
+    if (xmlInput.getErrorCount() == 0){
         if(!setting.silentMode)
             cout << "XML input file validated against the schema successfully" << endl;
     }
@@ -134,7 +133,7 @@ int validateOutput(roadNetwork data)
  * @param file  xml input file
  * @return int  error code
  */
-int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file)
+int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file) //TODO THIS METHOD BECOMES OBSOLET WITH XERCESC
 {
     // save file name in data
     string f = file;
@@ -149,6 +148,8 @@ int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file)
         cerr << "ERR: InputFile not found" << endl;
         return 1;
     }
+
+    
 }
 
 

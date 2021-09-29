@@ -34,7 +34,6 @@ int main(int argc, char** argv){
 
     execPipeline();
 
-    
     return 0;
 }
 

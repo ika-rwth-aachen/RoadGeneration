@@ -36,8 +36,25 @@ extern settings setting;
  * @param data 	roadNetwork data where the openDrive structure should be generated
  * @return int 	error code
  */
-int buildSegments(pugi::xml_document &doc, roadNetwork &data)
+int buildSegments(pugi::xml_document &doc, xmlTree &inputxml, roadNetwork &data)
 {
+	//DOMElement * root = inputxml->getRootElement();
+	//cout << XMLString::transcode(root->getNodeName())<< endl;
+
+	DOMElement *roadNode;
+	if (inputxml.findNodeWithName("segments", roadNode))
+	{
+		cerr << "ERR: 'segments' not found in input file." << endl;
+		cout << "ERR: 'segments' not found in input file." << endl;
+		return 1;
+	}
+
+	cout << XMLString::transcode(roadNode->getNodeName()) << endl;
+	DOMNodeList* segmentNodes = roadNode->getChildNodes();
+
+
+
+	//---------------------------------------------
 	pugi::xml_node segments = doc.child("roadNetwork").child("segments");
 	if (!segments)
 		cerr << "ERR: 'segments' not found in input file." << endl;

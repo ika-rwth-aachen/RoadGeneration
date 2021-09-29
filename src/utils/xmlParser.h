@@ -21,6 +21,35 @@ bool initialized = false;
 
 //code for reading a xml document
 
+class XStr
+{
+public :
+    // -----------------------------------------------------------------------
+    //  Constructors and Destructor
+    // -----------------------------------------------------------------------
+    XStr(const char* const toTranscode)
+    {
+        // Call the private transcoding method
+        fUnicodeForm = XMLString::transcode(toTranscode);
+    }
+
+    ~XStr()
+    {
+        XMLString::release(&fUnicodeForm);
+    }
+
+    const XMLCh* unicodeForm() const
+    {
+        return fUnicodeForm;
+    }
+
+private :
+    XMLCh*   fUnicodeForm;
+};
+
+#define X(str) XStr(str).unicodeForm()
+
+
 struct xmlTree{
 
     private:
@@ -30,8 +59,6 @@ struct xmlTree{
     public:
 
         xmlTree(){
-           
-
             try{
                 if(!initialized){
                     XMLPlatformUtils::Initialize();
@@ -84,6 +111,38 @@ struct xmlTree{
             return parser->getErrorCount();
         }
 
+        /**
+         * @brief looks for the first node that with matching name in the xml document
+         * 
+         * @param childName name too look for
+         * @param res return Element
+         * @return int 0 if a node is found. 1 if nothing is found with a matching name
+         */
+        int findNodeWithName(const char *childName, DOMElement *&res)
+        {
+            DOMNodeList * nodelist = doc->getElementsByTagName(X(childName));
+            for(int i = 0; i < nodelist->getLength(); i++)
+            {
+                if(!XMLString::compareString(X(childName), nodelist->item(i)->getNodeName()))
+                {
+                    res = (DOMElement *)(nodelist->item(0));
+
+                    return 0;
+                }
+            }
+            return 1;
+            
+        }
+
+        DOMNodeList *findNodeswithName(const char *childName)
+        {
+            DOMNodeList *nodelist = doc->getElementsByTagName(X(childName));
+          
+            return nodelist;
+            
+        }
+
+
         xercesc_3_2::Grammar *loadGrammar(const char *const schema_file)
         {
             return parser->loadGrammar(schema_file, Grammar::SchemaGrammarType);
@@ -93,42 +152,12 @@ struct xmlTree{
         {
             delete parser;
         }
-    
-
-
 
 };
 
 
 //code for creating a xml document
 
-class XStr
-{
-public :
-    // -----------------------------------------------------------------------
-    //  Constructors and Destructor
-    // -----------------------------------------------------------------------
-    XStr(const char* const toTranscode)
-    {
-        // Call the private transcoding method
-        fUnicodeForm = XMLString::transcode(toTranscode);
-    }
-
-    ~XStr()
-    {
-        XMLString::release(&fUnicodeForm);
-    }
-
-    const XMLCh* unicodeForm() const
-    {
-        return fUnicodeForm;
-    }
-
-private :
-    XMLCh*   fUnicodeForm;
-};
-
-#define X(str) XStr(str).unicodeForm()
 
 
 //TODO im not sure if this is the best implementation. The wrapper class

@@ -100,6 +100,9 @@ EXPORTED int executePipeline(char* file)
 	// --- initialization ------------------------------------------------------
 	pugi::xml_document in;
 	pugi::xml_document out;
+
+	xmlTree inputxml;
+
 	roadNetwork data;
 
 	string outputFile = _outName;
@@ -107,17 +110,18 @@ EXPORTED int executePipeline(char* file)
     data.outputFile = data.outputFile.substr(0, outputFile.find(".xodr"));
 	
 	// --- pipeline ------------------------------------------------------------
-	if (validateInput(file))
+	if (validateInput(file, inputxml))
 	{
 		cerr << "ERR: error in validateInput" << endl;
 		return -1;
 	}
+
 	if (parseXML(in, data, file))
 	{
 		cerr << "ERR: error in parseXML" << endl;
 		return -1;
 	}
-	if (buildSegments(in, data))
+	if (buildSegments(in, inputxml, data))
 	{
 		cerr << "ERR: error in buildSegments" << endl;
 		return -1;
@@ -147,6 +151,7 @@ EXPORTED int executePipeline(char* file)
 		cerr << "ERR: error in validateOutput" << endl;
 		return -1;
 	}
-	
+
+	cout << "hehe" << endl;
 	return 0;
 }
