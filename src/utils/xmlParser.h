@@ -137,20 +137,16 @@ struct xmlTree{
                 if(!XMLString::compareString(X(childName), nodelist->item(i)->getNodeName()))
                 {
                     res = (DOMElement *)(nodelist->item(0));
-
                     return 0;
                 }
             }
             return 1;
-            
         }
 
         DOMNodeList *findNodeswithName(const char *childName)
         {
             DOMNodeList *nodelist = doc->getElementsByTagName(X(childName));
-          
             return nodelist;
-            
         }
 
 

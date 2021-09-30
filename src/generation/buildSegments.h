@@ -53,7 +53,7 @@ int buildSegments(pugi::xml_document &doc, xmlTree &inputxml, roadNetwork &data)
 	DOMNodeList* segmentNodes = roadNode->getChildNodes();
 
 
-	for(DOMElement* em = roadNode->getFirstElementChild(); em != NULL ;em = em->getNextElementSibling() )
+	for(DOMElement* em = roadNode->getFirstElementChild(); em != NULL ;em = em->getNextElementSibling())
 	{
 		cout << "processing " <<XMLString::transcode(em->getNodeName()) << endl;
 
@@ -62,11 +62,12 @@ int buildSegments(pugi::xml_document &doc, xmlTree &inputxml, roadNetwork &data)
 			cout << "TODO JUNCTION IN BUILDSEGMENTS" << endl;
 			if(!setting.silentMode)
 				cout << "Processing junction" << endl;
-			//if (junctionWrapper(*it, data))
-			//{
-		    //		cerr << "ERR: error in junction." << endl;
-			//		return 1;
-			//	}
+			while(true)
+			if (junctionWrapper(em, data))
+			{
+		    		cerr << "ERR: error in junction." << endl;
+					return 1;
+			}
 		}
 
 		if (!strcmp(XMLString::transcode(em->getNodeName()),"roundabout"))
