@@ -53,47 +53,88 @@ int buildSegments(pugi::xml_document &doc, xmlTree &inputxml, roadNetwork &data)
 	DOMNodeList* segmentNodes = roadNode->getChildNodes();
 
 
-
-	//---------------------------------------------
-	pugi::xml_node segments = doc.child("roadNetwork").child("segments");
-	if (!segments)
-		cerr << "ERR: 'segments' not found in input file." << endl;
-
-	for (pugi::xml_node_iterator it = segments.begin(); it != segments.end(); ++it)
+	for(DOMElement* em = roadNode->getFirstElementChild(); em != NULL ;em = em->getNextElementSibling() )
 	{
-			if ((string)it->name() == "junction")
+		cout << "processing " <<XMLString::transcode(em->getNodeName()) << endl;
+
+		if (!strcmp(XMLString::transcode(em->getNodeName()),"junction"))
 		{
+			cout << "TODO JUNCTION IN BUILDSEGMENTS" << endl;
 			if(!setting.silentMode)
 				cout << "Processing junction" << endl;
-			if (junctionWrapper(*it, data))
-			{
-				cerr << "ERR: error in junction." << endl;
-				return 1;
-			}
+			//if (junctionWrapper(*it, data))
+			//{
+		    //		cerr << "ERR: error in junction." << endl;
+			//		return 1;
+			//	}
 		}
 
-		if ((string)it->name() == "roundabout")
+		if (!strcmp(XMLString::transcode(em->getNodeName()),"roundabout"))
 		{	
 			if(!setting.silentMode)
 				cout << "Processing roundabout" << endl;
-			if (roundAbout(*it, data))
-			{
-				cerr << "ERR: error in roundabout." << endl;
-				return 1;
-			}
+			cout << "TODO ROUNDABOUT IN BUILDSEGMENTS" << endl;
+			// if (roundAbout(*it, data))
+			// {
+			// 	cerr << "ERR: error in roundabout." << endl;
+			// 	return 1;
+			// }
 		}
 
-		if ((string)it->name() == "connectingRoad")
+		if (!strcmp(XMLString::transcode(em->getNodeName()),"connectingRoad"))
 		{
 			if(!setting.silentMode)
 				cout << "Processing connectingRoad" << endl;
-			if (connectingRoad(*it, data))
-			{
-				cerr << "ERR: error in connectingRoad." << endl;
-				return 1;
-			}
+			cout << "TODO connectingRoad IN BUILDSEGMENTS" << endl;
+			// if (connectingRoad(*it, data))
+			// {
+			// 	cerr << "ERR: error in connectingRoad." << endl;
+			// 	return 1;
+			// }
 		}
 	}
+
+
+	//---------------------------------------------
+	// pugi::xml_node segments = doc.child("roadNetwork").child("segments");
+	// if (!segments)
+	// 	cerr << "ERR: 'segments' not found in input file." << endl;
+
+	// for (pugi::xml_node_iterator it = segments.begin(); it != segments.end(); ++it)
+	// {
+	// 		if ((string)it->name() == "junction")
+	// 		{
+	// 		if(!setting.silentMode)
+	// 			cout << "Processing junction" << endl;
+	// 		if (junctionWrapper(*it, data))
+	// 		{
+	// 			cerr << "ERR: error in junction." << endl;
+	// 			return 1;
+	// 		}
+	// 	}
+
+	// 	if ((string)it->name() == "roundabout")
+	// 	{	
+	// 		if(!setting.silentMode)
+	// 			cout << "Processing roundabout" << endl;
+	// 		if (roundAbout(*it, data))
+	// 		{
+	// 			cerr << "ERR: error in roundabout." << endl;
+	// 			return 1;
+	// 		}
+	// 	}
+
+	// 	if ((string)it->name() == "connectingRoad")
+	// 	{
+	// 		if(!setting.silentMode)
+	// 			cout << "Processing connectingRoad" << endl;
+	// 		if (connectingRoad(*it, data))
+	// 		{
+	// 			cerr << "ERR: error in connectingRoad." << endl;
+	// 			return 1;
+	// 		}
+	// 	}
+	// }
 
 	return 0;
 }

@@ -78,6 +78,11 @@ struct xmlTree{
             }
         }
 
+        DOMImplementation* getDocImpl()
+        {
+            return doc->getImplementation();
+        }
+
         DOMElement *getRootElement()
         {
             if(doc != NULL)
@@ -91,12 +96,18 @@ struct xmlTree{
             }
         }
 
+        DOMDocument *getDoc()
+        {
+            return doc;
+        }
+
         int parseDocument(const char* path)
         {
             try
             {
                 parser->parse(path);
                 doc = parser->getDocument();
+                
             }
             catch (...)
             {
