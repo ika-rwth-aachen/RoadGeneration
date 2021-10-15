@@ -149,7 +149,6 @@ int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file) //TODO THIS
         return 1;
     }
 
-    
 }
 
 

@@ -32,11 +32,11 @@ extern settings setting;
 /**
  * @brief function creates all segments which can be either a junction, roundabout or connectingroad
  * 
- * @param doc 	tree structure which contains the input data
+ * @param inputxml 	tree structure which contains the input data
  * @param data 	roadNetwork data where the openDrive structure should be generated
  * @return int 	error code
  */
-int buildSegments(pugi::xml_document &doc, xmlTree &inputxml, roadNetwork &data)
+int buildSegments(xmlTree &inputxml, roadNetwork &data)
 {
 	//DOMElement * root = inputxml->getRootElement();
 	//cout << XMLString::transcode(root->getNodeName())<< endl;
@@ -62,7 +62,6 @@ int buildSegments(pugi::xml_document &doc, xmlTree &inputxml, roadNetwork &data)
 			cout << "TODO JUNCTION IN BUILDSEGMENTS" << endl;
 			if(!setting.silentMode)
 				cout << "Processing junction" << endl;
-			while(true)
 			if (junctionWrapper(em, data))
 			{
 		    		cerr << "ERR: error in junction." << endl;

@@ -34,7 +34,7 @@ int junctionWrapper(const DOMElement* node, roadNetwork &data)
     std::string type(c_type);
     XMLString::release(&c_type); 
     XMLString::release(&typestring);
-    //AVOID MEMORY LEAK
+    //AVOID MEMORY LEAK and cleanup
     
     // check type of the junction (M = mainroad, A = accessroad)
     int mode = 0;
@@ -52,11 +52,11 @@ int junctionWrapper(const DOMElement* node, roadNetwork &data)
     if (mode == 1)
     {
         cout << "TODO MODE 1 IN JUNCTION WRAPPER " << endl;
-        // if (xjunction(node, data))
-        // {
-        //     cerr << "ERR: error in xjunction." << endl;
-        //     return 1;
-        // }
+        if (xjunction(node, data))
+        {
+            cerr << "ERR: error in xjunction." << endl;
+            return 1;
+        }
     }
     if (mode == 2)
     {

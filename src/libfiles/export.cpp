@@ -121,7 +121,7 @@ EXPORTED int executePipeline(char* file)
 		cerr << "ERR: error in parseXML" << endl;
 		return -1;
 	}
-	if (buildSegments(in, inputxml, data))
+	if (buildSegments(inputxml, data))
 	{
 		cerr << "ERR: error in buildSegments" << endl;
 		return -1;

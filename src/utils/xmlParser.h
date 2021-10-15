@@ -162,6 +162,67 @@ struct xmlTree{
 
 };
 
+/**
+ * @brief reads an attribute from a xercesC node without causing memory leak. use this method for reading attributes!!!
+ * 
+ * @param node the node to read the attribute from
+ * @param attribute attribute to read
+ * @return string returns a string value
+ */
+string readStrAttrValueFromNode(const DOMElement* node, const char* attribute)
+{
+
+    if(node == NULL){
+        cout << "ERR in readStrAttriValueFromNode; dom node does not exists!" << endl;
+        cerr << "ERR in readStrAttriValueFromNode; dom node does not exists!" << endl;
+        return "0";
+    }
+    XMLCh *typestring = XMLString::transcode(attribute);
+
+    DOMAttr* attr = node->getAttributeNode(typestring);
+      if(attr == NULL){
+        cout << "ERR in readStrAttriValueFromNode; attr does not exists!" << endl;
+        cerr << "ERR in readStrAttriValueFromNode; attr does not exists!" << endl;
+        return "0";
+    }
+    char *c_type = XMLString::transcode(attr->getValue());
+    std::string res(c_type);
+
+    XMLString::release(&c_type); 
+    XMLString::release(&typestring);
+
+    return res;
+}
+
+int readIntAttrValueFromNode(const DOMElement* node, const char* attribute)
+{
+    
+    return stoi(readStrAttrValueFromNode(node, attribute));
+}
+
+
+    /**
+     * @brief looks for the first node that with matching name in the xml document
+     * 
+     * @param childName name too look for
+     * @param res return Element
+     * @return first child element with name
+     */
+    DOMElement* getChildWithName( const DOMElement* node, const char *childName)
+    {
+        DOMNodeList * nodelist = node->getElementsByTagName(X(childName));
+        for(int i = 0; i < nodelist->getLength(); i++)
+        {
+            if(!XMLString::compareString(X(childName), nodelist->item(i)->getNodeName()))
+            {
+                return (DOMElement*) nodelist->item(0);
+            }
+        }
+        return NULL;
+    }
+
+
+
 
 //code for creating a xml document
 
