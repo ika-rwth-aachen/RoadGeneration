@@ -28,7 +28,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 {
     // check type of the junction (here: M = mainroad, A = accessroad)
     int mode = 0;
-    string type = readStrAttrValueFromNode(domNode, "type");
+    string type = readStrAttrFromNode(domNode, "type");
     if (type == "2M")
         mode = 1;
     if (type == "M2A")
@@ -44,10 +44,10 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     // create segment
     data.nSegment++;
     junction junc;
-    junc.id = readIntAttrValueFromNode(domNode, "id");
+    junc.id = readIntAttrFromNode(domNode, "id");
 
     // automatic widening
-    pugi::xml_node dummy; //TODO FIGURE out how to avoid using this...
+    DOMElement* dummy; //TODO FIGURE out how to avoid using this...
     DOMElement* automaticWidening = getChildWithName(domNode, "automaticWidening");
 
 
@@ -62,61 +62,71 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     DOMElement* con = getChildWithName(getChildWithName(domNode, "coupler"), "connection");
     DOMElement* addLanes = getChildWithName(getChildWithName(domNode, "coupler"), "additionalLanes");
 
-   //TOODO!
 
-    // // define junction roads
-    // pugi::xml_node refRoad;
-    // pugi::xml_node additionalRoad1;
-    // pugi::xml_node additionalRoad2;
-    // pugi::xml_node additionalRoad3;
+    // define junction roads
+    DOMElement* refRoad;
+    DOMElement* additionalRoad1;
+    DOMElement* additionalRoad2;
+    DOMElement* additionalRoad3;
 
-    // pugi::xml_node tmpNode = iP.child("adRoad");
+    DOMElement* tmpNode = getChildWithName(iP, "adRoad");
+    DOMNodeList *roads = domNode->getElementsByTagName(X("road"));
+    
+    for (int i = 0; i < roads->getLength(); i ++)
+    {
+        DOMElement* road = (DOMElement*)roads->item(i);
+        int roadID = readIntAttrFromNode(road, "id");
+        if (roadID == readIntAttrFromNode(iP,"refRoad"))
+            refRoad = road;
 
-    // for (pugi::xml_node road : node.children("road"))
-    // {
-    //     if (road.attribute("id").as_int() == iP.attribute("refRoad").as_int())
-    //         refRoad = road;
+        if (mode >= 1 && roadID == readIntAttrFromNode(tmpNode,"id"))
+            additionalRoad1 = road;
 
-    //     if (mode >= 1 && road.attribute("id").as_int() == tmpNode.attribute("id").as_int())
-    //         additionalRoad1 = road;
+        if (mode >= 2 && roadID == readIntAttrFromNode(getNextSiblingWithTagName(tmpNode, "adRoad"), "id"))
+            additionalRoad2 = road;
 
-    //     if (mode >= 2 && road.attribute("id").as_int() == tmpNode.next_sibling("adRoad").attribute("id").as_int())
-    //         additionalRoad2 = road;
+        if (mode >= 3 && roadID == readIntAttrFromNode(getNextSiblingWithTagName(getNextSiblingWithTagName(tmpNode, "adRoad"), "adRoad"), "id"))
+            additionalRoad3 = road;
+    }
 
-    //     if (mode >= 3 && road.attribute("id").as_int() == tmpNode.next_sibling("adRoad").next_sibling("adRoad").attribute("id").as_int())
-    //         additionalRoad3 = road;
-    // }
+    if (!refRoad || (mode >= 1 && !additionalRoad1) || (mode >= 2 && !additionalRoad2) || (mode >= 3 && !additionalRoad3))
+    {
+        cerr << "ERR: specified roads in intersection are not found." << endl;
+        return 1;
+    }
 
-    // if (!refRoad || (mode >= 1 && !additionalRoad1) || (mode >= 2 && !additionalRoad2) || (mode >= 3 && !additionalRoad3))
-    // {
-    //     cerr << "ERR: specified roads in intersection are not found.";
-    //     return 1;
-    // }
+    double sMain, sAdd1, sAdd2, sAdd3, sOffMain, sOffAdd1, sOffAdd2, sOffAdd3, phi1, phi2, phi3;
 
-    // double sMain, sAdd1, sAdd2, sAdd3, sOffMain, sOffAdd1, sOffAdd2, sOffAdd3, phi1, phi2, phi3;
+    // calculate offsets
+    double sOffset = 0;
+    if (cA)
+        sOffset = stod(readStrAttrFromNode(cA, "gap"), &st);
 
-    // // calculate offsets
-    // double sOffset = 0;
-    // if (cA)
-    //     sOffset = stod(cA.attribute("gap").value(), &st);
-    // sOffMain = sOffset;
-    // sOffAdd1 = sOffset;
-    // sOffAdd2 = sOffset;
-    // sOffAdd3 = sOffset;
-    // for (pugi::xml_node_iterator sB = cA.begin(); sB != cA.end(); ++sB)
-    // {
-    //     if (sB->attribute("id").as_int() == refRoad.attribute("id").as_int())
-    //         sOffMain = sB->attribute("gap").as_double();
+    sOffMain = sOffset;
+    sOffAdd1 = sOffset;
+    sOffAdd2 = sOffset;
+    sOffAdd3 = sOffset;
+    
+    for (DOMElement* it = cA->getFirstElementChild(); it != NULL ;it = it->getNextElementSibling())
+    {
+        if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(refRoad, "id") )
+            sOffMain = readDoubleAttrFromNode(it, "gap");
 
-    //     if (sB->attribute("id").as_int() == additionalRoad1.attribute("id").as_int())
-    //         sOffAdd1 = sB->attribute("gap").as_double();
+        if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad1, "id"))
+            sOffAdd1 = readDoubleAttrFromNode(it, "gap");
 
-    //     if (sB->attribute("id").as_int() == additionalRoad2.attribute("id").as_int())
-    //         sOffAdd2 = sB->attribute("gap").as_double();
+        if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad2, "id"))
+            sOffAdd2 = readDoubleAttrFromNode(it, "gap");
 
-    //     if (sB->attribute("id").as_int() == additionalRoad3.attribute("id").as_int())
-    //         sOffAdd3 = sB->attribute("gap").as_double();
-    // }
+        if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad3, "id"))
+            sOffAdd3 = readDoubleAttrFromNode(it, "gap");
+
+    }
+
+    cout << sOffMain << endl;
+    cout << sOffAdd1 << endl;
+    cout << sOffAdd2 << endl;
+    cout << sOffAdd3 << endl;
 
     // // calculate helper roads
     // road help1;

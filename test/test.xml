@@ -73,8 +73,8 @@
             <coupler>
                 <junctionArea gap="0">
                     <roadGap id="1" gap="15"/>     
-                    <roadGap id="2" gap="15"/>
-                    <roadGap id="3" gap="15"/>
+                    <roadGap id="2" gap="155"/>
+                    <roadGap id="3" gap="1555"/>
                 </junctionArea>
                 <connection type="single">
                     <roadLink fromId="1" toId="2">

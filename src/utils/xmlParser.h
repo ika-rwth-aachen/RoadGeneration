@@ -19,7 +19,6 @@ DOMDocument* doc;
 bool initialized = false;
 
 
-//code for reading a xml document
 
 class XStr
 {
@@ -169,13 +168,13 @@ struct xmlTree{
  * @param attribute attribute to read
  * @return string returns a string value
  */
-string readStrAttrValueFromNode(const DOMElement* node, const char* attribute)
+string readStrAttrFromNode(const DOMElement* node, const char* attribute)
 {
 
     if(node == NULL){
         cout << "ERR in readStrAttriValueFromNode; dom node does not exists!" << endl;
         cerr << "ERR in readStrAttriValueFromNode; dom node does not exists!" << endl;
-        return "0";
+        return NULL;
     }
     XMLCh *typestring = XMLString::transcode(attribute);
 
@@ -183,7 +182,7 @@ string readStrAttrValueFromNode(const DOMElement* node, const char* attribute)
       if(attr == NULL){
         cout << "ERR in readStrAttriValueFromNode; attr does not exists!" << endl;
         cerr << "ERR in readStrAttriValueFromNode; attr does not exists!" << endl;
-        return "0";
+        return NULL;
     }
     char *c_type = XMLString::transcode(attr->getValue());
     std::string res(c_type);
@@ -194,11 +193,37 @@ string readStrAttrValueFromNode(const DOMElement* node, const char* attribute)
     return res;
 }
 
-int readIntAttrValueFromNode(const DOMElement* node, const char* attribute)
+int readIntAttrFromNode(const DOMElement* node, const char* attribute)
 {
     
-    return stoi(readStrAttrValueFromNode(node, attribute));
+    return stoi(readStrAttrFromNode(node, attribute));
 }
+
+double readDoubleAttrFromNode(const DOMElement* node, const char* attribute)
+{
+    return stod(readStrAttrFromNode(node, attribute));
+}
+
+/**
+ * @brief Get the Next Sibling with the specified tag name. Return NULL if nothing is found.
+ * 
+ * @param elem element which to find the sibling of
+ * @param tag name of the desired sibling
+ * @return DOMElement* sibling if found. NULL otherwise
+ */
+DOMElement* getNextSiblingWithTagName(DOMElement* elem, const char* tag)
+{
+
+    for(DOMElement* curr = elem->getNextElementSibling(); curr != NULL; curr = curr->getNextElementSibling())
+    {
+        if(!XMLString::compareString(X(tag), curr->getTagName()))
+        {
+            return curr;
+        }
+    }
+    return NULL;
+
+} 
 
 
     /**
