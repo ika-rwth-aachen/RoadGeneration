@@ -123,10 +123,6 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
     }
 
-    cout << sOffMain << endl;
-    cout << sOffAdd1 << endl;
-    cout << sOffAdd2 << endl;
-    cout << sOffAdd3 << endl;
 
     // // calculate helper roads
     // road help1;
