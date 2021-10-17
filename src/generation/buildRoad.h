@@ -499,16 +499,18 @@ int addLanes(DOMElement* roadIn, road &r, int mode)
  * @param automaticWidening     automatic widing input data
  * @return int                  error code
  */
-int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automaticWidening)
+int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWidening)
 {
     // --- user defined lanedrops or lanewidenings -----------------------------
     //      -> have to be defined in increasing s order, because the lane changes are concatenated in s direction
 
-    for (pugi::xml_node_iterator itt = roadIn.child("lanes").begin(); itt != roadIn.child("lanes").end(); ++itt)
+    DOMNodeList* referenceLines = roadIn->getElementsByTagName(X("lanes"));
+    for (int i = 0; i < referenceLines->getLength(); i++)
     {
-        if ((string)itt->name() == "laneWidening")
+        DOMElement* itt = (DOMElement*)referenceLines->item(i);
+        if (!readStrAttrFromNode(itt, "laneWidening").empty())
         {
-            int side = itt->attribute("side").as_int();
+            int side = readIntAttrFromNode(itt, "side");
 
             if (side == 0)
             {
@@ -516,11 +518,11 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
                 return 1;
             }
 
-            double s = itt->attribute("s").as_double();
+            double s = readDoubleAttrFromNode(itt, "s");
 
             double ds = setting.laneChange.ds;
-            if (itt->attribute("length"))
-                ds = itt->attribute("length").as_double();
+            if (attributeExits(itt,"length"))
+                ds = readDoubleAttrFromNode(itt, "length");
 
             // only perform drop if on road length
             if (s > r.length)
@@ -533,11 +535,11 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
             }
 
             //restricted area
-            if (itt->child("restrictedArea"))
+            if (getChildWithName(itt, "restrictedArea") != NULL)
             {
                 double ds2 = setting.laneChange.ds;
-                if (itt->child("restrictedArea").attribute("length"))
-                    ds2 = itt->child("restrictedArea").attribute("length").as_int();
+                if (attributeExits(getChildWithName(itt, "restrictedArea"),"length"))
+                    ds2 = readIntAttrFromNode(getChildWithName(itt, "restrictedArea"),"length");
 
                 if (addRestrictedAreaWidening(r.laneSections, side, s, ds, ds2))
                 {
@@ -546,9 +548,9 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
                 }
             }
         }
-        if ((string)itt->name() == "laneDrop")
+        if (readNameFromNode(itt) == "laneDrop")
         {
-            int side = itt->attribute("side").as_int();
+            int side = readIntAttrFromNode(itt, "side");
 
             if (side == 0)
             {
@@ -556,11 +558,11 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
                 return 1;
             }
 
-            double s = itt->attribute("s").as_double();
+            double s =  readDoubleAttrFromNode(itt, "s");
 
             double ds = setting.laneChange.ds;
-            if (itt->attribute("length"))
-                ds = itt->attribute("length").as_double();
+            if (attributeExits(itt, "length"))
+                ds =  readDoubleAttrFromNode(itt, "length");
 
             // only perform drop if on road length
             if (s > r.length)
@@ -573,11 +575,11 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
             }
 
             //restricted area
-            if (itt->child("restrictedArea"))
+            if (getChildWithName(itt, "restrictedArea") != NULL)
             {
                 double ds2 = setting.laneChange.ds;
-                if (itt->child("restrictedArea").attribute("length"))
-                    ds2 = itt->child("restrictedArea").attribute("length").as_int();
+                if (attributeExits(getChildWithName(itt, "restrictedArea"),"length"))
+                    ds2 = readIntAttrFromNode(getChildWithName(itt, "restrictedArea"),"length");
 
                 if (addRestrictedAreaDrop(r.laneSections, side, s, ds, ds2))
                 {
@@ -596,19 +598,19 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
 
     if (automaticWidening)
     {
-        if (automaticWidening.attribute("active"))
+        if (attributeExits(automaticWidening,"active"))
         {
-            active = automaticWidening.attribute("active").value();
+            active = readStrAttrFromNode(automaticWidening, "active");
 
-            if (automaticWidening.attribute("length"))
-                widening_s = automaticWidening.attribute("length").as_double();
+            if (attributeExits(automaticWidening,"length"))
+                widening_s = readDoubleAttrFromNode(automaticWidening, "length");
 
-            if (automaticWidening.attribute("ds"))
-                widening_ds = automaticWidening.attribute("ds").as_double();
+            if (attributeExits(automaticWidening,"ds"))
+                widening_ds = readDoubleAttrFromNode(automaticWidening, "ds");
         }
 
         bool restricted = false;
-        if (automaticWidening.attribute("restricted").as_bool())
+        if (readBoolAttrFromNode(automaticWidening, "restricted"))
             restricted = true;
 
         if (active == "all")
@@ -654,7 +656,7 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
  * @param phi0              reference angle
  * @return int              error code
  */
-int buildRoad(DOMElement* roadIn, road &r, double sStart, double sEnd, pugi::xml_node automaticWidening, double s0, double x0, double y0, double phi0)
+int buildRoad(DOMElement* roadIn, road &r, double sStart, double sEnd, DOMElement* automaticWidening, double s0, double x0, double y0, double phi0)
 {
     r.classification = readStrAttrFromNode(roadIn,"classification");
     r.inputId = readIntAttrFromNode(roadIn, "id");

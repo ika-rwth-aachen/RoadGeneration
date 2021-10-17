@@ -220,6 +220,17 @@ string readNameFromNode(const DOMElement* node)
     return res;
 }
 
+bool readBoolAttrFromNode(const DOMElement* node, const char* attribute)
+{
+    string str = readStrAttrFromNode(node, attribute);
+    return str == "1" || str == "True" || str == "true";
+}
+
+bool attributeExits(const DOMElement* node, const char* attribute)
+{
+    return !readStrAttrFromNode(node, attribute).empty();
+}
+
 /**
  * @brief Get the Next Sibling with the specified tag name. Return NULL if nothing is found.
  * 
