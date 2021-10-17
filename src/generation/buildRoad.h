@@ -30,14 +30,18 @@ extern settings setting;
  * @param sEnd          end of the s interval
  * @return int          error code
  */
-int computeFirstLast(pugi::xml_node roadIn, int &foundfirst, int &foundlast, double &sStart, double &sEnd)
+int computeFirstLast(DOMElement* roadIn, int &foundfirst, int &foundlast, double &sStart, double &sEnd)
 {
+    //TODO MIGHT GENERATE ERRORS
     int cc = 0;
     double s = 0;
 
-    for (pugi::xml_node_iterator it = roadIn.child("referenceLine").begin(); it != roadIn.child("referenceLine").end(); ++it)
+    DOMNodeList* referenceLines = roadIn->getElementsByTagName(X("referenceLine"));
+    for (int i = 0; i < referenceLines->getLength(); i++)
     {
-        double length = it->attribute("length").as_double();
+        DOMElement* it = (DOMElement*)referenceLines->item(i);
+
+        double length = readDoubleAttrFromNode(it, "length");
 
         if (s + length > sStart && foundfirst == -1)
             foundfirst = cc;
@@ -68,7 +72,7 @@ int computeFirstLast(pugi::xml_node roadIn, int &foundfirst, int &foundlast, dou
  * @param sEnd      end of the s interval
  * @return int      error code
  */
-int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &sEnd)
+int generateGeometries(DOMElement* roadIn, road &r, double &sStart, double &sEnd)
 {
     // search first and last relevant geometry
     int foundfirst = -1;
@@ -84,29 +88,31 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
     double y = 0;
     double hdg = 0;
 
-    for (pugi::xml_node_iterator it = roadIn.child("referenceLine").begin(); it != roadIn.child("referenceLine").end(); ++it)
+    DOMNodeList* referenceLines = roadIn->getElementsByTagName(X("referenceLine"));
+    for (int i = 0; i < referenceLines->getLength(); i++)
     {
+        DOMElement* it = (DOMElement*)referenceLines->item(i);
         geometryType type;
         double c = 0, c1 = 0, c2 = 0;
         double R = 0, R1 = 0, R2 = 0;
 
         // define type
-        if ((string)it->name() == "line")
+        if (readNameFromNode(it) == "line")
             type = line;
-        if ((string)it->name() == "spiral")
+        if (readNameFromNode(it) == "spiral")
             type = spiral;
-        if ((string)it->name() == "arc")
+        if (readNameFromNode(it) == "arc")
             type = arc;
-        if ((string)it->name() == "circle")
+        if (readNameFromNode(it) == "circle")
             type = arc;
 
-        double length = it->attribute("length").as_double();
+        double length = readDoubleAttrFromNode(it, "length");
 
         // define radi and curvatures
         if (type == spiral)
         {
-            R1 = it->attribute("Rs").as_double();
-            R2 = it->attribute("Re").as_double();
+            R1 = readDoubleAttrFromNode(it, "Rs");
+            R2 = readDoubleAttrFromNode(it, "Re");
             if (R1 != 0)
                 c1 = 1 / R1;
             if (R2 != 0)
@@ -114,7 +120,7 @@ int generateGeometries(pugi::xml_node roadIn, road &r, double &sStart, double &s
         }
         if (type == arc)
         {
-            R = it->attribute("R").as_double();
+            R = readDoubleAttrFromNode(it, "R");
             if (R != 0)
                 c = 1 / R;
         }
@@ -367,7 +373,7 @@ int flipGeometries(road &r)
  * @param mode      defines the mode (flipped or not)
  * @return int      error code
  */
-int addLanes(pugi::xml_node roadIn, road &r, int mode)
+int addLanes(DOMElement* roadIn, road &r, int mode)
 {
     double desWidth = setting.width.standard;
     double desSpeed = setting.speed.standard;
@@ -415,13 +421,16 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
 
     // --- add user defined laneSection to road --------------------------------
 
-    for (pugi::xml_node_iterator itt = roadIn.child("lanes").begin(); itt != roadIn.child("lanes").end(); ++itt)
+    DOMNodeList* referenceLines = roadIn->getElementsByTagName(X("lanes"));
+    for (int i = 0; i < referenceLines->getLength(); i++)
     {
-        if ((string)itt->name() != "lane")
+        DOMElement* itt = (DOMElement*)referenceLines->item(i);
+
+        if (readNameFromNode(itt) != "lane")
             continue;
 
         lane l;
-        l.id = itt->attribute("id").as_int();
+        l.id = readIntAttrFromNode(itt, "id");
         l.preId = l.id;
         l.sucId = l.id;
 
@@ -429,39 +438,39 @@ int addLanes(pugi::xml_node roadIn, road &r, int mode)
         if (mode == 2)
             l.id *= -1;
 
-        if (itt->attribute("type"))
-            l.type = itt->attribute("type").value();
+        if (!readStrAttrFromNode(itt, "type").empty())
+            l.type = readStrAttrFromNode(itt, "type");
 
         l.w.a = desWidth;
-        if (itt->attribute("width"))
-            l.w.a = itt->attribute("width").as_double();
+        if (!readStrAttrFromNode(itt, "width").empty())
+            l.w.a = readDoubleAttrFromNode(itt, "width");
         if (l.id == 0)
             l.w.a = 0.0;
 
         l.speed = desSpeed;
-        if (itt->attribute("speed"))
-            l.speed = itt->attribute("speed").as_double();
+        if (!readStrAttrFromNode(itt, "speed").empty())
+            l.speed = readDoubleAttrFromNode(itt, "speed");
 
-        pugi::xml_node rm = itt->child("roadMark");
+        DOMElement* rm = getChildWithName(itt, "roadMark");
         if (rm)
         {
-            if (rm.attribute("type"))
-                l.rm.type = rm.attribute("type").value();
-            if (rm.attribute("color"))
-                l.rm.color = rm.attribute("color").value();
-            if (rm.attribute("width"))
-                l.rm.width = rm.attribute("width").as_double();
+            if (!readStrAttrFromNode(rm, "type").empty())
+                l.rm.type = readStrAttrFromNode(rm, "type");
+            if (!readStrAttrFromNode(rm, "color").empty())
+                l.rm.color = readStrAttrFromNode(rm, "color");
+            if (!readStrAttrFromNode(rm, "width").empty())
+                l.rm.width = readDoubleAttrFromNode(rm, "width");
         }
 
-        pugi::xml_node m = itt->child("material");
+        DOMElement* m = getChildWithName(itt,"material");
         if (m)
         {
-            if (m.attribute("surface"))
-                l.m.surface = m.attribute("surface").value();
-            if (m.attribute("friction"))
-                l.m.friction = m.attribute("friction").as_double();
-            if (m.attribute("roughness"))
-                l.m.roughness = m.attribute("roughness").as_double();
+            if (!readStrAttrFromNode(m, "surface").empty())
+                l.m.surface = readStrAttrFromNode(m, "surface");
+            if (!readStrAttrFromNode(m, "friction").empty())
+                l.m.friction = readDoubleAttrFromNode(m, "friction");
+            if (!readStrAttrFromNode(m, "roughness").empty())
+                l.m.roughness = readDoubleAttrFromNode(m, "roughness");
         }
 
         lane tmp;
@@ -645,10 +654,10 @@ int addLaneSectionChanges(pugi::xml_node roadIn, road &r, pugi::xml_node automat
  * @param phi0              reference angle
  * @return int              error code
  */
-int buildRoad(pugi::xml_node roadIn, road &r, double sStart, double sEnd, pugi::xml_node automaticWidening, double s0, double x0, double y0, double phi0)
+int buildRoad(DOMElement* roadIn, road &r, double sStart, double sEnd, pugi::xml_node automaticWidening, double s0, double x0, double y0, double phi0)
 {
-    r.classification = roadIn.attribute("classification").value();
-    r.inputId = roadIn.attribute("id").as_int();
+    r.classification = readStrAttrFromNode(roadIn,"classification");
+    r.inputId = readIntAttrFromNode(roadIn, "id");
 
     // save geometry data from sStart - sEnd
     // mode = 1 -> in s direction

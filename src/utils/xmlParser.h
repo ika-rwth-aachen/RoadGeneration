@@ -166,7 +166,7 @@ struct xmlTree{
  * 
  * @param node the node to read the attribute from
  * @param attribute attribute to read
- * @return string returns a string value
+ * @return string returns a string value. The string is empty if no attribute was found
  */
 string readStrAttrFromNode(const DOMElement* node, const char* attribute)
 {
@@ -174,7 +174,7 @@ string readStrAttrFromNode(const DOMElement* node, const char* attribute)
     if(node == NULL){
         cout << "ERR in readStrAttriValueFromNode; dom node does not exists!" << endl;
         cerr << "ERR in readStrAttriValueFromNode; dom node does not exists!" << endl;
-        return NULL;
+        return "";
     }
     XMLCh *typestring = XMLString::transcode(attribute);
 
@@ -182,7 +182,7 @@ string readStrAttrFromNode(const DOMElement* node, const char* attribute)
       if(attr == NULL){
         cout << "ERR in readStrAttriValueFromNode; attr does not exists!" << endl;
         cerr << "ERR in readStrAttriValueFromNode; attr does not exists!" << endl;
-        return NULL;
+        return "";
     }
     char *c_type = XMLString::transcode(attr->getValue());
     std::string res(c_type);
@@ -202,6 +202,22 @@ int readIntAttrFromNode(const DOMElement* node, const char* attribute)
 double readDoubleAttrFromNode(const DOMElement* node, const char* attribute)
 {
     return stod(readStrAttrFromNode(node, attribute));
+}
+
+string readNameFromNode(const DOMElement* node)
+{
+    if(node == NULL){
+        cout << "ERR in readNameFromNode; dom node does not exists!" << endl;
+        cerr << "ERR in readNameFromNode; dom node does not exists!" << endl;
+        return "";
+    }
+  
+    char *c_type = XMLString::transcode(node->getTagName());
+    std::string res(c_type);
+
+    XMLString::release(&c_type); 
+
+    return res;
 }
 
 /**
@@ -231,7 +247,7 @@ DOMElement* getNextSiblingWithTagName(DOMElement* elem, const char* tag)
      * 
      * @param childName name too look for
      * @param res return Element
-     * @return first child element with name
+     * @return first child element with name. NULL if nothing is found
      */
     DOMElement* getChildWithName( const DOMElement* node, const char *childName)
     {

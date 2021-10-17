@@ -124,13 +124,13 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     }
 
 
-    // // calculate helper roads
-    // road help1;
-    // if (buildRoad(refRoad, help1, 0, INFINITY, dummy, 0, 0, 0, 0))
-    // {
-    //     cerr << "ERR: error in buildRoad" << endl;
-    //     return 1;
-    // }
+    // calculate helper roads
+    road help1;
+    if (buildRoad(refRoad, help1, 0, INFINITY, dummy, 0, 0, 0, 0))
+    {
+        cerr << "ERR: error in buildRoad" << endl;
+        return 1;
+    }
 
     // road help2;
     // if (buildRoad(additionalRoad1, help2, 0, INFINITY, dummy, 0, 0, 0, 0))
