@@ -24,13 +24,13 @@ extern settings setting;
  * @param data  roadNetwork structure where the generated roads and junctions are stored
  * @return int  error code
  */
-int connectingRoad(pugi::xml_node &node, roadNetwork &data)
+int connectingRoad(DOMElement *node, roadNetwork &data)
 {
     // define segment
     data.nSegment++;
-    pugi::xml_node mainRoad = node.child("road");
+    DOMElement* mainRoad = getChildWithName(node, "road");
 
-    pugi::xml_node dummy;
+    DOMElement* dummy;
 
     if (!mainRoad)
     {
@@ -43,9 +43,9 @@ int connectingRoad(pugi::xml_node &node, roadNetwork &data)
         cout << "\t Generating Roads" << endl;
 
     road r;
-    int id = mainRoad.attribute("id").as_int();
-    r.id = 100 * node.attribute("id").as_int() + id;
-    r.junction = node.attribute("id").as_int(); // <- might cause a bug in linging. 
+    int id = readIntAttrFromNode(mainRoad, "id");
+    r.id = 100 * readIntAttrFromNode(node, "id"); + id;
+    r.junction = readIntAttrFromNode(node, "id");; // <- might cause a bug in linking. 
     r.isConnectingRoad = true; // <- is needed to fix the bug that is caused by using junction attribute to store segment id in linking segments
     //r.junction = -1;
 
