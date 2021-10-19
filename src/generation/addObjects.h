@@ -277,25 +277,25 @@ int addBusStop(object o, road &r)
  * @param o         object data
  * @return int      error code
  */
-int getPosition(pugi::xml_node node, object &o)
+int getPosition(DOMElement* node, object &o)
 {
     // read position of objects in st coordinates
-    if (node.child("relativePosition"))
+    if (getChildWithName(node, "relativePosition") != NULL)
     {
-        pugi::xml_node position = node.child("relativePosition");
-        o.s = position.attribute("s").as_double();
-        o.t = position.attribute("t").as_double();
-        o.hdg = position.attribute("hdg").as_double();
+        DOMElement* position = getChildWithName(node, "relativePosition");
+        o.s = readDoubleAttrFromNode(position, "s");
+        o.t = readDoubleAttrFromNode(position, "t");
+        o.hdg = readDoubleAttrFromNode(position, "hdg");
     }
-    if (node.child("repeatPosition"))
+    if (getChildWithName(node, "repeatPosition") != NULL)
     {
-        pugi::xml_node position = node.child("repeatPosition");
-        o.s = position.attribute("s").as_double();
-        o.t = position.attribute("t").as_double();
-        o.hdg = position.attribute("hdg").as_double();
+       DOMElement* position = getChildWithName(node, "repeatPosition");
+        o.s = readDoubleAttrFromNode(position, "s");
+        o.t = readDoubleAttrFromNode(position, "t");
+        o.hdg = readDoubleAttrFromNode(position, "hdg");
 
         o.repeat = true;
-        o.len = position.attribute("length").as_double();
+        o.len = readDoubleAttrFromNode(position, "length");
     }
 
     return 0;
@@ -309,14 +309,17 @@ int getPosition(pugi::xml_node node, object &o)
  * @param data      roadNetwork structure where the generated roads and junctions are stored
  * @return int      error code
  */
-int addObjects(pugi::xml_node inRoad, road &r, roadNetwork &data)
+int addObjects(DOMElement* inRoad, road &r, roadNetwork &data)
 {
-    for (pugi::xml_node obj : inRoad.child("objects").children())
+
+    DOMNodeList* objects = inRoad->getElementsByTagName(X("objects"));
+    for (int i = 0; i < objects->getLength(); i++)
     {
-        std::string type = obj.name();
+        DOMElement* obj = (DOMElement*)objects->item(i);
+        std::string type = readNameFromNode(obj);
         object o;
 
-        o.id = obj.attribute("id").as_double();
+        o.id = readDoubleAttrFromNode(obj, "id");
 
         // save position in object
         getPosition(obj, o);
