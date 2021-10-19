@@ -36,11 +36,16 @@ int computeFirstLast(DOMElement* roadIn, int &foundfirst, int &foundlast, double
     int cc = 0;
     double s = 0;
 
-    DOMNodeList* referenceLines = roadIn->getElementsByTagName(X("referenceLine"));
+
+    cout <<  getChildWithName(roadIn, "referenceLine")->getChildElementCount() << endl;
+    DOMNodeList* referenceLines = getChildWithName(roadIn, "referenceLine")->getChildNodes();
+    cout << readNameFromNode( (DOMElement*) referenceLines->item(2)) << endl; //SOMETHING IS WRONG WITH THE..
+    //.. RETURNED DOMLIST. it contains 3 elements insteadd of just one
+
     for (int i = 0; i < referenceLines->getLength(); i++)
     {
         DOMElement* it = (DOMElement*)referenceLines->item(i);
-
+        cout << readNameFromNode(it) << endl;
         double length = readDoubleAttrFromNode(it, "length");
 
         if (s + length > sStart && foundfirst == -1)
