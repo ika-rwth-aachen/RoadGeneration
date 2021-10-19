@@ -328,8 +328,8 @@ int addObjects(DOMElement* inRoad, road &r, roadNetwork &data)
         if (type == "parkingSpace")
         {
             o.type = type;
-            o.length = obj.attribute("length").as_double();
-            o.width = obj.attribute("width").as_double();
+            o.length = readDoubleAttrFromNode(obj, "length");
+            o.width = readDoubleAttrFromNode(obj, "width");
             o.height = 4;
 
             addParking(o, r);
@@ -344,9 +344,9 @@ int addObjects(DOMElement* inRoad, road &r, roadNetwork &data)
 
         if (type == "roadWork")
         {
-            o.s = obj.attribute("s").as_double();
-            o.len = obj.attribute("length").as_double();
-            int laneId = obj.attribute("laneId").as_int();
+            o.s = readDoubleAttrFromNode(obj, "s");
+            o.len = readDoubleAttrFromNode(obj, "length");
+            int laneId = readIntAttrFromNode(obj, "laneId");
 
             addRoadWork(o, r, laneId);
         }
@@ -359,10 +359,10 @@ int addObjects(DOMElement* inRoad, road &r, roadNetwork &data)
         if (type == "trafficIsland")
         {
             o.type = type;
-            o.s = obj.attribute("s").as_double();
+            o.s = readDoubleAttrFromNode(obj, "s");
             o.t = 0;
-            o.length = obj.attribute("length").as_double();
-            o.width = obj.attribute("width").as_double();
+            o.length = readDoubleAttrFromNode(obj, "length");
+            o.width = readDoubleAttrFromNode(obj, "width");
 
             addTrafficIsland(o, r);
         }
@@ -372,20 +372,20 @@ int addObjects(DOMElement* inRoad, road &r, roadNetwork &data)
             continue;
 
         control c;
-        c.id = obj.attribute("id").as_int();
+        c.id = readIntAttrFromNode(obj, "id");
 
-        for (pugi::xml_node ob : obj.children())
+        for (DOMElement* ob = obj->getFirstElementChild(); ob != NULL ;ob = ob->getNextElementSibling())
         {
             sign s;
             data.nSignal++;
             s.id = data.nSignal;
-            s.id = ob.attribute("id").as_int();
-            s.type = ob.attribute("type").value();
-            s.value = ob.attribute("value").as_double();
-            s.dynamic = ob.attribute("dynamic").as_bool();
-            s.s = ob.child("relativePosition").attribute("s").as_double();
-            s.t = ob.child("relativePosition").attribute("t").as_double();
-            s.z = ob.child("relativePosition").attribute("z").as_double();
+            s.id = readIntAttrFromNode(ob, "id");
+            s.type = readStrAttrFromNode(ob, "type");
+            s.value = readDoubleAttrFromNode(ob, "value");
+            s.dynamic = readBoolAttrFromNode(ob, "dynamic");
+            s.s = readDoubleAttrFromNode(getChildWithName(ob, "relativePosition"), "s");
+            s.t = readDoubleAttrFromNode(getChildWithName(ob, "relativePosition"), "t");
+            s.z = readDoubleAttrFromNode(getChildWithName(ob, "relativePosition"), "z");
 
             r.signs.push_back(s);
 
