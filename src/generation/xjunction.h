@@ -26,6 +26,7 @@ extern settings setting;
  */
 int xjunction(const DOMElement* domNode, roadNetwork &data)
 {
+    cout << "processing x junction" << endl;
     // check type of the junction (here: M = mainroad, A = accessroad)
     int mode = 0;
     string type = readStrAttrFromNode(domNode, "type");
@@ -106,6 +107,8 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     sOffAdd1 = sOffset;
     sOffAdd2 = sOffset;
     sOffAdd3 = sOffset;
+
+
     
     for (DOMElement* it = cA->getFirstElementChild(); it != NULL ;it = it->getNextElementSibling())
     {
@@ -120,9 +123,9 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
         if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad3, "id"))
             sOffAdd3 = readDoubleAttrFromNode(it, "gap");
+       
 
     }
-
 
     // calculate helper roads
     road help1;
@@ -131,6 +134,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         cerr << "ERR: error in buildRoad" << endl;
         return 1;
     }
+
 
     // road help2;
     // if (buildRoad(additionalRoad1, help2, 0, INFINITY, dummy, 0, 0, 0, 0))
