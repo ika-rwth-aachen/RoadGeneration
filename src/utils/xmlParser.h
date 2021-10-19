@@ -32,10 +32,32 @@ public :
         fUnicodeForm = XMLString::transcode(toTranscode);
     }
 
+
+
+    XStr(const XMLCh* transcoded)
+    {
+        // Call the private transcoding method
+        fUnicodeForm = (XMLCh*)malloc(XMLString::stringLen(transcoded));
+
+        XMLString::copyNString(fUnicodeForm,transcoded, XMLString::stringLen(transcoded));
+
+    }
+
+
     ~XStr()
     {
         XMLString::release(&fUnicodeForm);
     }
+
+    operator string() {
+        char *c_type = XMLString::transcode(fUnicodeForm);
+        std::string res(c_type);
+
+        XMLString::release(&c_type); 
+        return res;
+    }
+
+    operator XMLCh*() {return fUnicodeForm;}
 
     const XMLCh* unicodeForm() const
     {
@@ -46,7 +68,7 @@ private :
     XMLCh*   fUnicodeForm;
 };
 
-#define X(str) XStr(str).unicodeForm()
+#define X(str) XStr(str)
 
 
 struct xmlTree{
