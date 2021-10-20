@@ -57,6 +57,22 @@ public :
         return res;
     }
 
+    operator int()
+    {
+        char *c_type = XMLString::transcode(fUnicodeForm);
+        std::string res(c_type);
+        XMLString::release(&c_type); 
+        return stoi(res);
+    }
+
+    operator double()
+    {
+        char *c_type = XMLString::transcode(fUnicodeForm);
+        std::string res(c_type);
+        XMLString::release(&c_type); 
+        return stod(res);
+    }
+
     operator XMLCh*() {return fUnicodeForm;}
 
     const XMLCh* unicodeForm() const
@@ -202,8 +218,8 @@ string readStrAttrFromNode(const DOMElement* node, const char* attribute)
 
     DOMAttr* attr = node->getAttributeNode(typestring);
       if(attr == NULL){
-        cout << "ERR in readStrAttriValueFromNode; attr does not exists!" << endl;
-        cerr << "ERR in readStrAttriValueFromNode; attr does not exists!" << endl;
+        cout << "ERR in readStrAttriValueFromNode; attr does not exists: " << attribute << endl;
+        cerr << "ERR in readStrAttriValueFromNode; attr does not exists: " << attribute << endl;
         return "";
     }
     char *c_type = XMLString::transcode(attr->getValue());

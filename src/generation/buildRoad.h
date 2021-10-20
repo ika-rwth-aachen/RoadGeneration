@@ -45,7 +45,11 @@ int computeFirstLast(DOMElement* roadIn, int &foundfirst, int &foundlast, double
     for (int i = 0; i < referenceLines->getLength(); i++)
     {
         DOMElement* it = (DOMElement*)referenceLines->item(i);
-        cout << readNameFromNode(it) << endl;
+        if(it->getNodeType() != 1) //1 is an Element Node https://xerces.apache.org/xerces-c/apiDocs-3/classDOMNode.html
+        {
+            continue;
+        }
+
         double length = readDoubleAttrFromNode(it, "length");
 
         if (s + length > sStart && foundfirst == -1)
@@ -56,6 +60,7 @@ int computeFirstLast(DOMElement* roadIn, int &foundfirst, int &foundlast, double
 
         cc++;
         s += length;
+
     }
 
     // set sEnd to last containing s value if it's set to inf

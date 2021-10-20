@@ -28,14 +28,8 @@
 int junctionWrapper(const DOMElement* node, roadNetwork &data)
 {   
 
-    //AVOID MEMORY LEAK
-    XMLCh *typestring = XMLString::transcode("type");
-    char *c_type = XMLString::transcode(node->getAttributeNode(typestring)->getValue());
-    std::string type(c_type);
-    XMLString::release(&c_type); 
-    XMLString::release(&typestring);
-    //AVOID MEMORY LEAK and cleanup
-    
+    std::string type = X(node->getAttributeNode(X("type"))->getValue());
+
     // check type of the junction (M = mainroad, A = accessroad)
     int mode = 0;
     if (type == "2M")

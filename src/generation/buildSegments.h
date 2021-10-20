@@ -55,9 +55,9 @@ int buildSegments(xmlTree &inputxml, roadNetwork &data)
 
 	for(DOMElement* em = roadNode->getFirstElementChild(); em != NULL ;em = em->getNextElementSibling())
 	{
-		cout << "processing " <<XMLString::transcode(em->getNodeName()) << endl;
+		cout << "processing " << ((string)X(em->getNodeName())) << endl;
 
-		if (!strcmp(XMLString::transcode(em->getNodeName()),"junction"))
+		if (((string)X(em->getNodeName()) == "junction"))
 		{
 			cout << "TODO JUNCTION IN BUILDSEGMENTS" << endl;
 			if(!setting.silentMode)
@@ -69,7 +69,7 @@ int buildSegments(xmlTree &inputxml, roadNetwork &data)
 			}
 		}
 
-		if (!strcmp(XMLString::transcode(em->getNodeName()),"roundabout"))
+		if ((string)X(em->getNodeName()) == "roundabout")
 		{	
 			if(!setting.silentMode)
 				cout << "Processing roundabout" << endl;
@@ -81,7 +81,7 @@ int buildSegments(xmlTree &inputxml, roadNetwork &data)
 			// }
 		}
 
-		if (!strcmp(XMLString::transcode(em->getNodeName()),"connectingRoad"))
+		if ((string)X(em->getNodeName()) == "connectingRoad")
 		{
 			if(!setting.silentMode)
 				cout << "Processing connectingRoad" << endl;
