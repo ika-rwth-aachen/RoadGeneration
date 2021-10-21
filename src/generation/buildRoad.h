@@ -32,15 +32,11 @@ extern settings setting;
  */
 int computeFirstLast(DOMElement* roadIn, int &foundfirst, int &foundlast, double &sStart, double &sEnd)
 {
-    //TODO: MIGHT GENERATE ERRORS
     int cc = 0;
     double s = 0;
 
 
-    cout <<  getChildWithName(roadIn, "referenceLine")->getChildElementCount() << endl;
     DOMNodeList* referenceLines = getChildWithName(roadIn, "referenceLine")->getChildNodes();
-    cout << readNameFromNode( (DOMElement*) referenceLines->item(2)) << endl; //SOMETHING IS WRONG WITH THE..
-    //.. RETURNED DOMLIST. it contains 3 elements insteadd of just one
 
     for (int i = 0; i < referenceLines->getLength(); i++)
     {
@@ -98,10 +94,12 @@ int generateGeometries(DOMElement* roadIn, road &r, double &sStart, double &sEnd
     double y = 0;
     double hdg = 0;
 
-    DOMNodeList* referenceLines = roadIn->getElementsByTagName(X("referenceLine"));
+    DOMNodeList* referenceLines =  getChildWithName(roadIn, "referenceLine")->getChildNodes(); // TODO: there is a faulty call of the child nodes from roadIN!!
     for (int i = 0; i < referenceLines->getLength(); i++)
     {
         DOMElement* it = (DOMElement*)referenceLines->item(i);
+        if(it->getNodeType() != 1) continue;
+        
         geometryType type;
         double c = 0, c1 = 0, c2 = 0;
         double R = 0, R1 = 0, R2 = 0;

@@ -218,7 +218,7 @@ string readStrAttrFromNode(const DOMElement* node, const char* attribute)
 
     DOMAttr* attr = node->getAttributeNode(typestring);
       if(attr == NULL){
-        cout << "ERR in readStrAttriValueFromNode; attr does not exists: " << attribute << endl;
+        cout << "ERR in readStrAttriValueFromNode; attr "<< attribute <<  "does not exists in node  " << endl;
         cerr << "ERR in readStrAttriValueFromNode; attr does not exists: " << attribute << endl;
         return "";
     }
