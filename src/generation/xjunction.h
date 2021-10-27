@@ -48,7 +48,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     junc.id = readIntAttrFromNode(domNode, "id");
 
     // automatic widening
-    DOMElement* dummy; //TODO FIGURE out how to avoid using this...
+    DOMElement* dummy = NULL; //TODO FIGURE out how to avoid using this...
     DOMElement* automaticWidening = getChildWithName(domNode, "automaticWidening");
 
 

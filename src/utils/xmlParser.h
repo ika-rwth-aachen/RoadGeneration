@@ -199,14 +199,31 @@ struct xmlTree{
 
 };
 
+string readNameFromNode(const DOMElement* node)
+{
+    if(node == NULL){
+        cout << "ERR in readNameFromNode; dom node does not exists!" << endl;
+        cerr << "ERR in readNameFromNode; dom node does not exists!" << endl;
+        return "";
+    }
+  
+    char *c_type = XMLString::transcode(node->getTagName());
+    std::string res(c_type);
+
+    XMLString::release(&c_type); 
+
+    return res;
+}
+
 /**
  * @brief reads an attribute from a xercesC node without causing memory leak. use this method for reading attributes!!!
  * 
  * @param node the node to read the attribute from
  * @param attribute attribute to read
- * @return string returns a string value. The string is empty if no attribute was found
+ * @param suppressOutput suppress output if the attribute is not found.
+ * @return string returns a string value. Returns an empty string if no attribute with the given name is found.
  */
-string readStrAttrFromNode(const DOMElement* node, const char* attribute)
+string readStrAttrFromNode(const DOMElement* node, const char* attribute, bool suppressOutput = false)
 {
 
     if(node == NULL){
@@ -215,11 +232,13 @@ string readStrAttrFromNode(const DOMElement* node, const char* attribute)
         return "";
     }
     XMLCh *typestring = XMLString::transcode(attribute);
-
     DOMAttr* attr = node->getAttributeNode(typestring);
       if(attr == NULL){
-        cout << "ERR in readStrAttriValueFromNode; attr "<< attribute <<  "does not exists in node  " << endl;
-        cerr << "ERR in readStrAttriValueFromNode; attr does not exists: " << attribute << endl;
+        if(!suppressOutput)
+        {
+            cout << "ERR in readStrAttriValueFromNode; attr "<< attribute <<  " does not exists in node " << readNameFromNode(node) << endl;
+            cerr << "ERR in readStrAttriValueFromNode; attr does not exists: " << attribute << endl;
+        }
         return "";
     }
     char *c_type = XMLString::transcode(attr->getValue());
@@ -242,21 +261,7 @@ double readDoubleAttrFromNode(const DOMElement* node, const char* attribute)
     return stod(readStrAttrFromNode(node, attribute));
 }
 
-string readNameFromNode(const DOMElement* node)
-{
-    if(node == NULL){
-        cout << "ERR in readNameFromNode; dom node does not exists!" << endl;
-        cerr << "ERR in readNameFromNode; dom node does not exists!" << endl;
-        return "";
-    }
-  
-    char *c_type = XMLString::transcode(node->getTagName());
-    std::string res(c_type);
 
-    XMLString::release(&c_type); 
-
-    return res;
-}
 
 bool readBoolAttrFromNode(const DOMElement* node, const char* attribute)
 {
@@ -266,7 +271,7 @@ bool readBoolAttrFromNode(const DOMElement* node, const char* attribute)
 
 bool attributeExits(const DOMElement* node, const char* attribute)
 {
-    return !readStrAttrFromNode(node, attribute).empty();
+    return !readStrAttrFromNode(node, attribute, true).empty();
 }
 
 /**

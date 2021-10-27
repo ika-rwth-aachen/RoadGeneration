@@ -516,7 +516,7 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
     for (int i = 0; i < referenceLines->getLength(); i++)
     {
         DOMElement* itt = (DOMElement*)referenceLines->item(i);
-        if (!readStrAttrFromNode(itt, "laneWidening").empty())
+        if (attributeExits(itt,"laneWidening"))
         {
             int side = readIntAttrFromNode(itt, "side");
 
@@ -604,8 +604,9 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
     double widening_ds = setting.laneChange.ds;
     string active = "main";
 
-    if (automaticWidening)
+    if (automaticWidening != NULL)
     {
+        cout << "in automatic widening" << endl;
         if (attributeExits(automaticWidening,"active"))
         {
             active = readStrAttrFromNode(automaticWidening, "active");
