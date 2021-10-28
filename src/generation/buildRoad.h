@@ -433,6 +433,8 @@ int addLanes(DOMElement* roadIn, road &r, int mode)
     for (int i = 0; i < referenceLines->getLength(); i++)
     {
         DOMElement* itt = (DOMElement*)referenceLines->item(i);
+        if(itt->getNodeType() != 1) continue;
+
 
         if (readNameFromNode(itt) != "lane")
             continue;
@@ -516,6 +518,8 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
     for (int i = 0; i < referenceLines->getLength(); i++)
     {
         DOMElement* itt = (DOMElement*)referenceLines->item(i);
+        if(itt->getNodeType() != 1) continue;
+
         if (attributeExits(itt,"laneWidening"))
         {
             int side = readIntAttrFromNode(itt, "side");

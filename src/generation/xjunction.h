@@ -54,7 +54,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
     // define intersection properties
     DOMElement* iP =  getChildWithName(domNode, "intersectionPoint");
-    if (!iP)
+    if (iP == NULL)
     {
         cerr << "ERR: intersection point is not defined correct.";
         return 1;
@@ -76,6 +76,9 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     for (int i = 0; i < roads->getLength(); i ++)
     {
         DOMElement* road = (DOMElement*)roads->item(i);
+        if(road->getNodeType() != 1) continue; //we have to check the node type. Type 1 is an element. The reason for the check is that line breaks are handled as
+        // text nodes by xercesC.
+
         int roadID = readIntAttrFromNode(road, "id");
         if (roadID == readIntAttrFromNode(iP,"refRoad"))
             refRoad = road;
@@ -136,426 +139,463 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     }
 
 
-    // road help2;
-    // if (buildRoad(additionalRoad1, help2, 0, INFINITY, dummy, 0, 0, 0, 0))
-    // {
-    //     cerr << "ERR: error in buildRoad" << endl;
-    //     return 1;
-    // }
+    road help2;
+    if (buildRoad(additionalRoad1, help2, 0, INFINITY, dummy, 0, 0, 0, 0))
+    {
+        cerr << "ERR: error in buildRoad" << endl;
+        return 1;
+    }
 
-    // road help3;
-    // if (buildRoad(additionalRoad2, help3, 0, INFINITY, dummy, 0, 0, 0, 0))
-    // {
-    //     cerr << "ERR: error in buildRoad" << endl;
-    //     return 1;
-    // }
+    road help3;
+    if (buildRoad(additionalRoad2, help3, 0, INFINITY, dummy, 0, 0, 0, 0))
+    {
+        cerr << "ERR: error in buildRoad" << endl;
+        return 1;
+    }
 
-    // road help4;
-    // if (buildRoad(additionalRoad3, help4, 0, INFINITY, dummy, 0, 0, 0, 0))
-    // {
-    //     cerr << "ERR: error in buildRoad" << endl;
-    //     return 1;
-    // }
+    road help4;
+    if (buildRoad(additionalRoad3, help4, 0, INFINITY, dummy, 0, 0, 0, 0))
+    {
+        cerr << "ERR: error in buildRoad" << endl;
+        return 1;
+    }
 
-    // // calculate width of refRoad and addtionalRoad
-    // laneSection lS1 = help1.laneSections.front();
-    // double width1 = abs(findTOffset(lS1, findMinLaneId(lS1), 0)) + abs(findTOffset(lS1, findMaxLaneId(lS1), 0));
+    // calculate width of refRoad and addtionalRoad
+    laneSection lS1 = help1.laneSections.front();
+    double width1 = abs(findTOffset(lS1, findMinLaneId(lS1), 0)) + abs(findTOffset(lS1, findMaxLaneId(lS1), 0));
 
-    // laneSection lS2 = help2.laneSections.front();
-    // double width2 = abs(findTOffset(lS2, findMinLaneId(lS2), 0)) + abs(findTOffset(lS2, findMaxLaneId(lS2), 0));
+    laneSection lS2 = help2.laneSections.front();
+    double width2 = abs(findTOffset(lS2, findMinLaneId(lS2), 0)) + abs(findTOffset(lS2, findMaxLaneId(lS2), 0));
 
-    // laneSection lS3 = help3.laneSections.front();
-    // double width3 = abs(findTOffset(lS3, findMinLaneId(lS3), 0)) + abs(findTOffset(lS3, findMaxLaneId(lS3), 0));
+    laneSection lS3 = help3.laneSections.front();
+    double width3 = abs(findTOffset(lS3, findMinLaneId(lS3), 0)) + abs(findTOffset(lS3, findMaxLaneId(lS3), 0));
 
-    // laneSection lS4 = help4.laneSections.front();
-    // double width4 = abs(findTOffset(lS4, findMinLaneId(lS4), 0)) + abs(findTOffset(lS4, findMaxLaneId(lS4), 0));
+    laneSection lS4 = help4.laneSections.front();
+    double width4 = abs(findTOffset(lS4, findMinLaneId(lS4), 0)) + abs(findTOffset(lS4, findMaxLaneId(lS4), 0));
 
-    // // check offsets and adjust them if necessary (here: 4 is safty factor)
-    // double w1 = max(width2 / 2, max(width3 / 2, width4 / 2)) * 4;
-    // double w2 = max(width1 / 2, max(width3 / 2, width4 / 2)) * 4;
-    // double w3 = max(width1 / 2, max(width2 / 2, width4 / 2)) * 4;
-    // double w4 = max(width1 / 2, max(width2 / 2, width3 / 2)) * 4;
+    // check offsets and adjust them if necessary (here: 4 is safty factor)
+    double w1 = max(width2 / 2, max(width3 / 2, width4 / 2)) * 4;
+    double w2 = max(width1 / 2, max(width3 / 2, width4 / 2)) * 4;
+    double w3 = max(width1 / 2, max(width2 / 2, width4 / 2)) * 4;
+    double w4 = max(width1 / 2, max(width2 / 2, width3 / 2)) * 4;
 
-    // bool changed = false;
-    // if (sOffMain < w1)
-    // {
-    //     sOffMain = w1;
-    //     changed = true;
-    // }
-    // if (sOffAdd1 < w2)
-    // {
-    //     sOffAdd1 = w2;
-    //     changed = true;
-    // }
-    // if (sOffAdd2 < w3)
-    // {
-    //     sOffAdd2 = w3;
-    //     changed = true;
-    // }
-    // if (sOffAdd3 < w4)
-    // {
-    //     sOffAdd3 = w4;
-    //     changed = true;
-    // }
+    bool changed = false;
+    if (sOffMain < w1)
+    {
+        sOffMain = w1;
+        changed = true;
+    }
+    if (sOffAdd1 < w2)
+    {
+        sOffAdd1 = w2;
+        changed = true;
+    }
+    if (sOffAdd2 < w3)
+    {
+        sOffAdd2 = w3;
+        changed = true;
+    }
+    if (sOffAdd3 < w4)
+    {
+        sOffAdd3 = w4;
+        changed = true;
+    }
 
-    // if (changed)
-    // {
-    //     cerr << "!!! sOffset of at least one road was changed, due to feasible road structure !!!" << endl;
-    // }
+    if (changed)
+    {
+        cerr << "!!! sOffset of at least one road was changed, due to feasible road structure !!!" << endl;
+    }
 
-    // // calculate s and phi at intersection
-    // sMain = iP.attribute("s").as_double();
+    // calculate s and phi at intersection
+    sMain = readDoubleAttrFromNode(iP, "s");
 
-    // if (mode >= 1)
-    // {
-    //     tmpNode = iP.child("adRoad");
-    //     if (!tmpNode)
-    //     {
-    //         cerr << "ERR: first 'adRoad' is missing." << endl;
-    //         return 1;
-    //     }
-    //     sAdd1 = tmpNode.attribute("s").as_double();
-    //     phi1 = tmpNode.attribute("angle").as_double();
-    //     tmpNode = tmpNode.next_sibling("adRoad");
-
-    //     //some sanity checks---
-
-    //     if(sAdd1 - sOffAdd1 <= 0)
-    //     {
-    //         cerr << "ERR: error in generating junction road. Intersection point is too close to add. road start" << endl;
-    //         return 1;
-    //     }
-
-    //     if(sAdd1 >  help2.length)
-    //     {
-    //         cerr << "ERR: error in generating junction road. Intersection point is too close to add. road end " << endl;
-    //         return 1;
-    //     }
-
-    //     if(sMain > help1.length)
-    //     {
-    //         cerr << "ERR: error in generating junction road. Intersection point is too close to main road end " << endl;
-    //         return 1;
-    //     }
-    //     if(sMain <= sOffMain)
-    //     {
-    //         cerr << "ERR: error in generating junction road. Intersection point is too close to main road start " << endl;
-    //         return 1;
-    //     }
-
-    //     //---------
-    // }
-    // if (mode >= 2)
-    // {
-    //     if (!tmpNode)
-    //     {
-    //         cerr << "ERR: second 'adRoad' is missing." << endl;
-    //         return 1;
-    //     }
-    //     sAdd2 = tmpNode.attribute("s").as_double();
-    //     phi2 = tmpNode.attribute("angle").as_double();
-    //     tmpNode = tmpNode.next_sibling("adRoad");
-    // }
-    // if (mode >= 3)
-    // {
-    //     if (!tmpNode)
-    //     {
-    //         cerr << "ERR: third 'adRoad' is missing." << endl;
-    //         return 1;
-    //     }
-    //     sAdd3 = tmpNode.attribute("s").as_double();
-    //     phi3 = tmpNode.attribute("angle").as_double();
-    //     tmpNode = tmpNode.next_sibling("adRoad");
-    // }
-
-    // // calculate coordinates of intersectionPoint
-    // double iPx = 0;
-    // double iPy = 0;
-    // double iPhdg = 0;
-
-    // // --- generate roads ------------------------------------------------------
-    // /*            |      |
-    //                    | id:4 |
-    //          __________|      |___________
-    // refRoad   id: 1               id: 3
-    //          __________        ___________    
-    //                    |      |
-    //                    | id:2 |
-    //                    |      |
-    // */
-    // if(!setting.silentMode)
-    //     cout << "\t Generating Roads" << endl;
-
-    // road r1;
-    // r1.id = 100 * junc.id + 1;
-    // r1.junction = junc.id;
-    // r1.isConnectingRoad = true;
-    // r1.predecessor.id = junc.id;
-    // r1.predecessor.elementType = junctionType;
-    // if (mode == 1 || mode == 2)
-    // {
-    //     if (buildRoad(refRoad, r1, sMain - sOffMain, 0, automaticWidening, sMain, iPx, iPy, iPhdg))
-    //     {
-    //         cerr << "ERR: error in buildRoad" << endl;
-    //         return 1;
-    //     }
-    // }
-    // if (mode == 3)
-    // {
-    //     if (buildRoad(refRoad, r1, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
-    //     {
-    //         cerr << "ERR: error in buildRoad" << endl;
-    //         return 1;
-    //     }
-    // }
-    // if (addObjects(refRoad, r1, data))
-    // {
-    //     cerr << "ERR: error in addObjects" << endl;
-    //     return 1;
-    // }
-
-    // road r2;
-    // r2.id = 100 * junc.id + 2;
-    // r2.junction = junc.id;
-    // r2.isConnectingRoad = true;
-    // r2.predecessor.id = junc.id;
-    // r2.predecessor.elementType = junctionType;
-    // if (mode == 1)
-    // {
+    if (mode >= 1)
+    {
+        tmpNode = getChildWithName(iP, "adRoad");
+        if (tmpNode == NULL)
+        {
+            cerr << "ERR: first 'adRoad' is missing." << endl;
+            return 1;
+        }
+        sAdd1 = readDoubleAttrFromNode(tmpNode, "s");
+        phi1 = readDoubleAttrFromNode(tmpNode, "angle");
+        //tmpNode = tmpNode.next_sibling("adRoad");
+        for(tmpNode = tmpNode->getNextElementSibling(); tmpNode != NULL && readNameFromNode(tmpNode) != "adRoad";tmpNode = tmpNode->getNextElementSibling());
         
-    //     if (buildRoad(additionalRoad1, r2, sAdd1 - sOffAdd1, 0, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
-    //     {
-    //         cerr << "ERR: error in buildRoad" << endl;
-    //         return 1;
-    //     }
-    // }
-    // if (mode == 2 || mode == 3)
-    // {
-    //     if (buildRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
-    //     {
-    //         cerr << "ERR: error in buildRoad" << endl;
-    //         return 1;
-    //     }
-    // }
-    // if (addObjects(additionalRoad1, r2, data))
-    // {
-    //     cerr << "ERR: error in addObjects" << endl;
-    //     return 1;
-    // }
+        //some sanity checks---
+        if (tmpNode == NULL)
+        {
+            cerr << "ERR: error in generating junction road (mode 1). AdRoad is missing in intersection point" << endl;
+            return 1;
+        }
 
-    // road r3;
-    // r3.id = 100 * junc.id + 3;
-    // r3.junction = junc.id;
-    // r3.predecessor.id = junc.id;
-    // r3.isConnectingRoad = true;
-    // r3.predecessor.elementType = junctionType;
-    // if (mode == 1 || mode == 2)
-    // {
-    //     if (buildRoad(refRoad, r3, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
-    //     {
-    //         cerr << "ERR: error in buildRoad" << endl;
-    //         return 1;
-    //     }
-    //     if (addObjects(refRoad, r3, data))
-    //     {
-    //         cerr << "ERR: error in addObjects" << endl;
-    //         return 1;
-    //     }
-    // }
-    // if (mode == 3)
-    // {
-    //     if (buildRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
-    //     {
-    //         cerr << "ERR: error in buildRoad" << endl;
-    //         return 1;
-    //     }
-    //     if (addObjects(additionalRoad2, r3, data))
-    //     {
-    //         cerr << "ERR: error in addObjects" << endl;
-    //         return 1;
-    //     }
-    // }
+        if(sAdd1 - sOffAdd1 <= 0)
+        {
+            cerr << "ERR: error in generating junction road. Intersection point is too close to add. road start" << endl;
+            return 1;
+        }
 
-    // road r4;
-    // r4.id = 100 * junc.id + 4;
-    // r4.junction = junc.id;
-    // r4.predecessor.id = junc.id;
-    // r4.isConnectingRoad = true;
-    // r4.predecessor.elementType = junctionType;
-    // if (mode == 1) //check here
-    // {
-    //     if (buildRoad(additionalRoad1, r4, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
-    //     {
-    //         cerr << "ERR: error in buildRoad" << endl;
-    //         return 1;
-    //     }
-    //     if (addObjects(additionalRoad1, r4, data))
-    //     {
-    //         cerr << "ERR: error in addObjects" << endl;
-    //         return 1;
-    //     }
-    // }
-    // if (mode == 2)
-    // {
-    //     if (buildRoad(additionalRoad2, r4, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
-    //     {
-    //         cerr << "ERR: error in buildRoad" << endl;
-    //         return 1;
-    //     }
-    //     if (addObjects(additionalRoad2, r4, data))
-    //     {
-    //         cerr << "ERR: error in addObjects" << endl;
-    //         return 1;
-    //     }
-    // }
-    // if (mode == 3)
-    // {
-    //     if (buildRoad(additionalRoad3, r4, sAdd3 + sOffAdd3, INFINITY, automaticWidening, sAdd3, iPx, iPy, iPhdg + phi3))
-    //     {
-    //         cerr << "ERR: error in buildRoad" << endl;
-    //         return 1;
-    //     }
-    //     if (addObjects(additionalRoad3, r4, data))
-    //     {
-    //         cerr << "ERR: error in addObjects" << endl;
-    //         return 1;
-    //     }
-    // }
+        if(sAdd1 >  help2.length)
+        {
+            cerr << "ERR: error in generating junction road. Intersection point is too close to add. road end " << endl;
+            return 1;
+        }
 
-    // // add addtional lanes
+        if(sMain > help1.length)
+        {
+            cerr << "ERR: error in generating junction road. Intersection point is too close to main road end " << endl;
+            return 1;
+        }
+        if(sMain <= sOffMain)
+        {
+            cerr << "ERR: error in generating junction road. Intersection point is too close to main road start " << endl;
+            return 1;
+        }
+
+        //---------
+    }
+    if (mode >= 2)
+    {
+        if (tmpNode == NULL)
+        {
+            cerr << "ERR: second 'adRoad' is missing." << endl;
+            return 1;
+        }
+
+        sAdd2 = readDoubleAttrFromNode(tmpNode, "s");
+        phi2 = readDoubleAttrFromNode(tmpNode, "angle");
+        for(tmpNode = tmpNode->getNextElementSibling(); tmpNode != NULL && readNameFromNode(tmpNode) != "adRoad";tmpNode = tmpNode->getNextElementSibling());
+
+        if (tmpNode == NULL)
+        {
+            cerr << "ERR: error in generating junction road (mode 2). AdRoad is missing in intersection point" << endl;
+            return 1;
+        }
+
+
+    }
+    if (mode >= 3)
+    {
+        if (!tmpNode)
+        {
+            cerr << "ERR: third 'adRoad' is missing." << endl;
+            return 1;
+        }
+        sAdd3 = readDoubleAttrFromNode(tmpNode, "s");
+        phi3 = readDoubleAttrFromNode(tmpNode, "angle");
+        for(tmpNode = tmpNode->getNextElementSibling(); tmpNode != NULL && readNameFromNode(tmpNode) != "adRoad";tmpNode = tmpNode->getNextElementSibling());
+
+        if (tmpNode == NULL)
+        {
+            cerr << "ERR: error in generating junction road (mode 2). AdRoad is missing in intersection point" << endl;
+            return 1;
+        }
+    }
+
+    // calculate coordinates of intersectionPoint
+    double iPx = 0;
+    double iPy = 0;
+    double iPhdg = 0;
+
+    // --- generate roads ------------------------------------------------------
+    /*            |      |
+                       | id:4 |
+             __________|      |___________
+    refRoad   id: 1               id: 3
+             __________        ___________    
+                       |      |
+                       | id:2 |
+                       |      |
+    */
+    if(!setting.silentMode)
+        cout << "\t Generating Roads" << endl;
+
+    road r1;
+    r1.id = 100 * junc.id + 1;
+    r1.junction = junc.id;
+    r1.isConnectingRoad = true;
+    r1.predecessor.id = junc.id;
+    r1.predecessor.elementType = junctionType;
+    if (mode == 1 || mode == 2)
+    {
+        if (buildRoad(refRoad, r1, sMain - sOffMain, 0, automaticWidening, sMain, iPx, iPy, iPhdg))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+    }
+    if (mode == 3)
+    {
+        if (buildRoad(refRoad, r1, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+    }
+    if (addObjects(refRoad, r1, data))
+    {
+        cerr << "ERR: error in addObjects" << endl;
+        return 1;
+    }
+
+    road r2;
+    r2.id = 100 * junc.id + 2;
+    r2.junction = junc.id;
+    r2.isConnectingRoad = true;
+    r2.predecessor.id = junc.id;
+    r2.predecessor.elementType = junctionType;
+    if (mode == 1)
+    {
+        
+        if (buildRoad(additionalRoad1, r2, sAdd1 - sOffAdd1, 0, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+    }
+    if (mode == 2 || mode == 3)
+    {
+        if (buildRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+    }
+    if (addObjects(additionalRoad1, r2, data))
+    {
+        cerr << "ERR: error in addObjects" << endl;
+        return 1;
+    }
+
+    road r3;
+    r3.id = 100 * junc.id + 3;
+    r3.junction = junc.id;
+    r3.predecessor.id = junc.id;
+    r3.isConnectingRoad = true;
+    r3.predecessor.elementType = junctionType;
+    if (mode == 1 || mode == 2)
+    {
+        if (buildRoad(refRoad, r3, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+        if (addObjects(refRoad, r3, data))
+        {
+            cerr << "ERR: error in addObjects" << endl;
+            return 1;
+        }
+    }
+    if (mode == 3)
+    {
+        if (buildRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+        if (addObjects(additionalRoad2, r3, data))
+        {
+            cerr << "ERR: error in addObjects" << endl;
+            return 1;
+        }
+    }
+
+    road r4;
+    r4.id = 100 * junc.id + 4;
+    r4.junction = junc.id;
+    r4.predecessor.id = junc.id;
+    r4.isConnectingRoad = true;
+    r4.predecessor.elementType = junctionType;
+    if (mode == 1) //check here
+    {
+        if (buildRoad(additionalRoad1, r4, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+        if (addObjects(additionalRoad1, r4, data))
+        {
+            cerr << "ERR: error in addObjects" << endl;
+            return 1;
+        }
+    }
+    if (mode == 2)
+    {
+        if (buildRoad(additionalRoad2, r4, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+        if (addObjects(additionalRoad2, r4, data))
+        {
+            cerr << "ERR: error in addObjects" << endl;
+            return 1;
+        }
+    }
+    if (mode == 3)
+    {
+        if (buildRoad(additionalRoad3, r4, sAdd3 + sOffAdd3, INFINITY, automaticWidening, sAdd3, iPx, iPy, iPhdg + phi3))
+        {
+            cerr << "ERR: error in buildRoad" << endl;
+            return 1;
+        }
+        if (addObjects(additionalRoad3, r4, data))
+        {
+            cerr << "ERR: error in addObjects" << endl;
+            return 1;
+        }
+    }
+
+    // add addtional lanes
     // for (pugi::xml_node addLane : addLanes.children("additionalLane"))
     // {
-    //     int n = 1;
-    //     if (addLane.attribute("amount"))
-    //         n = addLane.attribute("amount").as_int();
+    DOMNodeList *addLaneList = addLanes->getElementsByTagName(X("additionalLane"));
+    for (int i = 0; i < addLaneList->getLength(); i ++)
+    {
+        DOMElement* addLane = (DOMElement*)addLaneList->item(i);
+        if(addLane->getNodeType() != 1) continue; //we have to check the node type. Type 1 is an element. The reason for the check is that line breaks are handled as
+        // text nodes by xercesC.
+        int n = 1;
+        if (attributeExits(addLane, "amount"))
+            n = readIntAttrFromNode(addLane, "amount");
 
-    //     bool verschwenkung = true;
-    //     if (addLane.attribute("verschwenkung"))
-    //         verschwenkung = addLane.attribute("verschwenkung").as_bool();
+        bool verschwenkung = true;
+        if (attributeExits(addLane, "verschwenkung"))
+            verschwenkung = readBoolAttrFromNode(addLane, "verschwenkung");
 
-    //     double length = setting.laneChange.s;
-    //     if (addLane.attribute("length"))
-    //         length = addLane.attribute("length").as_double();
+        double length = setting.laneChange.s;
+        if (attributeExits(addLane, "length"))
+            length = readDoubleAttrFromNode(addLane, "length");
 
-    //     double ds = setting.laneChange.ds;
-    //     if (addLane.attribute("ds"))
-    //         length = addLane.attribute("ds").as_double();
+        double ds = setting.laneChange.ds;
+        if (attributeExits(addLane, "ds"))
+            length = readDoubleAttrFromNode(addLane, "ds");
 
-    //     int type;
-    //     string tmpType = addLane.attribute("type").value();
-    //     if (tmpType == "left")
-    //         type = 1;
-    //     if (tmpType == "right")
-    //         type = -1;
+        int type;
+        string tmpType = readStrAttrFromNode(addLane, "type");
+        if (tmpType == "left")
+            type = 1;
+        if (tmpType == "right")
+            type = -1;
 
-    //     if (tmpType == "leftRestricted")
-    //         type = 1;
-    //     if (tmpType == "rightRestricted")
-    //         type = -1;
+        if (tmpType == "leftRestricted")
+            type = 1;
+        if (tmpType == "rightRestricted")
+            type = -1;
 
-    //     bool restricted = false;
-    //     if (tmpType == "leftRestricted" || tmpType == "rightRestricted")
-    //         restricted = true;
+        bool restricted = false;
+        if (tmpType == "leftRestricted" || tmpType == "rightRestricted")
+            restricted = true;
 
-    //     int inputId = addLane.attribute("roadId").as_int();
+        int inputId = readIntAttrFromNode(addLane, "roadId");
 
-    //     string inputPos = "end";
-    //     if (addLane.attribute("roadPos"))
-    //         inputPos = addLane.attribute("roadPos").value();
+        string inputPos = "end";
+        if (attributeExits(addLane, "roadPos"))
+            inputPos = readStrAttrFromNode(addLane, "roadPos");
 
-    //     if (inputId == r1.inputId && inputPos == r1.inputPos)
-    //     {
-    //         for (int i = 0; i < n; i++)
-    //             laneWideningJunction(r1, length, ds, type, verschwenkung, restricted);
-    //     }
+        if (inputId == r1.inputId && inputPos == r1.inputPos)
+        {
+            for (int i = 0; i < n; i++)
+                laneWideningJunction(r1, length, ds, type, verschwenkung, restricted);
+        }
 
-    //     if (inputId == r2.inputId && inputPos == r2.inputPos)
-    //     {
-    //         for (int i = 0; i < n; i++)
-    //             laneWideningJunction(r2, length, ds, type, verschwenkung, restricted);
-    //     }
+        if (inputId == r2.inputId && inputPos == r2.inputPos)
+        {
+            for (int i = 0; i < n; i++)
+                laneWideningJunction(r2, length, ds, type, verschwenkung, restricted);
+        }
 
-    //     if (inputId == r3.inputId && inputPos == r3.inputPos)
-    //     {
-    //         for (int i = 0; i < n; i++)
-    //             laneWideningJunction(r3, length, ds, type, verschwenkung, restricted);
-    //     }
+        if (inputId == r3.inputId && inputPos == r3.inputPos)
+        {
+            for (int i = 0; i < n; i++)
+                laneWideningJunction(r3, length, ds, type, verschwenkung, restricted);
+        }
 
-    //     if (inputId == r4.inputId && inputPos == r4.inputPos)
-    //     {
-    //         for (int i = 0; i < n; i++)
-    //             laneWideningJunction(r4, length, ds, type, verschwenkung, restricted);
-    //     }
-    // }
+        if (inputId == r4.inputId && inputPos == r4.inputPos)
+        {
+            for (int i = 0; i < n; i++)
+                laneWideningJunction(r4, length, ds, type, verschwenkung, restricted);
+        }
+    }
 
-    // data.roads.push_back(r1);
-    // data.roads.push_back(r2);
-    // data.roads.push_back(r3);
-    // data.roads.push_back(r4);
+    data.roads.push_back(r1);
+    data.roads.push_back(r2);
+    data.roads.push_back(r3);
+    data.roads.push_back(r4);
 
-    // // --- generate connecting lanes -------------------------------------------
-    // if(!setting.silentMode)
-    //     cout << "\t Generate Connecting Lanes" << endl;
+    // --- generate connecting lanes -------------------------------------------
+    if(!setting.silentMode)
+        cout << "\t Generate Connecting Lanes" << endl;
 
-    // // generate user-defined connecting lanes
-    // if (con && (string)con.attribute("type").value() == "single")
-    // {
-    //     for (pugi::xml_node roadLink : con.children("roadLink"))
-    //     {
-    //         int fromId = roadLink.attribute("fromId").as_int();
-    //         int toId = roadLink.attribute("toId").as_int();
+    // generate user-defined connecting lanes
+    if (con != NULL && readStrAttrFromNode(con, "type") == "single")
+    {
+        DOMNodeList *roadLinkList = con->getElementsByTagName(X("roadLink"));
+        for (int i = 0; i < roadLinkList->getLength(); i ++)
+        {
+            DOMElement* roadLink = (DOMElement*)roadLinkList->item(i);
+            if(roadLink->getNodeType() != 1) continue; //we have to check the node type. Type 1 is an element. The reason for the check is that line breaks are handled as
+            // text nodes by xercesC.
 
-    //         string fromPos = "end";
-    //         if (roadLink.attribute("fromPos"))
-    //             fromPos = roadLink.attribute("fromPos").value();
+            int fromId = readIntAttrFromNode(roadLink, "fromId");
+            int toId = readIntAttrFromNode(roadLink, "toId");
 
-    //         string toPos = "end";
-    //         if (roadLink.attribute("toPos"))
-    //             toPos = roadLink.attribute("toPos").value();
+            string fromPos = "end";
+            if (attributeExits(roadLink, "fromPos"))
+                fromPos = readIntAttrFromNode(roadLink, "fromPos");
 
-    //         road r1, r2;
-    //         for (int i = 0; i < data.roads.size(); i++)
-    //         {
-    //             road tmp = data.roads[i];
-    //             if (tmp.inputId == fromId && tmp.inputPos == fromPos)
-    //                 r1 = tmp;
-    //             if (tmp.inputId == toId && tmp.inputPos == toPos)
-    //                 r2 = tmp;
-    //         }
-    //         if (r1.id == -1 || r2.id == -1)
-    //         {
-    //             cerr << "ERR: error in user-defined lane connecting:" << endl;
-    //             cerr << "\t road to 'fromId' or 'toId' can not be found" << endl;
-    //             return 1;
-    //         }
+            string toPos = "end";
+            if (attributeExits(roadLink, "toPos"))
+                toPos = readIntAttrFromNode(roadLink, "toPos");
 
-    //         for (pugi::xml_node laneLink : roadLink.children("laneLink"))
-    //         {
-    //             int from = laneLink.attribute("fromId").as_int();
-    //             int to = laneLink.attribute("toId").as_int();
+            road r1, r2;
+            for (int i = 0; i < data.roads.size(); i++)
+            {
+                road tmp = data.roads[i];
+                if (tmp.inputId == fromId && tmp.inputPos == fromPos)
+                    r1 = tmp;
+                if (tmp.inputId == toId && tmp.inputPos == toPos)
+                    r2 = tmp;
+            }
+            if (r1.id == -1 || r2.id == -1)
+            {
+                cerr << "ERR: error in user-defined lane connecting:" << endl;
+                cerr << "\t road to 'fromId' or 'toId' can not be found" << endl;
+                return 1;
+            }
 
-    //             // flip ids
-    //             if (fromPos == "start")
-    //                 from *= -1;
-    //             if (toPos == "end")
-    //                 to *= -1;
+            DOMNodeList *laneLinkList = roadLink->getElementsByTagName(X("laneLink"));
+            for (int i = 0; i < laneLinkList->getLength(); i ++)
+            {
+                DOMElement* laneLink = (DOMElement*)laneLinkList->item(i);
+                if(laneLink->getNodeType() != 1) continue; //we have to check the node type. Type 1 is an element. The reason for the check is that line breaks are handled as
+                // text nodes by xercesC.
 
-    //             string left = non;
-    //             string right = non;
+                int from = readIntAttrFromNode(laneLink, "fromId");
+                int to = readIntAttrFromNode(laneLink, "toId");
 
-    //             if (laneLink.attribute("left"))
-    //                 left = laneLink.attribute("left").value();
+                // flip ids
+                if (fromPos == "start")
+                    from *= -1;
+                if (toPos == "end")
+                    to *= -1;
 
-    //             if (laneLink.attribute("right"))
-    //                 right = laneLink.attribute("right").value();
+                string left = non;
+                string right = non;
 
-    //             road r;
-    //             r.id = 100 * junc.id + data.roads.size() + 1;
-    //             createRoadConnection(r1, r2, r, junc, from, to, left, right);
-    //             data.roads.push_back(r);
-    //         }
-    //     }
-    // }
+                if (attributeExits(laneLink, "left"))
+                    left = readStrAttrFromNode(laneLink, "left");
+
+                if (attributeExits(laneLink, "right"))
+                    right = readStrAttrFromNode(laneLink, "right");;
+
+                road r;
+                r.id = 100 * junc.id + data.roads.size() + 1;
+                createRoadConnection(r1, r2, r, junc, from, to, left, right);
+                data.roads.push_back(r);
+            }
+        }
+    }
     // // generate automatic connecting lanes
     // else
     // {

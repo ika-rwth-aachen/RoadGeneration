@@ -316,6 +316,8 @@ int addObjects(DOMElement* inRoad, road &r, roadNetwork &data)
     for (int i = 0; i < objects->getLength(); i++)
     {
         DOMElement* obj = (DOMElement*)objects->item(i);
+        if(obj->getNodeType() != 1) continue;
+
         std::string type = readNameFromNode(obj);
         object o;
 
