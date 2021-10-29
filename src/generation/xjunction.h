@@ -596,256 +596,257 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
             }
         }
     }
-    // // generate automatic connecting lanes
-    // else
-    // {
-    //     // switch roads if necessary, so that the angle to refRoad increases
-    //     if (sortRoads(r1, r2, r3, r4))
-    //     {
-    //         cerr << "ERR: roads can not be sorted." << endl;
-    //         return 1;
-    //     }
+    // generate automatic connecting lanes
+    else
+    {
+        // switch roads if necessary, so that the angle to refRoad increases
+        if (sortRoads(r1, r2, r3, r4))
+        {
+            cerr << "ERR: roads can not be sorted." << endl;
+            return 1;
+        }
 
-    //     // generate connections
-    //     int nCount = 1;
-    //     int from, to, nF, nT;
+        // generate connections
+        int nCount = 1;
+        int from, to, nF, nT;
 
-    //     // 1) PART from M1 To M3 -> Middle to Middle
+        // 1) PART from M1 To M3 -> Middle to Middle
 
-    //     calcFromTo(r1, r3, from, to, nF, nT, 0);
+        calcFromTo(r1, r3, from, to, nF, nT, 0);
 
-    //     for (int i = 0; i < min(nF, nT); i++)
-    //     {
-    //         road r;
-    //         r.id = 100 * junc.id + 50 + nCount;
+        for (int i = 0; i < min(nF, nT); i++)
+        {
+            road r;
+            r.id = 100 * junc.id + 50 + nCount;
 
-    //         if (mode == 1 || mode == 2)
-    //             createRoadConnection(r1, r3, r, junc, from, to, non, non);
-    //         if (mode == 3)
-    //             createRoadConnection(r1, r3, r, junc, from, to, non, non);
+            if (mode == 1 || mode == 2)
+                createRoadConnection(r1, r3, r, junc, from, to, non, non);
+            if (mode == 3)
+                createRoadConnection(r1, r3, r, junc, from, to, non, non);
 
-    //         data.roads.push_back(r);
+            data.roads.push_back(r);
 
-    //         from++;
-    //         to--;
-    //         nCount++;
-    //     }
+            from++;
+            to--;
+            nCount++;
+        }
 
-    //     // 2) PART from M2 To M4 -> Middle to Middle
+        // 2) PART from M2 To M4 -> Middle to Middle
 
-    //     calcFromTo(r2, r4, from, to, nF, nT, 0);
+        calcFromTo(r2, r4, from, to, nF, nT, 0);
 
-    //     for (int i = 0; i < min(nF, nT); i++)
-    //     {
-    //         road r;
-    //         r.id = 100 * junc.id + 50 + nCount;
+        for (int i = 0; i < min(nF, nT); i++)
+        {
+            road r;
+            r.id = 100 * junc.id + 50 + nCount;
 
-    //         createRoadConnection(r2, r4, r, junc, from, to, non, non);
+            createRoadConnection(r2, r4, r, junc, from, to, non, non);
 
-    //         data.roads.push_back(r);
+            data.roads.push_back(r);
 
-    //         from++;
-    //         to--;
-    //         nCount++;
-    //     }
+            from++;
+            to--;
+            nCount++;
+        }
 
-    //     // 3) PART from M3 To M1 -> Middle to Middle
+        // 3) PART from M3 To M1 -> Middle to Middle
 
-    //     calcFromTo(r3, r1, from, to, nF, nT, 0);
+        calcFromTo(r3, r1, from, to, nF, nT, 0);
 
-    //     for (int i = 0; i < min(nF, nT); i++)
-    //     {
-    //         road r;
-    //         r.id = 100 * junc.id + 50 + nCount;
+        for (int i = 0; i < min(nF, nT); i++)
+        {
+            road r;
+            r.id = 100 * junc.id + 50 + nCount;
 
-    //         if (mode == 1 || mode == 2)
-    //             createRoadConnection(r3, r1, r, junc, from, to, non, non);
-    //         if (mode == 3)
-    //             createRoadConnection(r3, r1, r, junc, from, to, non, non);
+            if (mode == 1 || mode == 2)
+                createRoadConnection(r3, r1, r, junc, from, to, non, non);
+            if (mode == 3)
+                createRoadConnection(r3, r1, r, junc, from, to, non, non);
 
-    //         data.roads.push_back(r);
+            data.roads.push_back(r);
 
-    //         from++;
-    //         to--;
-    //         nCount++;
-    //     }
+            from++;
+            to--;
+            nCount++;
+        }
 
-    //     // 4) PART from M4 To M2 -> Middle to Middle
+        // 4) PART from M4 To M2 -> Middle to Middle
 
-    //     calcFromTo(r4, r2, from, to, nF, nT, 0);
+        calcFromTo(r4, r2, from, to, nF, nT, 0);
 
-    //     for (int i = 0; i < min(nF, nT); i++)
-    //     {
-    //         road r;
-    //         r.id = 100 * junc.id + 50 + nCount;
+        for (int i = 0; i < min(nF, nT); i++)
+        {
+            road r;
+            r.id = 100 * junc.id + 50 + nCount;
 
-    //         createRoadConnection(r4, r2, r, junc, from, to, non, non);
+            createRoadConnection(r4, r2, r, junc, from, to, non, non);
 
-    //         data.roads.push_back(r);
+            data.roads.push_back(r);
 
-    //         from++;
-    //         to--;
-    //         nCount++;
-    //     }
+            from++;
+            to--;
+            nCount++;
+        }
 
-    //     // 5) PART from R1 To R2 -> Right to Right (if exist)
+        // 5) PART from R1 To R2 -> Right to Right (if exist)
 
-    //     calcFromTo(r1, r2, from, to, nF, nT, -1);
+        calcFromTo(r1, r2, from, to, nF, nT, -1);
 
-    //     for (int i = 0; i < min(nF, nT); i++)
-    //     {
-    //         road r;
-    //         r.id = 100 * junc.id + 50 + nCount;
+        for (int i = 0; i < min(nF, nT); i++)
+        {
+            road r;
+            r.id = 100 * junc.id + 50 + nCount;
 
-    //         if (i == 0)
-    //             createRoadConnection(r1, r2, r, junc, from, to, non, sol);
-    //         else
-    //             createRoadConnection(r1, r2, r, junc, from, to, non, non);
+            if (i == 0)
+                createRoadConnection(r1, r2, r, junc, from, to, non, sol);
+            else
+                createRoadConnection(r1, r2, r, junc, from, to, non, non);
 
-    //         data.roads.push_back(r);
+            data.roads.push_back(r);
 
-    //         from--;
-    //         to++;
-    //         nCount++;
-    //     }
+            from--;
+            to++;
+            nCount++;
+        }
 
-    //     // 6) PART from L2 To L1 -> Left to Left (if exist)
+        // 6) PART from L2 To L1 -> Left to Left (if exist)
 
-    //     calcFromTo(r2, r1, from, to, nF, nT, 1);
+        calcFromTo(r2, r1, from, to, nF, nT, 1);
 
-    //     for (int i = 0; i < min(nF, nT); i++)
-    //     {
-    //         road r;
-    //         r.id = 100 * junc.id + 50 + nCount;
+        for (int i = 0; i < min(nF, nT); i++)
+        {
+            road r;
+            r.id = 100 * junc.id + 50 + nCount;
 
-    //         createRoadConnection(r2, r1, r, junc, from, to, non, non);
+            createRoadConnection(r2, r1, r, junc, from, to, non, non);
 
-    //         data.roads.push_back(r);
+            data.roads.push_back(r);
 
-    //         from++;
-    //         to--;
-    //         nCount++;
-    //     }
+            from++;
+            to--;
+            nCount++;
+        }
 
-    //     // 7) PART from R2 To R3 -> Right to Right (if exist)
+        // 7) PART from R2 To R3 -> Right to Right (if exist)
 
-    //     calcFromTo(r2, r3, from, to, nF, nT, -1);
+        calcFromTo(r2, r3, from, to, nF, nT, -1);
 
-    //     for (int i = 0; i < min(nF, nT); i++)
-    //     {
-    //         road r;
-    //         r.id = 100 * junc.id + 50 + nCount;
+        for (int i = 0; i < min(nF, nT); i++)
+        {
+            road r;
+            r.id = 100 * junc.id + 50 + nCount;
 
-    //         if (i == 0)
-    //             createRoadConnection(r2, r3, r, junc, from, to, non, sol);
-    //         else
-    //             createRoadConnection(r2, r3, r, junc, from, to, non, non);
+            if (i == 0)
+                createRoadConnection(r2, r3, r, junc, from, to, non, sol);
+            else
+                createRoadConnection(r2, r3, r, junc, from, to, non, non);
 
-    //         data.roads.push_back(r);
+            data.roads.push_back(r);
 
-    //         from--;
-    //         to++;
-    //         nCount++;
-    //     }
+            from--;
+            to++;
+            nCount++;
+        }
 
-    //     // 8) PART from L3 To L2 -> Left to Left (if exist)
+        // 8) PART from L3 To L2 -> Left to Left (if exist)
 
-    //     calcFromTo(r3, r2, from, to, nF, nT, 1);
+        calcFromTo(r3, r2, from, to, nF, nT, 1);
 
-    //     for (int i = 0; i < min(nF, nT); i++)
-    //     {
-    //         road r;
-    //         r.id = 100 * junc.id + 50 + nCount;
+        for (int i = 0; i < min(nF, nT); i++)
+        {
+            road r;
+            r.id = 100 * junc.id + 50 + nCount;
 
-    //         createRoadConnection(r3, r2, r, junc, from, to, non, non);
+            createRoadConnection(r3, r2, r, junc, from, to, non, non);
 
-    //         data.roads.push_back(r);
+            data.roads.push_back(r);
 
-    //         from++;
-    //         to--;
-    //         nCount++;
-    //     }
+            from++;
+            to--;
+            nCount++;
+        }
 
-    //     // 9) PART from R3 To R4 -> Right to Right (if exist)
+        // 9) PART from R3 To R4 -> Right to Right (if exist)
 
-    //     calcFromTo(r3, r4, from, to, nF, nT, -1);
+        calcFromTo(r3, r4, from, to, nF, nT, -1);
 
-    //     for (int i = 0; i < min(nF, nT); i++)
-    //     {
-    //         road r;
-    //         r.id = 100 * junc.id + 50 + nCount;
+        for (int i = 0; i < min(nF, nT); i++)
+        {
+            road r;
+            r.id = 100 * junc.id + 50 + nCount;
 
-    //         if (i == 0)
-    //             createRoadConnection(r3, r4, r, junc, from, to, non, sol);
-    //         else
-    //             createRoadConnection(r3, r4, r, junc, from, to, non, non);
+            if (i == 0)
+                createRoadConnection(r3, r4, r, junc, from, to, non, sol);
+            else
+                createRoadConnection(r3, r4, r, junc, from, to, non, non);
 
-    //         data.roads.push_back(r);
+            data.roads.push_back(r);
 
-    //         from--;
-    //         to++;
-    //         nCount++;
-    //     }
+            from--;
+            to++;
+            nCount++;
+        }
 
-    //     // 10) PART from L4 To L3 -> Left to Left (if exist)
+        // 10) PART from L4 To L3 -> Left to Left (if exist)
 
-    //     calcFromTo(r4, r3, from, to, nF, nT, 1);
+        calcFromTo(r4, r3, from, to, nF, nT, 1);
 
-    //     for (int i = 0; i < min(nF, nT); i++)
-    //     {
-    //         road r;
-    //         r.id = 100 * junc.id + 50 + nCount;
+        for (int i = 0; i < min(nF, nT); i++)
+        {
+            road r;
+            r.id = 100 * junc.id + 50 + nCount;
 
-    //         createRoadConnection(r4, r3, r, junc, from, to, non, non);
+            createRoadConnection(r4, r3, r, junc, from, to, non, non);
 
-    //         data.roads.push_back(r);
+            data.roads.push_back(r);
 
-    //         from++;
-    //         to--;
-    //         nCount++;
-    //     }
+            from++;
+            to--;
+            nCount++;
+        }
 
-    //     // 11) PART from R4 To R1 -> Right to Right (if exist)
+        // 11) PART from R4 To R1 -> Right to Right (if exist)
 
-    //     calcFromTo(r4, r1, from, to, nF, nT, -1);
+        calcFromTo(r4, r1, from, to, nF, nT, -1);
 
-    //     for (int i = 0; i < min(nF, nT); i++)
-    //     {
-    //         road r;
-    //         r.id = 100 * junc.id + 50 + nCount;
+        for (int i = 0; i < min(nF, nT); i++)
+        {
+            road r;
+            r.id = 100 * junc.id + 50 + nCount;
 
-    //         if (i == 0)
-    //             createRoadConnection(r4, r1, r, junc, from, to, non, sol);
-    //         else
-    //             createRoadConnection(r4, r1, r, junc, from, to, non, non);
+            if (i == 0)
+                createRoadConnection(r4, r1, r, junc, from, to, non, sol);
+            else
+                createRoadConnection(r4, r1, r, junc, from, to, non, non);
 
-    //         data.roads.push_back(r);
+            data.roads.push_back(r);
 
-    //         from--;
-    //         to++;
-    //         nCount++;
-    //     }
+            from--;
+            to++;
+            nCount++;
+        }
 
-    //     // 12) PART from L1 To L4 -> Left to Left (if exist)
+        // 12) PART from L1 To L4 -> Left to Left (if exist)
 
-    //     calcFromTo(r1, r4, from, to, nF, nT, 1);
+        calcFromTo(r1, r4, from, to, nF, nT, 1);
 
-    //     for (int i = 0; i < min(nF, nT); i++)
-    //     {
-    //         road r;
-    //         r.id = 100 * junc.id + 50 + nCount;
+        for (int i = 0; i < min(nF, nT); i++)
+        {
+            road r;
+            r.id = 100 * junc.id + 50 + nCount;
 
-    //         createRoadConnection(r1, r4, r, junc, from, to, non, non);
+            createRoadConnection(r1, r4, r, junc, from, to, non, non);
 
-    //         data.roads.push_back(r);
+            data.roads.push_back(r);
 
-    //         from++;
-    //         to--;
-    //         nCount++;
-    //     }
-    // }
+            from++;
+            to--;
+            nCount++;
+        }
+    }
 
-    // data.junctions.push_back(junc);
+    data.junctions.push_back(junc);
+    cout << "done" << endl;
 
     return 0;
 }
