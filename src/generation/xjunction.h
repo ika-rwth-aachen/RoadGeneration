@@ -283,13 +283,9 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         }
         sAdd3 = readDoubleAttrFromNode(tmpNode, "s");
         phi3 = readDoubleAttrFromNode(tmpNode, "angle");
-        for(tmpNode = tmpNode->getNextElementSibling(); tmpNode != NULL && readNameFromNode(tmpNode) != "adRoad";tmpNode = tmpNode->getNextElementSibling());
+        for(tmpNode = tmpNode->getNextElementSibling(); tmpNode != NULL 
+            && readNameFromNode(tmpNode) != "adRoad";tmpNode = tmpNode->getNextElementSibling());
 
-        if (tmpNode == NULL)
-        {
-            cerr << "ERR: error in generating junction road (mode 2). AdRoad is missing in intersection point" << endl;
-            return 1;
-        }
     }
 
     // calculate coordinates of intersectionPoint
@@ -447,74 +443,74 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     }
 
     // add addtional lanes
-    // for (pugi::xml_node addLane : addLanes.children("additionalLane"))
-    // {
-    DOMNodeList *addLaneList = addLanes->getElementsByTagName(X("additionalLane"));
-    for (int i = 0; i < addLaneList->getLength(); i ++)
-    {
-        DOMElement* addLane = (DOMElement*)addLaneList->item(i);
-        if(addLane->getNodeType() != 1) continue; //we have to check the node type. Type 1 is an element. The reason for the check is that line breaks are handled as
-        // text nodes by xercesC.
-        int n = 1;
-        if (attributeExits(addLane, "amount"))
-            n = readIntAttrFromNode(addLane, "amount");
-
-        bool verschwenkung = true;
-        if (attributeExits(addLane, "verschwenkung"))
-            verschwenkung = readBoolAttrFromNode(addLane, "verschwenkung");
-
-        double length = setting.laneChange.s;
-        if (attributeExits(addLane, "length"))
-            length = readDoubleAttrFromNode(addLane, "length");
-
-        double ds = setting.laneChange.ds;
-        if (attributeExits(addLane, "ds"))
-            length = readDoubleAttrFromNode(addLane, "ds");
-
-        int type;
-        string tmpType = readStrAttrFromNode(addLane, "type");
-        if (tmpType == "left")
-            type = 1;
-        if (tmpType == "right")
-            type = -1;
-
-        if (tmpType == "leftRestricted")
-            type = 1;
-        if (tmpType == "rightRestricted")
-            type = -1;
-
-        bool restricted = false;
-        if (tmpType == "leftRestricted" || tmpType == "rightRestricted")
-            restricted = true;
-
-        int inputId = readIntAttrFromNode(addLane, "roadId");
-
-        string inputPos = "end";
-        if (attributeExits(addLane, "roadPos"))
-            inputPos = readStrAttrFromNode(addLane, "roadPos");
-
-        if (inputId == r1.inputId && inputPos == r1.inputPos)
+    if(addLanes != NULL){
+        DOMNodeList *addLaneList = addLanes->getElementsByTagName(X("additionalLane"));
+        for (int i = 0; i < addLaneList->getLength(); i ++)
         {
-            for (int i = 0; i < n; i++)
-                laneWideningJunction(r1, length, ds, type, verschwenkung, restricted);
-        }
+            DOMElement* addLane = (DOMElement*)addLaneList->item(i);
+            if(addLane->getNodeType() != 1) continue; //we have to check the node type. Type 1 is an element. The reason for the check is that line breaks are handled as
+            // text nodes by xercesC.
+            int n = 1;
+            if (attributeExits(addLane, "amount"))
+                n = readIntAttrFromNode(addLane, "amount");
 
-        if (inputId == r2.inputId && inputPos == r2.inputPos)
-        {
-            for (int i = 0; i < n; i++)
-                laneWideningJunction(r2, length, ds, type, verschwenkung, restricted);
-        }
+            bool verschwenkung = true;
+            if (attributeExits(addLane, "verschwenkung"))
+                verschwenkung = readBoolAttrFromNode(addLane, "verschwenkung");
 
-        if (inputId == r3.inputId && inputPos == r3.inputPos)
-        {
-            for (int i = 0; i < n; i++)
-                laneWideningJunction(r3, length, ds, type, verschwenkung, restricted);
-        }
+            double length = setting.laneChange.s;
+            if (attributeExits(addLane, "length"))
+                length = readDoubleAttrFromNode(addLane, "length");
 
-        if (inputId == r4.inputId && inputPos == r4.inputPos)
-        {
-            for (int i = 0; i < n; i++)
-                laneWideningJunction(r4, length, ds, type, verschwenkung, restricted);
+            double ds = setting.laneChange.ds;
+            if (attributeExits(addLane, "ds"))
+                length = readDoubleAttrFromNode(addLane, "ds");
+
+            int type;
+            string tmpType = readStrAttrFromNode(addLane, "type");
+            if (tmpType == "left")
+                type = 1;
+            if (tmpType == "right")
+                type = -1;
+
+            if (tmpType == "leftRestricted")
+                type = 1;
+            if (tmpType == "rightRestricted")
+                type = -1;
+
+            bool restricted = false;
+            if (tmpType == "leftRestricted" || tmpType == "rightRestricted")
+                restricted = true;
+
+            int inputId = readIntAttrFromNode(addLane, "roadId");
+
+            string inputPos = "end";
+            if (attributeExits(addLane, "roadPos"))
+                inputPos = readStrAttrFromNode(addLane, "roadPos");
+
+            if (inputId == r1.inputId && inputPos == r1.inputPos)
+            {
+                for (int i = 0; i < n; i++)
+                    laneWideningJunction(r1, length, ds, type, verschwenkung, restricted);
+            }
+
+            if (inputId == r2.inputId && inputPos == r2.inputPos)
+            {
+                for (int i = 0; i < n; i++)
+                    laneWideningJunction(r2, length, ds, type, verschwenkung, restricted);
+            }
+
+            if (inputId == r3.inputId && inputPos == r3.inputPos)
+            {
+                for (int i = 0; i < n; i++)
+                    laneWideningJunction(r3, length, ds, type, verschwenkung, restricted);
+            }
+
+            if (inputId == r4.inputId && inputPos == r4.inputPos)
+            {
+                for (int i = 0; i < n; i++)
+                    laneWideningJunction(r4, length, ds, type, verschwenkung, restricted);
+            }
         }
     }
 
@@ -845,6 +841,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         }
     }
     data.junctions.push_back(junc);
+    cout << junc.to_string() << endl;
     cout << "done" << endl;
 
     return 0;
