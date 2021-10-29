@@ -45,7 +45,6 @@ int junctionWrapper(const DOMElement* node, roadNetwork &data)
 
     if (mode == 1)
     {
-        cout << "TODO MODE 1 IN JUNCTION WRAPPER " << endl;
         if (xjunction(node, data))
         {
             cerr << "ERR: error in xjunction." << endl;
@@ -56,11 +55,11 @@ int junctionWrapper(const DOMElement* node, roadNetwork &data)
     {
         cout << "TODO MODE 2 IN JUNCTION WRAPPER " << endl;
 
-        // if (tjunction(node, data))
-        // {
-        //     cerr << "ERR: error in tjunction." << endl;
-        //     return 1;
-        // }
+        if (tjunction(node, data))
+        {
+            cerr << "ERR: error in tjunction." << endl;
+            return 1;
+        }
     }
 
     if (mode == 0)

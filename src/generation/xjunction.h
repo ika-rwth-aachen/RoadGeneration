@@ -65,14 +65,13 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
 
     // define junction roads
-    DOMElement* refRoad;
-    DOMElement* additionalRoad1;
-    DOMElement* additionalRoad2;
-    DOMElement* additionalRoad3;
+    DOMElement* refRoad = NULL;
+    DOMElement* additionalRoad1 = NULL;
+    DOMElement* additionalRoad2 = NULL;
+    DOMElement* additionalRoad3 = NULL;
 
     DOMElement* tmpNode = getChildWithName(iP, "adRoad");
     DOMNodeList *roads = domNode->getElementsByTagName(X("road"));
-    
     for (int i = 0; i < roads->getLength(); i ++)
     {
         DOMElement* road = (DOMElement*)roads->item(i);

@@ -24,63 +24,72 @@ extern settings setting;
  * @param data  roadNetwork structure where the generated roads and junctions are stored
  * @return int  error code
  */
-int tjunction(pugi::xml_node &node, roadNetwork &data)
+int tjunction(const DOMElement* node, roadNetwork &data)
 {
     cout << "processing t junction" << endl;
-    // // check type of the junction (here: M = mainroad, A = accessroad)
-    // int mode = 0;
-    // if ((string)node.attribute("type").value() == "MA")
-    //     mode = 1;
-    // if ((string)node.attribute("type").value() == "3A")
-    //     mode = 2;
-    // if (mode == 0)
-    // {
-    //     cerr << "ERR: junction type is not defined correct." << endl;
-    //     return 1;
-    // }
+    // check type of the junction (here: M = mainroad, A = accessroad)
+    int mode = 0;
+    if (readStrAttrFromNode(node, "type") == "MA")
+        mode = 1;
+    if (readStrAttrFromNode(node, "type")  == "3A")
+        mode = 2;
+    if (mode == 0)
+    {
+        cerr << "ERR: junction type is not defined correct." << endl;
+        return 1;
+    }
 
-    // // create segment
-    // data.nSegment++;
-    // junction junc;
-    // junc.id = node.attribute("id").as_int();
+    // create segment
+    data.nSegment++;
+    junction junc;
+    junc.id = readIntAttrFromNode(node, "id");
 
-    // // automatic widening
-    // pugi::xml_node dummy;
-    // pugi::xml_node automaticWidening = node.child("automaticWidening");
+    // automatic widening
+    DOMElement* dummy = NULL;
+    DOMElement* automaticWidening = getChildWithName(node ,"automaticWidening");
 
-    // // create automatic restricted node based on defined automatic widening node
-    // pugi::xml_node automaticRestricted = node.child("automaticWidening");
-    // automaticRestricted.append_attribute("restricted") = true;
+    // create automatic restricted node based on defined automatic widening node
+    DOMElement* automaticRestricted = getChildWithName(node ,"automaticWidening");
+    if(automaticRestricted != NULL)
+        automaticRestricted->setAttribute(X("restricted"), X("true"));
+    //automaticRestricted.append_attribute("restricted") = true;
 
-    // // define intersection properties
-    // pugi::xml_node iP = node.child("intersectionPoint");
-    // if (!iP)
-    // {
-    //     cerr << "ERR: intersection point is not defined correct.";
-    //     return 1;
-    // }
-    // pugi::xml_node cA = node.child("coupler").child("junctionArea");
-    // pugi::xml_node con = node.child("coupler").child("connection");
-    // pugi::xml_node addLanes = node.child("coupler").child("additionalLanes");
+    // define intersection properties
+    DOMElement* iP = getChildWithName(node, "intersectionPoint");
+    if (iP != NULL)
+    {
+        cerr << "ERR: intersection point is not defined correct.";
+        return 1;
+    }
+    DOMElement* cA = getChildWithName(getChildWithName(node, "coupler"), "junctionArea");
+    DOMElement* con = getChildWithName(getChildWithName(node, "coupler"), "connection");
+    DOMElement* addLanes = getChildWithName(getChildWithName(node, "coupler"), "additionalLanes");
 
-    // // define junction roads
-    // pugi::xml_node mainRoad;
-    // pugi::xml_node additionalRoad1;
-    // pugi::xml_node additionalRoad2;
+    // define junction roads
+    DOMElement* mainRoad = NULL;
+    DOMElement* additionalRoad1 = NULL;
+    DOMElement* additionalRoad2 = NULL;
 
-    // pugi::xml_node tmpNode = iP.child("adRoad");
+    DOMElement* tmpNode = getChildWithName(iP, "adRoad");
 
-    // for (pugi::xml_node road : node.children("road"))
-    // {
-    //     if (road.attribute("id").as_int() == iP.attribute("refRoad").as_int())
-    //         mainRoad = road;
+    //for (pugi::xml_node road : node.children("road"))
+    DOMNodeList *roadList = node->getElementsByTagName(X("road"));
+    for (int i = 0; i < roadList->getLength(); i ++)
+    {
+        DOMElement* road = (DOMElement*)roadList->item(i);
+        if(road->getNodeType() != 1) continue; //we have to check the node type. Type 1 is an element. The reason for the check is that line breaks are handled as
+        // text nodes by xercesC.
+        int currentRoadId = readIntAttrFromNode(road, "id");
 
-    //     if (mode >= 1 && road.attribute("id").as_int() == tmpNode.attribute("id").as_int())
-    //         additionalRoad1 = road;
+        if (currentRoadId == readIntAttrFromNode(iP, "refRoad"))
+            mainRoad = road;
 
-    //     if (mode >= 2 && road.attribute("id").as_int() == tmpNode.next_sibling("adRoad").attribute("id").as_int())
-    //         additionalRoad2 = road;
-    // }
+        if (mode >= 1 && currentRoadId == readIntAttrFromNode(tmpNode, "id"))
+            additionalRoad1 = road;
+
+        if (mode >= 2 && currentRoadId == readIntAttrFromNode(getNextSiblingWithTagName(tmpNode, "adRoad"), "id"))
+            additionalRoad2 = road;
+    }
 
     // if (!mainRoad || !additionalRoad1 || (mode == 2 && !additionalRoad2))
     // {
