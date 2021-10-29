@@ -783,7 +783,6 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
             nCount++;
         }
     }
-
     data.junctions.push_back(junc);
 
     return 0;
