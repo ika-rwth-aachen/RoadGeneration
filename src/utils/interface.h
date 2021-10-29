@@ -48,6 +48,18 @@ struct connection
     contactPointType contactPoint = noneType;
     int fromLane = -1;
     int toLane = -1;
+
+    string to_string()
+    {
+        string res = 
+        "connection:      " + std::to_string(id) + "\n"
+        "from:            " + std::to_string(from) + "\n"
+        "to:              " + std::to_string(to) + "\n"
+        "connection type: " + std::to_string(contactPoint) + "\n"
+        "fromLane:        " + std::to_string(fromLane) + "\n"
+        "toLane:          " + std::to_string(toLane);
+        return res;
+    }
 };
 
 /**
@@ -58,6 +70,18 @@ struct junction
 {
     int id = -1;
     vector<connection> connections;
+
+    string to_string()
+    {
+        string res = 
+        "junction " + std::to_string(id) + "\n";
+        for(connection c: connections)
+        {
+            res = res + c.to_string() + "\n";
+        }
+        return res;
+    }
+
 };
 
 /**

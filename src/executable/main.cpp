@@ -27,6 +27,8 @@ int main(int argc, char** argv){
         return -1;
     }
 
+
+
     setFileName(settings.fileName);
     setXMLSchemaLocation(&schemaLocation[0]);
     setOutputName(settings.outputName);

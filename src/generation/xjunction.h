@@ -844,7 +844,6 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
             nCount++;
         }
     }
-
     data.junctions.push_back(junc);
     cout << "done" << endl;
 
