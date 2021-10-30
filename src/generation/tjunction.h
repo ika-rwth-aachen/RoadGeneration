@@ -56,9 +56,9 @@ int tjunction(const DOMElement* node, roadNetwork &data)
 
     // define intersection properties
     DOMElement* iP = getChildWithName(node, "intersectionPoint");
-    if (iP != NULL)
+    if (iP == NULL)
     {
-        cerr << "ERR: intersection point is not defined correct.";
+        cerr << "ERR: intersection point is not defined correct." << endl;
         return 1;
     }
     DOMElement* cA = getChildWithName(getChildWithName(node, "coupler"), "junctionArea");
@@ -91,32 +91,33 @@ int tjunction(const DOMElement* node, roadNetwork &data)
             additionalRoad2 = road;
     }
 
-    // if (!mainRoad || !additionalRoad1 || (mode == 2 && !additionalRoad2))
-    // {
-    //     cerr << "ERR: specified roads in intersection are not found.";
-    //     return 1;
-    // }
+    if (mainRoad == NULL || additionalRoad1 == NULL || (mode == 2 && additionalRoad2 == NULL))
+    {
+        cerr << "ERR: specified roads in intersection are not found.";
+        return 1;
+    }
 
-    // double sMain, sAdd1, sAdd2, sOffMain, sOffAdd1, sOffAdd2, phi1, phi2;
+    double sMain, sAdd1, sAdd2, sOffMain, sOffAdd1, sOffAdd2, phi1, phi2;
 
-    // // calculate offsets
-    // double sOffset = 0;
-    // if (cA)
-    //     sOffset = stod(cA.attribute("gap").value(), &st);
-    // sOffMain = sOffset;
-    // sOffAdd1 = sOffset;
-    // sOffAdd2 = sOffset;
-    // for (pugi::xml_node_iterator sB = cA.begin(); sB != cA.end(); ++sB)
-    // {
-    //     if (sB->attribute("id").as_int() == mainRoad.attribute("id").as_int())
-    //         sOffMain = sB->attribute("gap").as_double();
+    // calculate offsets
+    double sOffset = 0;
+    if (cA)
+        sOffset = readDoubleAttrFromNode(cA, "gap");
+    sOffMain = sOffset;
+    sOffAdd1 = sOffset;
+    sOffAdd2 = sOffset;
+    
+    for (pugi::xml_node_iterator sB = cA.begin(); sB != cA.end(); ++sB)
+    {
+        if (sB->attribute("id").as_int() == mainRoad.attribute("id").as_int())
+            sOffMain = sB->attribute("gap").as_double();
 
-    //     if (sB->attribute("id").as_int() == additionalRoad1.attribute("id").as_int())
-    //         sOffAdd1 = sB->attribute("gap").as_double();
+        if (sB->attribute("id").as_int() == additionalRoad1.attribute("id").as_int())
+            sOffAdd1 = sB->attribute("gap").as_double();
 
-    //     if (sB->attribute("id").as_int() == additionalRoad2.attribute("id").as_int())
-    //         sOffAdd2 = sB->attribute("gap").as_double();
-    // }
+        if (sB->attribute("id").as_int() == additionalRoad2.attribute("id").as_int())
+            sOffAdd2 = sB->attribute("gap").as_double();
+    }
 
     // // calculate helper roads
     // road help1;
