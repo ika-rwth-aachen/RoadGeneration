@@ -252,13 +252,16 @@ string readStrAttrFromNode(const DOMElement* node, const char* attribute, bool s
 
 int readIntAttrFromNode(const DOMElement* node, const char* attribute)
 {
-    
-    return stoi(readStrAttrFromNode(node, attribute));
+    string res = readStrAttrFromNode(node, attribute);
+    if (res == "") return NULL;
+    return stoi(res);
 }
 
 double readDoubleAttrFromNode(const DOMElement* node, const char* attribute)
 {
-    return stod(readStrAttrFromNode(node, attribute));
+    string res = readStrAttrFromNode(node, attribute);
+    if (res == "") return NULL;
+    return stod(res);
 }
 
 
@@ -266,6 +269,7 @@ double readDoubleAttrFromNode(const DOMElement* node, const char* attribute)
 bool readBoolAttrFromNode(const DOMElement* node, const char* attribute)
 {
     string str = readStrAttrFromNode(node, attribute);
+    if(str == "") return NULL;
     return str == "1" || str == "True" || str == "true";
 }
 
@@ -305,6 +309,7 @@ DOMElement* getNextSiblingWithTagName(DOMElement* elem, const char* tag)
      */
     DOMElement* getChildWithName( const DOMElement* node, const char *childName)
     {
+        if (node == NULL) return NULL;
         DOMNodeList * nodelist = node->getElementsByTagName(X(childName));
         for(int i = 0; i < nodelist->getLength(); i++)
         {

@@ -35,28 +35,29 @@ int computeFirstLast(DOMElement* roadIn, int &foundfirst, int &foundlast, double
     int cc = 0;
     double s = 0;
 
+    if (roadIn != NULL) {
+        DOMNodeList* referenceLines = getChildWithName(roadIn, "referenceLine")->getChildNodes();
 
-    DOMNodeList* referenceLines = getChildWithName(roadIn, "referenceLine")->getChildNodes();
-
-    for (int i = 0; i < referenceLines->getLength(); i++)
-    {
-        DOMElement* it = (DOMElement*)referenceLines->item(i);
-        if(it->getNodeType() != 1) //1 is an Element Node https://xerces.apache.org/xerces-c/apiDocs-3/classDOMNode.html
+        for (int i = 0; i < referenceLines->getLength(); i++)
         {
-            continue;
+            DOMElement* it = (DOMElement*)referenceLines->item(i);
+            if(it->getNodeType() != 1) //1 is an Element Node https://xerces.apache.org/xerces-c/apiDocs-3/classDOMNode.html
+            {
+                continue;
+            }
+
+            double length = readDoubleAttrFromNode(it, "length");
+
+            if (s + length > sStart && foundfirst == -1)
+                foundfirst = cc;
+
+            if (s + length >= sEnd && foundlast == -1)
+                foundlast = cc;
+
+            cc++;
+            s += length;
+
         }
-
-        double length = readDoubleAttrFromNode(it, "length");
-
-        if (s + length > sStart && foundfirst == -1)
-            foundfirst = cc;
-
-        if (s + length >= sEnd && foundlast == -1)
-            foundlast = cc;
-
-        cc++;
-        s += length;
-
     }
 
     // set sEnd to last containing s value if it's set to inf
@@ -93,8 +94,9 @@ int generateGeometries(DOMElement* roadIn, road &r, double &sStart, double &sEnd
     double x = 0;
     double y = 0;
     double hdg = 0;
+    if(roadIn == NULL) return 0;
 
-    DOMNodeList* referenceLines =  getChildWithName(roadIn, "referenceLine")->getChildNodes(); // TODO: there is a faulty call of the child nodes from roadIN!!
+    DOMNodeList* referenceLines =  getChildWithName(roadIn, "referenceLine")->getChildNodes();
     for (int i = 0; i < referenceLines->getLength(); i++)
     {
         DOMElement* it = (DOMElement*)referenceLines->item(i);
@@ -428,72 +430,74 @@ int addLanes(DOMElement* roadIn, road &r, int mode)
     r.laneSections.push_back(laneSec);
 
     // --- add user defined laneSection to road --------------------------------
-
-    DOMNodeList* referenceLines = roadIn->getElementsByTagName(X("lanes"));
-    for (int i = 0; i < referenceLines->getLength(); i++)
+    if (roadIn != NULL)
     {
-        DOMElement* itt = (DOMElement*)referenceLines->item(i);
-        if(itt->getNodeType() != 1) continue;
-
-
-        if (readNameFromNode(itt) != "lane")
-            continue;
-
-        lane l;
-        l.id = readIntAttrFromNode(itt, "id");
-        l.preId = l.id;
-        l.sucId = l.id;
-
-        // flip lanes for mode 1
-        if (mode == 2)
-            l.id *= -1;
-
-        if (!readStrAttrFromNode(itt, "type").empty())
-            l.type = readStrAttrFromNode(itt, "type");
-
-        l.w.a = desWidth;
-        if (!readStrAttrFromNode(itt, "width").empty())
-            l.w.a = readDoubleAttrFromNode(itt, "width");
-        if (l.id == 0)
-            l.w.a = 0.0;
-
-        l.speed = desSpeed;
-        if (!readStrAttrFromNode(itt, "speed").empty())
-            l.speed = readDoubleAttrFromNode(itt, "speed");
-
-        DOMElement* rm = getChildWithName(itt, "roadMark");
-        if (rm)
+        DOMNodeList* referenceLines = roadIn->getElementsByTagName(X("lanes"));
+        for (int i = 0; i < referenceLines->getLength(); i++)
         {
-            if (!readStrAttrFromNode(rm, "type").empty())
-                l.rm.type = readStrAttrFromNode(rm, "type");
-            if (!readStrAttrFromNode(rm, "color").empty())
-                l.rm.color = readStrAttrFromNode(rm, "color");
-            if (!readStrAttrFromNode(rm, "width").empty())
-                l.rm.width = readDoubleAttrFromNode(rm, "width");
-        }
+            DOMElement* itt = (DOMElement*)referenceLines->item(i);
+            if(itt->getNodeType() != 1) continue;
 
-        DOMElement* m = getChildWithName(itt,"material");
-        if (m)
-        {
-            if (!readStrAttrFromNode(m, "surface").empty())
-                l.m.surface = readStrAttrFromNode(m, "surface");
-            if (!readStrAttrFromNode(m, "friction").empty())
-                l.m.friction = readDoubleAttrFromNode(m, "friction");
-            if (!readStrAttrFromNode(m, "roughness").empty())
-                l.m.roughness = readDoubleAttrFromNode(m, "roughness");
-        }
 
-        lane tmp;
-        int id = findLane(laneSec, tmp, l.id);
-        if (id >= 0)
-            laneSec.lanes[id] = l;
-        else
-            laneSec.lanes.push_back(l);
+            if (readNameFromNode(itt) != "lane")
+                continue;
 
-        if (l.type == "delete")
-        {
-            int id = findLane(laneSec, l, l.id);
-            laneSec.lanes.erase(laneSec.lanes.begin() + id);
+            lane l;
+            l.id = readIntAttrFromNode(itt, "id");
+            l.preId = l.id;
+            l.sucId = l.id;
+
+            // flip lanes for mode 1
+            if (mode == 2)
+                l.id *= -1;
+
+            if (!readStrAttrFromNode(itt, "type").empty())
+                l.type = readStrAttrFromNode(itt, "type");
+
+            l.w.a = desWidth;
+            if (!readStrAttrFromNode(itt, "width").empty())
+                l.w.a = readDoubleAttrFromNode(itt, "width");
+            if (l.id == 0)
+                l.w.a = 0.0;
+
+            l.speed = desSpeed;
+            if (!readStrAttrFromNode(itt, "speed").empty())
+                l.speed = readDoubleAttrFromNode(itt, "speed");
+
+            DOMElement* rm = getChildWithName(itt, "roadMark");
+            if (rm)
+            {
+                if (!readStrAttrFromNode(rm, "type").empty())
+                    l.rm.type = readStrAttrFromNode(rm, "type");
+                if (!readStrAttrFromNode(rm, "color").empty())
+                    l.rm.color = readStrAttrFromNode(rm, "color");
+                if (!readStrAttrFromNode(rm, "width").empty())
+                    l.rm.width = readDoubleAttrFromNode(rm, "width");
+            }
+
+            DOMElement* m = getChildWithName(itt,"material");
+            if (m)
+            {
+                if (!readStrAttrFromNode(m, "surface").empty())
+                    l.m.surface = readStrAttrFromNode(m, "surface");
+                if (!readStrAttrFromNode(m, "friction").empty())
+                    l.m.friction = readDoubleAttrFromNode(m, "friction");
+                if (!readStrAttrFromNode(m, "roughness").empty())
+                    l.m.roughness = readDoubleAttrFromNode(m, "roughness");
+            }
+
+            lane tmp;
+            int id = findLane(laneSec, tmp, l.id);
+            if (id >= 0)
+                laneSec.lanes[id] = l;
+            else
+                laneSec.lanes.push_back(l);
+
+            if (l.type == "delete")
+            {
+                int id = findLane(laneSec, l, l.id);
+                laneSec.lanes.erase(laneSec.lanes.begin() + id);
+            }
         }
     }
     r.laneSections.front() = laneSec;
@@ -513,6 +517,9 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
 {
     // --- user defined lanedrops or lanewidenings -----------------------------
     //      -> have to be defined in increasing s order, because the lane changes are concatenated in s direction
+
+    if(roadIn == NULL) return 0; //leave if the road is null. might cause errros 
+
 
     DOMNodeList* referenceLines = roadIn->getElementsByTagName(X("lanes"));
     for (int i = 0; i < referenceLines->getLength(); i++)
