@@ -55,7 +55,6 @@ int buildSegments(xmlTree &inputxml, roadNetwork &data)
 
 	for(DOMElement* em = roadNode->getFirstElementChild(); em != NULL ;em = em->getNextElementSibling())
 	{
-		cout << "processing " << ((string)X(em->getNodeName())) << endl;
 
 		if (((string)X(em->getNodeName()) == "junction"))
 		{
@@ -73,12 +72,11 @@ int buildSegments(xmlTree &inputxml, roadNetwork &data)
 		{	
 			if(!setting.silentMode)
 				cout << "Processing roundabout" << endl;
-			cout << "TODO ROUNDABOUT IN BUILDSEGMENTS" << endl;
-			// if (roundAbout(*it, data))
-			// {
-			// 	cerr << "ERR: error in roundabout." << endl;
-			// 	return 1;
-			// }
+			if (roundAbout(em, data))
+			{
+				cerr << "ERR: error in roundabout." << endl;
+				return 1;
+			}
 		}
 
 		if ((string)X(em->getNodeName()) == "connectingRoad")
@@ -93,48 +91,6 @@ int buildSegments(xmlTree &inputxml, roadNetwork &data)
 			// }
 		}
 	}
-
-
-	//---------------------------------------------
-	// pugi::xml_node segments = doc.child("roadNetwork").child("segments");
-	// if (!segments)
-	// 	cerr << "ERR: 'segments' not found in input file." << endl;
-
-	// for (pugi::xml_node_iterator it = segments.begin(); it != segments.end(); ++it)
-	// {
-	// 		if ((string)it->name() == "junction")
-	// 		{
-	// 		if(!setting.silentMode)
-	// 			cout << "Processing junction" << endl;
-	// 		if (junctionWrapper(*it, data))
-	// 		{
-	// 			cerr << "ERR: error in junction." << endl;
-	// 			return 1;
-	// 		}
-	// 	}
-
-	// 	if ((string)it->name() == "roundabout")
-	// 	{	
-	// 		if(!setting.silentMode)
-	// 			cout << "Processing roundabout" << endl;
-	// 		if (roundAbout(*it, data))
-	// 		{
-	// 			cerr << "ERR: error in roundabout." << endl;
-	// 			return 1;
-	// 		}
-	// 	}
-
-	// 	if ((string)it->name() == "connectingRoad")
-	// 	{
-	// 		if(!setting.silentMode)
-	// 			cout << "Processing connectingRoad" << endl;
-	// 		if (connectingRoad(*it, data))
-	// 		{
-	// 			cerr << "ERR: error in connectingRoad." << endl;
-	// 			return 1;
-	// 		}
-	// 	}
-	// }
 
 	return 0;
 }

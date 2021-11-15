@@ -24,30 +24,33 @@ extern settings setting;
  * @param data  roadNetwork structure where the generated roads and junctions are stored
  * @return int  error code
  */
-int roundAbout(pugi::xml_node &node, roadNetwork &data)
+int roundAbout(const DOMElement* node, roadNetwork &data)
 {
-    // // create segment
-    // data.nSegment++;
-    // junction junc;
-    // junc.id = node.attribute("id").as_int();
+    // create segment
+    data.nSegment++;
+    junction junc;
+    junc.id = readIntAttrFromNode(node, "id");
 
-    // pugi::xml_node dummy;
+    DOMElement* dummy = NULL;
 
-    // pugi::xml_node circleRoad = node.child("circle");
-    // int refId = circleRoad.attribute("id").as_int();
-    // if (!circleRoad)
-    // {
-    //     cerr << "ERR: circleRoad is not found.";
-    //     return 1;
-    // }
+    DOMElement* circleRoad = getChildWithName(node, "circle");
+    int refId = readIntAttrFromNode(circleRoad, "id");
+    if (!circleRoad)
+    {
+        cerr << "ERR: circleRoad is not found.";
+        return 1;
+    }
 
-    // // store properties of circleRoad
-    // double length = circleRoad.child("referenceLine").child("circle").attribute("length").as_double();
-    // double R = length / (2 * M_PI);
-    // circleRoad.child("referenceLine").child("circle").append_attribute("R") = R;
+    // store properties of circleRoad
+    //double length = circleRoad.child("referenceLine").child("circle").attribute("length").as_double();
+    double length = readDoubleAttrFromNode(getChildWithName(getChildWithName(circleRoad, "referenceLine"), "circle"),"length") ;
+    double R = length / (2 * M_PI);
+    getChildWithName(getChildWithName(circleRoad, "referenceLine"), "circle")->setAttribute(X("R"), X(to_string(R).c_str()));
+    //circleRoad.child("referenceLine").child("circle").append_attribute("R") = R;
+    
 
-    // double sOld;
-    // road rOld;
+    double sOld;
+    road rOld;
 
     // bool clockwise;
     // if (R > 0)

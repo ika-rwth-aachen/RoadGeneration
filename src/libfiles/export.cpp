@@ -126,7 +126,7 @@ EXPORTED int executePipeline(char* file)
 		cerr << "ERR: error in buildSegments" << endl;
 		return -1;
 	}
-	if (linkSegments(in, data))
+	if (linkSegments(inputxml, data))
 	{
 		cerr << "ERR: error in linkSegments" << endl;
 		return -1;
