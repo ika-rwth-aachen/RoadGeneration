@@ -253,14 +253,14 @@ string readStrAttrFromNode(const DOMElement* node, const char* attribute, bool s
 int readIntAttrFromNode(const DOMElement* node, const char* attribute)
 {
     string res = readStrAttrFromNode(node, attribute);
-    if (res == "") return NULL;
+    if (res == "") return -1;
     return stoi(res);
 }
 
 double readDoubleAttrFromNode(const DOMElement* node, const char* attribute)
 {
     string res = readStrAttrFromNode(node, attribute);
-    if (res == "") return NULL;
+    if (res == "") return -1;
     return stod(res);
 }
 

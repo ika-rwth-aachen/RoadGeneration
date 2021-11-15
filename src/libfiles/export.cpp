@@ -136,7 +136,7 @@ EXPORTED int executePipeline(char* file)
 		cerr << "ERR: error in closeRoadNetwork" << endl;
 		return -1;
 	}
-	if (createXML(out, data))
+	if (createXMLXercesC(data))
 	{
 		cerr << "ERR: error during createXML" << endl;
 		return -1;
