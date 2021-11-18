@@ -215,6 +215,8 @@ string readNameFromNode(const DOMElement* node)
     return res;
 }
 
+
+
 /**
  * @brief reads an attribute from a xercesC node without causing memory leak. use this method for reading attributes!!!
  * 
@@ -278,6 +280,7 @@ bool attributeExits(const DOMElement* node, const char* attribute)
     return !readStrAttrFromNode(node, attribute, true).empty();
 }
 
+
 /**
  * @brief Get the Next Sibling with the specified tag name. Return NULL if nothing is found.
  * 
@@ -321,12 +324,36 @@ DOMElement* getNextSiblingWithTagName(DOMElement* elem, const char* tag)
         return NULL;
     }
 
+/**
+ * @brief Reads the attribute from a child of a node. Use with caution: if multiple child nodes with the name exist, only the first one will be read.
+ * 
+ * @param node the node whose childs should be read
+ * @param firstchild name of the first child
+ * @param attr name of the attribute
+ * @return string value of the attribute
+ */
+string readAttributeFromChildren(DOMElement *node, const char* firstchild, const char* attr )
+{
+    return readStrAttrFromNode(getChildWithName(node, firstchild), attr);
+}
+
+/**
+ * @brief Reads the attribute from a child of a child of a node. Use with caution: if multiple child nodes with the name exist, only the first one will be read.
+ * 
+ * @param node the node whose childs should be read
+ * @param firstchild name of the first child
+ * @param firstchild name of the child of the first child
+ * @param attr name of the attribute
+ * @return string value of the attribute
+ */
+string readAttributeFromChildren(DOMElement *node, const char* firstchild, const char* secondchild, const char* attr )
+{
+    return readStrAttrFromNode(getChildWithName(getChildWithName(node, firstchild), secondchild), attr);
+}
 
 
 
 //code for creating a xml document
-
-
 
 //TODO im not sure if this is the best implementation. The wrapper class
 // makes it easier for the xml.h module to produce the output file (less overhead and easier to read)
