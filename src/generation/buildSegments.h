@@ -38,8 +38,6 @@ extern settings setting;
  */
 int buildSegments(xmlTree &inputxml, roadNetwork &data)
 {
-	//DOMElement * root = inputxml->getRootElement();
-	//cout << XMLString::transcode(root->getNodeName())<< endl;
 
 	DOMElement *roadNode;
 	if (inputxml.findNodeWithName("segments", roadNode))
@@ -49,16 +47,15 @@ int buildSegments(xmlTree &inputxml, roadNetwork &data)
 		return 1;
 	}
 
-	cout << XMLString::transcode(roadNode->getNodeName()) << endl;
 	DOMNodeList* segmentNodes = roadNode->getChildNodes();
 
 
 	for(DOMElement* em = roadNode->getFirstElementChild(); em != NULL ;em = em->getNextElementSibling())
 	{
 
+		cout << readNameFromNode(em) << endl;
 		if (((string)X(em->getNodeName()) == "junction"))
 		{
-			cout << "TODO JUNCTION IN BUILDSEGMENTS" << endl;
 			if(!setting.silentMode)
 				cout << "Processing junction" << endl;
 			if (junctionWrapper(em, data))

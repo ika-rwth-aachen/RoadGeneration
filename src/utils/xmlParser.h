@@ -194,7 +194,7 @@ struct xmlTree{
 
         ~xmlTree()
         {
-            delete parser;
+            //delete parser;
         }
 
 };

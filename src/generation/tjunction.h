@@ -344,67 +344,70 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     }
 
     // add addtional lanes
-    for (DOMElement *addLane = addLanes->getFirstElementChild();addLane != NULL; addLane = addLane->getNextElementSibling())
+    if(addLanes != NULL)
     {
-        if(readNameFromNode(addLane) != "additionalLane") continue;
-        int n = 1;
-
-        if (attributeExits(addLane, "amount"))
-            n = readIntAttrFromNode(addLane, "amount");
-
-        bool verschwenkung = true;
-        if (attributeExits(addLane, "verschwenkung"))
-            verschwenkung = readBoolAttrFromNode(addLane, "verschwenkung");
-            
-        double length = setting.laneChange.s;
-        if (attributeExits(addLane, "length"))
-            length = readDoubleAttrFromNode(addLane, "length");
-
-        double ds = setting.laneChange.ds;
-        if (attributeExits(addLane, "ds"))
-            length = readDoubleAttrFromNode(addLane, "ds");
-
-        int type;
-        string tmpType = readStrAttrFromNode(addLane, "type");
-        if (tmpType == "left")
-            type = 1;
-        if (tmpType == "right")
-            type = -1;
-
-        if (tmpType == "leftRestricted")
-            type = 1;
-        if (tmpType == "rightRestricted")
-            type = -1;
-
-        bool restricted = false;
-        if (tmpType == "leftRestricted" || tmpType == "rightRestricted")
-            restricted = true;
-
-        int inputId = readIntAttrFromNode(addLane, "roadId");
-
-        string inputPos = "end";
-        if (attributeExits(addLane, "roadPos"))
-            inputPos = readStrAttrFromNode(addLane, "roadPos");
-
-        if (inputId == r1.inputId && inputPos == r1.inputPos)
+        for (DOMElement *addLane = addLanes->getFirstElementChild();addLane != NULL; addLane = addLane->getNextElementSibling())
         {
-            for (int i = 0; i < n; i++)
-                laneWideningJunction(r1, length, ds, type, verschwenkung, restricted);
-        }
+            if(readNameFromNode(addLane) != "additionalLane") continue;
+            int n = 1;
 
-        if (inputId == r2.inputId && inputPos == r2.inputPos)
-        {
-            for (int i = 0; i < n; i++)
-                laneWideningJunction(r2, length, ds, type, verschwenkung, restricted);
-        }
+            if (attributeExits(addLane, "amount"))
+                n = readIntAttrFromNode(addLane, "amount");
 
-        if (inputId == r3.inputId && inputPos == r3.inputPos)
-        {
-            for (int i = 0; i < n; i++)
-                laneWideningJunction(r3, length, ds, type, verschwenkung, restricted);
+            bool verschwenkung = true;
+            if (attributeExits(addLane, "verschwenkung"))
+                verschwenkung = readBoolAttrFromNode(addLane, "verschwenkung");
+                
+            double length = setting.laneChange.s;
+            if (attributeExits(addLane, "length"))
+                length = readDoubleAttrFromNode(addLane, "length");
+
+            double ds = setting.laneChange.ds;
+            if (attributeExits(addLane, "ds"))
+                length = readDoubleAttrFromNode(addLane, "ds");
+
+            int type;
+            string tmpType = readStrAttrFromNode(addLane, "type");
+            if (tmpType == "left")
+                type = 1;
+            if (tmpType == "right")
+                type = -1;
+
+            if (tmpType == "leftRestricted")
+                type = 1;
+            if (tmpType == "rightRestricted")
+                type = -1;
+
+            bool restricted = false;
+            if (tmpType == "leftRestricted" || tmpType == "rightRestricted")
+                restricted = true;
+
+            int inputId = readIntAttrFromNode(addLane, "roadId");
+
+            string inputPos = "end";
+            if (attributeExits(addLane, "roadPos"))
+                inputPos = readStrAttrFromNode(addLane, "roadPos");
+
+            if (inputId == r1.inputId && inputPos == r1.inputPos)
+            {
+                for (int i = 0; i < n; i++)
+                    laneWideningJunction(r1, length, ds, type, verschwenkung, restricted);
+            }
+
+            if (inputId == r2.inputId && inputPos == r2.inputPos)
+            {
+                for (int i = 0; i < n; i++)
+                    laneWideningJunction(r2, length, ds, type, verschwenkung, restricted);
+            }
+
+            if (inputId == r3.inputId && inputPos == r3.inputPos)
+            {
+                for (int i = 0; i < n; i++)
+                    laneWideningJunction(r3, length, ds, type, verschwenkung, restricted);
+            }
         }
     }
-
+    
     data.roads.push_back(r1);
     data.roads.push_back(r2);
     data.roads.push_back(r3);

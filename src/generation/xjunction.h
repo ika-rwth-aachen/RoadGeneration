@@ -26,7 +26,6 @@ extern settings setting;
  */
 int xjunction(const DOMElement* domNode, roadNetwork &data)
 {
-    cout << "processing x junction" << endl;
     // check type of the junction (here: M = mainroad, A = accessroad)
     int mode = 0;
     string type = readStrAttrFromNode(domNode, "type");
@@ -264,12 +263,6 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         sAdd2 = readDoubleAttrFromNode(tmpNode, "s");
         phi2 = readDoubleAttrFromNode(tmpNode, "angle");
         for(tmpNode = tmpNode->getNextElementSibling(); tmpNode != NULL && readNameFromNode(tmpNode) != "adRoad";tmpNode = tmpNode->getNextElementSibling());
-
-        if (tmpNode == NULL)
-        {
-            cerr << "ERR: error in generating junction road (mode 2). AdRoad is missing in intersection point" << endl;
-            return 1;
-        }
 
 
     }
