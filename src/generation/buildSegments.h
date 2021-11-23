@@ -81,11 +81,11 @@ int buildSegments(xmlTree &inputxml, roadNetwork &data)
 			if(!setting.silentMode)
 				cout << "Processing connectingRoad" << endl;
 			cout << "TODO connectingRoad IN BUILDSEGMENTS" << endl;
-			// if (connectingRoad(*it, data))
-			// {
-			// 	cerr << "ERR: error in connectingRoad." << endl;
-			// 	return 1;
-			// }
+			if (connectingRoad(em, data))
+			{
+				cerr << "ERR: error in connectingRoad." << endl;
+				return 1;
+			}
 		}
 	}
 

@@ -6,16 +6,6 @@
  *
  * This library is distributed under the MIT License.
  * 
- * This file makes use of the pugixml library.
- * 
- * Copyright (c) 2006-2020 Arseny Kapoulkine
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and 
- * associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation the rights to use, 
- * copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, 
- * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  * 
  * @file xml.cpp
  *
@@ -26,7 +16,6 @@
  *
  */
 
-#include "pugixml.hpp"
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/framework/LocalFileInputSource.hpp>
@@ -133,23 +122,23 @@ int validateOutput(roadNetwork data)
  * @param file  xml input file
  * @return int  error code
  */
-int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file) //TODO THIS METHOD BECOMES OBSOLET WITH XERCESC
-{
-    // save file name in data
-    string f = file;
-    data.file = f.substr(0, f.find(".xml"));
+// int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file) //TODO THIS METHOD BECOMES OBSOLET WITH XERCESC
+// {
+//     // save file name in data
+//     string f = file;
+//     data.file = f.substr(0, f.find(".xml"));
 
-    if (doc.load_file(file))
-    {
-        return 0;
-    }
-    else
-    {
-        cerr << "ERR: InputFile not found" << endl;
-        return 1;
-    }
+//     if (doc.load_file(file))
+//     {
+//         return 0;
+//     }
+//     else
+//     {
+//         cerr << "ERR: InputFile not found" << endl;
+//         return 1;
+//     }
 
-}
+// }
 
 
 /**
@@ -160,29 +149,6 @@ int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file) //TODO THIS
  * @param sucessor the potential predecessor to the road segment * 
  */
 
-void appendLinkToNode(pugi::xml_node road, link &successor, link &predecessor)
-{
-    if (successor.id == -1 && predecessor.id == -1){
-        return;
-    }
-    pugi::xml_node link = road.append_child("link");
-   
-    if( predecessor.id != -1){
-        pugi::xml_node pre = link.append_child("predecessor");
-        pre.append_attribute("elementId") = predecessor.id;
-        pre.append_attribute("elementType") = getLinkType(predecessor.elementType).c_str();
-        if(predecessor.contactPoint != noneType)
-            pre.append_attribute("contactPoint") = getContactPointType(predecessor.contactPoint).c_str();
-    }
-
-    if( successor.id != -1){
-        pugi::xml_node suc = link.append_child("successor");
-        suc.append_attribute("elementId") = successor.id;
-        suc.append_attribute("elementType") = getLinkType(successor.elementType).c_str();
-        if(successor.contactPoint != noneType)
-            suc.append_attribute("contactPoint") = getContactPointType(successor.contactPoint).c_str();
-    }
-}
 
 
 

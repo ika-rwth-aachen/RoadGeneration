@@ -98,8 +98,6 @@ EXPORTED int executePipeline(char* file)
 	}
 	
 	// --- initialization ------------------------------------------------------
-	pugi::xml_document in;
-	pugi::xml_document out;
 
 	xmlTree inputxml;
 
@@ -116,11 +114,11 @@ EXPORTED int executePipeline(char* file)
 		return -1;
 	}
 
-	if (parseXML(in, data, file))
-	{
-		cerr << "ERR: error in parseXML" << endl;
-		return -1;
-	}
+	// if (parseXML(in, data, file))
+	// {
+	// 	cerr << "ERR: error in parseXML" << endl;
+	// 	return -1;
+	// }
 	if (buildSegments(inputxml, data))
 	{
 		cerr << "ERR: error in buildSegments" << endl;
@@ -131,7 +129,7 @@ EXPORTED int executePipeline(char* file)
 		cerr << "ERR: error in linkSegments" << endl;
 		return -1;
 	}
-	if (closeRoadNetwork(in, data))
+	if (closeRoadNetwork(inputxml, data))
 	{
 		cerr << "ERR: error in closeRoadNetwork" << endl;
 		return -1;
