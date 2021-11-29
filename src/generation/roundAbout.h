@@ -104,7 +104,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
                 additionalRoad = road;
         }
 
-        if (additionalRoad != NULL)
+        if (additionalRoad == NULL)
         {
             cerr << "ERR: specified road in intersection" << cc << " is not found.";
             return 1;
@@ -396,5 +396,6 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
     data.junctions.push_back(junc);
 
+    cout << "end roundabout " << endl;
     return 0;
 }

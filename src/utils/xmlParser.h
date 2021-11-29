@@ -235,6 +235,7 @@ string readStrAttrFromNode(const DOMElement* node, const char* attribute, bool s
     }
     XMLCh *typestring = XMLString::transcode(attribute);
     DOMAttr* attr = node->getAttributeNode(typestring);
+    
       if(attr == NULL){
         if(!suppressOutput)
         {

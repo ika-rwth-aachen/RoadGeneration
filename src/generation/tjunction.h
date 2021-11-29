@@ -640,7 +640,6 @@ int tjunction(const DOMElement* node, roadNetwork &data)
 
     data.junctions.push_back(junc);
 
-    cout << junc.to_string() << endl;
 
     return 0;
 }

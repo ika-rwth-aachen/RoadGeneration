@@ -30,7 +30,7 @@ int connectingRoad(DOMElement *node, roadNetwork &data)
     data.nSegment++;
     DOMElement* mainRoad = getChildWithName(node, "road");
 
-    DOMElement* dummy;
+    DOMElement* dummy = NULL;
 
     if (!mainRoad)
     {
