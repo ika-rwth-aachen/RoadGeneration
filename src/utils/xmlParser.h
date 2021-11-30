@@ -249,6 +249,8 @@ string readStrAttrFromNode(const DOMElement* node, const char* attribute, bool s
 
     XMLString::release(&c_type); 
     XMLString::release(&typestring);
+    typestring = NULL;
+    attr = NULL;
 
     return res;
 }

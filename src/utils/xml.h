@@ -44,8 +44,6 @@ int validateInput(char *file, xmlTree &xmlInput)
     const char *schema_file = schema.c_str();
     const char *xml_file = file;
 
-    xmlInput.parseDocument("example.xml");
-
     if (xmlInput.loadGrammar(schema_file) == NULL)
     {
         cerr << "ERR: couldn't load schema" << endl;
@@ -73,7 +71,7 @@ int validateInput(char *file, xmlTree &xmlInput)
  * @param data  output data
  * @return int  error code
  */
-int validateOutput(roadNetwork data)
+int validateOutput(roadNetwork &data)
 {
     // setup file
     string file = data.outputFile;
@@ -180,7 +178,7 @@ void appendLinkToNodeXercesC(nodeElement road, link &successor, link &predecesso
 }
 
 
-int createXMLXercesC(roadNetwork data)
+int createXMLXercesC(roadNetwork &data)
 {
 
     init("OpenDRIVE");
