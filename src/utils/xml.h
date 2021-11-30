@@ -488,7 +488,7 @@ int createXMLXercesC(roadNetwork &data)
 
 
     cout << (data.outputFile) << endl;
-    serialize((data.outputFile + ".testxml").c_str());
+    serialize((data.outputFile + ".xodr").c_str());
 
     return 0;
 }

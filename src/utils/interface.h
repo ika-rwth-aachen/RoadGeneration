@@ -279,6 +279,11 @@ struct road
  */
 struct roadNetwork
 {
+    roadNetwork()
+    {
+        cout << "init struct" <<endl;
+    }
+
     string file;
     string outputFile;
     // main data properties
