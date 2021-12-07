@@ -38,7 +38,7 @@ int connectingRoad(DOMElement *node, roadNetwork &data)
         return 1;
     }
 
-    // --- generate roads ------------------------------------------------------
+    //--- generate roads ------------------------------------------------------
     if(!setting.silentMode)
         cout << "\t Generating Roads" << endl;
 
@@ -48,6 +48,7 @@ int connectingRoad(DOMElement *node, roadNetwork &data)
     r.junction = readIntAttrFromNode(node, "id");; // <- might cause a bug in linking. 
     r.isConnectingRoad = true; // <- is needed to fix the bug that is caused by using junction attribute to store segment id in linking segments
     //r.junction = -1;
+
 
     if (buildRoad(mainRoad, r, 0, INFINITY, dummy, 0, 0, 0, 0))
     {

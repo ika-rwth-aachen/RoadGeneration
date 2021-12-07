@@ -383,7 +383,7 @@ int flipGeometries(road &r)
  * @param mode      defines the mode (flipped or not)
  * @return int      error code
  */
-int addLanes(DOMElement* roadIn, road &r, int mode)
+int addLanes(DOMElement* &roadIn, road &r, int mode)
 {
     double desWidth = setting.width.standard;
     double desSpeed = setting.speed.standard;
@@ -432,71 +432,72 @@ int addLanes(DOMElement* roadIn, road &r, int mode)
     // --- add user defined laneSection to road --------------------------------
     if (roadIn != NULL)
     {
-        DOMNodeList* referenceLines = roadIn->getElementsByTagName(X("lanes"));
-        for (int i = 0; i < referenceLines->getLength(); i++)
+        DOMElement* lanes = getChildWithName(roadIn, "lanes");
+        cout << "name " << (lanes == NULL) << endl;
+        
+        if(lanes != NULL)
         {
-            DOMElement* itt = (DOMElement*)referenceLines->item(i);
-            if(itt->getNodeType() != 1) continue;
-
-
-            if (readNameFromNode(itt) != "lane")
-                continue;
-
-            lane l;
-            l.id = readIntAttrFromNode(itt, "id");
-            l.preId = l.id;
-            l.sucId = l.id;
-
-            // flip lanes for mode 1
-            if (mode == 2)
-                l.id *= -1;
-
-            if (!readStrAttrFromNode(itt, "type").empty())
-                l.type = readStrAttrFromNode(itt, "type");
-
-            l.w.a = desWidth;
-            if (!readStrAttrFromNode(itt, "width").empty())
-                l.w.a = readDoubleAttrFromNode(itt, "width");
-            if (l.id == 0)
-                l.w.a = 0.0;
-
-            l.speed = desSpeed;
-            if (!readStrAttrFromNode(itt, "speed").empty())
-                l.speed = readDoubleAttrFromNode(itt, "speed");
-
-            DOMElement* rm = getChildWithName(itt, "roadMark");
-            if (rm)
+            for (DOMElement *itt = lanes->getFirstElementChild();itt != NULL; itt = itt->getNextElementSibling())
             {
-                if (!readStrAttrFromNode(rm, "type").empty())
-                    l.rm.type = readStrAttrFromNode(rm, "type");
-                if (!readStrAttrFromNode(rm, "color").empty())
-                    l.rm.color = readStrAttrFromNode(rm, "color");
-                if (!readStrAttrFromNode(rm, "width").empty())
-                    l.rm.width = readDoubleAttrFromNode(rm, "width");
-            }
+                if (readNameFromNode(itt) != "lane")
+                    continue;
 
-            DOMElement* m = getChildWithName(itt,"material");
-            if (m)
-            {
-                if (!readStrAttrFromNode(m, "surface").empty())
-                    l.m.surface = readStrAttrFromNode(m, "surface");
-                if (!readStrAttrFromNode(m, "friction").empty())
-                    l.m.friction = readDoubleAttrFromNode(m, "friction");
-                if (!readStrAttrFromNode(m, "roughness").empty())
-                    l.m.roughness = readDoubleAttrFromNode(m, "roughness");
-            }
+                lane l;
+                l.id = readIntAttrFromNode(itt, "id");
+                l.preId = l.id;
+                l.sucId = l.id;
 
-            lane tmp;
-            int id = findLane(laneSec, tmp, l.id);
-            if (id >= 0)
-                laneSec.lanes[id] = l;
-            else
-                laneSec.lanes.push_back(l);
+                // flip lanes for mode 1
+                if (mode == 2)
+                    l.id *= -1;
 
-            if (l.type == "delete")
-            {
-                int id = findLane(laneSec, l, l.id);
-                laneSec.lanes.erase(laneSec.lanes.begin() + id);
+                if (!readStrAttrFromNode(itt, "type").empty())
+                    l.type = readStrAttrFromNode(itt, "type");
+
+                l.w.a = desWidth;
+                if (!readStrAttrFromNode(itt, "width").empty())
+                    l.w.a = readDoubleAttrFromNode(itt, "width");
+                if (l.id == 0)
+                    l.w.a = 0.0;
+
+                l.speed = desSpeed;
+                if (!readStrAttrFromNode(itt, "speed").empty())
+                    l.speed = readDoubleAttrFromNode(itt, "speed");
+
+                DOMElement* rm = getChildWithName(itt, "roadMark");
+                if (rm)
+                {
+                    if (!readStrAttrFromNode(rm, "type").empty())
+                        l.rm.type = readStrAttrFromNode(rm, "type");
+                    if (!readStrAttrFromNode(rm, "color").empty())
+                        l.rm.color = readStrAttrFromNode(rm, "color");
+                    if (!readStrAttrFromNode(rm, "width").empty())
+                        l.rm.width = readDoubleAttrFromNode(rm, "width");
+                }
+
+                DOMElement* m = getChildWithName(itt,"material");
+                if (m)
+                {
+                    if (!readStrAttrFromNode(m, "surface").empty())
+                        l.m.surface = readStrAttrFromNode(m, "surface");
+                    if (!readStrAttrFromNode(m, "friction").empty())
+                        l.m.friction = readDoubleAttrFromNode(m, "friction");
+                    if (!readStrAttrFromNode(m, "roughness").empty())
+                        l.m.roughness = readDoubleAttrFromNode(m, "roughness");
+                }
+
+                lane tmp;
+                int id = findLane(laneSec, tmp, l.id);
+                if (id >= 0)
+                    laneSec.lanes[id] = l;
+                else
+                    laneSec.lanes.push_back(l);
+
+                if (l.type == "delete")
+                {
+                    int id = findLane(laneSec, l, l.id);
+                    laneSec.lanes.erase(laneSec.lanes.begin() + id);
+                }
             }
         }
     }
@@ -732,11 +733,11 @@ int buildRoad(DOMElement* roadIn, road &r, double sStart, double sEnd, DOMElemen
     }
 
     // add lane section changes
-    if (addLaneSectionChanges(roadIn, r, automaticWidening))
-    {
-        cerr << "ERR: error in addLaneSectionChanges";
-        return 1;
-    }
+    // if (addLaneSectionChanges(roadIn, r, automaticWidening))
+    // {
+    //     cerr << "ERR: error in addLaneSectionChanges";
+    //     return 1;
+    // }
 
     return 0;
 }

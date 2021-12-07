@@ -313,10 +313,10 @@ DOMElement* getNextSiblingWithTagName(DOMElement* elem, const char* tag)
      * @param res return Element
      * @return first child element with name. NULL if nothing is found
      */
-    DOMElement* getChildWithName( const DOMElement* node, const char *childName)
+    DOMElement* getChildWithName(const DOMElement* node, const char *childName)
     {
         if (node == NULL) return NULL;
-        DOMNodeList * nodelist = node->getElementsByTagName(X(childName));
+        DOMNodeList * nodelist = node->getElementsByTagName(X(childName)); //TODO this causes a free(): invalid next size (fast) down the line.
         for(int i = 0; i < nodelist->getLength(); i++)
         {
             if(!XMLString::compareString(X(childName), nodelist->item(i)->getNodeName()))

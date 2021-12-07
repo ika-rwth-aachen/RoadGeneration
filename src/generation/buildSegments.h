@@ -76,11 +76,10 @@ int buildSegments(xmlTree &inputxml, roadNetwork &data)
 			}
 		}
 
-		if ((string)X(em->getNodeName()) == "connectingRoad")
+		if ((string)X(em->getNodeName()) == "connectingRoad" )
 		{
 			if(!setting.silentMode)
 				cout << "Processing connectingRoad" << endl;
-			cout << "TODO connectingRoad IN BUILDSEGMENTS" << endl;
 			if (connectingRoad(em, data))
 			{
 				cerr << "ERR: error in connectingRoad." << endl;

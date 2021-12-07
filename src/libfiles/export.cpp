@@ -72,6 +72,11 @@ EXPORTED void setXMLSchemaLocation(char* file){
 	setting.xmlSchemaLocation = file;
 }
 
+void test(roadNetwork rn)
+{
+	cout << rn.controller.size() << endl; 
+}
+
 EXPORTED int executePipeline(char* file)
 {
 
@@ -102,7 +107,6 @@ EXPORTED int executePipeline(char* file)
 	xmlTree inputxml;
 
 	roadNetwork data;
-
 	string outputFile = _outName;
 	data.outputFile = outputFile.substr(0, outputFile.find(".xml"));
     data.outputFile = data.outputFile.substr(0, outputFile.find(".xodr"));
