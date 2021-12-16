@@ -383,7 +383,7 @@ int flipGeometries(road &r)
  * @param mode      defines the mode (flipped or not)
  * @return int      error code
  */
-int addLanes(DOMElement* &roadIn, road &r, int mode)
+int addLanes(DOMElement* roadIn, road &r, int mode)
 {
     double desWidth = setting.width.standard;
     double desSpeed = setting.speed.standard;
@@ -433,8 +433,7 @@ int addLanes(DOMElement* &roadIn, road &r, int mode)
     if (roadIn != NULL)
     {
         DOMElement* lanes = getChildWithName(roadIn, "lanes");
-        cout << "name " << (lanes == NULL) << endl;
-        
+
         if(lanes != NULL)
         {
             for (DOMElement *itt = lanes->getFirstElementChild();itt != NULL; itt = itt->getNextElementSibling())
@@ -732,12 +731,12 @@ int buildRoad(DOMElement* roadIn, road &r, double sStart, double sEnd, DOMElemen
         return 1;
     }
 
-    // add lane section changes
-    // if (addLaneSectionChanges(roadIn, r, automaticWidening))
-    // {
-    //     cerr << "ERR: error in addLaneSectionChanges";
-    //     return 1;
-    // }
+    // // add lane section changes
+    if (addLaneSectionChanges(roadIn, r, automaticWidening))
+    {
+        cerr << "ERR: error in addLaneSectionChanges";
+        return 1;
+    }
 
     return 0;
 }

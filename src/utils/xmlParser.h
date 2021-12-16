@@ -316,15 +316,24 @@ DOMElement* getNextSiblingWithTagName(DOMElement* elem, const char* tag)
     DOMElement* getChildWithName(const DOMElement* node, const char *childName)
     {
         if (node == NULL) return NULL;
-        DOMNodeList * nodelist = node->getElementsByTagName(X(childName)); //TODO this causes a free(): invalid next size (fast) down the line.
+        //DOMNodeList * nodelist = (DOMNodeList*)malloc( 0); 
+        DOMElement* res = NULL;
+
+        DOMNodeList *nodelist = node->getElementsByTagName(X(childName));//this causes memory corruption if the child
+        //is not found in the search tree. Allocating memory with before calling this malloc 
+        //solves this issue but causes memory leak since the allocation pointer will be overwritten...
+       
+        //cout << "list length: " << nodelist->getLength() << "  for childname: " << childName << endl;
+        
         for(int i = 0; i < nodelist->getLength(); i++)
         {
             if(!XMLString::compareString(X(childName), nodelist->item(i)->getNodeName()))
             {
-                return (DOMElement*) nodelist->item(0);
+                res = (DOMElement*) nodelist->item(0);
+                break;
             }
         }
-        return NULL;
+        return res;
     }
 
 /**

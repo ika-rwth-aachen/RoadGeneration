@@ -50,6 +50,11 @@ int connectingRoad(DOMElement *node, roadNetwork &data)
     //r.junction = -1;
 
 
+    DOMElement* tmp = getChildWithName(node, "road");
+    cout << "name: " << readNameFromNode(node) << endl;
+    cout << "name: " << readNameFromNode(tmp) << endl;
+
+
     if (buildRoad(mainRoad, r, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
         cerr << "ERR: error in buildRoad" << endl;
