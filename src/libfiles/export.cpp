@@ -144,16 +144,11 @@ EXPORTED int executePipeline(char* file)
 		return -1;
 	}
 
-	cout << "TEST XML OUT" <<endl;
-
-	createXMLXercesC(data);
-
 	if (validateOutput(data))
 	{
 		cerr << "ERR: error in validateOutput" << endl;
 		return -1;
 	}
 
-	cout << "hehe" << endl;
 	return 0;
 }

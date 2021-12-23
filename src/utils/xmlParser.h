@@ -229,19 +229,17 @@ string readStrAttrFromNode(const DOMElement* node, const char* attribute, bool s
 {
 
     if(node == NULL){
-        cout << "ERR in readStrAttriValueFromNode; dom node does not exists!" << endl;
-        cerr << "ERR in readStrAttriValueFromNode; dom node does not exists!" << endl;
+        if(!suppressOutput)
+        {
+            cout << "ERR in readStrAttriValueFromNode; dom node does not exists!" << endl;
+            cerr << "ERR in readStrAttriValueFromNode; dom node does not exists!" << endl;
+        }
         return "";
     }
     XMLCh *typestring = XMLString::transcode(attribute);
     DOMAttr* attr = node->getAttributeNode(typestring);
     
       if(attr == NULL){
-        if(!suppressOutput)
-        {
-            cout << "ERR in readStrAttriValueFromNode; attr "<< attribute <<  " does not exists in node " << readNameFromNode(node) << endl;
-            cerr << "ERR in readStrAttriValueFromNode; attr does not exists: " << attribute << endl;
-        }
         return "";
     }
     char *c_type = XMLString::transcode(attr->getValue());
@@ -255,9 +253,9 @@ string readStrAttrFromNode(const DOMElement* node, const char* attribute, bool s
     return res;
 }
 
-int readIntAttrFromNode(const DOMElement* node, const char* attribute)
+int readIntAttrFromNode(const DOMElement* node, const char* attribute, bool suppress = false)
 {
-    string res = readStrAttrFromNode(node, attribute);
+    string res = readStrAttrFromNode(node, attribute, suppress);
     if (res == "") return -1;
     return stoi(res);
 }
@@ -316,14 +314,10 @@ DOMElement* getNextSiblingWithTagName(DOMElement* elem, const char* tag)
     DOMElement* getChildWithName(const DOMElement* node, const char *childName)
     {
         if (node == NULL) return NULL;
-        //DOMNodeList * nodelist = (DOMNodeList*)malloc( 0); 
         DOMElement* res = NULL;
 
-        DOMNodeList *nodelist = node->getElementsByTagName(X(childName));//this causes memory corruption if the child
-        //is not found in the search tree. Allocating memory with before calling this malloc 
-        //solves this issue but causes memory leak since the allocation pointer will be overwritten...
-       
-        //cout << "list length: " << nodelist->getLength() << "  for childname: " << childName << endl;
+        //DOMNodeList * nodelist = (DOMNodeList*)malloc( 0); //this fixes the memory corruption bug that can occur but introduces memory leak beacuse the pointer will be changed
+        DOMNodeList* nodelist = node->getElementsByTagName(X(childName)); //This might cause memory corruption due to a bug with xercesC. It seems solved
         
         for(int i = 0; i < nodelist->getLength(); i++)
         {
@@ -367,9 +361,6 @@ string readAttributeFromChildren(DOMElement *node, const char* firstchild, const
 
 //code for creating a xml document
 
-//TODO im not sure if this is the best implementation. The wrapper class
-// makes it easier for the xml.h module to produce the output file (less overhead and easier to read)
-//but its more tedious to release all structs..
 struct nodeElement
 {
 

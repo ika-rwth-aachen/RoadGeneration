@@ -53,7 +53,6 @@ int junctionWrapper(const DOMElement* node, roadNetwork &data)
     }
     if (mode == 2)
     {
-        cout << "TODO MODE 2 IN JUNCTION WRAPPER " << endl;
 
         if (tjunction(node, data))
         {
@@ -64,7 +63,6 @@ int junctionWrapper(const DOMElement* node, roadNetwork &data)
 
     if (mode == 0)
     {
-        cout << "TODO MODE 0 IN JUNCTION WRAPPER " << endl;
         cerr << "ERR: junction type is not defined correct." << endl;
         return 1;
     }

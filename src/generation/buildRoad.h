@@ -678,8 +678,10 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
  */
 int buildRoad(DOMElement* roadIn, road &r, double sStart, double sEnd, DOMElement* automaticWidening, double s0, double x0, double y0, double phi0)
 {
-    r.classification = readStrAttrFromNode(roadIn,"classification");
-    r.inputId = readIntAttrFromNode(roadIn, "id");
+    
+    if(roadIn != NULL)
+        r.classification = readStrAttrFromNode(roadIn,"classification");
+    r.inputId = readIntAttrFromNode(roadIn, "id", true);
 
     // save geometry data from sStart - sEnd
     // mode = 1 -> in s direction

@@ -47,7 +47,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     junc.id = readIntAttrFromNode(domNode, "id");
 
     // automatic widening
-    DOMElement* dummy = NULL; //TODO FIGURE out how to avoid using this...
+    DOMElement* dummy = NULL; 
     DOMElement* automaticWidening = getChildWithName(domNode, "automaticWidening");
 
 
@@ -122,7 +122,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad2, "id"))
             sOffAdd2 = readDoubleAttrFromNode(it, "gap");
 
-        if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad3, "id"))
+        if (readIntAttrFromNode(it, "id", true) == readIntAttrFromNode(additionalRoad3, "id", true))
             sOffAdd3 = readDoubleAttrFromNode(it, "gap");
        
 

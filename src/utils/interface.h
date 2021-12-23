@@ -281,7 +281,6 @@ struct roadNetwork
 {
     roadNetwork()
     {
-        cout << "init struct" <<endl;
     }
 
     string file;

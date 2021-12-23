@@ -215,8 +215,7 @@ int createXMLXercesC(roadNetwork &data)
        
         //it has to be checked if it is a connecting road, since the junction attribute is missused as the original ID for connecting roads.
         road.addAttribute("junction" ,(it->isConnectingRoad) ? -1 : it->junction);
-        appendLinkToNodeXercesC(road, it->successor, it->predecessor); //FIXME COMMENT IN AN IMPLEMENT XERCES PARSER
-
+        appendLinkToNodeXercesC(road, it->successor, it->predecessor);
 
         nodeElement type("type");
         type.addAttribute("s", 0);
@@ -487,7 +486,6 @@ int createXMLXercesC(roadNetwork &data)
     }
 
 
-    cout << (data.outputFile) << endl;
     serialize((data.outputFile + ".xodr").c_str());
 
     return 0;
