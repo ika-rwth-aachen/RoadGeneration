@@ -1,3 +1,11 @@
+/**
+ * @file export.h
+ * @brief file contains the functions that provide the api for the library.
+ * @author Jannik Busse (jannik.busse@ika.rwth-aachen.de)
+ * @date 2021-08-30
+ * 
+ */
+
 #ifndef EXPORT_H
 #define EXPORT_H
 
@@ -21,10 +29,10 @@ std::string _logfile = "log.txt";
 extern "C" EXPORTED void setFileName(char* file);
 
 /**
- * @brief set path which provides xml schema files
+ * @brief set path to xml schema files
  * @param file set path
  */
-extern "C" EXPORTED void setXMLSchemaLocation(char* file);
+extern "C" EXPORTED void setXMLSchemeLocation(char* file);
 
 /**
  * @brief set log file location

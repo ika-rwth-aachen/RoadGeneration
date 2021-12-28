@@ -17,7 +17,6 @@ add_library("${PROJECT_NAME}" SHARED
     "${CMAKE_SOURCE_DIR}/libs/pugixml/src/pugixml.cpp"
 )
 
-
 add_executable("${PROJECT_NAME}_exec"
     "${CMAKE_SOURCE_DIR}/src/executable/main.cpp"
     "${CMAKE_SOURCE_DIR}/src/executable/helperExec.cpp"

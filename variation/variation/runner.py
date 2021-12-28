@@ -54,7 +54,7 @@ def find_var(item, idx, varDict):
         variable dictionary
 
     """
-    for child in item.getchildren():
+    for child in list(item):
         find_var(child, idx, varDict)
         for key, val in child.attrib.items():
             if is_var(val):
@@ -108,9 +108,7 @@ def writeTreesToXML(n, tree, inpDir, nwName, varDict):
         name of the output xml file
     varDict: dict
         dict containing array of vars
-    
     """
-
   
     for i in range(n):
         cpTree = copy.deepcopy(tree)
@@ -160,7 +158,7 @@ def executePipeline(tree, inpDir, varDict):
                
             roadgen.setSilentMode(c_bool(args.s))
             roadgen.setFileName(argFilename)
-            roadgen.setXMLSchemaLocation(argXMLPath)
+            roadgen.setXMLSchemeLocation(argXMLPath)
             if args.o:
                 outArgs = c_char_p((inpDir + args.o+"_rev"+str(c)).encode('utf-8'))
                 roadgen.setOutputName(outArgs)
@@ -180,15 +178,10 @@ def initDirectories(inpDir):
         os.makedirs(inpDir )
 
 
-def copyTemplate(path):
-    """This method copies the example template to given location
-
-    Parameters
-    ----------    
-    path: str
-        defines the location to which to copy
+def copyTemplate():
+    """This method copies the example template to the current directory
     """
-    shutil.copy(os.path.join(os.path.dirname(__file__), "resources/network.tmpl"), path)
+    shutil.copy(os.path.join(os.path.dirname(__file__), "resources/network.tmpl"), "network_example.tmpl")
 
 def run():
     #parsing args-------------------------------------
@@ -198,15 +191,15 @@ def run():
     argParse.add_argument('-fname', help='filename of the road network template', metavar='<TemplateFilename>')
     argParse.add_argument('-o', help='set output name scheme', metavar='<out filename>')
     argParse.add_argument('-n', help='number of variations to be generated', metavar='<int>', type=int, default=20)
-    argParse.add_argument('-e', help='generate an example template file', metavar='<file location>')
-    argParse.add_argument('-k', help='keep intermediate xml files after generation', action='store_false')
-    argParse.add_argument('-s', help='run roadgen in silent mode', action='store_true')
+    argParse.add_argument('-e', help='generate an example template file', action='store_true')
+    argParse.add_argument('-k', help='keep xml files', action='store_false')
+    argParse.add_argument('-s', help='suppress most console output', action='store_true')
     args = argParse.parse_args()    
 
     
-    if not args.e == None:
-            copyTemplate(args.e)
-            print("copied tmpl file to " + args.e)
+    if args.e:
+            copyTemplate()
+            print("copied tmpl file!")
 
     if args.fname == None:
         if args.e == None:
