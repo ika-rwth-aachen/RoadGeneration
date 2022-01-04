@@ -13,11 +13,23 @@ const char *HELP_MESSAGE =
   "    -o <fileName>                    Specify output file name.\n\n";
 
 
+/**
+ * @brief prints the help message for the road generaction executable to cout.
+ * 
+ */
 void printHelpMessage()
 {
     std::cout << HELP_MESSAGE << std:: endl;       
 }
 
+/**
+ * @brief parses the command line arguments from the main function and stores them in a settings struct.
+ * 
+ * @param argc argc from main
+ * @param argv argv from main
+ * @param settings setting struct to store the parsed parameter
+ * @return int error code
+ */
 int parseArgs(int argc, char **argv, settingsExec &settings) {
     bool foundFile = false, setOutputName = false;
     char defaultPath[]="";

@@ -1,6 +1,6 @@
 /**
  * @file main.cpp
- * @brief This file is the main file for the Road-Generation executable. It makes use of the Road-Generation library.
+ * @brief This is the main file for the Road-Generation executable. It makes use of the Road-Generation library.
  * @author Jannik Busse (jannik.busse@ika.rwth-aachen.de)
  * @date 2021-08-30
  * 
@@ -15,6 +15,13 @@
 
 using namespace std;
 
+/**
+ * @brief main function that calls the roadgeneration library functions
+ * 
+ * @param argc 
+ * @param argv 
+ * @return int: error code. 0 means that no errors occured. 
+ */
 int main(int argc, char** argv){
 
     string schemeLocation = PROJ_DIR;
