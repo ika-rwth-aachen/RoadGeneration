@@ -8,7 +8,7 @@
  * 
  * @file closeRoadConnection.h
  *
- * @brief file contains methods for building the geometry of a new road
+ * @brief This file contains methods for building the geometry of a new road.
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de
