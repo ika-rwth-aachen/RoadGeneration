@@ -17,7 +17,7 @@
 #include "settingsExec.h"
 
 /**
- * @brief functions prints the help message for the executable 
+ * @brief functions prints the help message for the executable.
  */
 void printHelpMessage();
 
