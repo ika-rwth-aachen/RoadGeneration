@@ -20,8 +20,10 @@ jobs:
     - name: install doxygen
       run: sudo apt-get install -y doxygen
     - name: run doxy      
-      run: sudo apt install libxerces-c-dev
-           mkdir build && cd build  && cmake .. -DCREATE_DOXYGEN_TARGET=ON && make doxygen
+      run: |
+           sudo apt install libxerces-c-dev
+           mkdir build && cd build  
+           cmake .. -DCREATE_DOXYGEN_TARGET=ON && make doxygen
     - name: Deploy 
       uses: JamesIves/github-pages-deploy-action@4.1.5
       with:
