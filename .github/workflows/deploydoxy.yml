@@ -1,0 +1,30 @@
+name: deploydoxy
+
+on:
+  push:
+    branches: [ main, doc-gen ]
+  pull_request:
+    branches: [ main, doc-gen ]
+#d
+jobs:
+  gen_doxygen:
+    name: generate doxygen for gh-pages    
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+          persist-credentials: false
+    - name: cd to repo
+      run: echo $GITHUB_WORKSPACE && cd $GITHUB_WORKSPACE
+    - name: install doxygen
+      run: sudo apt-get install -y doxygen
+    - name: run doxy      
+      run: mkdir build && cd build  && cmake .. -DCREATE_DOXYGEN_TARGET=ON && make doxygen
+    - name: Deploy 
+      uses: JamesIves/github-pages-deploy-action@4.1.5
+      with:
+        GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: gh-pages # The branch the action should deploy to.
+        FOLDER: docs/html # The folder the action should deploy.
+       # TARGET-FOLDER: test
