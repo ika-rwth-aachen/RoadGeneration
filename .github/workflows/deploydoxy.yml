@@ -16,7 +16,7 @@ jobs:
       with:
           persist-credentials: false
     - name: cd to repo
-      run: echo $GITHUB_WORKSPACE && cd $GITHUB_WORKSPACE
+      run: cd $GITHUB_WORKSPACE
     - name: install doxygen
       run: sudo apt-get install -y doxygen
     - name: run doxy      
