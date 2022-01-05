@@ -1,9 +1,10 @@
 /**
- * @file libimports.h
- * @brief This file calls the library functions from the Road-Generation library.
- * @author Jannik Busse (jannik.busse@ika.rwth-aachen.de)
- * @date 2021-08-30
- * 
+ * Road-Generation
+ * --------------------------------------------------------
+ * Copyright (c) 2021 Institut für Kraftfahrzeuge, RWTH Aachen, ika
+ * Report bugs and download new versions https://github.com/ika-rwth-aachen/RoadGeneration
+ *
+ * This library is distributed under the MIT License.
  */
 
 #ifndef EXPORT_H

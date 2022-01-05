@@ -1,4 +1,11 @@
 /**
+ * Road-Generation
+ * --------------------------------------------------------
+ * Copyright (c) 2021 Institut für Kraftfahrzeuge, RWTH Aachen, ika
+ * Report bugs and download new versions https://github.com/ika-rwth-aachen/RoadGeneration
+ *
+ * This library is distributed under the MIT License.
+ * 
  * @file roundAbout.h
  *
  * @brief file contains method for generating roundabout
@@ -17,17 +24,19 @@ extern settings setting;
  * @param data  roadNetwork structure where the generated roads and junctions are stored
  * @return int  error code
  */
-int roundAbout(pugi::xml_node &node, roadNetwork &data)
+int roundAbout(const DOMElement* node, roadNetwork &data)
 {
     // create segment
     data.nSegment++;
     junction junc;
-    junc.id = node.attribute("id").as_int();
+    junc.id = readIntAttrFromNode(node, "id");
 
-    pugi::xml_node dummy;
+    cout << "Roundabout" << endl;
 
-    pugi::xml_node circleRoad = node.child("circle");
-    int refId = circleRoad.attribute("id").as_int();
+    DOMElement* dummy = NULL;
+
+    DOMElement* circleRoad = getChildWithName(node, "circle");
+    int refId = readIntAttrFromNode(circleRoad, "id");
     if (!circleRoad)
     {
         cerr << "ERR: circleRoad is not found.";
@@ -35,9 +44,12 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
     }
 
     // store properties of circleRoad
-    double length = circleRoad.child("referenceLine").child("circle").attribute("length").as_double();
+    //double length = circleRoad.child("referenceLine").child("circle").attribute("length").as_double();
+    double length = readDoubleAttrFromNode(getChildWithName(getChildWithName(circleRoad, "referenceLine"), "circle"),"length") ;
     double R = length / (2 * M_PI);
-    circleRoad.child("referenceLine").child("circle").append_attribute("R") = R;
+    getChildWithName(getChildWithName(circleRoad, "referenceLine"), "circle")->setAttribute(X("R"), X(to_string(R).c_str()));
+    //circleRoad.child("referenceLine").child("circle").append_attribute("R") = R;
+    
 
     double sOld;
     road rOld;
@@ -54,30 +66,45 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
     }
 
     // get coupler
-    pugi::xml_node cA = node.child("coupler").child("junctionArea");
+    //pugi::xml_node cA = node.child("coupler").child("junctionArea");
+    DOMElement* cA = getChildWithName(getChildWithName(node, "coupler"), "junctionArea");
 
     // count intersectionPoints
     int nIp = 0;
-    for (pugi::xml_node iP : node.children("intersectionPoint"))
-        nIp++;
-
+    for (DOMElement* child = node->getFirstElementChild(); child != NULL; child = child->getNextElementSibling())
+    {
+        if(readNameFromNode(child) == "intersectionPoint")
+        {
+            nIp++;
+        }
+    }
     int cc = 0;
     // iterate over all additonalRoads defined by separate intersectionPoints
     // sMain of intersection points have to increase
-    for (pugi::xml_node iP : node.children("intersectionPoint"))
+    for (DOMElement* iP = node->getFirstElementChild(); iP != NULL; iP = iP->getNextElementSibling())
     {
+        if(readNameFromNode(iP) != "intersectionPoint")
+        {
+            continue;
+        }
         cc++;
 
         // find additionalRoad
-        int adId = iP.child("adRoad").attribute("id").as_int();
-        pugi::xml_node additionalRoad;
-        for (pugi::xml_node road : node.children("road"))
+        //int adId = iP.child("adRoad").attribute("id").as_int();
+        int adId = stoi(readAttributeFromChildren(iP, "adRoad", "id"));
+        
+        DOMElement* additionalRoad;
+        for (DOMElement* road = node->getFirstElementChild(); road != NULL; road = road->getNextElementSibling())
         {
-            if (road.attribute("id").as_int() == adId)
+            if(readNameFromNode(road) != "road")
+            {
+                continue;
+            }
+            if (readIntAttrFromNode(road, "id") == adId)
                 additionalRoad = road;
         }
 
-        if (!additionalRoad)
+        if (additionalRoad == NULL)
         {
             cerr << "ERR: specified road in intersection" << cc << " is not found.";
             return 1;
@@ -86,18 +113,25 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         // calculate offsets
         double sOffset = 0;
         if (cA)
-            sOffset = cA.attribute("gap").as_double();
+            sOffset = readDoubleAttrFromNode(cA, "gap");
 
         double sOffMain = sOffset;
         double sOffAdd = sOffset;
-        for (pugi::xml_node sB : cA.children("roadGap"))
+        for (DOMElement* sB = cA->getFirstElementChild(); sB != NULL; sB = sB->getNextElementSibling())
         {
-            if (sB.attribute("id").as_int() == refId)
-                sOffMain = sB.attribute("gap").as_double();
+            if(readNameFromNode(sB) != "roadGap")
+            {
+                continue;
+            }
 
-            if (sB.attribute("id").as_int() == adId)
-                sOffAdd = sB.attribute("gap").as_double();
+            if (readIntAttrFromNode(sB, "id") == refId)
+                sOffMain = readDoubleAttrFromNode(sB, "gap");
+
+            if (readIntAttrFromNode(sB, "id") == adId)
+                sOffAdd = readDoubleAttrFromNode(sB, "gap");
         }
+
+        
 
         // calculate width of circleRoad and addtionalRoad
         road helpMain;
@@ -144,9 +178,9 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
         }
 
         // calculate s and phi at intersection
-        double sMain = iP.attribute("s").as_double();
-        double sAdd = iP.child("adRoad").attribute("s").as_double();
-        double phi = iP.child("adRoad").attribute("angle").as_double();
+        double sMain = readDoubleAttrFromNode(iP, "s");
+        double sAdd = readDoubleAttrFromNode(getChildWithName(iP, "adRoad"), "s");
+        double phi = readDoubleAttrFromNode(getChildWithName(iP, "adRoad"), "angle");
 
         // calculate coordinates of intersectionPoint
         double curPhi = sMain / (2 * M_PI * R) * 2 * M_PI;
@@ -362,5 +396,6 @@ int roundAbout(pugi::xml_node &node, roadNetwork &data)
 
     data.junctions.push_back(junc);
 
+    cout << "end roundabout " << endl;
     return 0;
 }

@@ -1,4 +1,11 @@
 /**
+ * Road-Generation
+ * --------------------------------------------------------
+ * Copyright (c) 2021 Institut für Kraftfahrzeuge, RWTH Aachen, ika
+ * Report bugs and download new versions https://github.com/ika-rwth-aachen/RoadGeneration
+ *
+ * This library is distributed under the MIT License.
+ * 
  * @file xjunction.h
  *
  * @brief file contains method for generating x junction
@@ -17,15 +24,16 @@ extern settings setting;
  * @param data  roadNetwork structure where the generated roads and junctions are stored
  * @return int  error code
  */
-int xjunction(pugi::xml_node &node, roadNetwork &data)
+int xjunction(const DOMElement* domNode, roadNetwork &data)
 {
     // check type of the junction (here: M = mainroad, A = accessroad)
     int mode = 0;
-    if ((string)node.attribute("type").value() == "2M")
+    string type = readStrAttrFromNode(domNode, "type");
+    if (type == "2M")
         mode = 1;
-    if ((string)node.attribute("type").value() == "M2A")
+    if (type == "M2A")
         mode = 2;
-    if ((string)node.attribute("type").value() == "4A")
+    if (type == "4A")
         mode = 3;
     if (mode == 0)
     {
@@ -36,49 +44,56 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     // create segment
     data.nSegment++;
     junction junc;
-    junc.id = node.attribute("id").as_int();
+    junc.id = readIntAttrFromNode(domNode, "id");
 
     // automatic widening
-    pugi::xml_node dummy;
-    pugi::xml_node automaticWidening = node.child("automaticWidening");
+    DOMElement* dummy = NULL; 
+    DOMElement* automaticWidening = getChildWithName(domNode, "automaticWidening");
+
 
     // define intersection properties
-    pugi::xml_node iP = node.child("intersectionPoint");
-    if (!iP)
+    DOMElement* iP =  getChildWithName(domNode, "intersectionPoint");
+    if (iP == NULL)
     {
         cerr << "ERR: intersection point is not defined correct.";
         return 1;
     }
-    pugi::xml_node cA = node.child("coupler").child("junctionArea");
-    pugi::xml_node con = node.child("coupler").child("connection");
-    pugi::xml_node addLanes = node.child("coupler").child("additionalLanes");
+    DOMElement* cA = getChildWithName(getChildWithName(domNode, "coupler"), "junctionArea");
+    DOMElement* con = getChildWithName(getChildWithName(domNode, "coupler"), "connection");
+    DOMElement* addLanes = getChildWithName(getChildWithName(domNode, "coupler"), "additionalLanes");
+
 
     // define junction roads
-    pugi::xml_node refRoad;
-    pugi::xml_node additionalRoad1;
-    pugi::xml_node additionalRoad2;
-    pugi::xml_node additionalRoad3;
+    DOMElement* refRoad = NULL;
+    DOMElement* additionalRoad1 = NULL;
+    DOMElement* additionalRoad2 = NULL;
+    DOMElement* additionalRoad3 = NULL;
 
-    pugi::xml_node tmpNode = iP.child("adRoad");
-
-    for (pugi::xml_node road : node.children("road"))
+    DOMElement* tmpNode = getChildWithName(iP, "adRoad");
+    DOMNodeList *roads = domNode->getElementsByTagName(X("road"));
+    for (int i = 0; i < roads->getLength(); i ++)
     {
-        if (road.attribute("id").as_int() == iP.attribute("refRoad").as_int())
+        DOMElement* road = (DOMElement*)roads->item(i);
+        if(road->getNodeType() != 1) continue; //we have to check the node type. Type 1 is an element. The reason for the check is that line breaks are handled as
+        // text nodes by xercesC.
+
+        int roadID = readIntAttrFromNode(road, "id");
+        if (roadID == readIntAttrFromNode(iP,"refRoad"))
             refRoad = road;
 
-        if (mode >= 1 && road.attribute("id").as_int() == tmpNode.attribute("id").as_int())
+        if (mode >= 1 && roadID == readIntAttrFromNode(tmpNode,"id"))
             additionalRoad1 = road;
 
-        if (mode >= 2 && road.attribute("id").as_int() == tmpNode.next_sibling("adRoad").attribute("id").as_int())
+        if (mode >= 2 && roadID == readIntAttrFromNode(getNextSiblingWithTagName(tmpNode, "adRoad"), "id"))
             additionalRoad2 = road;
 
-        if (mode >= 3 && road.attribute("id").as_int() == tmpNode.next_sibling("adRoad").next_sibling("adRoad").attribute("id").as_int())
+        if (mode >= 3 && roadID == readIntAttrFromNode(getNextSiblingWithTagName(getNextSiblingWithTagName(tmpNode, "adRoad"), "adRoad"), "id"))
             additionalRoad3 = road;
     }
 
     if (!refRoad || (mode >= 1 && !additionalRoad1) || (mode >= 2 && !additionalRoad2) || (mode >= 3 && !additionalRoad3))
     {
-        cerr << "ERR: specified roads in intersection are not found.";
+        cerr << "ERR: specified roads in intersection are not found." << endl;
         return 1;
     }
 
@@ -87,24 +102,30 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     // calculate offsets
     double sOffset = 0;
     if (cA)
-        sOffset = stod(cA.attribute("gap").value(), &st);
+        sOffset = stod(readStrAttrFromNode(cA, "gap"), &st);
+
     sOffMain = sOffset;
     sOffAdd1 = sOffset;
     sOffAdd2 = sOffset;
     sOffAdd3 = sOffset;
-    for (pugi::xml_node_iterator sB = cA.begin(); sB != cA.end(); ++sB)
+
+
+    
+    for (DOMElement* it = cA->getFirstElementChild(); it != NULL ;it = it->getNextElementSibling())
     {
-        if (sB->attribute("id").as_int() == refRoad.attribute("id").as_int())
-            sOffMain = sB->attribute("gap").as_double();
+        if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(refRoad, "id") )
+            sOffMain = readDoubleAttrFromNode(it, "gap");
 
-        if (sB->attribute("id").as_int() == additionalRoad1.attribute("id").as_int())
-            sOffAdd1 = sB->attribute("gap").as_double();
+        if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad1, "id"))
+            sOffAdd1 = readDoubleAttrFromNode(it, "gap");
 
-        if (sB->attribute("id").as_int() == additionalRoad2.attribute("id").as_int())
-            sOffAdd2 = sB->attribute("gap").as_double();
+        if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad2, "id"))
+            sOffAdd2 = readDoubleAttrFromNode(it, "gap");
 
-        if (sB->attribute("id").as_int() == additionalRoad3.attribute("id").as_int())
-            sOffAdd3 = sB->attribute("gap").as_double();
+        if (readIntAttrFromNode(it, "id", true) == readIntAttrFromNode(additionalRoad3, "id", true))
+            sOffAdd3 = readDoubleAttrFromNode(it, "gap");
+       
+
     }
 
     // calculate helper roads
@@ -114,6 +135,7 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         cerr << "ERR: error in buildRoad" << endl;
         return 1;
     }
+
 
     road help2;
     if (buildRoad(additionalRoad1, help2, 0, INFINITY, dummy, 0, 0, 0, 0))
@@ -183,21 +205,27 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     }
 
     // calculate s and phi at intersection
-    sMain = iP.attribute("s").as_double();
+    sMain = readDoubleAttrFromNode(iP, "s");
 
     if (mode >= 1)
     {
-        tmpNode = iP.child("adRoad");
-        if (!tmpNode)
+        tmpNode = getChildWithName(iP, "adRoad");
+        if (tmpNode == NULL)
         {
             cerr << "ERR: first 'adRoad' is missing." << endl;
             return 1;
         }
-        sAdd1 = tmpNode.attribute("s").as_double();
-        phi1 = tmpNode.attribute("angle").as_double();
-        tmpNode = tmpNode.next_sibling("adRoad");
-
+        sAdd1 = readDoubleAttrFromNode(tmpNode, "s");
+        phi1 = readDoubleAttrFromNode(tmpNode, "angle");
+        //tmpNode = tmpNode.next_sibling("adRoad");
+        for(tmpNode = tmpNode->getNextElementSibling(); tmpNode != NULL && readNameFromNode(tmpNode) != "adRoad";tmpNode = tmpNode->getNextElementSibling());
+        
         //some sanity checks---
+        if (tmpNode == NULL)
+        {
+            cerr << "ERR: error in generating junction road (mode 1). AdRoad is missing in intersection point" << endl;
+            return 1;
+        }
 
         if(sAdd1 - sOffAdd1 <= 0)
         {
@@ -226,14 +254,17 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     }
     if (mode >= 2)
     {
-        if (!tmpNode)
+        if (tmpNode == NULL)
         {
             cerr << "ERR: second 'adRoad' is missing." << endl;
             return 1;
         }
-        sAdd2 = tmpNode.attribute("s").as_double();
-        phi2 = tmpNode.attribute("angle").as_double();
-        tmpNode = tmpNode.next_sibling("adRoad");
+
+        sAdd2 = readDoubleAttrFromNode(tmpNode, "s");
+        phi2 = readDoubleAttrFromNode(tmpNode, "angle");
+        for(tmpNode = tmpNode->getNextElementSibling(); tmpNode != NULL && readNameFromNode(tmpNode) != "adRoad";tmpNode = tmpNode->getNextElementSibling());
+
+
     }
     if (mode >= 3)
     {
@@ -242,9 +273,11 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
             cerr << "ERR: third 'adRoad' is missing." << endl;
             return 1;
         }
-        sAdd3 = tmpNode.attribute("s").as_double();
-        phi3 = tmpNode.attribute("angle").as_double();
-        tmpNode = tmpNode.next_sibling("adRoad");
+        sAdd3 = readDoubleAttrFromNode(tmpNode, "s");
+        phi3 = readDoubleAttrFromNode(tmpNode, "angle");
+        for(tmpNode = tmpNode->getNextElementSibling(); tmpNode != NULL 
+            && readNameFromNode(tmpNode) != "adRoad";tmpNode = tmpNode->getNextElementSibling());
+
     }
 
     // calculate coordinates of intersectionPoint
@@ -402,68 +435,74 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
     }
 
     // add addtional lanes
-    for (pugi::xml_node addLane : addLanes.children("additionalLane"))
-    {
-        int n = 1;
-        if (addLane.attribute("amount"))
-            n = addLane.attribute("amount").as_int();
-
-        bool verschwenkung = true;
-        if (addLane.attribute("verschwenkung"))
-            verschwenkung = addLane.attribute("verschwenkung").as_bool();
-
-        double length = setting.laneChange.s;
-        if (addLane.attribute("length"))
-            length = addLane.attribute("length").as_double();
-
-        double ds = setting.laneChange.ds;
-        if (addLane.attribute("ds"))
-            length = addLane.attribute("ds").as_double();
-
-        int type;
-        string tmpType = addLane.attribute("type").value();
-        if (tmpType == "left")
-            type = 1;
-        if (tmpType == "right")
-            type = -1;
-
-        if (tmpType == "leftRestricted")
-            type = 1;
-        if (tmpType == "rightRestricted")
-            type = -1;
-
-        bool restricted = false;
-        if (tmpType == "leftRestricted" || tmpType == "rightRestricted")
-            restricted = true;
-
-        int inputId = addLane.attribute("roadId").as_int();
-
-        string inputPos = "end";
-        if (addLane.attribute("roadPos"))
-            inputPos = addLane.attribute("roadPos").value();
-
-        if (inputId == r1.inputId && inputPos == r1.inputPos)
+    if(addLanes != NULL){
+        DOMNodeList *addLaneList = addLanes->getElementsByTagName(X("additionalLane"));
+        for (int i = 0; i < addLaneList->getLength(); i ++)
         {
-            for (int i = 0; i < n; i++)
-                laneWideningJunction(r1, length, ds, type, verschwenkung, restricted);
-        }
+            DOMElement* addLane = (DOMElement*)addLaneList->item(i);
+            if(addLane->getNodeType() != 1) continue; //we have to check the node type. Type 1 is an element. The reason for the check is that line breaks are handled as
+            // text nodes by xercesC.
+            int n = 1;
+            if (attributeExits(addLane, "amount"))
+                n = readIntAttrFromNode(addLane, "amount");
 
-        if (inputId == r2.inputId && inputPos == r2.inputPos)
-        {
-            for (int i = 0; i < n; i++)
-                laneWideningJunction(r2, length, ds, type, verschwenkung, restricted);
-        }
+            bool verschwenkung = true;
+            if (attributeExits(addLane, "verschwenkung"))
+                verschwenkung = readBoolAttrFromNode(addLane, "verschwenkung");
 
-        if (inputId == r3.inputId && inputPos == r3.inputPos)
-        {
-            for (int i = 0; i < n; i++)
-                laneWideningJunction(r3, length, ds, type, verschwenkung, restricted);
-        }
+            double length = setting.laneChange.s;
+            if (attributeExits(addLane, "length"))
+                length = readDoubleAttrFromNode(addLane, "length");
 
-        if (inputId == r4.inputId && inputPos == r4.inputPos)
-        {
-            for (int i = 0; i < n; i++)
-                laneWideningJunction(r4, length, ds, type, verschwenkung, restricted);
+            double ds = setting.laneChange.ds;
+            if (attributeExits(addLane, "ds"))
+                length = readDoubleAttrFromNode(addLane, "ds");
+
+            int type;
+            string tmpType = readStrAttrFromNode(addLane, "type");
+            if (tmpType == "left")
+                type = 1;
+            if (tmpType == "right")
+                type = -1;
+
+            if (tmpType == "leftRestricted")
+                type = 1;
+            if (tmpType == "rightRestricted")
+                type = -1;
+
+            bool restricted = false;
+            if (tmpType == "leftRestricted" || tmpType == "rightRestricted")
+                restricted = true;
+
+            int inputId = readIntAttrFromNode(addLane, "roadId");
+
+            string inputPos = "end";
+            if (attributeExits(addLane, "roadPos"))
+                inputPos = readStrAttrFromNode(addLane, "roadPos");
+
+            if (inputId == r1.inputId && inputPos == r1.inputPos)
+            {
+                for (int i = 0; i < n; i++)
+                    laneWideningJunction(r1, length, ds, type, verschwenkung, restricted);
+            }
+
+            if (inputId == r2.inputId && inputPos == r2.inputPos)
+            {
+                for (int i = 0; i < n; i++)
+                    laneWideningJunction(r2, length, ds, type, verschwenkung, restricted);
+            }
+
+            if (inputId == r3.inputId && inputPos == r3.inputPos)
+            {
+                for (int i = 0; i < n; i++)
+                    laneWideningJunction(r3, length, ds, type, verschwenkung, restricted);
+            }
+
+            if (inputId == r4.inputId && inputPos == r4.inputPos)
+            {
+                for (int i = 0; i < n; i++)
+                    laneWideningJunction(r4, length, ds, type, verschwenkung, restricted);
+            }
         }
     }
 
@@ -477,20 +516,25 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
         cout << "\t Generate Connecting Lanes" << endl;
 
     // generate user-defined connecting lanes
-    if (con && (string)con.attribute("type").value() == "single")
+    if (con != NULL && readStrAttrFromNode(con, "type") == "single")
     {
-        for (pugi::xml_node roadLink : con.children("roadLink"))
+        DOMNodeList *roadLinkList = con->getElementsByTagName(X("roadLink"));
+        for (int i = 0; i < roadLinkList->getLength(); i ++)
         {
-            int fromId = roadLink.attribute("fromId").as_int();
-            int toId = roadLink.attribute("toId").as_int();
+            DOMElement* roadLink = (DOMElement*)roadLinkList->item(i);
+            if(roadLink->getNodeType() != 1) continue; //we have to check the node type. Type 1 is an element. The reason for the check is that line breaks are handled as
+            // text nodes by xercesC.
+
+            int fromId = readIntAttrFromNode(roadLink, "fromId");
+            int toId = readIntAttrFromNode(roadLink, "toId");
 
             string fromPos = "end";
-            if (roadLink.attribute("fromPos"))
-                fromPos = roadLink.attribute("fromPos").value();
+            if (attributeExits(roadLink, "fromPos"))
+                fromPos = readIntAttrFromNode(roadLink, "fromPos");
 
             string toPos = "end";
-            if (roadLink.attribute("toPos"))
-                toPos = roadLink.attribute("toPos").value();
+            if (attributeExits(roadLink, "toPos"))
+                toPos = readIntAttrFromNode(roadLink, "toPos");
 
             road r1, r2;
             for (int i = 0; i < data.roads.size(); i++)
@@ -508,10 +552,15 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
                 return 1;
             }
 
-            for (pugi::xml_node laneLink : roadLink.children("laneLink"))
+            DOMNodeList *laneLinkList = roadLink->getElementsByTagName(X("laneLink"));
+            for (int i = 0; i < laneLinkList->getLength(); i ++)
             {
-                int from = laneLink.attribute("fromId").as_int();
-                int to = laneLink.attribute("toId").as_int();
+                DOMElement* laneLink = (DOMElement*)laneLinkList->item(i);
+                if(laneLink->getNodeType() != 1) continue; //we have to check the node type. Type 1 is an element. The reason for the check is that line breaks are handled as
+                // text nodes by xercesC.
+
+                int from = readIntAttrFromNode(laneLink, "fromId");
+                int to = readIntAttrFromNode(laneLink, "toId");
 
                 // flip ids
                 if (fromPos == "start")
@@ -522,11 +571,11 @@ int xjunction(pugi::xml_node &node, roadNetwork &data)
                 string left = non;
                 string right = non;
 
-                if (laneLink.attribute("left"))
-                    left = laneLink.attribute("left").value();
+                if (attributeExits(laneLink, "left"))
+                    left = readStrAttrFromNode(laneLink, "left");
 
-                if (laneLink.attribute("right"))
-                    right = laneLink.attribute("right").value();
+                if (attributeExits(laneLink, "right"))
+                    right = readStrAttrFromNode(laneLink, "right");;
 
                 road r;
                 r.id = 100 * junc.id + data.roads.size() + 1;

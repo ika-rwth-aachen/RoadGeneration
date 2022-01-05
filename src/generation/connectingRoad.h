@@ -1,4 +1,11 @@
 /**
+ * Road-Generation
+ * --------------------------------------------------------
+ * Copyright (c) 2021 Institut für Kraftfahrzeuge, RWTH Aachen, ika
+ * Report bugs and download new versions https://github.com/ika-rwth-aachen/RoadGeneration
+ *
+ * This library is distributed under the MIT License.
+ * 
  * @file connectingRoad.h
  *
  * @brief file contains method for generating connecting road segment
@@ -17,13 +24,13 @@ extern settings setting;
  * @param data  roadNetwork structure where the generated roads and junctions are stored
  * @return int  error code
  */
-int connectingRoad(pugi::xml_node &node, roadNetwork &data)
+int connectingRoad(DOMElement *node, roadNetwork &data)
 {
     // define segment
     data.nSegment++;
-    pugi::xml_node mainRoad = node.child("road");
+    DOMElement* mainRoad = getChildWithName(node, "road");
 
-    pugi::xml_node dummy;
+    DOMElement* dummy = NULL;
 
     if (!mainRoad)
     {
@@ -31,16 +38,22 @@ int connectingRoad(pugi::xml_node &node, roadNetwork &data)
         return 1;
     }
 
-    // --- generate roads ------------------------------------------------------
+    //--- generate roads ------------------------------------------------------
     if(!setting.silentMode)
         cout << "\t Generating Roads" << endl;
 
     road r;
-    int id = mainRoad.attribute("id").as_int();
-    r.id = 100 * node.attribute("id").as_int() + id;
-    r.junction = node.attribute("id").as_int(); // <- might cause a bug in linging. 
+    int id = readIntAttrFromNode(mainRoad, "id");
+    r.id = 100 * readIntAttrFromNode(node, "id"); + id;
+    r.junction = readIntAttrFromNode(node, "id");; // <- might cause a bug in linking. 
     r.isConnectingRoad = true; // <- is needed to fix the bug that is caused by using junction attribute to store segment id in linking segments
     //r.junction = -1;
+
+
+    DOMElement* tmp = getChildWithName(node, "road");
+    cout << "name: " << readNameFromNode(node) << endl;
+    cout << "name: " << readNameFromNode(tmp) << endl;
+
 
     if (buildRoad(mainRoad, r, 0, INFINITY, dummy, 0, 0, 0, 0))
     {

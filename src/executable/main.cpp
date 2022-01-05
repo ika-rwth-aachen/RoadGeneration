@@ -1,9 +1,10 @@
 /**
- * @file main.cpp
- * @brief This is the main file for the Road-Generation executable. It makes use of the Road-Generation library.
- * @author Jannik Busse (jannik.busse@ika.rwth-aachen.de)
- * @date 2021-08-30
- * 
+ * Road-Generation
+ * --------------------------------------------------------
+ * Copyright (c) 2021 Institut für Kraftfahrzeuge, RWTH Aachen, ika
+ * Report bugs and download new versions https://github.com/ika-rwth-aachen/RoadGeneration
+ *
+ * This library is distributed under the MIT License.
  */
 
 #include <stdio.h>
@@ -41,7 +42,6 @@ int main(int argc, char** argv){
 
     execPipeline();
 
-    
     return 0;
 }
 

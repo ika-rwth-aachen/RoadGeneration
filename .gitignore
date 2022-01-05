@@ -11,6 +11,7 @@ doc/doxygenDocumentation
 .vscode
 *.cmake
 CMakeCache.txt
+*.code-workspace
 
 *.so
 *.pyc

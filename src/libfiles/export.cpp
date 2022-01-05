@@ -1,9 +1,18 @@
 /**
- * @file export.cpp
- * @brief file contains the functions that provide the api for the library.
- * @author Jannik Busse (jannik.busse@ika.rwth-aachen.de)
- * @date 2021-08-30
+ * Road-Generation
+ * --------------------------------------------------------
+ * Copyright (c) 2021 Institut für Kraftfahrzeuge, RWTH Aachen, ika
+ * Report bugs and download new versions https://github.com/ika-rwth-aachen/RoadGeneration
+ *
+ * This library is distributed under the MIT License.
  * 
+ * @file export.cpp
+ *
+ * @brief This file contains the most important functions for using the road generation library
+ *
+ * @author Jannik Busse
+ * Contact: jannik.busse@rwth-aachen.de
+ *
  */
 
 #include "export.h"
@@ -64,6 +73,11 @@ EXPORTED void setXMLSchemeLocation(char* file){
 	setting.xmlSchemeLocation = file;
 }
 
+void test(roadNetwork rn)
+{
+	cout << rn.controller.size() << endl; 
+}
+
 EXPORTED int executePipeline(char* file)
 {
 
@@ -78,8 +92,6 @@ EXPORTED int executePipeline(char* file)
 	
 	(void)! freopen(_logfile.c_str(), "a", stderr); //(void)! suppresses the unused return warning..
 	cerr << "\nError log for run with attribute: " << file << endl;
-	
-
 
 	if (setting.xmlSchemeLocation == ""){
 		cerr << "ERR: xml scheme  NOT SET" << endl;
@@ -90,55 +102,54 @@ EXPORTED int executePipeline(char* file)
 		cout << file << endl;
 		printLogo();
 	}
-
-	
 	
 	// --- initialization ------------------------------------------------------
-	pugi::xml_document in;
-	pugi::xml_document out;
-	roadNetwork data;
 
+	xmlTree inputxml;
+
+	roadNetwork data;
 	string outputFile = _outName;
 	data.outputFile = outputFile.substr(0, outputFile.find(".xml"));
     data.outputFile = data.outputFile.substr(0, outputFile.find(".xodr"));
-
 	
 	// --- pipeline ------------------------------------------------------------
-	if (validateInput(file))
+	if (validateInput(file, inputxml))
 	{
 		cerr << "ERR: error in validateInput" << endl;
 		return -1;
 	}
-	if (parseXML(in, data, file))
-	{
-		cerr << "ERR: error in parseXML" << endl;
-		return -1;
-	}
-	if (buildSegments(in, data))
+
+	// if (parseXML(in, data, file))
+	// {
+	// 	cerr << "ERR: error in parseXML" << endl;
+	// 	return -1;
+	// }
+	if (buildSegments(inputxml, data))
 	{
 		cerr << "ERR: error in buildSegments" << endl;
 		return -1;
 	}
-	if (linkSegments(in, data))
+	if (linkSegments(inputxml, data))
 	{
 		cerr << "ERR: error in linkSegments" << endl;
 		return -1;
 	}
-	if (closeRoadNetwork(in, data))
+	if (closeRoadNetwork(inputxml, data))
 	{
 		cerr << "ERR: error in closeRoadNetwork" << endl;
 		return -1;
 	}
-	if (createXML(out, data))
+	if (createXMLXercesC(data))
 	{
 		cerr << "ERR: error during createXML" << endl;
 		return -1;
 	}
+
 	if (validateOutput(data))
 	{
 		cerr << "ERR: error in validateOutput" << endl;
 		return -1;
 	}
-	
+
 	return 0;
 }
