@@ -520,14 +520,13 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
 
     if(roadIn == NULL) return 0; //leave if the road is null. might cause errros 
 
-
     DOMNodeList* referenceLines = roadIn->getElementsByTagName(X("lanes"));
     for (int i = 0; i < referenceLines->getLength(); i++)
     {
         DOMElement* itt = (DOMElement*)referenceLines->item(i);
         if(itt->getNodeType() != 1) continue;
 
-        if (attributeExits(itt,"laneWidening"))
+        if (getChildWithName(itt,"laneWidening"))
         {
             int side = readIntAttrFromNode(itt, "side");
 
