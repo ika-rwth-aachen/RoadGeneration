@@ -523,86 +523,92 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
     DOMNodeList* referenceLines = roadIn->getElementsByTagName(X("lanes"));
     for (int i = 0; i < referenceLines->getLength(); i++)
     {
-        DOMElement* itt = (DOMElement*)referenceLines->item(i);
-        if(itt->getNodeType() != 1) continue;
-
-        if (getChildWithName(itt,"laneWidening"))
+        
+        DOMElement* lane = (DOMElement*)referenceLines->item(i);  
+        if(lane->getNodeType() != 1) continue;
+        
+        for(DOMElement* itt = lane->getFirstElementChild(); itt != NULL; itt = itt->getNextElementSibling())//this contains either lanedrops or lanewidening 
         {
-            int side = readIntAttrFromNode(itt, "side");
+            if(itt->getNodeType() != 1) continue;
 
-            if (side == 0)
+            if (readNameFromNode(itt) == "laneWidening")
             {
-                cerr << "ERR: laneWidening with side = 0" << endl;
-                return 1;
-            }
+                int side = readIntAttrFromNode(itt, "side");
 
-            double s = readDoubleAttrFromNode(itt, "s");
-
-            double ds = setting.laneChange.ds;
-            if (attributeExits(itt,"length"))
-                ds = readDoubleAttrFromNode(itt, "length");
-
-            // only perform drop if on road length
-            if (s > r.length)
-                continue;
-
-            if (addLaneWidening(r.laneSections, side, s, ds, false))
-            {
-                cerr << "ERR: error in addLaneWidening";
-                return 1;
-            }
-
-            //restricted area
-            if (getChildWithName(itt, "restrictedArea") != NULL)
-            {
-                double ds2 = setting.laneChange.ds;
-                if (attributeExits(getChildWithName(itt, "restrictedArea"),"length"))
-                    ds2 = readIntAttrFromNode(getChildWithName(itt, "restrictedArea"),"length");
-
-                if (addRestrictedAreaWidening(r.laneSections, side, s, ds, ds2))
+                if (side == 0)
                 {
-                    cerr << "ERR: error in addRestrictedAreaWidening" << endl;
+                    cerr << "ERR: laneWidening with side = 0" << endl;
                     return 1;
                 }
-            }
-        }
-        if (readNameFromNode(itt) == "laneDrop")
-        {
-            int side = readIntAttrFromNode(itt, "side");
 
-            if (side == 0)
-            {
-                cerr << "ERR: laneWidening with side = 0" << endl;
-                return 1;
-            }
+                double s = readDoubleAttrFromNode(itt, "s");
 
-            double s =  readDoubleAttrFromNode(itt, "s");
+                double ds = setting.laneChange.ds;
+                if (attributeExits(itt,"length"))
+                    ds = readDoubleAttrFromNode(itt, "length");
 
-            double ds = setting.laneChange.ds;
-            if (attributeExits(itt, "length"))
-                ds =  readDoubleAttrFromNode(itt, "length");
+                // only perform drop if on road length
+                if (s > r.length)
+                    continue;
 
-            // only perform drop if on road length
-            if (s > r.length)
-                continue;
-
-            if (addLaneDrop(r.laneSections, side, s, ds))
-            {
-                cerr << "ERR: error in addLaneDrop";
-                return 1;
-            }
-
-            //restricted area
-            if (getChildWithName(itt, "restrictedArea") != NULL)
-            {
-                double ds2 = setting.laneChange.ds;
-                if (attributeExits(getChildWithName(itt, "restrictedArea"),"length"))
-                    ds2 = readIntAttrFromNode(getChildWithName(itt, "restrictedArea"),"length");
-
-                if (addRestrictedAreaDrop(r.laneSections, side, s, ds, ds2))
+                if (addLaneWidening(r.laneSections, side, s, ds, false))
                 {
-                    cerr << "ERR: error in addRestrictedAreaDrop";
+                    cerr << "ERR: error in addLaneWidening";
                     return 1;
+                }
+
+                //restricted area
+                if (getChildWithName(itt, "restrictedArea") != NULL)
+                {
+                    double ds2 = setting.laneChange.ds;
+                    if (attributeExits(getChildWithName(itt, "restrictedArea"),"length"))
+                        ds2 = readIntAttrFromNode(getChildWithName(itt, "restrictedArea"),"length");
+
+                    if (addRestrictedAreaWidening(r.laneSections, side, s, ds, ds2))
+                    {
+                        cerr << "ERR: error in addRestrictedAreaWidening" << endl;
+                        return 1;
+                    }
+                }
+            }
+            if (readNameFromNode(itt) == "laneDrop")
+            {
+                int side = readIntAttrFromNode(itt, "side");
+
+                if (side == 0)
+                {
+                    cerr << "ERR: laneWidening with side = 0" << endl;
+                    return 1;
+                }
+
+                double s =  readDoubleAttrFromNode(itt, "s");
+
+                double ds = setting.laneChange.ds;
+                if (attributeExits(itt, "length"))
+                    ds =  readDoubleAttrFromNode(itt, "length");
+
+                // only perform drop if on road length
+                if (s > r.length)
+                    continue;
+
+                if (addLaneDrop(r.laneSections, side, s, ds))
+                {
+                    cerr << "ERR: error in addLaneDrop";
+                    return 1;
+                }
+
+                //restricted area
+                if (getChildWithName(itt, "restrictedArea") != NULL)
+                {
+                    double ds2 = setting.laneChange.ds;
+                    if (attributeExits(getChildWithName(itt, "restrictedArea"),"length"))
+                        ds2 = readIntAttrFromNode(getChildWithName(itt, "restrictedArea"),"length");
+
+                    if (addRestrictedAreaDrop(r.laneSections, side, s, ds, ds2))
+                    {
+                        cerr << "ERR: error in addRestrictedAreaDrop";
+                        return 1;
+                    }
                 }
             }
         }
