@@ -561,7 +561,7 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
 
                 if (addRestrictedAreaWidening(r.laneSections, side, s, ds, ds2))
                 {
-                    cerr << "ERR: error in addRestrictedAreaWidening";
+                    cerr << "ERR: error in addRestrictedAreaWidening" << endl;
                     return 1;
                 }
             }
