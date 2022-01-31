@@ -49,6 +49,7 @@ int connectingRoad(DOMElement *node, roadNetwork &data)
     r.isConnectingRoad = true; // <- is needed to fix the bug that is caused by using junction attribute to store segment id in linking segments
     //r.junction = -1;
 
+
     DOMElement* tmp = getChildWithName(node, "road");
 
     if (buildRoad(mainRoad, r, 0, INFINITY, dummy, 0, 0, 0, 0))
