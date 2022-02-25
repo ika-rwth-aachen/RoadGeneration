@@ -52,6 +52,9 @@ int closeRoadNetwork(xmlTree &doc, roadNetwork &data)
 		data.nSegment++;
 		rConnection.id = data.nSegment * 100 + 1;
 
+		if(rConnection.id == 1001)
+			cout << rConnection.id << endl; //TODO delete this (debugging)
+
 		int fromSegment = readIntAttrFromNode(segmentLink, "fromSegment");
 		int toSegment = readIntAttrFromNode(segmentLink, "toSegment");
 		int fromRoadId = readIntAttrFromNode(segmentLink, "fromRoad");
