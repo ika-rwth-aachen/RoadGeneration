@@ -49,13 +49,6 @@ int connectingRoad(DOMElement *node, roadNetwork &data)
     r.isConnectingRoad = true; // <- is needed to fix the bug that is caused by using junction attribute to store segment id in linking segments
     //r.junction = -1;
 
-    if(r.id == 502) //TODO delete this (debugging)
-    {
-        cout << readNameFromNode(mainRoad) << endl;
-        cout << id << endl;
-        cout << readIntAttrFromNode(node, "id") << endl;
-
-    }
 
     DOMElement* tmp = getChildWithName(node, "road");
 

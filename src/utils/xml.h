@@ -336,6 +336,7 @@ int createXMLXercesC(roadNetwork &data)
                     width.addAttribute("b", ittt->w.b);
                     width.addAttribute("c", ittt->w.c);
                     width.addAttribute("d", ittt->w.d);
+                    
                 }
 
                 nodeElement roadmark = ("roadMark");
