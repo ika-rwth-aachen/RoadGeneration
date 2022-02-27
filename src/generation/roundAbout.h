@@ -328,7 +328,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
                 to--;
             }
 
-            data.roads.push_back(r);
+            data.roads.push_back(r); //these are the connecting roads in the roundabout 
             nCount++;
         }
 
@@ -397,5 +397,6 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
     data.junctions.push_back(junc);
 
     cout << "end roundabout " << endl;
+    //TODO connect all roads after generation.
     return 0;
 }
