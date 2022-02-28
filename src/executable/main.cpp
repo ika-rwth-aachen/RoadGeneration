@@ -1,3 +1,12 @@
+/**
+ * Road-Generation
+ * --------------------------------------------------------
+ * Copyright (c) 2021 Institut für Kraftfahrzeuge, RWTH Aachen, ika
+ * Report bugs and download new versions https://github.com/ika-rwth-aachen/RoadGeneration
+ *
+ * This library is distributed under the MIT License.
+ */
+
 #include <stdio.h>
 #include <iostream>
 #include "libImports.h"
@@ -27,7 +36,6 @@ int main(int argc, char** argv){
 
     execPipeline();
 
-    
     return 0;
 }
 

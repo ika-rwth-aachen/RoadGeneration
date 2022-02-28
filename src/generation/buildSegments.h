@@ -1,4 +1,11 @@
 /**
+ * Road-Generation
+ * --------------------------------------------------------
+ * Copyright (c) 2021 Institut für Kraftfahrzeuge, RWTH Aachen, ika
+ * Report bugs and download new versions https://github.com/ika-rwth-aachen/RoadGeneration
+ *
+ * This library is distributed under the MIT License.
+ * 
  * @file buildSegments.h
  *
  * @brief file contains method for generating segments
@@ -25,45 +32,53 @@ extern settings setting;
 /**
  * @brief function creates all segments which can be either a junction, roundabout or connectingroad
  * 
- * @param doc 	tree structure which contains the input data
+ * @param inputxml 	tree structure which contains the input data
  * @param data 	roadNetwork data where the openDrive structure should be generated
  * @return int 	error code
  */
-int buildSegments(pugi::xml_document &doc, roadNetwork &data)
+int buildSegments(xmlTree &inputxml, roadNetwork &data)
 {
-	pugi::xml_node segments = doc.child("roadNetwork").child("segments");
-	if (!segments)
-		cerr << "ERR: 'segments' not found in input file." << endl;
 
-	for (pugi::xml_node_iterator it = segments.begin(); it != segments.end(); ++it)
+	DOMElement *roadNode;
+	if (inputxml.findNodeWithName("segments", roadNode))
 	{
-			if ((string)it->name() == "junction")
+		cerr << "ERR: 'segments' not found in input file." << endl;
+		cout << "ERR: 'segments' not found in input file." << endl;
+		return 1;
+	}
+
+	DOMNodeList* segmentNodes = roadNode->getChildNodes();
+
+
+	for(DOMElement* em = roadNode->getFirstElementChild(); em != NULL ;em = em->getNextElementSibling())
+	{
+		if (readNameFromNode(em) == "junction")
 		{
 			if(!setting.silentMode)
 				cout << "Processing junction" << endl;
-			if (junctionWrapper(*it, data))
+			if (junctionWrapper(em, data))
 			{
-				cerr << "ERR: error in junction." << endl;
-				return 1;
+		    		cerr << "ERR: error in junction." << endl;
+					return 1;
 			}
 		}
 
-		if ((string)it->name() == "roundabout")
+		if (readNameFromNode(em) == "roundabout")
 		{	
 			if(!setting.silentMode)
 				cout << "Processing roundabout" << endl;
-			if (roundAbout(*it, data))
+			if (roundAbout(em, data))
 			{
 				cerr << "ERR: error in roundabout." << endl;
 				return 1;
 			}
 		}
 
-		if ((string)it->name() == "connectingRoad")
+		if (readNameFromNode(em) == "connectingRoad" )
 		{
 			if(!setting.silentMode)
 				cout << "Processing connectingRoad" << endl;
-			if (connectingRoad(*it, data))
+			if (connectingRoad(em, data))
 			{
 				cerr << "ERR: error in connectingRoad." << endl;
 				return 1;
