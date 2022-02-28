@@ -456,10 +456,12 @@ struct nodeElement
     
     int addAttribute(const char* key, double value)
     {
-        return addAttribute(key, to_string(value));
+       
+        ostringstream strobj;
+        strobj << value;
+        return addAttribute(key, strobj.str());
     }
-
-
+   
     int appendToNode(nodeElement &node)
     {
         int errorCode = 0;

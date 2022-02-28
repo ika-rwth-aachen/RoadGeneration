@@ -52,6 +52,7 @@ int closeRoadNetwork(xmlTree &doc, roadNetwork &data)
 		data.nSegment++;
 		rConnection.id = data.nSegment * 100 + 1;
 
+
 		int fromSegment = readIntAttrFromNode(segmentLink, "fromSegment");
 		int toSegment = readIntAttrFromNode(segmentLink, "toSegment");
 		int fromRoadId = readIntAttrFromNode(segmentLink, "fromRoad");
