@@ -339,7 +339,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
            
             data.roads.push_back(r); //these are the connecting roads in the roundabout 
-            roundAboutIds[roundAboutIds.size()-1][i] = data.roads.size(); //store id of road all roads
+            roundAboutIds[roundAboutIds.size()-1][i] = data.roads.size() -1; //store id of road 
             
             nCount++;
         }
@@ -396,13 +396,13 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         r1.predecessor.contactPoint = startType;
 
         data.roads.push_back(r1);
-        roundAboutIds[roundAboutIds.size()-1][nLane] = data.roads.size(); //store id of road all roads
+        roundAboutIds[roundAboutIds.size()-1][nLane] = data.roads.size() -1 ; //store id of road all roads
         data.roads.push_back(r2);
-        roundAboutIds[roundAboutIds.size()-1][nLane + 1] = data.roads.size(); //store id of road all roads
+        roundAboutIds[roundAboutIds.size()-1][nLane + 1] = data.roads.size()-1 ; //store id of road all roads
         data.roads.push_back(r5);
-        roundAboutIds[roundAboutIds.size()-1][nLane + 2] = data.roads.size(); //store id of road all roads
+        roundAboutIds[roundAboutIds.size()-1][nLane + 2] = data.roads.size()-1 ; //store id of road all roads
         data.roads.push_back(r6);
-        roundAboutIds[roundAboutIds.size()-1][nLane + 3] = data.roads.size(); //store id of road all roads
+        roundAboutIds[roundAboutIds.size()-1][nLane + 3] = data.roads.size()-1 ; //store id of road all roads
 
         // update for next step
         sOld = sMain + sOffMain;
@@ -418,12 +418,24 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         for(int a = 0; a < roundAboutWidth; a ++)
         {
             data.roads[i * roundAboutWidth + a].successor.id = data.roads[i * roundAboutWidth + 4].id;
+            cout << data.roads[i * roundAboutWidth + 4].id << endl;
         }
 
         for(int a = 0; a < 4; a ++)
         {
             
         }
+
+    }
+    cout << "////" << endl;
+    for(int i = 0; i < roundAboutIds.size(); i++)
+    {
+        for(int a = 0; a < roundAboutIds[i].size(); a ++)
+        {
+            cout << data.roads[roundAboutIds[i][a]].id <<endl;
+        }
+
+        cout << endl;
 
     }
     
