@@ -26,6 +26,11 @@ extern settings setting;
  */
 int roundAbout(const DOMElement* node, roadNetwork &data)
 {
+
+    vector<vector<int>> roundAboutIds; //store the roads ids to connect them after they are generated
+    int roundAboutWidth = 0;
+
+
     // create segment
     data.nSegment++;
     junction junc;
@@ -304,6 +309,10 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         from = inner1;
         to = inner2;
 
+        vector<int> seg(nLane + 4); //create a vector for the current segment
+        roundAboutWidth = nLane;
+        roundAboutIds.push_back(seg);
+
         for (int i = 0; i < nLane; i++)
         {
             road r;
@@ -328,7 +337,10 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
                 to--;
             }
 
+           
             data.roads.push_back(r); //these are the connecting roads in the roundabout 
+            roundAboutIds[roundAboutIds.size()-1][i] = data.roads.size(); //store id of road all roads
+            
             nCount++;
         }
 
@@ -384,15 +396,40 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         r1.predecessor.contactPoint = startType;
 
         data.roads.push_back(r1);
+        roundAboutIds[roundAboutIds.size()-1][nLane] = data.roads.size(); //store id of road all roads
         data.roads.push_back(r2);
+        roundAboutIds[roundAboutIds.size()-1][nLane + 1] = data.roads.size(); //store id of road all roads
         data.roads.push_back(r5);
+        roundAboutIds[roundAboutIds.size()-1][nLane + 2] = data.roads.size(); //store id of road all roads
         data.roads.push_back(r6);
+        roundAboutIds[roundAboutIds.size()-1][nLane + 3] = data.roads.size(); //store id of road all roads
 
         // update for next step
         sOld = sMain + sOffMain;
         if (cc == 1)
             rOld = r1;
     }
+
+    //connect the segments here------------
+
+
+    for(int i = 0; i < roundAboutIds.size(); i++)
+    {
+        for(int a = 0; a < roundAboutWidth; a ++)
+        {
+            data.roads[i * roundAboutWidth + a].successor.id = data.roads[i * roundAboutWidth + 4].id;
+        }
+
+        for(int a = 0; a < 4; a ++)
+        {
+            
+        }
+
+    }
+    
+
+    //end connecting segments---------------
+
 
     data.junctions.push_back(junc);
 
