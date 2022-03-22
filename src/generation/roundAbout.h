@@ -417,8 +417,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
     {
         for(int a = 0; a < roundAboutWidth; a ++)
         {
-            data.roads[i * roundAboutWidth + a].successor.id = data.roads[i * roundAboutWidth + 4].id;
-            cout << data.roads[i * roundAboutWidth + 4].id << endl;
+            data.roads[i * (roundAboutWidth  + 4) + a].successor.id = data.roads[(i + 1)%(roundAboutIds.size()) * (roundAboutWidth + 4) + 3].id;
         }
 
         for(int a = 0; a < 4; a ++)
