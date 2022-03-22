@@ -420,10 +420,9 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
             data.roads[i * (roundAboutWidth  + 4) + a].successor.id = data.roads[(i + 1)%(roundAboutIds.size()) * (roundAboutWidth + 4) + 3].id;
         }
 
-        for(int a = 0; a < 4; a ++)
-        {
-            
-        }
+        data.roads[i * (roundAboutWidth  + 4) + 6].successor.id = data.roads[(i + 1)%(roundAboutIds.size()) * (roundAboutWidth + 4) + 3].id;
+
+        //TODO connection type and contact point!!     
 
     }
     cout << "////" << endl;
