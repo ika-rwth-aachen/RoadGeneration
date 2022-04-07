@@ -132,6 +132,14 @@ A simple but well designed C++ reference [documentation](https://ika-rwth-aachen
 
 The Variation tool is used to generate a variety of different scenarios based on the same general road network. A template file is provided to specify variables as well as the general road network structure. A more thorough documentation can be found in the [variation subdirectory](variation/README.md).
 
+### Installation
+
+You can run the code from the `variation` subfolder, however, the variation tool can be installed system wide by using the install script in the root directory.
+
+```bash
+    sh install-variation.sh
+```
+
 ## Licenses
 
 The project is distributed under the [MIT License](LICENSE.md).
