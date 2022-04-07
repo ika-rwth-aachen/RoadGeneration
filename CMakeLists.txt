@@ -26,7 +26,7 @@ if (CREATE_DOXYGEN_TARGET)
         set(DOXYGEN_GENERATE_HTML YES)
         set(DOXYGEN_GENERATE_MAN YES)
         set(DOXYGEN_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/docs)
-        set(DOXYGEN_USE_MDFILE_AS_MAINPAGE README.md) #this is not optimal, since the project uses an rst file at the moment
+        set(DOXYGEN_USE_MDFILE_AS_MAINPAGE README.md) 
 
         message("Doxygen build started")
 
