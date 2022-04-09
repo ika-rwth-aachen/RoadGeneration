@@ -28,8 +28,9 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 {
     // create segment
     data.nSegment++;
-    junction junc;
-    junc.id = readIntAttrFromNode(node, "id");
+    vector<junction> junctions;
+    
+    int juncid = readIntAttrFromNode(node, "id") * 10000; //temporary store the input id of the roundabout. TODO fix the namespace issue with the ids.
 
     cout << "Roundabout" << endl;
 
@@ -44,11 +45,9 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
     }
 
     // store properties of circleRoad
-    //double length = circleRoad.child("referenceLine").child("circle").attribute("length").as_double();
     double length = readDoubleAttrFromNode(getChildWithName(getChildWithName(circleRoad, "referenceLine"), "circle"),"length") ;
     double R = length / (2 * M_PI);
     getChildWithName(getChildWithName(circleRoad, "referenceLine"), "circle")->setAttribute(X("R"), X(to_string(R).c_str()));
-    //circleRoad.child("referenceLine").child("circle").append_attribute("R") = R;
     
 
     double sOld;
@@ -78,19 +77,36 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
             nIp++;
         }
     }
+
+    //generate all junctions first for easier linking
     int cc = 0;
-    // iterate over all additonalRoads defined by separate intersectionPoints
-    // sMain of intersection points have to increase
     for (DOMElement* iP = node->getFirstElementChild(); iP != NULL; iP = iP->getNextElementSibling())
     {
         if(readNameFromNode(iP) != "intersectionPoint")
         {
             continue;
         }
+        junction junc;
+        junc.id = juncid + cc * 100;
+        cc++;
+        junctions.push_back(junc);
+        
+    }
+
+    cc = 0;
+    // iterate over all additonalRoads defined by separate intersectionPoints
+    // sMain of intersection points have to increase
+    for (DOMElement* iP = node->getFirstElementChild(); iP != NULL; iP = iP->getNextElementSibling())
+    {
+
+        if(readNameFromNode(iP) != "intersectionPoint")
+        {
+            continue;
+        }
+        junction junc = junctions[cc];
         cc++;
 
         // find additionalRoad
-        //int adId = iP.child("adRoad").attribute("id").as_int();
         int adId = stoi(readAttributeFromChildren(iP, "adRoad", "id"));
         
         DOMElement* additionalRoad;
@@ -190,7 +206,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         // --- generate roads --------------------------------------------------
         if(!setting.silentMode)
-            cout << "\t Generating Roads" << endl;
+            cout << "\t Generating Roads for Roundabout" << endl;
         /*           
                     \___       ____/
                  id: 1         id: helper
@@ -203,10 +219,16 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         road r1;
         r1.id = 100 * junc.id + cc * 10 + nCount;
-        r1.junction = junc.id;
-        r1.successor.id = junc.id;
+        r1.junction = -1;
+        r1.successor.id = junctions[(cc - 1+ junctions.size()) % junctions.size()].id;
         r1.successor.elementType = junctionType;
         r1.successor.contactPoint = startType;
+
+        r1.predecessor.id = junctions[(cc - 2 + junctions.size()) % junctions.size()].id;
+        r1.predecessor.elementType = junctionType;
+        r1.predecessor.contactPoint = endType;
+
+
         if (cc == 1)
             sOld = sOffMain;
 
@@ -378,10 +400,10 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         }
         nCount++;
 
-        // adjust precessor of first element, due to loop
-        r1.predecessor.id = junc.id;
-        r1.predecessor.elementType = junctionType;
-        r1.predecessor.contactPoint = startType;
+        // // adjust predecessor of first element, due to loop
+        // r1.predecessor.id = junc.id;
+        // r1.predecessor.elementType = junctionType;
+        // r1.predecessor.contactPoint = startType;
 
         data.roads.push_back(r1);
         data.roads.push_back(r2);
@@ -392,9 +414,12 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         sOld = sMain + sOffMain;
         if (cc == 1)
             rOld = r1;
+
+        junctions.push_back(junc);
     }
 
-    data.junctions.push_back(junc);
+    for(auto &j: junctions)
+        data.junctions.push_back(j);
 
     cout << "end roundabout " << endl;
     //TODO connect all roads after generation.
