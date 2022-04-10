@@ -261,7 +261,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         //addSignal(r2, data, 1, INFINITY, "1.000.001", "-", -1);
 
         road helper;
-        helper.id = 100 * junc.id + cc * 10 + nCount;
+        helper.id = 100 * junc.id + (cc + 1 )%junctions.size() * 10 + nCount - 2;
         helper.junction = junc.id;
         if (cc < nIp)
         {
