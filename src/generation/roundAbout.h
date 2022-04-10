@@ -103,7 +103,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         {
             continue;
         }
-        junction junc = junctions[cc];
+        junction &junc = junctions[cc];
         cc++;
 
         // find additionalRoad
@@ -169,7 +169,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         laneSection lSAdd = helpAdd.laneSections.front();
         double widthAdd = abs(findTOffset(lSAdd, findMinLaneId(lSAdd), 0)) + abs(findTOffset(lSAdd, findMaxLaneId(lSAdd), 0));
 
-        // check offsets and adjust them if necessary (2 and 4 are safty factor)
+        // check offsets and adjust them if necessary (2 and 4 are safety factors)
         bool(changed) = false;
         if (sOffMain < widthAdd / 2 * 4)
         {
@@ -218,7 +218,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         int nCount = 1;
 
         road r1;
-        r1.id = 100 * junc.id + cc * 10 + nCount;
+        r1.id = 100 * junc.id + nCount;
         r1.junction = -1;
         r1.successor.id = junctions[(cc - 1+ junctions.size()) % junctions.size()].id;
         r1.successor.elementType = junctionType;
@@ -240,7 +240,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         nCount++;
 
         road r2;
-        r2.id = 100 * junc.id + cc * 10 + nCount;
+        r2.id = 100 * junc.id + nCount;
         r2.junction = junc.id;
         r2.predecessor.id = junc.id;
         r2.predecessor.elementType = junctionType;
@@ -261,7 +261,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         //addSignal(r2, data, 1, INFINITY, "1.000.001", "-", -1);
 
         road helper;
-        helper.id = 100 * junc.id + (cc + 1 )%junctions.size() * 10 + nCount - 2;
+        helper.id = 100 * junctions[(cc)%nIp].id + nCount - 2 ;
         helper.junction = junc.id;
         if (cc < nIp)
         {
@@ -278,6 +278,9 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
             helper.successor.id = -101;
             helper.successor.contactPoint = startType;
         }
+
+  
+
         helper.predecessor.id = junc.id;
         helper.predecessor.elementType = junctionType;
         helper.predecessor.contactPoint = startType;
@@ -329,7 +332,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         for (int i = 0; i < nLane; i++)
         {
             road r;
-            r.id = 100 * junc.id + cc * 10 + nCount;
+            r.id = 100 * junc.id + nCount;
 
             if (clockwise)
             {
@@ -355,7 +358,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         }
 
         road r5;
-        r5.id = 100 * junc.id + cc * 10 + nCount;
+        r5.id = 100 * junc.id  + nCount;
         if (clockwise)
         {
             from = outer1;
@@ -379,7 +382,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         nCount++;
 
         road r6;
-        r6.id = 100 * junc.id + cc * 10 + nCount;
+        r6.id = 100 * junc.id + nCount;
         if (clockwise)
         {
             if (r2_T_R != 0)
@@ -415,7 +418,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         if (cc == 1)
             rOld = r1;
 
-        junctions.push_back(junc);
+        
     }
 
     for(auto &j: junctions)
