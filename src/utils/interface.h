@@ -18,6 +18,11 @@
 extern settings setting;
 
 // definition of basic types
+enum junctionGroupType
+{
+    roundaboutType,
+    unknownType
+};
 enum contactPointType
 {
     startType,
@@ -273,6 +278,29 @@ struct road
     vector<sign> signs;
 };
 
+
+struct junctionGroup
+{
+
+    int id;
+    string name;
+    junctionGroupType type = roundaboutType;
+    vector<int> juncIds; 
+
+    junctionGroup()
+    {
+        
+    }
+
+    ~junctionGroup()
+    {
+
+    }
+
+
+
+};
+
 /**
  * @brief roadNetwork is the overall struct holding all data
  * 
@@ -289,6 +317,7 @@ struct roadNetwork
     vector<road> roads;
     vector<junction> junctions;
     vector<control> controller;
+    vector<junctionGroup> juncGroups;
 
     // global counters
     int nSignal = 0;

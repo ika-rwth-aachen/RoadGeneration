@@ -485,6 +485,24 @@ int createXMLXercesC(roadNetwork &data)
             ll.addAttribute("to", itt->toLane);
         }
     }
+    // --- write junction groups -----------------------------------------------------
+
+    for (std::vector<junctionGroup>::iterator it = data.juncGroups.begin(); it != data.juncGroups.end(); ++it)
+    {
+
+        nodeElement juncGroup("junctionGroup");
+        juncGroup.appendToNode(root);
+        juncGroup.addAttribute("id", it->id);
+        juncGroup.addAttribute("name", it->name);
+        juncGroup.addAttribute("type", it->type);
+
+
+        for (std::vector<int>::iterator itt = it->juncIds.begin(); itt != it->juncIds.end(); ++itt)
+        {
+            nodeElement juncRef("junctionReference", juncGroup);
+            juncRef.addAttribute("junction", *itt);
+        }
+    }
 
 
     serialize((data.outputFile + ".xodr").c_str());

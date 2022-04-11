@@ -443,6 +443,14 @@ struct nodeElement
         return addAttribute(key, value.c_str());
     }
 
+    int addAttribute(const char* key, junctionGroupType value)
+    {
+        if(value == roundaboutType)
+            return addAttribute(key, "roundabout");
+        else
+            return addAttribute(key, "unknown");
+
+    }
 
     int addAttribute(const char* key, int value)
     {

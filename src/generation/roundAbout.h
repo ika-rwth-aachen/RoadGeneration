@@ -29,15 +29,18 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
     // create segment
     data.nSegment++;
     vector<junction> junctions;
-    
-    int juncid = readIntAttrFromNode(node, "id") * 10000; //temporary store the input id of the roundabout. TODO fix the namespace issue with the ids.
+    junctionGroup juncGroup;
+
+    juncGroup.id = readIntAttrFromNode(node, "id"); 
+    juncGroup.name = "jg" + to_string(juncGroup.id);
+    int juncid = juncGroup.id * 10000; //temporary store the input id of the roundabout. TODO fix the namespace issue with the ids.
 
     cout << "Roundabout" << endl;
 
     DOMElement* dummy = NULL;
-
     DOMElement* circleRoad = getChildWithName(node, "circle");
     int refId = readIntAttrFromNode(circleRoad, "id");
+
     if (!circleRoad)
     {
         cerr << "ERR: circleRoad is not found.";
@@ -78,6 +81,8 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         }
     }
 
+    
+
     //generate all junctions first for easier linking
     int cc = 0;
     for (DOMElement* iP = node->getFirstElementChild(); iP != NULL; iP = iP->getNextElementSibling())
@@ -90,6 +95,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         junc.id = juncid + cc * 100;
         cc++;
         junctions.push_back(junc);
+        juncGroup.juncIds.push_back(junc.id);
         
     }
 
@@ -423,6 +429,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
     for(auto &j: junctions)
         data.junctions.push_back(j);
+    data.juncGroups.push_back(juncGroup);
 
     cout << "end roundabout " << endl;
     //TODO connect all roads after generation.

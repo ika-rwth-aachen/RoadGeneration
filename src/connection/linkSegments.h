@@ -138,6 +138,7 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 
 			toRoad = r;
 			toRoadId = r.id;
+			cout << toRoad.id << endl; //DELETE
 
 			// if junction, the contact point is always at "end" of a road
 			if (toIsJunction)
