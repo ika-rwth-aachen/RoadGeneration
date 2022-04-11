@@ -17,6 +17,19 @@
 
 extern settings setting;
 
+
+/**
+ * @brief translates the input segment id and the index of the junction inside the roundabout to an absolute junction id
+ * 
+ * @param juncGroupId input id of the segment. Equals the id of the junction group
+ * @param juncIdx index of the junction inside the roundabout. Starts with 0 and counting up
+ * @return int resulting id of the junction in the output file
+ */
+int juncGroupIdToJuncId(int juncGroupId, int juncIdx)
+{
+    return juncGroupId * 10000 + juncIdx * 100;
+}
+
 /**
  * @brief function generates the roads and junctions for a roundabout which is specified in the input file
  *  
@@ -33,7 +46,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
     juncGroup.id = readIntAttrFromNode(node, "id"); 
     juncGroup.name = "jg" + to_string(juncGroup.id);
-    int juncid = juncGroup.id * 10000; //temporary store the input id of the roundabout. TODO fix the namespace issue with the ids.
+    int juncid = juncGroupIdToJuncId(juncGroup.id, 0); //temporary store the input id of the roundabout. TODO fix the namespace issue with the ids.
 
     cout << "Roundabout" << endl;
 
@@ -92,7 +105,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
             continue;
         }
         junction junc;
-        junc.id = juncid + cc * 100;
+        junc.id = juncGroupIdToJuncId(juncGroup.id, cc);
         cc++;
         junctions.push_back(junc);
         juncGroup.juncIds.push_back(junc.id);
@@ -246,8 +259,9 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         nCount++;
 
         road r2;
+        r2.inputId = adId;
         r2.id = 100 * junc.id + nCount;
-        r2.junction = junc.id;
+        r2.junction = -1;
         r2.predecessor.id = junc.id;
         r2.predecessor.elementType = junctionType;
         r2.predecessor.contactPoint = startType;
@@ -423,7 +437,6 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         sOld = sMain + sOffMain;
         if (cc == 1)
             rOld = r1;
-
         
     }
 
@@ -433,5 +446,6 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
     cout << "end roundabout " << endl;
     //TODO connect all roads after generation.
+
     return 0;
 }
