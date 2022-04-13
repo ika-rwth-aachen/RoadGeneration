@@ -93,13 +93,13 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 			if(toSegment == jg.id)
 			{
 				//toSegment is a roundabout
-				toSegment = juncGroupIdToJuncId(toSegment, 0);
+				toSegment = juncGroupIdToJuncId(toSegment, toRoadId) + 2; //+2 is the id offset of the road that comes out of the roundabout
 
 			}
 			if(fromSegment == jg.id)
 			{
 				//toSegment is a roundabout
-				fromSegment = juncGroupIdToJuncId(fromSegment, 0);
+				fromSegment = juncGroupIdToJuncId(fromSegment, fromRoadId) +2; //+2 is the id offset of the road that comes out of the roundabout
 
 			}
 		}
@@ -156,7 +156,7 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 		for (auto &&r : data.roads)
 		{
 
-			if(toSegment ==30200 && toSegment == r.junction)
+			if(toSegment ==30202 && r.id == toSegment)
 				cout << r.inputId << endl;
 
 			if (r.junction != toSegment || r.inputId != toRoadId) 

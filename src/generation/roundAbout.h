@@ -46,7 +46,6 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
     juncGroup.id = readIntAttrFromNode(node, "id"); 
     juncGroup.name = "jg" + to_string(juncGroup.id);
-    int juncid = juncGroupIdToJuncId(juncGroup.id, 0); //temporary store the input id of the roundabout. TODO fix the namespace issue with the ids.
 
     cout << "Roundabout" << endl;
 
@@ -104,8 +103,9 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         {
             continue;
         }
+        int adId = stoi(readAttributeFromChildren(iP, "adRoad", "id"));
         junction junc;
-        junc.id = juncGroupIdToJuncId(juncGroup.id, cc);
+        junc.id = juncGroupIdToJuncId(juncGroup.id, adId);
         cc++;
         junctions.push_back(junc);
         juncGroup.juncIds.push_back(junc.id);
@@ -237,7 +237,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         int nCount = 1;
 
         road r1;
-        r1.id = 100 * junc.id + nCount;
+        r1.id = junc.id + nCount;
         r1.junction = -1;
         r1.successor.id = junctions[(cc - 1+ junctions.size()) % junctions.size()].id;
         r1.successor.elementType = junctionType;
@@ -260,11 +260,13 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         road r2;
         r2.inputId = adId;
-        r2.id = 100 * junc.id + nCount;
-        r2.junction = -1;
+        r2.id = junc.id + nCount;
+        r2.junction = junc.id + nCount; //storing the junction like this is a workaround for the problem with the id namespace. It needs to be this way
+        //so there wont be a problem in linking and closing the road network
         r2.predecessor.id = junc.id;
         r2.predecessor.elementType = junctionType;
         r2.predecessor.contactPoint = startType;
+        r2.isConnectingRoad = true;
         if (buildRoad(additionalRoad, r2, sAdd + sOffAdd, INFINITY, dummy, sAdd, iPx, iPy, iPhdg + phi))
         {
             cerr << "ERR: error in buildRoad" << endl;
@@ -281,7 +283,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         //addSignal(r2, data, 1, INFINITY, "1.000.001", "-", -1);
 
         road helper;
-        helper.id = 100 * junctions[(cc)%nIp].id + nCount - 2 ;
+        helper.id = junctions[(cc)%nIp].id + nCount - 2 ;
         helper.junction = junc.id;
         if (cc < nIp)
         {
@@ -352,7 +354,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         for (int i = 0; i < nLane; i++)
         {
             road r;
-            r.id = 100 * junc.id + nCount;
+            r.id = junc.id + nCount;
 
             if (clockwise)
             {
@@ -378,7 +380,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         }
 
         road r5;
-        r5.id = 100 * junc.id  + nCount;
+        r5.id = junc.id  + nCount;
         if (clockwise)
         {
             from = outer1;
@@ -402,7 +404,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         nCount++;
 
         road r6;
-        r6.id = 100 * junc.id + nCount;
+        r6.id = junc.id + nCount;
         if (clockwise)
         {
             if (r2_T_R != 0)
