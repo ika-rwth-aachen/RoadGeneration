@@ -239,6 +239,8 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         road r1;
         r1.id = junc.id + nCount;
         r1.junction = -1;
+        r1.roundAboutInputSegment = juncGroup.id;
+        r1.isConnectingRoad = true;
         r1.successor.id = junctions[(cc - 1+ junctions.size()) % junctions.size()].id;
         r1.successor.elementType = junctionType;
         r1.successor.contactPoint = startType;
@@ -260,12 +262,14 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         road r2;
         r2.inputId = adId;
+        r2.roundAboutInputSegment = juncGroup.id;
         r2.id = junc.id + nCount;
         r2.junction = junc.id + nCount; //storing the junction like this is a workaround for the problem with the id namespace. It needs to be this way
         //so there wont be a problem in linking and closing the road network
         r2.predecessor.id = junc.id;
         r2.predecessor.elementType = junctionType;
         r2.predecessor.contactPoint = startType;
+
         r2.isConnectingRoad = true;
         if (buildRoad(additionalRoad, r2, sAdd + sOffAdd, INFINITY, dummy, sAdd, iPx, iPy, iPhdg + phi))
         {
@@ -354,6 +358,8 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         for (int i = 0; i < nLane; i++)
         {
             road r;
+            r.roundAboutInputSegment = juncGroup.id;
+
             r.id = junc.id + nCount;
 
             if (clockwise)
@@ -381,6 +387,8 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         road r5;
         r5.id = junc.id  + nCount;
+        r5.roundAboutInputSegment = juncGroup.id;
+
         if (clockwise)
         {
             from = outer1;
@@ -404,6 +412,8 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         nCount++;
 
         road r6;
+        r6.roundAboutInputSegment = juncGroup.id;
+
         r6.id = junc.id + nCount;
         if (clockwise)
         {

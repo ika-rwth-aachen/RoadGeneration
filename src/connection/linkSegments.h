@@ -80,31 +80,10 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 		string toPos = readStrAttrFromNode(segmentLink, "toPos");
 		road fromRoad;
 		road toRoad;
+		int toJunctionGroup = -1; //in case we like TO a junction group, store the pointer
 
-		/*fix for the roundabout junction namespace problem. Since multiple junctions get generated for each roundabout
-		the linking is problematic with the current input format (since the user does not know the id that will be generated for the junctions).
-		So we check if the from and to segments belong to a roundabout
-		and if so adjust them acording to the roundabout id convention.*/
-
-		for(junctionGroup &jg: data.juncGroups)
-		{
-			if(jg.type != roundaboutType) continue;
-
-			if(toSegment == jg.id)
-			{
-				//toSegment is a roundabout
-				toSegment = juncGroupIdToJuncId(toSegment, toRoadId) + 2; //+2 is the id offset of the road that comes out of the roundabout
-
-			}
-			if(fromSegment == jg.id)
-			{
-				//toSegment is a roundabout
-				fromSegment = juncGroupIdToJuncId(fromSegment, fromRoadId) +2; //+2 is the id offset of the road that comes out of the roundabout
-
-			}
-		}
-		//-------------------END roundabout namespace fix---------------------------------
-
+		
+	
 		// assumption is that "fromSegement" is already linked to reference frame
 
 		double fromX, fromY, fromHdg;
@@ -121,6 +100,32 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 		for (auto &&j : data.junctions)
 			if (j.id == toSegment)
 				toIsJunction = true;
+
+		/*fix for the roundabout junction namespace problem. Since multiple junctions get generated for each roundabout
+		the linking is problematic with the current input format (since the user does not know the id that will be generated for the junctions).
+		So we check if the from and to segments belong to a roundabout
+		and if so adjust them acording to the roundabout id convention.*/
+
+		for(junctionGroup &jg: data.juncGroups)
+		{
+			if(jg.type != roundaboutType) continue;
+
+			if(toSegment == jg.id)
+			{
+				//toSegment is a roundabout
+				toSegment = juncGroupIdToJuncId(toSegment, toRoadId) + 2; //+2 is the id offset of the road that comes out of the roundabout
+				toJunctionGroup = jg.id;
+
+			}
+			if(fromSegment == jg.id)
+			{
+				//toSegment is a roundabout
+				fromSegment = juncGroupIdToJuncId(fromSegment, fromRoadId) +2; //+2 is the id offset of the road that comes out of the roundabout
+
+			}
+		}
+		//-------------------END roundabout namespace fix---------------------------------
+
 
 		// save from position
 		for (auto &&r : data.roads)
@@ -155,9 +160,6 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 		// save to position
 		for (auto &&r : data.roads)
 		{
-
-			if(toSegment ==30202 && r.id == toSegment)
-				cout << r.inputId << endl;
 
 			if (r.junction != toSegment || r.inputId != toRoadId) 
 				continue;
@@ -234,6 +236,31 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 				fixAngle(g.hdg);
 			}
 		}
+
+
+		//this part adjusts the roundabout geometries that belong the the RB of the tosegment
+		if(toJunctionGroup != -1)
+		{
+			for (auto &&r : data.roads)
+			{
+				if (r.roundAboutInputSegment != toJunctionGroup || r.id == toSegment)
+					continue;
+
+				for (auto &&g : r.geometries)
+				{
+					double x = g.x * cos(dPhi) - g.y * sin(dPhi);
+					double y = g.x * sin(dPhi) + g.y * cos(dPhi);
+
+					g.x = x + dx;
+					g.y = y + dy;
+					g.hdg = g.hdg + dPhi;
+					fixAngle(g.hdg);
+				}
+		}
+
+		}
+
+		//-----------------------------------------------------------
 
 	
 		for (auto &&r : data.roads)
