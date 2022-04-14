@@ -47,7 +47,6 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
     juncGroup.id = readIntAttrFromNode(node, "id"); 
     juncGroup.name = "jg" + to_string(juncGroup.id);
 
-    cout << "Roundabout" << endl;
 
     DOMElement* dummy = NULL;
     DOMElement* circleRoad = getChildWithName(node, "circle");
@@ -456,8 +455,6 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         data.junctions.push_back(j);
     data.juncGroups.push_back(juncGroup);
 
-    cout << "end roundabout " << endl;
-    //TODO connect all roads after generation.
 
     return 0;
 }

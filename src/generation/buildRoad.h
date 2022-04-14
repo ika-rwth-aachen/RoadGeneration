@@ -622,7 +622,6 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
 
     if (automaticWidening != NULL)
     {
-        cout << "in automatic widening" << endl;
         if (attributeExits(automaticWidening,"active"))
         {
             active = readStrAttrFromNode(automaticWidening, "active");

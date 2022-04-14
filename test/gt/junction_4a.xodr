@@ -515,8 +515,14 @@
     <connection connectingRoad="105" contactPoint="start" id="1" incomingRoad="101">
       <laneLink from="2" to="-1"/>
     </connection>
-    <connection connectingRoad="106" contactPoint="start" id="2" incomingRoad="101">
+    <connection connectingRoad="105" contactPoint="start" id="2" incomingRoad="103">
+      <laneLink from="-1" to="-1"/>
+    </connection>
+    <connection connectingRoad="106" contactPoint="start" id="3" incomingRoad="101">
       <laneLink from="-1" to="1"/>
+    </connection>
+    <connection connectingRoad="106" contactPoint="start" id="4" incomingRoad="103">
+      <laneLink from="1" to="2"/>
     </connection>
   </junction>
 

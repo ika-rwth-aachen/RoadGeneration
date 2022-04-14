@@ -53,8 +53,8 @@ int validateInput(char *file, xmlTree &xmlInput)
     xmlInput.parseDocument(xml_file);
 
     if (xmlInput.getErrorCount() == 0){
-        if(!setting.silentMode)
-            cout << "XML input file validated against the schema successfully" << endl;
+        //if(!setting.silentMode)
+        cout << "XML input file validated against the schema successfully" << endl;
     }
     else
     {
