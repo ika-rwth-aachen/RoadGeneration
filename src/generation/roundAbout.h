@@ -264,7 +264,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         r2.inputId = adId;
         r2.roundAboutInputSegment = juncGroup.id;
         r2.id = junc.id + nCount;
-        r2.junction = junc.id + nCount; //storing the junction like this is a workaround for the problem with the id namespace. It needs to be this way
+        r2.junction = juncGroup.id; //storing the junction like this is a workaround for the problem with the id namespace. It needs to be this way
         //so there wont be a problem in linking and closing the road network
         r2.predecessor.id = junc.id;
         r2.predecessor.elementType = junctionType;
