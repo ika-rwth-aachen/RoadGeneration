@@ -17,6 +17,19 @@
 
 extern settings setting;
 
+
+/**
+ * @brief translates the input segment id and the index of the junction inside the roundabout to an absolute junction id
+ * 
+ * @param juncGroupId input id of the segment. Equals the id of the junction group
+ * @param juncIdx index of the junction inside the roundabout. Starts with 0 and counting up
+ * @return int resulting id of the junction in the output file
+ */
+int juncGroupIdToJuncId(int juncGroupId, int juncIdx)
+{
+    return juncGroupId * 10000 + juncIdx * 100;
+}
+
 /**
  * @brief function generates the roads and junctions for a roundabout which is specified in the input file
  *  
@@ -28,15 +41,17 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 {
     // create segment
     data.nSegment++;
-    junction junc;
-    junc.id = readIntAttrFromNode(node, "id");
+    vector<junction> junctions;
+    junctionGroup juncGroup;
 
-    cout << "Roundabout" << endl;
+    juncGroup.id = readIntAttrFromNode(node, "id"); 
+    juncGroup.name = "jg" + to_string(juncGroup.id);
+
 
     DOMElement* dummy = NULL;
-
     DOMElement* circleRoad = getChildWithName(node, "circle");
     int refId = readIntAttrFromNode(circleRoad, "id");
+
     if (!circleRoad)
     {
         cerr << "ERR: circleRoad is not found.";
@@ -44,11 +59,9 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
     }
 
     // store properties of circleRoad
-    //double length = circleRoad.child("referenceLine").child("circle").attribute("length").as_double();
     double length = readDoubleAttrFromNode(getChildWithName(getChildWithName(circleRoad, "referenceLine"), "circle"),"length") ;
     double R = length / (2 * M_PI);
     getChildWithName(getChildWithName(circleRoad, "referenceLine"), "circle")->setAttribute(X("R"), X(to_string(R).c_str()));
-    //circleRoad.child("referenceLine").child("circle").append_attribute("R") = R;
     
 
     double sOld;
@@ -78,19 +91,40 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
             nIp++;
         }
     }
+
+    
+
+    //generate all junctions first for easier linking
     int cc = 0;
-    // iterate over all additonalRoads defined by separate intersectionPoints
-    // sMain of intersection points have to increase
     for (DOMElement* iP = node->getFirstElementChild(); iP != NULL; iP = iP->getNextElementSibling())
     {
         if(readNameFromNode(iP) != "intersectionPoint")
         {
             continue;
         }
+        int adId = stoi(readAttributeFromChildren(iP, "adRoad", "id"));
+        junction junc;
+        junc.id = juncGroupIdToJuncId(juncGroup.id, adId);
+        cc++;
+        junctions.push_back(junc);
+        juncGroup.juncIds.push_back(junc.id);
+        
+    }
+
+    cc = 0;
+    // iterate over all additonalRoads defined by separate intersectionPoints
+    // sMain of intersection points have to increase
+    for (DOMElement* iP = node->getFirstElementChild(); iP != NULL; iP = iP->getNextElementSibling())
+    {
+
+        if(readNameFromNode(iP) != "intersectionPoint")
+        {
+            continue;
+        }
+        junction &junc = junctions[cc];
         cc++;
 
         // find additionalRoad
-        //int adId = iP.child("adRoad").attribute("id").as_int();
         int adId = stoi(readAttributeFromChildren(iP, "adRoad", "id"));
         
         DOMElement* additionalRoad;
@@ -153,7 +187,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         laneSection lSAdd = helpAdd.laneSections.front();
         double widthAdd = abs(findTOffset(lSAdd, findMinLaneId(lSAdd), 0)) + abs(findTOffset(lSAdd, findMaxLaneId(lSAdd), 0));
 
-        // check offsets and adjust them if necessary (2 and 4 are safty factor)
+        // check offsets and adjust them if necessary (2 and 4 are safety factors)
         bool(changed) = false;
         if (sOffMain < widthAdd / 2 * 4)
         {
@@ -190,7 +224,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         // --- generate roads --------------------------------------------------
         if(!setting.silentMode)
-            cout << "\t Generating Roads" << endl;
+            cout << "\t Generating Roads for Roundabout" << endl;
         /*           
                     \___       ____/
                  id: 1         id: helper
@@ -202,11 +236,19 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         int nCount = 1;
 
         road r1;
-        r1.id = 100 * junc.id + cc * 10 + nCount;
-        r1.junction = junc.id;
-        r1.successor.id = junc.id;
+        r1.id = junc.id + nCount;
+        r1.junction = -1;
+        r1.roundAboutInputSegment = juncGroup.id;
+        r1.isConnectingRoad = true;
+        r1.successor.id = junctions[(cc - 1+ junctions.size()) % junctions.size()].id;
         r1.successor.elementType = junctionType;
         r1.successor.contactPoint = startType;
+
+        r1.predecessor.id = junctions[(cc - 2 + junctions.size()) % junctions.size()].id;
+        r1.predecessor.elementType = junctionType;
+        r1.predecessor.contactPoint = endType;
+
+
         if (cc == 1)
             sOld = sOffMain;
 
@@ -218,11 +260,16 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         nCount++;
 
         road r2;
-        r2.id = 100 * junc.id + cc * 10 + nCount;
-        r2.junction = junc.id;
+        r2.inputId = adId;
+        r2.roundAboutInputSegment = juncGroup.id;
+        r2.id = junc.id + nCount;
+        r2.junction = juncGroup.id; //storing the junction like this is a workaround for the problem with the id namespace. It needs to be this way
+        //so there wont be a problem in linking and closing the road network
         r2.predecessor.id = junc.id;
         r2.predecessor.elementType = junctionType;
         r2.predecessor.contactPoint = startType;
+
+        r2.isConnectingRoad = true;
         if (buildRoad(additionalRoad, r2, sAdd + sOffAdd, INFINITY, dummy, sAdd, iPx, iPy, iPhdg + phi))
         {
             cerr << "ERR: error in buildRoad" << endl;
@@ -239,7 +286,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         //addSignal(r2, data, 1, INFINITY, "1.000.001", "-", -1);
 
         road helper;
-        helper.id = 100 * junc.id + cc * 10 + nCount;
+        helper.id = junctions[(cc)%nIp].id + nCount - 2 ;
         helper.junction = junc.id;
         if (cc < nIp)
         {
@@ -256,6 +303,9 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
             helper.successor.id = -101;
             helper.successor.contactPoint = startType;
         }
+
+  
+
         helper.predecessor.id = junc.id;
         helper.predecessor.elementType = junctionType;
         helper.predecessor.contactPoint = startType;
@@ -307,7 +357,9 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         for (int i = 0; i < nLane; i++)
         {
             road r;
-            r.id = 100 * junc.id + cc * 10 + nCount;
+            r.roundAboutInputSegment = juncGroup.id;
+
+            r.id = junc.id + nCount;
 
             if (clockwise)
             {
@@ -333,7 +385,9 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         }
 
         road r5;
-        r5.id = 100 * junc.id + cc * 10 + nCount;
+        r5.id = junc.id  + nCount;
+        r5.roundAboutInputSegment = juncGroup.id;
+
         if (clockwise)
         {
             from = outer1;
@@ -357,7 +411,9 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         nCount++;
 
         road r6;
-        r6.id = 100 * junc.id + cc * 10 + nCount;
+        r6.roundAboutInputSegment = juncGroup.id;
+
+        r6.id = junc.id + nCount;
         if (clockwise)
         {
             if (r2_T_R != 0)
@@ -378,10 +434,10 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         }
         nCount++;
 
-        // adjust precessor of first element, due to loop
-        r1.predecessor.id = junc.id;
-        r1.predecessor.elementType = junctionType;
-        r1.predecessor.contactPoint = startType;
+        // // adjust predecessor of first element, due to loop
+        // r1.predecessor.id = junc.id;
+        // r1.predecessor.elementType = junctionType;
+        // r1.predecessor.contactPoint = startType;
 
         data.roads.push_back(r1);
         data.roads.push_back(r2);
@@ -392,11 +448,13 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         sOld = sMain + sOffMain;
         if (cc == 1)
             rOld = r1;
+        
     }
 
-    data.junctions.push_back(junc);
+    for(auto &j: junctions)
+        data.junctions.push_back(j);
+    data.juncGroups.push_back(juncGroup);
 
-    cout << "end roundabout " << endl;
-    //TODO connect all roads after generation.
+
     return 0;
 }

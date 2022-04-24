@@ -66,11 +66,11 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 	}
 
 	// --- add other specified segments ----------------------------------------
-		//for (pugi::xml_node segmentLink : links.children("segmentLink"))
 
 		for (DOMElement *segmentLink = links->getFirstElementChild();segmentLink != NULL; segmentLink = segmentLink->getNextElementSibling())
         {
-            if(readNameFromNode(segmentLink) != "segmentLink") continue;
+
+		if(readNameFromNode(segmentLink) != "segmentLink") continue;
 		// get properties
 		int fromSegment = readIntAttrFromNode(segmentLink, "fromSegment");
 		int toSegment = readIntAttrFromNode(segmentLink, "toSegment");
@@ -80,7 +80,10 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 		string toPos = readStrAttrFromNode(segmentLink, "toPos");
 		road fromRoad;
 		road toRoad;
+		int toJunctionGroup = -1; //in case we like TO a junction group, store the pointer
 
+		
+	
 		// assumption is that "fromSegement" is already linked to reference frame
 
 		double fromX, fromY, fromHdg;
@@ -98,9 +101,29 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 			if (j.id == toSegment)
 				toIsJunction = true;
 
+		/*fix for the roundabout junction namespace problem. Since multiple junctions get generated for each roundabout
+		the linking is problematic with the current input format (since the user does not know the id that will be generated for the junctions).
+		So we check if the from and to segments belong to a roundabout*/
+
+		for(junctionGroup &jg: data.juncGroups)
+		{
+			if(jg.type != roundaboutType) continue;
+
+			if(toSegment == jg.id)
+			{
+				//toSegment is a roundabout
+				toJunctionGroup = jg.id;
+
+			}
+		
+		}
+		//-------------------END roundabout namespace fix---------------------------------
+
+
 		// save from position
 		for (auto &&r : data.roads)
 		{
+				
 			if (r.junction != fromSegment || r.inputId != fromRoadId)
 				continue;
 			if (fromIsJunction && r.inputPos != fromPos)
@@ -131,6 +154,8 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 		// save to position
 		for (auto &&r : data.roads)
 		{
+
+
 			if (r.junction != toSegment || r.inputId != toRoadId) 
 				continue;
 			if (toIsJunction && r.inputPos != toPos)
@@ -192,7 +217,7 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 		// shift all geometries which belong to the toSegment according two the offsets determined above
 		for (auto &&r : data.roads)
 		{
-			if (r.junction != toSegment)
+			if (r.junction != toSegment && r.roundAboutInputSegment != toSegment)
 				continue;
 
 			for (auto &&g : r.geometries)
@@ -207,25 +232,19 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 			}
 		}
 
-	
 		for (auto &&r : data.roads)
 		{
 			if (r.id == toRoadId){
 				r.predecessor.id = fromRoadId;
 				r.predecessor.contactPoint = (fromPos == "start") ? startType : endType ;
-				
 			}
 			
 			if (r.id == fromRoadId){
 				r.successor.id = toRoadId;
 				r.successor.contactPoint = (toPos == "start") ? startType : endType;
-				
 			}
 		}
-
 	}
 
-	
-	
 	return 0;
 }

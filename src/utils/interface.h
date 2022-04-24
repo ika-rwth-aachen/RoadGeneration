@@ -18,6 +18,11 @@
 extern settings setting;
 
 // definition of basic types
+enum junctionGroupType
+{
+    roundaboutType,
+    unknownType
+};
 enum contactPointType
 {
     startType,
@@ -257,6 +262,9 @@ struct road
 {
     int id = -1;
     int inputId = -1;     // original id from input file
+    int roundAboutInputSegment = -1; //use this only for generated roads that belong to a roundabout to store the segment id of the roundabout!
+    //inputid has to be set to another value for roundabout roads so that ids dont clash in the linking segment
+    
     string inputPos = ""; // specifying part of original road from input file
     int junction = -1;
     bool isConnectingRoad = false; // this variable fixes the problem that junction is used in linkSegments as placeholder for "inputSegmentId". 
@@ -271,6 +279,29 @@ struct road
     vector<laneSection> laneSections;
     vector<object> objects;
     vector<sign> signs;
+};
+
+
+struct junctionGroup
+{
+
+    int id;
+    string name;
+    junctionGroupType type = roundaboutType;
+    vector<int> juncIds; 
+
+    junctionGroup()
+    {
+        
+    }
+
+    ~junctionGroup()
+    {
+
+    }
+
+
+
 };
 
 /**
@@ -289,6 +320,7 @@ struct roadNetwork
     vector<road> roads;
     vector<junction> junctions;
     vector<control> controller;
+    vector<junctionGroup> juncGroups;
 
     // global counters
     int nSignal = 0;
