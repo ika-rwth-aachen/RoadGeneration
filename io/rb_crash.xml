@@ -1,0 +1,72 @@
+<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+	<segments>
+	
+ <roundabout id="3">
+            <circle id="1" classification="access" >	
+                <referenceLine>
+                    <circle length="300"/>
+                </referenceLine>
+                <lanes>
+                        <lane id="1" type="delete" />
+                        
+                       
+                        <lane id="-3" type="driving">
+                            <roadMark   type="solid" color="white" width="0.13"/>
+                        </lane>
+                        <lane id="-2" type="driving">
+                            <roadMark   type="broken" color="white" width="0.13"/>
+                        </lane>
+                        <lane id="-1" type="driving">
+                            <roadMark   type="broken" color="white" width="0.13"/>
+                        </lane>
+                        <lane id="0" type="driving" />
+                </lanes>
+            </circle>
+            
+            <road id="2" classification="access" >	
+                <referenceLine>
+                     <line length="150"/>
+                </referenceLine>
+            </road>
+            <road id="3" classification="access" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+            </road>
+            <road id="4" classification="access" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+            </road>
+            <road id="5" classification="access" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+            </road>
+            <intersectionPoint refRoad="1" s="80">
+                <adRoad id="2" s="20" angle="-1.56"/>
+            </intersectionPoint>
+            <intersectionPoint refRoad="1" s="160">
+                <adRoad id="3" s="20" angle="-1.56"/>
+            </intersectionPoint>
+            <intersectionPoint refRoad="1" s="240">
+                <adRoad id="4" s="20" angle="-1.56"/>
+            </intersectionPoint>
+            <intersectionPoint refRoad="1" s="320">
+                <adRoad id="5" s="20" angle="-1.6"/>
+            </intersectionPoint>
+            <coupler>
+                <junctionArea gap="10">
+                    <roadGap id="1" gap="2" />
+                    <roadGap id="2" gap="10" />
+                </junctionArea> 
+            </coupler>
+        </roundabout>
+        
+        
+	</segments>
+	
+
+	
+</roadNetwork>
+
