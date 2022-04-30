@@ -26,7 +26,6 @@ extern settings setting;
  */
 int tjunction(const DOMElement* node, roadNetwork &data)
 {
-    cout << "processing t junction" << endl;
     // check type of the junction (here: M = mainroad, A = accessroad)
     int mode = 0;
     if (readStrAttrFromNode(node, "type") == "MA")

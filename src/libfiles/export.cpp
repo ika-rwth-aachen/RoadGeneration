@@ -73,10 +73,6 @@ EXPORTED void setXMLSchemeLocation(char* file){
 	setting.xmlSchemeLocation = file;
 }
 
-void test(roadNetwork rn)
-{
-	cout << rn.controller.size() << endl; 
-}
 
 EXPORTED int executePipeline(char* file)
 {
