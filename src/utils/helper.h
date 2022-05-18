@@ -225,6 +225,12 @@ int shiftLanes(laneSection &sec, int id, int dir)
             if (sec.lanes[i].id == start)
             {
                 sec.lanes[i].id += dir * side;
+
+                /*
+                    Below is a fix that adjusts the linkage of the shifted lanes according to their id.
+                */
+                sec.lanes[i].preId += dir * side; 
+                sec.lanes[i].sucId += dir * side;
             }
         }
         start -= dir * side;
