@@ -36,9 +36,15 @@ extensions = [ "breathe" ]
 # Breathe Configuration
 breathe_default_project = "road-generation"
 
+breathe_implementation_filename_extensions = ['.c', '.cc', '.cpp', '.h', '.hpp']
+
 breathe_projects = {
     "road-generation":"xml/",
     }
+    
+breathe_projects_source = {
+"interface" : ( "../src/utils", ["interface.h"] )
+}
     
 breathe_default_members = ('members', 'private-members', 'undoc-members')
 

@@ -23,7 +23,6 @@ Indices and tables
 Docs
 ====
 
-.. doxygenstruct:: road
-   :members:
-.. doxygenstruct:: lane
-   :members:
+.. doxygenindex::
+   :project: road-generation
+

@@ -24,10 +24,9 @@ if (CREATE_DOXYGEN_TARGET)
 
         # settings
         set(DOXYGEN_GENERATE_HTML YES)
-        set(DOXYGEN_GENERATE_XML YES)
         set(DOXYGEN_GENERATE_MAN YES)
         set(DOXYGEN_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/docs)
-        set(DOXYGEN_USE_MDFILE_AS_MAINPAGE README.md) 
+        set(DOXYGEN_USE_MDFILE_AS_MAINPAGE README.md) #this is not optimal, since the project uses an rst file at the moment
 
         message("Doxygen build started")
 
@@ -36,21 +35,6 @@ if (CREATE_DOXYGEN_TARGET)
                 ${PROJECT_SOURCE_DIR} README.md #this is not optimal, since the project uses an rst file at the moment
                 COMMENT "Generate man pages"
         )
-        #sphinx code
-        set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
-
-        find_package(Sphinx REQUIRED)
-
-        set(SPHINX_SOURCE ${CMAKE_CURRENT_SOURCE_DIR})
-        set(SPHINX_BUILD ${CMAKE_CURRENT_BINARY_DIR}/docs/sphinx)
-
-        add_custom_target(Sphinx ALL
-                        COMMAND
-                        ${SPHINX_EXECUTABLE} -b html
-                        ${SPHINX_SOURCE} ${SPHINX_BUILD}
-                        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-                        COMMENT "Generating documentation with Sphinx")
-        #-------------------------------------------------------
 
     else (DOXYGEN_FOUND)
         message("Doxygen need to be installed to generate the doxygen documentation")
@@ -58,7 +42,6 @@ if (CREATE_DOXYGEN_TARGET)
 endif (CREATE_DOXYGEN_TARGET)
 
 # project code ---------------------------------------------------------------------------------
-
 
 add_library("${PROJECT_NAME}" SHARED
     "${CMAKE_SOURCE_DIR}/src/libfiles/export.cpp"
@@ -76,5 +59,4 @@ target_link_libraries("${PROJECT_NAME}_executable" ${PROJECT_NAME})
 
 
 add_definitions(-DPROJ_DIR=\"${PROJECT_SOURCE_DIR}\")
-
 
