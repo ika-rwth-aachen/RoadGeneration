@@ -5,15 +5,6 @@
                 <referenceLine>
                      <line length="100"/>
                 </referenceLine>
-
-                <lanes>
-                    <lane id="-1"/>
-                    <lane id="1" />
-                    <laneWidening side="-1" s="20" length="50">
-                    </laneWidening>
-
-
-                </lanes>
             </road>
         </connectingRoad>
         <connectingRoad id="2">
@@ -21,20 +12,25 @@
                <referenceLine>
                      <spiral length="800"  Rs="-150" Re="0"/>
                 </referenceLine>
-
-                <lanes>
-                    <lane id="-1"/>
-                    <lane id="1" />
-                     <lane id="-2" />
-                </lanes>
+            </road>
+        </connectingRoad>
+        <connectingRoad id="3">
+            <road id="1" classification="main" >	
+                <referenceLine>
+                     <arc length="100" R="300"/>
+                </referenceLine>
             </road>
         </connectingRoad>
 	</segments>
 	
     <links refId="1" hdgOffset="0.0" xOffset="0" yOffset="0">
         <segmentLink fromSegment="1" toSegment="2" fromRoad="1" toRoad="1" fromPos="end" toPos="start" />
+        <segmentLink fromSegment="2" toSegment="3" fromRoad="1" toRoad="1" fromPos="end" toPos="start" />
     </links>
 
-
+    <closeRoads>
+        <segmentLink fromSegment="3" toSegment="1" fromRoad="1" toRoad="1" fromPos="end" toPos="start" />
+    </closeRoads>
 </roadNetwork>
+
 

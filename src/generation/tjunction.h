@@ -34,7 +34,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
         mode = 2;
     if (mode == 0)
     {
-        cerr << "ERR: junction type is not defined correct." << endl;
+        cerr << "ERR: junction type is not defined correctly." << endl;
         return 1;
     }
 

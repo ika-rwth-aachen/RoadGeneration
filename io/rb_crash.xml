@@ -4,7 +4,7 @@
  <roundabout id="3">
             <circle id="1" classification="access" >	
                 <referenceLine>
-                    <circle length="320.5"/>
+                    <circle length="300"/>
                 </referenceLine>
                 <lanes>
                         <lane id="1" type="delete" />
