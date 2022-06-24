@@ -1,13 +1,16 @@
 cmake_minimum_required(VERSION 2.6)
 project(road-generation)
+
+set(BIN_DIR ${CMAKE_SOURCE_DIR} CACHE PATH "BIN_DIR")
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR})
+
 find_package (XercesC REQUIRED)
+find_package(Sphinx REQUIRED)
 
 include_directories(src)
 include_directories (${XercesC_INCLUDE_DIR})
-
-set(BIN_DIR ${CMAKE_SOURCE_DIR} CACHE PATH "BIN_DIR")
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR})
 
 add_definitions(-DPROJ_DIR=\"${PROJECT_SOURCE_DIR}\")
 
@@ -24,6 +27,7 @@ if (CREATE_DOXYGEN_TARGET)
 
         # settings
         set(DOXYGEN_GENERATE_HTML YES)
+        set(DOXYGEN_GENERATE_XML YES)
         set(DOXYGEN_GENERATE_MAN YES)
         set(DOXYGEN_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/docs)
         set(DOXYGEN_USE_MDFILE_AS_MAINPAGE README.md) #this is not optimal, since the project uses an rst file at the moment
@@ -35,6 +39,10 @@ if (CREATE_DOXYGEN_TARGET)
                 ${PROJECT_SOURCE_DIR} README.md #this is not optimal, since the project uses an rst file at the moment
                 COMMENT "Generate man pages"
         )
+
+        #build sphinx------------------------------------------
+        
+        #end sphinx--------------------------------------------
 
     else (DOXYGEN_FOUND)
         message("Doxygen need to be installed to generate the doxygen documentation")

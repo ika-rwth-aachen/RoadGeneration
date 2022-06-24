@@ -8,7 +8,7 @@
  * 
  * @file interface.h
  *
- * @brief file contains the interface
+ * @brief This file contains important data structures
  *
  * @author Christian Geller
  * Contact: christian.geller@rwth-aachen.de

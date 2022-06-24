@@ -3,26 +3,40 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+
 Welcome to Road's documentation!
 ================================
 
+.. include:: overview/readme.rst
+
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+    :maxdepth: 3
+    :caption: Overview
+    :hidden:
+    
+    overview/readme
+    overview/variation
+    overview/examples
 
 
 
-Indices and tables
-==================
+Quicklinks (to be removed)
+==========================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
 
+.. toctree::
+    :maxdepth: 3
+    :caption: Documentation
+    :numbered:
+    :hidden:
 
-Docs
-====
+    doc
+    inputdoc
+    autodoc
 
-.. doxygenindex::
-   :project: road-generation
+
+    
+
 
