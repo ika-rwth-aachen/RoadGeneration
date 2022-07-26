@@ -72,12 +72,11 @@ int tjunction(const DOMElement* node, roadNetwork &data)
 
     DOMElement* tmpNode = getChildWithName(iP, "adRoad");
 
-    //for (pugi::xml_node road : node.children("road"))
     DOMNodeList *roadList = node->getElementsByTagName(X("road"));
     for (int i = 0; i < roadList->getLength(); i ++)
     {
         DOMElement* road = (DOMElement*)roadList->item(i);
-        if(road->getNodeType() != 1) continue; //we have to check the node type. Type 1 is an element. The reason for the check is that line breaks are handled as
+        if(road->getNodeType() != 1) continue; //check the node type. Type 1 is an element. The reason for the check is that line breaks are handled as
         // text nodes by xercesC.
         int currentRoadId = readIntAttrFromNode(road, "id");
 
@@ -107,7 +106,6 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     sOffAdd1 = sOffset;
     sOffAdd2 = sOffset;
     
-    //for (pugi::xml_node_iterator sB = cA.begin(); sB != cA.end(); ++sB)
     for (DOMElement *sB = cA->getFirstElementChild();sB != NULL; sB = sB->getNextElementSibling())
     {
         if (readIntAttrFromNode(sB, "id") == readIntAttrFromNode(mainRoad, "id"))
@@ -228,7 +226,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     road r1;
     r1.id = 100 * junc.id + 1;
     r1.junction = junc.id;
-    r1.isConnectingRoad = true;  //this is a fix for the junction bug
+    r1.isConnectingRoad = true;  
     r1.predecessor.elementType = junctionType;
     r1.predecessor.id = junc.id;
     if (mode == 1)
@@ -268,7 +266,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     road r2;
     r2.id = 100 * junc.id + 2;
     r2.junction = junc.id;
-    r2.isConnectingRoad = true; //this is a fix for the junction bug
+    r2.isConnectingRoad = true; 
     r2.predecessor.elementType = junctionType;
     r2.predecessor.id = junc.id;
     if (mode == 1)
@@ -313,7 +311,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     road r3;
     r3.id = 100 * junc.id + 3;
     r3.junction = junc.id;
-    r3.isConnectingRoad = true; //this is a fix for the junction bug
+    r3.isConnectingRoad = true; 
     r3.predecessor.elementType = junctionType;
     r3.predecessor.id = junc.id;
     if (mode == 1)
