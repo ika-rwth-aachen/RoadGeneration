@@ -38,10 +38,9 @@
                     <arc length="100"  R="-100"/>
                 </referenceLine>
             </road>
-            <intersectionPoint refRoad="1" s="100">
-                <adRoad id="1" s="50" angle="3.14"/>
-                <adRoad id="2" s="50" angle="1.57079632679"/>
-                <adRoad id="3" s="50" angle="4.7"/>
+            <intersectionPoint refRoad="1" s="800">
+                <adRoad id="2" s="0" angle="3.14"/>
+                <adRoad id="3" s="0" angle="1.57079632679"/>
             </intersectionPoint>
             <coupler>
                 <junctionArea gap="10">

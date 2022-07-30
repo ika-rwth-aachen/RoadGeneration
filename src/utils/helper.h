@@ -716,4 +716,21 @@ bool compareLanes(const lane &a, const lane &b)
     return a.id < b.id;
 }
 
+/**
+ * @brief checks if int is in vector
+ * 
+ * @param v vector to check
+ * @param i integer
+ * @return true int is in vector
+ * @return false int is not in vector
+ */
+bool isIn(vector<int> &v, int &i)
+{
+    for(auto e: v)
+    {
+        if(e == i) return true;
+    }
+    return false;
+}
+
 
