@@ -26,18 +26,28 @@
  * @param data road network data
  * @return int error code
  */
-int transformRoad(DOMElement *segmentLink, roadNetwork &data)
+int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 {
 	// --- add other specified segments ----------------------------------------
 
 
 	// get properties
+	
 	int fromSegment = readIntAttrFromNode(segmentLink, "fromSegment");
 	int toSegment = readIntAttrFromNode(segmentLink, "toSegment");
 	int fromRoadId = readIntAttrFromNode(segmentLink, "fromRoad");
 	int toRoadId = readIntAttrFromNode(segmentLink, "toRoad");
 	string fromPos = readStrAttrFromNode(segmentLink, "fromPos");
 	string toPos = readStrAttrFromNode(segmentLink, "toPos");
+	if(swap) 
+	{
+		fromSegment = readIntAttrFromNode(segmentLink, "toSegment");
+		toSegment = readIntAttrFromNode(segmentLink, "fromSegment");
+		fromRoadId = readIntAttrFromNode(segmentLink, "toRoad");
+		toRoadId = readIntAttrFromNode(segmentLink, "fromRoad");
+		fromPos = readStrAttrFromNode(segmentLink, "toPos");
+		toPos = readStrAttrFromNode(segmentLink, "fromPos");
+	}
 	road fromRoad;
 	road toRoad;
 	int toJunctionGroup = -1; //in case we like TO a junction group, store the pointer
@@ -289,24 +299,27 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 		cout << "processing " << curId << endl;
 
 		//first find the element in the list. skip if it is the ref element 
-		if(curId != refId)
+
+		for(int e:  outgoing_connections[curId])
 		{
+			if(isIn(transformedIds, e)) continue;
+		
 			for (DOMElement *segmentLink = links->getFirstElementChild();segmentLink != NULL; segmentLink = segmentLink->getNextElementSibling())
 			{
-				if(curId != readIntAttrFromNode(segmentLink, "fromSegment")) continue;
+				if(curId != readIntAttrFromNode(segmentLink, "fromSegment") || e != readIntAttrFromNode(segmentLink, "toSegment")) continue;
+				cout << "\tto " << e << endl;
+
 				//process the element------------------
 				transformRoad(segmentLink, data);
 				//end processessing the element--------
 
 			}
+			toDo.push(e);
+
 		}
 		transformedIds.push_back(curId);
 		
-		auto adj =  outgoing_connections[curId];
-		for(int e: adj)
-		{
-			toDo.push(e);
-		}
+		
 	}
 	//the tree starting at the ref note is built. Now process all incoming connections 
 	for(int p: transformedIds)
@@ -318,17 +331,23 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 	{
 		int curId = toDo.front();
 		toDo.pop();
+		cout << "from " << curId << endl;
 
 		for(int incoming_id : incoming_connections[curId])
 		{
 			if(isIn(transformedIds, incoming_id)) continue;
 
+			for (DOMElement *segmentLink = links->getFirstElementChild();segmentLink != NULL; segmentLink = segmentLink->getNextElementSibling())
+			{
+				if(curId != readIntAttrFromNode(segmentLink, "toSegment") || incoming_id != readIntAttrFromNode(segmentLink, "fromSegment")) continue;
+				//process the element------------------
+				transformRoad(segmentLink, data, true);
+				cout << "\tprocessing " << incoming_id << endl;
+
+			}
+			transformedIds.push_back(incoming_id);
 			toDo.push(incoming_id);
-			cout << "processing " << incoming_id << endl;
-
 		}
-
-
 	}
 
 
