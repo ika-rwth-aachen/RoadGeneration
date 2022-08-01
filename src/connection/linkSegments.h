@@ -72,7 +72,7 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 			toIsJunction = true;
 
 	/*fix for the roundabout junction namespace problem. Since multiple junctions get generated for each roundabout
-	the linking is problematic with the input format (since the user does not know the id that will be generated for the junctions).
+	the linking is problematic with the input format (since the user does not know which ids will be generated for the junctions).
 	So we check if the from and to segments belong to a roundabout*/
 
 	for(junctionGroup &jg: data.juncGroups)
@@ -85,7 +85,6 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 			toJunctionGroup = jg.id;
 
 		}
-	
 	}
 	//-------------------END roundabout namespace fix---------------------------------
 
@@ -206,12 +205,24 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 	{
 		if (r.id == toRoadId){
 			r.predecessor.id = fromRoadId;
-			r.predecessor.contactPoint = (fromPos == "start") ? startType : endType ;
+			r.predecessor.contactPoint = (fromPos == "start") ? startType : endType;
 		}
 		
 		if (r.id == fromRoadId){
 			r.successor.id = toRoadId;
 			r.successor.contactPoint = (toPos == "start") ? startType : endType;
+		}
+	}
+	//mark every road that belongs to the from- or toSegment as linked
+	for(auto &r: data.roads)
+	{
+		if(r.junction == toSegment || r.roundAboutInputSegment == toSegment || r.junction == fromSegment || r.roundAboutInputSegment == fromSegment)
+		{
+			r.isLinkedToNetwork = true;
+		}
+		if(r.inputId == toSegment || r.inputId == toSegment)
+		{
+			r.isLinkedToNetwork = true;
 		}
 	}
 	return 0;
@@ -281,10 +292,6 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 
 	}
 
-	//DEBUG print out the order in which to process elements
-	//TODO all roads that got linked to the reference netowrk as a to Segment dont get considered here. FIX THIS
-
-	bool done = false;
 	queue<int> toDo = queue<int>();
 	vector<int> transformedIds;
 	toDo.push(refId);
@@ -296,7 +303,7 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 
 		if(isIn(transformedIds, curId)) continue;
 
-		cout << "processing " << curId << endl;
+		//cout << "processing " << curId << endl;
 
 		//first find the element in the list. skip if it is the ref element 
 
@@ -307,7 +314,7 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 			for (DOMElement *segmentLink = links->getFirstElementChild();segmentLink != NULL; segmentLink = segmentLink->getNextElementSibling())
 			{
 				if(curId != readIntAttrFromNode(segmentLink, "fromSegment") || e != readIntAttrFromNode(segmentLink, "toSegment")) continue;
-				cout << "\tto " << e << endl;
+				//cout << "\tto " << e << endl;
 
 				//process the element------------------
 				transformRoad(segmentLink, data);
@@ -321,7 +328,8 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 		
 		
 	}
-	//the tree starting at the ref note is built. Now process all incoming connections 
+	//the tree starting at the ref note is built. Now process all incoming connections. if the graph does not contain cycles, this can be done in the outgoing
+	//connections loop.
 	for(int p: transformedIds)
 	{
 		toDo.push(p);
@@ -331,7 +339,7 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 	{
 		int curId = toDo.front();
 		toDo.pop();
-		cout << "from " << curId << endl;
+		//cout << "from " << curId << endl;
 
 		for(int incoming_id : incoming_connections[curId])
 		{
@@ -342,7 +350,7 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 				if(curId != readIntAttrFromNode(segmentLink, "toSegment") || incoming_id != readIntAttrFromNode(segmentLink, "fromSegment")) continue;
 				//process the element------------------
 				transformRoad(segmentLink, data, true);
-				cout << "\tprocessing " << incoming_id << endl;
+				//cout << "\tprocessing " << incoming_id << endl;
 
 			}
 			transformedIds.push_back(incoming_id);
@@ -350,9 +358,30 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 		}
 	}
 
+	//check if all roads are connected to the network
+	vector<road*> v;
+	for(road r: data.roads)
+	{
+		if(!r.isLinkedToNetwork)
+		{
+			v.push_back(&r);
+		}
+	}
+	if(v.size() > 0)
+	{
+		if(!setting.silentMode)
+			{
+				std::cout << "WARNING: 'Not all roads are connected to the road network!'" << std::endl;
 
-	//End debug!
+			}
+		std::cerr << "WARNING: 'Not all roads are connected to the road network!'" << std::endl;
+		for(road* p: v)
+		{
+			cout << "\tRoad " << p->inputSegmentId << " is not linked"<< endl;
+		}
 
+
+	}
 
 
 	return 0;
