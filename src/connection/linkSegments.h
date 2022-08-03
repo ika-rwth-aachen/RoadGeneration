@@ -24,6 +24,7 @@
  * 
  * @param segmentLink segment to link
  * @param data road network data
+ * @param swap if true the from and toSegment and road are swapped
  * @return int error code
  */
 int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
@@ -88,7 +89,6 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 	}
 	//-------------------END roundabout namespace fix---------------------------------
 
-
 	// save from position
 	for (auto &&r : data.roads)
 	{
@@ -123,8 +123,6 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 	// save to position
 	for (auto &&r : data.roads)
 	{
-
-
 		if (r.junction != toSegment || r.inputId != toRoadId) 
 			continue;
 		if (toIsJunction && r.inputPos != toPos)
@@ -287,8 +285,11 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 		int fromSegment = readIntAttrFromNode(segmentLink, "fromSegment");
 		int toSegment = readIntAttrFromNode(segmentLink, "toSegment");
 
-		outgoing_connections[fromSegment].push_back(toSegment);
-		incoming_connections[toSegment].push_back(fromSegment);
+		if(!isIn(outgoing_connections[fromSegment], toSegment))
+			outgoing_connections[fromSegment].push_back(toSegment);
+
+		if(!isIn(incoming_connections[toSegment], fromSegment))
+			incoming_connections[toSegment].push_back(fromSegment);
 
 	}
 
@@ -300,10 +301,8 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 	{
 		int curId = toDo.front();
 		toDo.pop();
-
+		cout << "processing road " << curId << endl;
 		if(isIn(transformedIds, curId)) continue;
-
-		//cout << "processing " << curId << endl;
 
 		//first find the element in the list. skip if it is the ref element 
 
@@ -314,46 +313,31 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 			for (DOMElement *segmentLink = links->getFirstElementChild();segmentLink != NULL; segmentLink = segmentLink->getNextElementSibling())
 			{
 				if(curId != readIntAttrFromNode(segmentLink, "fromSegment") || e != readIntAttrFromNode(segmentLink, "toSegment")) continue;
-				//cout << "\tto " << e << endl;
-
+				cout << "\tto " << e << endl;
 				//process the element------------------
 				transformRoad(segmentLink, data);
 				//end processessing the element--------
+				break; //prevents multiple processing steps if they are defined in the xml (they shoudlnt be)
 
 			}
 			toDo.push(e);
 
 		}
 		transformedIds.push_back(curId);
-		
-		
-	}
-	//the tree starting at the ref note is built. Now process all incoming connections. if the graph does not contain cycles, this can be done in the outgoing
-	//connections loop.
-	for(int p: transformedIds)
-	{
-		toDo.push(p);
-	}
-
-	while(!toDo.empty())
-	{
-		int curId = toDo.front();
-		toDo.pop();
-		//cout << "from " << curId << endl;
 
 		for(int incoming_id : incoming_connections[curId])
 		{
 			if(isIn(transformedIds, incoming_id)) continue;
 
-			for (DOMElement *segmentLink = links->getFirstElementChild();segmentLink != NULL; segmentLink = segmentLink->getNextElementSibling())
+			for (DOMElement *segmentLink = links->getFirstElementChild(); segmentLink != NULL; segmentLink = segmentLink->getNextElementSibling())
 			{
 				if(curId != readIntAttrFromNode(segmentLink, "toSegment") || incoming_id != readIntAttrFromNode(segmentLink, "fromSegment")) continue;
 				//process the element------------------
 				transformRoad(segmentLink, data, true);
-				//cout << "\tprocessing " << incoming_id << endl;
+				cout << "\tprocessing " << incoming_id << endl;
+				break; //prevents multiple processing steps if they are defined in the xml (they shoudlnt be)
 
 			}
-			transformedIds.push_back(incoming_id);
 			toDo.push(incoming_id);
 		}
 	}
@@ -382,8 +366,6 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 
 
 	}
-
-
 	return 0;
 }
 
