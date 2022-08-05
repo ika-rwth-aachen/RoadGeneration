@@ -51,6 +51,10 @@ EXPORTED void setFileName(char* file){
 	_fileName = file;
 }
 
+EXPORTED void setOverwriteLog(bool b){
+	setting.overwriteLog = b;
+}
+
 EXPORTED void setLogFile(char* file){
 	_logfile = file;
 }
@@ -85,9 +89,12 @@ EXPORTED int executePipeline(char* file)
 	if(!_setOutput){
 		_outName = file;
 	}
-	
-	(void)! freopen(_logfile.c_str(), "a", stderr); //(void)! suppresses the unused return warning..
-	cerr << "\nError log for run with attribute: " << file << endl;
+
+	(void)! freopen(_logfile.c_str(), (setting.overwriteLog)? "w":"a", stderr); //(void)! suppresses the unused return warning..
+
+	char dt[100];
+	getTimeStamp(dt);
+	cerr << "\n" << dt << " Error log for run with attribute: " << file << endl;
 
 	if (setting.xmlSchemeLocation == ""){
 		cerr << "ERR: xml scheme  NOT SET" << endl;
