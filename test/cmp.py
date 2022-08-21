@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 
 threshold = 0.0001
 
-print("testing with", threshold, "margin..\n" )
+print("testing with epsilon=", threshold)
 
 def tree_to_list(tree):
     x = []
@@ -92,8 +92,8 @@ list2 = tree_to_list(root2)
 
 s,n,e = cmp_xml_list(list1, list2)
 
-print ("\nsmall numerical diffs :", n)
-print ("numerical diffs       :", e)
+print ("\numerical diffs < epsilon :", n)
+print ("numerical diffs > epsilon       :", e)
 print ("string diffs          :", s)
 
 sys.exit(s+e)
