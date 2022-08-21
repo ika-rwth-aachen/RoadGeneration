@@ -301,7 +301,6 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 	{
 		int curId = toDo.front();
 		toDo.pop();
-		cout << "processing road " << curId << endl;
 		if(isIn(transformedIds, curId)) continue;
 
 		//first find the element in the list. skip if it is the ref element 
@@ -313,7 +312,6 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 			for (DOMElement *segmentLink = links->getFirstElementChild();segmentLink != NULL; segmentLink = segmentLink->getNextElementSibling())
 			{
 				if(curId != readIntAttrFromNode(segmentLink, "fromSegment") || e != readIntAttrFromNode(segmentLink, "toSegment")) continue;
-				cout << "\tto " << e << endl;
 				//process the element------------------
 				transformRoad(segmentLink, data);
 				//end processessing the element--------
@@ -334,7 +332,6 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 				if(curId != readIntAttrFromNode(segmentLink, "toSegment") || incoming_id != readIntAttrFromNode(segmentLink, "fromSegment")) continue;
 				//process the element------------------
 				transformRoad(segmentLink, data, true);
-				cout << "\tprocessing " << incoming_id << endl;
 				break; //prevents multiple processing steps if they are defined in the xml (they shoudlnt be)
 
 			}
@@ -354,14 +351,14 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 	if(v.size() > 0)
 	{
 		if(!setting.silentMode)
-			{
-				std::cout << "WARNING: 'Not all roads are connected to the road network!'" << std::endl;
-
-			}
+			std::cout << "WARNING: 'Not all roads are connected to the road network!'" << std::endl;
+		
 		std::cerr << "WARNING: 'Not all roads are connected to the road network!'" << std::endl;
 		for(road* p: v)
 		{
-			cout << "\tRoad " << p->inputSegmentId << " is not linked"<< endl;
+			if(!setting.silentMode)
+				cout << "\tRoad " << p->inputSegmentId << " is not linked"<< endl;
+			std::cerr << "\tRoad " << p->inputSegmentId << " is not linked"<< endl;
 		}
 
 
