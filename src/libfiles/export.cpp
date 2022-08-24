@@ -152,7 +152,7 @@ EXPORTED int executePipeline(char* file)
 	//warning handling
 	if(setting.warnings > 0)
 	{
-		cout << "Terminated with " << setting.warnings << " see error log for more information." << endl;
+		cout << "Finished with " << setting.warnings << " warnings, check out the error log for more information." << endl;
 	}
 
 	return 0;
