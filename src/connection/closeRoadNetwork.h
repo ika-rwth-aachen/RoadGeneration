@@ -62,29 +62,7 @@ int closeRoadNetwork(xmlTree &doc, roadNetwork &data)
 		road fromRoad;
 		road toRoad;
 
-		/*fix for the roundabout junction namespace problem. Since multiple junctions get generated for each roundabout
-		the linking is problematic with the current input format (since the user does not know the id that will be generated for the junctions).
-		So we check if the from and to segments belong to a roundabout
-		and if so adjust them acording to the roundabout id convention.*/
 
-		// for(junctionGroup &jg: data.juncGroups)
-		// {
-		// 	if(jg.type != roundaboutType) continue;
-
-		// 	if(toSegment == jg.id)
-		// 	{
-		// 		//toSegment is a roundabout
-		// 		toSegment = juncGroupIdToJuncId(toSegment, toRoadId) + 2; //+2 is the id offset of the road that comes out of the roundabout
-
-		// 	}
-		// 	if(fromSegment == jg.id)
-		// 	{
-		// 		//toSegment is a roundabout
-		// 		fromSegment = juncGroupIdToJuncId(fromSegment, fromRoadId) +2; //+2 is the id offset of the road that comes out of the roundabout
-
-		// 	}
-		// }
-		//-------------------END roundabout namespace fix---------------------------------
 
 		double fromX, fromY, fromHdg;
 		double toX, toY, toHdg;

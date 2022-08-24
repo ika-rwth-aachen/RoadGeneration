@@ -45,6 +45,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     data.nSegment++;
     junction junc;
     junc.id = readIntAttrFromNode(domNode, "id");
+    int inputSegmentId = readIntAttrFromNode(domNode, "id");
 
     // automatic widening
     DOMElement* dummy = NULL; 
@@ -301,6 +302,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     road r1;
     r1.id = 100 * junc.id + 1;
     r1.junction = junc.id;
+    r1.inputSegmentId = inputSegmentId;
     r1.isConnectingRoad = true;
     r1.predecessor.id = junc.id;
     r1.predecessor.elementType = junctionType;
@@ -330,6 +332,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     r2.id = 100 * junc.id + 2;
     r2.junction = junc.id;
     r2.isConnectingRoad = true;
+    r2.inputSegmentId = inputSegmentId;
     r2.predecessor.id = junc.id;
     r2.predecessor.elementType = junctionType;
     if (mode == 1)
@@ -359,6 +362,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     r3.id = 100 * junc.id + 3;
     r3.junction = junc.id;
     r3.predecessor.id = junc.id;
+    r3.inputSegmentId = inputSegmentId;
     r3.isConnectingRoad = true;
     r3.predecessor.elementType = junctionType;
     if (mode == 1 || mode == 2)
@@ -392,6 +396,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     r4.id = 100 * junc.id + 4;
     r4.junction = junc.id;
     r4.predecessor.id = junc.id;
+    r4.inputSegmentId = inputSegmentId;
     r4.isConnectingRoad = true;
     r4.predecessor.elementType = junctionType;
     if (mode == 1) //check here
@@ -579,6 +584,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
                 road r;
                 r.id = 100 * junc.id + data.roads.size() + 1;
+                r.inputSegmentId = inputSegmentId;
                 createRoadConnection(r1, r2, r, junc, from, to, left, right);
                 data.roads.push_back(r);
             }
@@ -605,6 +611,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             if (mode == 1 || mode == 2)
@@ -626,6 +633,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             createRoadConnection(r2, r4, r, junc, from, to, non, non);
@@ -644,6 +652,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             if (mode == 1 || mode == 2)
@@ -665,6 +674,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             createRoadConnection(r4, r2, r, junc, from, to, non, non);
@@ -683,6 +693,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             if (i == 0)
@@ -704,6 +715,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             createRoadConnection(r2, r1, r, junc, from, to, non, non);
@@ -722,6 +734,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             if (i == 0)
@@ -743,6 +756,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             createRoadConnection(r3, r2, r, junc, from, to, non, non);
@@ -761,6 +775,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             if (i == 0)
@@ -782,6 +797,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             createRoadConnection(r4, r3, r, junc, from, to, non, non);
@@ -800,6 +816,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             if (i == 0)
@@ -821,6 +838,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             createRoadConnection(r1, r4, r, junc, from, to, non, non);

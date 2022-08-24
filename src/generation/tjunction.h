@@ -42,6 +42,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     data.nSegment++;
     junction junc;
     junc.id = readIntAttrFromNode(node, "id");
+    int inputSegmentId = readIntAttrFromNode(node, "id");
 
     // automatic widening
     DOMElement* dummy = NULL;
@@ -227,6 +228,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     road r1;
     r1.id = 100 * junc.id + 1;
     r1.junction = junc.id;
+    r1.inputSegmentId = inputSegmentId;
     r1.isConnectingRoad = true;  //this is a fix for the junction bug
     r1.predecessor.elementType = junctionType;
     r1.predecessor.id = junc.id;
@@ -267,6 +269,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     road r2;
     r2.id = 100 * junc.id + 2;
     r2.junction = junc.id;
+    r2.inputSegmentId = inputSegmentId;
     r2.isConnectingRoad = true; //this is a fix for the junction bug
     r2.predecessor.elementType = junctionType;
     r2.predecessor.id = junc.id;
@@ -312,6 +315,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     road r3;
     r3.id = 100 * junc.id + 3;
     r3.junction = junc.id;
+    r3.inputSegmentId = inputSegmentId;
     r3.isConnectingRoad = true; //this is a fix for the junction bug
     r3.predecessor.elementType = junctionType;
     r3.predecessor.id = junc.id;
@@ -472,6 +476,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
                     //left = readStrAttrFromNode(laneLink, "right");  The line above was like this. i changed it to this since i think it was a bug.
 
                 road r;
+                r.inputSegmentId = inputSegmentId;
                 r.id = 100 * junc.id + data.roads.size() + 1;
                 createRoadConnection(r1, r2, r, junc, from, to, left, right);
                 data.roads.push_back(r);
@@ -498,6 +503,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             if (mode == 1 && phi1 > 0 && i == 0)
@@ -527,6 +533,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             if (mode == 1 && phi1 > 0)
@@ -551,6 +558,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             if (i == 0)
@@ -573,6 +581,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             createRoadConnection(r3, r2, r, junc, from, to, non, non);
@@ -591,6 +600,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             if (mode == 1 && phi1 > 0 && i == 0)
@@ -620,6 +630,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
         for (int i = 0; i < min(nF, nT); i++)
         {
             road r;
+            r.inputSegmentId = inputSegmentId;
             r.id = 100 * junc.id + 50 + nCount;
 
             if (mode == 1 && phi1 > 0)

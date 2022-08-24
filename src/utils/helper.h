@@ -726,4 +726,35 @@ bool compareLanes(const lane &a, const lane &b)
     return a.id < b.id;
 }
 
+/**
+ * @brief checks if int is in vector
+ * 
+ * @param v vector to check
+ * @param i integer
+ * @return true int is in vector
+ * @return false int is not in vector
+ */
+bool isIn(vector<int> &v, int &i)
+{
+    for(auto e: v)
+    {
+        if(e == i) return true;
+    }
+    return false;
+}
 
+void throwWarning(string msg, string origin)
+{
+    setting.warnings ++;
+    if(!setting.silentMode)
+        cout << msg << "\n\tin " << origin << endl;
+    cerr << msg << "\n\tin " << origin << endl;
+}
+void throwWarning(string msg)
+{
+    setting.warnings ++;
+    if(!setting.silentMode)
+        cout << msg << endl;
+    cerr << msg << endl;
+
+}

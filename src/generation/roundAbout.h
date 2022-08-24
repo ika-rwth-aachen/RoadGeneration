@@ -47,6 +47,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
     juncGroup.id = readIntAttrFromNode(node, "id"); 
     juncGroup.name = "jg" + to_string(juncGroup.id);
 
+    int inputSegmentId = readIntAttrFromNode(node, "id");
 
     DOMElement* dummy = NULL;
     DOMElement* circleRoad = getChildWithName(node, "circle");
@@ -238,6 +239,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         road r1;
         r1.id = junc.id + nCount;
         r1.junction = -1;
+        r1.inputSegmentId = inputSegmentId;
         r1.roundAboutInputSegment = juncGroup.id;
         r1.isConnectingRoad = true;
         r1.successor.id = junctions[(cc - 1+ junctions.size()) % junctions.size()].id;
@@ -262,6 +264,8 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         road r2;
         r2.inputId = adId;
         r2.roundAboutInputSegment = juncGroup.id;
+        r2.inputSegmentId = inputSegmentId;
+
         r2.id = junc.id + nCount;
         r2.junction = juncGroup.id; //storing the junction like this is a workaround for the problem with the id namespace. It needs to be this way
         //so there wont be a problem in linking and closing the road network
@@ -358,7 +362,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         {
             road r;
             r.roundAboutInputSegment = juncGroup.id;
-
+            r.inputSegmentId = inputSegmentId;
             r.id = junc.id + nCount;
 
             if (clockwise)
@@ -386,6 +390,8 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         road r5;
         r5.id = junc.id  + nCount;
+        r5.inputSegmentId = inputSegmentId;
+
         r5.roundAboutInputSegment = juncGroup.id;
 
         if (clockwise)
@@ -412,7 +418,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         road r6;
         r6.roundAboutInputSegment = juncGroup.id;
-
+        r6.inputSegmentId = inputSegmentId;
         r6.id = junc.id + nCount;
         if (clockwise)
         {
@@ -433,11 +439,6 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
             createRoadConnection(r2, helper, r6, junc, from, to, non, sol);
         }
         nCount++;
-
-        // // adjust predecessor of first element, due to loop
-        // r1.predecessor.id = junc.id;
-        // r1.predecessor.elementType = junctionType;
-        // r1.predecessor.contactPoint = startType;
 
         data.roads.push_back(r1);
         data.roads.push_back(r2);
