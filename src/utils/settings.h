@@ -89,3 +89,4 @@ struct settings
     double west = 0;
     double east = 0;
 };
+

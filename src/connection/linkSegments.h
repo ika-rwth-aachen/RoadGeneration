@@ -109,9 +109,9 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 		// if junction, the contact point is always at "end" of a road
 		if (fromIsJunction || fromIsRoundabout)
 		{
-			if(fromPos == "start" && !setting.silentMode)
+			if(fromPos == "start")
 			{
-				cout << "WARNING: junctions and roundabouts must be linked at end positions!" << endl;
+				throwWarning("WARNING: junctions and roundabouts must be linked at end positions!");
 			}
 			fromPos = "end";
 
@@ -149,9 +149,9 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 		// if junction, the contact point is always at "end" of a road
 		if (toIsJunction || toIsRoundabout)
 		{
-			if(toPos == "start" && !setting.silentMode)
+			if(toPos == "start")
 			{
-				cout << "WARNING: junctions and roundabouts must be linked at end positions!" << endl;
+				throwWarning("WARNING: junctions and roundabouts must be linked at end positions!");
 			}
 			toPos = "end";
 	

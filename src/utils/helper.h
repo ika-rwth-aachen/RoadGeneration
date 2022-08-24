@@ -743,4 +743,15 @@ bool isIn(vector<int> &v, int &i)
     return false;
 }
 
-
+void throwWarning(string msg, string origin)
+{
+    setting.warnings ++;
+    if(!setting.silentMode)
+        cout << msg << "\n\tfrom " << origin << endl;
+}
+void throwWarning(string msg)
+{
+    setting.warnings ++;
+    if(!setting.silentMode)
+        cout << msg << "\n\tfrom "<< endl;
+}
