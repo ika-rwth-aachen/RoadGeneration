@@ -703,6 +703,16 @@ bool compareSignals(const sign &a, const sign &b)
     return a.id < b.id;
 }
 
+size_t getTimeStamp(char* date_time)
+{
+	time_t curr_time;
+	tm * curr_tm;
+	
+	time(&curr_time);
+	curr_tm = localtime(&curr_time);
+	
+    return strftime(date_time, 100, "%Y-%m-%d %H:%M:%S", curr_tm);
+}
 /**
  * @brief function compares lanes by id
  * 
