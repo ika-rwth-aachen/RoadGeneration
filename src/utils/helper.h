@@ -747,11 +747,14 @@ void throwWarning(string msg, string origin)
 {
     setting.warnings ++;
     if(!setting.silentMode)
-        cout << msg << "\n\tfrom " << origin << endl;
+        cout << msg << "\n\tin " << origin << endl;
+    cerr << msg << "\n\tin " << origin << endl;
 }
 void throwWarning(string msg)
 {
     setting.warnings ++;
     if(!setting.silentMode)
-        cout << msg << "\n\tfrom "<< endl;
+        cout << msg << endl;
+    cerr << msg << endl;
+
 }
