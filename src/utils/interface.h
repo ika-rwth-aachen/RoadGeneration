@@ -266,7 +266,7 @@ struct road
 
     int id = -1;
     int inputSegmentId = -1;
-    int inputId = -1;     // original id from input file
+    int inputId = -1;     // original road id from input file
     int roundAboutInputSegment = -1; //use this only for generated roads that belong to a roundabout to store the segment id of the roundabout!
     int junction = -1;
     

@@ -29,8 +29,6 @@
  */
 int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 {
-	// --- add other specified segments ----------------------------------------
-
 
 	// get properties
 	
@@ -51,30 +49,31 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 	}
 	road fromRoad;
 	road toRoad;
-	int toJunctionGroup = -1; //in case we like TO a junction group, store the pointer
 
-	
+
 
 	// assumption is that "fromSegement" is already linked to reference frame
 
 	double fromX, fromY, fromHdg;
 	double toX, toY, toHdg;
+	bool fromIsRoundabout 	= false;
+	bool toIsRoundabout  	= false;
+	bool fromIsJunction 	= false;
+	bool toIsJunction 		= false;
 
 	// check if fromSegment is junction
-	bool fromIsJunction = false;
 	for (auto &&j : data.junctions)
 		if (j.id == fromSegment)
 			fromIsJunction = true;
 
 	// check if toSegment is junction
-	bool toIsJunction = false;
 	for (auto &&j : data.junctions)
 		if (j.id == toSegment)
 			toIsJunction = true;
 
-	/*fix for the roundabout junction namespace problem. Since multiple junctions get generated for each roundabout
-	the linking is problematic with the input format (since the user does not know which ids will be generated for the junctions).
-	So we check if the from and to segments belong to a roundabout*/
+	
+
+	/*check if either one of the segments is a roundabout*/
 
 	for(junctionGroup &jg: data.juncGroups)
 	{
@@ -82,10 +81,15 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 
 		if(toSegment == jg.id)
 		{
-			//toSegment is a roundabout
-			toJunctionGroup = jg.id;
+			toIsRoundabout = true;
 
 		}
+		if(fromSegment == jg.id)
+		{
+			fromIsRoundabout= true;
+
+		}
+		
 	}
 	//-------------------END roundabout namespace fix---------------------------------
 
@@ -93,16 +97,25 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 	for (auto &&r : data.roads)
 	{
 			
-		if (r.junction != fromSegment || r.inputId != fromRoadId)
+		if (r.inputSegmentId != fromSegment || r.inputId != fromRoadId)
 			continue;
 		if (fromIsJunction && r.inputPos != fromPos)
 			continue;
 
+		cout << r.inputSegmentId << endl;		
+
 		fromRoad = r;
 		fromRoadId = r.id;
 		// if junction, the contact point is always at "end" of a road
-		if (fromIsJunction)
+		if (fromIsJunction || fromIsRoundabout)
+		{
+			if(fromPos == "start")
+			{
+				cout << "WARNING: junctions must be linked at end positions!" << endl;
+			}
 			fromPos = "end";
+
+		}
 
 		if (fromPos == "start")
 		{
@@ -126,15 +139,23 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 		if (r.junction != toSegment || r.inputId != toRoadId) 
 			continue;
 		if (toIsJunction && r.inputPos != toPos)
+		{
 			continue;
-
+		}
 		toRoad = r;
 		toRoadId = r.id;
 
-		// if junction, the contact point is always at "end" of a road
-		if (toIsJunction)
-			toPos = "end";
 
+		// if junction, the contact point is always at "end" of a road
+		if (toIsJunction || toIsRoundabout)
+		{
+			if(toPos == "start")
+			{
+				cout << "WARNING: junctions must be linked at end positions!" << endl;
+			}
+			toPos = "end";
+	
+		}
 		if (toPos == "start")
 		{
 			toX = r.geometries.front().x;
@@ -186,6 +207,7 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 	{
 		if (r.junction != toSegment && r.roundAboutInputSegment != toSegment)
 			continue;
+		
 
 		for (auto &&g : r.geometries)
 		{
