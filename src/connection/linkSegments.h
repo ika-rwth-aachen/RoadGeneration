@@ -102,7 +102,6 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 		if (fromIsJunction && r.inputPos != fromPos)
 			continue;
 
-		cout << r.inputSegmentId << endl;		
 
 		fromRoad = r;
 		fromRoadId = r.id;
