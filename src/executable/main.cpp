@@ -33,13 +33,11 @@ int main(int argc, char** argv){
         return -1;
     }
 
-
-
     setFileName(settings.fileName);
     setXMLSchemeLocation(&schemeLocation[0]);
+    setOverwriteLog(settings.overwriteLog);
     setOutputName(settings.outputName);
     setSilentMode(settings.silentMode);
-
     execPipeline();
 
     return 0;
