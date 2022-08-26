@@ -743,18 +743,29 @@ bool isIn(vector<int> &v, int &i)
     return false;
 }
 
-void throwWarning(string msg, string origin)
+void throwWarning(string msg, string origin, bool mute = false)
 {
     setting.warnings ++;
+    if(!setting.silentMode && !mute)
+        cout << msg << "\n\tin " << origin << endl;
+    cerr << msg << "\n\tin " << origin << endl;
+}
+void throwWarning(string msg, bool mute = false)
+{
+    setting.warnings ++;
+    if(!setting.silentMode && !mute)
+        cout << msg << endl;
+    cerr << msg << endl;
+}
+void throwError(string msg, string origin)
+{
     if(!setting.silentMode)
         cout << msg << "\n\tin " << origin << endl;
     cerr << msg << "\n\tin " << origin << endl;
 }
-void throwWarning(string msg)
+void throwError(string msg)
 {
-    setting.warnings ++;
     if(!setting.silentMode)
         cout << msg << endl;
     cerr << msg << endl;
-
 }

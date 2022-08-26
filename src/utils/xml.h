@@ -111,32 +111,6 @@ int validateOutput(roadNetwork &data)
     return 0;
 }
 
-/**
- * @brief function parses the input xml file with the external tool pugi_xml
- *  input is then accessable in a pugi::xml_document tree structure 
- * 
- * @param doc   tree structure which contains the data of the xml input file
- * @param data  roadNetwork data which holds the input file name
- * @param file  xml input file
- * @return int  error code
- */
-// int parseXML(pugi::xml_document &doc, roadNetwork &data, char *file) //TODO THIS METHOD BECOMES OBSOLET WITH XERCESC
-// {
-//     // save file name in data
-//     string f = file;
-//     data.file = f.substr(0, f.find(".xml"));
-
-//     if (doc.load_file(file))
-//     {
-//         return 0;
-//     }
-//     else
-//     {
-//         cerr << "ERR: InputFile not found" << endl;
-//         return 1;
-//     }
-
-// }
 
 
 /**

@@ -231,8 +231,8 @@ string readStrAttrFromNode(const DOMElement* node, const char* attribute, bool s
     if(node == NULL){
         if(!suppressOutput)
         {
-            cout << "ERR in readStrAttriValueFromNode; dom node does not exists!" << endl;
-            cerr << "ERR in readStrAttriValueFromNode; dom node does not exists!" << endl;
+            cout << "ERR: in readStrAttriValueFromNode; dom node does not exists!" << endl;
+            cerr << "ERR: in readStrAttriValueFromNode; dom node does not exists!" << endl;
         }
         return "";
     }
@@ -328,6 +328,18 @@ DOMElement* getNextSiblingWithTagName(DOMElement* elem, const char* tag)
             }
         }
         return res;
+    }
+
+    /**
+     * @brief Get the First Child object
+     * 
+     * @param node of the parent object
+     * @return DOMElement* first child of parent object in the xml tree
+     */
+    DOMElement* getFirstChild(const DOMElement* node)
+    {
+        if (node == NULL) return NULL;
+        return (DOMElement*)node->getFirstChild();
     }
 
 /**

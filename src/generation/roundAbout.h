@@ -80,7 +80,6 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
     }
 
     // get coupler
-    //pugi::xml_node cA = node.child("coupler").child("junctionArea");
     DOMElement* cA = getChildWithName(getChildWithName(node, "coupler"), "junctionArea");
 
     // count intersectionPoints
@@ -92,8 +91,6 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
             nIp++;
         }
     }
-
-    
 
     //generate all junctions first for easier linking
     int cc = 0;
@@ -166,8 +163,6 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
                 sOffAdd = readDoubleAttrFromNode(sB, "gap");
         }
 
-        
-
         // calculate width of circleRoad and addtionalRoad
         road helpMain;
         road helpAdd;
@@ -203,7 +198,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         if (changed)
         {
-            cerr << "!!! sOffset of at least one road was changed, due to feasible road structure !!!" << endl;
+            throwWarning("!!! sOffset of at least one road was changed, due to feasible road structure !!!", true);
         }
 
         if (sOffMain * 2 > length / nIp)
@@ -216,6 +211,33 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         double sMain = readDoubleAttrFromNode(iP, "s");
         double sAdd = readDoubleAttrFromNode(getChildWithName(iP, "adRoad"), "s");
         double phi = readDoubleAttrFromNode(getChildWithName(iP, "adRoad"), "angle");
+
+        //sanity checks
+        if(sMain > length)
+        {
+            throwError("ERR: Interesection point s from ref road "+ to_string(refId)  
+                + " to add road " + to_string(adId) + " is larger than the ref road's length");
+            return 1;
+        }
+        //fint the length of the add road
+        //TODO error handling. the ids seems to be faulty so that the correct length cannot be read!
+        double adLength = 0;
+        for (DOMElement* child = node->getFirstElementChild(); child != NULL; child = child->getNextElementSibling())
+        {
+                if(readNameFromNode(child) == "road" && readIntAttrFromNode(child, "id") == adId)
+                {
+                    adLength = readDoubleAttrFromNode(getFirstChild(getFirstChild(child)), "length");
+                }
+        }
+
+
+        if(sAdd > adLength)
+        {
+            throwError("ERR: Interesection point s from adRoad "+ to_string(adId)  
+                + " to ref road " + to_string(refId) + " is larger than the add road's length");
+            return 1;
+        }
+        //------end sanity checks
 
         // calculate coordinates of intersectionPoint
         double curPhi = sMain / (2 * M_PI * R) * 2 * M_PI;
