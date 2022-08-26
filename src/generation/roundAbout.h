@@ -215,25 +215,23 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         //sanity checks
         if(sMain > length)
         {
-            throwError("ERR: Interesection point s from ref road "+ to_string(refId)  
+            throwError("Interesection point s from ref road "+ to_string(refId)  
                 + " to add road " + to_string(adId) + " is larger than the ref road's length");
             return 1;
         }
         //fint the length of the add road
-        //TODO error handling. the ids seems to be faulty so that the correct length cannot be read!
         double adLength = 0;
         for (DOMElement* child = node->getFirstElementChild(); child != NULL; child = child->getNextElementSibling())
         {
                 if(readNameFromNode(child) == "road" && readIntAttrFromNode(child, "id") == adId)
                 {
-                    adLength = readDoubleAttrFromNode(getFirstChild(getFirstChild(child)), "length");
+                    adLength = readDoubleAttrFromNode(getFirstChildFromNode(getFirstChildFromNode(child)), "length");
                 }
         }
 
-
         if(sAdd > adLength)
         {
-            throwError("ERR: Interesection point s from adRoad "+ to_string(adId)  
+            throwError("Interesection point s from adRoad "+ to_string(adId)  
                 + " to ref road " + to_string(refId) + " is larger than the add road's length");
             return 1;
         }

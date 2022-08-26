@@ -84,7 +84,6 @@ int generateGeometries(DOMElement* roadIn, road &r, double &sStart, double &sEnd
     // search first and last relevant geometry
     int foundfirst = -1;
     int foundlast = -1;
-    if(r.id == 30501)
     computeFirstLast(roadIn, foundfirst, foundlast, sStart, sEnd);
 
     // start values (starting point at origin)

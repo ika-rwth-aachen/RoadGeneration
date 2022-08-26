@@ -110,7 +110,7 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 		{
 			if(fromPos == "start")
 			{
-				throwWarning("WARNING: junctions and roundabouts must be linked at end positions!");
+				throwWarning("junctions and roundabouts must be linked at end positions!");
 			}
 			fromPos = "end";
 
@@ -150,7 +150,7 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 		{
 			if(toPos == "start")
 			{
-				throwWarning("WARNING: junctions and roundabouts must be linked at end positions!");
+				throwWarning("junctions and roundabouts must be linked at end positions!");
 			}
 			toPos = "end";
 	
@@ -267,8 +267,7 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 	DOMElement *links;
 	if (inputxml.findNodeWithName("links", links))
 	{
-		cerr << "ERR: 'links' are not specified in input file." << endl;
-		cerr << "\t -> skip segment linking" << endl;
+		throwWarning("'links' are not specified in input file.\n\t -> skip segment linking", true);
 		return 0;
 	}
 

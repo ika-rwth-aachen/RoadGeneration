@@ -747,25 +747,25 @@ void throwWarning(string msg, string origin, bool mute = false)
 {
     setting.warnings ++;
     if(!setting.silentMode && !mute)
-        cout << msg << "\n\tin " << origin << endl;
-    cerr << msg << "\n\tin " << origin << endl;
+        cout <<"WARNING: " << msg << "\n\tin " << origin << endl;
+    cerr << "WARNING: " << msg << "\n\tin " << origin << endl;
 }
 void throwWarning(string msg, bool mute = false)
 {
     setting.warnings ++;
     if(!setting.silentMode && !mute)
-        cout << msg << endl;
-    cerr << msg << endl;
+        cout << "WARNING: " <<msg << endl;
+    cerr << "WARNING: "<< msg << endl;
 }
 void throwError(string msg, string origin)
 {
     if(!setting.silentMode)
-        cout << msg << "\n\tin " << origin << endl;
-    cerr << msg << "\n\tin " << origin << endl;
+        cout << "ERR: " << msg << "\n\tin " << origin << endl;
+    cerr << "ERR: " << msg << "\n\tin " << origin << endl;
 }
 void throwError(string msg)
 {
     if(!setting.silentMode)
-        cout << msg << endl;
-    cerr << msg << endl;
+        cout << "ERR: "<< msg << endl;
+    cerr << "ERR: "<< msg << endl;
 }

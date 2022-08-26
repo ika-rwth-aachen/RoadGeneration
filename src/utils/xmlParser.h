@@ -336,10 +336,10 @@ DOMElement* getNextSiblingWithTagName(DOMElement* elem, const char* tag)
      * @param node of the parent object
      * @return DOMElement* first child of parent object in the xml tree
      */
-    DOMElement* getFirstChild(const DOMElement* node)
+    DOMElement* getFirstChildFromNode(const DOMElement* node)
     {
         if (node == NULL) return NULL;
-        return (DOMElement*)node->getFirstChild();
+        return node->getFirstElementChild();
     }
 
 /**
