@@ -4,12 +4,12 @@
  <roundabout id="3">
             <circle id="1" classification="access" >	
                 <referenceLine>
-                    <circle length="320.5"/>
+                    <circle length="300"/>
                 </referenceLine>
                 <lanes>
                         <lane id="1" type="delete" />
-                        
-                       
+
+
                         <lane id="-3" type="driving">
                             <roadMark   type="solid" color="white" width="0.13"/>
                         </lane>
@@ -22,7 +22,7 @@
                         <lane id="0" type="driving" />
                 </lanes>
             </circle>
-            
+
             <road id="2" classification="access" >	
                 <referenceLine>
                      <line length="150"/>
@@ -52,7 +52,7 @@
             <intersectionPoint refRoad="1" s="240">
                 <adRoad id="4" s="20" angle="-1.56"/>
             </intersectionPoint>
-            <intersectionPoint refRoad="1" s="320">
+            <intersectionPoint refRoad="1" s="290">
                 <adRoad id="5" s="20" angle="-1.6"/>
             </intersectionPoint>
             <coupler>
@@ -62,7 +62,6 @@
                 </junctionArea> 
             </coupler>
         </roundabout>
-        
         
 	</segments>
 	

@@ -1,0 +1,40 @@
+<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+	<segments>
+	<connectingRoad id="1">
+            <road id="1" classification="main" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+
+                <lanes>
+                    <lane id="-1"/>
+                    <lane id="1" />
+                    <laneWidening side="-1" s="20" length="50">
+                    </laneWidening>
+
+
+                </lanes>
+            </road>
+        </connectingRoad>
+        <connectingRoad id="2">
+            <road id="1" classification="main" >	
+               <referenceLine>
+                     <spiral length="800"  Rs="-150" Re="0"/>
+                </referenceLine>
+
+                <lanes>
+                    <lane id="-1"/>
+                    <lane id="1" />
+                     <lane id="-2" />
+                </lanes>
+            </road>
+        </connectingRoad>
+	</segments>
+	
+    <links refId="1" hdgOffset="0.0" xOffset="0" yOffset="0">
+        <segmentLink fromSegment="1" toSegment="2" fromRoad="1" toRoad="1" fromPos="end" toPos="start" />
+    </links>
+
+
+</roadNetwork>
+

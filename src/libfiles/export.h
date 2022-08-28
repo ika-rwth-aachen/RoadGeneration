@@ -65,6 +65,13 @@ extern "C" EXPORTED void setOutputName(char* file);
  */
 extern "C" EXPORTED void setSilentMode(bool sMode);
 
+/**
+ * @brief set overwriting the error log to ture or false
+ *  @param b true if errorlog should be overwritten
+ */
+extern "C" EXPORTED void setOverwriteLog(bool b);
+
+
 
 #endif
 

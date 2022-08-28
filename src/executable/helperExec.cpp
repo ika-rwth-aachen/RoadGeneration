@@ -19,7 +19,8 @@ const char *HELP_MESSAGE =
   "    -h                               Display help message.\n"
   "    -s                               Disable console output.\n"
   "    -d <fileDir>                     Specify output file directory.\n"
-  "    -o <fileName>                    Specify output file name.\n\n";
+  "    -o <fileName>                    Specify output file name.\n"
+  "    -k                               Keep logfile. Log will be overwritten if this is not set.\n\n";
 
 
 /**
@@ -51,14 +52,14 @@ int parseArgs(int argc, char **argv, settingsExec &settings) {
     for(int i = 1; i < argc; i++){
         if(argv[i][0] == '-'){
             if(strlen(argv[i]) != 2) {
-                std::cout << "ERR: wrong args!" << std::endl;
+                std::cout << "ERR: invalid arguments!" << std::endl;
                 return -1;
             }
             
             switch(argv[i][1]){  // look for params
                 case 'o':
                     if(argc <= i +1){
-                        std::cout <<"ERR: wrong args!" << std::endl;
+                        std::cout <<"ERR: invalid arguments!" << std::endl;
                         return -1;
                     }
                     settings.outputName = argv[++i];
@@ -73,8 +74,12 @@ int parseArgs(int argc, char **argv, settingsExec &settings) {
                     settings.silentMode = true;
                 break;
 
+                case 'k':
+                    settings.overwriteLog = false;
+                break;
+
                 default:
-                    std::cout << "ERR: wrong args!" << std::endl;
+                    std::cout << "ERR: invalid arguments!" << std::endl;
                     return -1;
             }
         }

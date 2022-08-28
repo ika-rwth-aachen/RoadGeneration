@@ -15,6 +15,7 @@
  *
  */
 
+
 /**
  * @brief lane width settings
  * 
@@ -74,6 +75,8 @@ struct settings
     std::string xmlSchemeLocation; //this has to be set to the xml schema input path
 
     bool silentMode = false; //silent mode disables console outputs
+    bool overwriteLog = true;
+    int warnings = 0; // counts number of warnings
 
     int versionMajor = 1; // OpenDrive major version
     int versionMinor = 4; // OpenDrive minor version
@@ -86,3 +89,4 @@ struct settings
     double west = 0;
     double east = 0;
 };
+

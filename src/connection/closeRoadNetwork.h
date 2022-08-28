@@ -36,8 +36,7 @@ int closeRoadNetwork(xmlTree &doc, roadNetwork &data)
 
 	if (doc.findNodeWithName("closeRoads",closeRoad))
 	{
-		cerr << "ERR: 'closeRoadNetwork' is not specified in input file." << endl;
-		cerr << "\t -> skip closing" << endl;
+		throwWarning("'closeRoadNetwork' is not specified in input file.\n\t -> skip closing", true);
 		return 0;
 	}
 
@@ -61,6 +60,8 @@ int closeRoadNetwork(xmlTree &doc, roadNetwork &data)
 		string toPos = readStrAttrFromNode(segmentLink, "toPos");
 		road fromRoad;
 		road toRoad;
+
+
 
 		double fromX, fromY, fromHdg;
 		double toX, toY, toHdg;

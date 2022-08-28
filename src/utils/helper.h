@@ -225,6 +225,12 @@ int shiftLanes(laneSection &sec, int id, int dir)
             if (sec.lanes[i].id == start)
             {
                 sec.lanes[i].id += dir * side;
+
+                /*
+                    Below is a fix that adjusts the linkage of the shifted lanes according to their id.
+                */
+                sec.lanes[i].preId += dir * side; 
+                sec.lanes[i].sucId += dir * side;
             }
         }
         start -= dir * side;
@@ -697,6 +703,16 @@ bool compareSignals(const sign &a, const sign &b)
     return a.id < b.id;
 }
 
+size_t getTimeStamp(char* date_time)
+{
+	time_t curr_time;
+	tm * curr_tm;
+	
+	time(&curr_time);
+	curr_tm = localtime(&curr_time);
+	
+    return strftime(date_time, 100, "%Y-%m-%d %H:%M:%S", curr_tm);
+}
 /**
  * @brief function compares lanes by id
  * 
@@ -710,4 +726,46 @@ bool compareLanes(const lane &a, const lane &b)
     return a.id < b.id;
 }
 
+/**
+ * @brief checks if int is in vector
+ * 
+ * @param v vector to check
+ * @param i integer
+ * @return true int is in vector
+ * @return false int is not in vector
+ */
+bool isIn(vector<int> &v, int &i)
+{
+    for(auto e: v)
+    {
+        if(e == i) return true;
+    }
+    return false;
+}
 
+void throwWarning(string msg, string origin, bool mute = false)
+{
+    setting.warnings ++;
+    if(!setting.silentMode && !mute)
+        cout <<"WARNING: " << msg << "\n\tin " << origin << endl;
+    cerr << "WARNING: " << msg << "\n\tin " << origin << endl;
+}
+void throwWarning(string msg, bool mute = false)
+{
+    setting.warnings ++;
+    if(!setting.silentMode && !mute)
+        cout << "WARNING: " <<msg << endl;
+    cerr << "WARNING: "<< msg << endl;
+}
+void throwError(string msg, string origin)
+{
+    if(!setting.silentMode)
+        cout << "ERR: " << msg << "\n\tin " << origin << endl;
+    cerr << "ERR: " << msg << "\n\tin " << origin << endl;
+}
+void throwError(string msg)
+{
+    if(!setting.silentMode)
+        cout << "ERR: "<< msg << endl;
+    cerr << "ERR: "<< msg << endl;
+}

@@ -51,6 +51,10 @@ EXPORTED void setFileName(char* file){
 	_fileName = file;
 }
 
+EXPORTED void setOverwriteLog(bool b){
+	setting.overwriteLog = b;
+}
+
 EXPORTED void setLogFile(char* file){
 	_logfile = file;
 }
@@ -73,10 +77,6 @@ EXPORTED void setXMLSchemeLocation(char* file){
 	setting.xmlSchemeLocation = file;
 }
 
-void test(roadNetwork rn)
-{
-	cout << rn.controller.size() << endl; 
-}
 
 EXPORTED int executePipeline(char* file)
 {
@@ -89,9 +89,12 @@ EXPORTED int executePipeline(char* file)
 	if(!_setOutput){
 		_outName = file;
 	}
-	
-	(void)! freopen(_logfile.c_str(), "a", stderr); //(void)! suppresses the unused return warning..
-	cerr << "\nError log for run with attribute: " << file << endl;
+
+	(void)! freopen(_logfile.c_str(), (setting.overwriteLog)? "w":"a", stderr); //(void)! suppresses the unused return warning..
+
+	char dt[100];
+	getTimeStamp(dt);
+	cerr << "\n" << dt << " Error log for run with attribute: " << file << endl;
 
 	if (setting.xmlSchemeLocation == ""){
 		cerr << "ERR: xml scheme  NOT SET" << endl;
@@ -119,11 +122,6 @@ EXPORTED int executePipeline(char* file)
 		return -1;
 	}
 
-	// if (parseXML(in, data, file))
-	// {
-	// 	cerr << "ERR: error in parseXML" << endl;
-	// 	return -1;
-	// }
 	if (buildSegments(inputxml, data))
 	{
 		cerr << "ERR: error in buildSegments" << endl;
@@ -149,6 +147,12 @@ EXPORTED int executePipeline(char* file)
 	{
 		cerr << "ERR: error in validateOutput" << endl;
 		return -1;
+	}
+
+	//warning handling
+	if(setting.warnings > 0)
+	{
+		cout << "\nFinished with " << setting.warnings << " warning(s), check out the error log for more information." << endl;
 	}
 
 	return 0;

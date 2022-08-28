@@ -53,8 +53,8 @@ int validateInput(char *file, xmlTree &xmlInput)
     xmlInput.parseDocument(xml_file);
 
     if (xmlInput.getErrorCount() == 0){
-        if(!setting.silentMode)
-            cout << "XML input file validated against the schema successfully" << endl;
+        //if(!setting.silentMode)
+        cout << "XML input file validated against the schema successfully" << endl;
     }
     else
     {
@@ -110,8 +110,6 @@ int validateOutput(roadNetwork &data)
 
     return 0;
 }
-
-
 
 
 /**
@@ -458,6 +456,24 @@ int createXMLXercesC(roadNetwork &data)
             nodeElement ll("laneLink", con);
             ll.addAttribute("from", itt->fromLane);
             ll.addAttribute("to", itt->toLane);
+        }
+    }
+    // --- write junction groups -----------------------------------------------------
+
+    for (std::vector<junctionGroup>::iterator it = data.juncGroups.begin(); it != data.juncGroups.end(); ++it)
+    {
+
+        nodeElement juncGroup("junctionGroup");
+        juncGroup.appendToNode(root);
+        juncGroup.addAttribute("id", it->id);
+        juncGroup.addAttribute("name", it->name);
+        juncGroup.addAttribute("type", it->type);
+
+
+        for (std::vector<int>::iterator itt = it->juncIds.begin(); itt != it->juncIds.end(); ++itt)
+        {
+            nodeElement juncRef("junctionReference", juncGroup);
+            juncRef.addAttribute("junction", *itt);
         }
     }
 

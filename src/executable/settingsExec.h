@@ -24,6 +24,7 @@ struct settingsExec{
     char* fileName;
     char* outputName;
     bool silentMode = false;
+    bool overwriteLog = true;
 
 };
 
