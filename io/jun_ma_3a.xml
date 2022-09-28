@@ -35,10 +35,10 @@
             </road>
             <road id="3" classification="access" >	
                 <referenceLine>
-                    <arc length="100"  R="-100"/>
+                    <arc length="100"  R="-200"/>
                 </referenceLine>
             </road>
-            <intersectionPoint refRoad="1" s="800">
+            <intersectionPoint refRoad="1" s="0">
                 <adRoad id="2" s="0" angle="3.14"/>
                 <adRoad id="3" s="0" angle="1.57079632679"/>
             </intersectionPoint>
