@@ -22,7 +22,7 @@ The proposed workflow can be seen in Fig. 1. Further information is published in
 Fig.1: Possible workflow for the presend road variation tool.
 
 
-## Overview
+## Repository Overview
 
 This repository provides a tool for the generation of road networkds. Here, the main folders are named:
 
@@ -150,12 +150,14 @@ sh install-variation.sh
 
 The project is distributed under the [MIT License](LICENSE.md).
 
-## Contact
+## Authors of this Work
 
-Daniel Becker  
-| Institute for Automotive Engineering (ika)  
-| RWTH Aachen University  
-| daniel.becker@ika.rwth-aachen.de  
+### Scientific Researcher:
+[Daniel Becker](https://github.com/dbeckerAC) - daniel.becker@ika.rwth-aachen.de  
+[Christian Geller](https://github.com/cgeller) - christian.geller@ika.rwth-aachen.de  
+Fabian Ruß - fabian.russ@ika.rwth-aachen.de  
+### Student Worker:
+[Jannik Busse](https://github.com/jannikbusse)  
 
 ## Citation
 
