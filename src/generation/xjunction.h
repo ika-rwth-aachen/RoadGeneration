@@ -222,7 +222,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         for(tmpNode = tmpNode->getNextElementSibling(); tmpNode != NULL && readNameFromNode(tmpNode) != "adRoad";tmpNode = tmpNode->getNextElementSibling());
         
         //some sanity checks---
-        if (tmpNode == NULL)
+        if (tmpNode == NULL && mode != 1) //2M (=mode1) does not contain adRoads
         {
             cerr << "ERR: error in generating junction road (mode 1). AdRoad is missing in intersection point" << endl;
             return 1;
