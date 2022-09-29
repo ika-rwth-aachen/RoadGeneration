@@ -149,18 +149,22 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         double sOffMain = sOffset;
         double sOffAdd = sOffset;
-        for (DOMElement* sB = cA->getFirstElementChild(); sB != NULL; sB = sB->getNextElementSibling())
+
+        if(cA != NULL)
         {
-            if(readNameFromNode(sB) != "roadGap")
+            for (DOMElement* sB = cA->getFirstElementChild(); sB != NULL; sB = sB->getNextElementSibling())
             {
-                continue;
+                if(readNameFromNode(sB) != "roadGap")
+                {
+                    continue;
+                }
+
+                if (readIntAttrFromNode(sB, "id") == refId)
+                    sOffMain = readDoubleAttrFromNode(sB, "gap");
+
+                if (readIntAttrFromNode(sB, "id") == adId)
+                    sOffAdd = readDoubleAttrFromNode(sB, "gap");
             }
-
-            if (readIntAttrFromNode(sB, "id") == refId)
-                sOffMain = readDoubleAttrFromNode(sB, "gap");
-
-            if (readIntAttrFromNode(sB, "id") == adId)
-                sOffAdd = readDoubleAttrFromNode(sB, "gap");
         }
 
         // calculate width of circleRoad and addtionalRoad
