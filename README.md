@@ -15,15 +15,23 @@ Therefore, we present a prototypical solution for a logical road network descrip
 
 The idea is to derive the description from a commonly used, standardized format for simulation maps in order to generate this format from the introduced logical description. Consequently, we developed a command-line tool that generates the standardized simulation map format OpenDRIVE. Furthermore, there exists a Python package that allows the user to introduce stochastic variables for each quantity and generate as many variations of a logically identical road network as desired.
 
+The proposed workflow can be seen in Fig. 1. Further information is published in [[1]](https://arxiv.org/abs/2006.03403) and [2].    
+<div align="center">
+    <img src="docs/motivation.png"</img> 
+</div>
+Fig.1: Possible workflow for the presend road variation tool.
+
+
 ## Overview
 
 This repository provides a tool for the generation of road networkds. Here, the main folders are named:
 
-- `io`: contains sample input files
-- `src`: contains the source code
-- `test`: contains test files and their desired OpenDRIVE outputs
-- `xml`: contains the xsd validation files
-- `variation`: contains the variation tool
+- `doc`: Resources for documentation
+- `io`: Sample input files
+- `src`: Source code
+- `test`: Test files and their desired OpenDRIVE outputs
+- `xml`: Contains the XSD validation files
+- `variation`: Python based variation tool for the road generator
 
 ## Installation
 
@@ -37,9 +45,9 @@ The following **requirements** have to be satisfied:
 **Download** the repository as a zip-file and un-zip, or use git with
 
 ```bash
-    # Clone Repository and open main folder
-    git clone git@github.com:ika-rwth-aachen/RoadGeneration.git
-    cd RoadGeneration
+# Clone Repository and open main folder
+git clone git@github.com:ika-rwth-aachen/RoadGeneration.git
+cd RoadGeneration
 ```
 
 A build script is provided and can be executed from the root directory with
@@ -113,20 +121,18 @@ THIS IS SUBJECT TO CHANGE
 The compiled application can be called from the root folder:
 
 ```bash
-    ./road-generation_executable <input>
+./road-generation_executable <input>
 ```
 
 This generates the output OpenDRIVE file next to the input file. The provided input file is checked against ``input.xsd``. Analogous the output file is checked against the ``output.xsd`` file which specifies the openDRIVE 1.5 standard. For a list of all parameters use the help flag of the tool.
 
 ```bash
-    ./road-generation_executable -h
+./road-generation_executable -h
 ```
 
 ## Documentation
 
 A simple but well designed C++ reference [documentation](https://ika-rwth-aachen.github.io/RoadGeneration/index.html) is provided.
-
-*TODO: take care of XSD input file documenation.*
 
 ## Variation tool
 
@@ -137,7 +143,7 @@ The Variation tool is used to generate a variety of different scenarios based on
 You can run the code from the `variation` subfolder, however, the variation tool can be installed system wide by using the install script in the root directory.
 
 ```bash
-    sh install-variation.sh
+sh install-variation.sh
 ```
 
 ## Licenses
@@ -146,7 +152,37 @@ The project is distributed under the [MIT License](LICENSE.md).
 
 ## Contact
 
-Daniel Becker
-| Institute for Automotive Engineering (ika)
-| RWTH Aachen University
-| daniel.becker@ika.rwth-aachen.de
+Daniel Becker  
+| Institute for Automotive Engineering (ika)  
+| RWTH Aachen University  
+| daniel.becker@ika.rwth-aachen.de  
+
+## Citation
+
+We hope our work provides useful help in your research. If this is the case, please cite:  
+[1]
+```
+@INPROCEEDINGS{BeckerRussGeller2020,
+  author    = {Daniel Becker and
+               Fabian Ru{\ss} and
+               Christian Geller and
+               Lutz Eckstein},
+  title     = {Generation of Complex Road Networks Using a Simplified Logical Description
+               for the Validation of Automated Vehicles},
+  booktitle = {2020 IEEE 23rd International Conference on Intelligent Transportation Systems (ITSC)},
+  year      = {2020},
+  url       = {https://arxiv.org/abs/2006.03403},
+  doi       = {10.1109/ITSC45102.2020.9294664}}
+```
+[2]
+```
+@INPROCEEDINGS{BeckerGeller2022,
+  author    = {Daniel Becker and
+               Christian Geller and
+               Lutz Eckstein},
+  title     = {Road Network Variation Based on HD Map Analysis for the Simulative Safety  Assurance of Automated Vehicles},
+  booktitle = {2022 International Conference on Electrical, Computer, Communications and Mechatronics Engineering (ICECCME)},
+  year      = {2022},
+  url       = {https://arxiv.org/abs/...},
+  doi       = {...}}
+```
