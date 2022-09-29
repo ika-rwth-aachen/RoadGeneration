@@ -114,6 +114,8 @@ EXPORTED int executePipeline(char* file)
 	string outputFile = _outName;
 	data.outputFile = outputFile.substr(0, outputFile.find(".xml"));
     data.outputFile = data.outputFile.substr(0, outputFile.find(".xodr"));
+
+	setting.warnings = 0;
 	
 	// --- pipeline ------------------------------------------------------------
 	if (validateInput(file, inputxml))
