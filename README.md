@@ -136,7 +136,7 @@ A simple but well designed C++ reference [documentation](https://ika-rwth-aachen
 
 ## Variation tool
 
-The Variation tool is used to generate a variety of different scenarios based on the same general road network. A template file is provided to specify variables as well as the general road network structure. A more thorough documentation can be found in the [variation subdirectory](variation/README.md).
+The Variation tool is used to generate a variety of different scenarios based on the same general road network. A template file is provided to specify variables as well as the general road network structure. A more thorough documentation can be found in the [variation subdirectory](variation/).
 
 ### Installation
 
