@@ -111,22 +111,22 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     sOffAdd3 = sOffset;
 
 
-    
-    for (DOMElement* it = cA->getFirstElementChild(); it != NULL ;it = it->getNextElementSibling())
+    if(cA != NULL) //ca might be not provided
     {
-        if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(refRoad, "id") )
-            sOffMain = readDoubleAttrFromNode(it, "gap");
+        for (DOMElement* it = cA->getFirstElementChild(); it != NULL ;it = it->getNextElementSibling())
+        {
+            if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(refRoad, "id") )
+                sOffMain = readDoubleAttrFromNode(it, "gap");
 
-        if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad1, "id"))
-            sOffAdd1 = readDoubleAttrFromNode(it, "gap");
+            if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad1, "id"))
+                sOffAdd1 = readDoubleAttrFromNode(it, "gap");
 
-        if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad2, "id"))
-            sOffAdd2 = readDoubleAttrFromNode(it, "gap");
+            if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad2, "id"))
+                sOffAdd2 = readDoubleAttrFromNode(it, "gap");
 
-        if (readIntAttrFromNode(it, "id", true) == readIntAttrFromNode(additionalRoad3, "id", true))
-            sOffAdd3 = readDoubleAttrFromNode(it, "gap");
-       
-
+            if (readIntAttrFromNode(it, "id", true) == readIntAttrFromNode(additionalRoad3, "id", true))
+                sOffAdd3 = readDoubleAttrFromNode(it, "gap");
+        }
     }
 
     // calculate helper roads
