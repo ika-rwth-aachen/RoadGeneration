@@ -1,5 +1,4 @@
 <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
-
     <segments>
 
         <connectingRoad id="1">

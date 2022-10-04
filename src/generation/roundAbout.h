@@ -198,7 +198,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         if (changed)
         {
-            throwWarning("!!! sOffset of at least one road was changed, due to feasible road structure !!!", true);
+            throwWarning(" sOffset of at least one road was changed, due to feasible road structure ", true);
         }
 
         if (sOffMain * 2 > length / nIp)
