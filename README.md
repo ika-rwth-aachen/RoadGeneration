@@ -15,7 +15,7 @@ Therefore, we present a prototypical solution for a logical road network descrip
 
 The idea is to derive the description from a commonly used, standardized format for simulation maps in order to generate this format from the introduced logical description. Consequently, we developed a command-line tool that generates the standardized simulation map format OpenDRIVE. Furthermore, there exists a Python package that allows the user to introduce stochastic variables for each quantity and generate as many variations of a logically identical road network as desired.
 
-The proposed workflow can be seen in Fig. 1. Further information is published in [[1]](https://arxiv.org/abs/2006.03403) and [2].    
+The proposed workflow can be seen in Fig. 1. Further information is published in [[1]](https://arxiv.org/abs/2006.03403) and [[2]](https://arxiv.org/abs/2210.00853).    
 <div align="center">
     <img src="docs/motivation.png"</img> 
 </div>
@@ -185,6 +185,6 @@ We hope our work provides useful help in your research. If this is the case, ple
   title     = {Road Network Variation Based on HD Map Analysis for the Simulative Safety  Assurance of Automated Vehicles},
   booktitle = {2022 International Conference on Electrical, Computer, Communications and Mechatronics Engineering (ICECCME)},
   year      = {2022},
-  url       = {https://arxiv.org/abs/...},
+  url       = {https://arxiv.org/abs/2210.00853},
   doi       = {...}}
 ```
