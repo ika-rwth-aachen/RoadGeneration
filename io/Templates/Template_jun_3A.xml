@@ -29,7 +29,6 @@
                 <connection type="all"/>
            
             </coupler>
-            <automaticWidening active="access" length="50" ds="10"/>
         </junction>
         
         
