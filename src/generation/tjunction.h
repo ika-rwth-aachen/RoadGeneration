@@ -106,18 +106,21 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     sOffAdd1 = sOffset;
     sOffAdd2 = sOffset;
     
-    for (DOMElement *sB = cA->getFirstElementChild();sB != NULL; sB = sB->getNextElementSibling())
+
+    if(cA != NULL) // there might be no coupler provided
     {
-        if (readIntAttrFromNode(sB, "id") == readIntAttrFromNode(mainRoad, "id"))
-            sOffMain = readDoubleAttrFromNode(sB, "gap");
+        for (DOMElement *sB = cA->getFirstElementChild();sB != NULL; sB = sB->getNextElementSibling())
+        {
+            if (readIntAttrFromNode(sB, "id") == readIntAttrFromNode(mainRoad, "id"))
+                sOffMain = readDoubleAttrFromNode(sB, "gap");
 
-        if (additionalRoad1 != NULL && readIntAttrFromNode(sB, "id") == readIntAttrFromNode(additionalRoad1, "id"))
-            sOffAdd1 = readDoubleAttrFromNode(sB, "gap");
+            if (additionalRoad1 != NULL && readIntAttrFromNode(sB, "id") == readIntAttrFromNode(additionalRoad1, "id"))
+                sOffAdd1 = readDoubleAttrFromNode(sB, "gap");
 
-        if (additionalRoad2 != NULL && readIntAttrFromNode(sB, "id") == readIntAttrFromNode(additionalRoad2, "id"))
-            sOffAdd2 = readDoubleAttrFromNode(sB, "gap");
+            if (additionalRoad2 != NULL && readIntAttrFromNode(sB, "id") == readIntAttrFromNode(additionalRoad2, "id"))
+                sOffAdd2 = readDoubleAttrFromNode(sB, "gap");
+        }
     }
-
     // calculate helper roads
     road help1;
     if (buildRoad(mainRoad, help1, 0, INFINITY, dummy, 0, 0, 0, 0))

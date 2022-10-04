@@ -3,12 +3,12 @@
         <junction id="1" type="MA">
             <road id="1" classification="main" >	
                 <referenceLine>
-                    <spiral length="800"  Rs="-150" Re="0"/>
+                    <spiral length="500"  Rs="-120" Re="0"/>
                 </referenceLine>
             </road>
-            <road id="2" classification="access" >	
+            <road id="2" classification="main" >	
                 <referenceLine>
-                    <arc length="100"  R="-100"/>
+                    <arc length="100"  R="200"/>
                 </referenceLine>
             </road>
             <intersectionPoint refRoad="1" s="200">
@@ -18,29 +18,28 @@
                 <junctionArea gap="10">
                     <roadGap id="2" gap="15"/>
                 </junctionArea>
-                <connection type="all"/>
-           
+                <connection type="all"/>           
             </coupler>
         </junction>
        <junction id="2" type="3A">
-            <road id="1" classification="access" >	
+            <road id="1" classification="main" >	
                 <referenceLine>
-                    <spiral length="800"  Rs="-150" Re="0"/>
+                    <spiral length="300"  Rs="0" Re="-150"/>
                 </referenceLine>
             </road>
-            <road id="2" classification="access" >	
+            <road id="2" classification="main" >	
                 <referenceLine>
-                    <arc length="100"  R="-100"/>
+                    <line length="100"/>
                 </referenceLine>
             </road>
-            <road id="3" classification="access" >	
+            <road id="3" classification="main" >	
                 <referenceLine>
-                    <arc length="100"  R="-200"/>
+                    <arc length="100"  R="200"/>
                 </referenceLine>
             </road>
             <intersectionPoint refRoad="1" s="0">
                 <adRoad id="2" s="0" angle="3.14"/>
-                <adRoad id="3" s="0" angle="1.57079632679"/>
+                <adRoad id="3" s="0" angle="-1.57079632679"/>
             </intersectionPoint>
             <coupler>
                 <junctionArea gap="10">
@@ -50,12 +49,21 @@
            
             </coupler>
         </junction>
+        <connectingRoad id="3">
+            <road id="1" classification="main" >	
+                <referenceLine>
+                     <spiral length="300" Rs="-150" Re="0"/>
+                </referenceLine>
+            </road>
+        </connectingRoad>
     </segments>
     <links refId="1" hdgOffset="0.05" xOffset="0" yOffset="0" >
-        <segmentLink fromSegment="1" toSegment="2" fromRoad="1" toRoad="1" fromPos="start" toPos="end" />
+        <segmentLink fromSegment="1" toSegment="3" fromRoad="1" toRoad="1" fromPos="start" toPos="end" />
+        <segmentLink fromSegment="3" toSegment="2" fromRoad="1" toRoad="1" fromPos="start" toPos="end"/>
     </links>
     
     <closeRoads>
-        <segmentLink fromSegment="1" toSegment="1" fromRoad="2" toRoad="1" fromPos="end" toPos="start" />
+        <segmentLink fromSegment="1" toSegment="2" fromRoad="1" toRoad="2" fromPos="end" toPos="end" />
+        <segmentLink fromSegment="1" toSegment="2" fromRoad="2" toRoad="3" fromPos="end" toPos="end" />
     </closeRoads>
 </roadNetwork>
