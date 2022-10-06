@@ -1,7 +1,7 @@
 Input file format
 =================
 
-This documentation shows the most common use cases for the Road Generation library. The general outline of our input format consists of a *segments* element, a *links* and a *closeRoad* element.
+This documentation shows the most common use cases for the library.
 
 .. code-block:: xml
 
@@ -17,7 +17,6 @@ This documentation shows the most common use cases for the Road Generation libra
         </closeRoads>
     </roadNetwork>
 
-The *segments* element contains information about each physical road in the network. For each seperate road, roundabout or junction, a corresponding child element should be added to *segments*.
 
 .. figure:: dias/segments.svg
    :width: 50%
@@ -25,6 +24,8 @@ The *segments* element contains information about each physical road in the netw
 
 Segments
 --------
+
+The *segments* element contains information about each physical road in the network. For each seperate road, roundabout or junction a corresponding child element should be added to *segments*.
 
 ConnectingRoad
 ''''''''''''''
@@ -109,7 +110,7 @@ Junction
 **intersectionPoint**
 ^^^^^^^^^^^^^^^^^^^^^
 
-The intersection point stores information about the location and geometry about the point where all roads meet. The reference road dictates the position of the junction.
+The intersection point stores information about the location and geometry about the point in which all roads meet. The reference road dictates the position of the junction.
 
 .. csv-table::
     :widths: 50 50 50 50 50
@@ -119,10 +120,8 @@ The intersection point stores information about the location and geometry about 
     s , string , positive, position of the junction in road direction , yes
 
 
-**roadLink**
+**RoadLink**
 ^^^^^^^^^^^^
-
-This element stores road linkage.
 
 .. csv-table::
     :widths: 50 50 50 50 50
@@ -207,6 +206,26 @@ Represents a simple roundabout. The tool will then generate several junctions be
 .. figure:: dias/roundabout.svg
    :width: 55%
    :align: center
+
+**Circle**
+^^^^^^^^^^^
+.. csv-table::
+    :widths: 50 50 50 50 50
+
+    **Name** , **Type** , **Range** , **Description** , **Required**
+    id, int , positive , id of the circle (usually 1) , yes
+    classification, int , 'main' 'access' , sets the circular road of the rb to access or main road, yes
+
+
+**Reference Line**
+^^^^^^^^^^^
+This tag contains another circle that stores the length of the reference line. *Note:* This circle tag is semantically and syntactically different from the circle node above.
+
+.. csv-table::
+    :widths: 50 50 50 50 50
+
+    **Name** , **Type** , **Range** , **Description** , **Required**
+    length, double , positive , length of the circular road in the roundabout , yes
 
 
 **Example**
