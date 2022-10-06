@@ -18,8 +18,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Road Generation'
-copyright = '2022, Jannik'
-author = 'Jannik'
+copyright = '2022 Institut für Kraftfahrzeuge, RWTH Aachen, ika'
+author = 'Jannik Busse'
 
 # The full version, including alpha/beta/rc tags
 release = '1'

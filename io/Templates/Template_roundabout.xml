@@ -8,7 +8,6 @@
                 </referenceLine>
                 <lanes>
                         <lane id="1" type="delete" />
-                        
                        
                         <lane id="-3" type="driving">
                             <roadMark   type="solid" color="white" width="0.13"/>

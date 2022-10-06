@@ -17,7 +17,7 @@ This documentation shows the most common use cases for the Road Generation libra
         </closeRoads>
     </roadNetwork>
 
-The *segments* element contains information about each physical road in the network. For each seperate road, roundabout or junction, a corresponding child element is added to *segments*.
+The *segments* element contains information about each physical road in the network. For each seperate road, roundabout or junction, a corresponding child element should be added to *segments*.
 
 .. figure:: dias/segments.svg
    :width: 50%
@@ -38,9 +38,9 @@ A connecting Road element is used to represent a single street.
 
 
 
-^^^^
 
 **road**
+^^^^
 
 .. csv-table::
     :widths: 50 50 50 50 50
@@ -50,10 +50,8 @@ A connecting Road element is used to represent a single street.
     classification , string , 'main' 'access' , set the road to main or access road , yes
 
 
-
-^^^^^^^^
-
 **lineType**
+^^^^^^^^
 
 .. csv-table::
     :widths: 50 50 50 50 50
@@ -64,10 +62,17 @@ A connecting Road element is used to represent a single street.
     Rs , double , positive , starting radius of the spiral , yes
     Re , double , positive , ending radius of the spiral , yes
 
+
+**Key points to consider**
+^^^^^^^^
+
+* Connecting roads are used for simple streets that are linked once at each endpoint at most
+* The outermost ConnectingRoad element holds the ID in the segment namespace
+* The road element holds an ID that is relative to the ConnectingRoad's ID. This is used to distinguish seperate parts of the same segment element
+  
+
 Junction
 ''''''''''''''
-
-A junction must be used if more than two roads are linked to each other.
 
 .. figure:: dias/junction.svg
    :width: 55%
@@ -75,9 +80,9 @@ A junction must be used if more than two roads are linked to each other.
 
 
 
-^^^^
 
 **junction**
+^^^^^^^^^^^
 
 .. csv-table::
     :widths: 50 50 50 50 50
@@ -88,33 +93,36 @@ A junction must be used if more than two roads are linked to each other.
 
 
 
-^^^^^^^^
 
 **automaticWidening**
+^^^^^^^^^^^^^^^^^^^^
 
 .. csv-table::
     :widths: 50 50 50 50 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
-    active , string , 'none' 'all' 'main' 'access' , specify where automatic Widening is applied, yes
+    active , string , 'none' 'all' 'main' 'access' , specify where automatic widening is applied, yes
     length , double , positive , length of the additional lane, no
     double , double , positive , length of the transitioning part, no
 
-* starting point is always at road beginning (s=0)
 
 **intersectionPoint**
+^^^^^^^^^^^^^^^^^^^^^
 
-Stores information about the point where all roads intersect. The reference road dictates the position of the junction.
+The intersection point stores information about the location and geometry about the point where all roads meet. The reference road dictates the position of the junction.
 
 .. csv-table::
     :widths: 50 50 50 50 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
-    refRoad, int , positive , id of the reference road of the junction´, yes
-    s , string , positive, position of the junction , yes
+    refRoad, int , positive , id of the reference road of the junction, yes
+    s , string , positive, position of the junction in road direction , yes
 
 
 **roadLink**
+^^^^^^^^^^^^
+
+This element stores road linkage.
 
 .. csv-table::
     :widths: 50 50 50 50 50
@@ -127,6 +135,7 @@ Stores information about the point where all roads intersect. The reference road
 
 
 **laneLink**
+^^^^^^^^^^^^
 
 .. csv-table::
     :widths: 50 50 50 50 50
@@ -137,12 +146,149 @@ Stores information about the point where all roads intersect. The reference road
     left , string , 'solid' 'broken' 'none', lane marking on the left side, no
     right , string , 'solid' 'broken' 'none', lane marking on the right side, no
 
+**coupler**
+^^^^^^^^^^^
+
+Holds detailed junction properties about the linkage of the lanes and the junction area.
 
 
+Key points to consider:
+^^^^^^^^^^^^^^^^^^^^^^
+
+* Junctions need to be linked to the starting point of each adjacent road
+* A junction must be used if more than two roads are linked to each other
+* The intersection points of access roads need to be linked at their start or end positions
+* Similar to the connecting road namespace, the junction ID is in the segment ID namespace and the road IDs are relative to the segment ID
+  
 
 
+**Example**
+^^^^^^^^^^^
+
+.. code-block:: xml
+
+    <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+        ...
+            <junction id="1" type="M2A">
+                <road id="1" classification="main" >	
+                    <referenceLine>
+                        <line length="200"/>
+                    </referenceLine>
+                </road>
+                <road id="2" classification="access" >	
+                    <referenceLine>
+                        <line length="100"/>
+                    </referenceLine>
+                </road>
+                <road id="3" classification="access" >	
+                    <referenceLine>
+                        <line length="100"/>
+                    </referenceLine>
+                </road>
+                <intersectionPoint refRoad="1" s="100">
+                    <adRoad id="2" s="20" angle="-1.57"/>
+                    <adRoad id="3" s="20" angle="1.57"/>
+                </intersectionPoint>
+                <coupler>
+                    <junctionArea gap="10">
+                        <roadGap id="2" gap="15"/>
+                        <roadGap id="3" gap="15"/>
+                    </junctionArea>
+                </coupler>
+            </junction>
+        ...
+    </roadNetwork>
 
 
+Roundabout
+''''''''''
+Represents a simple roundabout. The tool will then generate several junctions belonging to a junction group in the output.
+
+.. figure:: dias/roundabout.svg
+   :width: 55%
+   :align: center
+
+
+**Example**
+^^^^^^^^^^^
+
+.. code-block:: xml
+
+   <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+    ...
+
+      <roundabout id="1">
+            <circle id="1" classification="access" >	
+                <referenceLine>
+                    <circle length="320.5"/>
+                </referenceLine>
+                <lanes>
+                        <lane id="1" type="delete" />
+                       
+                        <lane id="-3" type="driving">
+                            <roadMark   type="solid" color="white" width="0.13"/>
+                        </lane>
+                        <lane id="-2" type="driving">
+                            <roadMark   type="broken" color="white" width="0.13"/>
+                        </lane>
+                        <lane id="-1" type="driving">
+                            <roadMark   type="broken" color="white" width="0.13"/>
+                        </lane>
+                        <lane id="0" type="driving" />
+                </lanes>
+            </circle>
+            
+            <road id="2" classification="access" >	
+                <referenceLine>
+                     <line length="150"/>
+                </referenceLine>
+            </road>
+            <road id="3" classification="access" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+            </road>
+            <road id="4" classification="access" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+            </road>
+            <road id="5" classification="access" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+            </road>
+            
+            <intersectionPoint refRoad="1" s="80">
+                <adRoad id="2" s="20" angle="-1.56"/>
+            </intersectionPoint>
+            <intersectionPoint refRoad="1" s="160">
+                <adRoad id="3" s="20" angle="-1.56"/>
+            </intersectionPoint>
+            <intersectionPoint refRoad="1" s="240">
+                <adRoad id="4" s="20" angle="-1.56"/>
+            </intersectionPoint>
+            <intersectionPoint refRoad="1" s="320">
+                <adRoad id="5" s="20" angle="-1.6"/>
+            </intersectionPoint>
+            <coupler>
+                <junctionArea gap="20">
+                </junctionArea> 
+            </coupler>
+        </roundabout>
+    ...
+    </roadNetwork>
+
+
+Lanes
+-------
+
+Linkage
+-------
+
+
+Closing the Network
+----------------
 
 
 
