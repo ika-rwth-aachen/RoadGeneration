@@ -594,7 +594,7 @@ elementFormDefault="qualified">
             Element: determines the way how the roads intersect on a junction
 
                 - adRoad: road identifier of additional road
-                        (ensure that a road do not occur twice!)
+                        (ensure that a road does not occur twice!)
                         in a t junction up to 2 instances, in a x junction up to 3 instances are considered
 
                 - refRoad: identifier of fixed reference road
