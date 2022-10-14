@@ -153,6 +153,11 @@ Key points
 Example
 ^^^^^^^
 
+EXAMPLE
+
+.. image:: _static/tmp.png
+    :class: align-right
+
 .. code-block:: xml
 
     <junction id="1" type="M2A">
@@ -184,6 +189,7 @@ Example
     </junction>
 
 3A below
+
 .. code-block:: xml
 
            <junction id="1" type="3A">
@@ -216,6 +222,7 @@ Example
         </junction>
 
 MA below
+
 .. code-block:: xml
 
             <junction id="1" type="MA">
@@ -239,32 +246,29 @@ MA below
             </coupler>
         </junction>
 
+
+2M below
+
 .. code-block:: xml
 
-    <junction id="1" type="M2A">
+    <junction id="1" type="2M">
         <road id="1" classification="main" >	
             <referenceLine>
-                <line length="200"/>
+                <line length="400"/>
             </referenceLine>
         </road>
-        <road id="2" classification="access" >	
+        <road id="2" classification="main" >	
             <referenceLine>
-                <line length="100"/>
+                <arc length="100"  R="-100"/>
             </referenceLine>
         </road>
-        <road id="3" classification="access" >	
-            <referenceLine>
-                <line length="100"/>
-            </referenceLine>
-        </road>
-        <intersectionPoint refRoad="1" s="100">
-            <adRoad id="2" s="20" angle="-1.57"/>
-            <adRoad id="3" s="20" angle="1.57"/>
+        <intersectionPoint refRoad="1" s="200">
+            <adRoad id="2" s="100" angle="-1.57"/>
         </intersectionPoint>
         <coupler>
             <junctionArea gap="10">
-                <roadGap id="2" gap="15"/>
-                <roadGap id="3" gap="15"/>
+                    <roadGap id="1" gap="15"/>
+                <roadGap id="2" gap="20"/>
             </junctionArea>
         </coupler>
     </junction>
