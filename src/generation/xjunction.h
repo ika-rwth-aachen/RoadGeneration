@@ -121,7 +121,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
             if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad1, "id"))
                 sOffAdd1 = readDoubleAttrFromNode(it, "gap");
 
-            if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad2, "id"))
+            if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad2, "id", true))
                 sOffAdd2 = readDoubleAttrFromNode(it, "gap");
 
             if (readIntAttrFromNode(it, "id", true) == readIntAttrFromNode(additionalRoad3, "id", true))
