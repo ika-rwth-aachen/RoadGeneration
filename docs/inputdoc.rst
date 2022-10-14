@@ -183,6 +183,92 @@ Example
         </coupler>
     </junction>
 
+3A below
+.. code-block:: xml
+
+           <junction id="1" type="3A">
+            <road id="1" classification="access" >	
+                <referenceLine>
+                    <spiral length="200"  Rs="-150" Re="0"/>
+                </referenceLine>
+            </road>
+            <road id="2" classification="access" >	
+                <referenceLine>
+                    <arc length="100"  R="-100"/>
+                </referenceLine>
+            </road>
+            <road id="3" classification="access" >	
+                <referenceLine>
+                    <arc length="100"  R="-100"/>
+                </referenceLine>
+            </road>
+            <intersectionPoint refRoad="1" s="200">
+                <adRoad id="2" s="0" angle="3.14"/>
+                <adRoad id="3" s="0" angle="1.57079632679"/>
+            </intersectionPoint>
+            <coupler>
+                <junctionArea gap="10">
+                    <roadGap id="2" gap="15"/>
+                </junctionArea>
+                <connection type="all"/>
+           
+            </coupler>
+        </junction>
+
+MA below
+.. code-block:: xml
+
+            <junction id="1" type="MA">
+            <road id="1" classification="main" >	
+                <referenceLine>
+                    <line length="400"/>
+                </referenceLine>
+            </road>
+            <road id="2" classification="access" >	
+                <referenceLine>
+                    <arc length="100"  R="-100"/>
+                </referenceLine>
+            </road>
+            <intersectionPoint refRoad="1" s="200">
+                <adRoad id="2" s="0" angle="-1.57"/>
+            </intersectionPoint>
+            <coupler>
+                <junctionArea gap="10">
+                    <roadGap id="2" gap="15"/>
+                </junctionArea>
+            </coupler>
+        </junction>
+
+.. code-block:: xml
+
+    <junction id="1" type="M2A">
+        <road id="1" classification="main" >	
+            <referenceLine>
+                <line length="200"/>
+            </referenceLine>
+        </road>
+        <road id="2" classification="access" >	
+            <referenceLine>
+                <line length="100"/>
+            </referenceLine>
+        </road>
+        <road id="3" classification="access" >	
+            <referenceLine>
+                <line length="100"/>
+            </referenceLine>
+        </road>
+        <intersectionPoint refRoad="1" s="100">
+            <adRoad id="2" s="20" angle="-1.57"/>
+            <adRoad id="3" s="20" angle="1.57"/>
+        </intersectionPoint>
+        <coupler>
+            <junctionArea gap="10">
+                <roadGap id="2" gap="15"/>
+                <roadGap id="3" gap="15"/>
+            </junctionArea>
+        </coupler>
+    </junction>
+
 
 Roundabout
 ''''''''''

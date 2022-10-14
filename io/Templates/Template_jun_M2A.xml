@@ -10,16 +10,16 @@
             </road>
             <road id="2" classification="access" >	
                 <referenceLine>
-                    <line length="100"/>
+                    <line length="150"/>
                 </referenceLine>
             </road>
      	    <road id="3" classification="access" >	
                 <referenceLine>
-                    <line length="100"/>
+                    <line length="150"/>
                 </referenceLine>
             </road>
             <intersectionPoint refRoad="1" s="100">
-                <adRoad id="2" s="20" angle="-1.57"/>
+                <adRoad id="2" s="40" angle="-1.27"/>
                 <adRoad id="3" s="20" angle="1.57"/>
             </intersectionPoint>
             <coupler>
