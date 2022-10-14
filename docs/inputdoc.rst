@@ -41,7 +41,7 @@ Road
 ^^^^
 
 .. csv-table::
-    :widths: 50 50 50 50 50
+    :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
     id , int , positive , id of the road inside of the segment, yes
@@ -52,7 +52,7 @@ LineType
 ^^^^^^^^
 
 .. csv-table::
-    :widths: 50 50 50 50 50
+    :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
     length , double , positive , length of the reference line in m, yes
@@ -81,7 +81,7 @@ Junction
 ^^^^^^^^^
 
 .. csv-table::
-    :widths: 50 50 50 50 50
+    :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
     id , int , positive , id of the road inside of the segment, yes
@@ -93,7 +93,7 @@ AutomaticWidening
 ^^^^^^^^^^^^^^^^
 
 .. csv-table::
-    :widths: 50 50 50 50 50
+    :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
     active , string , 'none' 'all' 'main' 'access' , specify where automatic widening is applied, yes
@@ -107,7 +107,7 @@ IntersectionPoint
 The intersection point stores information about the location and geometry about the point in which all roads meet. The reference road dictates the position of the junction.
 
 .. csv-table::
-    :widths: 50 50 50 50 50
+    :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
     refRoad, int , positive , id of the reference road of the junction, yes
@@ -118,7 +118,7 @@ RoadLink
 ^^^^^^^^
 
 .. csv-table::
-    :widths: 50 50 50 50 50
+    :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
     fromId, int , positive , id of the fromRoad, yes
@@ -131,7 +131,7 @@ laneLink
 ^^^^^^^^
 
 .. csv-table::
-    :widths: 50 50 50 50 50
+    :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
     fromId, int , positive , id of the fromLane , yes
@@ -140,7 +140,7 @@ laneLink
     right , string , 'solid' 'broken' 'none', lane marking on the right side, no
 
 
-Key points:
+Key points
 ^^^^^^^^^^^
 
 * Junctions need to be linked to the starting point of each adjacent road
@@ -196,7 +196,7 @@ Represents a simple roundabout. The tool will generate several junctions belongi
 Circle
 ^^^^^^
 .. csv-table::
-    :widths: 50 50 50 50 50
+    :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
     id, int , positive , id of the circle (usually 1) , yes
@@ -206,13 +206,17 @@ Circle
 Reference Line
 ^^^^^^^^^^^^^^
 
-The reference line is parent another circle object that stores the length of the reference line. Note that this circle is semantically different from the direct child object of the roundabout.
-
 .. csv-table::
-    :widths: 50 50 50 50 50
+    :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
     length, double , positive , length of the circular road in the roundabout , yes
+
+Key points
+^^^^^^^^^^^
+
+* Roundabouts need to be linked to the starting point of each adjacent road
+* Roundabouts will be represented by junctions in the open drive output
 
 
 Example
@@ -292,7 +296,7 @@ Lane
 ''''
 
 .. csv-table::
-    :widths: 50 50 50 50 50
+    :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
     id, int , all , id of the lane , yes
@@ -300,11 +304,16 @@ Lane
     width, double , positive , width of the lane , no
     speed, double , positive , speed limit of the lane , no
 
+**Notes:**
+
+* If no further lane information is provided a total of three default lanes will be generated. One in each direction and a dividing middle lane
+* If at least one lane is provided no default lanes will be generated
+
 RoadMark
 ''''''''
 
 .. csv-table::
-    :widths: 50 50 50 50 50
+    :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
     type, int , 'solid' 'broken' 'none' , specifies the roadmark , no
@@ -312,13 +321,13 @@ RoadMark
     width, double , positive , roadmark width , no
 
 **Colors**:
-standard, blue, green, red, white, yellow, orange
+'standard', 'blue', 'green', 'red', 'white', 'yellow', 'orange'.
 
 LaneWidening and laneDrop
 '''''''''''''''''''''''''''
 
 .. csv-table::
-    :widths: 50 50 50 50 50
+    :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
     side, int , '-1' '1' , side of the lane that will be added/dropped , yes
@@ -330,7 +339,7 @@ RestrictedArea
 '''''''''''''''
 
 .. csv-table::
-    :widths: 50 50 50 50 50
+    :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
     length, double , positive , length of the restricted area  of the lanewidening or lanedrop , no
@@ -342,15 +351,15 @@ Material
 ''''''''
 
 .. csv-table::
-    :widths: 50 50 50 50 50
+    :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
-    surface, string , Surface material code depending on application, no
+    surface, string , surface material code depending on application, no
     friction, double , positive , friction coefficient , no
     roughness, double , positive ,roughness coefficient , no
 
 
-Key points:
+Key points
 '''''''''''
 
 * Lane ids are centered around 0 and store their location relative to the driving direction. Positive ids are to the left of the driving direction and negative ids are on the right.
@@ -380,11 +389,11 @@ Example
 Linkage
 -------
 
-All links between segments are stored in a segmentLink element.
+All links between segments are stored in a segmentLink element. Each segment is linked at their endpoint or their startpoint.
 
 
 .. csv-table::
-    :widths: 50 50 50 50 50
+    :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
     fromSegment, int , positive , id of the firstSegment that will be linked , yes
@@ -394,7 +403,7 @@ All links between segments are stored in a segmentLink element.
     fromPos, string , 'start' 'end' , specifies if the fromSegment should be linked at its beginning or end , yes
     toPos, string , 'start' 'end' , specifies if the toSegment should be linked at its beginning or end , yes
 
-Key points:
+Key points
 ^^^^^^^^^^^
 
 * Junctions and roundabouts need to be linked to the starting point of each adjacent road
@@ -418,10 +427,10 @@ Example
 Closing the Network
 -------------------
 
-To smoothly close remaining connections, roads and their respective linkage information can automatically be generated. The syntax of closing roads is identical to the road links.
+To smoothly close open connections, roads and their respective linkage information can automatically be generated. The syntax of closing roads is identical to the road links.
 
 .. csv-table::
-    :widths: 50 50 50 50 50
+    :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
     fromSegment, int , positive , id of the firstSegment that will be linked , yes
