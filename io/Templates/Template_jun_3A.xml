@@ -1,11 +1,10 @@
 <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
 
     <segments>
-
         <junction id="1" type="3A">
             <road id="1" classification="access" >	
                 <referenceLine>
-                    <spiral length="200"  Rs="-150" Re="0"/>
+                    <spiral length="100"  Rs="-150" Re="0"/>
                 </referenceLine>
             </road>
             <road id="2" classification="access" >	
@@ -18,7 +17,7 @@
                     <arc length="100"  R="-100"/>
                 </referenceLine>
             </road>
-            <intersectionPoint refRoad="1" s="200">
+            <intersectionPoint refRoad="1" s="100">
                 <adRoad id="2" s="0" angle="3.14"/>
                 <adRoad id="3" s="0" angle="1.57079632679"/>
             </intersectionPoint>
@@ -27,7 +26,6 @@
                     <roadGap id="2" gap="15"/>
                 </junctionArea>
                 <connection type="all"/>
-           
             </coupler>
         </junction>
         

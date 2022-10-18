@@ -155,29 +155,30 @@ Example
 
 EXAMPLE
 
-.. image:: _static/tmp.png
+.. figure:: _static/M2A.png
     :class: align-right
+    :width: 427
 
 .. code-block:: xml
 
-    <junction id="1" type="M2A">
+        <junction id="1" type="M2A">
         <road id="1" classification="main" >	
             <referenceLine>
-                <line length="200"/>
+                <line length="150"/>
             </referenceLine>
         </road>
         <road id="2" classification="access" >	
             <referenceLine>
-                <line length="100"/>
+                <line length="150"/>
             </referenceLine>
         </road>
         <road id="3" classification="access" >	
             <referenceLine>
-                <line length="100"/>
+                <line length="150"/>
             </referenceLine>
         </road>
-        <intersectionPoint refRoad="1" s="100">
-            <adRoad id="2" s="20" angle="-1.57"/>
+        <intersectionPoint refRoad="1" s="75">
+            <adRoad id="2" s="20" angle="-1.27"/>
             <adRoad id="3" s="20" angle="1.57"/>
         </intersectionPoint>
         <coupler>
@@ -190,42 +191,49 @@ EXAMPLE
 
 3A below
 
+.. figure:: _static/3A.png
+    :class: align-right
+    :width: 427
+
 .. code-block:: xml
 
-           <junction id="1" type="3A">
-            <road id="1" classification="access" >	
-                <referenceLine>
-                    <spiral length="200"  Rs="-150" Re="0"/>
-                </referenceLine>
-            </road>
-            <road id="2" classification="access" >	
-                <referenceLine>
-                    <arc length="100"  R="-100"/>
-                </referenceLine>
-            </road>
-            <road id="3" classification="access" >	
-                <referenceLine>
-                    <arc length="100"  R="-100"/>
-                </referenceLine>
-            </road>
-            <intersectionPoint refRoad="1" s="200">
-                <adRoad id="2" s="0" angle="3.14"/>
-                <adRoad id="3" s="0" angle="1.57079632679"/>
-            </intersectionPoint>
-            <coupler>
-                <junctionArea gap="10">
-                    <roadGap id="2" gap="15"/>
-                </junctionArea>
-                <connection type="all"/>
-           
-            </coupler>
-        </junction>
+    <junction id="1" type="3A">
+        <road id="1" classification="access" >	
+            <referenceLine>
+                <spiral length="100"  Rs="-150" Re="0"/>
+            </referenceLine>
+        </road>
+        <road id="2" classification="access" >	
+            <referenceLine>
+                <arc length="100"  R="-100"/>
+            </referenceLine>
+        </road>
+        <road id="3" classification="access" >	
+            <referenceLine>
+                <arc length="100"  R="-100"/>
+            </referenceLine>
+        </road>
+        <intersectionPoint refRoad="1" s="100">
+            <adRoad id="2" s="0" angle="3.14"/>
+            <adRoad id="3" s="0" angle="1.57079632679"/>
+        </intersectionPoint>
+        <coupler>
+            <junctionArea gap="10">
+                <roadGap id="2" gap="15"/>
+            </junctionArea>
+            <connection type="all"/>
+        </coupler>
+    </junction>
 
 MA below
 
+.. figure:: _static/MA.png
+    :class: align-right
+    :width: 427
+
 .. code-block:: xml
 
-            <junction id="1" type="MA">
+        <junction id="1" type="MA">
             <road id="1" classification="main" >	
                 <referenceLine>
                     <line length="400"/>
@@ -249,12 +257,18 @@ MA below
 
 2M below
 
-.. code-block:: xml
 
-    <junction id="1" type="2M">
+
+.. figure:: _static/2M.png
+    :class: align-right
+    :width: 427
+
+.. code-block:: xml
+    
+        <junction id="1" type="2M">
         <road id="1" classification="main" >	
             <referenceLine>
-                <line length="400"/>
+                <line length="100"/>
             </referenceLine>
         </road>
         <road id="2" classification="main" >	
@@ -262,8 +276,8 @@ MA below
                 <arc length="100"  R="-100"/>
             </referenceLine>
         </road>
-        <intersectionPoint refRoad="1" s="200">
-            <adRoad id="2" s="100" angle="-1.57"/>
+        <intersectionPoint refRoad="1" s="50">
+            <adRoad id="2" s="50" angle="-1.57"/>
         </intersectionPoint>
         <coupler>
             <junctionArea gap="10">

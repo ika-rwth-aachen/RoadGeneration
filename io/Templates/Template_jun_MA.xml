@@ -5,7 +5,7 @@
         <junction id="1" type="MA">
             <road id="1" classification="main" >	
                 <referenceLine>
-                    <line length="400"/>
+                    <line length="100"/>
                 </referenceLine>
             </road>
             <road id="2" classification="access" >	
@@ -13,7 +13,7 @@
                     <arc length="100"  R="-100"/>
                 </referenceLine>
             </road>
-            <intersectionPoint refRoad="1" s="200">
+            <intersectionPoint refRoad="1" s="100">
                 <adRoad id="2" s="0" angle="-1.57"/>
             </intersectionPoint>
             <coupler>

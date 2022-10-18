@@ -5,21 +5,21 @@
         <junction id="1" type="M2A">
             <road id="1" classification="main" >	
                 <referenceLine>
-                    <line length="200"/>
+                    <line length="150"/>
                 </referenceLine>
             </road>
             <road id="2" classification="access" >	
                 <referenceLine>
-                    <line length="150"/>
+                    <line length="75"/>
                 </referenceLine>
             </road>
      	    <road id="3" classification="access" >	
                 <referenceLine>
-                    <line length="150"/>
+                    <line length="75"/>
                 </referenceLine>
             </road>
-            <intersectionPoint refRoad="1" s="100">
-                <adRoad id="2" s="40" angle="-1.27"/>
+            <intersectionPoint refRoad="1" s="75">
+                <adRoad id="2" s="20" angle="-1.27"/>
                 <adRoad id="3" s="20" angle="1.57"/>
             </intersectionPoint>
             <coupler>
