@@ -18,7 +18,7 @@ This section explains the input format and provides examples for basic usecases.
     </roadNetwork>
 
 
-.. figure:: dias/segments.svg
+.. figure:: _static/all.svg
    :width: 50%
    :align: center
 
@@ -32,7 +32,7 @@ ConnectingRoad
 
 A connecting Road is used to represent a single street.
 
-.. figure:: dias/connectingroad.svg
+.. figure:: _static/connectingroad.svg
    :width: 45%
    :align: center
 
@@ -388,6 +388,11 @@ Example
         </coupler>
     </roundabout>
 
+.. figure:: _static/roundabout.png
+    :class: center
+    :width: 427
+
+    Generated with https://odrviewer.io/
 
 Lanes
 -----
