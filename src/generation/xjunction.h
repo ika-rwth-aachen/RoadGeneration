@@ -10,8 +10,8 @@
  *
  * @brief file contains method for generating x junction
  *
- * @author Christian Geller
- * Contact: christian.geller@rwth-aachen.de
+ * @author Jannik Busse, Christian Geller
+ * Contact: jannik.busse@rwth-aachen.de
  *
  */
 

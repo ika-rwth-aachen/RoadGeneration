@@ -1,3 +1,20 @@
+/**
+ * Road-Generation
+ * --------------------------------------------------------
+ * Copyright (c) 2021 Institut für Kraftfahrzeuge, RWTH Aachen, ika
+ * Report bugs and download new versions https://github.com/ika-rwth-aachen/RoadGeneration
+ *
+ * This library is distributed under the MIT License.
+ * 
+ * @file xmlParser.h
+ *
+ * @brief This file contains functions to parse xml code.
+ *
+ * @author Jannik Busse
+ * Contact: jannik.busse@rwth-aachen.de
+ *
+ */
+
 #pragma once
 
 #include <xercesc/util/PlatformUtils.hpp>

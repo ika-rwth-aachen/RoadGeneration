@@ -30,7 +30,7 @@ The *segments* node stores information about each physical road in the network a
 ConnectingRoad
 ''''''''''''''
 
-A connecting Road is used to represent a single street.
+A connecting Road is used to represent a single street. The two types i.e 'access' and 'main' roads are used to select different presets for the road's characteristics. If used in junctions there are other minor .
 
 .. figure:: _static/connectingroad.svg
    :width: 45%
@@ -50,7 +50,7 @@ Road
 
 LineType
 ^^^^^^^^
-
+At the moment three different types of line are supported. Straight lines, curves and spirals.
 .. csv-table::
     :widths: 100 100 100 100 50
 
@@ -69,10 +69,12 @@ Key points
 * The road element holds an ID that is relative to the ConnectingRoad's ID. This is used to distinguish seperate parts of the same segment element
   
 
-Junction
-''''''''
+Junctions
+'''''''''
 
-.. figure:: dias/junction.svg
+Junctions are a key component that are used connect multiple roads. 'access' and 'main' roads are behaving differently when used in a junction. While 'main' roads are 'cut' appart to create an intersection, 'access' roads are 'appended' to the intersection point. While the same junction can be represented by different junction types, it is adviced to stick to their intended usecases.
+
+.. figure:: _static/junction.svg
    :width: 55%
    :align: center
 
@@ -117,6 +119,8 @@ The intersection point stores information about the location and geometry about 
 RoadLink
 ^^^^^^^^
 
+In most cases manual road links can be omitted. If the user wants to create custom road linkage they can use the road link tag.
+
 .. csv-table::
     :widths: 100 100 100 100 50
 
@@ -129,6 +133,8 @@ RoadLink
 
 laneLink
 ^^^^^^^^
+
+If the user wants to create elaborate junctions they might want to manually link each lane. However, in most cases this is not necessary.
 
 .. csv-table::
     :widths: 100 100 100 100 50
@@ -150,10 +156,10 @@ Key points
   
 
 
-Example
-^^^^^^^
+Examples
+^^^^^^^^
 
-EXAMPLE
+**M2A Junction**
 
 .. figure:: _static/M2A.png
     :class: align-right
@@ -189,7 +195,7 @@ EXAMPLE
         </coupler>
     </junction>
 
-3A below
+**3A Junction**
 
 .. figure:: _static/3A.png
     :class: align-right
@@ -225,7 +231,7 @@ EXAMPLE
         </coupler>
     </junction>
 
-MA below
+**MA Junction**
 
 .. figure:: _static/MA.png
     :class: align-right
@@ -255,9 +261,7 @@ MA below
         </junction>
 
 
-2M below
-
-
+**2M Junction**
 
 .. figure:: _static/2M.png
     :class: align-right
@@ -288,12 +292,13 @@ MA below
     </junction>
 
 
+
 Roundabout
 ''''''''''
 
-Represents a simple roundabout. The tool will generate several junctions belonging to a junction group in the output.
+Represents a simple roundabout. While it is possible to manually create a roundabout by using junctions, it is tedious and requires a lot of redundant code. Therefore it is best practice to use the roundabout template instead. The tool will generate several junctions that belong to one junction group in the output.
 
-.. figure:: dias/roundabout.svg
+.. figure:: _static/roundabout.svg
    :width: 55%
    :align: center
 
@@ -397,7 +402,7 @@ Example
 Lanes
 -----
 
-.. figure:: dias/lanes.svg
+.. figure:: _static/lanes.svg
    :width: 50%
    :align: center
 
@@ -434,6 +439,8 @@ RoadMark
 
 LaneWidening and laneDrop
 '''''''''''''''''''''''''''
+
+If the user wants to expand or shrink the road's lane count during its course, they  can use the lanewidening or lanedrop tag. 
 
 .. csv-table::
     :widths: 100 100 100 100 50
@@ -498,7 +505,7 @@ Example
 Linkage
 -------
 
-All links between segments are stored in a segmentLink element. Each segment is linked at their endpoint or their startpoint.
+All links between segments are stored in a segmentLink element. Each segment is linked at their endpoint or their startpoint. While most other links can be generated automatically by the tool, the user has to link every segment manually. 
 
 
 .. csv-table::
@@ -516,6 +523,7 @@ Key points
 ^^^^^^^^^^^
 
 * Junctions and roundabouts need to be linked to the starting point of each adjacent road
+* Each segment must be linked to the biggest component. No other components can exist in the network.
 * Segments have a seperate namespace from Roads, i.e. multiple roads with the ID 1 can exist under differen segments
 
 

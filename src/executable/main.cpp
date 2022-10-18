@@ -5,6 +5,12 @@
  * Report bugs and download new versions https://github.com/ika-rwth-aachen/RoadGeneration
  *
  * This library is distributed under the MIT License.
+ * 
+ * @file main.cpp
+ *
+ * @author Jannik Busse
+ * Contact: jannik.busse@rwth-aachen.de
+ *
  */
 
 #include <stdio.h>

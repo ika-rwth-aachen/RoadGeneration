@@ -5,6 +5,14 @@
  * Report bugs and download new versions https://github.com/ika-rwth-aachen/RoadGeneration
  *
  * This library is distributed under the MIT License.
+ * 
+ * @file helperExec.h
+ *
+ * @brief This file contains helper functions for the executable
+ *
+ * @author Jannik Busse
+ * Contact: jannik.busse@rwth-aachen.de
+ *
  */
 
 #ifndef HELPER
