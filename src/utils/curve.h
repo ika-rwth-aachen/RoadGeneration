@@ -11,7 +11,7 @@
  * @brief file contains curve function for calculating positions along geometries
  *
  * @author Jannik Busse, Christian Geller
- * Contact: jannik.busse@rwth-aachen.de
+ * Contact: jannik.busse@rwth-aachen.de, christian.geller@rwth-aachen.de
  *
  */
 

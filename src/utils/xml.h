@@ -12,7 +12,7 @@
  * @brief file contains the import and export, as well as the validation, of xml files
  *
  * @author Jannik Busse
- * Contact: jannik.busse@rwth-aachen.de
+ * Contact: jannik.busse@rwth-aachen.de, christian.geller@rwth-aachen.de
  *
  */
 

@@ -11,7 +11,7 @@
  * @brief file contains methodology for lanesection changes such as lanedrop, lane widening or restricted lanes
  *
  * @author Jannik Busse, Christian Geller
- * Contact: jannik.busse@rwth-aachen.de
+ * Contact: jannik.busse@rwth-aachen.de, christian.geller@rwth-aachen.de
  *
  */
 
