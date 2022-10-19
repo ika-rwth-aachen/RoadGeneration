@@ -30,7 +30,7 @@ The *segments* node stores information about each physical road in the network a
 ConnectingRoad
 ''''''''''''''
 
-A connecting Road is used to represent a single street. The two types i.e 'access' and 'main' roads are used to select different presets for the road's characteristics. If used in junctions there are other minor .
+A connecting Road is used to represent a single street. Two types (i.e 'access' and 'main') of roads can be used to select different presets for the road's characteristics.
 
 .. figure:: _static/connectingroad.svg
    :width: 45%
