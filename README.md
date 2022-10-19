@@ -13,14 +13,13 @@ Simulation is a valuable building block for the verification and validation of a
 
 Therefore, we present a prototypical solution for a logical road network description which is easy to maintain and modify. The concept aims to be non-redundant so that changes of distinct quantities do not affect other places in the code and thus the variation of maps is straightforward. In addition, the simple definition of junctions is a focus of the work. Intersecting roads are defined separately and then set in relation, finally a junction is generated automatically.  
 
-The idea is to derive the description from a commonly used, standardized format for simulation maps in order to generate this format from the introduced logical description. Consequently, we developed a command-line tool that generates the standardized simulation map format OpenDRIVE. Furthermore, there exists a Python package that allows the user to introduce stochastic variables for each quantity and generate as many variations of a logically identical road network as desired.
+The idea is to derive the description from a commonly used, standardized format for simulation maps in order to generate this format from the introduced logical description. Consequently, we developed a command-line tool that generates the standardized simulation map format [ASAM OpenDRIVE](https://www.asam.net/standards/detail/opendrive/). Furthermore, there exists a Python package that allows the user to introduce stochastic variables for each quantity and generate as many variations of a logically identical road network as desired.
 
-The proposed workflow can be seen in Fig. 1. Further information is published in [[1]](https://arxiv.org/abs/2006.03403) and [[2]](https://arxiv.org/abs/2210.00853).    
+The proposed workflow can be seen in Fig. 1. Further information is published in [[1]](https://arxiv.org/abs/2006.03403) and [[2]](https://arxiv.org/abs/2210.00853). This repository exlucdes the analysis of real world HD maps which is done in a separate internal tool.  
 <div align="center">
     <img src="docs/motivation.png"</img> 
 </div>
 Fig.1: Possible workflow for the presend road variation tool.
-
 
 ## Repository Overview
 
@@ -50,7 +49,7 @@ git clone git@github.com:ika-rwth-aachen/RoadGeneration.git
 cd RoadGeneration
 ```
 
-A build script is provided and can be executed from the root directory with
+A build script for Linux systems is provided and can be executed from the root directory with
 
 ```bash
 sh buildScript.sh
@@ -58,63 +57,19 @@ sh buildScript.sh
 
 Alternatively you can **build the project manually**:
 
-<details><summary><b>Build on Linux</b></summary>
-
-1. Install [`xercesC`](https://xerces.apache.org/xerces-c/)
-
-    You can use a packet manager
+1. Install [`xercesC`](https://xerces.apache.org/xerces-c/) via a package manager, e.g.:
     ```bash
     sudo apt install libxerces-c-dev
     ```
-    Or download the source directly
+2. Build the Road-generation tool with standard cmake commands, e.g.:
     ```bash
-    curl https://mirrors.gigenet.com/apache//xerces/c/3/sources/xerces-c-3.2.3.tar.gz --output xerces-c-3.2.3.tar.gz
-    ```
-    and unpack it with
-    ```bash
-    gzip -d xerces-c-3.2.3.tar.gz
-    tar -xf xerces-c-3.2.3.tar
-    ```
-    Finally build the source files as instructed [here](https://xerces.apache.org/xerces-c/build-3.html).
-
-2. Build the Road-generation tool
-```bash
     mkdir -p build
     cd build
     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
     cmake --build .
-```
-</details>
+    ``` 
 
-
-<details><summary><b>Build on Windows</b></summary>
-
-THIS IS SUBJECT TO CHANGE
-1. Install [`xercesC`](https://xerces.apache.org/xerces-c/)
-
-    You can use a packet manager
-    ```bash
-    sudo apt install libxerces-c-dev
-    ```
-    Or download the source directly
-    ```bash
-    curl https://mirrors.gigenet.com/apache//xerces/c/3/sources/xerces-c-3.2.3.tar.gz --output xerces-c-3.2.3.tar.gz
-    ```
-    and unpack it with
-    ```bash
-    gzip -d xerces-c-3.2.3.tar.gz
-    tar -xf xerces-c-3.2.3.tar
-    ```
-    Finally build the source files as instructed [here](https://xerces.apache.org/xerces-c/build-3.html).
-
-2. Build the Road-generation tool
-```bash
-    mkdir -p build
-    cd build
-    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
-    cmake --build .
-```
-</details>
+*Note:* In principal, it is possible to compile and use the tool in Windows operating systems. However, this is experimental.
 
 ## Usage
 
@@ -188,3 +143,11 @@ We hope our work provides useful help in your research. If this is the case, ple
   url       = {https://arxiv.org/abs/2210.00853},
   doi       = {...}}
 ```
+
+## Acknowledgements and Credits
+This work received funding from the research project 
+"[SET Level](https://setlevel.de/)" of the [PEGASUS ](https://pegasus-family.de) project family, promoted by the German Federal Ministry for Economic Affairs and Climate Action based on a decision of the German Bundestag.
+| SET Level | PEGASUS Family | BMWK |
+|-----------|----------------|------|
+| <a href="https://setlevel.de"><img src="https://setlevel.de/assets/logo-setlevel.svg" width="100" /></a> | <a href="https://pegasus-family.de"><img src="https://setlevel.de/assets/logo-pegasus-family.svg" width="100" /></a> | <a href="https://www.bmwi.de/Redaktion/DE/Textsammlungen/Technologie/fahrzeug-und-systemtechnologien.html"><img src="https://setlevel.de/assets/logo-bmwi-en.svg" width="100" /></a> |
+

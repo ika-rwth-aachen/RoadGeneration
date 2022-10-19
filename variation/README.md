@@ -1,6 +1,6 @@
 # Variation Tool
 
-The variation tool makes use of the road-generation library and generates several variations of an opendrive scenario that is provided by a template file. The main goal was to create an easy to use syntax while allowing the user to specify constraints for the output scenarios.
+The variation tool makes use of the road-generation library and generates several variations of an OpenDRIVE road network that is provided by a template file. The main goal was to create an easy to use syntax while allowing the user to specify constraints for the output scenarios.
 
 ## Usage
 
