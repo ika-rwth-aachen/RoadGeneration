@@ -1,0 +1,29 @@
+<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+	<segments>
+	
+	<connectingRoad id="1">
+            <road id="1" classification="main" >	
+                <referenceLine>
+                     <arc length="100"  R="100"/>
+                </referenceLine>
+                 <lanes>
+                </lanes>
+            </road>
+            <road id="2" classification="main" >	
+                <referenceLine>
+                     <arc length="100"  R="100"/>
+                </referenceLine>
+                 <lanes>
+                </lanes>
+            </road>
+        </connectingRoad>
+
+        
+	</segments>
+	
+   <links refId="1" hdgOffset="0.0" xOffset="0" yOffset="0">
+    </links>
+
+
+</roadNetwork>
+
