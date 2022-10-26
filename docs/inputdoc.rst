@@ -17,7 +17,6 @@ This section explains the input format and provides examples for basic usecases.
         </closeRoads>
     </roadNetwork>
 
-
 .. figure:: _static/all.svg
    :width: 50%
    :align: center
@@ -291,6 +290,44 @@ Examples
         </coupler>
     </junction>
 
+
+
+**Additional Lane**
+
+.. figure:: _static/adlane.png
+    :class: align-right
+    :width: 427
+
+.. code-block:: xml
+
+    <segments>
+        <junction id="1" type="MA">
+            <road id="1" classification="main" >	
+                <referenceLine>
+                    <line length="100"/>
+                </referenceLine>
+            </road>
+            
+            <road id="2" classification="access" >	
+                <referenceLine>
+                    <arc length="100"  R="-100"/>
+                </referenceLine>
+                
+            </road>
+            <intersectionPoint refRoad="1" s="100">
+                <adRoad id="2" s="0" angle="-1.57"/>
+            </intersectionPoint>
+            <coupler>
+                <junctionArea gap="10">
+                    <roadGap id="2" gap="15"/>
+                </junctionArea>
+                <connection type="all"/>
+                <additionalLanes>
+                    <additionalLane roadId="2" roadPos="end" type="left" length="5" />
+                </additionalLanes>
+            </coupler>
+        </junction>
+    </segments>
 
 
 Roundabout
