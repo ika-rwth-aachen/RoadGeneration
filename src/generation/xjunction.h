@@ -121,7 +121,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
             if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad1, "id"))
                 sOffAdd1 = readDoubleAttrFromNode(it, "gap");
 
-            if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad2, "id"))
+            if (readIntAttrFromNode(it, "id") == readIntAttrFromNode(additionalRoad2, "id", true))
                 sOffAdd2 = readDoubleAttrFromNode(it, "gap");
 
             if (readIntAttrFromNode(it, "id", true) == readIntAttrFromNode(additionalRoad3, "id", true))
@@ -306,6 +306,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     r1.isConnectingRoad = true;
     r1.predecessor.id = junc.id;
     r1.predecessor.elementType = junctionType;
+
     if (mode == 1 || mode == 2)
     {
         if (buildRoad(refRoad, r1, sMain - sOffMain, 0, automaticWidening, sMain, iPx, iPy, iPhdg))
@@ -322,6 +323,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
             return 1;
         }
     }
+    
     if (addObjects(refRoad, r1, data))
     {
         cerr << "ERR: error in addObjects" << endl;
@@ -352,6 +354,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
             return 1;
         }
     }
+
     if (addObjects(additionalRoad1, r2, data))
     {
         cerr << "ERR: error in addObjects" << endl;
@@ -365,6 +368,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     r3.inputSegmentId = inputSegmentId;
     r3.isConnectingRoad = true;
     r3.predecessor.elementType = junctionType;
+   
     if (mode == 1 || mode == 2)
     {
         if (buildRoad(refRoad, r3, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
@@ -399,6 +403,13 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     r4.inputSegmentId = inputSegmentId;
     r4.isConnectingRoad = true;
     r4.predecessor.elementType = junctionType;
+    for(laneSection ls: r4.laneSections)
+    {
+        for(lane l: ls.lanes)
+        {
+            l.preId = -1; //the junction connecting road always use lane -1
+        }
+    }
     if (mode == 1) //check here
     {
         if (buildRoad(additionalRoad1, r4, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
@@ -440,7 +451,8 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     }
 
     // add addtional lanes
-    if(addLanes != NULL){
+    if(addLanes != NULL)
+    {
         DOMNodeList *addLaneList = addLanes->getElementsByTagName(X("additionalLane"));
         for (int i = 0; i < addLaneList->getLength(); i ++)
         {
@@ -510,6 +522,40 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
             }
         }
     }
+
+      //correct lane links 
+    //set the correct lane link id for the predecessor
+    for(laneSection &ls: r1.laneSections)
+    {
+        for(lane &l: ls.lanes)
+        {
+            l.preId = -1; //the junction connecting road always use lane -1
+        }
+    }
+    
+    for(laneSection &ls: r2.laneSections)
+    {
+        for(lane &l: ls.lanes)
+        {
+            l.preId = -1; //the junction connecting road always use lane -1
+        }
+    }
+    
+    for(laneSection &ls: r3.laneSections)
+    {
+        for(lane &l: ls.lanes)
+        {
+            l.preId = -1; //the junction connecting road always use lane -1
+        }
+    }
+    for(laneSection &ls: r4.laneSections)
+    {
+        for(lane &l: ls.lanes)
+        {
+            l.preId = -1; //the junction connecting road always use lane -1
+        }
+    }
+    //end correcting lane links
 
     data.roads.push_back(r1);
     data.roads.push_back(r2);

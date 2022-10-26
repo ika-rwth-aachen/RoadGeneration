@@ -464,6 +464,17 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         }
         nCount++;
 
+          //correct lane links 
+        //set the correct lane link id for the predecessor
+        for(laneSection &ls: r2.laneSections)
+        {
+            for(lane &l: ls.lanes)
+            {
+                l.preId = -1; //the junction connecting road always use lane -1
+            }
+        }
+        //end correcting lane links
+
         data.roads.push_back(r1);
         data.roads.push_back(r2);
         data.roads.push_back(r5);

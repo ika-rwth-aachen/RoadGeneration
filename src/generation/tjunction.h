@@ -261,6 +261,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
                 return 1;
             }
     }
+    
     if (addObjects(mainRoad, r1, data))
     {
         cerr << "ERR: error in addObjects" << endl;
@@ -312,7 +313,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
             return 1;
         }
     }
-
+    
     road r3;
     r3.id = 100 * junc.id + 3;
     r3.junction = junc.id;
@@ -345,7 +346,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
             cerr << "ERR: error in addObjects" << endl;
             return 1;
         }
-    }
+    }    
 
     // add addtional lanes
     if(addLanes != NULL)
@@ -411,6 +412,33 @@ int tjunction(const DOMElement* node, roadNetwork &data)
             }
         }
     }
+
+    //correct lane links 
+    //set the correct lane link id for the predecessor
+       for(laneSection &ls: r1.laneSections)
+    {
+        for(lane &l: ls.lanes)
+        {
+            l.preId = -1; //the junction connecting road always use lane -1
+        }
+    }
+    
+    for(laneSection &ls: r2.laneSections)
+    {
+        for(lane &l: ls.lanes)
+        {
+            l.preId = -1; //the junction connecting road always use lane -1
+        }
+    }
+    
+    for(laneSection &ls: r3.laneSections)
+    {
+        for(lane &l: ls.lanes)
+        {
+            l.preId = -1; //the junction connecting road always use lane -1
+        }
+    }
+    //end correcting lane links
     
     data.roads.push_back(r1);
     data.roads.push_back(r2);
