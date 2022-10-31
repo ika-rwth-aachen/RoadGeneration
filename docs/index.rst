@@ -16,7 +16,6 @@ Welcome to Road's documentation!
     
     overview/readme
     overview/variation
-    overview/examples
 
 
 

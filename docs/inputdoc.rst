@@ -50,6 +50,7 @@ Road
 LineType
 ^^^^^^^^
 At the moment three different types of line are supported. Straight lines, curves and spirals.
+
 .. csv-table::
     :widths: 100 100 100 100 50
 
@@ -166,33 +167,35 @@ Examples
 
 .. code-block:: xml
 
-        <junction id="1" type="M2A">
-        <road id="1" classification="main" >	
-            <referenceLine>
-                <line length="150"/>
-            </referenceLine>
-        </road>
-        <road id="2" classification="access" >	
-            <referenceLine>
-                <line length="150"/>
-            </referenceLine>
-        </road>
-        <road id="3" classification="access" >	
-            <referenceLine>
-                <line length="150"/>
-            </referenceLine>
-        </road>
-        <intersectionPoint refRoad="1" s="75">
-            <adRoad id="2" s="20" angle="-1.27"/>
-            <adRoad id="3" s="20" angle="1.57"/>
-        </intersectionPoint>
-        <coupler>
-            <junctionArea gap="10">
-                <roadGap id="2" gap="15"/>
-                <roadGap id="3" gap="15"/>
-            </junctionArea>
-        </coupler>
-    </junction>
+            <junction id="1" type="M2A">
+            <road id="1" classification="main" >	
+                <referenceLine>
+                    <line length="150"/>
+                </referenceLine>
+            </road>
+            <road id="2" classification="access" >	
+                <referenceLine>
+                    <line length="150"/>
+                </referenceLine>
+            </road>
+            <road id="3" classification="access" >	
+                <referenceLine>
+                    <line length="150"/>
+                </referenceLine>
+            </road>
+            <intersectionPoint refRoad="1" s="75">
+                <adRoad id="2" s="20" angle="-1.27"/>
+                <adRoad id="3" s="20" angle="1.57"/>
+            </intersectionPoint>
+            <coupler>
+                <junctionArea gap="10">
+                    <roadGap id="2" gap="15"/>
+                    <roadGap id="3" gap="15"/>
+                </junctionArea>
+            </coupler>
+        </junction>
+    </roadNetwork>
+
 
 **3A Junction**
 
@@ -202,33 +205,34 @@ Examples
 
 .. code-block:: xml
 
-    <junction id="1" type="3A">
-        <road id="1" classification="access" >	
-            <referenceLine>
-                <spiral length="100"  Rs="-150" Re="0"/>
-            </referenceLine>
-        </road>
-        <road id="2" classification="access" >	
-            <referenceLine>
-                <arc length="100"  R="-100"/>
-            </referenceLine>
-        </road>
-        <road id="3" classification="access" >	
-            <referenceLine>
-                <arc length="100"  R="-100"/>
-            </referenceLine>
-        </road>
-        <intersectionPoint refRoad="1" s="100">
-            <adRoad id="2" s="0" angle="3.14"/>
-            <adRoad id="3" s="0" angle="1.57079632679"/>
-        </intersectionPoint>
-        <coupler>
-            <junctionArea gap="10">
-                <roadGap id="2" gap="15"/>
-            </junctionArea>
-            <connection type="all"/>
-        </coupler>
-    </junction>
+        <junction id="1" type="3A">
+            <road id="1" classification="access" >	
+                <referenceLine>
+                    <spiral length="100"  Rs="-150" Re="0"/>
+                </referenceLine>
+            </road>
+            <road id="2" classification="access" >	
+                <referenceLine>
+                    <arc length="100"  R="-100"/>
+                </referenceLine>
+            </road>
+            <road id="3" classification="access" >	
+                <referenceLine>
+                    <arc length="100"  R="-100"/>
+                </referenceLine>
+            </road>
+            <intersectionPoint refRoad="1" s="100">
+                <adRoad id="2" s="0" angle="3.14"/>
+                <adRoad id="3" s="0" angle="1.57079632679"/>
+            </intersectionPoint>
+            <coupler>
+                <junctionArea gap="10">
+                    <roadGap id="2" gap="15"/>
+                </junctionArea>
+                <connection type="all"/>
+            </coupler>
+        </junction>
+    </roadNetwork>
 
 **MA Junction**
 
@@ -258,6 +262,7 @@ Examples
                 </junctionArea>
             </coupler>
         </junction>
+    </roadNetwork>
 
 
 **2M Junction**
@@ -267,29 +272,33 @@ Examples
     :width: 427
 
 .. code-block:: xml
-    
-        <junction id="1" type="2M">
-        <road id="1" classification="main" >	
-            <referenceLine>
-                <line length="100"/>
-            </referenceLine>
-        </road>
-        <road id="2" classification="main" >	
-            <referenceLine>
-                <arc length="100"  R="-100"/>
-            </referenceLine>
-        </road>
-        <intersectionPoint refRoad="1" s="50">
-            <adRoad id="2" s="50" angle="-1.57"/>
-        </intersectionPoint>
-        <coupler>
-            <junctionArea gap="10">
-                    <roadGap id="1" gap="15"/>
-                <roadGap id="2" gap="20"/>
-            </junctionArea>
-        </coupler>
-    </junction>
 
+    
+    <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+        <segments>
+            <junction id="1" type="2M">
+                <road id="1" classification="main" >	
+                    <referenceLine>
+                        <line length="100"/>
+                    </referenceLine>
+                </road>
+                <road id="2" classification="main" >	
+                    <referenceLine>
+                        <arc length="100"  R="-100"/>
+                    </referenceLine>
+                </road>
+                <intersectionPoint refRoad="1" s="50">
+                    <adRoad id="2" s="50" angle="-1.57"/>
+                </intersectionPoint>
+                <coupler>
+                    <junctionArea gap="10">
+                            <roadGap id="1" gap="15"/>
+                        <roadGap id="2" gap="20"/>
+                    </junctionArea>
+                </coupler>
+            </junction>
+        </segments>
+    </roadNetwork>
 
 
 **Additional Lane**
@@ -300,34 +309,156 @@ Examples
 
 .. code-block:: xml
 
-    <segments>
-        <junction id="1" type="MA">
-            <road id="1" classification="main" >	
-                <referenceLine>
-                    <line length="100"/>
-                </referenceLine>
-            </road>
-            
-            <road id="2" classification="access" >	
-                <referenceLine>
-                    <arc length="100"  R="-100"/>
-                </referenceLine>
+    <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+        <segments>
+            <junction id="1" type="MA">
+                <road id="1" classification="main" >	
+                    <referenceLine>
+                        <line length="100"/>
+                    </referenceLine>
+                </road>
                 
-            </road>
-            <intersectionPoint refRoad="1" s="100">
-                <adRoad id="2" s="0" angle="-1.57"/>
-            </intersectionPoint>
-            <coupler>
-                <junctionArea gap="10">
-                    <roadGap id="2" gap="15"/>
-                </junctionArea>
-                <connection type="all"/>
-                <additionalLanes>
-                    <additionalLane roadId="2" roadPos="end" type="left" length="5" />
-                </additionalLanes>
-            </coupler>
-        </junction>
-    </segments>
+                <road id="2" classification="access" >	
+                    <referenceLine>
+                        <arc length="100"  R="-100"/>
+                    </referenceLine>
+                    
+                </road>
+                <intersectionPoint refRoad="1" s="100">
+                    <adRoad id="2" s="0" angle="-1.57"/>
+                </intersectionPoint>
+                <coupler>
+                    <junctionArea gap="10">
+                        <roadGap id="2" gap="15"/>
+                    </junctionArea>
+                    <connection type="all"/>
+                    <additionalLanes>
+                        <additionalLane roadId="2" roadPos="end" type="left" length="5" />
+                    </additionalLanes>
+                </coupler>
+            </junction>
+        </segments>
+    </roadNetwork>
+
+
+**Multiple Lanes**
+
+.. figure:: _static/MulLanes.png
+    :class: align-right
+    :width: 427
+
+.. code-block:: xml
+
+    <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+       <segments>
+            <junction id="1" type="MA">
+                <road id="1" classification="main" >	
+                    <referenceLine>
+                        <line length="100"/>
+                    </referenceLine>
+                    <lanes>
+                    <lane id="2" type="driving" width="5">
+                            <roadMark type="solid" color="white" width="0.1"/>
+                    </lane>
+                    <lane id="1" type="driving">
+                            <roadMark type="solid" color="white" width="0.1"/>
+                            </lane>
+                        <lane id="0" type="driving"> </lane>
+                            <lane id="-1" type="driving" width="3">
+                                <roadMark type="solid" color="white" width="0.1"/>
+                        </lane>
+                    </lanes>
+                </road>
+                
+                <road id="2" classification="access" >	
+                    <referenceLine>
+                        <arc length="100"  R="-100"/>
+                    </referenceLine>
+                    <lanes>
+                    <lane id="2" type="driving" width="5">
+                            <roadMark type="solid" color="white" width="0.1"/>
+                    </lane>
+                    <lane id="1" type="driving">
+                            <roadMark type="solid" color="white" width="0.1"/>
+                            </lane>
+                        <lane id="0" type="driving"> </lane>
+                            <lane id="-1" type="driving" width="3">
+                                <roadMark type="solid" color="white" width="0.1"/>
+                        </lane>
+                    </lanes>
+                </road>
+                <intersectionPoint refRoad="1" s="50">
+                    <adRoad id="2" s="0" angle="-1.57"/>
+                </intersectionPoint>
+                <coupler>
+                    <junctionArea gap="10">
+                        <roadGap id="2" gap="15"/>
+                    </junctionArea>
+                    <connection type="all"/>
+                    
+                </coupler>
+            </junction>
+        </segments>
+    </roadNetwork>
+
+
+.. figure:: _static/m2amultiplelanes.png
+    :class: align-right
+    :width: 427
+
+.. code-block:: xml
+
+    <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+        <segments>
+            <junction id="1" type="2M">
+                <road id="1" classification="main" >	
+                    <referenceLine>
+                        <line length="200"/>
+                    </referenceLine>
+                    <lanes>
+                    <lane id="2" type="driving" width="5">
+                            <roadMark type="solid" color="white" width="0.1"/>
+                    </lane>
+                    <lane id="1" type="driving">
+                            <roadMark type="solid" color="white" width="0.1"/>
+                            </lane>
+                        <lane id="0" type="driving"> </lane>
+                            <lane id="-1" type="driving" width="3">
+                                <roadMark type="solid" color="white" width="0.1"/>
+                        </lane>
+                    </lanes>
+                </road>
+                
+                <road id="2" classification="main" >	
+                    <referenceLine>
+                        <arc length="200"  R="-100"/>
+                    </referenceLine>
+                    <lanes>
+                    <lane id="2" type="driving" width="5">
+                            <roadMark type="solid" color="white" width="0.1"/>
+                    </lane>
+                    <lane id="1" type="driving">
+                            <roadMark type="solid" color="white" width="0.1"/>
+                            </lane>
+                        <lane id="0" type="driving"> </lane>
+                            <lane id="-1" type="driving" width="3">
+                                <roadMark type="solid" color="white" width="0.1"/>
+                        </lane>
+                    </lanes>
+                </road>
+                <intersectionPoint refRoad="1" s="100">
+                    <adRoad id="2" s="100" angle="-1.57"/>
+                </intersectionPoint>
+                <coupler>
+                    <junctionArea gap="10">
+                        <roadGap id="2" gap="15"/>
+                    </junctionArea>
+                    <connection type="all"/>
+                    
+                </coupler>
+            </junction>
+        </segments>
+    </roadNetwork>
 
 
 Roundabout

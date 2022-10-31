@@ -13,7 +13,7 @@
                     <arc length="100"  R="-100"/>
                 </referenceLine>
             </road>
-            <intersectionPoint refRoad="1" s="100">
+            <intersectionPoint refRoad="1" s="30">
                 <adRoad id="2" s="0" angle="-1.57"/>
             </intersectionPoint>
             <coupler>
