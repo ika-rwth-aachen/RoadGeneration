@@ -24,6 +24,9 @@ jobs:
            sudo apt install libxerces-c-dev
            mkdir build && cd build  
            cmake .. -DCREATE_DOXYGEN_TARGET=ON && make doxygen
+           cd ../doc
+           sphinx-build . sphinx/
+
     - name: Deploy 
       uses: JamesIves/github-pages-deploy-action@4.1.5
       with:
