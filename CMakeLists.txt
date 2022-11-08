@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6)
+# cmake_minimum_required(VERSION 2.6)
 project(road-generation)
 
 set(BIN_DIR ${CMAKE_SOURCE_DIR} CACHE PATH "BIN_DIR")
@@ -6,11 +6,11 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR})
 
-find_package (XercesC REQUIRED)
+find_package(XercesC REQUIRED)
 find_package(Sphinx REQUIRED)
 
 include_directories(src)
-include_directories (${XercesC_INCLUDE_DIR})
+include_directories(${XercesC_INCLUDE_DIR})
 
 add_definitions(-DPROJ_DIR=\"${PROJECT_SOURCE_DIR}\")
 
