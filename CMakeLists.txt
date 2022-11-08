@@ -1,5 +1,6 @@
-# cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8.12)
 project(road-generation)
+
 
 set(BIN_DIR ${CMAKE_SOURCE_DIR} CACHE PATH "BIN_DIR")
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
