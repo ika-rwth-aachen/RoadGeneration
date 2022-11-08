@@ -30,8 +30,6 @@
 void printHelpMessage();
 
 /**
- * @brief parses the args for the executable
- * 
  * @param argc      argc from command line
  * @param argv      argv from command line
  * @param settings  settings struct to store settings 
