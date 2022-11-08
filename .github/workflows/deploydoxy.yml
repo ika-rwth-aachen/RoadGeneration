@@ -24,6 +24,7 @@ jobs:
            sudo apt install libxerces-c-dev
            mkdir build && cd build  
            cmake .. -DCREATE_DOXYGEN_TARGET=ON && make doxygen
+           pwd
            cd ../doc
            sphinx-build . sphinx/
 
