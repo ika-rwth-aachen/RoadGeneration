@@ -21,6 +21,7 @@ jobs:
       run: sudo apt-get install -y doxygen
     - name: run doxy      
       run: |
+           suto apt update
            sudo apt install libxerces-c-dev
            sudo apt-get install python3-sphinx
            mkdir build && cd build  
