@@ -24,6 +24,7 @@ jobs:
            sudo apt update
            sudo apt install libxerces-c-dev
            sudo apt-get install python3-sphinx
+           pip3 install breathe
            mkdir build && cd build  
            cmake .. -DCREATE_DOXYGEN_TARGET=ON && make doxygen
            cd ../docs
