@@ -22,6 +22,7 @@ jobs:
     - name: run doxy      
       run: |
            sudo apt install libxerces-c-dev
+           sudo apt-get install python3-sphinx
            mkdir build && cd build  
            cmake .. -DCREATE_DOXYGEN_TARGET=ON && make doxygen
            cd ../docs
