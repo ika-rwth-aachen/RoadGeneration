@@ -2,9 +2,9 @@ name: deploydoxy
 
 on:
   push:
-    branches: [ main, doc-gen ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, doc-gen ]
+    branches: [ main ]
 #d
 jobs:
   gen_doxygen:
