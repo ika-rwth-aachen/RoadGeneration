@@ -25,7 +25,8 @@ jobs:
            mkdir build && cd build  
            cmake .. -DCREATE_DOXYGEN_TARGET=ON && make doxygen
            pwd
-           cd ../doc
+           cd ..
+           ls
            sphinx-build . sphinx/
 
     - name: Deploy 
