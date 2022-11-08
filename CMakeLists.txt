@@ -7,7 +7,6 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR})
 
 find_package(XercesC REQUIRED)
-find_package(Sphinx REQUIRED)
 
 include_directories(src)
 include_directories(${XercesC_INCLUDE_DIR})
