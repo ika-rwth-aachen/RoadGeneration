@@ -2,9 +2,9 @@ name: deploydoxy
 
 on:
   push:
-    branches: [ main, doc-gen ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, doc-gen ]
+    branches: [ main ]
 #d
 jobs:
   gen_doxygen:
@@ -21,9 +21,16 @@ jobs:
       run: sudo apt-get install -y doxygen
     - name: run doxy      
       run: |
+           sudo apt update
            sudo apt install libxerces-c-dev
+           sudo apt-get install python3-sphinx
+           pip3 install breathe
+           pip3 install sphinx_rtd_theme
            mkdir build && cd build  
            cmake .. -DCREATE_DOXYGEN_TARGET=ON && make doxygen
+           cd ../docs
+           sphinx-build . sphinx/
+
     - name: Deploy 
       uses: JamesIves/github-pages-deploy-action@4.1.5
       with:

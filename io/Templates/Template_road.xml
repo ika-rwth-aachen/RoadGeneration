@@ -1,0 +1,15 @@
+<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+    <segments>
+
+        <connectingRoad id="1">
+            <road id="1" classification="main" >	
+                <referenceLine>
+                    <line length="100"/>
+                    <!--<spiral length="200"  Rs="-150" Re="0"/>-->
+                    <!--<arc length="100"  R="-100"/>-->
+                </referenceLine>
+            </road>
+        </connectingRoad>
+        
+    </segments>
+</roadNetwork>

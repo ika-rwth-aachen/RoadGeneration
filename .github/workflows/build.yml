@@ -17,7 +17,8 @@ jobs:
     - name: Compile
       # Build your program with the given configuration
       run: |
-           sudo apt install libxerces-c-dev
+           sudo apt install libxerces-c-dev python3-sphinx
+           pip3 install -U sphinx
            mkdir -p build
            cd build
            rm -rf *

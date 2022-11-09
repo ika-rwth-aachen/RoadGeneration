@@ -429,7 +429,7 @@ elementFormDefault="qualified">
         <xs:documentation>
             Element: specifying a restricted area 
 
-                - length: specifying the length for the restriced area, this has to be longer than the length of the lanewidening or lanedrop! Stating position is defined by parent lanewidening or lanedrop.
+                - length: specifying the length for the restricted area, this has to be longer than the length of the lanewidening or lanedrop! Stating position is defined by parent lanewidening or lanedrop.
         </xs:documentation>
     </xs:annotation>
     <xs:attribute name="length" type="positiveDouble" use="optional"/>  

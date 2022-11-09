@@ -10,8 +10,8 @@
  *
  * @brief file contains methodology for linking two segments 
  *
- * @author Christian Geller
- * Contact: christian.geller@rwth-aachen.de
+ * @author Jannik Busse, Christian Geller
+ * Contact: jannik.busse@rwth-aachen.de, christian.geller@rwth-aachen.de
  *
  */
 
@@ -370,10 +370,7 @@ int linkSegments(xmlTree &inputxml, roadNetwork &data)
 	}
 	if(v.size() > 0)
 	{
-		if(!setting.silentMode)
-			std::cout << "WARNING: 'Not all roads are connected to the road network!'" << std::endl;
-		
-		std::cerr << "WARNING: 'Not all roads are connected to the road network!'" << std::endl;
+		throwWarning("'Not all roads are connected to the road network!'");
 		for(road* p: v)
 		{
 			if(!setting.silentMode)

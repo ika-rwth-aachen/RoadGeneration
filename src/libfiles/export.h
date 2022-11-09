@@ -5,8 +5,15 @@
  * Report bugs and download new versions https://github.com/ika-rwth-aachen/RoadGeneration
  *
  * This library is distributed under the MIT License.
+ * 
+ * @file export.h
+ *
+ * @brief This file contains the most important functions for using the road generation library
+ *
+ * @author Jannik Busse
+ * Contact: jannik.busse@rwth-aachen.de, christian.geller@rwth-aachen.de
+ *
  */
-
 #ifndef EXPORT_H
 #define EXPORT_H
 

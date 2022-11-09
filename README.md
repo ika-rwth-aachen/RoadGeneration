@@ -1,26 +1,36 @@
 # Road Generation Tool for Basic OpenDRIVE Road Networks
-![Build](https://github.com/ika-rwth-aachen/RoadGeneration/actions/workflows/build.yml/badge.svg?branch=license) ![MIT](https://img.shields.io/badge/license-MIT-blue.svg)  
+
+![Build](https://github.com/ika-rwth-aachen/RoadGeneration/actions/workflows/build.yml/badge.svg?branch=main) ![MIT](https://img.shields.io/badge/license-MIT-blue.svg)  
 ``#road`` ``#openDRIVE`` ``#generic`` ``#generation``
 
 <!--<div align="center">
     <img src="/doc/logo.jpg" width="350px"</img> 
 </div>-->
 
-## About 
-<!--Simulation is a valuable building block for the verification and validation of automated driving functions (ADF). When simulating urban driving scenarios, simulation maps are one important component. Often, the generation of those road networks is a time consuming and manual effort. Furthermore, typically many variations of a distinct junction or road section are demanded to ensure that an ADF can be validated in the process of releasing those functions to the public.
-Therefore, we present a prototypical solution for a logical road network description which is easy to maintain and modify. The concept aims to be non-redundant so that changes of distinct quantities do not affect other places in the code and thus the variation of maps is straightforward. In addition, the simple definition of junctions is a focus of the work. Intersecting roads are defined separately and then set in relation, finally a junction is generated automatically.
-The idea is to derive the description from a commonly used, standardized format for simulation maps in order to generate this format from the introduced logical description. Consequently, we developed a command-line tool that generates the standardized simulation map format OpenDRIVE.-->
-WIP
+## About
 
-## Overview
+Simulation is a valuable building block for the verification and validation of automated driving functions (ADF). When simulating urban driving scenarios, simulation maps are one important component. Often, the generation of those road networks is a time consuming and manual effort. Furthermore, typically many variations of a distinct junction or road section are demanded to ensure that an ADF can be validated in the process of releasing those functions to the public.  
+
+Therefore, we present a prototypical solution for a logical road network description which is easy to maintain and modify. The concept aims to be non-redundant so that changes of distinct quantities do not affect other places in the code and thus the variation of maps is straightforward. In addition, the simple definition of junctions is a focus of the work. Intersecting roads are defined separately and then set in relation, finally a junction is generated automatically.  
+
+The idea is to derive the description from a commonly used, standardized format for simulation maps in order to generate this format from the introduced logical description. Consequently, we developed a command-line tool that generates the standardized simulation map format [ASAM OpenDRIVE](https://www.asam.net/standards/detail/opendrive/). Furthermore, there exists a Python package that allows the user to introduce stochastic variables for each quantity and generate as many variations of a logically identical road network as desired.
+
+The proposed workflow can be seen in Fig. 1. Further information is published in [[1]](https://arxiv.org/abs/2006.03403) and [[2]](https://arxiv.org/abs/2210.00853). This repository exlucdes the analysis of real world HD maps which is done in a separate internal tool.  
+<div align="center">
+    <img src="docs/motivation.png"</img> 
+</div>
+Fig.1: Possible workflow for the presend road variation tool.
+
+## Repository Overview
+
 This repository provides a tool for the generation of road networkds. Here, the main folders are named:
 
-- `io`: contains sample input files
-- `doc`: contains the code and xsd input file documentation 
-- `src`: contains the source code
-- `xml`: contains the xsd validation files 
-- `variation`: contains the variation tool
-
+- `doc`: Resources for documentation
+- `io`: Sample input files
+- `src`: Source code
+- `test`: Test files and their desired OpenDRIVE outputs
+- `xml`: Contains the XSD validation files
+- `variation`: Python based variation tool for the road generator
 
 ## Installation
 
@@ -34,12 +44,12 @@ The following **requirements** have to be satisfied:
 **Download** the repository as a zip-file and un-zip, or use git with
 
 ```bash
-    # Clone Repository and open main folder
-    git clone git@github.com:ika-rwth-aachen/RoadGeneration.git
-    cd road-generation
+# Clone Repository and open main folder
+git clone git@github.com:ika-rwth-aachen/RoadGeneration.git
+cd RoadGeneration
 ```
 
-A build script is provided and can be executed from the root directory with
+A build script for Linux systems is provided and can be executed from the root directory with
 
 ```bash
 sh buildScript.sh
@@ -47,110 +57,96 @@ sh buildScript.sh
 
 Alternatively you can **build the project manually**:
 
-<details><summary><b>Build on Linux</b></summary>
-
-1. Install [`xercesC`](https://xerces.apache.org/xerces-c/)
-
-    You can use a packet manager
+1. Install [`xercesC`](https://xerces.apache.org/xerces-c/) via a package manager, e.g.:
     ```bash
     sudo apt install libxerces-c-dev
     ```
-    Or download the source directly
+2. Build the Road-generation tool with standard cmake commands, e.g.:
     ```bash
-    curl https://mirrors.gigenet.com/apache//xerces/c/3/sources/xerces-c-3.2.3.tar.gz --output xerces-c-3.2.3.tar.gz
-    ```
-    and unpack it with
-    ```bash
-    gzip -d xerces-c-3.2.3.tar.gz
-    tar -xf xerces-c-3.2.3.tar
-    ```
-    Finally build the source files as instructed [here](https://xerces.apache.org/xerces-c/build-3.html).
-
-2. Build the Road-generation tool
-```bash
     mkdir -p build
     cd build
     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
     cmake --build .
-```
-</details>
+    ``` 
 
-
-<details><summary><b>Build on Windows</b></summary>
-
-THIS IS SUBJECT TO CHANGE
-1. Install [`xercesC`](https://xerces.apache.org/xerces-c/)
-
-    You can use a packet manager
-    ```bash
-    sudo apt install libxerces-c-dev
-    ```
-    Or download the source directly
-    ```bash
-    curl https://mirrors.gigenet.com/apache//xerces/c/3/sources/xerces-c-3.2.3.tar.gz --output xerces-c-3.2.3.tar.gz
-    ```
-    and unpack it with
-    ```bash
-    gzip -d xerces-c-3.2.3.tar.gz
-    tar -xf xerces-c-3.2.3.tar
-    ```
-    Finally build the source files as instructed [here](https://xerces.apache.org/xerces-c/build-3.html).
-
-2. Build the Road-generation tool
-```bash
-    mkdir -p build
-    cd build
-    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
-    cmake --build .
-```
-</details>
-
+*Note:* In principal, it is possible to compile and use the tool in Windows operating systems. However, this is experimental.
 
 ## Usage
 
 The compiled application can be called from the root folder:
 
 ```bash
-    ./road-generation_executable <input>
+./road-generation_executable <input>
 ```
 
-This generates the output XML file next to the input file. The provided input file is checked against ``input.xsd``. Analogous the output file is checked against the ``output.xsd`` file which specifies the current openDRIVE standard. For a list of all parameters use the help flag of the tool.
+This generates the output OpenDRIVE file next to the input file. The provided input file is checked against ``input.xsd``. Analogous the output file is checked against the ``output.xsd`` file which specifies the openDRIVE 1.5 standard. For a list of all parameters use the help flag of the tool.
 
 ```bash
-    ./road-generation_executable -h
+./road-generation_executable -h
 ```
-
-
 
 ## Documentation
-A simple but well designed code documentation is provided by using [`Doxygen`](http://www.doxygen.nl/).
-```bash 
-    cd doc/
-    doxygen doxygenDocumentation.doxy
-    open doxygenDocumentation/html/index.html
-```
-An documentation for the input file of the tool can be generated by the following. It is based on the [`xs3p`](https://xml.fiforms.org/xs3p/) style guide.
 
-```bash
-    cd doc/
-    ./xsdDocumentation.sh
-```
-
+A simple but well designed C++ reference [documentation](https://ika-rwth-aachen.github.io/RoadGeneration/index.html) is provided.
 
 ## Variation tool
-The Variation tool is used to generate a variety of different scenarios based on the same general road network. A template file is provided to specify variables aswell as the general road network structure. A more thorough documentation can be found in the `variation` subdirectory.
+
+The Variation tool is used to generate a variety of different scenarios based on the same general road network. A template file is provided to specify variables as well as the general road network structure. A more thorough documentation can be found in the [variation subdirectory](variation/).
+
+### Installation
+
+You can run the code from the `variation` subfolder, however, the variation tool can be installed system wide by using the install script in the root directory.
+
+```bash
+sh install-variation.sh
+```
 
 ## Licenses
-License information [...]
 
-## Contact
-- Authors:
-    | Christian Geller
-    | christian.geller@rwth-aachen.de
-- Supervisor:
-    | Daniel Becker
-    | Institute for Automotive Engineering (ika)
-    | RWTH Aachen University
-    | daniel.becker@ika.rwth-aachen.de
+The project is distributed under the [MIT License](LICENSE.md).
 
+## Authors of this Work
 
+### Scientific Researcher:
+[Daniel Becker](https://github.com/dbeckerAC) - daniel.becker@ika.rwth-aachen.de  
+[Christian Geller](https://github.com/cgeller) - christian.geller@ika.rwth-aachen.de  
+Fabian Ruß - fabian.russ@ika.rwth-aachen.de  
+### Student Worker:
+[Jannik Busse](https://github.com/jannikbusse)  
+
+## Citation
+
+We hope our work provides useful help in your research. If this is the case, please cite:  
+[1]
+```
+@INPROCEEDINGS{BeckerRussGeller2020,
+  author    = {Daniel Becker and
+               Fabian Ru{\ss} and
+               Christian Geller and
+               Lutz Eckstein},
+  title     = {Generation of Complex Road Networks Using a Simplified Logical Description
+               for the Validation of Automated Vehicles},
+  booktitle = {2020 IEEE 23rd International Conference on Intelligent Transportation Systems (ITSC)},
+  year      = {2020},
+  url       = {https://arxiv.org/abs/2006.03403},
+  doi       = {10.1109/ITSC45102.2020.9294664}}
+```
+[2]
+```
+@INPROCEEDINGS{BeckerGeller2022,
+  author    = {Daniel Becker and
+               Christian Geller and
+               Lutz Eckstein},
+  title     = {Road Network Variation Based on HD Map Analysis for the Simulative Safety  Assurance of Automated Vehicles},
+  booktitle = {2022 International Conference on Electrical, Computer, Communications and Mechatronics Engineering (ICECCME)},
+  year      = {2022},
+  url       = {https://arxiv.org/abs/2210.00853},
+  doi       = {...}}
+```
+
+## Acknowledgements and Credits
+This work received funding from the research project 
+"[SET Level](https://setlevel.de/)" of the [PEGASUS ](https://pegasus-family.de) project family, promoted by the German Federal Ministry for Economic Affairs and Climate Action based on a decision of the German Bundestag.
+| SET Level | PEGASUS Family | BMWK |
+|-----------|----------------|------|
+| <a href="https://setlevel.de"><img src="https://setlevel.de/assets/logo-setlevel.svg" width="100" /></a> | <a href="https://pegasus-family.de"><img src="https://setlevel.de/assets/logo-pegasus-family.svg" width="100" /></a> | <a href="https://www.bmwi.de/Redaktion/DE/Textsammlungen/Technologie/fahrzeug-und-systemtechnologien.html"><img src="https://setlevel.de/assets/logo-bmwk-en.svg" width="100" /></a> |  

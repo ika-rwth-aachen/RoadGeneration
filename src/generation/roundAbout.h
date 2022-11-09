@@ -10,8 +10,8 @@
  *
  * @brief file contains method for generating roundabout
  *
- * @author Christian Geller
- * Contact: christian.geller@rwth-aachen.de
+ * @author Jannik Busse, Christian Geller
+ * Contact: jannik.busse@rwth-aachen.de, christian.geller@rwth-aachen.de
  *
  */
 
@@ -202,7 +202,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         if (changed)
         {
-            throwWarning("!!! sOffset of at least one road was changed, due to feasible road structure !!!", true);
+            throwWarning(" sOffset of at least one road was changed, due to feasible road structure ", true);
         }
 
         if (sOffMain * 2 > length / nIp)

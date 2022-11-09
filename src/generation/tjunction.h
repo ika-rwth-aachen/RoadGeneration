@@ -10,8 +10,8 @@
  *
  * @brief file contains method for generating t junction
  *
- * @author Christian Geller
- * Contact: christian.geller@rwth-aachen.de
+ * @author Jannik Busse, Christian Geller
+ * Contact: jannik.busse@rwth-aachen.de, christian.geller@rwth-aachen.de
  *
  */
 
@@ -72,12 +72,11 @@ int tjunction(const DOMElement* node, roadNetwork &data)
 
     DOMElement* tmpNode = getChildWithName(iP, "adRoad");
 
-    //for (pugi::xml_node road : node.children("road"))
     DOMNodeList *roadList = node->getElementsByTagName(X("road"));
     for (int i = 0; i < roadList->getLength(); i ++)
     {
         DOMElement* road = (DOMElement*)roadList->item(i);
-        if(road->getNodeType() != 1) continue; //we have to check the node type. Type 1 is an element. The reason for the check is that line breaks are handled as
+        if(road->getNodeType() != 1) continue; //check the node type. Type 1 is an element. The reason for the check is that line breaks are handled as
         // text nodes by xercesC.
         int currentRoadId = readIntAttrFromNode(road, "id");
 
@@ -107,6 +106,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     sOffAdd1 = sOffset;
     sOffAdd2 = sOffset;
     
+
     if(cA != NULL) // there might be no coupler provided
     {
         for (DOMElement *sB = cA->getFirstElementChild();sB != NULL; sB = sB->getNextElementSibling())

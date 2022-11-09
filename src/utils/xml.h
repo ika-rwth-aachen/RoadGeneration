@@ -11,8 +11,8 @@
  *
  * @brief file contains the import and export, as well as the validation, of xml files
  *
- * @author Christian Geller
- * Contact: christian.geller@rwth-aachen.de
+ * @author Jannik Busse
+ * Contact: jannik.busse@rwth-aachen.de, christian.geller@rwth-aachen.de
  *
  */
 
@@ -110,7 +110,6 @@ int validateOutput(roadNetwork &data)
 
     return 0;
 }
-
 
 
 /**
@@ -485,7 +484,7 @@ int createXMLXercesC(roadNetwork &data)
 }
 
 /**
- * @brief function for displaying the road generation header name
+ * @brief function for displaying the road generation logo
  * 
  */
 int printLogo()
