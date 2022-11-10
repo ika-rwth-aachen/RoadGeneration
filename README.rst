@@ -164,7 +164,10 @@ Scientific Researcher:
 | `Christian Geller <https://github.com/cgeller>`__ -
   christian.geller@ika.rwth-aachen.de
 | Fabian Ruß - fabian.russ@ika.rwth-aachen.de
-| ### Student Worker: `Jannik Busse <https://github.com/jannikbusse>`__
+
+Student Worker:
+~~~~~~~~~~~~~~~
+`Jannik Busse <https://github.com/jannikbusse>`__
 
 Citation
 --------
