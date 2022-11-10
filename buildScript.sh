@@ -4,8 +4,14 @@ UNAME=$( command -v uname)
 
 case $( "${UNAME}" | tr '[:upper:]' '[:lower:]') in
   linux*)
-    echo "Linux"
-    sudo apt install libxerces-c-dev
+    echo "  Installing on Linux"
+    
+    if out=$(dpkg --list | grep libxerces-c-dev); then
+        echo "  libxerces-c-dev already installed"
+    else
+        echo "  install libxerces-c-dev"
+        sudo apt install libxerces-c-dev
+    fi   
     mkdir -p build
     cd build
     rm -rf *
