@@ -44,11 +44,9 @@ published in `[1] <https://arxiv.org/abs/2006.03403>`__ and
 analysis of real world HD maps which is done in a separate internal
 tool.
 
-.. container::
-
-   ::
-
-      <img src="docs/motivation.png"</img> 
+.. image:: "docs/motivation.png"
+   :width: 500
+   :alt: Fig.1: Possible workflow for the presend road variation tool.
 
 Fig.1: Possible workflow for the presend road variation tool.
 
