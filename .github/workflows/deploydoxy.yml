@@ -30,7 +30,6 @@ jobs:
            cmake .. -DCREATE_DOXYGEN_TARGET=ON && make doxygen
            cd ../docs
            sphinx-build . sphinx/
-
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
