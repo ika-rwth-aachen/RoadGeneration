@@ -2,7 +2,7 @@ name: deploydoxy
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, doc-deploy ]
   pull_request:
     branches: [ main ]
 #d
@@ -31,10 +31,12 @@ jobs:
            cd ../docs
            sphinx-build . sphinx/
 
-    - name: Deploy 
-      uses: JamesIves/github-pages-deploy-action@4.1.5
-      with:
-        #token: ${{ secrets.ACCESS_TOKEN }}
-        BRANCH: gh-pages # The branch the action should deploy to.
-        FOLDER: docs/html # The folder the action should deploy.
-       # TARGET-FOLDER: test
+
+    - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        with:
+          publish_branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _build/
+          force_orphan: true

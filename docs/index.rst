@@ -7,14 +7,14 @@
 Welcome to Road's documentation!
 ================================
 
-.. include:: overview/readme.rst
+.. include:: Readme <README.rst>
 
 .. toctree::
     :maxdepth: 3
     :caption: Overview
     :hidden:
     
-    overview/readme
+    readmelink
     overview/variation
 
 

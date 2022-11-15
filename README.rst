@@ -1,6 +1,8 @@
 Road Generation Tool for Basic OpenDRIVE Road Networks
 ======================================================
 
+.. inclusion-marker
+
 | |Build| |MIT|
 | ``#road`` ``#openDRIVE`` ``#generic`` ``#generation``
 
@@ -38,7 +40,7 @@ published in `[1] <https://arxiv.org/abs/2006.03403>`__ and
 analysis of real world HD maps which is done in a separate internal
 tool.
 
-.. image:: docs/motivation.png
+.. image:: docs/_static/motivation.png
    :alt: Fig.1: Possible workflow for the presend road variation tool.
 
 Fig.1: Possible workflow for the presend road variation tool.
