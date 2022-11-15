@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Variation Tool &mdash; Road Generation 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/layout.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1. Documentation" href="../doc.html" />
+    <link rel="prev" title="Road Generation Tool for Basic OpenDRIVE Road Networks" href="../readmelink.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Road Generation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readmelink.html">Road Generation Tool for Basic OpenDRIVE Road Networks</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Variation Tool</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#template-file">Template File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#variable-types">Variable Types</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../doc.html">1. Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../inputdoc.html">2. Input file format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../autodoc.html">3. Autodoc</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Road Generation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Variation Tool</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/overview/variation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="variation-tool">
+<h1>Variation Tool<a class="headerlink" href="#variation-tool" title="Permalink to this heading"></a></h1>
+<p>The variation tool makes use of the road-generation library and
+generates several variations of an opendrive scenario that is provided
+by a template file. The main goal was to create an easy to use syntax
+while allowing the user to specify constraints for the output scenarios.</p>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h2>
+<p>The tool can be accessed via the command line:</p>
+<p><strong>On Liunx:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>variation -fname &lt;filename&gt;
+</pre></div>
+</div>
+<p><strong>On Windows:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m variation -fname &lt;filename&gt;
+</pre></div>
+</div>
+<p>A variety of parameters and flaggs can be specified:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-fname</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;input</span> <span class="pre">file</span> <span class="pre">path&gt;</span></code> input template file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code> number of generated outputs</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-o</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code> output file name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-e</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;file</span> <span class="pre">path&gt;</span></code> generate an example template file to location</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-h</span> <span class="pre">--help</span></code> display the help message</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-k</span></code> keep <code class="docutils literal notranslate"><span class="pre">.xml</span></code> files with the logical road description</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-s</span></code> suppress most console output</p></li>
+</ul>
+</section>
+<section id="template-file">
+<h2>Template File<a class="headerlink" href="#template-file" title="Permalink to this heading"></a></h2>
+<p>The variation tool takes a template file as an input which extends the
+syntax of the road-generation library <a class="reference external" href="../xml/input.xsd">input
+scheme</a>. Additionally, a <code class="docutils literal notranslate"><span class="pre">&lt;vars&gt;</span> <span class="pre">...</span> <span class="pre">&lt;/vars&gt;</span></code> tag
+declares variables that will be drawn from a random distribution. The
+variables are provided in a <code class="docutils literal notranslate"><span class="pre">&lt;var&gt;</span> <span class="pre">...</span> <span class="pre">&lt;/var&gt;</span></code> tag and use attributes
+to define the distribution from which these variables will be drawn. The
+random variables can then be referenced in the description of the road
+network.</p>
+<p>Examples for the definition of stochastic variabes:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;vars&gt;</span>
+    <span class="nt">&lt;var</span> <span class="na">id=</span><span class="s">&quot;transDepVar&quot;</span> <span class="na">type=</span><span class="s">&quot;lindep&quot;</span> <span class="na">dp=</span><span class="s">&quot;depVar/2&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;var</span> <span class="na">id=</span><span class="s">&quot;depVar&quot;</span> <span class="na">type=</span><span class="s">&quot;lindep&quot;</span> <span class="na">dp=</span><span class="s">&quot;uniformVar*0.3 + normalVar&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;var</span> <span class="na">id=</span><span class="s">&quot;uniformVar&quot;</span> <span class="na">type=</span><span class="s">&quot;uniform&quot;</span> <span class="na">min=</span><span class="s">&quot;100&quot;</span> <span class="na">max=</span><span class="s">&quot;150&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;var</span> <span class="na">id=</span><span class="s">&quot;normalVar&quot;</span> <span class="na">type=</span><span class="s">&quot;normal&quot;</span> <span class="na">mu=</span><span class="s">&quot;1.57&quot;</span> <span class="na">sd=</span><span class="s">&quot;0.12&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/vars&gt;</span>
+</pre></div>
+</div>
+<p>These variables can then be referenced by their name, surrounded by
+<code class="docutils literal notranslate"><span class="pre">${...}</span></code>, e.g.:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;referenceLine&gt;</span>
+    <span class="nt">&lt;line</span> <span class="na">length=</span><span class="s">&quot;${uniformVar}&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/referenceLine&gt;</span>
+</pre></div>
+</div>
+<p>An example template file can be generated by using the <code class="docutils literal notranslate"><span class="pre">-e</span></code> flag.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>variation -e
+</pre></div>
+</div>
+<section id="variable-types">
+<h3>Variable Types<a class="headerlink" href="#variable-types" title="Permalink to this heading"></a></h3>
+<p>For each variable we need to specify an <code class="docutils literal notranslate"><span class="pre">id</span></code> and <code class="docutils literal notranslate"><span class="pre">type</span></code> attribute.
+There are three types of variables that require different attributes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">normal</span></code> distribution with mean value <code class="docutils literal notranslate"><span class="pre">mu</span></code> and standard deviation
+<code class="docutils literal notranslate"><span class="pre">sd</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uniform</span></code> distribution with a <code class="docutils literal notranslate"><span class="pre">min</span></code> and a <code class="docutils literal notranslate"><span class="pre">max</span></code> value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lindep</span></code> a linearly dependent variable that uses an equation string
+as <code class="docutils literal notranslate"><span class="pre">dp</span></code> attribute. The equation can reference other variables
+transitively.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../readmelink.html" class="btn btn-neutral float-left" title="Road Generation Tool for Basic OpenDRIVE Road Networks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../doc.html" class="btn btn-neutral float-right" title="1. Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022 Institut für Kraftfahrzeuge, RWTH Aachen, ika.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
