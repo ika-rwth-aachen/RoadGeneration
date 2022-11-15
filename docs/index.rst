@@ -19,9 +19,6 @@ Welcome to Road's documentation!
 
 
 
-Quicklinks (to be removed)
-==========================
-
 * :ref:`genindex`
 * :ref:`search`
 
