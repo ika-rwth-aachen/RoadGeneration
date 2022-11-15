@@ -41,7 +41,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="readmelink.html">Road Generation Tool for Basic OpenDRIVE Road Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readmelink.html">Road Generation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview/variation.html">Variation Tool</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
@@ -77,6 +77,188 @@
              
   <section id="welcome-to-road-s-documentation">
 <h1>Welcome to Road’s documentation!<a class="headerlink" href="#welcome-to-road-s-documentation" title="Permalink to this heading"></a></h1>
+</section>
+<section id="road-generation-tool-for-basic-opendrive-road-networks">
+<h1>Road Generation Tool for Basic OpenDRIVE Road Networks<a class="headerlink" href="#road-generation-tool-for-basic-opendrive-road-networks" title="Permalink to this heading"></a></h1>
+<div class="line-block">
+<div class="line"><img alt="Build" src="https://github.com/ika-rwth-aachen/RoadGeneration/actions/workflows/build.yml/badge.svg?branch=main" /> <img alt="MIT" src="https://img.shields.io/badge/license-MIT-blue.svg" /></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">#road</span></code> <code class="docutils literal notranslate"><span class="pre">#openDRIVE</span></code> <code class="docutils literal notranslate"><span class="pre">#generic</span></code> <code class="docutils literal notranslate"><span class="pre">#generation</span></code></div>
+</div>
+<section id="about">
+<h2>About<a class="headerlink" href="#about" title="Permalink to this heading"></a></h2>
+<p>Simulation is a valuable building block for the verification and
+validation of automated driving functions (ADF). When simulating urban
+driving scenarios, simulation maps are one important component. Often,
+the generation of those road networks is a time consuming and manual
+effort. Furthermore, typically many variations of a distinct junction or
+road section are demanded to ensure that an ADF can be validated in the
+process of releasing those functions to the public.</p>
+<p>Therefore, we present a prototypical solution for a logical road network
+description which is easy to maintain and modify. The concept aims to be
+non-redundant so that changes of distinct quantities do not affect other
+places in the code and thus the variation of maps is straightforward. In
+addition, the simple definition of junctions is a focus of the work.
+Intersecting roads are defined separately and then set in relation,
+finally a junction is generated automatically.</p>
+<p>The idea is to derive the description from a commonly used, standardized
+format for simulation maps in order to generate this format from the
+introduced logical description. Consequently, we developed a
+command-line tool that generates the standardized simulation map format
+<a class="reference external" href="https://www.asam.net/standards/detail/opendrive/">ASAM OpenDRIVE</a>.
+Furthermore, there exists a Python package that allows the user to
+introduce stochastic variables for each quantity and generate as many
+variations of a logically identical road network as desired.</p>
+<p>The proposed workflow can be seen in Fig. 1. Further information is
+published in <a class="reference external" href="https://arxiv.org/abs/2006.03403">[1]</a> and
+<a class="reference external" href="https://arxiv.org/abs/2210.00853">[2]</a>. This repository exlucdes the
+analysis of real world HD maps which is done in a separate internal
+tool.</p>
+<img alt="Fig.1: Possible workflow for the presend road variation tool." src="_images/motivation.png" />
+<p>Fig.1: Possible workflow for the presend road variation tool.</p>
+</section>
+<section id="repository-overview">
+<h2>Repository Overview<a class="headerlink" href="#repository-overview" title="Permalink to this heading"></a></h2>
+<p>This repository provides a tool for the generation of road networkds.
+Here, the main folders are named:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">doc</span></code>: Resources for documentation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">io</span></code>: Sample input files</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">src</span></code>: Source code</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test</span></code>: Test files and their desired OpenDRIVE outputs</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xml</span></code>: Contains the XSD validation files</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">variation</span></code>: Python based variation tool for the road generator</p></li>
+</ul>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
+<p>The following <strong>requirements</strong> have to be satisfied:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">C++11</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CMake</span> <span class="pre">2.6</span> <span class="pre">or</span> <span class="pre">higher</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">3.6</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xercesC</span></code></p></li>
+</ul>
+<p><strong>Download</strong> the repository as a zip-file and un-zip, or use git with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clone Repository and open main folder</span>
+git clone git@github.com:ika-rwth-aachen/RoadGeneration.git
+<span class="nb">cd</span> RoadGeneration
+</pre></div>
+</div>
+<p>A build script for Linux systems is provided and can be executed from
+the root directory with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sh buildScript.sh
+</pre></div>
+</div>
+<p>Alternatively you can <strong>build the project manually</strong>:</p>
+<ol class="arabic simple">
+<li><p>Install <code class="docutils literal notranslate"><span class="pre">`xercesC</span></code> &lt;<a class="reference external" href="https://xerces.apache.org/xerces-c/">https://xerces.apache.org/xerces-c/</a>&gt;`__ via a
+package manager, e.g.: <code class="docutils literal notranslate"><span class="pre">bash</span>&#160;&#160;&#160;&#160; <span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">libxerces-c-dev</span></code></p></li>
+<li><p>Build the Road-generation tool with standard cmake commands, e.g.:
+<code class="docutils literal notranslate"><span class="pre">bash</span>&#160;&#160;&#160;&#160; <span class="pre">mkdir</span> <span class="pre">-p</span> <span class="pre">build</span>&#160;&#160;&#160;&#160; <span class="pre">cd</span> <span class="pre">build</span>&#160;&#160;&#160;&#160; <span class="pre">cmake</span> <span class="pre">-DCMAKE_BUILD_TYPE=Release</span> <span class="pre">-DCMAKE_INSTALL_PREFIX=../bin</span> <span class="pre">..</span>&#160;&#160;&#160;&#160; <span class="pre">cmake</span> <span class="pre">--build</span> <span class="pre">.</span></code></p></li>
+</ol>
+<p><em>Note:</em> In principal, it is possible to compile and use the tool in
+Windows operating systems. However, this is experimental.</p>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h2>
+<p>The compiled application can be called from the root folder:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./road-generation_executable &lt;input&gt;
+</pre></div>
+</div>
+<p>This generates the output OpenDRIVE file next to the input file. The
+provided input file is checked against <code class="docutils literal notranslate"><span class="pre">input.xsd</span></code>. Analogous the
+output file is checked against the <code class="docutils literal notranslate"><span class="pre">output.xsd</span></code> file which specifies
+the openDRIVE 1.5 standard. For a list of all parameters use the help
+flag of the tool.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./road-generation_executable -h
+</pre></div>
+</div>
+</section>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
+<p>A simple but well designed C++ reference
+<a class="reference external" href="https://ika-rwth-aachen.github.io/RoadGeneration/index.html">documentation</a>
+is provided.</p>
+</section>
+<section id="variation-tool">
+<h2>Variation tool<a class="headerlink" href="#variation-tool" title="Permalink to this heading"></a></h2>
+<p>The Variation tool is used to generate a variety of different scenarios
+based on the same general road network. A template file is provided to
+specify variables as well as the general road network structure. A more
+thorough documentation can be found in the <a class="reference external" href="variation/">variation
+subdirectory</a>.</p>
+<section id="installation-1">
+<span id="id1"></span><h3>Installation<a class="headerlink" href="#installation-1" title="Permalink to this heading"></a></h3>
+<p>You can run the code from the <code class="docutils literal notranslate"><span class="pre">variation</span></code> subfolder, however, the
+variation tool can be installed system wide by using the install script
+in the root directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sh install-variation.sh
+</pre></div>
+</div>
+</section>
+</section>
+<section id="licenses">
+<h2>Licenses<a class="headerlink" href="#licenses" title="Permalink to this heading"></a></h2>
+<p>The project is distributed under the <a class="reference external" href="LICENSE.md">MIT License</a>.</p>
+</section>
+<section id="authors-of-this-work">
+<h2>Authors of this Work<a class="headerlink" href="#authors-of-this-work" title="Permalink to this heading"></a></h2>
+<section id="scientific-researcher">
+<h3>Scientific Researcher:<a class="headerlink" href="#scientific-researcher" title="Permalink to this heading"></a></h3>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://github.com/dbeckerAC">Daniel Becker</a> -
+<a class="reference external" href="mailto:daniel&#46;becker&#37;&#52;&#48;ika&#46;rwth-aachen&#46;de">daniel<span>&#46;</span>becker<span>&#64;</span>ika<span>&#46;</span>rwth-aachen<span>&#46;</span>de</a></div>
+<div class="line"><a class="reference external" href="https://github.com/cgeller">Christian Geller</a> -
+<a class="reference external" href="mailto:christian&#46;geller&#37;&#52;&#48;ika&#46;rwth-aachen&#46;de">christian<span>&#46;</span>geller<span>&#64;</span>ika<span>&#46;</span>rwth-aachen<span>&#46;</span>de</a></div>
+<div class="line">Fabian Ruß - <a class="reference external" href="mailto:fabian&#46;russ&#37;&#52;&#48;ika&#46;rwth-aachen&#46;de">fabian<span>&#46;</span>russ<span>&#64;</span>ika<span>&#46;</span>rwth-aachen<span>&#46;</span>de</a></div>
+</div>
+</section>
+<section id="student-worker">
+<h3>Student Worker:<a class="headerlink" href="#student-worker" title="Permalink to this heading"></a></h3>
+<p><a class="reference external" href="https://github.com/jannikbusse">Jannik Busse</a></p>
+</section>
+</section>
+<section id="citation">
+<h2>Citation<a class="headerlink" href="#citation" title="Permalink to this heading"></a></h2>
+<div class="line-block">
+<div class="line">We hope our work provides useful help in your research. If this is the
+case, please cite:</div>
+<div class="line">[1]</div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>@INPROCEEDINGS{BeckerRussGeller2020,
+  author    = {Daniel Becker and
+               Fabian Ru{\ss} and
+               Christian Geller and
+               Lutz Eckstein},
+  title     = {Generation of Complex Road Networks Using a Simplified Logical Description
+               for the Validation of Automated Vehicles},
+  booktitle = {2020 IEEE 23rd International Conference on Intelligent Transportation Systems (ITSC)},
+  year      = {2020},
+  url       = {https://arxiv.org/abs/2006.03403},
+  doi       = {10.1109/ITSC45102.2020.9294664}}
+</pre></div>
+</div>
+<p>[2]</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>@INPROCEEDINGS{BeckerGeller2022,
+  author    = {Daniel Becker and
+               Christian Geller and
+               Lutz Eckstein},
+  title     = {Road Network Variation Based on HD Map Analysis for the Simulative Safety  Assurance of Automated Vehicles},
+  booktitle = {2022 International Conference on Electrical, Computer, Communications and Mechatronics Engineering (ICECCME)},
+  year      = {2022},
+  url       = {https://arxiv.org/abs/2210.00853},
+  doi       = {...}}
+</pre></div>
+</div>
+</section>
+<section id="acknowledgements-and-credits">
+<h2>Acknowledgements and Credits<a class="headerlink" href="#acknowledgements-and-credits" title="Permalink to this heading"></a></h2>
+<p>This work received funding from the research project “<a class="reference external" href="https://setlevel.de/">SET
+Level</a>” of the
+<a class="reference external" href="https://pegasus-family.de">PEGASUS</a> project family, promoted by the
+German Federal Ministry for Economic Affairs and Climate Action based on
+a decision of the German Bundestag. | SET Level | PEGASUS Family |
+BMWK | |———–<a href="#id2"><span class="problematic" id="id3">|—————-|</span></a>——| | | | |</p>
 <div class="toctree-wrapper compound">
 </div>
 <ul class="simple">
@@ -85,6 +267,7 @@
 </ul>
 <div class="toctree-wrapper compound">
 </div>
+</section>
 </section>
 
 
