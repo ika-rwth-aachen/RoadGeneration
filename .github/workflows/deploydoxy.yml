@@ -35,5 +35,5 @@ jobs:
       with:
         publish_branch: gh-pages
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: sphinx/
+        publish_dir: ./sphinx
         force_orphan: true
