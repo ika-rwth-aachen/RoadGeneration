@@ -166,7 +166,9 @@ Examples
     :width: 427
 
 .. code-block:: xml
-
+    
+    <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+       <segments>
             <junction id="1" type="M2A">
             <road id="1" classification="main" >	
                 <referenceLine>
@@ -194,8 +196,8 @@ Examples
                 </junctionArea>
             </coupler>
         </junction>
+        </segments>
     </roadNetwork>
-
 
 **3A Junction**
 
@@ -205,6 +207,8 @@ Examples
 
 .. code-block:: xml
 
+    <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+       <segments>
         <junction id="1" type="3A">
             <road id="1" classification="access" >	
                 <referenceLine>
@@ -232,6 +236,7 @@ Examples
                 <connection type="all"/>
             </coupler>
         </junction>
+        </segments>
     </roadNetwork>
 
 **MA Junction**
@@ -242,6 +247,8 @@ Examples
 
 .. code-block:: xml
 
+    <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+       <segments>
         <junction id="1" type="MA">
             <road id="1" classification="main" >	
                 <referenceLine>
@@ -262,7 +269,10 @@ Examples
                 </junctionArea>
             </coupler>
         </junction>
+        </segments>
     </roadNetwork>
+
+|
 
 
 **2M Junction**
@@ -273,10 +283,9 @@ Examples
 
 .. code-block:: xml
 
-    
     <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
-        <segments>
-            <junction id="1" type="2M">
+       <segments>
+        <junction id="1" type="2M">
                 <road id="1" classification="main" >	
                     <referenceLine>
                         <line length="100"/>
@@ -300,7 +309,6 @@ Examples
         </segments>
     </roadNetwork>
 
-
 **Additional Lane**
 
 .. figure:: _static/adlane.png
@@ -310,7 +318,7 @@ Examples
 .. code-block:: xml
 
     <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
-        <segments>
+       <segments>
             <junction id="1" type="MA">
                 <road id="1" classification="main" >	
                     <referenceLine>
@@ -339,7 +347,6 @@ Examples
             </junction>
         </segments>
     </roadNetwork>
-
 
 **Multiple Lanes**
 
