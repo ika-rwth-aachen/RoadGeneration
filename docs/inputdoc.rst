@@ -166,7 +166,7 @@ Examples
     :width: 427
 
 .. code-block:: xml
-    
+
     <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
        <segments>
             <junction id="1" type="M2A">
@@ -569,8 +569,8 @@ Example
     </roundabout>
 
 .. figure:: _static/roundabout.png
-    :class: center
-    :width: 427
+    :align: center
+    :width: 600
 
     Generated with https://odrviewer.io/
 
