@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.8.13">
+  <compound refid="structconnection" kind="struct"><name>connection</name>
+    <member refid="structconnection_1ae5c10c33c48068f9e5a943ebf6a2ed8f" kind="variable"><name>id</name></member>
+    <member refid="structconnection_1ae0def79a564a9c792ea3e7dae6f25e82" kind="variable"><name>from</name></member>
+    <member refid="structconnection_1a3fed230662723b9e65024dbda0b51846" kind="variable"><name>to</name></member>
+    <member refid="structconnection_1a41154bdfcce6a01122a5a23a5104c0d9" kind="variable"><name>contactPoint</name></member>
+    <member refid="structconnection_1ae3b2fd2efdfe41436a0f7ea1eb4892a2" kind="variable"><name>fromLane</name></member>
+    <member refid="structconnection_1ab359e1d45858601eefd790b7285d7e0d" kind="variable"><name>toLane</name></member>
+    <member refid="structconnection_1aa022d12094368d3b55e6ab5a995f502b" kind="function"><name>to_string</name></member>
+  </compound>
+  <compound refid="structcontrol" kind="struct"><name>control</name>
+    <member refid="structcontrol_1ab50f77b013bd64fb1c8e52cda8efbbae" kind="variable"><name>id</name></member>
+    <member refid="structcontrol_1a3d535eab2d10a15f2bbaaf6297ca74d2" kind="variable"><name>signs</name></member>
+  </compound>
+  <compound refid="structgeometry" kind="struct"><name>geometry</name>
+    <member refid="structgeometry_1a03c4dc234f0629296af28f4e74b868d9" kind="variable"><name>type</name></member>
+    <member refid="structgeometry_1afc2a1bd06492055a51c7967e53b96d15" kind="variable"><name>s</name></member>
+    <member refid="structgeometry_1a4e11de9f5b5302e82e38ea484f76dbe1" kind="variable"><name>x</name></member>
+    <member refid="structgeometry_1a0f60c2d3d471a3bd2b8515c289897d90" kind="variable"><name>y</name></member>
+    <member refid="structgeometry_1aaeadb023827bd52040801f0933abcf65" kind="variable"><name>hdg</name></member>
+    <member refid="structgeometry_1a6f38a349f8271789a9bc794df05088dd" kind="variable"><name>length</name></member>
+    <member refid="structgeometry_1a0a0c83f6f34d50e4b3861e3fbcf0b260" kind="variable"><name>c</name></member>
+    <member refid="structgeometry_1a6212e93c1b9ce6da280c3c00e2b30084" kind="variable"><name>c1</name></member>
+    <member refid="structgeometry_1a62903414c6aeaf29023d431bc0b7ccc9" kind="variable"><name>c2</name></member>
+  </compound>
+  <compound refid="structjunction" kind="struct"><name>junction</name>
+    <member refid="structjunction_1af279ccaa458364ef865d963b3040830d" kind="variable"><name>id</name></member>
+    <member refid="structjunction_1aea578e3d8584e4ed23e16316c25ee67f" kind="variable"><name>connections</name></member>
+    <member refid="structjunction_1a606fee31359f1512e54d404eb3d72366" kind="function"><name>to_string</name></member>
+  </compound>
+  <compound refid="structjunction_group" kind="struct"><name>junctionGroup</name>
+    <member refid="structjunction_group_1af855cfecf9c6b4ceb06528ac9bccaa04" kind="variable"><name>id</name></member>
+    <member refid="structjunction_group_1a1303b35c07a940ff2dbdb5fa7675f959" kind="variable"><name>name</name></member>
+    <member refid="structjunction_group_1ad20ade83dd8143fda71d916961f1ddce" kind="variable"><name>type</name></member>
+    <member refid="structjunction_group_1abf4e8fe3a629af7cdd8020d7b461dc8f" kind="variable"><name>juncIds</name></member>
+    <member refid="structjunction_group_1a23bf7681cdb9ea460695aca6e09e1936" kind="function"><name>junctionGroup</name></member>
+    <member refid="structjunction_group_1a09f27792bc047e00dc2a9d1b231688ee" kind="function"><name>~junctionGroup</name></member>
+  </compound>
+  <compound refid="structlane" kind="struct"><name>lane</name>
+    <member refid="structlane_1adba2ef70f6b975ae428d7b3a64772877" kind="variable"><name>id</name></member>
+    <member refid="structlane_1abcba75fe72b0f82ee55ca374c8f20af3" kind="variable"><name>type</name></member>
+    <member refid="structlane_1a7e62f9740d2a598910b67d0a43507106" kind="variable"><name>turnLeft</name></member>
+    <member refid="structlane_1a3aae36426252caa6fbb69c88250d620b" kind="variable"><name>turnStraight</name></member>
+    <member refid="structlane_1a3aadd656508314a895d086ff929b8906" kind="variable"><name>turnRight</name></member>
+    <member refid="structlane_1ada0fa91e189662b541a9e635f8c35376" kind="variable"><name>level</name></member>
+    <member refid="structlane_1adf18366453b96d7eda646824dd63e83c" kind="variable"><name>speed</name></member>
+    <member refid="structlane_1aa493735f8aade228d0d5be3cc620e8de" kind="variable"><name>w</name></member>
+    <member refid="structlane_1abc228903c1c9ad0190c2f07659bc6696" kind="variable"><name>rm</name></member>
+    <member refid="structlane_1a0c5a311f9d6ca46cee5b42e2dcd6a350" kind="variable"><name>m</name></member>
+    <member refid="structlane_1a8ca443ddf53cd1c2c2df9af4ca36cc2f" kind="variable"><name>preId</name></member>
+    <member refid="structlane_1a0f0ed2eecb91aa694ac2bafdfddf1fc5" kind="variable"><name>sucId</name></member>
+  </compound>
+  <compound refid="structlane_section" kind="struct"><name>laneSection</name>
+    <member refid="structlane_section_1a7da65254691f561e711227a9efeb00f0" kind="variable"><name>id</name></member>
+    <member refid="structlane_section_1a580b5ca50efdfbfb45b195c45ec44ddc" kind="variable"><name>s</name></member>
+    <member refid="structlane_section_1a93a5af678ba725ce71e8dd0e569ab438" kind="variable"><name>lanes</name></member>
+    <member refid="structlane_section_1a354b03ac813874b97af9877c9ddd0004" kind="variable"><name>o</name></member>
+  </compound>
+  <compound refid="structlink" kind="struct"><name>link</name>
+    <member refid="structlink_1ac8d24608af3ad2555d3e67cf297af86f" kind="variable"><name>id</name></member>
+    <member refid="structlink_1af6f1aa69a7832fdbc89068d29b62adb2" kind="variable"><name>elementType</name></member>
+    <member refid="structlink_1a2571e309f299a5bc5a40dc682a48d8b8" kind="variable"><name>contactPoint</name></member>
+  </compound>
+  <compound refid="structmaterial" kind="struct"><name>material</name>
+    <member refid="structmaterial_1ae3d1c6599b6ffd8963dc648ef6e8ac17" kind="variable"><name>s</name></member>
+    <member refid="structmaterial_1a14db1e9b68cfd6201c19b0e87a32c655" kind="variable"><name>surface</name></member>
+    <member refid="structmaterial_1ad69eb3251f1eb1acc6554428de8579ca" kind="variable"><name>friction</name></member>
+    <member refid="structmaterial_1aa189399642e0f8d7b2747ad36ecda21c" kind="variable"><name>roughness</name></member>
+  </compound>
+  <compound refid="structobject" kind="struct"><name>object</name>
+    <member refid="structobject_1a1e71b7aa89f7e0b22b590844a2e1acb2" kind="variable"><name>id</name></member>
+    <member refid="structobject_1a9923ea1815f19b8d884f1e2841f066dc" kind="variable"><name>type</name></member>
+    <member refid="structobject_1a5504884b36f3c2e0be8efe064835f293" kind="variable"><name>s</name></member>
+    <member refid="structobject_1a7c3934f2ad62b411a2da8a982df60bfe" kind="variable"><name>t</name></member>
+    <member refid="structobject_1a9ccdbf4455ae94e12e46ff31352ca0af" kind="variable"><name>z</name></member>
+    <member refid="structobject_1a39688c5c0ff46fc8b6ed8f9bb2c7e817" kind="variable"><name>hdg</name></member>
+    <member refid="structobject_1aace7d1ff596b0d03e60fd7c6e10fc2cf" kind="variable"><name>orientation</name></member>
+    <member refid="structobject_1ad79ce87e0a2eee5b94018a0f73cf28f6" kind="variable"><name>length</name></member>
+    <member refid="structobject_1aac6d97d3574620b7df33cfd147c512dc" kind="variable"><name>width</name></member>
+    <member refid="structobject_1a9965c915611059acef1d3b325a77bedf" kind="variable"><name>height</name></member>
+    <member refid="structobject_1aa7e4036e61f41835f8947b83a651d392" kind="variable"><name>repeat</name></member>
+    <member refid="structobject_1ad6fb8f7420d95a631b52bd9790a8ba37" kind="variable"><name>len</name></member>
+    <member refid="structobject_1ad3d4ecfa123bdff2db14547449a2370b" kind="variable"><name>distance</name></member>
+  </compound>
+  <compound refid="structoffset" kind="struct"><name>offset</name>
+    <member refid="structoffset_1a50acda63105d3a439b5dd819f801036f" kind="variable"><name>a</name></member>
+    <member refid="structoffset_1a2a9206aa83a8aa018f59222b523a92ed" kind="variable"><name>b</name></member>
+    <member refid="structoffset_1aa91db57446e2f91f57abd499c2ea9dce" kind="variable"><name>c</name></member>
+    <member refid="structoffset_1a7b49d552115eb9261f9881c5d9f465af" kind="variable"><name>d</name></member>
+  </compound>
+  <compound refid="structroad" kind="struct"><name>road</name>
+    <member refid="structroad_1a42cd8102866096942a53b9bc4ed53e52" kind="variable"><name>isConnectingRoad</name></member>
+    <member refid="structroad_1ae0fa3e750ef59df5118bc9acdcdbc440" kind="variable"><name>isLinkedToNetwork</name></member>
+    <member refid="structroad_1a34362a6260bdfee70ffc8afefc19dce0" kind="variable"><name>length</name></member>
+    <member refid="structroad_1a23eca91eb8de3fe2c7d4bd1ef20a14b4" kind="variable"><name>id</name></member>
+    <member refid="structroad_1a19d743a0d0e2809153fd66e287c4c3a1" kind="variable"><name>inputSegmentId</name></member>
+    <member refid="structroad_1af3dc88f4f2f8317c9b4e2bb250a7eb4a" kind="variable"><name>inputId</name></member>
+    <member refid="structroad_1ad6127d071ad652dad8ddbc9067fd8951" kind="variable"><name>roundAboutInputSegment</name></member>
+    <member refid="structroad_1a06e9dd125de637c00cde292394b660bc" kind="variable"><name>junction</name></member>
+    <member refid="structroad_1ab029ccda54e89afb623605ab7147cea8" kind="variable"><name>inputPos</name></member>
+    <member refid="structroad_1a6852ef746597c28e635826757334dd85" kind="variable"><name>type</name></member>
+    <member refid="structroad_1aec136322505872815322824eaeadf34e" kind="variable"><name>classification</name></member>
+    <member refid="structroad_1a0855df3fe84932bd7fae49c0cd6396ca" kind="variable"><name>predecessor</name></member>
+    <member refid="structroad_1a12a316e5d67fe890961be27183338359" kind="variable"><name>successor</name></member>
+    <member refid="structroad_1a6466cccf415d7733475b8d3559451efa" kind="variable"><name>geometries</name></member>
+    <member refid="structroad_1a9020b591907122f94d1fbce1dc38c8c5" kind="variable"><name>laneSections</name></member>
+    <member refid="structroad_1a974948f0dd40abfff596fbaa78e89149" kind="variable"><name>objects</name></member>
+    <member refid="structroad_1a494d38533f491ded1a726aac4bae66fc" kind="variable"><name>signs</name></member>
+  </compound>
+  <compound refid="structroadmark" kind="struct"><name>roadmark</name>
+    <member refid="structroadmark_1ab00257d8b7ae4cac304a6803a9357337" kind="variable"><name>s</name></member>
+    <member refid="structroadmark_1abbb845544fdd431b76be8e43e880cf7a" kind="variable"><name>type</name></member>
+    <member refid="structroadmark_1ad0076c886da1b1fbd89958bdea456696" kind="variable"><name>weight</name></member>
+    <member refid="structroadmark_1adab3a3b13d9bffb1f8f09bbcddcb2a30" kind="variable"><name>color</name></member>
+    <member refid="structroadmark_1af804eea6c3fe8eb597726e7cdf0485fe" kind="variable"><name>width</name></member>
+  </compound>
+  <compound refid="structroad_network" kind="struct"><name>roadNetwork</name>
+    <member refid="structroad_network_1a3a074497917f9f269d7892bf1577508b" kind="variable"><name>file</name></member>
+    <member refid="structroad_network_1aaed5f0555b90ebe5cb113c419bdf80f4" kind="variable"><name>outputFile</name></member>
+    <member refid="structroad_network_1a4cad43f9be39c1d1e7f67e1abaf5e4df" kind="variable"><name>roads</name></member>
+    <member refid="structroad_network_1af4beb76ce1d1a0342a1afec3c0ba5e8d" kind="variable"><name>junctions</name></member>
+    <member refid="structroad_network_1af01a760c9e83d166a9d6dd017a296d7d" kind="variable"><name>controller</name></member>
+    <member refid="structroad_network_1a64be71908883e58e0a47f78f3c4c0cdc" kind="variable"><name>juncGroups</name></member>
+    <member refid="structroad_network_1a5bab654dbb643b6f8ba014b34dca7039" kind="variable"><name>nSignal</name></member>
+    <member refid="structroad_network_1acb2ee014e45ad99da340b418df506498" kind="variable"><name>nSegment</name></member>
+    <member refid="structroad_network_1a63dc25531ade07cba159292e62f5025d" kind="function"><name>roadNetwork</name></member>
+  </compound>
+  <compound refid="structsign" kind="struct"><name>sign</name>
+    <member refid="structsign_1a70a87c60d44d236452e6401525b90a52" kind="variable"><name>id</name></member>
+    <member refid="structsign_1a761c12a47212dac45bb4c1a24616557f" kind="variable"><name>type</name></member>
+    <member refid="structsign_1a8829f82498b4eaa32b3bc5df110dcf0b" kind="variable"><name>subtype</name></member>
+    <member refid="structsign_1ad254a816c4530c6050b51d819144bfb4" kind="variable"><name>rule</name></member>
+    <member refid="structsign_1ab21fdcf46652b3821ae57941e3e40eee" kind="variable"><name>value</name></member>
+    <member refid="structsign_1a39da2ffbe214f6a17d38456ec2346920" kind="variable"><name>s</name></member>
+    <member refid="structsign_1a47cc73863771ccc00dbaff0ebcc82b3c" kind="variable"><name>t</name></member>
+    <member refid="structsign_1ab92ff238fecd043172f179d802123f52" kind="variable"><name>z</name></member>
+    <member refid="structsign_1a29e4823a2763439052aa6ffcb2bfc8cd" kind="variable"><name>orientation</name></member>
+    <member refid="structsign_1a677b06de5d8ea04a725da7fe494f9ea4" kind="variable"><name>width</name></member>
+    <member refid="structsign_1af39ec41ccb9fb1c9c8ff3cac888c60d4" kind="variable"><name>height</name></member>
+    <member refid="structsign_1afa2e05ac19cc7f6255d75e7bd496c750" kind="variable"><name>dynamic</name></member>
+    <member refid="structsign_1a4dfcbf10c8e7a7313046772ab1cace18" kind="variable"><name>country</name></member>
+  </compound>
+  <compound refid="structwidth" kind="struct"><name>width</name>
+    <member refid="structwidth_1a3cccca4f732534765cb8e7f0e86ced59" kind="variable"><name>s</name></member>
+    <member refid="structwidth_1a4d777012ea613c1001d60d3b3a1f4b2f" kind="variable"><name>a</name></member>
+    <member refid="structwidth_1adf0b2b7f6b940e6afdcee0a044cb4597" kind="variable"><name>b</name></member>
+    <member refid="structwidth_1a4f9b29c43418954e4a21acf8a1a27e2e" kind="variable"><name>c</name></member>
+    <member refid="structwidth_1a5947e26a2ca39d1306307f24142ee982" kind="variable"><name>d</name></member>
+  </compound>
+  <compound refid="interface_8h" kind="file"><name>interface.h</name>
+    <member refid="interface_8h_1aaa249d21a2432e0e3f220374c156a537" kind="enum"><name>junctionGroupType</name></member>
+    <member refid="interface_8h_1aaa249d21a2432e0e3f220374c156a537a49ab97fa47467085366e4774e98943fe" kind="enumvalue"><name>roundaboutType</name></member>
+    <member refid="interface_8h_1aaa249d21a2432e0e3f220374c156a537a10ea200ca9861971578ded6205c6369f" kind="enumvalue"><name>unknownType</name></member>
+    <member refid="interface_8h_1a22e448582d19b6ac750cfcc507b416be" kind="enum"><name>contactPointType</name></member>
+    <member refid="interface_8h_1a22e448582d19b6ac750cfcc507b416bea5c094621cc0aeaf2c5f7f249f73971fe" kind="enumvalue"><name>startType</name></member>
+    <member refid="interface_8h_1a22e448582d19b6ac750cfcc507b416beaa708553e385a365dfb8cc0be4664f269" kind="enumvalue"><name>endType</name></member>
+    <member refid="interface_8h_1a22e448582d19b6ac750cfcc507b416bea032c13375b9b84cd23b70f832e0b389b" kind="enumvalue"><name>noneType</name></member>
+    <member refid="interface_8h_1a4002d440ff249a9ff196a240c148eba3" kind="enum"><name>geometryType</name></member>
+    <member refid="interface_8h_1a4002d440ff249a9ff196a240c148eba3a476ddac22dd2023b76578b83e7573269" kind="enumvalue"><name>line</name></member>
+    <member refid="interface_8h_1a4002d440ff249a9ff196a240c148eba3a0ab6a9955490a7075c9e11e5fe8a6bbe" kind="enumvalue"><name>spiral</name></member>
+    <member refid="interface_8h_1a4002d440ff249a9ff196a240c148eba3a5fc2b488d897cad539213e3f08d36888" kind="enumvalue"><name>arc</name></member>
+    <member refid="interface_8h_1aafb381844623b97e6ef5bdbd3dfa6340" kind="enum"><name>linkType</name></member>
+    <member refid="interface_8h_1aafb381844623b97e6ef5bdbd3dfa6340a93afc77041f5e004752b7c29baec3e7f" kind="enumvalue"><name>roadType</name></member>
+    <member refid="interface_8h_1aafb381844623b97e6ef5bdbd3dfa6340afd025bfdae0843db32330fd1a83ed3ed" kind="enumvalue"><name>junctionType</name></member>
+    <member refid="interface_8h_1ac459126ea89253cb9829548863ed621c" kind="variable"><name>setting</name></member>
+  </compound>
+  <compound refid="dir_68267d1309a1af8e8297ef4c3efbcdba" kind="dir"><name>/home/runner/work/RoadGeneration/RoadGeneration/src</name>
+  </compound>
+  <compound refid="dir_313caf1132e152dd9b58bea13a4052ca" kind="dir"><name>/home/runner/work/RoadGeneration/RoadGeneration/src/utils</name>
+  </compound>
+</doxygenindex>
