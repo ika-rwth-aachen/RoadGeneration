@@ -272,7 +272,6 @@ Examples
     :width: 427
 
 .. code-block:: xml
-
     
     <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
         <segments>
@@ -299,7 +298,6 @@ Examples
             </junction>
         </segments>
     </roadNetwork>
-
 
 **Additional Lane**
 
