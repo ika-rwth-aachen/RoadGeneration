@@ -94,6 +94,7 @@ int generateGeometries(DOMElement* roadIn, road &r, double &sStart, double &sEnd
     double x = 0;
     double y = 0;
     double hdg = 0;
+
     if(roadIn == NULL) return 0;
 
     DOMNodeList* referenceLines =  getChildWithName(roadIn, "referenceLine")->getChildNodes();
@@ -184,6 +185,7 @@ int generateGeometries(DOMElement* roadIn, road &r, double &sStart, double &sEnd
             geo.c1 += (sStart - s) * (geo.c2 - geo.c1) / length;
             // update length
             geo.length = actuallength;
+
         }
 
         // sStart   |-------sEnd--------|
@@ -224,6 +226,7 @@ int generateGeometries(DOMElement* roadIn, road &r, double &sStart, double &sEnd
         //   sStart |------------| sEnd
         if (cc != foundfirst && cc != foundlast)
         {
+            geo.s -= sStart;//BUGFIX
             curve(length, geo, x, y, hdg, 1);
         }
 
@@ -233,7 +236,7 @@ int generateGeometries(DOMElement* roadIn, road &r, double &sStart, double &sEnd
         r.geometries.push_back(geo);
 
         // increase variables
-        s += length;
+        s += length; //TODO: Why not actuallength?
         cc++;
     }
     return 0;
@@ -342,6 +345,8 @@ int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, d
  */
 int flipGeometries(road &r)
 {
+    if(r.id == 101)
+        cout << "DELETE THIS DEBUG CODE " << endl;
     road rNew = r;
     rNew.geometries.clear();
 
@@ -708,6 +713,8 @@ int buildRoad(DOMElement* roadIn, road &r, double sStart, double sEnd, DOMElemen
     }
 
     // generate geometries
+    if(r.id == 102 || r.id == 101)
+        cout << "DEBUG OUTPUT" << endl;
     if (generateGeometries(roadIn, r, sStart, sEnd))
     {
         cerr << "ERR: error in generateGeometries";
