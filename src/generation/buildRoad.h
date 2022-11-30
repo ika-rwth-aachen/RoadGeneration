@@ -226,7 +226,7 @@ int generateGeometries(DOMElement* roadIn, road &r, double &sStart, double &sEnd
         //   sStart |------------| sEnd
         if (cc != foundfirst && cc != foundlast)
         {
-            geo.s -= sStart;//BUGFIX
+            geo.s -= sStart;//s values start at 0 after the cut. Therefore we need to substract the offset
             curve(length, geo, x, y, hdg, 1);
         }
 
