@@ -236,7 +236,7 @@ int generateGeometries(DOMElement* roadIn, road &r, double &sStart, double &sEnd
         r.geometries.push_back(geo);
 
         // increase variables
-        s += length; //TODO: Why not actuallength?
+        s += length;
         cc++;
     }
     return 0;
