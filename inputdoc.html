@@ -86,16 +86,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#linkage">2.3. Linkage</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#links">2.3.1. Links</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#segmentlink">2.3.2. SegmentLink</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id5">2.3.2.1. Key points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">2.3.1. Example</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">2.3.3. Example</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#closeroads">2.4. CloseRoads</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id7">2.4.1. Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#closing-the-network">2.4. Closing the Network</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">2.4.1. Example</a></li>
 </ul>
 </li>
 </ul>
@@ -129,7 +124,7 @@
              
   <section id="input-file-format">
 <h1><span class="section-number">2. </span>Input file format<a class="headerlink" href="#input-file-format" title="Permalink to this heading"></a></h1>
-<p>This section explains the input format and provides examples for basic usecases. Furthermore a variety of template files can be found in <cite>io/Templates</cite>. If the input <cite>xsd</cite> scheme was subject to change, this documentation needs to be updated.</p>
+<p>This section explains the input format and provides examples for basic usecases. Furthermore a variety of template files can be found in <cite>io/Templates</cite>.</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;roadNetwork</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="na">xsi:noNamespaceSchemaLocation=</span><span class="s">&quot;../xml/input.xsd&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;segments&gt;</span>
         ...
@@ -874,10 +869,10 @@
 <span class="nt">&lt;/roundabout&gt;</span>
 </pre></div>
 </div>
-<figure class="align-center" id="id8">
+<figure class="align-center" id="id7">
 <a class="reference internal image-reference" href="_images/roundabout.png"><img alt="_images/roundabout.png" src="_images/roundabout.png" style="width: 600px;" /></a>
 <figcaption>
-<p><span class="caption-text">Generated with <a class="reference external" href="https://odrviewer.io/">https://odrviewer.io/</a></span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
+<p><span class="caption-text">Generated with <a class="reference external" href="https://odrviewer.io/">https://odrviewer.io/</a></span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
@@ -1110,54 +1105,7 @@
 </section>
 <section id="linkage">
 <h2><span class="section-number">2.3. </span>Linkage<a class="headerlink" href="#linkage" title="Permalink to this heading"></a></h2>
-<p>The <cite>links</cite> element defines the reference segment, which will be used as a refernece point for all other roads. The user can provide an offset.</p>
-<section id="links">
-<h3><span class="section-number">2.3.1. </span>Links<a class="headerlink" href="#links" title="Permalink to this heading"></a></h3>
-<table class="colwidths-given docutils align-default">
-<colgroup>
-<col style="width: 22%" />
-<col style="width: 22%" />
-<col style="width: 22%" />
-<col style="width: 22%" />
-<col style="width: 11%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><strong>Name</strong></p></td>
-<td><p><strong>Type</strong></p></td>
-<td><p><strong>Range</strong></p></td>
-<td><p><strong>Description</strong></p></td>
-<td><p><strong>Required</strong></p></td>
-</tr>
-<tr class="row-even"><td><p>refId</p></td>
-<td><p>int</p></td>
-<td><p>positive</p></td>
-<td><p>specifying the global reference segment</p></td>
-<td><p>yes</p></td>
-</tr>
-<tr class="row-odd"><td><p>xOffset</p></td>
-<td><p>int</p></td>
-<td><p>positive</p></td>
-<td><p>specifying a global x offset</p></td>
-<td><p>yes</p></td>
-</tr>
-<tr class="row-even"><td><p>yOffset</p></td>
-<td><p>int</p></td>
-<td><p>positive</p></td>
-<td><p>specifying a global y offset</p></td>
-<td><p>yes</p></td>
-</tr>
-<tr class="row-odd"><td><p>hdgOffset</p></td>
-<td><p>int</p></td>
-<td><p>positive</p></td>
-<td><p>specifying a global angle offset</p></td>
-<td><p>yes</p></td>
-</tr>
-</tbody>
-</table>
 <p>All links between segments are stored in a segmentLink element. Each segment is linked at their endpoint or their startpoint. While most other links can be generated automatically by the tool, the user has to link every segment manually.</p>
-</section>
-<section id="segmentlink">
-<h3><span class="section-number">2.3.2. </span>SegmentLink<a class="headerlink" href="#segmentlink" title="Permalink to this heading"></a></h3>
 <table class="colwidths-given docutils align-default">
 <colgroup>
 <col style="width: 22%" />
@@ -1211,17 +1159,13 @@
 </tr>
 </tbody>
 </table>
-<section id="id5">
-<h4><span class="section-number">2.3.2.1. </span>Key points<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p>Junctions and roundabouts need to be linked to the starting point of each adjacent road</p></li>
 <li><p>Each segment must be linked to the biggest component. No other components can exist in the network.</p></li>
 <li><p>Segments have a seperate namespace from Roads, i.e. multiple roads with the ID 1 can exist under differen segments</p></li>
 </ul>
-</section>
-</section>
-<section id="id6">
-<h3><span class="section-number">2.3.3. </span>Example<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<section id="id5">
+<h3><span class="section-number">2.3.1. </span>Example<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;links</span> <span class="na">refId=</span><span class="s">&quot;1&quot;</span> <span class="na">hdgOffset=</span><span class="s">&quot;0.0&quot;</span> <span class="na">xOffset=</span><span class="s">&quot;0&quot;</span> <span class="na">yOffset=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;segmentLink</span> <span class="na">fromSegment=</span><span class="s">&quot;1&quot;</span> <span class="na">toSegment=</span><span class="s">&quot;2&quot;</span> <span class="na">fromRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">toRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">fromPos=</span><span class="s">&quot;end&quot;</span> <span class="na">toPos=</span><span class="s">&quot;start&quot;</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;segmentLink</span> <span class="na">fromSegment=</span><span class="s">&quot;2&quot;</span> <span class="na">toSegment=</span><span class="s">&quot;3&quot;</span> <span class="na">fromRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">toRoad=</span><span class="s">&quot;2&quot;</span> <span class="na">fromPos=</span><span class="s">&quot;end&quot;</span> <span class="na">toPos=</span><span class="s">&quot;end&quot;</span> <span class="nt">/&gt;</span>
@@ -1233,8 +1177,8 @@
 </div>
 </section>
 </section>
-<section id="closeroads">
-<h2><span class="section-number">2.4. </span>CloseRoads<a class="headerlink" href="#closeroads" title="Permalink to this heading"></a></h2>
+<section id="closing-the-network">
+<h2><span class="section-number">2.4. </span>Closing the Network<a class="headerlink" href="#closing-the-network" title="Permalink to this heading"></a></h2>
 <p>To smoothly close open connections, roads and their respective linkage information can automatically be generated. The syntax of closing roads is identical to the road links.</p>
 <table class="colwidths-given docutils align-default">
 <colgroup>
@@ -1289,8 +1233,8 @@
 </tr>
 </tbody>
 </table>
-<section id="id7">
-<h3><span class="section-number">2.4.1. </span>Example<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<section id="id6">
+<h3><span class="section-number">2.4.1. </span>Example<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;closeRoads&gt;</span>
         <span class="nt">&lt;segmentLink</span> <span class="na">fromSegment=</span><span class="s">&quot;1&quot;</span> <span class="na">toSegment=</span><span class="s">&quot;2&quot;</span> <span class="na">fromRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">toRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">fromPos=</span><span class="s">&quot;end&quot;</span> <span class="na">toPos=</span><span class="s">&quot;end&quot;</span> <span class="nt">/&gt;</span>
         <span class="nt">&lt;segmentLink</span> <span class="na">fromSegment=</span><span class="s">&quot;3&quot;</span> <span class="na">toSegment=</span><span class="s">&quot;3&quot;</span> <span class="na">fromRoad=</span><span class="s">&quot;5&quot;</span> <span class="na">toRoad=</span><span class="s">&quot;4&quot;</span> <span class="na">fromPos=</span><span class="s">&quot;end&quot;</span> <span class="na">toPos=</span><span class="s">&quot;end&quot;</span> <span class="nt">/&gt;</span>
