@@ -119,10 +119,6 @@ int validateOutput(roadNetwork &data)
  * @param sucessor the potential successor to the road segment
  * @param sucessor the potential predecessor to the road segment * 
  */
-
-
-
-
 void appendLinkToNodeXercesC(nodeElement road, link &successor, link &predecessor)
 {
     if (successor.id == -1 && predecessor.id == -1){
