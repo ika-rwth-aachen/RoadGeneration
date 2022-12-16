@@ -345,8 +345,6 @@ int shiftGeometries(road &r, double sStart, double sEnd, double s0, double x0, d
  */
 int flipGeometries(road &r)
 {
-    if(r.id == 101)
-        cout << "DELETE THIS DEBUG CODE " << endl;
     road rNew = r;
     rNew.geometries.clear();
 
@@ -713,8 +711,6 @@ int buildRoad(DOMElement* roadIn, road &r, double sStart, double sEnd, DOMElemen
     }
 
     // generate geometries
-    if(r.id == 102 || r.id == 101)
-        cout << "DEBUG OUTPUT" << endl;
     if (generateGeometries(roadIn, r, sStart, sEnd))
     {
         cerr << "ERR: error in generateGeometries";
