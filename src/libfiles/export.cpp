@@ -44,6 +44,7 @@ using namespace std;
 #include "generation/buildSegments.h"
 #include "connection/linkSegments.h"
 #include "connection/closeRoadNetwork.h"
+#include "connection/validateElevation.h"
 
 settings setting;
 
@@ -137,6 +138,11 @@ EXPORTED int executePipeline(char* file)
 	if (closeRoadNetwork(inputxml, data))
 	{
 		cerr << "ERR: error in closeRoadNetwork" << endl;
+		return -1;
+	}
+	if(validateElevation(data))
+	{
+		cerr << "ERR: error in validateElevation" << endl;
 		return -1;
 	}
 	if (createXMLXercesC(data))
