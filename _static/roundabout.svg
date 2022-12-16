@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="36cm" height="21cm" viewBox="-480 -449 709 406" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="Background">
+    <g>
+      <rect style="fill: #ffdeb8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-165.504" y="-394.126" width="115.45" height="28"/>
+      <text font-size="16" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-107.779" y="-375.274">roundabout</text>
+      <rect style="fill: #ffdeb8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-165.504" y="-366.126" width="115.45" height="20"/>
+      <text xml:space="preserve" font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-162.504" y="-352.245"> id: int</text>
+    </g>
+    <g>
+      <rect style="fill: #ffdeb8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-175.416" y="-110.667" width="187.1" height="28"/>
+      <text font-size="16" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-81.8662" y="-91.8153">road</text>
+      <rect style="fill: #ffdeb8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-175.416" y="-82.6668" width="187.1" height="36"/>
+      <text xml:space="preserve" font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-172.416" y="-68.7856"> id: int</text>
+      <text xml:space="preserve" font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-172.416" y="-52.7856"> classification: string</text>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="-107.589,-429.746 -107.589,-413.557 -107.779,-413.557 -107.779,-395.132 "/>
+      <polygon style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="-99.5892,-429.746 -107.589,-445.746 -115.589,-429.746 "/>
+    </g>
+    <g>
+      <rect style="fill: #ffdeb8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="62.5859" y="-110.667" width="166" height="28"/>
+      <text font-size="16" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="145.586" y="-91.8153">intersectionPoint</text>
+      <rect style="fill: #ffdeb8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="62.5859" y="-82.6668" width="166" height="36"/>
+      <text xml:space="preserve" font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="65.5859" y="-68.7856"> refRoad: int</text>
+      <text xml:space="preserve" font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="65.5859" y="-52.7856"> s: double</text>
+    </g>
+    <g>
+      <rect style="fill: #ffdeb8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-340.159" y="-74.6668" width="75.45" height="28"/>
+      <text font-size="16" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-302.434" y="-55.8153">objects</text>
+    </g>
+    <g>
+      <rect style="fill: #ffdeb8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-248.261" y="-207.673" width="58.05" height="28"/>
+      <text font-size="16" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-219.236" y="-188.821">lanes</text>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="-81.8662,-136.846 -81.8662,-152.17 -219.236,-152.17 -219.236,-178.666 "/>
+      <polygon style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="-81.8662,-111.675 -86.6662,-125.675 -81.8662,-139.675 -77.0662,-125.675 "/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="-150.551" y="-155.189"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-70.8662" y="-115.794"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-215.236" y="-166.784">0..1</text>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="-201.594,-78.6668 -227.061,-78.6668 -227.061,-60.6668 -263.7,-60.6668 "/>
+      <polygon style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="-176.422,-78.6668 -190.422,-73.8668 -204.422,-78.6668 -190.422,-83.4668 "/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-225.061" y="-72.6856"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="-208.422" y="-81.6856"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-259.7" y="-63.6856">0..1</text>
+    </g>
+    <g>
+      <rect style="fill: #ffdeb8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-478.394" y="-328.006" width="341.1" height="28"/>
+      <text font-size="16" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-307.844" y="-309.155">circle</text>
+      <rect style="fill: #ffdeb8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-478.394" y="-300.006" width="341.1" height="36"/>
+      <text xml:space="preserve" font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-475.394" y="-286.125"> id: int</text>
+      <text xml:space="preserve" font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-475.394" y="-270.125"> classification: string(classificationType)</text>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="-191.683,-370.126 -307.844,-370.126 -307.844,-328.006 "/>
+      <polygon style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="-166.511,-370.126 -180.511,-365.326 -194.511,-370.126 -180.511,-374.926 "/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="-237.177" y="-373.145"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="-198.511" y="-373.145"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-303.844" y="-332.125">1</text>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="-107.779,-319.96 -107.779,-263.76 145.586,-263.76 145.586,-111.666 "/>
+      <polygon style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="-107.779,-345.132 -102.979,-331.132 -107.779,-317.132 -112.579,-331.132 "/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="18.9035" y="-266.779"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-96.779" y="-333.25"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="149.586" y="-115.785">0..*</text>
+    </g>
+    <g>
+      <rect style="fill: #ffdeb8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="150.986" y="-328.006" width="77.6" height="28"/>
+      <text font-size="16" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="189.786" y="-309.155">coupler</text>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="-23.8752,-370.126 57.4647,-370.126 57.4647,-314.006 149.976,-314.006 "/>
+      <polygon style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="-49.0468,-370.126 -35.0468,-374.926 -21.0468,-370.126 -35.0468,-365.326 "/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="59.4647" y="-345.085"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-17.0468" y="-373.145"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="145.976" y="-317.025">0..1</text>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="-307.844,-237.827 -307.844,-162.336 -302.434,-162.336 -302.434,-75.6741 "/>
+      <polygon style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="-307.844,-262.998 -303.044,-248.998 -307.844,-234.998 -312.644,-248.998 "/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="-305.139" y="-165.355"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-296.844" y="-251.117"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-298.434" y="-79.7929">0..1</text>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="-307.844,-237.827 -307.844,-228.839 -219.236,-228.839 -219.236,-208.68 "/>
+      <polygon style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="-307.844,-262.998 -303.044,-248.998 -307.844,-234.998 -312.644,-248.998 "/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="-263.54" y="-231.858"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-296.844" y="-251.117"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-215.236" y="-212.799">0..1</text>
+    </g>
+    <g>
+      <rect style="fill: #ffdeb8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-478.394" y="-208.366" width="135" height="28"/>
+      <text font-size="16" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-410.894" y="-189.515">referenceLine</text>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="-307.844,-237.827 -307.844,-229.186 -410.894,-229.186 -410.894,-209.373 "/>
+      <polygon style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="-307.844,-262.998 -303.044,-248.998 -307.844,-234.998 -312.644,-248.998 "/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="-359.369" y="-232.205"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-296.844" y="-251.117"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-406.894" y="-213.492">1</text>
+    </g>
+    <g>
+      <rect style="fill: #ffdeb8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-477.745" y="-94.6668" width="125.5" height="28"/>
+      <text font-size="16" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-414.995" y="-75.8153">circle</text>
+      <rect style="fill: #ffdeb8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-477.745" y="-66.6668" width="125.5" height="20"/>
+      <text xml:space="preserve" font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-474.745" y="-52.7856"> length: double</text>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="-410.894,-154.187 -410.894,-130.516 -414.995,-130.516 -414.995,-95.6729 "/>
+      <polygon style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="-410.894,-179.359 -406.094,-165.359 -410.894,-151.359 -415.694,-165.359 "/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="-412.945" y="-133.535"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-399.894" y="-167.478"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-410.995" y="-99.7917">1</text>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="-107.779,-319.953 -107.779,-193.639 32.6838,-193.639 32.6838,-72.6668 11.6838,-72.6668 "/>
+      <polygon style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="-107.779,-345.124 -102.979,-331.124 -107.779,-317.124 -112.579,-331.124 "/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="15.6838" y="-75.6854">1..*</text>
+    </g>
+  </g>
+</svg>
