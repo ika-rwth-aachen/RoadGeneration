@@ -214,17 +214,17 @@ German Federal Ministry for Economic Affairs and Climate Action based on
 a decision of the German Bundestag.
 
 .. |image1| image:: https://setlevel.de/assets/logo-setlevel.svg
-   :width: 30%
+
 
 .. |image2| image:: https://setlevel.de/assets/logo-pegasus-family.svg
-   :width: 30%
+
 
 .. |image3| image:: https://setlevel.de/assets/logo-bmwk-en.svg
-   :width: 30%
 
 
-.. list-table:: Title
-   :widths: 25 25 50
+
+.. list-table::
+   :widths: 30 30 30
    :header-rows: 1
 
    * - SET Level
