@@ -80,10 +80,6 @@
 </section>
 <section id="road-generation-tool-for-basic-opendrive-road-networks">
 <h1>Road Generation Tool for Basic OpenDRIVE Road Networks<a class="headerlink" href="#road-generation-tool-for-basic-opendrive-road-networks" title="Permalink to this heading"></a></h1>
-<div class="line-block">
-<div class="line"><img alt="Build" src="https://github.com/ika-rwth-aachen/RoadGeneration/actions/workflows/build.yml/badge.svg?branch=main" /> <img alt="MIT" src="https://img.shields.io/badge/license-MIT-blue.svg" /></div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">#road</span></code> <code class="docutils literal notranslate"><span class="pre">#openDRIVE</span></code> <code class="docutils literal notranslate"><span class="pre">#generic</span></code> <code class="docutils literal notranslate"><span class="pre">#generation</span></code></div>
-</div>
 <section id="about">
 <h2>About<a class="headerlink" href="#about" title="Permalink to this heading"></a></h2>
 <p>Simulation is a valuable building block for the verification and
@@ -151,11 +147,19 @@ the root directory with</p>
 </div>
 <p>Alternatively you can <strong>build the project manually</strong>:</p>
 <ol class="arabic simple">
-<li><p>Install <code class="docutils literal notranslate"><span class="pre">`xercesC</span></code> &lt;<a class="reference external" href="https://xerces.apache.org/xerces-c/">https://xerces.apache.org/xerces-c/</a>&gt;`__ via a
-package manager, e.g.: <code class="docutils literal notranslate"><span class="pre">bash</span>&#160;&#160;&#160;&#160; <span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">libxerces-c-dev</span></code></p></li>
-<li><p>Build the Road-generation tool with standard cmake commands, e.g.:
-<code class="docutils literal notranslate"><span class="pre">bash</span>&#160;&#160;&#160;&#160; <span class="pre">mkdir</span> <span class="pre">-p</span> <span class="pre">build</span>&#160;&#160;&#160;&#160; <span class="pre">cd</span> <span class="pre">build</span>&#160;&#160;&#160;&#160; <span class="pre">cmake</span> <span class="pre">-DCMAKE_BUILD_TYPE=Release</span> <span class="pre">-DCMAKE_INSTALL_PREFIX=../bin</span> <span class="pre">..</span>&#160;&#160;&#160;&#160; <span class="pre">cmake</span> <span class="pre">--build</span> <span class="pre">.</span></code></p></li>
+<li><p>Install <a class="reference external" href="https://xerces.apache.org/xerces-c">XercesC</a> via a
+package manager, e.g.:</p></li>
 </ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo apt install libxerces-c-dev
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Build the Road-generation tool with standard cmake commands, e.g.:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mkdir -p build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build <span class="o">&amp;&amp;</span> cmake -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DCMAKE_INSTALL_PREFIX<span class="o">=</span>../bin ..
+$ cmake --build .
+</pre></div>
+</div>
 <p><em>Note:</em> In principal, it is possible to compile and use the tool in
 Windows operating systems. However, this is experimental.</p>
 </section>
@@ -257,8 +261,27 @@ case, please cite:</div>
 Level</a>” of the
 <a class="reference external" href="https://pegasus-family.de">PEGASUS</a> project family, promoted by the
 German Federal Ministry for Economic Affairs and Climate Action based on
-a decision of the German Bundestag. | SET Level | PEGASUS Family |
-BMWK | |———–<a href="#id2"><span class="problematic" id="id3">|—————-|</span></a>——| | | | |</p>
+a decision of the German Bundestag.</p>
+<table class="colwidths-given docutils align-default" id="id2">
+<caption><span class="caption-text">Title</span><a class="headerlink" href="#id2" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SET Level</p></th>
+<th class="head"><p>PEGASUS Family</p></th>
+<th class="head"><p>BMWK</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="https://setlevel.de/assets/logo-setlevel.svg"><img alt="image1" src="https://setlevel.de/assets/logo-setlevel.svg" width="30%" /></a></p></td>
+<td><p><a class="reference internal" href="https://setlevel.de/assets/logo-pegasus-family.svg"><img alt="image2" src="https://setlevel.de/assets/logo-pegasus-family.svg" width="30%" /></a></p></td>
+<td><p><a class="reference internal" href="https://setlevel.de/assets/logo-bmwk-en.svg"><img alt="image3" src="https://setlevel.de/assets/logo-bmwk-en.svg" width="30%" /></a></p></td>
+</tr>
+</tbody>
+</table>
 <div class="toctree-wrapper compound">
 </div>
 <ul class="simple">
