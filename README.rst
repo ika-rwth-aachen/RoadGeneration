@@ -3,8 +3,6 @@ Road Generation Tool for Basic OpenDRIVE Road Networks
 
 .. inclusion-marker
 
-| |Build| |MIT|
-| ``#road`` ``#openDRIVE`` ``#generic`` ``#generation``
 
 About
 -----
@@ -85,10 +83,19 @@ the root directory with
 
 Alternatively you can **build the project manually**:
 
-1. Install ```xercesC`` <https://xerces.apache.org/xerces-c/>`__ via a
-   package manager, e.g.: ``bash     sudo apt install libxerces-c-dev``
+1. Install `XercesC <https://xerces.apache.org/xerces-c>`_ via a
+   package manager, e.g.:
+
+.. code:: bash
+
+    $ sudo apt install libxerces-c-dev
+
 2. Build the Road-generation tool with standard cmake commands, e.g.:
-   ``bash     mkdir -p build     cd build     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..     cmake --build .``
+
+.. code:: bash
+
+    $ mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
+    $ cmake --build .
 
 *Note:* In principal, it is possible to compile and use the tool in
 Windows operating systems. However, this is experimental.
@@ -204,8 +211,26 @@ This work received funding from the research project “`SET
 Level <https://setlevel.de/>`__” of the
 `PEGASUS <https://pegasus-family.de>`__ project family, promoted by the
 German Federal Ministry for Economic Affairs and Climate Action based on
-a decision of the German Bundestag. \| SET Level \| PEGASUS Family \|
-BMWK \| \|———–|—————-|——\| \| \| \| \|
+a decision of the German Bundestag.
 
-.. |Build| image:: https://github.com/ika-rwth-aachen/RoadGeneration/actions/workflows/build.yml/badge.svg?branch=main
-.. |MIT| image:: https://img.shields.io/badge/license-MIT-blue.svg
+.. |image1| image:: https://setlevel.de/assets/logo-setlevel.svg
+   :width: 30%
+
+.. |image2| image:: https://setlevel.de/assets/logo-pegasus-family.svg
+   :width: 30%
+
+.. |image3| image:: https://setlevel.de/assets/logo-bmwk-en.svg
+   :width: 30%
+
+
+.. list-table:: Title
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - SET Level
+     - PEGASUS Family
+     - BMWK
+   * - |image1|
+     - |image2|
+     - |image3|
+  
