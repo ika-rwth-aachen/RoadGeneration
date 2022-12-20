@@ -1,5 +1,7 @@
 Road Generation Tool for Basic OpenDRIVE Road Networks
 ======================================================
+.. image:: https://github.com/ika-rwth-aachen/RoadGeneration/actions/workflows/build.yml/badge.svg?branch=main
+
 
 .. inclusion-marker
 
