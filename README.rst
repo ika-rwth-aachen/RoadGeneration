@@ -214,13 +214,13 @@ German Federal Ministry for Economic Affairs and Climate Action based on
 a decision of the German Bundestag.
 
 .. |image1| image:: https://setlevel.de/assets/logo-setlevel.svg
-
+.. _image1: https://setlevel.de/
 
 .. |image2| image:: https://setlevel.de/assets/logo-pegasus-family.svg
-
+.. _image2: https://pegasus-family.de/
 
 .. |image3| image:: https://setlevel.de/assets/logo-bmwk-en.svg
-
+.. _image3: https://www.bmwk.de/Redaktion/DE/Textsammlungen/Technologie/fahrzeug-und-systemtechnologien.html
 
 
 .. list-table::
@@ -230,7 +230,7 @@ a decision of the German Bundestag.
    * - SET Level
      - PEGASUS Family
      - BMWK
-   * - |image1|
-     - |image2|
-     - |image3|
+   * - |image1|_
+     - |image2|_
+     - |image3|_
   
