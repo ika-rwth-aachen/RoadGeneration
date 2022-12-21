@@ -217,12 +217,15 @@ German Federal Ministry for Economic Affairs and Climate Action based on
 a decision of the German Bundestag.
 
 .. |image1| image:: https://setlevel.de/assets/logo-setlevel.svg
+   :width: 100pt
 .. _image1: https://setlevel.de/
 
 .. |image2| image:: https://setlevel.de/assets/logo-pegasus-family.svg
+   :width: 100pt
 .. _image2: https://pegasus-family.de/
 
 .. |image3| image:: https://setlevel.de/assets/logo-bmwk-en.svg
+   :width: 100pt
 .. _image3: https://www.bmwk.de/Redaktion/DE/Textsammlungen/Technologie/fahrzeug-und-systemtechnologien.html
 
 
