@@ -1,6 +1,9 @@
 Variation Tool
 ==============
 
+.. inclusion-marker
+
+
 The variation tool makes use of the road-generation library and
 generates several variations of an OpenDRIVE road network that is
 provided by a template file. The main goal was to create an easy to use

@@ -15,9 +15,7 @@ Welcome to Road's documentation!
     :hidden:
     
     Road Generation <readmelink>
-    overview/variation
-
-
+    Variation <variationlink>
 
 * :ref:`genindex`
 * :ref:`search`
