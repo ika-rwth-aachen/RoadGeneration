@@ -233,7 +233,6 @@ a decision of the German Bundestag.
 
 
 .. list-table::
-   :align: center
    :widths: 30 30 30
    :header-rows: 1
 
