@@ -1,7 +1,7 @@
 Input file format
 =================
 
-This section explains the input format and provides examples for basic usecases. Furthermore a variety of template files can be found in `io/Templates`. 
+This section explains the input format and provides examples for basic usecases. Furthermore a variety of template files can be found in `io/Templates`. If the input `xsd` scheme was subject to change, this documentation needs to be updated.
 
 .. code-block:: xml
 
@@ -167,6 +167,8 @@ Examples
 
 .. code-block:: xml
 
+    <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+       <segments>
             <junction id="1" type="M2A">
             <road id="1" classification="main" >	
                 <referenceLine>
@@ -194,8 +196,8 @@ Examples
                 </junctionArea>
             </coupler>
         </junction>
+        </segments>
     </roadNetwork>
-
 
 **3A Junction**
 
@@ -205,6 +207,8 @@ Examples
 
 .. code-block:: xml
 
+    <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+       <segments>
         <junction id="1" type="3A">
             <road id="1" classification="access" >	
                 <referenceLine>
@@ -232,6 +236,7 @@ Examples
                 <connection type="all"/>
             </coupler>
         </junction>
+        </segments>
     </roadNetwork>
 
 **MA Junction**
@@ -242,6 +247,8 @@ Examples
 
 .. code-block:: xml
 
+    <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+       <segments>
         <junction id="1" type="MA">
             <road id="1" classification="main" >	
                 <referenceLine>
@@ -262,7 +269,10 @@ Examples
                 </junctionArea>
             </coupler>
         </junction>
+        </segments>
     </roadNetwork>
+
+|
 
 
 **2M Junction**
@@ -272,10 +282,10 @@ Examples
     :width: 427
 
 .. code-block:: xml
-    
+
     <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
-        <segments>
-            <junction id="1" type="2M">
+       <segments>
+        <junction id="1" type="2M">
                 <road id="1" classification="main" >	
                     <referenceLine>
                         <line length="100"/>
@@ -308,7 +318,7 @@ Examples
 .. code-block:: xml
 
     <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
-        <segments>
+       <segments>
             <junction id="1" type="MA">
                 <road id="1" classification="main" >	
                     <referenceLine>
@@ -337,7 +347,6 @@ Examples
             </junction>
         </segments>
     </roadNetwork>
-
 
 **Multiple Lanes**
 
@@ -560,8 +569,8 @@ Example
     </roundabout>
 
 .. figure:: _static/roundabout.png
-    :class: center
-    :width: 427
+    :align: center
+    :width: 600
 
     Generated with https://odrviewer.io/
 
@@ -671,9 +680,23 @@ Example
 Linkage
 -------
 
+The `links` element defines the reference segment, which will be used as a refernece point for all other roads. The user can provide an offset.
+
+Links
+''''''
+.. csv-table::
+    :widths: 100 100 100 100 50
+
+    **Name** , **Type** , **Range** , **Description** , **Required**
+    refId, int , positive , specifying the global reference segment , yes
+    xOffset, int , positive , specifying a global x offset , yes
+    yOffset, int , positive , specifying a global y offset , yes
+    hdgOffset, int , positive , specifying a global angle offset , yes
+
 All links between segments are stored in a segmentLink element. Each segment is linked at their endpoint or their startpoint. While most other links can be generated automatically by the tool, the user has to link every segment manually. 
 
-
+SegmentLink
+'''''''''''
 .. csv-table::
     :widths: 100 100 100 100 50
 
@@ -686,7 +709,7 @@ All links between segments are stored in a segmentLink element. Each segment is 
     toPos, string , 'start' 'end' , specifies if the toSegment should be linked at its beginning or end , yes
 
 Key points
-^^^^^^^^^^^
+^^^^^^^^^^
 
 * Junctions and roundabouts need to be linked to the starting point of each adjacent road
 * Each segment must be linked to the biggest component. No other components can exist in the network.
@@ -707,8 +730,8 @@ Example
     </links>
 
 
-Closing the Network
--------------------
+CloseRoads
+----------
 
 To smoothly close open connections, roads and their respective linkage information can automatically be generated. The syntax of closing roads is identical to the road links.
 

@@ -1,3 +1,11 @@
+import os
+import sys
+import shutil
+from pathlib import Path
+
+Path("docs/_static").mkdir(parents=True, exist_ok=True)
+shutil.copyfile("_static/motivation.png", "docs/_static/motivation.png")
+
 # Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full

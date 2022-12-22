@@ -7,20 +7,15 @@
 Welcome to Road's documentation!
 ================================
 
-.. include:: overview/readme.rst
+.. include:: ../README.rst
 
 .. toctree::
     :maxdepth: 3
     :caption: Overview
     :hidden:
     
-    overview/readme
-    overview/variation
-
-
-
-Quicklinks (to be removed)
-==========================
+    Road Generation <readmelink>
+    Variation <variationlink>
 
 * :ref:`genindex`
 * :ref:`search`

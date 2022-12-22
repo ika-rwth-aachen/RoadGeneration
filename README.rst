@@ -1,8 +1,11 @@
 Road Generation Tool for Basic OpenDRIVE Road Networks
 ======================================================
+.. image:: https://github.com/ika-rwth-aachen/RoadGeneration/actions/workflows/build.yml/badge.svg?branch=main
+.. image:: https://camo.githubusercontent.com/83d3746e5881c1867665223424263d8e604df233d0a11aae0813e0414d433943/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c6963656e73652d4d49542d626c75652e737667
 
-| |Build| |MIT|
-| ``#road`` ``#openDRIVE`` ``#generic`` ``#generation``
+
+.. inclusion-marker
+
 
 About
 -----
@@ -38,7 +41,7 @@ published in `[1] <https://arxiv.org/abs/2006.03403>`__ and
 analysis of real world HD maps which is done in a separate internal
 tool.
 
-.. image:: docs/motivation.png
+.. image:: docs/_static/motivation.png
    :alt: Fig.1: Possible workflow for the presend road variation tool.
 
 Fig.1: Possible workflow for the presend road variation tool.
@@ -46,7 +49,7 @@ Fig.1: Possible workflow for the presend road variation tool.
 Repository Overview
 -------------------
 
-This repository provides a tool for the generation of road networkds.
+This repository provides a tool for the generation of road networks.
 Here, the main folders are named:
 
 -  ``doc``: Resources for documentation
@@ -83,10 +86,19 @@ the root directory with
 
 Alternatively you can **build the project manually**:
 
-1. Install ```xercesC`` <https://xerces.apache.org/xerces-c/>`__ via a
-   package manager, e.g.: ``bash     sudo apt install libxerces-c-dev``
+1. Install `XercesC <https://xerces.apache.org/xerces-c>`_ via a
+   package manager, e.g.:
+
+.. code:: bash
+
+    $ sudo apt install libxerces-c-dev
+
 2. Build the Road-generation tool with standard cmake commands, e.g.:
-   ``bash     mkdir -p build     cd build     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..     cmake --build .``
+
+.. code:: bash
+
+    $ mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
+    $ cmake --build .
 
 *Note:* In principal, it is possible to compile and use the tool in
 Windows operating systems. However, this is experimental.
@@ -202,8 +214,32 @@ This work received funding from the research project “`SET
 Level <https://setlevel.de/>`__” of the
 `PEGASUS <https://pegasus-family.de>`__ project family, promoted by the
 German Federal Ministry for Economic Affairs and Climate Action based on
-a decision of the German Bundestag. \| SET Level \| PEGASUS Family \|
-BMWK \| \|———–|—————-|——\| \| \| \| \|
+a decision of the German Bundestag.
 
-.. |Build| image:: https://github.com/ika-rwth-aachen/RoadGeneration/actions/workflows/build.yml/badge.svg?branch=main
-.. |MIT| image:: https://img.shields.io/badge/license-MIT-blue.svg
+.. |image1| image:: https://setlevel.de/assets/logo-setlevel.svg
+   :align: middle
+   :width: 100pt
+.. _image1: https://setlevel.de/
+
+.. |image2| image:: https://setlevel.de/assets/logo-pegasus-family.svg
+   :width: 100pt
+   :align: middle
+.. _image2: https://pegasus-family.de/
+
+.. |image3| image:: https://setlevel.de/assets/logo-bmwk-en.svg
+   :width: 100pt
+   :align: middle
+.. _image3: https://www.bmwk.de/Redaktion/DE/Textsammlungen/Technologie/fahrzeug-und-systemtechnologien.html
+
+
+.. list-table::
+   :widths: 30 30 30
+   :header-rows: 1
+
+   * - SET Level
+     - PEGASUS Family
+     - BMWK
+   * - |image1|_
+     - |image2|_
+     - |image3|_
+  
