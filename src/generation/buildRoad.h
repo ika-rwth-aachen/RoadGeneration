@@ -94,6 +94,7 @@ int generateGeometries(DOMElement* roadIn, road &r, double &sStart, double &sEnd
     double x = 0;
     double y = 0;
     double hdg = 0;
+
     if(roadIn == NULL) return 0;
 
     DOMNodeList* referenceLines =  getChildWithName(roadIn, "referenceLine")->getChildNodes();
@@ -184,6 +185,7 @@ int generateGeometries(DOMElement* roadIn, road &r, double &sStart, double &sEnd
             geo.c1 += (sStart - s) * (geo.c2 - geo.c1) / length;
             // update length
             geo.length = actuallength;
+
         }
 
         // sStart   |-------sEnd--------|
@@ -224,6 +226,7 @@ int generateGeometries(DOMElement* roadIn, road &r, double &sStart, double &sEnd
         //   sStart |------------| sEnd
         if (cc != foundfirst && cc != foundlast)
         {
+            geo.s -= sStart;//s values start at 0 after the cut. Therefore we need to substract the offset
             curve(length, geo, x, y, hdg, 1);
         }
 
