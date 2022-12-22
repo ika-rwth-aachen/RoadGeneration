@@ -49,7 +49,7 @@ Fig.1: Possible workflow for the presend road variation tool.
 Repository Overview
 -------------------
 
-This repository provides a tool for the generation of road networkds.
+This repository provides a tool for the generation of road networks.
 Here, the main folders are named:
 
 -  ``doc``: Resources for documentation
