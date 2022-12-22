@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="structlane_section" kind="struct" language="C++" prot="public">
+    <compoundname>laneSection</compoundname>
+    <includes refid="interface_8h" local="no">interface.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structlane_section_1a7da65254691f561e711227a9efeb00f0" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int laneSection::id</definition>
+        <argsstring></argsstring>
+        <name>id</name>
+        <initializer>= -1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="169" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="169" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structlane_section_1a580b5ca50efdfbfb45b195c45ec44ddc" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double laneSection::s</definition>
+        <argsstring></argsstring>
+        <name>s</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="170" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="170" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structlane_section_1a93a5af678ba725ce71e8dd0e569ab438" prot="public" static="no" mutable="no">
+        <type>vector&lt; <ref refid="structlane" kindref="compound">lane</ref> &gt;</type>
+        <definition>vector&lt;lane&gt; laneSection::lanes</definition>
+        <argsstring></argsstring>
+        <name>lanes</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="171" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="171" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structlane_section_1a354b03ac813874b97af9877c9ddd0004" prot="public" static="no" mutable="no">
+        <type><ref refid="structoffset" kindref="compound">offset</ref></type>
+        <definition>offset laneSection::o</definition>
+        <argsstring></argsstring>
+        <name>o</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="172" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="172" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para><ref refid="structlane_section" kindref="compound">laneSection</ref> holds several lanes in a defined s section </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="17">
+        <label>offset</label>
+        <link refid="structoffset"/>
+      </node>
+      <node id="16">
+        <label>laneSection</label>
+        <link refid="structlane_section"/>
+        <childnode refid="17" relation="usage">
+          <edgelabel>o</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="168" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="167" bodyend="173"/>
+    <listofallmembers>
+      <member refid="structlane_section_1a7da65254691f561e711227a9efeb00f0" prot="public" virt="non-virtual"><scope>laneSection</scope><name>id</name></member>
+      <member refid="structlane_section_1a93a5af678ba725ce71e8dd0e569ab438" prot="public" virt="non-virtual"><scope>laneSection</scope><name>lanes</name></member>
+      <member refid="structlane_section_1a354b03ac813874b97af9877c9ddd0004" prot="public" virt="non-virtual"><scope>laneSection</scope><name>o</name></member>
+      <member refid="structlane_section_1a580b5ca50efdfbfb45b195c45ec44ddc" prot="public" virt="non-virtual"><scope>laneSection</scope><name>s</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

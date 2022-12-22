@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2. Input file format &mdash; Road Generation 1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/layout.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3. Autodoc" href="autodoc.html" />
+    <link rel="prev" title="1. Documentation" href="doc.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Road Generation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="readmelink.html">Road Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="variationlink.html">Variation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="doc.html">1. Documentation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. Input file format</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#segments">2.1. Segments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#connectingroad">2.1.1. ConnectingRoad</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#road">2.1.1.1. Road</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linetype">2.1.1.2. LineType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#key-points">2.1.1.3. Key points</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#junctions">2.1.2. Junctions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#junction">2.1.2.1. Junction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#automaticwidening">2.1.2.2. AutomaticWidening</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#intersectionpoint">2.1.2.3. IntersectionPoint</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#roadlink">2.1.2.4. RoadLink</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lanelink">2.1.2.5. laneLink</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.1.2.6. Key points</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">2.1.2.7. Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#roundabout">2.1.3. Roundabout</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#circle">2.1.3.1. Circle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reference-line">2.1.3.2. Reference Line</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">2.1.3.3. Key points</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example">2.1.3.4. Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#lanes">2.2. Lanes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lane">2.2.1. Lane</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#roadmark">2.2.2. RoadMark</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lanewidening-and-lanedrop">2.2.3. LaneWidening and laneDrop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#restrictedarea">2.2.4. RestrictedArea</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#material">2.2.5. Material</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">2.2.6. Key points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">2.2.7. Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#linkage">2.3. Linkage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#links">2.3.1. Links</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#segmentlink">2.3.2. SegmentLink</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">2.3.2.1. Key points</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">2.3.3. Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#closeroads">2.4. CloseRoads</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">2.4.1. Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="autodoc.html">3. Autodoc</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Road Generation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">2. </span>Input file format</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/inputdoc.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="input-file-format">
+<h1><span class="section-number">2. </span>Input file format<a class="headerlink" href="#input-file-format" title="Permalink to this heading"></a></h1>
+<p>This section explains the input format and provides examples for basic usecases. Furthermore a variety of template files can be found in <cite>io/Templates</cite>. If the input <cite>xsd</cite> scheme was subject to change, this documentation needs to be updated.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;roadNetwork</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="na">xsi:noNamespaceSchemaLocation=</span><span class="s">&quot;../xml/input.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;segments&gt;</span>
+        ...
+    <span class="nt">&lt;/segments&gt;</span>
+    <span class="nt">&lt;links</span> <span class="na">refId=</span><span class="s">&quot;1&quot;</span> <span class="na">hdgOffset=</span><span class="s">&quot;0.0&quot;</span> <span class="na">xOffset=</span><span class="s">&quot;0&quot;</span> <span class="na">yOffset=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+        ...
+    <span class="nt">&lt;/links&gt;</span>
+    <span class="nt">&lt;closeRoads&gt;</span>
+        ...
+    <span class="nt">&lt;/closeRoads&gt;</span>
+<span class="nt">&lt;/roadNetwork&gt;</span>
+</pre></div>
+</div>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/all.svg"><img alt="_images/all.svg" src="_images/all.svg" width="50%" /></a>
+</figure>
+<section id="segments">
+<h2><span class="section-number">2.1. </span>Segments<a class="headerlink" href="#segments" title="Permalink to this heading"></a></h2>
+<p>The <em>segments</em> node stores information about each physical road in the network as it’s child nodes. Each segment represents a seperate road, roundabout or junction. The different types segments are outlined below.</p>
+<section id="connectingroad">
+<h3><span class="section-number">2.1.1. </span>ConnectingRoad<a class="headerlink" href="#connectingroad" title="Permalink to this heading"></a></h3>
+<p>A connecting Road is used to represent a single street. Two types (i.e ‘access’ and ‘main’) of roads can be used to select different presets for the road’s characteristics.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/connectingroad.svg"><img alt="_images/connectingroad.svg" src="_images/connectingroad.svg" width="45%" /></a>
+</figure>
+<section id="road">
+<h4><span class="section-number">2.1.1.1. </span>Road<a class="headerlink" href="#road" title="Permalink to this heading"></a></h4>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Range</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Required</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>id</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>id of the road inside of the segment</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>classification</p></td>
+<td><p>string</p></td>
+<td><p>‘main’ ‘access’</p></td>
+<td><p>set the road to main or access road</p></td>
+<td><p>yes</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="linetype">
+<h4><span class="section-number">2.1.1.2. </span>LineType<a class="headerlink" href="#linetype" title="Permalink to this heading"></a></h4>
+<p>At the moment three different types of line are supported. Straight lines, curves and spirals.</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Range</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Required</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>length</p></td>
+<td><p>double</p></td>
+<td><p>positive</p></td>
+<td><p>length of the reference line in m</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>R</p></td>
+<td><p>double</p></td>
+<td><p>positive</p></td>
+<td><p>constant radius of the arc</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-even"><td><p>Rs</p></td>
+<td><p>double</p></td>
+<td><p>positive</p></td>
+<td><p>starting radius of the spiral</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>Re</p></td>
+<td><p>double</p></td>
+<td><p>positive</p></td>
+<td><p>ending radius of the spiral</p></td>
+<td><p>yes</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="key-points">
+<h4><span class="section-number">2.1.1.3. </span>Key points<a class="headerlink" href="#key-points" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p>Connecting roads are used for simple streets that are linked once at each endpoint at most</p></li>
+<li><p>The outermost ConnectingRoad element holds the ID in the segment namespace</p></li>
+<li><p>The road element holds an ID that is relative to the ConnectingRoad’s ID. This is used to distinguish seperate parts of the same segment element</p></li>
+</ul>
+</section>
+</section>
+<section id="junctions">
+<h3><span class="section-number">2.1.2. </span>Junctions<a class="headerlink" href="#junctions" title="Permalink to this heading"></a></h3>
+<p>Junctions are a key component that are used connect multiple roads. ‘access’ and ‘main’ roads are behaving differently when used in a junction. While ‘main’ roads are ‘cut’ appart to create an intersection, ‘access’ roads are ‘appended’ to the intersection point. While the same junction can be represented by different junction types, it is adviced to stick to their intended usecases.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/junction.svg"><img alt="_images/junction.svg" src="_images/junction.svg" width="55%" /></a>
+</figure>
+<section id="junction">
+<h4><span class="section-number">2.1.2.1. </span>Junction<a class="headerlink" href="#junction" title="Permalink to this heading"></a></h4>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Range</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Required</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>id</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>id of the road inside of the segment</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>type</p></td>
+<td><p>string</p></td>
+<td><p>‘2M’ ‘MA’ ‘M2A’ ‘3A’</p></td>
+<td><p>type of junction</p></td>
+<td><p>yes</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="automaticwidening">
+<h4><span class="section-number">2.1.2.2. </span>AutomaticWidening<a class="headerlink" href="#automaticwidening" title="Permalink to this heading"></a></h4>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Range</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Required</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>active</p></td>
+<td><p>string</p></td>
+<td><p>‘none’ ‘all’ ‘main’ ‘access’</p></td>
+<td><p>specify where automatic widening is applied</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>length</p></td>
+<td><p>double</p></td>
+<td><p>positive</p></td>
+<td><p>length of the additional lane</p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p>double</p></td>
+<td><p>double</p></td>
+<td><p>positive</p></td>
+<td><p>length of the transitioning part</p></td>
+<td><p>no</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="intersectionpoint">
+<h4><span class="section-number">2.1.2.3. </span>IntersectionPoint<a class="headerlink" href="#intersectionpoint" title="Permalink to this heading"></a></h4>
+<p>The intersection point stores information about the location and geometry about the point in which all roads meet. The reference road dictates the position of the junction.</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Range</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Required</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>refRoad</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>id of the reference road of the junction</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>s</p></td>
+<td><p>string</p></td>
+<td><p>positive</p></td>
+<td><p>position of the junction in road direction</p></td>
+<td><p>yes</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="roadlink">
+<h4><span class="section-number">2.1.2.4. </span>RoadLink<a class="headerlink" href="#roadlink" title="Permalink to this heading"></a></h4>
+<p>In most cases manual road links can be omitted. If the user wants to create custom road linkage they can use the road link tag.</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Range</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Required</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>fromId</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>id of the fromRoad</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>toId</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>id of the toRoad</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-even"><td><p>fromPos</p></td>
+<td><p>string</p></td>
+<td><p>‘start’ ‘end’</p></td>
+<td><p>position of the fromRoad link</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>toPos</p></td>
+<td><p>string</p></td>
+<td><p>‘start’ ‘end’</p></td>
+<td><p>position of the toRoad link</p></td>
+<td><p>yes</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lanelink">
+<h4><span class="section-number">2.1.2.5. </span>laneLink<a class="headerlink" href="#lanelink" title="Permalink to this heading"></a></h4>
+<p>If the user wants to create elaborate junctions they might want to manually link each lane. However, in most cases this is not necessary.</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Range</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Required</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>fromId</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>id of the fromLane</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>toId</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>id of the toLane</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-even"><td><p>left</p></td>
+<td><p>string</p></td>
+<td><p>‘solid’ ‘broken’ ‘none’</p></td>
+<td><p>lane marking on the left side</p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p>right</p></td>
+<td><p>string</p></td>
+<td><p>‘solid’ ‘broken’ ‘none’</p></td>
+<td><p>lane marking on the right side</p></td>
+<td><p>no</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id1">
+<h4><span class="section-number">2.1.2.6. </span>Key points<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p>Junctions need to be linked to the starting point of each adjacent road</p></li>
+<li><p>A junction must be used if more than two roads are linked to each other</p></li>
+<li><p>The intersection points of access roads need to be linked at their start or end positions</p></li>
+<li><p>Similar to the connecting road namespace, the junction ID is in the segment ID namespace and the road IDs are relative to the segment ID</p></li>
+</ul>
+</section>
+<section id="examples">
+<h4><span class="section-number">2.1.2.7. </span>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h4>
+<p><strong>M2A Junction</strong></p>
+<figure class="align-default">
+<a class="align-right reference internal image-reference" href="_images/M2A.png"><img alt="_images/M2A.png" class="align-right" src="_images/M2A.png" style="width: 427px;" /></a>
+</figure>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;roadNetwork</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="na">xsi:noNamespaceSchemaLocation=</span><span class="s">&quot;../xml/input.xsd&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;segments&gt;</span>
+        <span class="nt">&lt;junction</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">type=</span><span class="s">&quot;M2A&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">classification=</span><span class="s">&quot;main&quot;</span> <span class="nt">&gt;</span>
+            <span class="nt">&lt;referenceLine&gt;</span>
+                <span class="nt">&lt;line</span> <span class="na">length=</span><span class="s">&quot;150&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/referenceLine&gt;</span>
+        <span class="nt">&lt;/road&gt;</span>
+        <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">classification=</span><span class="s">&quot;access&quot;</span> <span class="nt">&gt;</span>
+            <span class="nt">&lt;referenceLine&gt;</span>
+                <span class="nt">&lt;line</span> <span class="na">length=</span><span class="s">&quot;150&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/referenceLine&gt;</span>
+        <span class="nt">&lt;/road&gt;</span>
+        <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;3&quot;</span> <span class="na">classification=</span><span class="s">&quot;access&quot;</span> <span class="nt">&gt;</span>
+            <span class="nt">&lt;referenceLine&gt;</span>
+                <span class="nt">&lt;line</span> <span class="na">length=</span><span class="s">&quot;150&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/referenceLine&gt;</span>
+        <span class="nt">&lt;/road&gt;</span>
+        <span class="nt">&lt;intersectionPoint</span> <span class="na">refRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">s=</span><span class="s">&quot;75&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;adRoad</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">s=</span><span class="s">&quot;20&quot;</span> <span class="na">angle=</span><span class="s">&quot;-1.27&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;adRoad</span> <span class="na">id=</span><span class="s">&quot;3&quot;</span> <span class="na">s=</span><span class="s">&quot;20&quot;</span> <span class="na">angle=</span><span class="s">&quot;1.57&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/intersectionPoint&gt;</span>
+        <span class="nt">&lt;coupler&gt;</span>
+            <span class="nt">&lt;junctionArea</span> <span class="na">gap=</span><span class="s">&quot;10&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;roadGap</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">gap=</span><span class="s">&quot;15&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;roadGap</span> <span class="na">id=</span><span class="s">&quot;3&quot;</span> <span class="na">gap=</span><span class="s">&quot;15&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/junctionArea&gt;</span>
+        <span class="nt">&lt;/coupler&gt;</span>
+    <span class="nt">&lt;/junction&gt;</span>
+    <span class="nt">&lt;/segments&gt;</span>
+<span class="nt">&lt;/roadNetwork&gt;</span>
+</pre></div>
+</div>
+<p><strong>3A Junction</strong></p>
+<figure class="align-default">
+<a class="align-right reference internal image-reference" href="_images/3A.png"><img alt="_images/3A.png" class="align-right" src="_images/3A.png" style="width: 427px;" /></a>
+</figure>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;roadNetwork</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="na">xsi:noNamespaceSchemaLocation=</span><span class="s">&quot;../xml/input.xsd&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;segments&gt;</span>
+    <span class="nt">&lt;junction</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">type=</span><span class="s">&quot;3A&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">classification=</span><span class="s">&quot;access&quot;</span> <span class="nt">&gt;</span>
+            <span class="nt">&lt;referenceLine&gt;</span>
+                <span class="nt">&lt;spiral</span> <span class="na">length=</span><span class="s">&quot;100&quot;</span>  <span class="na">Rs=</span><span class="s">&quot;-150&quot;</span> <span class="na">Re=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/referenceLine&gt;</span>
+        <span class="nt">&lt;/road&gt;</span>
+        <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">classification=</span><span class="s">&quot;access&quot;</span> <span class="nt">&gt;</span>
+            <span class="nt">&lt;referenceLine&gt;</span>
+                <span class="nt">&lt;arc</span> <span class="na">length=</span><span class="s">&quot;100&quot;</span>  <span class="na">R=</span><span class="s">&quot;-100&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/referenceLine&gt;</span>
+        <span class="nt">&lt;/road&gt;</span>
+        <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;3&quot;</span> <span class="na">classification=</span><span class="s">&quot;access&quot;</span> <span class="nt">&gt;</span>
+            <span class="nt">&lt;referenceLine&gt;</span>
+                <span class="nt">&lt;arc</span> <span class="na">length=</span><span class="s">&quot;100&quot;</span>  <span class="na">R=</span><span class="s">&quot;-100&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/referenceLine&gt;</span>
+        <span class="nt">&lt;/road&gt;</span>
+        <span class="nt">&lt;intersectionPoint</span> <span class="na">refRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">s=</span><span class="s">&quot;100&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;adRoad</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">s=</span><span class="s">&quot;0&quot;</span> <span class="na">angle=</span><span class="s">&quot;3.14&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;adRoad</span> <span class="na">id=</span><span class="s">&quot;3&quot;</span> <span class="na">s=</span><span class="s">&quot;0&quot;</span> <span class="na">angle=</span><span class="s">&quot;1.57079632679&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/intersectionPoint&gt;</span>
+        <span class="nt">&lt;coupler&gt;</span>
+            <span class="nt">&lt;junctionArea</span> <span class="na">gap=</span><span class="s">&quot;10&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;roadGap</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">gap=</span><span class="s">&quot;15&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/junctionArea&gt;</span>
+            <span class="nt">&lt;connection</span> <span class="na">type=</span><span class="s">&quot;all&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/coupler&gt;</span>
+    <span class="nt">&lt;/junction&gt;</span>
+    <span class="nt">&lt;/segments&gt;</span>
+<span class="nt">&lt;/roadNetwork&gt;</span>
+</pre></div>
+</div>
+<p><strong>MA Junction</strong></p>
+<figure class="align-default">
+<a class="align-right reference internal image-reference" href="_images/MA.png"><img alt="_images/MA.png" class="align-right" src="_images/MA.png" style="width: 427px;" /></a>
+</figure>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;roadNetwork</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="na">xsi:noNamespaceSchemaLocation=</span><span class="s">&quot;../xml/input.xsd&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;segments&gt;</span>
+    <span class="nt">&lt;junction</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">type=</span><span class="s">&quot;MA&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">classification=</span><span class="s">&quot;main&quot;</span> <span class="nt">&gt;</span>
+            <span class="nt">&lt;referenceLine&gt;</span>
+                <span class="nt">&lt;line</span> <span class="na">length=</span><span class="s">&quot;400&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/referenceLine&gt;</span>
+        <span class="nt">&lt;/road&gt;</span>
+        <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">classification=</span><span class="s">&quot;access&quot;</span> <span class="nt">&gt;</span>
+            <span class="nt">&lt;referenceLine&gt;</span>
+                <span class="nt">&lt;arc</span> <span class="na">length=</span><span class="s">&quot;100&quot;</span>  <span class="na">R=</span><span class="s">&quot;-100&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/referenceLine&gt;</span>
+        <span class="nt">&lt;/road&gt;</span>
+        <span class="nt">&lt;intersectionPoint</span> <span class="na">refRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">s=</span><span class="s">&quot;200&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;adRoad</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">s=</span><span class="s">&quot;0&quot;</span> <span class="na">angle=</span><span class="s">&quot;-1.57&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/intersectionPoint&gt;</span>
+        <span class="nt">&lt;coupler&gt;</span>
+            <span class="nt">&lt;junctionArea</span> <span class="na">gap=</span><span class="s">&quot;10&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;roadGap</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">gap=</span><span class="s">&quot;15&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/junctionArea&gt;</span>
+        <span class="nt">&lt;/coupler&gt;</span>
+    <span class="nt">&lt;/junction&gt;</span>
+    <span class="nt">&lt;/segments&gt;</span>
+<span class="nt">&lt;/roadNetwork&gt;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p><strong>2M Junction</strong></p>
+<figure class="align-default">
+<a class="align-right reference internal image-reference" href="_images/2M.png"><img alt="_images/2M.png" class="align-right" src="_images/2M.png" style="width: 427px;" /></a>
+</figure>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;roadNetwork</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="na">xsi:noNamespaceSchemaLocation=</span><span class="s">&quot;../xml/input.xsd&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;segments&gt;</span>
+    <span class="nt">&lt;junction</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">type=</span><span class="s">&quot;2M&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">classification=</span><span class="s">&quot;main&quot;</span> <span class="nt">&gt;</span>
+                <span class="nt">&lt;referenceLine&gt;</span>
+                    <span class="nt">&lt;line</span> <span class="na">length=</span><span class="s">&quot;100&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/referenceLine&gt;</span>
+            <span class="nt">&lt;/road&gt;</span>
+            <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">classification=</span><span class="s">&quot;main&quot;</span> <span class="nt">&gt;</span>
+                <span class="nt">&lt;referenceLine&gt;</span>
+                    <span class="nt">&lt;arc</span> <span class="na">length=</span><span class="s">&quot;100&quot;</span>  <span class="na">R=</span><span class="s">&quot;-100&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/referenceLine&gt;</span>
+            <span class="nt">&lt;/road&gt;</span>
+            <span class="nt">&lt;intersectionPoint</span> <span class="na">refRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">s=</span><span class="s">&quot;50&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;adRoad</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">s=</span><span class="s">&quot;50&quot;</span> <span class="na">angle=</span><span class="s">&quot;-1.57&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/intersectionPoint&gt;</span>
+            <span class="nt">&lt;coupler&gt;</span>
+                <span class="nt">&lt;junctionArea</span> <span class="na">gap=</span><span class="s">&quot;10&quot;</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;roadGap</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">gap=</span><span class="s">&quot;15&quot;</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;roadGap</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">gap=</span><span class="s">&quot;20&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/junctionArea&gt;</span>
+            <span class="nt">&lt;/coupler&gt;</span>
+        <span class="nt">&lt;/junction&gt;</span>
+    <span class="nt">&lt;/segments&gt;</span>
+<span class="nt">&lt;/roadNetwork&gt;</span>
+</pre></div>
+</div>
+<p><strong>Additional Lane</strong></p>
+<figure class="align-default">
+<a class="align-right reference internal image-reference" href="_images/adlane.png"><img alt="_images/adlane.png" class="align-right" src="_images/adlane.png" style="width: 427px;" /></a>
+</figure>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;roadNetwork</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="na">xsi:noNamespaceSchemaLocation=</span><span class="s">&quot;../xml/input.xsd&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;segments&gt;</span>
+        <span class="nt">&lt;junction</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">type=</span><span class="s">&quot;MA&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">classification=</span><span class="s">&quot;main&quot;</span> <span class="nt">&gt;</span>
+                <span class="nt">&lt;referenceLine&gt;</span>
+                    <span class="nt">&lt;line</span> <span class="na">length=</span><span class="s">&quot;100&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/referenceLine&gt;</span>
+            <span class="nt">&lt;/road&gt;</span>
+
+            <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">classification=</span><span class="s">&quot;access&quot;</span> <span class="nt">&gt;</span>
+                <span class="nt">&lt;referenceLine&gt;</span>
+                    <span class="nt">&lt;arc</span> <span class="na">length=</span><span class="s">&quot;100&quot;</span>  <span class="na">R=</span><span class="s">&quot;-100&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/referenceLine&gt;</span>
+
+            <span class="nt">&lt;/road&gt;</span>
+            <span class="nt">&lt;intersectionPoint</span> <span class="na">refRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">s=</span><span class="s">&quot;100&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;adRoad</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">s=</span><span class="s">&quot;0&quot;</span> <span class="na">angle=</span><span class="s">&quot;-1.57&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/intersectionPoint&gt;</span>
+            <span class="nt">&lt;coupler&gt;</span>
+                <span class="nt">&lt;junctionArea</span> <span class="na">gap=</span><span class="s">&quot;10&quot;</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;roadGap</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">gap=</span><span class="s">&quot;15&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/junctionArea&gt;</span>
+                <span class="nt">&lt;connection</span> <span class="na">type=</span><span class="s">&quot;all&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;additionalLanes&gt;</span>
+                    <span class="nt">&lt;additionalLane</span> <span class="na">roadId=</span><span class="s">&quot;2&quot;</span> <span class="na">roadPos=</span><span class="s">&quot;end&quot;</span> <span class="na">type=</span><span class="s">&quot;left&quot;</span> <span class="na">length=</span><span class="s">&quot;5&quot;</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;/additionalLanes&gt;</span>
+            <span class="nt">&lt;/coupler&gt;</span>
+        <span class="nt">&lt;/junction&gt;</span>
+    <span class="nt">&lt;/segments&gt;</span>
+<span class="nt">&lt;/roadNetwork&gt;</span>
+</pre></div>
+</div>
+<p><strong>Multiple Lanes</strong></p>
+<figure class="align-default">
+<a class="align-right reference internal image-reference" href="_images/MulLanes.png"><img alt="_images/MulLanes.png" class="align-right" src="_images/MulLanes.png" style="width: 427px;" /></a>
+</figure>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;roadNetwork</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="na">xsi:noNamespaceSchemaLocation=</span><span class="s">&quot;../xml/input.xsd&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;segments&gt;</span>
+        <span class="nt">&lt;junction</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">type=</span><span class="s">&quot;MA&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">classification=</span><span class="s">&quot;main&quot;</span> <span class="nt">&gt;</span>
+                <span class="nt">&lt;referenceLine&gt;</span>
+                    <span class="nt">&lt;line</span> <span class="na">length=</span><span class="s">&quot;100&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/referenceLine&gt;</span>
+                <span class="nt">&lt;lanes&gt;</span>
+                <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span> <span class="na">width=</span><span class="s">&quot;5&quot;</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;roadMark</span> <span class="na">type=</span><span class="s">&quot;solid&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/lane&gt;</span>
+                <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;roadMark</span> <span class="na">type=</span><span class="s">&quot;solid&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+                        <span class="nt">&lt;/lane&gt;</span>
+                    <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;0&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span><span class="nt">&gt;</span> <span class="nt">&lt;/lane&gt;</span>
+                        <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;-1&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span> <span class="na">width=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+                            <span class="nt">&lt;roadMark</span> <span class="na">type=</span><span class="s">&quot;solid&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;/lane&gt;</span>
+                <span class="nt">&lt;/lanes&gt;</span>
+            <span class="nt">&lt;/road&gt;</span>
+
+            <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">classification=</span><span class="s">&quot;access&quot;</span> <span class="nt">&gt;</span>
+                <span class="nt">&lt;referenceLine&gt;</span>
+                    <span class="nt">&lt;arc</span> <span class="na">length=</span><span class="s">&quot;100&quot;</span>  <span class="na">R=</span><span class="s">&quot;-100&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/referenceLine&gt;</span>
+                <span class="nt">&lt;lanes&gt;</span>
+                <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span> <span class="na">width=</span><span class="s">&quot;5&quot;</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;roadMark</span> <span class="na">type=</span><span class="s">&quot;solid&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/lane&gt;</span>
+                <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;roadMark</span> <span class="na">type=</span><span class="s">&quot;solid&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+                        <span class="nt">&lt;/lane&gt;</span>
+                    <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;0&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span><span class="nt">&gt;</span> <span class="nt">&lt;/lane&gt;</span>
+                        <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;-1&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span> <span class="na">width=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+                            <span class="nt">&lt;roadMark</span> <span class="na">type=</span><span class="s">&quot;solid&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;/lane&gt;</span>
+                <span class="nt">&lt;/lanes&gt;</span>
+            <span class="nt">&lt;/road&gt;</span>
+            <span class="nt">&lt;intersectionPoint</span> <span class="na">refRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">s=</span><span class="s">&quot;50&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;adRoad</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">s=</span><span class="s">&quot;0&quot;</span> <span class="na">angle=</span><span class="s">&quot;-1.57&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/intersectionPoint&gt;</span>
+            <span class="nt">&lt;coupler&gt;</span>
+                <span class="nt">&lt;junctionArea</span> <span class="na">gap=</span><span class="s">&quot;10&quot;</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;roadGap</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">gap=</span><span class="s">&quot;15&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/junctionArea&gt;</span>
+                <span class="nt">&lt;connection</span> <span class="na">type=</span><span class="s">&quot;all&quot;</span><span class="nt">/&gt;</span>
+
+            <span class="nt">&lt;/coupler&gt;</span>
+        <span class="nt">&lt;/junction&gt;</span>
+    <span class="nt">&lt;/segments&gt;</span>
+<span class="nt">&lt;/roadNetwork&gt;</span>
+</pre></div>
+</div>
+<figure class="align-default">
+<a class="align-right reference internal image-reference" href="_images/m2amultiplelanes.png"><img alt="_images/m2amultiplelanes.png" class="align-right" src="_images/m2amultiplelanes.png" style="width: 427px;" /></a>
+</figure>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;roadNetwork</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="na">xsi:noNamespaceSchemaLocation=</span><span class="s">&quot;../xml/input.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;segments&gt;</span>
+        <span class="nt">&lt;junction</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">type=</span><span class="s">&quot;2M&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">classification=</span><span class="s">&quot;main&quot;</span> <span class="nt">&gt;</span>
+                <span class="nt">&lt;referenceLine&gt;</span>
+                    <span class="nt">&lt;line</span> <span class="na">length=</span><span class="s">&quot;200&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/referenceLine&gt;</span>
+                <span class="nt">&lt;lanes&gt;</span>
+                <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span> <span class="na">width=</span><span class="s">&quot;5&quot;</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;roadMark</span> <span class="na">type=</span><span class="s">&quot;solid&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/lane&gt;</span>
+                <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;roadMark</span> <span class="na">type=</span><span class="s">&quot;solid&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+                        <span class="nt">&lt;/lane&gt;</span>
+                    <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;0&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span><span class="nt">&gt;</span> <span class="nt">&lt;/lane&gt;</span>
+                        <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;-1&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span> <span class="na">width=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+                            <span class="nt">&lt;roadMark</span> <span class="na">type=</span><span class="s">&quot;solid&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;/lane&gt;</span>
+                <span class="nt">&lt;/lanes&gt;</span>
+            <span class="nt">&lt;/road&gt;</span>
+
+            <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">classification=</span><span class="s">&quot;main&quot;</span> <span class="nt">&gt;</span>
+                <span class="nt">&lt;referenceLine&gt;</span>
+                    <span class="nt">&lt;arc</span> <span class="na">length=</span><span class="s">&quot;200&quot;</span>  <span class="na">R=</span><span class="s">&quot;-100&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/referenceLine&gt;</span>
+                <span class="nt">&lt;lanes&gt;</span>
+                <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span> <span class="na">width=</span><span class="s">&quot;5&quot;</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;roadMark</span> <span class="na">type=</span><span class="s">&quot;solid&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/lane&gt;</span>
+                <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;roadMark</span> <span class="na">type=</span><span class="s">&quot;solid&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+                        <span class="nt">&lt;/lane&gt;</span>
+                    <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;0&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span><span class="nt">&gt;</span> <span class="nt">&lt;/lane&gt;</span>
+                        <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;-1&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span> <span class="na">width=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+                            <span class="nt">&lt;roadMark</span> <span class="na">type=</span><span class="s">&quot;solid&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;/lane&gt;</span>
+                <span class="nt">&lt;/lanes&gt;</span>
+            <span class="nt">&lt;/road&gt;</span>
+            <span class="nt">&lt;intersectionPoint</span> <span class="na">refRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">s=</span><span class="s">&quot;100&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;adRoad</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">s=</span><span class="s">&quot;100&quot;</span> <span class="na">angle=</span><span class="s">&quot;-1.57&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/intersectionPoint&gt;</span>
+            <span class="nt">&lt;coupler&gt;</span>
+                <span class="nt">&lt;junctionArea</span> <span class="na">gap=</span><span class="s">&quot;10&quot;</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;roadGap</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">gap=</span><span class="s">&quot;15&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/junctionArea&gt;</span>
+                <span class="nt">&lt;connection</span> <span class="na">type=</span><span class="s">&quot;all&quot;</span><span class="nt">/&gt;</span>
+
+            <span class="nt">&lt;/coupler&gt;</span>
+        <span class="nt">&lt;/junction&gt;</span>
+    <span class="nt">&lt;/segments&gt;</span>
+<span class="nt">&lt;/roadNetwork&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="roundabout">
+<h3><span class="section-number">2.1.3. </span>Roundabout<a class="headerlink" href="#roundabout" title="Permalink to this heading"></a></h3>
+<p>Represents a simple roundabout. While it is possible to manually create a roundabout by using junctions, it is tedious and requires a lot of redundant code. Therefore it is best practice to use the roundabout template instead. The tool will generate several junctions that belong to one junction group in the output.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/roundabout.svg"><img alt="_images/roundabout.svg" src="_images/roundabout.svg" width="55%" /></a>
+</figure>
+<section id="circle">
+<h4><span class="section-number">2.1.3.1. </span>Circle<a class="headerlink" href="#circle" title="Permalink to this heading"></a></h4>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Range</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Required</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>id</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>id of the circle (usually 1)</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>classification</p></td>
+<td><p>int</p></td>
+<td><p>‘main’ ‘access’</p></td>
+<td><p>sets the circular road of the rb to access or main road</p></td>
+<td><p>yes</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="reference-line">
+<h4><span class="section-number">2.1.3.2. </span>Reference Line<a class="headerlink" href="#reference-line" title="Permalink to this heading"></a></h4>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Range</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Required</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>length</p></td>
+<td><p>double</p></td>
+<td><p>positive</p></td>
+<td><p>length of the circular road in the roundabout</p></td>
+<td><p>yes</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id2">
+<h4><span class="section-number">2.1.3.3. </span>Key points<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p>Roundabouts need to be linked to the starting point of each adjacent road</p></li>
+<li><p>Roundabouts will be represented by junctions in the open drive output</p></li>
+</ul>
+</section>
+<section id="example">
+<h4><span class="section-number">2.1.3.4. </span>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h4>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;roundabout</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;circle</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">classification=</span><span class="s">&quot;access&quot;</span> <span class="nt">&gt;</span>
+        <span class="nt">&lt;referenceLine&gt;</span>
+            <span class="nt">&lt;circle</span> <span class="na">length=</span><span class="s">&quot;320.5&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/referenceLine&gt;</span>
+        <span class="nt">&lt;lanes&gt;</span>
+                <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">type=</span><span class="s">&quot;delete&quot;</span> <span class="nt">/&gt;</span>
+
+                <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;-3&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;roadMark</span>   <span class="na">type=</span><span class="s">&quot;solid&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.13&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/lane&gt;</span>
+                <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;-2&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;roadMark</span>   <span class="na">type=</span><span class="s">&quot;broken&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.13&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/lane&gt;</span>
+                <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;-1&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;roadMark</span>   <span class="na">type=</span><span class="s">&quot;broken&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.13&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/lane&gt;</span>
+                <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;0&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/lanes&gt;</span>
+    <span class="nt">&lt;/circle&gt;</span>
+
+    <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">classification=</span><span class="s">&quot;access&quot;</span> <span class="nt">&gt;</span>
+        <span class="nt">&lt;referenceLine&gt;</span>
+                <span class="nt">&lt;line</span> <span class="na">length=</span><span class="s">&quot;150&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/referenceLine&gt;</span>
+    <span class="nt">&lt;/road&gt;</span>
+    <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;3&quot;</span> <span class="na">classification=</span><span class="s">&quot;access&quot;</span> <span class="nt">&gt;</span>
+        <span class="nt">&lt;referenceLine&gt;</span>
+                <span class="nt">&lt;line</span> <span class="na">length=</span><span class="s">&quot;100&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/referenceLine&gt;</span>
+    <span class="nt">&lt;/road&gt;</span>
+    <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;4&quot;</span> <span class="na">classification=</span><span class="s">&quot;access&quot;</span> <span class="nt">&gt;</span>
+        <span class="nt">&lt;referenceLine&gt;</span>
+                <span class="nt">&lt;line</span> <span class="na">length=</span><span class="s">&quot;100&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/referenceLine&gt;</span>
+    <span class="nt">&lt;/road&gt;</span>
+    <span class="nt">&lt;road</span> <span class="na">id=</span><span class="s">&quot;5&quot;</span> <span class="na">classification=</span><span class="s">&quot;access&quot;</span> <span class="nt">&gt;</span>
+        <span class="nt">&lt;referenceLine&gt;</span>
+                <span class="nt">&lt;line</span> <span class="na">length=</span><span class="s">&quot;100&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/referenceLine&gt;</span>
+    <span class="nt">&lt;/road&gt;</span>
+
+    <span class="nt">&lt;intersectionPoint</span> <span class="na">refRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">s=</span><span class="s">&quot;80&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;adRoad</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">s=</span><span class="s">&quot;20&quot;</span> <span class="na">angle=</span><span class="s">&quot;-1.56&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/intersectionPoint&gt;</span>
+    <span class="nt">&lt;intersectionPoint</span> <span class="na">refRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">s=</span><span class="s">&quot;160&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;adRoad</span> <span class="na">id=</span><span class="s">&quot;3&quot;</span> <span class="na">s=</span><span class="s">&quot;20&quot;</span> <span class="na">angle=</span><span class="s">&quot;-1.56&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/intersectionPoint&gt;</span>
+    <span class="nt">&lt;intersectionPoint</span> <span class="na">refRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">s=</span><span class="s">&quot;240&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;adRoad</span> <span class="na">id=</span><span class="s">&quot;4&quot;</span> <span class="na">s=</span><span class="s">&quot;20&quot;</span> <span class="na">angle=</span><span class="s">&quot;-1.56&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/intersectionPoint&gt;</span>
+    <span class="nt">&lt;intersectionPoint</span> <span class="na">refRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">s=</span><span class="s">&quot;320&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;adRoad</span> <span class="na">id=</span><span class="s">&quot;5&quot;</span> <span class="na">s=</span><span class="s">&quot;20&quot;</span> <span class="na">angle=</span><span class="s">&quot;-1.6&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/intersectionPoint&gt;</span>
+    <span class="nt">&lt;coupler&gt;</span>
+        <span class="nt">&lt;junctionArea</span> <span class="na">gap=</span><span class="s">&quot;20&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;/junctionArea&gt;</span>
+    <span class="nt">&lt;/coupler&gt;</span>
+<span class="nt">&lt;/roundabout&gt;</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id8">
+<a class="reference internal image-reference" href="_images/roundabout.png"><img alt="_images/roundabout.png" src="_images/roundabout.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-text">Generated with <a class="reference external" href="https://odrviewer.io/">https://odrviewer.io/</a></span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+</section>
+<section id="lanes">
+<h2><span class="section-number">2.2. </span>Lanes<a class="headerlink" href="#lanes" title="Permalink to this heading"></a></h2>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/lanes.svg"><img alt="_images/lanes.svg" src="_images/lanes.svg" width="50%" /></a>
+</figure>
+<section id="lane">
+<h3><span class="section-number">2.2.1. </span>Lane<a class="headerlink" href="#lane" title="Permalink to this heading"></a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Range</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Required</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>id</p></td>
+<td><p>int</p></td>
+<td><p>all</p></td>
+<td><p>id of the lane</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>type</p></td>
+<td><p>string</p></td>
+<td><p>‘driving’ ‘restricted’ ‘none’ ‘delete’</p></td>
+<td><p>type of the lane</p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p>width</p></td>
+<td><p>double</p></td>
+<td><p>positive</p></td>
+<td><p>width of the lane</p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p>speed</p></td>
+<td><p>double</p></td>
+<td><p>positive</p></td>
+<td><p>speed limit of the lane</p></td>
+<td><p>no</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Notes:</strong></p>
+<ul class="simple">
+<li><p>If no further lane information is provided a total of three default lanes will be generated. One in each direction and a dividing middle lane</p></li>
+<li><p>If at least one lane is provided no default lanes will be generated</p></li>
+</ul>
+</section>
+<section id="roadmark">
+<h3><span class="section-number">2.2.2. </span>RoadMark<a class="headerlink" href="#roadmark" title="Permalink to this heading"></a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Range</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Required</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>type</p></td>
+<td><p>int</p></td>
+<td><p>‘solid’ ‘broken’ ‘none’</p></td>
+<td><p>specifies the roadmark</p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p>color</p></td>
+<td><p>string</p></td>
+<td><p>color</p></td>
+<td><p>color of the roadmark</p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p>width</p></td>
+<td><p>double</p></td>
+<td><p>positive</p></td>
+<td><p>roadmark width</p></td>
+<td><p>no</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Colors</strong>:
+‘standard’, ‘blue’, ‘green’, ‘red’, ‘white’, ‘yellow’, ‘orange’.</p>
+</section>
+<section id="lanewidening-and-lanedrop">
+<h3><span class="section-number">2.2.3. </span>LaneWidening and laneDrop<a class="headerlink" href="#lanewidening-and-lanedrop" title="Permalink to this heading"></a></h3>
+<p>If the user wants to expand or shrink the road’s lane count during its course, they  can use the lanewidening or lanedrop tag.</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Range</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Required</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>side</p></td>
+<td><p>int</p></td>
+<td><p>‘-1’ ‘1’</p></td>
+<td><p>side of the lane that will be added/dropped</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>s</p></td>
+<td><p>double</p></td>
+<td><p>positive</p></td>
+<td><p>starting position of the lane widening/drop</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-even"><td><p>length</p></td>
+<td><p>double</p></td>
+<td><p>positive</p></td>
+<td><p>length of the laneDrop</p></td>
+<td><p>no</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="restrictedarea">
+<h3><span class="section-number">2.2.4. </span>RestrictedArea<a class="headerlink" href="#restrictedarea" title="Permalink to this heading"></a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Range</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Required</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>length</p></td>
+<td><p>double</p></td>
+<td><p>positive</p></td>
+<td><p>length of the restricted area  of the lanewidening or lanedrop</p></td>
+<td><p>no</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note</strong>: The length of the restricted area must be larger than the length of the lanewidening or the lanedrop. The starting position is inherited by the parent node.</p>
+</section>
+<section id="material">
+<h3><span class="section-number">2.2.5. </span>Material<a class="headerlink" href="#material" title="Permalink to this heading"></a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Range</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Required</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>surface</p></td>
+<td><p>string</p></td>
+<td><p>surface material code depending on application</p></td>
+<td><p>no</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>friction</p></td>
+<td><p>double</p></td>
+<td><p>positive</p></td>
+<td><p>friction coefficient</p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p>roughness</p></td>
+<td><p>double</p></td>
+<td><p>positive</p></td>
+<td><p>roughness coefficient</p></td>
+<td><p>no</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id3">
+<h3><span class="section-number">2.2.6. </span>Key points<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Lane ids are centered around 0 and store their location relative to the driving direction. Positive ids are to the left of the driving direction and negative ids are on the right.</p></li>
+<li><p>Lanes from linked segments with the same ids are linked if not specified otherwise</p></li>
+<li><p>Lane ids are <strong>not</strong> exclusive</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3><span class="section-number">2.2.7. </span>Example<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;lanes&gt;</span>
+    <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;-2&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;roadMark</span>   <span class="na">type=</span><span class="s">&quot;solid&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.13&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/lane&gt;</span>
+    <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;-1&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;roadMark</span>   <span class="na">type=</span><span class="s">&quot;broken&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.13&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/lane&gt;</span>
+    <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;0&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;lane</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">type=</span><span class="s">&quot;driving&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;roadMark</span>   <span class="na">type=</span><span class="s">&quot;solid&quot;</span> <span class="na">color=</span><span class="s">&quot;white&quot;</span> <span class="na">width=</span><span class="s">&quot;0.13&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/lane&gt;</span>
+    <span class="nt">&lt;laneDrop</span> <span class="na">side=</span><span class="s">&quot;-1&quot;</span> <span class="na">s=</span><span class="s">&quot;100&quot;</span> <span class="na">length=</span><span class="s">&quot;50&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/lanes&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="linkage">
+<h2><span class="section-number">2.3. </span>Linkage<a class="headerlink" href="#linkage" title="Permalink to this heading"></a></h2>
+<p>The <cite>links</cite> element defines the reference segment, which will be used as a refernece point for all other roads. The user can provide an offset.</p>
+<section id="links">
+<h3><span class="section-number">2.3.1. </span>Links<a class="headerlink" href="#links" title="Permalink to this heading"></a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Range</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Required</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>refId</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>specifying the global reference segment</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>xOffset</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>specifying a global x offset</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-even"><td><p>yOffset</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>specifying a global y offset</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>hdgOffset</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>specifying a global angle offset</p></td>
+<td><p>yes</p></td>
+</tr>
+</tbody>
+</table>
+<p>All links between segments are stored in a segmentLink element. Each segment is linked at their endpoint or their startpoint. While most other links can be generated automatically by the tool, the user has to link every segment manually.</p>
+</section>
+<section id="segmentlink">
+<h3><span class="section-number">2.3.2. </span>SegmentLink<a class="headerlink" href="#segmentlink" title="Permalink to this heading"></a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Range</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Required</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>fromSegment</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>id of the firstSegment that will be linked</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>toSegment</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>id of the toSegment that will be linked</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-even"><td><p>fromRoad</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>id of the specific road in the fromSegment that will be linked</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>toRoad</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>id of the specific road in the toSegment that will be linked</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-even"><td><p>fromPos</p></td>
+<td><p>string</p></td>
+<td><p>‘start’ ‘end’</p></td>
+<td><p>specifies if the fromSegment should be linked at its beginning or end</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>toPos</p></td>
+<td><p>string</p></td>
+<td><p>‘start’ ‘end’</p></td>
+<td><p>specifies if the toSegment should be linked at its beginning or end</p></td>
+<td><p>yes</p></td>
+</tr>
+</tbody>
+</table>
+<section id="id5">
+<h4><span class="section-number">2.3.2.1. </span>Key points<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p>Junctions and roundabouts need to be linked to the starting point of each adjacent road</p></li>
+<li><p>Each segment must be linked to the biggest component. No other components can exist in the network.</p></li>
+<li><p>Segments have a seperate namespace from Roads, i.e. multiple roads with the ID 1 can exist under differen segments</p></li>
+</ul>
+</section>
+</section>
+<section id="id6">
+<h3><span class="section-number">2.3.3. </span>Example<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;links</span> <span class="na">refId=</span><span class="s">&quot;1&quot;</span> <span class="na">hdgOffset=</span><span class="s">&quot;0.0&quot;</span> <span class="na">xOffset=</span><span class="s">&quot;0&quot;</span> <span class="na">yOffset=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;segmentLink</span> <span class="na">fromSegment=</span><span class="s">&quot;1&quot;</span> <span class="na">toSegment=</span><span class="s">&quot;2&quot;</span> <span class="na">fromRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">toRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">fromPos=</span><span class="s">&quot;end&quot;</span> <span class="na">toPos=</span><span class="s">&quot;start&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;segmentLink</span> <span class="na">fromSegment=</span><span class="s">&quot;2&quot;</span> <span class="na">toSegment=</span><span class="s">&quot;3&quot;</span> <span class="na">fromRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">toRoad=</span><span class="s">&quot;2&quot;</span> <span class="na">fromPos=</span><span class="s">&quot;end&quot;</span> <span class="na">toPos=</span><span class="s">&quot;end&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;segmentLink</span> <span class="na">fromSegment=</span><span class="s">&quot;3&quot;</span> <span class="na">toSegment=</span><span class="s">&quot;4&quot;</span> <span class="na">fromRoad=</span><span class="s">&quot;3&quot;</span> <span class="na">toRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">fromPos=</span><span class="s">&quot;end&quot;</span> <span class="na">toPos=</span><span class="s">&quot;start&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;segmentLink</span> <span class="na">fromSegment=</span><span class="s">&quot;3&quot;</span> <span class="na">toSegment=</span><span class="s">&quot;5&quot;</span> <span class="na">fromRoad=</span><span class="s">&quot;4&quot;</span> <span class="na">toRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">fromPos=</span><span class="s">&quot;end&quot;</span> <span class="na">toPos=</span><span class="s">&quot;end&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;segmentLink</span> <span class="na">fromSegment=</span><span class="s">&quot;6&quot;</span> <span class="na">toSegment=</span><span class="s">&quot;1&quot;</span> <span class="na">fromRoad=</span><span class="s">&quot;2&quot;</span> <span class="na">toRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">fromPos=</span><span class="s">&quot;end&quot;</span> <span class="na">toPos=</span><span class="s">&quot;start&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/links&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="closeroads">
+<h2><span class="section-number">2.4. </span>CloseRoads<a class="headerlink" href="#closeroads" title="Permalink to this heading"></a></h2>
+<p>To smoothly close open connections, roads and their respective linkage information can automatically be generated. The syntax of closing roads is identical to the road links.</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Range</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+<td><p><strong>Required</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>fromSegment</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>id of the firstSegment that will be linked</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>toSegment</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>id of the toSegment that will be linked</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-even"><td><p>fromRoad</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>id of the specific road in the fromSegment that will be linked</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>toRoad</p></td>
+<td><p>int</p></td>
+<td><p>positive</p></td>
+<td><p>id of the specific road in the toSegment that will be linked</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-even"><td><p>fromPos</p></td>
+<td><p>string</p></td>
+<td><p>‘start’ ‘end’</p></td>
+<td><p>specifies if the fromSegment should be linked at its beginning or end</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>toPos</p></td>
+<td><p>string</p></td>
+<td><p>‘start’ ‘end’</p></td>
+<td><p>specifies if the toSegment should be linked at its beginning or end</p></td>
+<td><p>yes</p></td>
+</tr>
+</tbody>
+</table>
+<section id="id7">
+<h3><span class="section-number">2.4.1. </span>Example<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;closeRoads&gt;</span>
+        <span class="nt">&lt;segmentLink</span> <span class="na">fromSegment=</span><span class="s">&quot;1&quot;</span> <span class="na">toSegment=</span><span class="s">&quot;2&quot;</span> <span class="na">fromRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">toRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">fromPos=</span><span class="s">&quot;end&quot;</span> <span class="na">toPos=</span><span class="s">&quot;end&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;segmentLink</span> <span class="na">fromSegment=</span><span class="s">&quot;3&quot;</span> <span class="na">toSegment=</span><span class="s">&quot;3&quot;</span> <span class="na">fromRoad=</span><span class="s">&quot;5&quot;</span> <span class="na">toRoad=</span><span class="s">&quot;4&quot;</span> <span class="na">fromPos=</span><span class="s">&quot;end&quot;</span> <span class="na">toPos=</span><span class="s">&quot;end&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;segmentLink</span> <span class="na">fromSegment=</span><span class="s">&quot;6&quot;</span> <span class="na">toSegment=</span><span class="s">&quot;5&quot;</span> <span class="na">fromRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">toRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">fromPos=</span><span class="s">&quot;end&quot;</span> <span class="na">toPos=</span><span class="s">&quot;end&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;segmentLink</span> <span class="na">fromSegment=</span><span class="s">&quot;7&quot;</span> <span class="na">toSegment=</span><span class="s">&quot;1&quot;</span> <span class="na">fromRoad=</span><span class="s">&quot;4&quot;</span> <span class="na">toRoad=</span><span class="s">&quot;1&quot;</span> <span class="na">fromPos=</span><span class="s">&quot;end&quot;</span> <span class="na">toPos=</span><span class="s">&quot;start&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;segmentLink</span> <span class="na">fromSegment=</span><span class="s">&quot;7&quot;</span> <span class="na">toSegment=</span><span class="s">&quot;7&quot;</span> <span class="na">fromRoad=</span><span class="s">&quot;2&quot;</span> <span class="na">toRoad=</span><span class="s">&quot;3&quot;</span> <span class="na">fromPos=</span><span class="s">&quot;end&quot;</span> <span class="na">toPos=</span><span class="s">&quot;end&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/closeRoads&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="doc.html" class="btn btn-neutral float-left" title="1. Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="autodoc.html" class="btn btn-neutral float-right" title="3. Autodoc" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022 Institut für Kraftfahrzeuge, RWTH Aachen, ika.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
