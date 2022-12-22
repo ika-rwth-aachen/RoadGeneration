@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="structwidth" kind="struct" language="C++" prot="public">
+    <compoundname>width</compoundname>
+    <includes refid="interface_8h" local="no">interface.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structwidth_1a3cccca4f732534765cb8e7f0e86ced59" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double width::s</definition>
+        <argsstring></argsstring>
+        <name>s</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="111" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="111" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structwidth_1a4d777012ea613c1001d60d3b3a1f4b2f" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double width::a</definition>
+        <argsstring></argsstring>
+        <name>a</name>
+        <initializer>= setting.width.standard</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="112" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="112" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structwidth_1adf0b2b7f6b940e6afdcee0a044cb4597" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double width::b</definition>
+        <argsstring></argsstring>
+        <name>b</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="113" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="113" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structwidth_1a4f9b29c43418954e4a21acf8a1a27e2e" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double width::c</definition>
+        <argsstring></argsstring>
+        <name>c</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="114" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structwidth_1a5947e26a2ca39d1306307f24142ee982" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double width::d</definition>
+        <argsstring></argsstring>
+        <name>d</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="115" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="115" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>width holding the lanewidth with a 3rd order polynomial </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="110" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="109" bodyend="116"/>
+    <listofallmembers>
+      <member refid="structwidth_1a4d777012ea613c1001d60d3b3a1f4b2f" prot="public" virt="non-virtual"><scope>width</scope><name>a</name></member>
+      <member refid="structwidth_1adf0b2b7f6b940e6afdcee0a044cb4597" prot="public" virt="non-virtual"><scope>width</scope><name>b</name></member>
+      <member refid="structwidth_1a4f9b29c43418954e4a21acf8a1a27e2e" prot="public" virt="non-virtual"><scope>width</scope><name>c</name></member>
+      <member refid="structwidth_1a5947e26a2ca39d1306307f24142ee982" prot="public" virt="non-virtual"><scope>width</scope><name>d</name></member>
+      <member refid="structwidth_1a3cccca4f732534765cb8e7f0e86ced59" prot="public" virt="non-virtual"><scope>width</scope><name>s</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

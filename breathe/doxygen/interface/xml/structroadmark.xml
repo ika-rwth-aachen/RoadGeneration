@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="structroadmark" kind="struct" language="C++" prot="public">
+    <compoundname>roadmark</compoundname>
+    <includes refid="interface_8h" local="no">interface.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structroadmark_1ab00257d8b7ae4cac304a6803a9357337" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double roadmark::s</definition>
+        <argsstring></argsstring>
+        <name>s</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="98" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structroadmark_1abbb845544fdd431b76be8e43e880cf7a" prot="public" static="no" mutable="no">
+        <type>string</type>
+        <definition>string roadmark::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <initializer>= &quot;solid&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="99" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structroadmark_1ad0076c886da1b1fbd89958bdea456696" prot="public" static="no" mutable="no">
+        <type>string</type>
+        <definition>string roadmark::weight</definition>
+        <argsstring></argsstring>
+        <name>weight</name>
+        <initializer>= &quot;standard&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="100" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structroadmark_1adab3a3b13d9bffb1f8f09bbcddcb2a30" prot="public" static="no" mutable="no">
+        <type>string</type>
+        <definition>string roadmark::color</definition>
+        <argsstring></argsstring>
+        <name>color</name>
+        <initializer>= &quot;white&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="101" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="101" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structroadmark_1af804eea6c3fe8eb597726e7cdf0485fe" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double roadmark::width</definition>
+        <argsstring></argsstring>
+        <name>width</name>
+        <initializer>= 0.15</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="102" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>roadmark holding lane appearance properties </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="97" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="96" bodyend="103"/>
+    <listofallmembers>
+      <member refid="structroadmark_1adab3a3b13d9bffb1f8f09bbcddcb2a30" prot="public" virt="non-virtual"><scope>roadmark</scope><name>color</name></member>
+      <member refid="structroadmark_1ab00257d8b7ae4cac304a6803a9357337" prot="public" virt="non-virtual"><scope>roadmark</scope><name>s</name></member>
+      <member refid="structroadmark_1abbb845544fdd431b76be8e43e880cf7a" prot="public" virt="non-virtual"><scope>roadmark</scope><name>type</name></member>
+      <member refid="structroadmark_1ad0076c886da1b1fbd89958bdea456696" prot="public" virt="non-virtual"><scope>roadmark</scope><name>weight</name></member>
+      <member refid="structroadmark_1af804eea6c3fe8eb597726e7cdf0485fe" prot="public" virt="non-virtual"><scope>roadmark</scope><name>width</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
