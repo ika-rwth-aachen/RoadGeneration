@@ -73,6 +73,7 @@ int validateInput(char *file, xmlTree &xmlInput)
  */
 int validateOutput(roadNetwork &data)
 {
+    cout << "Validating output" << endl;
     // setup file
     string file = data.outputFile;
     file.append(".xodr");
@@ -90,7 +91,6 @@ int validateOutput(roadNetwork &data)
         cerr << "ERR: couldn't load schema" << endl;
         return 1;
     }
-
     //create error handler from custom error handler class
     xercesc::ErrorHandler *handler = new ValidationErrorHandler();
 

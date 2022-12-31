@@ -297,7 +297,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
                        |      |
     */
     if(!setting.silentMode)
-        cout << "\t Generating Roads" << endl;
+        cout << "\tGenerating roads" << endl;
 
     road r1;
     r1.id = 100 * junc.id + 1;
@@ -562,9 +562,9 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     data.roads.push_back(r3);
     data.roads.push_back(r4);
 
-    // --- generate connecting lanes -------------------------------------------
+    // ---Generating Connecting Lanes -------------------------------------------
     if(!setting.silentMode)
-        cout << "\t Generate Connecting Lanes" << endl;
+        cout << "\tGenerating Connecting Lanes" << endl;
 
     // generate user-defined connecting lanes
     if (con != NULL && readStrAttrFromNode(con, "type") == "single")

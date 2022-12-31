@@ -698,7 +698,7 @@ private:
 void ValidationErrorHandler::reportParseException(const xercesc::SAXParseException& ex)
 {
    char* message = xercesc::XMLString::transcode(ex.getMessage());
-   std::cout << message << " at line " << ex.getLineNumber() << " column " << ex.getColumnNumber() << std::endl;
+   std::cout << "\t" << message << " at line " << ex.getLineNumber() << " column " << ex.getColumnNumber() << std::endl;
 
    xercesc::XMLString::release(&message);
 }

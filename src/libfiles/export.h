@@ -40,7 +40,7 @@ extern "C" EXPORTED void setFileName(char* file);
  * @brief set path to xml schema files
  * @param file set path
  */
-extern "C" EXPORTED void setXMLSchemeLocation(char* file);
+extern "C" EXPORTED void setXMLSchemaLocation(char* file);
 
 /**
  * @brief set log file location

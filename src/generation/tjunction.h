@@ -222,7 +222,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
         __________        ___________    
      */
     if(!setting.silentMode)
-        cout << "\t Generating Roads" << endl;
+        cout << "\tGenerating roads" << endl;
     laneSection lS;
     double t;
 
@@ -444,9 +444,9 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     data.roads.push_back(r2);
     data.roads.push_back(r3);
 
-    // --- generate connecting lanes -------------------------------------------
+    // ---Generating Connecting Lanes -------------------------------------------
     if(!setting.silentMode)
-        cout << "\t Generate Connecting Lanes" << endl;
+        cout << "\tGenerating Connecting Lanes" << endl;
 
     // --- generate user-defined connecting lanes
     if (con != NULL && readStrAttrFromNode(con, "type") == "single")
