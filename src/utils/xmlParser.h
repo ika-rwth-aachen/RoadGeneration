@@ -675,3 +675,49 @@ DOMElement* getRootElement()
 {
     return doc->getDocumentElement();
 }
+
+/**
+ * @brief very simple error hander for the xerces dom parser
+ * 
+ */
+class ValidationErrorHandler : public xercesc::ErrorHandler 
+{
+public:
+   /** Warning message method */
+   void warning(const xercesc::SAXParseException& ex);
+   /** Error message method */
+   void error(const xercesc::SAXParseException& ex);
+   /** Fatal error message method */
+   void fatalError(const xercesc::SAXParseException& ex);
+   /** Errors resetter method */
+   void resetErrors();
+private:
+   /** Based message reporter method */
+   void reportParseException(const xercesc::SAXParseException& ex);
+};
+void ValidationErrorHandler::reportParseException(const xercesc::SAXParseException& ex)
+{
+   char* message = xercesc::XMLString::transcode(ex.getMessage());
+   std::cout << message << " at line " << ex.getLineNumber() << " column " << ex.getColumnNumber() << std::endl;
+
+   xercesc::XMLString::release(&message);
+}
+
+void ValidationErrorHandler::warning(const xercesc::SAXParseException& ex)
+{
+   reportParseException(ex);
+}
+
+void ValidationErrorHandler::error(const xercesc::SAXParseException& ex)
+{
+   reportParseException(ex);
+}
+
+void ValidationErrorHandler::fatalError(const xercesc::SAXParseException& ex)
+{
+   reportParseException(ex);
+}
+
+void ValidationErrorHandler::resetErrors()
+{
+}

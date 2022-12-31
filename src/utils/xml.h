@@ -91,9 +91,13 @@ int validateOutput(roadNetwork &data)
         return 1;
     }
 
+    //create error handler from custom error handler class
+    xercesc::ErrorHandler *handler = new ValidationErrorHandler();
+
     // check output file
-    domParser.setValidationScheme(XercesDOMParser::Val_Auto);
+    domParser.setValidationScheme(XercesDOMParser::Val_Always);
     domParser.setDoNamespaces(true);
+    domParser.setErrorHandler(handler);
     domParser.setDoSchema(true);
     domParser.setValidationConstraintFatal(true);
 
@@ -110,7 +114,6 @@ int validateOutput(roadNetwork &data)
 
     return 0;
 }
-
 
 /**
  * @brief helper function to append the link node to road node
