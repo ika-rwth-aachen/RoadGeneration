@@ -205,7 +205,7 @@ Citation
      booktitle = {2022 International Conference on Electrical, Computer, Communications and Mechatronics Engineering (ICECCME)},
      year      = {2022},
      url       = {https://arxiv.org/abs/2210.00853},
-     doi       = {...}}
+     doi       = {10.1109/ICECCME55909.2022.9988312}}
 
 Acknowledgements and Credits
 ----------------------------
