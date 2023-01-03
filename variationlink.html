@@ -94,7 +94,7 @@ scenarios.</p>
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h2>
 <p>The tool can be accessed via the command line:</p>
 <p><strong>On Liunx:</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>variation -fname &lt;filename&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>variation<span class="w"> </span>-fname<span class="w"> </span>&lt;filename&gt;
 </pre></div>
 </div>
 <div class="line-block">
@@ -102,7 +102,7 @@ scenarios.</p>
 <div class="line"><em>Note: we strongly recommend to use a Linux system. Windows support is
 experimental.</em></div>
 </div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m variation -fname &lt;filename&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>variation<span class="w"> </span>-fname<span class="w"> </span>&lt;filename&gt;
 </pre></div>
 </div>
 <p>A variety of parameters and flaggs can be specified:</p>
@@ -128,22 +128,22 @@ random variables can then be referenced in the description of the road
 network.</p>
 <p>Examples for the definition of stochastic variabes:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;vars&gt;</span>
-    <span class="nt">&lt;var</span> <span class="na">id=</span><span class="s">&quot;transDepVar&quot;</span> <span class="na">type=</span><span class="s">&quot;lindep&quot;</span> <span class="na">dp=</span><span class="s">&quot;depVar/2&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;var</span> <span class="na">id=</span><span class="s">&quot;depVar&quot;</span> <span class="na">type=</span><span class="s">&quot;lindep&quot;</span> <span class="na">dp=</span><span class="s">&quot;uniformVar*0.3 + normalVar&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;var</span> <span class="na">id=</span><span class="s">&quot;uniformVar&quot;</span> <span class="na">type=</span><span class="s">&quot;uniform&quot;</span> <span class="na">min=</span><span class="s">&quot;100&quot;</span> <span class="na">max=</span><span class="s">&quot;150&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;var</span> <span class="na">id=</span><span class="s">&quot;normalVar&quot;</span> <span class="na">type=</span><span class="s">&quot;normal&quot;</span> <span class="na">mu=</span><span class="s">&quot;1.57&quot;</span> <span class="na">sd=</span><span class="s">&quot;0.12&quot;</span> <span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;var</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;transDepVar&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;lindep&quot;</span><span class="w"> </span><span class="na">dp=</span><span class="s">&quot;depVar/2&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;var</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;depVar&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;lindep&quot;</span><span class="w"> </span><span class="na">dp=</span><span class="s">&quot;uniformVar*0.3 + normalVar&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;var</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;uniformVar&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;uniform&quot;</span><span class="w"> </span><span class="na">min=</span><span class="s">&quot;100&quot;</span><span class="w"> </span><span class="na">max=</span><span class="s">&quot;150&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;var</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;normalVar&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;normal&quot;</span><span class="w"> </span><span class="na">mu=</span><span class="s">&quot;1.57&quot;</span><span class="w"> </span><span class="na">sd=</span><span class="s">&quot;0.12&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/vars&gt;</span>
 </pre></div>
 </div>
 <p>These variables can then be referenced by their name, surrounded by
 <code class="docutils literal notranslate"><span class="pre">${...}</span></code>, e.g.:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;referenceLine&gt;</span>
-    <span class="nt">&lt;line</span> <span class="na">length=</span><span class="s">&quot;${uniformVar}&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;line</span><span class="w"> </span><span class="na">length=</span><span class="s">&quot;${uniformVar}&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/referenceLine&gt;</span>
 </pre></div>
 </div>
 <p>An example template file can be generated by using the <code class="docutils literal notranslate"><span class="pre">-e</span></code> flag.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>variation -e
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>variation<span class="w"> </span>-e
 </pre></div>
 </div>
 <section id="variable-types">

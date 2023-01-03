@@ -153,13 +153,13 @@ Here, the main folders are named:</p>
 </ul>
 <p><strong>Download</strong> the repository as a zip-file and un-zip, or use git with</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clone Repository and open main folder</span>
-git clone git@github.com:ika-rwth-aachen/RoadGeneration.git
-<span class="nb">cd</span> RoadGeneration
+git<span class="w"> </span>clone<span class="w"> </span>git@github.com:ika-rwth-aachen/RoadGeneration.git
+<span class="nb">cd</span><span class="w"> </span>RoadGeneration
 </pre></div>
 </div>
 <p>A build script for Linux systems is provided and can be executed from
 the root directory with</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sh buildScript.sh
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sh<span class="w"> </span>buildScript.sh
 </pre></div>
 </div>
 <p>Alternatively you can <strong>build the project manually</strong>:</p>
@@ -167,14 +167,14 @@ the root directory with</p>
 <li><p>Install <a class="reference external" href="https://xerces.apache.org/xerces-c">XercesC</a> via a
 package manager, e.g.:</p></li>
 </ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo apt install libxerces-c-dev
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>libxerces-c-dev
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
 <li><p>Build the Road-generation tool with standard cmake commands, e.g.:</p></li>
 </ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mkdir -p build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build <span class="o">&amp;&amp;</span> cmake -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DCMAKE_INSTALL_PREFIX<span class="o">=</span>../bin ..
-$ cmake --build .
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>build<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>build<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>cmake<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>../bin<span class="w"> </span>..
+$<span class="w"> </span>cmake<span class="w"> </span>--build<span class="w"> </span>.
 </pre></div>
 </div>
 <p><em>Note:</em> In principal, it is possible to compile and use the tool in
@@ -183,7 +183,7 @@ Windows operating systems. However, this is experimental.</p>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h2>
 <p>The compiled application can be called from the root folder:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./road-generation_executable &lt;input&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./road-generation_executable<span class="w"> </span>&lt;input&gt;
 </pre></div>
 </div>
 <p>This generates the output OpenDRIVE file next to the input file. The
@@ -191,7 +191,7 @@ provided input file is checked against <code class="docutils literal notranslate
 output file is checked against the <code class="docutils literal notranslate"><span class="pre">output.xsd</span></code> file which specifies
 the openDRIVE 1.5 standard. For a list of all parameters use the help
 flag of the tool.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./road-generation_executable -h
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./road-generation_executable<span class="w"> </span>-h
 </pre></div>
 </div>
 </section>
@@ -213,7 +213,7 @@ subdirectory</a>.</p>
 <p>You can run the code from the <code class="docutils literal notranslate"><span class="pre">variation</span></code> subfolder, however, the
 variation tool can be installed system wide by using the install script
 in the root directory.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sh install-variation.sh
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sh<span class="w"> </span>install-variation.sh
 </pre></div>
 </div>
 </section>
@@ -268,7 +268,7 @@ case, please cite:</div>
   booktitle = {2022 International Conference on Electrical, Computer, Communications and Mechatronics Engineering (ICECCME)},
   year      = {2022},
   url       = {https://arxiv.org/abs/2210.00853},
-  doi       = {...}}
+  doi       = {10.1109/ICECCME55909.2022.9988312}}
 </pre></div>
 </div>
 </section>
