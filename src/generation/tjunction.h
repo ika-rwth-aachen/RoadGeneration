@@ -222,7 +222,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
         __________        ___________    
      */
     if(!setting.silentMode)
-        cout << "\t Generating Roads" << endl;
+        cout << "\tGenerating Roads" << endl;
     laneSection lS;
     double t;
 

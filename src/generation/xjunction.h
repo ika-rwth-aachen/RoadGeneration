@@ -297,7 +297,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
                        |      |
     */
     if(!setting.silentMode)
-        cout << "\t Generating Roads" << endl;
+        cout << "\tGenerating Roads" << endl;
 
     road r1;
     r1.id = 100 * junc.id + 1;

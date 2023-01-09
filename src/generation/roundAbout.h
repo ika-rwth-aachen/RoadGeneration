@@ -249,7 +249,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         // --- generate roads --------------------------------------------------
         if(!setting.silentMode)
-            cout << "\t Generating Roads for Roundabout" << endl;
+            cout << "\tGenerating Roads for Roundabout" << endl;
         /*           
                     \___       ____/
                  id: 1         id: helper

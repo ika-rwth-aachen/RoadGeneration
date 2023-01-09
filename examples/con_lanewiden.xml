@@ -19,7 +19,7 @@
         <connectingRoad id="2">
             <road id="1" classification="main" >	
                <referenceLine>
-                     <spiral length="800"  Rs="-150" Re="0"/>
+                     <spiral length="200"  Rs="-150" Re="0"/>
                 </referenceLine>
 
                 <lanes>
