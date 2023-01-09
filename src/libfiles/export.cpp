@@ -105,7 +105,7 @@ EXPORTED int executePipeline(char* file)
 		cout << file << endl;
 		printLogo();
 	}
-	
+
 	// --- initialization ------------------------------------------------------
 
 	xmlTree inputxml;
@@ -118,6 +118,16 @@ EXPORTED int executePipeline(char* file)
 	setting.warnings = 0;
 	
 	// --- pipeline ------------------------------------------------------------
+	cout << "DEBUG: doing output validation" << endl;
+	if (validateOutput(data))
+	{
+		cerr << "ERR: error in validateOutput" << endl;
+	}
+	cout << "DEBUG skipping everything else. Delete this after you are done!" << endl;
+	//return 0;
+
+
+
 	if (validateInput(file, inputxml))
 	{
 		cerr << "ERR: error in validateInput" << endl;
