@@ -163,15 +163,15 @@ int createXMLXercesC(roadNetwork &data)
     header.addAttribute("west", to_string(setting.west).c_str());
     header.addAttribute("east", to_string(setting.east).c_str());
 
-    header.appendToNode(root);
-
-     // geoReference tag
+    // geoReference tag
     nodeElement geoReference("geoReference");
 
     DOMCDATASection *cdata;
     generateCDATA("+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs", &cdata);
     geoReference.domelement->appendChild(cdata);
-    geoReference.appendToNode(root);
+    geoReference.appendToNode(header);
+
+    header.appendToNode(root);
 
      // --- write roads ---------------------------------------------------------
     for (std::vector<road>::iterator it = data.roads.begin(); it != data.roads.end(); ++it)
