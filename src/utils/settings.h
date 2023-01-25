@@ -79,7 +79,7 @@ struct settings
     int warnings = 0; // counts number of warnings
 
     int versionMajor = 1; // OpenDrive major version
-    int versionMinor = 4; // OpenDrive minor version
+    int versionMinor = 5; // OpenDrive minor version
 
     float minConnectingRoadLength = 0.01f;
 

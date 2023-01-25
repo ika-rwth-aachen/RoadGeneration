@@ -258,7 +258,7 @@ struct xmlTree{
 
         ~xmlTree()
         {
-            //delete parser;
+
         }
 
 };
@@ -659,7 +659,7 @@ int init(const char *rootNode)
         try
         {
             doc = impl->createDocument(
-                        0,                    // root element namespace URI.
+                        0,// root element namespace URI.
                         X(rootNode),         // root element name
                         0);                   // document type object (DTD).
             

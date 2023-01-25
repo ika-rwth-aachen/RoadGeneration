@@ -53,7 +53,7 @@ int validateInput(char *file, xmlTree &xmlInput)
     xmlInput.parseDocument(xml_file);
 
     if (xmlInput.getErrorCount() == 0){
-        //if(!setting.silentMode)
+        if(!setting.silentMode)
         cout << "XML input file validated against the schema successfully" << endl;
     }
     else
@@ -98,6 +98,7 @@ int validateOutput(roadNetwork &data)
     // check output file
     domParser.setValidationScheme(XercesDOMParser::Val_Always);
     domParser.setDoNamespaces(true);
+    domParser.setExternalNoNamespaceSchemaLocation(schema_path);
     domParser.setErrorHandler(handler);
     domParser.setDoSchema(true);
     domParser.setValidationSchemaFullChecking(true);
@@ -174,13 +175,14 @@ int createXMLXercesC(roadNetwork &data)
     header.appendToNode(root);
 
      // geoReference tag
-    nodeElement geoReference("geoReference");
+    
+    //TODO fix georeference
+    // nodeElement geoReference("geoReference");
 
-    DOMCDATASection *cdata;
-    generateCDATA("+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs", &cdata);
-    geoReference.domelement->appendChild(cdata);
-    geoReference.appendToNode(root);
-
+    // DOMCDATASection *cdata;
+    // generateCDATA("+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs", &cdata);
+    // geoReference.domelement->appendChild(cdata);
+    // geoReference.appendToNode(root);
      // --- write roads ---------------------------------------------------------
     for (std::vector<road>::iterator it = data.roads.begin(); it != data.roads.end(); ++it)
     {
