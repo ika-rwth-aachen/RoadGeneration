@@ -36,6 +36,48 @@ DOMDocument* doc;
 bool initialized = false;
 
 
+/**
+ * @brief very simple error hander for the xerces dom parser
+ * 
+ */
+class ValidationErrorHandler : public xercesc::ErrorHandler 
+{
+public:
+   void warning(const xercesc::SAXParseException& ex);
+   void error(const xercesc::SAXParseException& ex);
+   void fatalError(const xercesc::SAXParseException& ex);
+   void resetErrors();
+private:
+   void reportParseException(const xercesc::SAXParseException& ex);
+};
+void ValidationErrorHandler::reportParseException(const xercesc::SAXParseException& ex)
+{
+   char* message = xercesc::XMLString::transcode(ex.getMessage());
+   std::cout << "\t" << message << " at line " << ex.getLineNumber() << " column " << ex.getColumnNumber() << std::endl;
+
+   xercesc::XMLString::release(&message);
+}
+
+void ValidationErrorHandler::warning(const xercesc::SAXParseException& ex)
+{
+   reportParseException(ex);
+}
+
+void ValidationErrorHandler::error(const xercesc::SAXParseException& ex)
+{
+   reportParseException(ex);
+}
+
+void ValidationErrorHandler::fatalError(const xercesc::SAXParseException& ex)
+{
+   reportParseException(ex);
+}
+
+void ValidationErrorHandler::resetErrors()
+{
+}
+
+
 
 class XStr
 {
@@ -109,20 +151,25 @@ struct xmlTree{
     private:
         XercesDOMParser *parser;
         DOMDocument *doc;
+        ValidationErrorHandler *inputHandler;
 
     public:
 
         xmlTree(){
             try{
+
                 if(!initialized){
                     XMLPlatformUtils::Initialize();
                     initialized = true;
                 }
-                parser = new XercesDOMParser;
-                parser->setValidationScheme(XercesDOMParser::Val_Auto);
+
+                parser = new XercesDOMParser();
+                inputHandler = new ValidationErrorHandler();
+                parser->setValidationScheme(XercesDOMParser::Val_Always);
                 parser->setDoNamespaces(true);
                 parser->setDoSchema(true);
                 parser->setValidationConstraintFatal(true);
+                parser->setErrorHandler(inputHandler);
                 
             }
             catch(const XMLException &toCatch)
@@ -676,48 +723,3 @@ DOMElement* getRootElement()
     return doc->getDocumentElement();
 }
 
-/**
- * @brief very simple error hander for the xerces dom parser
- * 
- */
-class ValidationErrorHandler : public xercesc::ErrorHandler 
-{
-public:
-   /** Warning message method */
-   void warning(const xercesc::SAXParseException& ex);
-   /** Error message method */
-   void error(const xercesc::SAXParseException& ex);
-   /** Fatal error message method */
-   void fatalError(const xercesc::SAXParseException& ex);
-   /** Errors resetter method */
-   void resetErrors();
-private:
-   /** Based message reporter method */
-   void reportParseException(const xercesc::SAXParseException& ex);
-};
-void ValidationErrorHandler::reportParseException(const xercesc::SAXParseException& ex)
-{
-   char* message = xercesc::XMLString::transcode(ex.getMessage());
-   std::cout << "\t" << message << " at line " << ex.getLineNumber() << " column " << ex.getColumnNumber() << std::endl;
-
-   xercesc::XMLString::release(&message);
-}
-
-void ValidationErrorHandler::warning(const xercesc::SAXParseException& ex)
-{
-   reportParseException(ex);
-}
-
-void ValidationErrorHandler::error(const xercesc::SAXParseException& ex)
-{
-   reportParseException(ex);
-}
-
-void ValidationErrorHandler::fatalError(const xercesc::SAXParseException& ex)
-{
-   reportParseException(ex);
-}
-
-void ValidationErrorHandler::resetErrors()
-{
-}

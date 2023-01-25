@@ -118,13 +118,15 @@ EXPORTED int executePipeline(char* file)
 	setting.warnings = 0;
 	
 	// --- pipeline ------------------------------------------------------------
-	cout << "DEBUG: doing output validation" << endl;
-	if (validateOutput(data))
+	cout << "DEBUG: doing input validation" << endl;
+	if (validateInput(file, inputxml))
 	{
-		cerr << "ERR: error in validateOutput" << endl;
+		cerr << "ERR: error in validateInput" << endl;
 	}
 	cout << "DEBUG skipping everything else. Delete this after you are done!" << endl;
-	//return 0;
+
+	cout << "debug ran. Terminating now" << endl;
+	return 0;
 
 
 
