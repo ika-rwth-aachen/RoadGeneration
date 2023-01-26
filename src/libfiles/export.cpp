@@ -120,7 +120,6 @@ EXPORTED int executePipeline(char* file)
 	// --- pipeline ------------------------------------------------------------
 
 
-
 	if (validateInput(file, inputxml))
 	{
 		cerr << "ERR: error in validateInput" << endl;
@@ -159,6 +158,10 @@ EXPORTED int executePipeline(char* file)
 	{
 		cout << "\nFinished with " << setting.warnings << " warning(s), check out the error log for more information." << endl;
 	}
+
+	//Cleanup ----------------
+
+	terminateXMLUtils();
 
 	return 0;
 }
