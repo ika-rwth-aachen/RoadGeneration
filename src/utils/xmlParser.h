@@ -171,14 +171,17 @@ public:
             string schema = string_format("%s/xml/input.xsd", PROJ_DIR);
             const char *schema_path = schema.c_str();
 
-            parser = new XercesDOMParser();
+            parser = new XercesDOMParser;
             inputHandler = new ValidationErrorHandler();
+            
             parser->setValidationScheme(XercesDOMParser::Val_Always);
             parser->setDoNamespaces(true);
             parser->setDoSchema(true);
             parser->setExternalNoNamespaceSchemaLocation(schema_path);
             parser->setValidationConstraintFatal(true);
             parser->setErrorHandler(inputHandler);
+            parser->setValidationSchemaFullChecking(true);
+            parser->setHandleMultipleImports(true);
         }
         catch (const XMLException &toCatch)
         {
