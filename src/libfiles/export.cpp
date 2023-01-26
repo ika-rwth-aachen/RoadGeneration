@@ -127,17 +127,17 @@ EXPORTED int executePipeline(char* file)
 		return -1;
 	}
 
-	if (buildSegments(inputxml, data))
+	if (buildSegments(inputxml.getRootElement(), data))
 	{
 		cerr << "ERR: error in buildSegments" << endl;
 		return -1;
 	}
-	if (linkSegments(inputxml, data))
+	if (linkSegments(inputxml.getRootElement(), data))
 	{
 		cerr << "ERR: error in linkSegments" << endl;
 		return -1;
 	}
-	if (closeRoadNetwork(inputxml, data))
+	if (closeRoadNetwork(inputxml.getRootElement(), data))
 	{
 		cerr << "ERR: error in closeRoadNetwork" << endl;
 		return -1;

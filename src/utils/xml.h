@@ -89,7 +89,6 @@ int validateOutput(roadNetwork &data)
     if (domParser.loadGrammar(schema_path, Grammar::SchemaGrammarType) == NULL)
     {
         cerr << "ERR: couldn't load schema" << endl;
-        terminateParser();
         return 1;
     }
     //create error handler from custom error handler class
@@ -113,11 +112,9 @@ int validateOutput(roadNetwork &data)
     else
     {
         cerr << "ERR: XML output file doesn't conform to the schema" << endl;
-        terminateParser();
         return 1;
     }
-
-    terminateParser();
+    
     return 0;
 }
 
