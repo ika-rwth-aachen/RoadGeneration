@@ -76,6 +76,10 @@ void ValidationErrorHandler::resetErrors()
 {
 }
 
+/**
+ * @brief wrapper class that handles conversion from xml string to string smoothly
+ * 
+ */
 class XStr
 {
 public:
@@ -136,9 +140,14 @@ public:
 private:
     XMLCh *fUnicodeForm;
 };
-
+//just to make the code more readable
 #define X(str) XStr(str)
 
+
+/**
+ * @brief Wrapper class that stores the xml dom context
+ * 
+ */
 struct xmlTree
 {
 
