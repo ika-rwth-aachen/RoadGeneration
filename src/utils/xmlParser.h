@@ -620,7 +620,10 @@ int init(const char *rootNode)
     try
     {
         if (!initialized)
+        {
             XMLPlatformUtils::Initialize();
+            initialized = true;
+        }
     }
     catch (const XMLException &toCatch)
     {
