@@ -149,7 +149,6 @@ def executePipeline(tree, inpDir, varDict):
     xml_path = os.path.join(os.path.dirname(__file__), "resources/xml")#xml path argument for lib
     argXMLPath = c_char_p(xml_path.encode('utf-8'))
 
-
     for filename in os.listdir(inpDir):
         if filename.endswith(".xml"): 
             
@@ -158,7 +157,7 @@ def executePipeline(tree, inpDir, varDict):
                
             roadgen.setSilentMode(c_bool(args.s))
             roadgen.setFileName(argFilename)
-            roadgen.setXMLSchemeLocation(argXMLPath)
+            roadgen.setXMLSchemaLocation(argXMLPath)
             if args.o:
                 outArgs = c_char_p((inpDir + args.o+"_rev"+str(c)).encode('utf-8'))
                 roadgen.setOutputName(outArgs)
