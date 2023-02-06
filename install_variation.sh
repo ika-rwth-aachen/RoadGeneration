@@ -7,10 +7,10 @@ case $( "${UNAME}" | tr '[:upper:]' '[:lower:]') in
     sh buildScript.sh
     cp ./build/libroad-generation.so ./variation/variation/resources/libroad-generation.so
     cd variation
-    pip3 install wheel
-    python3 setup.py bdist_wheel
+    pip install wheel
+    python setup.py bdist_wheel
     cd dist 
-    pip3 install roadvariation-0.1-py3-none-any.whl --force-reinstall
+    pip install roadvariation-0.1-py3-none-any.whl --force-reinstall
     ;;
   msys*|cygwin*|mingw*|nt|win*)
     printf 'windows\n'
