@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>3. Autodoc &mdash; Road Generation 1 documentation</title>
@@ -29,11 +29,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Road Generation
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Road Generation
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -153,7 +157,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active"><span class="section-number">3. </span>Autodoc</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/autodoc.rst.txt" rel="nofollow"> View page source</a>
@@ -462,10 +466,10 @@
 <em>#include &lt;<a class="reference internal" href="#settings_8h"><span class="std std-ref">settings.h</span></a>&gt;</em></div>
 <p>lane changes settings </p>
 <dl class="field-list simple">
-<dt class="field-odd">Param s</dt>
+<dt class="field-odd">Param s<span class="colon">:</span></dt>
 <dd class="field-odd"><p>length of additional lane </p>
 </dd>
-<dt class="field-even">Param ds</dt>
+<dt class="field-even">Param ds<span class="colon">:</span></dt>
 <dd class="field-even"><p>length of widening part </p>
 </dd>
 </dl>
@@ -2012,7 +2016,7 @@
 <span id="_CPPv319closeRoadConnectionR6vectorI8geometryEdddddd"></span><span id="_CPPv219closeRoadConnectionR6vectorI8geometryEdddddd"></span><span id="closeRoadConnection__vector:geometry:R.double.double.double.double.double.double"></span><span class="target" id="closeRoadConnection_8h_1a0d3f408018a47a957abee42f9c387c9d"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">closeRoadConnection</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv48geometry" title="geometry"><span class="n"><span class="pre">geometry</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">geo</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">x1</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">y1</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi1</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">x2</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">y2</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv419closeRoadConnectionR6vectorI8geometryEdddddd" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function generates geometries recursivly so that the two input points are connected with a feasible geometry </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>geo</strong> – vector which contains all output geometries </p></li>
 <li><p><strong>x1</strong> – x component of start point </p></li>
@@ -2023,7 +2027,7 @@
 <li><p><strong>phi2</strong> – angle of end point </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2053,13 +2057,13 @@
 <span id="_CPPv316closeRoadNetworkPK10DOMElementR11roadNetwork"></span><span id="_CPPv216closeRoadNetworkPK10DOMElementR11roadNetwork"></span><span id="closeRoadNetwork__DOMElementCP.roadNetworkR"></span><span class="target" id="closeRoadNetwork_8h_1a302f6a6c3c6e02d6157e4a8fbbb566b5"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">closeRoadNetwork</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">rootNode</span></span>, <a class="reference internal" href="#_CPPv411roadNetwork" title="roadNetwork"><span class="n"><span class="pre">roadNetwork</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416closeRoadNetworkPK10DOMElementR11roadNetwork" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function closes roads by adding new road structures </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>doc</strong> – tree structure which contains the input data </p></li>
 <li><p><strong>data</strong> – <a class="reference internal" href="doc.html#structroadNetwork"><span class="std std-ref">roadNetwork</span></a> structure generated by this tool </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2099,14 +2103,14 @@
 <span id="_CPPv313transformRoadP10DOMElementR11roadNetworkb"></span><span id="_CPPv213transformRoadP10DOMElementR11roadNetworkb"></span><span id="transformRoad__DOMElementP.roadNetworkR.b"></span><span class="target" id="linkSegments_8h_1af105059a13b6f28e64a31787b5ba229e"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">transformRoad</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">segmentLink</span></span>, <a class="reference internal" href="#_CPPv411roadNetwork" title="roadNetwork"><span class="n"><span class="pre">roadNetwork</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">data</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">swap</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv413transformRoadP10DOMElementR11roadNetworkb" title="Permalink to this definition"></a><br /></dt>
 <dd><p>Transforms one toSegments position according to the from segment and the semgment link data to the coordinate system of the reference segment. </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>segmentLink</strong> – segment to link </p></li>
 <li><p><strong>data</strong> – road network data </p></li>
 <li><p><strong>swap</strong> – if true the from and toSegment and road are swapped </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2117,13 +2121,13 @@
 <span id="_CPPv312linkSegmentsPK10DOMElementR11roadNetwork"></span><span id="_CPPv212linkSegmentsPK10DOMElementR11roadNetwork"></span><span id="linkSegments__DOMElementCP.roadNetworkR"></span><span class="target" id="linkSegments_8h_1a610b66eaf3900d238f050b249f1ea080"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">linkSegments</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">rootNode</span></span>, <a class="reference internal" href="#_CPPv411roadNetwork" title="roadNetwork"><span class="n"><span class="pre">roadNetwork</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv412linkSegmentsPK10DOMElementR11roadNetwork" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function links all specified segments the reference frame has to be specified two segments can be linked by determine two contactpoints of the roads </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>doc</strong> – tree structure which contains the input data </p></li>
 <li><p><strong>data</strong> – <a class="reference internal" href="doc.html#structroadNetwork"><span class="std std-ref">roadNetwork</span></a> structure generated by the tool </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2168,14 +2172,14 @@
 <span id="_CPPv39parseArgsiPPcR12settingsExec"></span><span id="_CPPv29parseArgsiPPcR12settingsExec"></span><span id="parseArgs__i.cPP.settingsExecR"></span><span class="target" id="helperExec_8cpp_1a8294db42a2aaf8644a981e164c96545f"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parseArgs</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">argc</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">argv</span></span>, <a class="reference internal" href="#_CPPv412settingsExec" title="settingsExec"><span class="n"><span class="pre">settingsExec</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">settings</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv49parseArgsiPPcR12settingsExec" title="Permalink to this definition"></a><br /></dt>
 <dd><p>parses the command line arguments from the main function and stores them in a settings struct. </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>argc</strong> – argc from main </p></li>
 <li><p><strong>argv</strong> – argv from main </p></li>
 <li><p><strong>settings</strong> – setting struct to store the parsed parameter </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2228,7 +2232,7 @@
 <span class="target" id="helperExec_8h_1a8294db42a2aaf8644a981e164c96545f"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parseArgs</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">argc</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">argv</span></span>, <a class="reference internal" href="#_CPPv412settingsExec" title="settingsExec"><span class="n"><span class="pre">settingsExec</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">settings</span></span><span class="sig-paren">)</span><br /></dt>
 <dd><p>parses the command line arguments from the main function and stores them in a settings struct. </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>argc</strong> – argc from command line </p></li>
 <li><p><strong>argv</strong> – argv from command line </p></li>
@@ -2238,10 +2242,10 @@
 <li><p><strong>settings</strong> – setting struct to store the parsed parameter </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code</p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int error code </p>
 </dd>
 </dl>
@@ -2351,13 +2355,13 @@
 <span id="_CPPv34mainiPPc"></span><span id="_CPPv24mainiPPc"></span><span id="main__i.cPP"></span><span class="target" id="main_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">main</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">argc</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">argv</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv44mainiPPc" title="Permalink to this definition"></a><br /></dt>
 <dd><p>main function that calls the roadgeneration library functions </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>argc</strong> – </p></li>
 <li><p><strong>argv</strong> – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int: error code. 0 means that no errors occured. </p>
 </dd>
 </dl>
@@ -2398,7 +2402,7 @@
 <span id="_CPPv315addLaneWideningR6vectorI11laneSectionEiddb"></span><span id="_CPPv215addLaneWideningR6vectorI11laneSectionEiddb"></span><span id="addLaneWidening__vector:laneSection:R.i.double.double.b"></span><span class="target" id="addLaneSections_8h_1ab59e271d00a4227a59cb0e5ac69295d4"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addLaneWidening</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv411laneSection" title="laneSection"><span class="n"><span class="pre">laneSection</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">secs</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">side</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">ds</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">addOuterLane</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv415addLaneWideningR6vectorI11laneSectionEiddb" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function adds a <a class="reference internal" href="doc.html#structlaneSection"><span class="std std-ref">laneSection</span></a> with laneWideing to a given lanesection set </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>secs</strong> – vector of all lanesections of a road </p></li>
 <li><p><strong>side</strong> – determines the road’s side of the widening </p></li>
@@ -2407,7 +2411,7 @@
 <li><p><strong>addouterLane</strong> – specifies if additional lane is on the outer side or not </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2418,7 +2422,7 @@
 <span id="_CPPv311addLaneDropR6vectorI11laneSectionEidd"></span><span id="_CPPv211addLaneDropR6vectorI11laneSectionEidd"></span><span id="addLaneDrop__vector:laneSection:R.i.double.double"></span><span class="target" id="addLaneSections_8h_1a8ff0b0a4bc013b9921316d359e06fe4a"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addLaneDrop</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv411laneSection" title="laneSection"><span class="n"><span class="pre">laneSection</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">secs</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">side</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">ds</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv411addLaneDropR6vectorI11laneSectionEidd" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function adds a <a class="reference internal" href="doc.html#structlaneSection"><span class="std std-ref">laneSection</span></a> with laneDrop to a given lanesection set </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>secs</strong> – vector of all lanesections of a road </p></li>
 <li><p><strong>side</strong> – determines the road’s side of the drop </p></li>
@@ -2426,7 +2430,7 @@
 <li><p><strong>ds</strong> – length of laneDrop </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2437,7 +2441,7 @@
 <span id="_CPPv325addRestrictedAreaWideningR6vectorI11laneSectionEiddd"></span><span id="_CPPv225addRestrictedAreaWideningR6vectorI11laneSectionEiddd"></span><span id="addRestrictedAreaWidening__vector:laneSection:R.i.double.double.double"></span><span class="target" id="addLaneSections_8h_1af1770b21e59be41bba345d9597866493"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addRestrictedAreaWidening</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv411laneSection" title="laneSection"><span class="n"><span class="pre">laneSection</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">secs</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">side</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">ds1</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">ds2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv425addRestrictedAreaWideningR6vectorI11laneSectionEiddd" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function adds a <a class="reference internal" href="doc.html#structlaneSection"><span class="std std-ref">laneSection</span></a> with restricted area after a lane widening </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>secs</strong> – vector of all lanesections of a road </p></li>
 <li><p><strong>side</strong> – determines the road’s side of the widening </p></li>
@@ -2446,7 +2450,7 @@
 <li><p><strong>ds2</strong> – length of restricted areay (always lager than ds1) </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2457,7 +2461,7 @@
 <span id="_CPPv321addRestrictedAreaDropR6vectorI11laneSectionEiddd"></span><span id="_CPPv221addRestrictedAreaDropR6vectorI11laneSectionEiddd"></span><span id="addRestrictedAreaDrop__vector:laneSection:R.i.double.double.double"></span><span class="target" id="addLaneSections_8h_1a38a3d1a53c90b137492b4948e0ca5ad5"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addRestrictedAreaDrop</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv411laneSection" title="laneSection"><span class="n"><span class="pre">laneSection</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">secs</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">side</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">ds1</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">ds2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv421addRestrictedAreaDropR6vectorI11laneSectionEiddd" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function adds a <a class="reference internal" href="doc.html#structlaneSection"><span class="std std-ref">laneSection</span></a> with restricted area after a lane drop </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>secs</strong> – vector of all lanesections of a road </p></li>
 <li><p><strong>side</strong> – determines the road’s side of the drop </p></li>
@@ -2466,7 +2470,7 @@
 <li><p><strong>ds2</strong> – length of restricted areay (always lager than ds1) </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2477,7 +2481,7 @@
 <span id="_CPPv320laneWideningJunctionR4roadddibb"></span><span id="_CPPv220laneWideningJunctionR4roadddibb"></span><span id="laneWideningJunction__roadR.double.double.i.b.b"></span><span class="target" id="addLaneSections_8h_1a5543b2ca42e21ade66ea640d2122f65d"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">laneWideningJunction</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">ds</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">turn</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">verschwenkung</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">restricted</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv420laneWideningJunctionR4roadddibb" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function creates laneWidenings in junction areas (in opposite s direction), for additional turning lanes </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>r</strong> – road data </p></li>
 <li><p><strong>s</strong> – start of widening </p></li>
@@ -2487,7 +2491,7 @@
 <li><p><strong>restricted</strong> – determines if widening is a restricted area </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2515,13 +2519,13 @@
 <span id="_CPPv316addTrafficIsland6objectR4road"></span><span id="_CPPv216addTrafficIsland6objectR4road"></span><span id="addTrafficIsland__object.roadR"></span><span class="target" id="addObjects_8h_1a0bcad2abfc6ff5ffb9dab2c07c5e1421"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addTrafficIsland</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv46object" title="object"><span class="n"><span class="pre">object</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">o</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416addTrafficIsland6objectR4road" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function adds a traffic island to the lane structure </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>o</strong> – object data </p></li>
 <li><p><strong>r</strong> – road data </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2532,14 +2536,14 @@
 <span id="_CPPv311addRoadWork6objectR4roadi"></span><span id="_CPPv211addRoadWork6objectR4roadi"></span><span id="addRoadWork__object.roadR.i"></span><span class="target" id="addObjects_8h_1a22ee64bfce52120a303cb06e227d68a8"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addRoadWork</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv46object" title="object"><span class="n"><span class="pre">object</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">o</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">laneId</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv411addRoadWork6objectR4roadi" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function generates a roadwork </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>o</strong> – object containing length and position of roadwork </p></li>
 <li><p><strong>r</strong> – road which contains the roadwork </p></li>
 <li><p><strong>laneId</strong> – lane which contains the roadwork </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2550,13 +2554,13 @@
 <span id="_CPPv310addParking6objectR4road"></span><span id="_CPPv210addParking6objectR4road"></span><span id="addParking__object.roadR"></span><span class="target" id="addObjects_8h_1a3155cfc479807e176d532ca06660d1e7"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addParking</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv46object" title="object"><span class="n"><span class="pre">object</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">o</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv410addParking6objectR4road" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function adds parking splot objects </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>o</strong> – object data </p></li>
 <li><p><strong>r</strong> – road data </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2567,13 +2571,13 @@
 <span id="_CPPv310addBusStop6objectR4road"></span><span id="_CPPv210addBusStop6objectR4road"></span><span id="addBusStop__object.roadR"></span><span class="target" id="addObjects_8h_1a51b92408bede06f68a328e092835d4c8"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addBusStop</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv46object" title="object"><span class="n"><span class="pre">object</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">o</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv410addBusStop6objectR4road" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function adds a bus top </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>o</strong> – objct data </p></li>
 <li><p><strong>r</strong> – road data </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2584,13 +2588,13 @@
 <span id="_CPPv311getPositionP10DOMElementR6object"></span><span id="_CPPv211getPositionP10DOMElementR6object"></span><span id="getPosition__DOMElementP.objectR"></span><span class="target" id="addObjects_8h_1a59c341950fea81752805b87803476666"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getPosition</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">node</span></span>, <a class="reference internal" href="#_CPPv46object" title="object"><span class="n"><span class="pre">object</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">o</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv411getPositionP10DOMElementR6object" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function gets the object position </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>node</strong> – object input data </p></li>
 <li><p><strong>o</strong> – object data </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2601,14 +2605,14 @@
 <span id="_CPPv310addObjectsP10DOMElementR4roadR11roadNetwork"></span><span id="_CPPv210addObjectsP10DOMElementR4roadR11roadNetwork"></span><span id="addObjects__DOMElementP.roadR.roadNetworkR"></span><span class="target" id="addObjects_8h_1a6d2be402fb0800d7e9210767e62fd61b"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addObjects</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">inRoad</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span>, <a class="reference internal" href="#_CPPv411roadNetwork" title="roadNetwork"><span class="n"><span class="pre">roadNetwork</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv410addObjectsP10DOMElementR4roadR11roadNetwork" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function creates objects </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>inRoad</strong> – road input data from input file </p></li>
 <li><p><strong>r</strong> – road data </p></li>
 <li><p><strong>data</strong> – <a class="reference internal" href="doc.html#structroadNetwork"><span class="std std-ref">roadNetwork</span></a> structure where the generated roads and junctions are stored </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2619,7 +2623,7 @@
 <span id="_CPPv39addSignalR4roadR11roadNetworkdd6string6stringi"></span><span id="_CPPv29addSignalR4roadR11roadNetworkdd6string6stringi"></span><span id="addSignal__roadR.roadNetworkR.double.double.string.string.i"></span><span class="target" id="addObjects_8h_1ac04f4d0cac9284b3d784a7ef969a5028"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addSignal</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span>, <a class="reference internal" href="#_CPPv411roadNetwork" title="roadNetwork"><span class="n"><span class="pre">roadNetwork</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">data</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">t</span></span>, <span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">type</span></span>, <span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">subtype</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">controller</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv49addSignalR4roadR11roadNetworkdd6string6stringi" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function creates a signal which is automatically generated </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>r</strong> – road which contains the signal </p></li>
 <li><p><strong>data</strong> – <a class="reference internal" href="doc.html#structroadNetwork"><span class="std std-ref">roadNetwork</span></a> data, which holds the controls </p></li>
@@ -2630,7 +2634,7 @@
 <li><p><strong>controller</strong> – controllerof signal </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2662,7 +2666,7 @@
 <span id="_CPPv316computeFirstLastP10DOMElementRiRiRdRd"></span><span id="_CPPv216computeFirstLastP10DOMElementRiRiRdRd"></span><span id="computeFirstLast__DOMElementP.iR.iR.doubleR.doubleR"></span><span class="target" id="buildRoad_8h_1a61526bef7d09c3ebe3ac73419eaf6fb7"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">computeFirstLast</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">roadIn</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">foundfirst</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">foundlast</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">sStart</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">sEnd</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416computeFirstLastP10DOMElementRiRiRdRd" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function computes first and last considered geometry in s interval </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>roadIn</strong> – road input data </p></li>
 <li><p><strong>foundfirst</strong> – id of the first considerd geometry </p></li>
@@ -2671,7 +2675,7 @@
 <li><p><strong>sEnd</strong> – end of the s interval </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2682,7 +2686,7 @@
 <span id="_CPPv318generateGeometriesP10DOMElementR4roadRdRd"></span><span id="_CPPv218generateGeometriesP10DOMElementR4roadRdRd"></span><span id="generateGeometries__DOMElementP.roadR.doubleR.doubleR"></span><span class="target" id="buildRoad_8h_1a1dba5dae9101fb49db04e0b494283a6f"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">generateGeometries</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">roadIn</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">sStart</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">sEnd</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv418generateGeometriesP10DOMElementR4roadRdRd" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function genetares the geometries of the reference line based on an s intervall </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>roadIn</strong> – road input data </p></li>
 <li><p><strong>r</strong> – road data containing the reference line information </p></li>
@@ -2690,7 +2694,7 @@
 <li><p><strong>sEnd</strong> – end of the s interval </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2701,7 +2705,7 @@
 <span id="_CPPv315shiftGeometriesR4roaddddddd"></span><span id="_CPPv215shiftGeometriesR4roaddddddd"></span><span id="shiftGeometries__roadR.double.double.double.double.double.double"></span><span class="target" id="buildRoad_8h_1aa91008d8d5618c54276e53223c1f68d1"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">shiftGeometries</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">sStart</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">sEnd</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">s0</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">x0</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">y0</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi0</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv415shiftGeometriesR4roaddddddd" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function shift the geometries of the reference line </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>r</strong> – road input data </p></li>
 <li><p><strong>sStart</strong> – start of s interval </p></li>
@@ -2712,7 +2716,7 @@
 <li><p><strong>phi0</strong> – global angle of origin </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2723,7 +2727,7 @@
 <span id="_CPPv314flipGeometriesR4road"></span><span id="_CPPv214flipGeometriesR4road"></span><span id="flipGeometries__roadR"></span><span class="target" id="buildRoad_8h_1a7a889471c2384c3dc6d0cb855e3612ab"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">flipGeometries</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv414flipGeometriesR4road" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function flips geometries of reference line </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>r</strong> – road data  error code </p>
 </dd>
 </dl>
@@ -2734,14 +2738,14 @@
 <span id="_CPPv38addLanesP10DOMElementR4roadi"></span><span id="_CPPv28addLanesP10DOMElementR4roadi"></span><span id="addLanes__DOMElementP.roadR.i"></span><span class="target" id="buildRoad_8h_1aa6c0aa0650d1b8cab39d4fc87a749928"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addLanes</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">roadIn</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv48addLanesP10DOMElementR4roadi" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function adds lanes to the road structure </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>roadIn</strong> – road input data </p></li>
 <li><p><strong>r</strong> – road data </p></li>
 <li><p><strong>mode</strong> – defines the mode (flipped or not) </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2752,14 +2756,14 @@
 <span id="_CPPv321addLaneSectionChangesP10DOMElementR4roadP10DOMElement"></span><span id="_CPPv221addLaneSectionChangesP10DOMElementR4roadP10DOMElement"></span><span id="addLaneSectionChanges__DOMElementP.roadR.DOMElementP"></span><span class="target" id="buildRoad_8h_1a72ca344f069ae750dc6a55b6de10f083"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addLaneSectionChanges</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">roadIn</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span>, <span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">automaticWidening</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv421addLaneSectionChangesP10DOMElementR4roadP10DOMElement" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function adds additional lane sections for changing lane structure </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>roadIn</strong> – road input data </p></li>
 <li><p><strong>r</strong> – road data </p></li>
 <li><p><strong>automaticWidening</strong> – automatic widing input data </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2770,7 +2774,7 @@
 <span id="_CPPv39buildRoadP10DOMElementR4roadddP10DOMElementdddd"></span><span id="_CPPv29buildRoadP10DOMElementR4roadddP10DOMElementdddd"></span><span id="buildRoad__DOMElementP.roadR.double.double.DOMElementP.double.double.double.double"></span><span class="target" id="buildRoad_8h_1a850736175871cce5630fb6ba69c7fa9c"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildRoad</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">roadIn</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">sStart</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">sEnd</span></span>, <span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">automaticWidening</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">s0</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">x0</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">y0</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi0</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv49buildRoadP10DOMElementR4roadddP10DOMElementdddd" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function builds a road based on the input data </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>road</strong> – road input data </p></li>
 <li><p><strong>r</strong> – road data </p></li>
@@ -2783,7 +2787,7 @@
 <li><p><strong>phi0</strong> – reference angle </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2851,13 +2855,13 @@
 <span id="_CPPv313buildSegmentsPK10DOMElementR11roadNetwork"></span><span id="_CPPv213buildSegmentsPK10DOMElementR11roadNetwork"></span><span id="buildSegments__DOMElementCP.roadNetworkR"></span><span class="target" id="buildSegments_8h_1a37fb440a84db91c436eb65f339c848ad"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildSegments</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">rootNode</span></span>, <a class="reference internal" href="#_CPPv411roadNetwork" title="roadNetwork"><span class="n"><span class="pre">roadNetwork</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv413buildSegmentsPK10DOMElementR11roadNetwork" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function creates all segments which can be either a junction, roundabout or connectingroad </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>inputxml</strong> – tree structure which contains the input data </p></li>
 <li><p><strong>data</strong> – <a class="reference internal" href="doc.html#structroadNetwork"><span class="std std-ref">roadNetwork</span></a> data where the openDrive structure should be generated </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2893,13 +2897,13 @@
 <span id="_CPPv314connectingRoadP10DOMElementR11roadNetwork"></span><span id="_CPPv214connectingRoadP10DOMElementR11roadNetwork"></span><span id="connectingRoad__DOMElementP.roadNetworkR"></span><span class="target" id="connectingRoad_8h_1a64a7dd7f80cda2a656a3d9c1f81e931d"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">connectingRoad</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">node</span></span>, <a class="reference internal" href="#_CPPv411roadNetwork" title="roadNetwork"><span class="n"><span class="pre">roadNetwork</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv414connectingRoadP10DOMElementR11roadNetwork" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function generates the road for a connecting road which is specified in the input file </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>node</strong> – input data from the input file for the connecting road </p></li>
 <li><p><strong>data</strong> – <a class="reference internal" href="doc.html#structroadNetwork"><span class="std std-ref">roadNetwork</span></a> structure where the generated roads and junctions are stored </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2935,7 +2939,7 @@
 <span id="_CPPv320createLaneConnectionR4road11laneSection11laneSectionii6string6string"></span><span id="_CPPv220createLaneConnectionR4road11laneSection11laneSectionii6string6string"></span><span id="createLaneConnection__roadR.laneSection.laneSection.i.i.string.string"></span><span class="target" id="createLaneConnection_8h_1a92e456fd3c49594d548b1cf9ce25ed47"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">createLaneConnection</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span>, <a class="reference internal" href="#_CPPv411laneSection" title="laneSection"><span class="n"><span class="pre">laneSection</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">lS1</span></span>, <a class="reference internal" href="#_CPPv411laneSection" title="laneSection"><span class="n"><span class="pre">laneSection</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">lS2</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">from</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">to</span></span>, <span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">left</span></span>, <span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">right</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv420createLaneConnectionR4road11laneSection11laneSectionii6string6string" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function creates a new lane for a connecting road </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>r</strong> – connecting road </p></li>
 <li><p><strong>lS1</strong> – lanesection of adjacent road at start </p></li>
@@ -2946,7 +2950,7 @@
 <li><p><strong>right</strong> – right roadmarking </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -2982,7 +2986,7 @@
 <span id="_CPPv320createRoadConnection4road4roadR4roadR8junctionii6string6string"></span><span id="_CPPv220createRoadConnection4road4roadR4roadR8junctionii6string6string"></span><span id="createRoadConnection__road.road.roadR.junctionR.i.i.string.string"></span><span class="target" id="createRoadConnection_8h_1a9ef94d17d3b627012f39888899861830"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">createRoadConnection</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">r1</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">r2</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span>, <a class="reference internal" href="#_CPPv48junction" title="junction"><span class="n"><span class="pre">junction</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">junc</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fromId</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">toId</span></span>, <span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">laneMarkLeft</span></span>, <span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">laneMarkRight</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv420createRoadConnection4road4roadR4roadR8junctionii6string6string" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function creates a new road connection </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>r1</strong> – road at start point </p></li>
 <li><p><strong>r2</strong> – road at end point </p></li>
@@ -2994,7 +2998,7 @@
 <li><p><strong>laneMarkRight</strong> – right roadmarking </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -3034,13 +3038,13 @@
 <span id="_CPPv315junctionWrapperPK10DOMElementR11roadNetwork"></span><span id="_CPPv215junctionWrapperPK10DOMElementR11roadNetwork"></span><span id="junctionWrapper__DOMElementCP.roadNetworkR"></span><span class="target" id="junctionWrapper_8h_1a27660ed53590e6cafa1e7727b35f4c82"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">junctionWrapper</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">node</span></span>, <a class="reference internal" href="#_CPPv411roadNetwork" title="roadNetwork"><span class="n"><span class="pre">roadNetwork</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv415junctionWrapperPK10DOMElementR11roadNetwork" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function takes the junction as input argument and calls the junction type function </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>node</strong> – input data from the input file for the tjunction </p></li>
 <li><p><strong>data</strong> – <a class="reference internal" href="doc.html#structroadNetwork"><span class="std std-ref">roadNetwork</span></a> structure where the generated roads and junctions are stored </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -3068,13 +3072,13 @@
 <span id="_CPPv319juncGroupIdToJuncIdii"></span><span id="_CPPv219juncGroupIdToJuncIdii"></span><span id="juncGroupIdToJuncId__i.i"></span><span class="target" id="roundAbout_8h_1aeac88dbe45b60e0452d288254fc5c5d9"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">juncGroupIdToJuncId</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">juncGroupId</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">juncIdx</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv419juncGroupIdToJuncIdii" title="Permalink to this definition"></a><br /></dt>
 <dd><p>translates the input segment id and the index of the junction inside the roundabout to an absolute junction id </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>juncGroupId</strong> – input id of the segment. Equals the id of the junction group </p></li>
 <li><p><strong>juncIdx</strong> – index of the junction inside the roundabout. Starts with 0 and counting up </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int resulting id of the junction in the output file </p>
 </dd>
 </dl>
@@ -3085,13 +3089,13 @@
 <span id="_CPPv310roundAboutPK10DOMElementR11roadNetwork"></span><span id="_CPPv210roundAboutPK10DOMElementR11roadNetwork"></span><span id="roundAbout__DOMElementCP.roadNetworkR"></span><span class="target" id="roundAbout_8h_1a5b0ba41d9658d58525002f08b767014d"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">roundAbout</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">node</span></span>, <a class="reference internal" href="#_CPPv411roadNetwork" title="roadNetwork"><span class="n"><span class="pre">roadNetwork</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv410roundAboutPK10DOMElementR11roadNetwork" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function generates the roads and junctions for a roundabout which is specified in the input file </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>node</strong> – input data from the input file for the roundAbout </p></li>
 <li><p><strong>data</strong> – <a class="reference internal" href="doc.html#structroadNetwork"><span class="std std-ref">roadNetwork</span></a> structure where the generated roads and junctions are stored </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -3127,13 +3131,13 @@
 <span id="_CPPv39tjunctionPK10DOMElementR11roadNetwork"></span><span id="_CPPv29tjunctionPK10DOMElementR11roadNetwork"></span><span id="tjunction__DOMElementCP.roadNetworkR"></span><span class="target" id="tjunction_8h_1a8e779cf9ea905a62325c9dfb53f88541"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">tjunction</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">node</span></span>, <a class="reference internal" href="#_CPPv411roadNetwork" title="roadNetwork"><span class="n"><span class="pre">roadNetwork</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv49tjunctionPK10DOMElementR11roadNetwork" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function generates the roads and junctions for a t junction which is specified in the input file </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>node</strong> – input data from the input file for the tjunction </p></li>
 <li><p><strong>data</strong> – <a class="reference internal" href="doc.html#structroadNetwork"><span class="std std-ref">roadNetwork</span></a> structure where the generated roads and junctions are stored </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -3169,13 +3173,13 @@
 <span id="_CPPv39xjunctionPK10DOMElementR11roadNetwork"></span><span id="_CPPv29xjunctionPK10DOMElementR11roadNetwork"></span><span id="xjunction__DOMElementCP.roadNetworkR"></span><span class="target" id="xjunction_8h_1a4765f04b1e5abb9323e9cfdccd40449b"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">xjunction</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">domNode</span></span>, <a class="reference internal" href="#_CPPv411roadNetwork" title="roadNetwork"><span class="n"><span class="pre">roadNetwork</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv49xjunctionPK10DOMElementR11roadNetwork" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function generates the roads and junctions for a x junction which is specified in the input file </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>node</strong> – input data from the input file for the xjunction </p></li>
 <li><p><strong>data</strong> – <a class="reference internal" href="doc.html#structroadNetwork"><span class="std std-ref">roadNetwork</span></a> structure where the generated roads and junctions are stored </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -3243,7 +3247,7 @@
 <span class="target" id="export_8cpp_1a478147bd1c66ca5ded5262be20fd6402"></span><span class="sig-name descname"><span class="pre">EXPORTED</span> <span class="pre">void</span> <span class="pre">setFileName</span> <span class="pre">(char</span> <span class="pre">*file)</span></span></dt>
 <dd><p>Sets the filename of the input file. </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>file</strong> – file name * </p>
 </dd>
 </dl>
@@ -3254,7 +3258,7 @@
 <span class="target" id="export_8cpp_1af89b7114cd15beaf55bd4c5a554e5c7e"></span><span class="sig-name descname"><span class="pre">EXPORTED</span> <span class="pre">void</span> <span class="pre">setOverwriteLog</span> <span class="pre">(bool</span> <span class="pre">b)</span></span></dt>
 <dd><p>set overwriting the error log to ture or false </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>b</strong> – true if errorlog should be overwritten </p>
 </dd>
 </dl>
@@ -3265,7 +3269,7 @@
 <span class="target" id="export_8cpp_1ac81d6175fedd3fa49b34f9964259d876"></span><span class="sig-name descname"><span class="pre">EXPORTED</span> <span class="pre">void</span> <span class="pre">setLogFile</span> <span class="pre">(char</span> <span class="pre">*file)</span></span></dt>
 <dd><p>set log file location </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>file</strong> – set file location </p>
 </dd>
 </dl>
@@ -3276,7 +3280,7 @@
 <span class="target" id="export_8cpp_1a08ae2f71986d3213443e510a77872768"></span><span class="sig-name descname"><span class="pre">EXPORTED</span> <span class="pre">void</span> <span class="pre">setOutputName</span> <span class="pre">(char</span> <span class="pre">*outName)</span></span></dt>
 <dd><p>set the output file name </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>file</strong> – output file </p>
 </dd>
 </dl>
@@ -3293,7 +3297,7 @@
 <span class="target" id="export_8cpp_1a8e662e4d7074eecd11ead4f2bbabff60"></span><span class="sig-name descname"><span class="pre">EXPORTED</span> <span class="pre">void</span> <span class="pre">setSilentMode</span> <span class="pre">(bool</span> <span class="pre">sMode)</span></span></dt>
 <dd><p>sets the silent mode. Silent mode disables most console output </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>sMode</strong> – sets silent mode to True or False </p>
 </dd>
 </dl>
@@ -3304,7 +3308,7 @@
 <span class="target" id="export_8cpp_1a4e3c119fd9d02182b2f8fbb18ee4441f"></span><span class="sig-name descname"><span class="pre">EXPORTED</span> <span class="pre">void</span> <span class="pre">setXMLSchemaLocation</span> <span class="pre">(char</span> <span class="pre">*file)</span></span></dt>
 <dd><p>set path to xml schema files </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>file</strong> – set path </p>
 </dd>
 </dl>
@@ -3315,7 +3319,7 @@
 <span class="target" id="export_8cpp_1a7ce0457072334859d2102151f673552b"></span><span class="sig-name descname"><span class="pre">EXPORTED</span> <span class="pre">int</span> <span class="pre">executePipeline</span> <span class="pre">(char</span> <span class="pre">*file)</span></span></dt>
 <dd><p>execute the pipeline on given fileName </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>file</strong> – filename to run the pipeline on </p>
 </dd>
 </dl>
@@ -3366,7 +3370,7 @@
 <span class="target" id="export_8h_1a478147bd1c66ca5ded5262be20fd6402"></span><span class="sig-name descname"><span class="pre">EXPORTED</span> <span class="pre">void</span> <span class="pre">setFileName</span> <span class="pre">(char</span> <span class="pre">*file)</span></span></dt>
 <dd><p>Sets the filename of the input file. </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>file</strong> – file name * </p>
 </dd>
 </dl>
@@ -3377,7 +3381,7 @@
 <span class="target" id="export_8h_1a4e3c119fd9d02182b2f8fbb18ee4441f"></span><span class="sig-name descname"><span class="pre">EXPORTED</span> <span class="pre">void</span> <span class="pre">setXMLSchemaLocation</span> <span class="pre">(char</span> <span class="pre">*file)</span></span></dt>
 <dd><p>set path to xml schema files </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>file</strong> – set path </p>
 </dd>
 </dl>
@@ -3388,7 +3392,7 @@
 <span class="target" id="export_8h_1ac81d6175fedd3fa49b34f9964259d876"></span><span class="sig-name descname"><span class="pre">EXPORTED</span> <span class="pre">void</span> <span class="pre">setLogFile</span> <span class="pre">(char</span> <span class="pre">*file)</span></span></dt>
 <dd><p>set log file location </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>file</strong> – set file location </p>
 </dd>
 </dl>
@@ -3405,7 +3409,7 @@
 <span class="target" id="export_8h_1a7ce0457072334859d2102151f673552b"></span><span class="sig-name descname"><span class="pre">EXPORTED</span> <span class="pre">int</span> <span class="pre">executePipeline</span> <span class="pre">(char</span> <span class="pre">*file)</span></span></dt>
 <dd><p>execute the pipeline on given fileName </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>file</strong> – filename to run the pipeline on </p>
 </dd>
 </dl>
@@ -3416,7 +3420,7 @@
 <span class="target" id="export_8h_1afcb70d423ffd93fc5a88055e5956f414"></span><span class="sig-name descname"><span class="pre">EXPORTED</span> <span class="pre">void</span> <span class="pre">setOutputName</span> <span class="pre">(char</span> <span class="pre">*file)</span></span></dt>
 <dd><p>set the output file name </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>file</strong> – output file </p>
 </dd>
 </dl>
@@ -3427,7 +3431,7 @@
 <span class="target" id="export_8h_1a8e662e4d7074eecd11ead4f2bbabff60"></span><span class="sig-name descname"><span class="pre">EXPORTED</span> <span class="pre">void</span> <span class="pre">setSilentMode</span> <span class="pre">(bool</span> <span class="pre">sMode)</span></span></dt>
 <dd><p>sets the silent mode. Silent mode disables most console output </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>sMode</strong> – sets silent mode to True or False </p>
 </dd>
 </dl>
@@ -3438,7 +3442,7 @@
 <span class="target" id="export_8h_1af89b7114cd15beaf55bd4c5a554e5c7e"></span><span class="sig-name descname"><span class="pre">EXPORTED</span> <span class="pre">void</span> <span class="pre">setOverwriteLog</span> <span class="pre">(bool</span> <span class="pre">b)</span></span></dt>
 <dd><p>set overwriting the error log to ture or false </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>b</strong> – true if errorlog should be overwritten </p>
 </dd>
 </dl>
@@ -3491,14 +3495,14 @@
 <span id="_CPPv37fresneldRdRd"></span><span id="_CPPv27fresneldRdRd"></span><span id="fresnel__double.doubleR.doubleR"></span><span class="target" id="curve_8h_1a1b4c9160320bf3a29943d8bf0d1125b5"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fresnel</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv47fresneldRdRd" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function computes the fresnel integral </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>s</strong> – position s in a spiral </p></li>
 <li><p><strong>x</strong> – result for x component </p></li>
 <li><p><strong>y</strong> – result for y component </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -3509,7 +3513,7 @@
 <span id="_CPPv35curved8geometryRdRdRdi"></span><span id="_CPPv25curved8geometryRdRdRdi"></span><span id="curve__double.geometry.doubleR.doubleR.doubleR.i"></span><span class="target" id="curve_8h_1ab3496c5d8bd7121964e3501f9a9b864d"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">curve</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="#_CPPv48geometry" title="geometry"><span class="n"><span class="pre">geometry</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">geo</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">phi</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fd</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv45curved8geometryRdRdRdi" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function computes the x, y, phi value for a given geometry at position s </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>s</strong> – position where x, y, phi should be computed </p></li>
 <li><p><strong>geo</strong> – geometry </p></li>
@@ -3519,7 +3523,7 @@
 <li><p><strong>fd</strong> – determines if finite differences should be used for derivative </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -3547,7 +3551,7 @@
 <span id="_CPPv37addLineR6vectorI8geometryEdddddd"></span><span id="_CPPv27addLineR6vectorI8geometryEdddddd"></span><span id="addLine__vector:geometry:R.double.double.double.double.double.double"></span><span class="target" id="geometries_8h_1a71f824b6b34ac594c8e5eebe7d6c53cc"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addLine</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv48geometry" title="geometry"><span class="n"><span class="pre">geometry</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">geo</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">x1</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">y1</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi1</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">x2</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">y2</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv47addLineR6vectorI8geometryEdddddd" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function adds a line </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>geo</strong> – vector of all geometries </p></li>
 <li><p><strong>x1</strong> – x component of start point </p></li>
@@ -3558,7 +3562,7 @@
 <li><p><strong>phi2</strong> – angle of end point (not used here) </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -3569,7 +3573,7 @@
 <span id="_CPPv36addArcR6vectorI8geometryEdddddd"></span><span id="_CPPv26addArcR6vectorI8geometryEdddddd"></span><span id="addArc__vector:geometry:R.double.double.double.double.double.double"></span><span class="target" id="geometries_8h_1afefc771a5c36c95447d80ad6e597e208"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addArc</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv48geometry" title="geometry"><span class="n"><span class="pre">geometry</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">geo</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">x1</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">y1</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi1</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">x2</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">y2</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv46addArcR6vectorI8geometryEdddddd" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function adds an arc </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>geo</strong> – vector of all geometries </p></li>
 <li><p><strong>x1</strong> – x component of start point </p></li>
@@ -3580,7 +3584,7 @@
 <li><p><strong>phi2</strong> – angle of end point </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -3591,7 +3595,7 @@
 <span id="_CPPv317addCompositeCurveR6vectorI8geometryEdddddd"></span><span id="_CPPv217addCompositeCurveR6vectorI8geometryEdddddd"></span><span id="addCompositeCurve__vector:geometry:R.double.double.double.double.double.double"></span><span class="target" id="geometries_8h_1a4a24ee9dc915d8701f3610f28f140186"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addCompositeCurve</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv48geometry" title="geometry"><span class="n"><span class="pre">geometry</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">geo</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">x1</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">y1</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi1</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">x2</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">y2</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv417addCompositeCurveR6vectorI8geometryEdddddd" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function adds a composite curve </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>geo</strong> – vector of all geometries </p></li>
 <li><p><strong>x1</strong> – x component of start point </p></li>
@@ -3602,7 +3606,7 @@
 <li><p><strong>phi2</strong> – angle of end point </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -3634,10 +3638,10 @@
 <span id="_CPPv33sgnd"></span><span id="_CPPv23sgnd"></span><span id="sgn__double"></span><span class="target" id="helper_8h_1a98135bd506b3ed7bb7fede9ca4af3ed6"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sgn</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">d</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv43sgnd" title="Permalink to this definition"></a><br /></dt>
 <dd><p>signum function </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>d</strong> – input </p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int sng(d) </p>
 </dd>
 </dl>
@@ -3648,10 +3652,10 @@
 <span id="_CPPv38fixAngleRd"></span><span id="_CPPv28fixAngleRd"></span><span id="fixAngle__doubleR"></span><span class="target" id="helper_8h_1abe222ad28f5a39ed90095c92a62da0c7"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fixAngle</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv48fixAngleRd" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function fixes the input angle in the range of [-M_PI, M_PI] </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>a</strong> – angle </p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -3662,10 +3666,10 @@
 <span id="_CPPv313findMinLaneId11laneSection"></span><span id="_CPPv213findMinLaneId11laneSection"></span><span id="findMinLaneId__laneSection"></span><span class="target" id="helper_8h_1a9dfc2deea3fc1e5e9461761edde0f119"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">findMinLaneId</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411laneSection" title="laneSection"><span class="n"><span class="pre">laneSection</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">sec</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv413findMinLaneId11laneSection" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function find the minimum laneId of current lanesection </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>sec</strong> – lanesection for which the laneId should be computed </p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int minimum laneId -&gt; if not found value 100 is stored </p>
 </dd>
 </dl>
@@ -3676,10 +3680,10 @@
 <span id="_CPPv313findMaxLaneId11laneSection"></span><span id="_CPPv213findMaxLaneId11laneSection"></span><span id="findMaxLaneId__laneSection"></span><span class="target" id="helper_8h_1ad01620aa25a058e27d6813e59ceddd56"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">findMaxLaneId</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411laneSection" title="laneSection"><span class="n"><span class="pre">laneSection</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">sec</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv413findMaxLaneId11laneSection" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function find the maximum laneId of current lanesection </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>sec</strong> – lanesection for which the laneId should be computed </p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int maximum laneId -&gt; if not found value -100 is stored </p>
 </dd>
 </dl>
@@ -3690,16 +3694,16 @@
 <span id="_CPPv310isBoundary11laneSectioni"></span><span id="_CPPv210isBoundary11laneSectioni"></span><span id="isBoundary__laneSection.i"></span><span class="target" id="helper_8h_1ac9c244b43c61efb640671e37f214471b"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isBoundary</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411laneSection" title="laneSection"><span class="n"><span class="pre">laneSection</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">sec</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">id</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv410isBoundary11laneSectioni" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function determines of given laneId is at the boundary of the current lanesection </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>sec</strong> – lanesection for which the boundary should be proofed </p></li>
 <li><p><strong>id</strong> – laneid for which the boundary should be proofed </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>true if the lane is a boundary-lane </p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>false if the lane is not a boundary-lane </p>
 </dd>
 </dl>
@@ -3710,14 +3714,14 @@
 <span id="_CPPv38findLane11laneSectionR4lanei"></span><span id="_CPPv28findLane11laneSectionR4lanei"></span><span id="findLane__laneSection.laneR.i"></span><span class="target" id="helper_8h_1acc063a999d3096558617d382b975a4ef"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">findLane</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411laneSection" title="laneSection"><span class="n"><span class="pre">laneSection</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">sec</span></span>, <a class="reference internal" href="#_CPPv44lane" title="lane"><span class="n"><span class="pre">lane</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">l</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">id</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv48findLane11laneSectionR4lanei" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function returns the lane with given id </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>sec</strong> – lanesection in which the lane is stored </p></li>
 <li><p><strong>l</strong> – lane which has the laneId id </p></li>
 <li><p><strong>id</strong> – laneId of the lane to find </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int position in <a class="reference internal" href="doc.html#structlaneSection"><span class="std std-ref">laneSection</span></a> vector </p>
 </dd>
 </dl>
@@ -3728,14 +3732,14 @@
 <span id="_CPPv38findRoad6vectorI4roadER4roadi"></span><span id="_CPPv28findRoad6vectorI4roadER4roadi"></span><span id="findRoad__vector:road:.roadR.i"></span><span class="target" id="helper_8h_1a72ba15f73932cb28de4720aafc8ab438"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">findRoad</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">roads</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">id</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv48findRoad6vectorI4roadER4roadi" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function returns the road with the given id </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>roads</strong> – road vector in which the road is stored </p></li>
 <li><p><strong>l</strong> – road which has the roadId id </p></li>
 <li><p><strong>id</strong> – roadId of the lane to find </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int position in road vector </p>
 </dd>
 </dl>
@@ -3746,13 +3750,13 @@
 <span id="_CPPv39laneWidth4laned"></span><span id="_CPPv29laneWidth4laned"></span><span id="laneWidth__lane.double"></span><span class="target" id="helper_8h_1a15b4df3434ff2b523a085d6e1390cca6"></span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">laneWidth</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv44lane" title="lane"><span class="n"><span class="pre">lane</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">l</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv49laneWidth4laned" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function determines lanewidth of the given lane at positon s </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>l</strong> – lane for which the lanewidth should be computed </p></li>
 <li><p><strong>s</strong> – position where the lanewidth should be computed </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>double computed lanewidth </p>
 </dd>
 </dl>
@@ -3763,14 +3767,14 @@
 <span id="_CPPv311findTOffset11laneSectionid"></span><span id="_CPPv211findTOffset11laneSectionid"></span><span id="findTOffset__laneSection.i.double"></span><span class="target" id="helper_8h_1a2c2fbc9222cff836115c70c968ffcc91"></span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">findTOffset</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411laneSection" title="laneSection"><span class="n"><span class="pre">laneSection</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">sec</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">id</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv411findTOffset11laneSectionid" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function computes the tOfset of a given lane inside of a lanesection at position s </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>sec</strong> – lanesection for which the tOffset should be computed </p></li>
 <li><p><strong>id</strong> – laneId of the lane with the tOffset </p></li>
 <li><p><strong>s</strong> – s position of the tOffset </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>double computed tOffset </p>
 </dd>
 </dl>
@@ -3781,14 +3785,14 @@
 <span id="_CPPv310shiftLanesR11laneSectionii"></span><span id="_CPPv210shiftLanesR11laneSectionii"></span><span id="shiftLanes__laneSectionR.i.i"></span><span class="target" id="helper_8h_1aeb35a61d15a3f0687d9eaa2002b4dff1"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">shiftLanes</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411laneSection" title="laneSection"><span class="n"><span class="pre">laneSection</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">sec</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">id</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dir</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv410shiftLanesR11laneSectionii" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function shifts all lanes in given lanesection from lane with laneId </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>sec</strong> – lanesection which should be shifted </p></li>
 <li><p><strong>id</strong> – lane which is the start of the shift; all outer lanes are shifted </p></li>
 <li><p><strong>dir</strong> – dir = 1 shift to outer side, die = -1 shift to inner side </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -3799,13 +3803,13 @@
 <span id="_CPPv312findLeftLane11laneSectioni"></span><span id="_CPPv212findLeftLane11laneSectioni"></span><span id="findLeftLane__laneSection.i"></span><span class="target" id="helper_8h_1a6fcf84a42ca6ef3f9d8630f1f924a3eb"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">findLeftLane</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411laneSection" title="laneSection"><span class="n"><span class="pre">laneSection</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">sec</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">side</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv412findLeftLane11laneSectioni" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function finds the id of the left turn lane </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>sec</strong> – <a class="reference internal" href="doc.html#structlaneSection"><span class="std std-ref">laneSection</span></a> </p></li>
 <li><p><strong>side</strong> – determines current side </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int laneId of left lane </p>
 </dd>
 </dl>
@@ -3816,13 +3820,13 @@
 <span id="_CPPv313findRightLane11laneSectioni"></span><span id="_CPPv213findRightLane11laneSectioni"></span><span id="findRightLane__laneSection.i"></span><span class="target" id="helper_8h_1a5a1a0b729a45d61d9ab5b98cf48b4962"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">findRightLane</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411laneSection" title="laneSection"><span class="n"><span class="pre">laneSection</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">sec</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">side</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv413findRightLane11laneSectioni" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function finds the id of the right turn lane </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>sec</strong> – <a class="reference internal" href="doc.html#structlaneSection"><span class="std std-ref">laneSection</span></a> </p></li>
 <li><p><strong>side</strong> – determines current side </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int laneId of right lane </p>
 </dd>
 </dl>
@@ -3833,13 +3837,13 @@
 <span id="_CPPv319findInnerMiddleLane11laneSectioni"></span><span id="_CPPv219findInnerMiddleLane11laneSectioni"></span><span id="findInnerMiddleLane__laneSection.i"></span><span class="target" id="helper_8h_1ad7fcd7c4177fbac0844499ac67526cfb"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">findInnerMiddleLane</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411laneSection" title="laneSection"><span class="n"><span class="pre">laneSection</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">sec</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">side</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv419findInnerMiddleLane11laneSectioni" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function finds the id of the inner middle lane (not marked) </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>sec</strong> – <a class="reference internal" href="doc.html#structlaneSection"><span class="std std-ref">laneSection</span></a> </p></li>
 <li><p><strong>side</strong> – determines current side </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int laneId of left lane </p>
 </dd>
 </dl>
@@ -3850,13 +3854,13 @@
 <span id="_CPPv319findOuterMiddleLane11laneSectioni"></span><span id="_CPPv219findOuterMiddleLane11laneSectioni"></span><span id="findOuterMiddleLane__laneSection.i"></span><span class="target" id="helper_8h_1a005129d6102625ee2be914be05a279ca"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">findOuterMiddleLane</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411laneSection" title="laneSection"><span class="n"><span class="pre">laneSection</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">sec</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">side</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv419findOuterMiddleLane11laneSectioni" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function finds the id of the outer middle lane (not marked) </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>sec</strong> – <a class="reference internal" href="doc.html#structlaneSection"><span class="std std-ref">laneSection</span></a> </p></li>
 <li><p><strong>side</strong> – determines current side </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int laneId of left lane </p>
 </dd>
 </dl>
@@ -3867,7 +3871,7 @@
 <span id="_CPPv310calcFromTo4road4roadRiRiRiRii"></span><span id="_CPPv210calcFromTo4road4roadRiRiRiRii"></span><span id="calcFromTo__road.road.iR.iR.iR.iR.i"></span><span class="target" id="helper_8h_1a5a4e9b3caed363b88b3b3b53861bb87b"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">calcFromTo</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">r1</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">r2</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">to</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">nF</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">nT</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv410calcFromTo4road4roadRiRiRiRii" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function calculates the possible lane connections </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>r1</strong> – input from road </p></li>
 <li><p><strong>r2</strong> – input to road </p></li>
@@ -3878,7 +3882,7 @@
 <li><p><strong>mode</strong> – either right-right / middle-middle / left-left </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -3889,7 +3893,7 @@
 <span id="_CPPv39sortRoads4roadR4roadR4roadR4road"></span><span id="_CPPv29sortRoads4roadR4roadR4roadR4road"></span><span id="sortRoads__road.roadR.roadR.roadR"></span><span class="target" id="helper_8h_1af734bb05a47ea2771238fffbf704bcea"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sortRoads</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">r1</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r2</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r3</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r4</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv49sortRoads4roadR4roadR4roadR4road" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function sorts the roads r2,r3,r4 to their corresponding angle </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>r1</strong> – reference road with reference angle </p></li>
 <li><p><strong>r2</strong> – first additional road </p></li>
@@ -3897,7 +3901,7 @@
 <li><p><strong>r4</strong> – third additional road </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -3908,14 +3912,14 @@
 <span id="_CPPv39sortRoads4roadR4roadR4road"></span><span id="_CPPv29sortRoads4roadR4roadR4road"></span><span id="sortRoads__road.roadR.roadR"></span><span class="target" id="helper_8h_1a220183ce79832353f8e56108abf9645a"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sortRoads</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">r1</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r2</span></span>, <a class="reference internal" href="#_CPPv44road" title="road"><span class="n"><span class="pre">road</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r3</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv49sortRoads4roadR4roadR4road" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function sorts the roads r2,r3 to their corresponding angle </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>r1</strong> – reference road with reference angle </p></li>
 <li><p><strong>r2</strong> – first additional road </p></li>
 <li><p><strong>r3</strong> – second additional road </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -3926,7 +3930,7 @@
 <span id="_CPPv39computeIPddddddRiRiRiRdRd"></span><span id="_CPPv29computeIPddddddRiRiRiRdRd"></span><span id="computeIP__double.double.double.double.double.double.iR.iR.iR.doubleR.doubleR"></span><span class="target" id="helper_8h_1ab5cef39eafabbf0de294ec76bb91ec61"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">computeIP</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">x1</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">y1</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi1</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">x2</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">y2</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi2</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">type</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">type1</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">type2</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">iPx</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">iPy</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv49computeIPddddddRiRiRiRdRd" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function computes intersection point </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x1</strong> – x position of first point </p></li>
 <li><p><strong>y1</strong> – y position of first point </p></li>
@@ -3941,7 +3945,7 @@
 <li><p><strong>iPy</strong> – y position of intersection point </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -3952,13 +3956,13 @@
 <span id="_CPPv3IDpE13string_formatRKNSt6stringEDp4Args"></span><span id="_CPPv2IDpE13string_formatRKNSt6stringEDp4Args"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="sig-name descname"><span class="n"><span class="pre">Args</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="helper_8h_1af7e34ab894685df0a70ffeb1cc543cd2"></span><a class="reference internal" href="#_CPPv4St" title="std"><span class="n"><span class="pre">std</span></span></a><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">string_format</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4St" title="std"><span class="n"><span class="pre">std</span></span></a><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">format</span></span>, <a class="reference internal" href="#_CPPv4IDpE13string_formatNSt6stringERKNSt6stringEDp4Args" title="string_format::Args"><span class="n"><span class="pre">Args</span></span></a><span class="p"><span class="pre">...</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">args</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4IDpE13string_formatNSt6stringERKNSt6stringEDp4Args" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function used for xsd checking output </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>format</strong> – xsd validation file </p></li>
 <li><p><strong>args</strong> – here the project directory PROJ_DIR </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>output buffer </p>
 </dd>
 </dl>
@@ -3969,10 +3973,10 @@
 <span id="_CPPv319getContactPointType16contactPointType"></span><span id="_CPPv219getContactPointType16contactPointType"></span><span id="getContactPointType__contactPointType"></span><span class="target" id="helper_8h_1abd7da92d462c9efbecb80da31fb2a988"></span><a class="reference internal" href="#_CPPv4St" title="std"><span class="n"><span class="pre">std</span></span></a><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getContactPointType</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv416contactPointType" title="contactPointType"><span class="n"><span class="pre">contactPointType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv419getContactPointType16contactPointType" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function get contactpoint name </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>t</strong> – contactpoint </p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>string name of contactpoint </p>
 </dd>
 </dl>
@@ -3983,10 +3987,10 @@
 <span id="_CPPv315getGeometryType12geometryType"></span><span id="_CPPv215getGeometryType12geometryType"></span><span id="getGeometryType__geometryType"></span><span class="target" id="helper_8h_1a974ab11ccfbb582a233fc9bb01dc0cfd"></span><a class="reference internal" href="#_CPPv4St" title="std"><span class="n"><span class="pre">std</span></span></a><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getGeometryType</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv412geometryType" title="geometryType"><span class="n"><span class="pre">geometryType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv415getGeometryType12geometryType" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function get geometrytype name </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>t</strong> – geometrytype </p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>string name of geometrytype </p>
 </dd>
 </dl>
@@ -3997,10 +4001,10 @@
 <span id="_CPPv311getLinkType8linkType"></span><span id="_CPPv211getLinkType8linkType"></span><span id="getLinkType__linkType"></span><span class="target" id="helper_8h_1a728211bdf583c63dbb2526d4c2fc773f"></span><a class="reference internal" href="#_CPPv4St" title="std"><span class="n"><span class="pre">std</span></span></a><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getLinkType</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv48linkType" title="linkType"><span class="n"><span class="pre">linkType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv411getLinkType8linkType" title="Permalink to this definition"></a><br /></dt>
 <dd><p>funtion get linktype name </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>t</strong> – linkname </p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>string name of linkname </p>
 </dd>
 </dl>
@@ -4011,16 +4015,16 @@
 <span id="_CPPv314compareObjectsRK6objectRK6object"></span><span id="_CPPv214compareObjectsRK6objectRK6object"></span><span id="compareObjects__objectCR.objectCR"></span><span class="target" id="helper_8h_1a3fed21eede37391aeb62a7aee1a15a5d"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compareObjects</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv46object" title="object"><span class="n"><span class="pre">object</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv46object" title="object"><span class="n"><span class="pre">object</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv414compareObjectsRK6objectRK6object" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function compares objects by id </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>a</strong> – object 1 </p></li>
 <li><p><strong>b</strong> – object 2 </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>true id of object 1 is smaller than id of object 2 </p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>false id of object 2 is smaller than id of object 1 </p>
 </dd>
 </dl>
@@ -4031,16 +4035,16 @@
 <span id="_CPPv314compareSignalsRK4signRK4sign"></span><span id="_CPPv214compareSignalsRK4signRK4sign"></span><span id="compareSignals__signCR.signCR"></span><span class="target" id="helper_8h_1a49e6cd28c04690afa82d3990be34a10a"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compareSignals</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv44sign" title="sign"><span class="n"><span class="pre">sign</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv44sign" title="sign"><span class="n"><span class="pre">sign</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv414compareSignalsRK4signRK4sign" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function compares objects by id </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>a</strong> – signal 1 </p></li>
 <li><p><strong>b</strong> – signal 2 </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>true id of signal 1 is smaller than id of signal 2 </p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>false id of signal 2 is smaller than id of signal 1 </p>
 </dd>
 </dl>
@@ -4056,16 +4060,16 @@
 <span id="_CPPv312compareLanesRK4laneRK4lane"></span><span id="_CPPv212compareLanesRK4laneRK4lane"></span><span id="compareLanes__laneCR.laneCR"></span><span class="target" id="helper_8h_1aa10cb7862f415f010ff595ce95a14adb"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compareLanes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv44lane" title="lane"><span class="n"><span class="pre">lane</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv44lane" title="lane"><span class="n"><span class="pre">lane</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv412compareLanesRK4laneRK4lane" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function compares lanes by id </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>a</strong> – lane 1 </p></li>
 <li><p><strong>b</strong> – lane 2 </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>true id of lane 1 is smaller than id of lane 2 </p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>false id of lane 2 is smaller than id of lane 1 </p>
 </dd>
 </dl>
@@ -4076,16 +4080,16 @@
 <span id="_CPPv34isInR6vectorIiERi"></span><span id="_CPPv24isInR6vectorIiERi"></span><span id="isIn__vector:i:R.iR"></span><span class="target" id="helper_8h_1a79209cbc04bb7fef8e4f040f069c73dc"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isIn</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">int</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">v</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">i</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv44isInR6vectorIiERi" title="Permalink to this definition"></a><br /></dt>
 <dd><p>checks if int is in vector </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>v</strong> – vector to check </p></li>
 <li><p><strong>i</strong> – integer </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>true int is in vector </p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>false int is not in vector </p>
 </dd>
 </dl>
@@ -4253,10 +4257,10 @@
 <span id="_CPPv313validateInputPcR7xmlTree"></span><span id="_CPPv213validateInputPcR7xmlTree"></span><span id="validateInput__cP.xmlTreeR"></span><span class="target" id="xml_8h_1aba8d26563cabe1eed8f767488b273bf5"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">validateInput</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">file</span></span>, <a class="reference internal" href="#_CPPv47xmlTree" title="xmlTree"><span class="n"><span class="pre">xmlTree</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">xmlInput</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv413validateInputPcR7xmlTree" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function checks the input file against the corresponding input.xsd </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>file</strong> – input file </p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -4267,10 +4271,10 @@
 <span id="_CPPv314validateOutputR11roadNetwork"></span><span id="_CPPv214validateOutputR11roadNetwork"></span><span id="validateOutput__roadNetworkR"></span><span class="target" id="xml_8h_1aa3565b3283fc7807a86a63321a4af702"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">validateOutput</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411roadNetwork" title="roadNetwork"><span class="n"><span class="pre">roadNetwork</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv414validateOutputR11roadNetwork" title="Permalink to this definition"></a><br /></dt>
 <dd><p>function checks the output file against the corresponding output.xsd </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> – output data </p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -4281,7 +4285,7 @@
 <span id="_CPPv323appendLinkToNodeXercesC11nodeElementR4linkR4link"></span><span id="_CPPv223appendLinkToNodeXercesC11nodeElementR4linkR4link"></span><span id="appendLinkToNodeXercesC__nodeElement.linkR.linkR"></span><span class="target" id="xml_8h_1a20c5f4762bd2574ac501962a384ec10f"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">appendLinkToNodeXercesC</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv411nodeElement" title="nodeElement"><span class="n"><span class="pre">nodeElement</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">road</span></span>, <a class="reference internal" href="#_CPPv44link" title="link"><span class="n"><span class="pre">link</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">successor</span></span>, <a class="reference internal" href="#_CPPv44link" title="link"><span class="n"><span class="pre">link</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">predecessor</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv423appendLinkToNodeXercesC11nodeElementR4linkR4link" title="Permalink to this definition"></a><br /></dt>
 <dd><p>helper function to append the link node to road node </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>road</strong> – the road xml node </p></li>
 <li><p><strong>sucessor</strong> – the potential successor to the road segment </p></li>
@@ -4361,14 +4365,14 @@
 <span id="_CPPv319readStrAttrFromNodePK10DOMElementPKcb"></span><span id="_CPPv219readStrAttrFromNodePK10DOMElementPKcb"></span><span id="readStrAttrFromNode__DOMElementCP.cCP.b"></span><span class="target" id="xmlParser_8h_1acb999e066f660135e99b73565d69be66"></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">readStrAttrFromNode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">node</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">attribute</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">suppressOutput</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv419readStrAttrFromNodePK10DOMElementPKcb" title="Permalink to this definition"></a><br /></dt>
 <dd><p>reads an attribute from a xercesC node without causing memory leak. use this method for reading attributes!!! </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>node</strong> – the node to read the attribute from </p></li>
 <li><p><strong>attribute</strong> – attribute to read </p></li>
 <li><p><strong>suppressOutput</strong> – suppress output if the attribute is not found. </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>string returns a string value. Returns an empty string if no attribute with the given name is found. </p>
 </dd>
 </dl>
@@ -4399,13 +4403,13 @@
 <span id="_CPPv325getNextSiblingWithTagNameP10DOMElementPKc"></span><span id="_CPPv225getNextSiblingWithTagNameP10DOMElementPKc"></span><span id="getNextSiblingWithTagName__DOMElementP.cCP"></span><span class="target" id="xmlParser_8h_1a5a7b33045b433bb268a555f10fbe4cc3"></span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getNextSiblingWithTagName</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">elem</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">tag</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv425getNextSiblingWithTagNameP10DOMElementPKc" title="Permalink to this definition"></a><br /></dt>
 <dd><p>Get the Next Sibling with the specified tag name. Return NULL if nothing is found. </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>elem</strong> – element which to find the sibling of </p></li>
 <li><p><strong>tag</strong> – name of the desired sibling </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DOMElement* sibling if found. NULL otherwise </p>
 </dd>
 </dl>
@@ -4416,13 +4420,13 @@
 <span id="_CPPv316getChildWithNamePK10DOMElementPKc"></span><span id="_CPPv216getChildWithNamePK10DOMElementPKc"></span><span id="getChildWithName__DOMElementCP.cCP"></span><span class="target" id="xmlParser_8h_1afcc9d7dd1e2f437ec7860926e0c78c79"></span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getChildWithName</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">node</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">childName</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416getChildWithNamePK10DOMElementPKc" title="Permalink to this definition"></a><br /></dt>
 <dd><p>looks for the first node that with matching name in the xml document </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>childName</strong> – name too look for </p></li>
 <li><p><strong>res</strong> – return Element </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>first child element with name. NULL if nothing is found </p>
 </dd>
 </dl>
@@ -4433,10 +4437,10 @@
 <span id="_CPPv321getFirstChildFromNodePK10DOMElement"></span><span id="_CPPv221getFirstChildFromNodePK10DOMElement"></span><span id="getFirstChildFromNode__DOMElementCP"></span><span class="target" id="xmlParser_8h_1a701609f8e892cc96fad16966af353fcc"></span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getFirstChildFromNode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">node</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv421getFirstChildFromNodePK10DOMElement" title="Permalink to this definition"></a><br /></dt>
 <dd><p>Get the First Child object. </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>node</strong> – of the parent object </p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DOMElement* first child of parent object in the xml tree </p>
 </dd>
 </dl>
@@ -4447,14 +4451,14 @@
 <span id="_CPPv325readAttributeFromChildrenP10DOMElementPKcPKc"></span><span id="_CPPv225readAttributeFromChildrenP10DOMElementPKcPKc"></span><span id="readAttributeFromChildren__DOMElementP.cCP.cCP"></span><span class="target" id="xmlParser_8h_1ae13cc91b3a892d6bf329c5d26d30c2e1"></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">readAttributeFromChildren</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">node</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">firstchild</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">attr</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv425readAttributeFromChildrenP10DOMElementPKcPKc" title="Permalink to this definition"></a><br /></dt>
 <dd><p>Reads the attribute from a child of a node. Use with caution: if multiple child nodes with the name exist, only the first one will be read. </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>node</strong> – the node whose childs should be read </p></li>
 <li><p><strong>firstchild</strong> – name of the first child </p></li>
 <li><p><strong>attr</strong> – name of the attribute </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>string value of the attribute </p>
 </dd>
 </dl>
@@ -4465,7 +4469,7 @@
 <span id="_CPPv325readAttributeFromChildrenP10DOMElementPKcPKcPKc"></span><span id="_CPPv225readAttributeFromChildrenP10DOMElementPKcPKcPKc"></span><span id="readAttributeFromChildren__DOMElementP.cCP.cCP.cCP"></span><span class="target" id="xmlParser_8h_1a8cef4f54d34bbf22129e30c7363a7583"></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">readAttributeFromChildren</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">node</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">firstchild</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">secondchild</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">attr</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv425readAttributeFromChildrenP10DOMElementPKcPKcPKc" title="Permalink to this definition"></a><br /></dt>
 <dd><p>Reads the attribute from a child of a child of a node. Use with caution: if multiple child nodes with the name exist, only the first one will be read. </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>node</strong> – the node whose childs should be read </p></li>
 <li><p><strong>firstchild</strong> – name of the first child </p></li>
@@ -4473,7 +4477,7 @@
 <li><p><strong>attr</strong> – name of the attribute </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>string value of the attribute </p>
 </dd>
 </dl>
@@ -4489,10 +4493,10 @@
 <span id="_CPPv34initPKc"></span><span id="_CPPv24initPKc"></span><span id="init__cCP"></span><span class="target" id="xmlParser_8h_1a083feca2b47498af216e17ece2544820"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">init</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">rootNode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv44initPKc" title="Permalink to this definition"></a><br /></dt>
 <dd><p>initializes the dom document. needs to be called befofe using the parser </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>rootNode</strong> – name of the root node </p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -4503,10 +4507,10 @@
 <span id="_CPPv39serializePKc"></span><span id="_CPPv29serializePKc"></span><span id="serialize__cCP"></span><span class="target" id="xmlParser_8h_1ac929bb7ee0dffb74a325f9c95dd0bbc5"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">serialize</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">outname</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv49serializePKc" title="Permalink to this definition"></a><br /></dt>
 <dd><p>seriaizes the constructed xml tree </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>outname</strong> – name of the output file </p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>int error code </p>
 </dd>
 </dl>
@@ -4680,7 +4684,7 @@ cd RoadGeneration
 </div>
 </p>
 <p><em>Acknowledgements and Credits</em></p>
-<p>This work received funding from the research project “[SET Level](https://setlevel.de/)” of the <a class="reference external" href="https://pegasus-family.de">PEGASUS</a> project family, promoted by the German Federal Ministry for Economic Affairs and Climate Action based on a decision of the German Bundestag. <table class="colwidths-auto docutils align-default">
+<p>This work received funding from the research project “[SET Level](https://setlevel.de/)” of the <a class="reference external" href="https://pegasus-family.de">PEGASUS</a> project family, promoted by the German Federal Ministry for Economic Affairs and Climate Action based on a decision of the German Bundestag. <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>SET Level </p></th>
 <th class="head"><p>PEGASUS Family </p></th>
