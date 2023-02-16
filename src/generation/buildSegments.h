@@ -36,11 +36,11 @@ extern settings setting;
  * @param data 	roadNetwork data where the openDrive structure should be generated
  * @return int 	error code
  */
-int buildSegments(xmlTree &inputxml, roadNetwork &data)
+int buildSegments(const DOMElement* rootNode, roadNetwork &data)
 {
 
-	DOMElement *roadNode;
-	if (inputxml.findNodeWithName("segments", roadNode))
+	DOMElement *roadNode = getChildWithName(rootNode, "segments");
+	if (roadNode == NULL)
 	{
 		cerr << "ERR: 'segments' not found in input file." << endl;
 		cout << "ERR: 'segments' not found in input file." << endl;

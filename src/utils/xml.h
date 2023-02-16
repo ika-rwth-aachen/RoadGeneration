@@ -53,7 +53,7 @@ int validateInput(char *file, xmlTree &xmlInput)
     xmlInput.parseDocument(xml_file);
 
     if (xmlInput.getErrorCount() == 0){
-        //if(!setting.silentMode)
+        if(!setting.silentMode)
         cout << "XML input file validated against the schema successfully" << endl;
     }
     else
@@ -73,6 +73,7 @@ int validateInput(char *file, xmlTree &xmlInput)
  */
 int validateOutput(roadNetwork &data)
 {
+    cout << "Validating output" << endl;
     // setup file
     string file = data.outputFile;
     file.append(".xodr");
@@ -90,11 +91,17 @@ int validateOutput(roadNetwork &data)
         cerr << "ERR: couldn't load schema" << endl;
         return 1;
     }
+    //create error handler from custom error handler class
+    xercesc::ErrorHandler *handler = new ValidationErrorHandler();
 
     // check output file
-    domParser.setValidationScheme(XercesDOMParser::Val_Auto);
+    domParser.setValidationScheme(XercesDOMParser::Val_Always);
     domParser.setDoNamespaces(true);
+    domParser.setExternalNoNamespaceSchemaLocation(schema_path);
+    domParser.setErrorHandler(handler);
     domParser.setDoSchema(true);
+    domParser.setValidationSchemaFullChecking(true);
+    domParser.setHandleMultipleImports(true);
     domParser.setValidationConstraintFatal(true);
 
     domParser.parse(xml_file);
@@ -107,10 +114,9 @@ int validateOutput(roadNetwork &data)
         cerr << "ERR: XML output file doesn't conform to the schema" << endl;
         return 1;
     }
-
+    
     return 0;
 }
-
 
 /**
  * @brief helper function to append the link node to road node
@@ -162,6 +168,7 @@ int createXMLXercesC(roadNetwork &data)
     header.addAttribute("south", to_string(setting.south).c_str());
     header.addAttribute("west", to_string(setting.west).c_str());
     header.addAttribute("east", to_string(setting.east).c_str());
+    header.appendToNode(root);
 
     // geoReference tag
     nodeElement geoReference("geoReference");
@@ -173,6 +180,12 @@ int createXMLXercesC(roadNetwork &data)
 
     header.appendToNode(root);
 
+
+    //DOMCDATASection *cdata;
+    //generateCDATA("+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs", &cdata);
+    //geoReference.domelement->appendChild(cdata);
+    //geoReference.appendToNode(root);
+  
      // --- write roads ---------------------------------------------------------
     for (std::vector<road>::iterator it = data.roads.begin(); it != data.roads.end(); ++it)
     {

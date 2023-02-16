@@ -72,14 +72,14 @@ struct settings
     laneChanges laneChange;
     busStops busStop;
 
-    std::string xmlSchemeLocation; //this has to be set to the xml schema input path
+    std::string xmlSchemaLocation; //this has to be set to the xml schema input path
 
     bool silentMode = false; //silent mode disables console outputs
     bool overwriteLog = true;
     int warnings = 0; // counts number of warnings
 
     int versionMajor = 1; // OpenDrive major version
-    int versionMinor = 4; // OpenDrive minor version
+    int versionMinor = 5; // OpenDrive minor version
 
     float minConnectingRoadLength = 0.01f;
 

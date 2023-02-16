@@ -1,4 +1,4 @@
-<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+<roadNetwork>
     <segments>
         <junction id="1" type="2M">
             <road id="1" classification="main" >	
