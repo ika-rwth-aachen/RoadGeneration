@@ -40,7 +40,7 @@ int connectingRoad(DOMElement *node, roadNetwork &data)
 
     //--- generate roads ------------------------------------------------------
     if(!setting.silentMode)
-        cout << "\t Generating Roads" << endl;
+        cout << "\tGenerating roads" << endl;
 
     road r;
     int id = readIntAttrFromNode(mainRoad, "id");

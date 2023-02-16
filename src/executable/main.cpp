@@ -31,8 +31,8 @@ using namespace std;
  */
 int main(int argc, char** argv){
 
-    string schemeLocation = PROJ_DIR;
-    schemeLocation += "/xml";    
+    string schemaLocation = PROJ_DIR;
+    schemaLocation += "/xml";    
 
     settingsExec settings;
     if (parseArgs(argc, argv, settings)){
@@ -40,7 +40,7 @@ int main(int argc, char** argv){
     }
 
     setFileName(settings.fileName);
-    setXMLSchemeLocation(&schemeLocation[0]);
+    setXMLSchemaLocation(&schemaLocation[0]);
     setOverwriteLog(settings.overwriteLog);
     setOutputName(settings.outputName);
     setSilentMode(settings.silentMode);

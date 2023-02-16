@@ -249,7 +249,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         // --- generate roads --------------------------------------------------
         if(!setting.silentMode)
-            cout << "\t Generating Roads for Roundabout" << endl;
+            cout << "\tGenerating roads for Roundabout" << endl;
         /*           
                     \___       ____/
                  id: 1         id: helper
@@ -338,9 +338,9 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         helper.predecessor.elementType = junctionType;
         helper.predecessor.contactPoint = startType;
 
-        // --- generate connecting lanes ---------------------------------------
+        // ---Generating Connecting Lanes ---------------------------------------
         if(!setting.silentMode)
-            cout << "\t Generate Connecting Lanes" << endl;
+            cout << "\tGenerating Connecting Lanes" << endl;
 
         // max and min id's of laneSections
         int inner1, outer1, outer2, inner2, nLane;

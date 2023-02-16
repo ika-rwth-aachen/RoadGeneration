@@ -73,8 +73,8 @@ EXPORTED void setSilentMode(bool sMode){
 }
 
 
-EXPORTED void setXMLSchemeLocation(char* file){
-	setting.xmlSchemeLocation = file;
+EXPORTED void setXMLSchemaLocation(char* file){
+	setting.xmlSchemaLocation = file;
 }
 
 
@@ -96,7 +96,7 @@ EXPORTED int executePipeline(char* file)
 	getTimeStamp(dt);
 	cerr << "\n" << dt << " Error log for run with attribute: " << file << endl;
 
-	if (setting.xmlSchemeLocation == ""){
+	if (setting.xmlSchemaLocation == ""){
 		cerr << "ERR: xml scheme  NOT SET" << endl;
 		return -1;
 	}
@@ -105,7 +105,7 @@ EXPORTED int executePipeline(char* file)
 		cout << file << endl;
 		printLogo();
 	}
-	
+
 	// --- initialization ------------------------------------------------------
 
 	xmlTree inputxml;
@@ -118,23 +118,25 @@ EXPORTED int executePipeline(char* file)
 	setting.warnings = 0;
 	
 	// --- pipeline ------------------------------------------------------------
+
+
 	if (validateInput(file, inputxml))
 	{
 		cerr << "ERR: error in validateInput" << endl;
 		return -1;
 	}
 
-	if (buildSegments(inputxml, data))
+	if (buildSegments(inputxml.getRootElement(), data))
 	{
 		cerr << "ERR: error in buildSegments" << endl;
 		return -1;
 	}
-	if (linkSegments(inputxml, data))
+	if (linkSegments(inputxml.getRootElement(), data))
 	{
 		cerr << "ERR: error in linkSegments" << endl;
 		return -1;
 	}
-	if (closeRoadNetwork(inputxml, data))
+	if (closeRoadNetwork(inputxml.getRootElement(), data))
 	{
 		cerr << "ERR: error in closeRoadNetwork" << endl;
 		return -1;
@@ -155,7 +157,13 @@ EXPORTED int executePipeline(char* file)
 	if(setting.warnings > 0)
 	{
 		cout << "\nFinished with " << setting.warnings << " warning(s), check out the error log for more information." << endl;
+	}else{
+		cout <<"\nFinished successfully" << endl;
 	}
+
+	//Cleanup ----------------
+
+	terminateXMLUtils();
 
 	return 0;
 }
