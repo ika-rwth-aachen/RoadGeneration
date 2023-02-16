@@ -8,7 +8,7 @@
  * 
  * @file buildSegments.h
  *
- * @brief file contains method for generating segments
+ * @brief file contains a method for generating segments
  * 
  * @author Jannik Busse, Christian Geller
  * Contact: jannik.busse@rwth-aachen.de, christian.geller@rwth-aachen.de
