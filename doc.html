@@ -988,12 +988,12 @@
 <h2><span class="section-number">1.2. </span>Generation<a class="headerlink" href="#generation" title="Permalink to this heading"></a></h2>
 <section id="buildsegments-h">
 <h3><span class="section-number">1.2.1. </span>buildSegments.h<a class="headerlink" href="#buildsegments-h" title="Permalink to this heading"></a></h3>
-<p>file contains method for generating segments </p>
+<p>file contains a method for generating segments </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv413buildSegmentsPK10DOMElementR11roadNetwork">
-<span id="_CPPv313buildSegmentsPK10DOMElementR11roadNetwork"></span><span id="_CPPv213buildSegmentsPK10DOMElementR11roadNetwork"></span><span id="buildSegments__DOMElementCP.roadNetworkR"></span><span class="target" id="buildSegments_8h_1a37fb440a84db91c436eb65f339c848ad"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildSegments</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">rootNode</span></span>, <a class="reference internal" href="autodoc.html#_CPPv411roadNetwork" title="roadNetwork"><span class="n"><span class="pre">roadNetwork</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">data</span></span><span class="sig-paren">)</span><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv413buildSegmentsR7xmlTreeR11roadNetwork">
+<span id="_CPPv313buildSegmentsR7xmlTreeR11roadNetwork"></span><span id="_CPPv213buildSegmentsR7xmlTreeR11roadNetwork"></span><span id="buildSegments__xmlTreeR.roadNetworkR"></span><span class="target" id="buildSegments_8h_1a23c71b423e4296a5df2b9eeca199cd14"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildSegments</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="autodoc.html#_CPPv47xmlTree" title="xmlTree"><span class="n"><span class="pre">xmlTree</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">inputxml</span></span>, <a class="reference internal" href="autodoc.html#_CPPv411roadNetwork" title="roadNetwork"><span class="n"><span class="pre">roadNetwork</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">data</span></span><span class="sig-paren">)</span><br /></dt>
 <dd><p>function creates all segments which can be either a junction, roundabout or connectingroad </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1739,13 +1739,10 @@
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv44initPKc">
 <span id="_CPPv34initPKc"></span><span id="_CPPv24initPKc"></span><span id="init__cCP"></span><span class="target" id="xmlParser_8h_1a083feca2b47498af216e17ece2544820"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">init</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">rootNode</span></span><span class="sig-paren">)</span><br /></dt>
-<dd><p>initializes the dom document. needs to be called befofe using the parser </p>
+<dd><p>inits the xml parser library </p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>rootNode</strong> – name of the root node </p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>int error code </p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int Error code </p>
 </dd>
 </dl>
 </dd></dl>
@@ -1753,25 +1750,16 @@
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv49serializePKc">
 <span id="_CPPv39serializePKc"></span><span id="_CPPv29serializePKc"></span><span id="serialize__cCP"></span><span class="target" id="xmlParser_8h_1ac929bb7ee0dffb74a325f9c95dd0bbc5"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">serialize</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">outname</span></span><span class="sig-paren">)</span><br /></dt>
-<dd><p>seriaizes the constructed xml tree </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>outname</strong> – name of the output file </p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>int error code </p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv415terminateParserv">
+<span id="_CPPv315terminateParserv"></span><span id="_CPPv215terminateParserv"></span><span id="terminateParser"></span><span class="target" id="xmlParser_8h_1ae7bc97e942226ffb73e349b0e9cc8a0e"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">terminateParser</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv414getRootElementv">
 <span id="_CPPv314getRootElementv"></span><span id="_CPPv214getRootElementv"></span><span id="getRootElement"></span><span class="target" id="xmlParser_8h_1a5e034b088ecf6f71d1319169421c4652"></span><span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getRootElement</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv417terminateXMLUtilsv">
-<span id="_CPPv317terminateXMLUtilsv"></span><span id="_CPPv217terminateXMLUtilsv"></span><span id="terminateXMLUtils"></span><span class="target" id="xmlParser_8h_1a8bbdcd61466482e5ac032e91dc7b860e"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">terminateXMLUtils</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
 <dd></dd></dl>
 
 </div>
@@ -1794,51 +1782,9 @@
 
 </div>
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv422ValidationErrorHandler">
-<span id="_CPPv322ValidationErrorHandler"></span><span id="_CPPv222ValidationErrorHandler"></span><span id="ValidationErrorHandler"></span><span class="target" id="classValidationErrorHandler"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ValidationErrorHandler</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">ErrorHandler</span></span><br /></dt>
-<dd><div class="docutils container">
-<em>#include &lt;<a class="reference internal" href="autodoc.html#xmlParser_8h"><span class="std std-ref">xmlParser.h</span></a>&gt;</em></div>
-<p>very simple error hander for the xerces dom parser </p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N22ValidationErrorHandler7warningERKN7xercesc17SAXParseExceptionE">
-<span id="_CPPv3N22ValidationErrorHandler7warningERKN7xercesc17SAXParseExceptionE"></span><span id="_CPPv2N22ValidationErrorHandler7warningERKN7xercesc17SAXParseExceptionE"></span><span id="ValidationErrorHandler::warning__xercesc::SAXParseExceptionCR"></span><span class="target" id="classValidationErrorHandler_1ac085f2656d04c81d556311cfc12c9fd6"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">warning</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="autodoc.html#_CPPv47xercesc" title="xercesc"><span class="n"><span class="pre">xercesc</span></span></a><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">SAXParseException</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ex</span></span><span class="sig-paren">)</span><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N22ValidationErrorHandler5errorERKN7xercesc17SAXParseExceptionE">
-<span id="_CPPv3N22ValidationErrorHandler5errorERKN7xercesc17SAXParseExceptionE"></span><span id="_CPPv2N22ValidationErrorHandler5errorERKN7xercesc17SAXParseExceptionE"></span><span id="ValidationErrorHandler::error__xercesc::SAXParseExceptionCR"></span><span class="target" id="classValidationErrorHandler_1a9475fa568fde8044829766e09ee688b5"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">error</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="autodoc.html#_CPPv47xercesc" title="xercesc"><span class="n"><span class="pre">xercesc</span></span></a><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">SAXParseException</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ex</span></span><span class="sig-paren">)</span><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N22ValidationErrorHandler10fatalErrorERKN7xercesc17SAXParseExceptionE">
-<span id="_CPPv3N22ValidationErrorHandler10fatalErrorERKN7xercesc17SAXParseExceptionE"></span><span id="_CPPv2N22ValidationErrorHandler10fatalErrorERKN7xercesc17SAXParseExceptionE"></span><span id="ValidationErrorHandler::fatalError__xercesc::SAXParseExceptionCR"></span><span class="target" id="classValidationErrorHandler_1acd571acc8865b8cd80c93145ba4cb1b3"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fatalError</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="autodoc.html#_CPPv47xercesc" title="xercesc"><span class="n"><span class="pre">xercesc</span></span></a><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">SAXParseException</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ex</span></span><span class="sig-paren">)</span><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N22ValidationErrorHandler11resetErrorsEv">
-<span id="_CPPv3N22ValidationErrorHandler11resetErrorsEv"></span><span id="_CPPv2N22ValidationErrorHandler11resetErrorsEv"></span><span id="ValidationErrorHandler::resetErrors"></span><span class="target" id="classValidationErrorHandler_1add3cc3fb81979f73335d4bd930015260"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">resetErrors</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
-<dd></dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N22ValidationErrorHandler20reportParseExceptionERKN7xercesc17SAXParseExceptionE">
-<span id="_CPPv3N22ValidationErrorHandler20reportParseExceptionERKN7xercesc17SAXParseExceptionE"></span><span id="_CPPv2N22ValidationErrorHandler20reportParseExceptionERKN7xercesc17SAXParseExceptionE"></span><span id="ValidationErrorHandler::reportParseException__xercesc::SAXParseExceptionCR"></span><span class="target" id="classValidationErrorHandler_1a84dd7f1a86d749f7401e7043a7086349"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reportParseException</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="autodoc.html#_CPPv47xercesc" title="xercesc"><span class="n"><span class="pre">xercesc</span></span></a><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">SAXParseException</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ex</span></span><span class="sig-paren">)</span><br /></dt>
-<dd></dd></dl>
-
-</div>
-</dd></dl>
-
-<dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv44XStr">
 <span id="_CPPv34XStr"></span><span id="_CPPv24XStr"></span><span id="XStr"></span><span class="target" id="classXStr"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">XStr</span></span></span><br /></dt>
-<dd><div class="docutils container">
-<em>#include &lt;<a class="reference internal" href="autodoc.html#xmlParser_8h"><span class="std std-ref">xmlParser.h</span></a>&gt;</em></div>
-<p>wrapper class that handles conversion from xml string to string smoothly </p>
-<div class="breathe-sectiondef docutils container">
+<dd><div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N4XStr4XStrEPCKc">
@@ -1894,10 +1840,7 @@
 <dl class="cpp struct">
 <dt class="sig sig-object cpp" id="_CPPv47xmlTree">
 <span id="_CPPv37xmlTree"></span><span id="_CPPv27xmlTree"></span><span id="xmlTree"></span><span class="target" id="structxmlTree"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">xmlTree</span></span></span><br /></dt>
-<dd><div class="docutils container">
-<em>#include &lt;<a class="reference internal" href="autodoc.html#xmlParser_8h"><span class="std std-ref">xmlParser.h</span></a>&gt;</em></div>
-<p>Wrapper class that stores the xml dom context. </p>
-<div class="breathe-sectiondef docutils container">
+<dd><div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N7xmlTree7xmlTreeEv">
@@ -1930,6 +1873,28 @@
 <dd></dd></dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7xmlTree16findNodeWithNameEPKcRP10DOMElement">
+<span id="_CPPv3N7xmlTree16findNodeWithNameEPKcRP10DOMElement"></span><span id="_CPPv2N7xmlTree16findNodeWithNameEPKcRP10DOMElement"></span><span id="xmlTree::findNodeWithName__cCP.DOMElementPR"></span><span class="target" id="structxmlTree_1a5305d92cdc5c328c62eb4baae5aed5e1"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">findNodeWithName</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">childName</span></span>, <span class="n"><span class="pre">DOMElement</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">res</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>looks for the first node that with matching name in the xml document </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>childName</strong> – name too look for </p></li>
+<li><p><strong>res</strong> – return Element </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>int 0 if a node is found. 1 if nothing is found with a matching name </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7xmlTree17findNodeswithNameEPKc">
+<span id="_CPPv3N7xmlTree17findNodeswithNameEPKc"></span><span id="_CPPv2N7xmlTree17findNodeswithNameEPKc"></span><span id="xmlTree::findNodeswithName__cCP"></span><span class="target" id="structxmlTree_1a2e437a4193cc8c0b6024982aa10f918b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">DOMNodeList</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">findNodeswithName</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">childName</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N7xmlTree11loadGrammarEPCKc">
 <span id="_CPPv3N7xmlTree11loadGrammarEPCKc"></span><span id="_CPPv2N7xmlTree11loadGrammarEPCKc"></span><span id="xmlTree::loadGrammar__cCPC"></span><span class="target" id="structxmlTree_1a250c63b27c457d3fa555a47c98cbb48f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">xercesc_3_2</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Grammar</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">loadGrammar</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">schema_file</span></span><span class="sig-paren">)</span><br /></dt>
 <dd></dd></dl>
@@ -1950,11 +1915,6 @@
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N7xmlTree3docE">
 <span id="_CPPv3N7xmlTree3docE"></span><span id="_CPPv2N7xmlTree3docE"></span><span id="xmlTree::doc__DOMDocumentP"></span><span class="target" id="structxmlTree_1af91defb6f566e960cab1b7991dc60b89"></span><span class="n"><span class="pre">DOMDocument</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">doc</span></span></span><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7xmlTree12inputHandlerE">
-<span id="_CPPv3N7xmlTree12inputHandlerE"></span><span id="_CPPv2N7xmlTree12inputHandlerE"></span><span id="xmlTree::inputHandler__ValidationErrorHandlerP"></span><span class="target" id="structxmlTree_1ac7297e5b0d39c4f1fe4e76bd2d88837c"></span><a class="reference internal" href="autodoc.html#_CPPv422ValidationErrorHandler" title="ValidationErrorHandler"><span class="n"><span class="pre">ValidationErrorHandler</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">inputHandler</span></span></span><br /></dt>
 <dd></dd></dl>
 
 </div>
@@ -2870,7 +2830,7 @@
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp">
-<span class="target" id="export_8h_1a4e3c119fd9d02182b2f8fbb18ee4441f"></span><span class="sig-name descname"><span class="pre">EXPORTED</span> <span class="pre">void</span> <span class="pre">setXMLSchemaLocation</span> <span class="pre">(char</span> <span class="pre">*file)</span></span></dt>
+<span class="target" id="export_8h_1a88b1f1448510e85ba171a95979dd0440"></span><span class="sig-name descname"><span class="pre">EXPORTED</span> <span class="pre">void</span> <span class="pre">setXMLSchemeLocation</span> <span class="pre">(char</span> <span class="pre">*file)</span></span></dt>
 <dd><p>set path to xml schema files </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
