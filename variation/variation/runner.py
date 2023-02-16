@@ -137,7 +137,7 @@ def executePipeline(tree, inpDir, varDict):
 
     libpath = ""
     c = 0
-    
+        
     if os.name == "posix":  # if MacOS
         libpath = os.path.join(os.path.dirname(__file__), "resources/libroad-generation.so")          
         
