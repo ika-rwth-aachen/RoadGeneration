@@ -8,7 +8,7 @@ case $( "${UNAME}" | tr '[:upper:]' '[:lower:]') in
     cp ./build/libroad-generation.so ./variation/variation/resources/libroad-generation.so
     cd variation
     pip install wheel
-    python setup.py bdist_wheel
+    python3 setup.py bdist_wheel
     cd dist 
     pip install roadvariation-0.1-py3-none-any.whl --force-reinstall
     ;;
