@@ -187,12 +187,12 @@ def run():
     global args
     print("-- Let's start the road network variation")
     argParse = argparse.ArgumentParser()
-    argParse.add_argument('-fname', help='filename of the road network template', metavar='<TemplateFilename>')
-    argParse.add_argument('-o', help='set output name scheme', metavar='<out filename>')
-    argParse.add_argument('-n', help='number of variations to be generated', metavar='<int>', type=int, default=20)
-    argParse.add_argument('-e', help='generate an example template file', action='store_true')
+    argParse.add_argument('-fname', help='path to template file', metavar='<TemplateFilename>')
+    argParse.add_argument('-o', help='set output name', metavar='<out filename>')
+    argParse.add_argument('-n', help='number of variations', metavar='<int>', type=int, default=20)
+    argParse.add_argument('-e', help='generate example template', action='store_true')
     argParse.add_argument('-k', help='keep xml files', action='store_false')
-    argParse.add_argument('-s', help='suppress most console output', action='store_true')
+    argParse.add_argument('-s', help='suppress console output', action='store_true')
     args = argParse.parse_args()    
 
     
