@@ -195,7 +195,7 @@ int createXMLXercesC(roadNetwork &data)
         road.addAttribute("id", it->id);
         road.addAttribute("length", it->length);
        
-        //it has to be checked if it is a connecting road, since the junction attribute is missused as the original ID for connecting roads.
+        //it has to be checked if it is a connecting road, since the junction attribute is also used as the original ID for connecting roads.
         road.addAttribute("junction" ,(it->isConnectingRoad) ? -1 : it->junction);
         appendLinkToNodeXercesC(road, it->successor, it->predecessor);
 

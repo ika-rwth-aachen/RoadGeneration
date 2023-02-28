@@ -743,6 +743,26 @@ bool isIn(vector<int> &v, int &i)
     return false;
 }
 
+/**
+ * @brief Return true if the specified road it (not input id) is a junction
+ * 
+ * @param data road network data
+ * @param roadID road id (in the road network)
+ * @return true 
+ * @return false 
+ */
+bool isJunction(roadNetwork data, int roadID)
+{
+    for (auto &&j : data.junctions)
+    {
+		if (j.id == roadID)
+        {
+        	return true;
+        }
+    }
+    return false;
+}
+
 void throwWarning(string msg, string origin, bool mute = false)
 {
     setting.warnings ++;

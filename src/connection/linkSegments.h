@@ -33,7 +33,7 @@ int resolveLaneLinkConflicts(roadNetwork &data)
 	for(road &r: data.roads)
 	{
 
-		if(r.successor.id != -1 &&r.junction != -1)
+		if(r.successor.id != -1)
 		{
 			road *suc;
 			for(road &rr: data.roads)
@@ -42,6 +42,11 @@ int resolveLaneLinkConflicts(roadNetwork &data)
 				{
 					suc = &rr;
 				}
+			}
+
+			if(isJunction(data, r.id) || isJunction(data, suc->id))
+			{
+				continue;
 			}
 
 			if(r.successor.contactPoint == suc->predecessor.contactPoint)
