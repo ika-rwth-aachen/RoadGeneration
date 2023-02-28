@@ -28,6 +28,8 @@
 int resolveLaneLinkConflicts(roadNetwork &data)
 {
 	//assumption that all user provided segments are linked by now.
+
+
 	for(road &r: data.roads)
 	{
 
@@ -44,7 +46,7 @@ int resolveLaneLinkConflicts(roadNetwork &data)
 
 			if(r.successor.contactPoint == suc->predecessor.contactPoint)
 			{
-				int borderingLaneSection = 0; // TODO get right lane section that borders to next segment
+				int borderingLaneSection = 0; 
 				if(r.successor.contactPoint == endType)
 					borderingLaneSection = r.laneSections.size() - 1;
 				vector<int> laneIds;
@@ -56,7 +58,7 @@ int resolveLaneLinkConflicts(roadNetwork &data)
 				//switch all lane links
 				for(int i = 0; i < r.laneSections.at(borderingLaneSection).lanes.size(); i ++)
 				{
-					r.laneSections.at(borderingLaneSection).lanes[i].id = laneIds[i];
+					r.laneSections.at(borderingLaneSection).lanes[i].sucId = laneIds[i];
 				}
 		
 				// switch everything for the successor aswell
@@ -72,7 +74,7 @@ int resolveLaneLinkConflicts(roadNetwork &data)
 				//switch all lane links
 				for(int i = 0; i < suc->laneSections.at(borderingLaneSection).lanes.size(); i ++)
 				{
-					suc->laneSections.at(borderingLaneSection).lanes[i].id = laneIds[i];
+					suc->laneSections.at(borderingLaneSection).lanes[i].preId = laneIds[i];
 				}
 				cout << "switched road " << r.id << " and succ " <<suc->id << endl;
 
