@@ -15,6 +15,8 @@
  *
  */
 
+#define UNASSIGNED 0
+
 extern settings setting;
 
 // definition of basic types

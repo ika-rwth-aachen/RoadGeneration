@@ -763,6 +763,8 @@ bool isJunction(roadNetwork data, int roadID)
     return false;
 }
 
+
+
 void throwWarning(string msg, string origin, bool mute = false)
 {
     setting.warnings ++;

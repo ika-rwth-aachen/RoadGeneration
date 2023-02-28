@@ -19,17 +19,15 @@
 #include<queue>
 
 
-
 /**
- * @brief Resolves lane linking conflicts that result from segments being linked start to start or end to end
+ * @brief Resolves conflicts that occur when segments are linked end to end or start to start
  * 
- * @return int 
+ * @param data road network data
+ * @return int error code
  */
-int resolveLaneLinkConflicts(roadNetwork &data)
+int resolveAlignmentConflicts(roadNetwork &data)
 {
 	//assumption that all user provided segments are linked by now.
-
-
 	for(road &r: data.roads)
 	{
 
@@ -85,6 +83,67 @@ int resolveLaneLinkConflicts(roadNetwork &data)
 
 			}
 		}
+	}
+	return 0;
+}
+
+/**
+ * @brief Removes lane links to junctions or empty roads
+ * 
+ * @param data 
+ * @return int error code
+ */
+int resolveIllegalLinkConflcits(roadNetwork &data)
+{
+	
+	for(road &r: data.roads)
+	{
+		if(isJunction(data, r.id))
+			continue;
+		
+		if(isJunction(data, r.successor.id) || r.successor.id == -1)
+		{
+			int lsId = 0;
+			if(r.successor.contactPoint == endType)
+				lsId = r.laneSections.size() -1;
+			for(lane & l: r.laneSections.at(lsId).lanes)
+			{
+				l.sucId = UNASSIGNED;
+			}
+		}
+
+		if(isJunction(data, r.predecessor.id) || r.predecessor.id == -1)
+		{
+			int lsId = 0;
+			if(r.predecessor.contactPoint == endType)
+				lsId = r.laneSections.size() -1;
+			for(lane & l: r.laneSections.at(lsId).lanes)
+			{
+				l.preId = UNASSIGNED;
+			}
+		}
+
+		
+
+	}
+	return 0;
+}
+/**
+ * @brief Resolves lane linking conflicts that result from segments being linked start to start or end to end
+ * 
+ * @return int 
+ */
+int resolveLaneLinkConflicts(roadNetwork &data)
+{	
+	if(resolveAlignmentConflicts(data))
+	{
+		throwError("Could not resolve Alignment conflicts");
+		return 1;
+	}
+	if (resolveIllegalLinkConflcits(data))
+	{
+		throwError("Could not remove lane links to junctions");
+		return 1;
 	}
 	
 	return 0;
@@ -337,6 +396,8 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 	if (links == NULL)
 	{
 		throwWarning("'links' are not specified in input file.\n\t -> skip segment linking", true);
+
+		resolveLaneLinkConflicts(data);
 		return 0;
 	}
 
