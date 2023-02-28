@@ -19,8 +19,72 @@
 #include<queue>
 
 
+
 /**
- * @brief Transforms one toSegments position according to the from segment and the semgment link data to the coordinate system of the reference segment
+ * @brief Resolves lane linking conflicts that result from segments being linked start to start or end to end
+ * 
+ * @return int 
+ */
+int resolveLaneLinkConflicts(roadNetwork &data)
+{
+	//assumption that all user provided segments are linked by now.
+	for(road &r: data.roads)
+	{
+
+		if(r.successor.id != -1 &&r.junction != -1)
+		{
+			road *suc;
+			for(road &rr: data.roads)
+			{
+				if(rr.id == r.successor.id)
+				{
+					suc = &rr;
+				}
+			}
+
+			if(r.successor.contactPoint == suc->predecessor.contactPoint)
+			{
+				int borderingLaneSection = 0; // TODO get right lane section that borders to next segment
+				if(r.successor.contactPoint == endType)
+					borderingLaneSection = r.laneSections.size() - 1;
+				vector<int> laneIds;
+				for(lane &l: r.laneSections.at(borderingLaneSection).lanes)
+				{
+					laneIds.insert(laneIds.begin(), l.id);
+				}
+
+				//switch all lane links
+				for(int i = 0; i < r.laneSections.at(borderingLaneSection).lanes.size(); i ++)
+				{
+					r.laneSections.at(borderingLaneSection).lanes[i].id = laneIds[i];
+				}
+		
+				// switch everything for the successor aswell
+				if(suc->predecessor.contactPoint == endType)
+					borderingLaneSection = suc->laneSections.size() - 1;
+
+				laneIds.clear();
+				for(lane &l: suc->laneSections.at(borderingLaneSection).lanes)
+				{
+					laneIds.insert(laneIds.begin(), l.id);
+				}
+
+				//switch all lane links
+				for(int i = 0; i < suc->laneSections.at(borderingLaneSection).lanes.size(); i ++)
+				{
+					suc->laneSections.at(borderingLaneSection).lanes[i].id = laneIds[i];
+				}
+				cout << "switched road " << r.id << " and succ " <<suc->id << endl;
+
+			}
+		}
+	}
+	
+	return 0;
+}
+
+/**
+ * @brief Transforms toSegments position according to the from segment and the semgment link data to the coordinate system of the reference segment
  * 
  * @param segmentLink segment to link
  * @param data road network data
@@ -71,7 +135,6 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 		if (j.id == toSegment)
 			toIsJunction = true;
 
-	
 
 	/*check if either one of the segments is a roundabout*/
 
@@ -89,7 +152,6 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 			fromIsRoundabout= true;
 
 		}
-		
 	}
 	//-------------------END roundabout namespace fix---------------------------------
 
@@ -296,7 +358,7 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 		}
 	}
 
-	//generate a map to store all the outgoing links of each segment
+	//generate a map to store all outgoing links of each segment
 	std::map<int, vector<int>> outgoing_connections;
 	std::map<int, vector<int>> incoming_connections;
 
@@ -380,6 +442,9 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 
 
 	}
+
+	resolveLaneLinkConflicts(data);
+
 	return 0;
 }
 
