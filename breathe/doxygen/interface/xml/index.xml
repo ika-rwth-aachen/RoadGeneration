@@ -149,6 +149,7 @@
     <member refid="structwidth_1a5947e26a2ca39d1306307f24142ee982" kind="variable"><name>d</name></member>
   </compound>
   <compound refid="interface_8h" kind="file"><name>interface.h</name>
+    <member refid="interface_8h_1a7f2a734b84f750bb35708fd8f3d0121e" kind="define"><name>UNASSIGNED</name></member>
     <member refid="interface_8h_1aaa249d21a2432e0e3f220374c156a537" kind="enum"><name>junctionGroupType</name></member>
     <member refid="interface_8h_1aaa249d21a2432e0e3f220374c156a537a49ab97fa47467085366e4774e98943fe" kind="enumvalue"><name>roundaboutType</name></member>
     <member refid="interface_8h_1aaa249d21a2432e0e3f220374c156a537a10ea200ca9861971578ded6205c6369f" kind="enumvalue"><name>unknownType</name></member>
