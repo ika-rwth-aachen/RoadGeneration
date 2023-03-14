@@ -16,7 +16,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="100" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="100" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="98" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="98" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structroadmark_1abbb845544fdd431b76be8e43e880cf7a" prot="public" static="no" mutable="no">
         <type>string</type>
@@ -30,7 +30,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="101" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="101" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="99" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="99" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structroadmark_1ad0076c886da1b1fbd89958bdea456696" prot="public" static="no" mutable="no">
         <type>string</type>
@@ -44,7 +44,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="102" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="102" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="100" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="100" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structroadmark_1adab3a3b13d9bffb1f8f09bbcddcb2a30" prot="public" static="no" mutable="no">
         <type>string</type>
@@ -58,7 +58,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="103" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="103" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="101" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="101" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structroadmark_1af804eea6c3fe8eb597726e7cdf0485fe" prot="public" static="no" mutable="no">
         <type>double</type>
@@ -72,14 +72,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="104" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="104" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="102" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="102" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
 <para>roadmark holding lane appearance properties </para>    </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="99" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="98" bodyend="105"/>
+    <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="97" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="96" bodyend="103"/>
     <listofallmembers>
       <member refid="structroadmark_1adab3a3b13d9bffb1f8f09bbcddcb2a30" prot="public" virt="non-virtual"><scope>roadmark</scope><name>color</name></member>
       <member refid="structroadmark_1ab00257d8b7ae4cac304a6803a9357337" prot="public" virt="non-virtual"><scope>roadmark</scope><name>s</name></member>

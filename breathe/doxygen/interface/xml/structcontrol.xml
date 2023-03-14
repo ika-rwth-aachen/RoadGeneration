@@ -16,7 +16,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="255" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="255" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="253" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="253" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structcontrol_1a3d535eab2d10a15f2bbaaf6297ca74d2" prot="public" static="no" mutable="no">
         <type>vector&lt; <ref refid="structsign" kindref="compound">sign</ref> &gt;</type>
@@ -29,14 +29,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="256" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="256" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="254" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="254" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
 <para>control to define a controller with several signals </para>    </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="254" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="253" bodyend="257"/>
+    <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="252" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="251" bodyend="255"/>
     <listofallmembers>
       <member refid="structcontrol_1ab50f77b013bd64fb1c8e52cda8efbbae" prot="public" virt="non-virtual"><scope>control</scope><name>id</name></member>
       <member refid="structcontrol_1a3d535eab2d10a15f2bbaaf6297ca74d2" prot="public" virt="non-virtual"><scope>control</scope><name>signs</name></member>

@@ -16,7 +16,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="200" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="200" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="198" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="198" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structlink_1af6f1aa69a7832fdbc89068d29b62adb2" prot="public" static="no" mutable="no">
         <type>linkType</type>
@@ -30,7 +30,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="201" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="201" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="199" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="199" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structlink_1a2571e309f299a5bc5a40dc682a48d8b8" prot="public" static="no" mutable="no">
         <type>contactPointType</type>
@@ -44,14 +44,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="202" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="202" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="200" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="200" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
 <para>link is either predecessor or successor and defines id and properties of previous/next element </para>    </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="199" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="198" bodyend="203"/>
+    <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="197" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="196" bodyend="201"/>
     <listofallmembers>
       <member refid="structlink_1a2571e309f299a5bc5a40dc682a48d8b8" prot="public" virt="non-virtual"><scope>link</scope><name>contactPoint</name></member>
       <member refid="structlink_1af6f1aa69a7832fdbc89068d29b62adb2" prot="public" virt="non-virtual"><scope>link</scope><name>elementType</name></member>

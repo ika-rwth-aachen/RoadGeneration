@@ -16,7 +16,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="138" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="138" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="136" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="136" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structmaterial_1a14db1e9b68cfd6201c19b0e87a32c655" prot="public" static="no" mutable="no">
         <type>string</type>
@@ -30,7 +30,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="139" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="139" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="137" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="137" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structmaterial_1ad69eb3251f1eb1acc6554428de8579ca" prot="public" static="no" mutable="no">
         <type>double</type>
@@ -44,7 +44,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="140" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="140" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="138" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="138" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structmaterial_1aa189399642e0f8d7b2747ad36ecda21c" prot="public" static="no" mutable="no">
         <type>double</type>
@@ -58,14 +58,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="141" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="141" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="139" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="139" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
 <para>material holding the material properties of a lane </para>    </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="137" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="136" bodyend="142"/>
+    <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="135" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="134" bodyend="140"/>
     <listofallmembers>
       <member refid="structmaterial_1ad69eb3251f1eb1acc6554428de8579ca" prot="public" virt="non-virtual"><scope>material</scope><name>friction</name></member>
       <member refid="structmaterial_1aa189399642e0f8d7b2747ad36ecda21c" prot="public" virt="non-virtual"><scope>material</scope><name>roughness</name></member>

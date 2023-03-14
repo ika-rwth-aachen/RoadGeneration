@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="183" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="183" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="181" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="181" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structgeometry_1afc2a1bd06492055a51c7967e53b96d15" prot="public" static="no" mutable="no">
         <type>double</type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="184" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="184" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="182" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="182" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structgeometry_1a4e11de9f5b5302e82e38ea484f76dbe1" prot="public" static="no" mutable="no">
         <type>double</type>
@@ -43,7 +43,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="185" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="185" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="183" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="183" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structgeometry_1a0f60c2d3d471a3bd2b8515c289897d90" prot="public" static="no" mutable="no">
         <type>double</type>
@@ -57,7 +57,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="186" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="186" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="184" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="184" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structgeometry_1aaeadb023827bd52040801f0933abcf65" prot="public" static="no" mutable="no">
         <type>double</type>
@@ -71,7 +71,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="187" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="187" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="185" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="185" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structgeometry_1a6f38a349f8271789a9bc794df05088dd" prot="public" static="no" mutable="no">
         <type>double</type>
@@ -85,7 +85,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="188" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="188" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="186" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="186" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structgeometry_1a0a0c83f6f34d50e4b3861e3fbcf0b260" prot="public" static="no" mutable="no">
         <type>double</type>
@@ -99,7 +99,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="189" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="189" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="187" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="187" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structgeometry_1a6212e93c1b9ce6da280c3c00e2b30084" prot="public" static="no" mutable="no">
         <type>double</type>
@@ -113,7 +113,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="190" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="190" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="188" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="188" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structgeometry_1a62903414c6aeaf29023d431bc0b7ccc9" prot="public" static="no" mutable="no">
         <type>double</type>
@@ -127,14 +127,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="191" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="191" bodyend="-1"/>
+        <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="189" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="189" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
 <para>geometry holds all properties of a geometry on the reference line </para>    </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="182" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="181" bodyend="192"/>
+    <location file="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" line="180" column="1" bodyfile="/home/runner/work/RoadGeneration/RoadGeneration/src/utils/interface.h" bodystart="179" bodyend="190"/>
     <listofallmembers>
       <member refid="structgeometry_1a0a0c83f6f34d50e4b3861e3fbcf0b260" prot="public" virt="non-virtual"><scope>geometry</scope><name>c</name></member>
       <member refid="structgeometry_1a6212e93c1b9ce6da280c3c00e2b30084" prot="public" virt="non-virtual"><scope>geometry</scope><name>c1</name></member>
