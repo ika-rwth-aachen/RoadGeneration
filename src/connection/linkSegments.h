@@ -350,14 +350,29 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 
 	for (auto &&r : data.roads)
 	{
-		if (r.id == toRoadId){
-			r.predecessor.id = fromRoadId;
-			r.predecessor.contactPoint = (fromPos == "start") ? startType : endType;
+		if(!swap)
+		{
+			if (r.id == toRoadId){
+				r.predecessor.id = fromRoadId;
+				r.predecessor.contactPoint = (fromPos == "start") ? startType : endType;
+			}
+			
+			if (r.id == fromRoadId){
+				r.successor.id = toRoadId;
+				r.successor.contactPoint = (toPos == "start") ? startType : endType;
+			}
 		}
-		
-		if (r.id == fromRoadId){
-			r.successor.id = toRoadId;
-			r.successor.contactPoint = (toPos == "start") ? startType : endType;
+		else
+		{
+			if (r.id == toRoadId){
+				r.successor.id = fromRoadId;
+				r.successor.contactPoint = (fromPos == "start") ? startType : endType;
+			}
+			
+			if (r.id == fromRoadId){
+				r.predecessor.id = toRoadId;
+				r.predecessor.contactPoint = (toPos == "start") ? startType : endType;
+			}
 		}
 	}
 	//mark every road that belongs to the from- or toSegment as linked
@@ -443,7 +458,7 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 
 	}
 
-	queue<int> toDo = queue<int>();
+	queue<int> toDo = queue<int>(); //remaining segments
 	vector<int> transformedIds;
 	toDo.push(refId);
 

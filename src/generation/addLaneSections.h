@@ -25,7 +25,7 @@
  * @param addouterLane  specifies if additional lane is on the outer side or not
  * @return int          error code
  */
-int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bool addOuterLane)
+int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double ds, bool addOuterLane)
 {
     std::vector<laneSection>::iterator it;
     int i = 0;
@@ -54,14 +54,14 @@ int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bo
 
     if (addOuterLane)
     {
-        if (side > 0)
+        if (addLaneId > 0)
             laneId = findMaxLaneId(adLaneSec);
-        if (side < 0)
+        if (addLaneId < 0)
             laneId = findMinLaneId(adLaneSec);
     }
     else
     {
-        laneId = sgn(side);
+        laneId = sgn(addLaneId);
     }
 
     if (laneId == 0 || abs(laneId) >= 100)
@@ -86,7 +86,7 @@ int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bo
     // shift other lanes and add additional lane
     if (addOuterLane)
     {
-        l.id = laneId + sgn(side);
+        l.id = laneId + sgn(addLaneId);
         shiftLanes(adLaneSec, l.id, 1);
 
         adLaneSec.lanes.push_back(l);
