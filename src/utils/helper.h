@@ -189,9 +189,10 @@ double findTOffset(laneSection sec, int id, double s)
  * @param sec   lanesection which should be shifted
  * @param id    lane which is the start of the shift; all outer lanes are shifted
  * @param dir   dir = 1 shift to outer side, die = -1 shift to inner side
+ * @param keepPre decides whether or not the pre links should be kept.
  * @return int  error code 
  */
-int shiftLanes(laneSection &sec, int id, int dir)
+int shiftLanes(laneSection &sec, int id, int dir, bool keepPre = false)
 {
     int side = sgn(id);
     int start, end;
@@ -229,8 +230,12 @@ int shiftLanes(laneSection &sec, int id, int dir)
                 /*
                     Below is a fix that adjusts the linkage of the shifted lanes according to their id.
                 */
-                sec.lanes[i].preId += dir * side; 
+                if(!keepPre)
+                {
+                    sec.lanes[i].preId += dir * side; 
+                }
                 sec.lanes[i].sucId += dir * side;
+
             }
         }
         start -= dir * side;

@@ -76,6 +76,7 @@ int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double d
     // find current lane in adLaneSec
     lane l;
     l.id = laneId;
+
     int id = findLane(adLaneSec, l, laneId);
 
     // adjust new width
@@ -86,7 +87,10 @@ int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double d
     l.w.a = 0;
 
     // shift other lanes and add additional lane
-    shiftLanes(adLaneSec, laneId, 1);
+    shiftLanes(adLaneSec, laneId, 1, false);
+    
+    l.preId = 0;
+    l.sucId = l.id;
 
     l.rm.type = "broken";
     adLaneSec.lanes.push_back(l);
@@ -125,7 +129,7 @@ int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double d
     {
         secs[i].id += 2;
 
-            shiftLanes(secs[i], laneId, 1);
+            //shiftLanes(secs[i], laneId, 1, false);
             if (abs(l.id) <= abs(laneId))
                 l.rm.type = "broken";
             it->lanes.push_back(l);
