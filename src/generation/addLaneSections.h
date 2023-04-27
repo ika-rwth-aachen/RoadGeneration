@@ -30,6 +30,7 @@ int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double d
     std::vector<laneSection>::iterator it;
     int i = 0;
 
+
     // search corresponding lane Section
     bool found = false;
     int n = secs.size();
@@ -50,23 +51,23 @@ int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double d
 
     laneSection adLaneSec = *it;
 
+    int max_lane_id = 0;
+    for(lane l: adLaneSec.lanes)
+    {
+        if(addLaneId * l.id > max_lane_id)
+            max_lane_id = addLaneId * l.id > max_lane_id;
+    }
+
     int laneId = 0;
 
-    if (addOuterLane)
-    {
-        if (addLaneId > 0)
-            laneId = findMaxLaneId(adLaneSec);
-        if (addLaneId < 0)
-            laneId = findMinLaneId(adLaneSec);
-    }
-    else
-    {
-        laneId = sgn(addLaneId);
-    }
+   
+    //laneId = sgn(addLaneId);
+    laneId = addLaneId; //changed this so the user can define the exact position where a new lane should get added!
 
     if (laneId == 0 || abs(laneId) >= 100)
     {
         cerr << "ERR: lane widening can not be performed" << endl;
+        return 1;
     }
 
     adLaneSec.id = it->id + 1;
@@ -74,6 +75,7 @@ int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double d
 
     // find current lane in adLaneSec
     lane l;
+    l.id = laneId;
     int id = findLane(adLaneSec, l, laneId);
 
     // adjust new width
@@ -84,21 +86,10 @@ int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double d
     l.w.a = 0;
 
     // shift other lanes and add additional lane
-    if (addOuterLane)
-    {
-        l.id = laneId + sgn(addLaneId);
-        shiftLanes(adLaneSec, l.id, 1);
+    shiftLanes(adLaneSec, laneId, 1);
 
-        adLaneSec.lanes.push_back(l);
-        adLaneSec.lanes[id].rm.type = "broken";
-    }
-    else
-    {
-        shiftLanes(adLaneSec, laneId, 1);
-
-        l.rm.type = "broken";
-        adLaneSec.lanes.push_back(l);
-    }
+    l.rm.type = "broken";
+    adLaneSec.lanes.push_back(l);
 
     // center line solid in laneWidening part
     lane tmp;
@@ -134,21 +125,10 @@ int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double d
     {
         secs[i].id += 2;
 
-        if (addOuterLane)
-        {
-            shiftLanes(secs[i], laneId + sgn(laneId), 1);
-
-            if (abs(l.id) <= abs(laneId + sgn(laneId)))
-                l.rm.type = "broken";
-            it->lanes.push_back(l);
-        }
-        else
-        {
             shiftLanes(secs[i], laneId, 1);
             if (abs(l.id) <= abs(laneId))
                 l.rm.type = "broken";
             it->lanes.push_back(l);
-        }
         i++;
     }
 
