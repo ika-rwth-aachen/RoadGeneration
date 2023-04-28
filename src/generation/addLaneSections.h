@@ -19,7 +19,7 @@
  * @brief function adds a laneSection with laneWideing to a given lanesection set
  * 
  * @param secs          vector of all lanesections of a road
- * @param side          determines the road's side of the widening
+ * @param addLaneId          determines the road's side of the widening
  * @param s             position of lane widening
  * @param ds            length of lane widening
  * @param addouterLane  specifies if additional lane is on the outer side or not
@@ -50,19 +50,18 @@ int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double d
     }
 
     laneSection adLaneSec = *it;
-
-    int max_lane_id = 0;
-    for(lane l: adLaneSec.lanes)
+    //Adjust the succ lane connection of predecessor
+    for(lane &l: it->lanes)
     {
-        if(addLaneId * l.id > max_lane_id)
-            max_lane_id = addLaneId * l.id > max_lane_id;
+        if(sgn(l.id) == sgn(addLaneId) && abs(l.id) >= abs(addLaneId))
+        {
+            l.sucId += sgn(addLaneId);
+        }
     }
 
-    int laneId = 0;
-
    
-    //laneId = sgn(addLaneId);
-    laneId = addLaneId; //changed this so the user can define the exact position where a new lane should get added!
+    //int laneId = sgn(addLaneId);
+    int laneId = addLaneId; //changed this so the user can define the exact position where a new lane should get added!
 
     if (laneId == 0 || abs(laneId) >= 100)
     {
@@ -124,12 +123,13 @@ int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double d
     it++;
     i++;
 
+
     // --- shift all lanes in following lane sections --------------------------
     for (; it != secs.end(); ++it)
     {
         secs[i].id += 2;
 
-            //shiftLanes(secs[i], laneId, 1, false);
+            shiftLanes(secs[i], laneId, 1, false);
             if (abs(l.id) <= abs(laneId))
                 l.rm.type = "broken";
             it->lanes.push_back(l);
