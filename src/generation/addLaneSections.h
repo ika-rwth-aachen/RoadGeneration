@@ -202,7 +202,7 @@ int addLaneDrop(vector<laneSection> &secs, int side, double s, double ds)
     l.w.c = -3 * w / pow(ds, 2);
     l.w.b = 0;
     l.w.a = w;
-
+    l.sucId = 0; //Changed
     adLaneSec.lanes[id] = l;
 
     // center line solid in laneDropping part
