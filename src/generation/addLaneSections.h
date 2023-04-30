@@ -101,7 +101,18 @@ int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double d
 
     it++;
     i++;
+
     it = secs.insert(it, adLaneSec);
+
+    //adjust all predecessor links for outer lanes in the lane section with the actual widthchange
+    for(lane &l: it->lanes)
+    {
+        if(sgn(l.id) == sgn(addLaneId) && abs(l.id) > abs(addLaneId))
+        {
+            l.preId -= sgn(addLaneId);
+        }
+    }
+
 
     // --- adjust the section after the laneWidening ---------------------------
     l.w.d = 0;
