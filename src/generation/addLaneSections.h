@@ -107,6 +107,8 @@ int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double d
     l.w.d = 0;
     l.w.c = 0;
     l.w.a = w;
+    l.preId = l.id;
+
     adLaneSec.lanes.back() = l;
 
     adLaneSec.id++;
