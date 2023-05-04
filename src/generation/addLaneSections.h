@@ -239,7 +239,7 @@ int addLaneDrop(vector<laneSection> &secs, int dropLaneID, double s, double ds)
     id = findLane(adLaneSec, l, laneId);
     int idTmp = findLane(adLaneSec, l, laneId - sgn(laneId));
 
-    shiftLanes(adLaneSec, laneId, -1, false, false);
+    shiftLanes(adLaneSec, laneId, -1, true, false);
 
     // adjust the correct lane type
     adLaneSec.lanes[idTmp].rm.type = adLaneSec.lanes[id].rm.type;
@@ -257,7 +257,7 @@ int addLaneDrop(vector<laneSection> &secs, int dropLaneID, double s, double ds)
     {
         int id = findLane(*it, l, laneId);
 
-        shiftLanes(*it, laneId, -1, true);
+        shiftLanes(*it, laneId, -1, false);
 
         itt = it->lanes.begin() + id;
         it->lanes.erase(itt);
