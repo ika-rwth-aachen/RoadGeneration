@@ -155,13 +155,13 @@ int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double d
 /**
  * @brief function adds a laneSection with laneDrop to a given lanesection set
  * 
- * @param secs      vector of all lanesections of a road
- * @param side      determines the road's side of the drop
- * @param s         position of laneDrop
- * @param ds        length of laneDrop
- * @return int      error code
+ * @param secs          vector of all lanesections of a road
+ * @param dropLaneID    determines the lane id of the drop
+ * @param s             position of laneDrop
+ * @param ds            length of laneDrop
+ * @return int          error code
  */
-int addLaneDrop(vector<laneSection> &secs, int side, double s, double ds)
+int addLaneDrop(vector<laneSection> &secs, int dropLaneID, double s, double ds)
 {
     std::vector<laneSection>::iterator it;
     std::vector<lane>::iterator itt;
@@ -187,13 +187,10 @@ int addLaneDrop(vector<laneSection> &secs, int side, double s, double ds)
 
     laneSection adLaneSec = *it;
 
-    int laneId = 0;
-    if (side > 0)
-        laneId = findMaxLaneId(adLaneSec);
-    if (side < 0)
-        laneId = findMinLaneId(adLaneSec);
+    int laneId = dropLaneID;
+    
 
-    if (laneId == 0 || abs(laneId) >= 100)
+    if (dropLaneID == 0 || abs(laneId) >= 100)
     {
         cerr << "ERR: lane drop can not be performed" << endl;
     }
