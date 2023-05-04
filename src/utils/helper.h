@@ -192,7 +192,7 @@ double findTOffset(laneSection sec, int id, double s)
  * @param keepPre decides whether or not the pre links should be kept.
  * @return int  error code 
  */
-int shiftLanes(laneSection &sec, int id, int dir, bool keepPre = false)
+int shiftLanes(laneSection &sec, int id, int dir, bool keepPre = false, bool keepSuc = false)
 {
     int side = sgn(id);
     int start, end;
@@ -234,8 +234,10 @@ int shiftLanes(laneSection &sec, int id, int dir, bool keepPre = false)
                 {
                     sec.lanes[i].preId += dir * side; 
                 }
-                sec.lanes[i].sucId += dir * side;
-
+                if(!keepSuc)
+                {
+                    sec.lanes[i].sucId += dir * side;
+                }
             }
         }
         start -= dir * side;

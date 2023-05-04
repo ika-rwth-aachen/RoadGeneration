@@ -86,7 +86,7 @@ int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double d
     l.w.a = 0;
 
     // shift other lanes and add additional lane
-    shiftLanes(adLaneSec, laneId, 1, false);
+    shiftLanes(adLaneSec, laneId, 1, false, false);
     
     l.preId = 0;
     l.sucId = l.id;
@@ -142,7 +142,7 @@ int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double d
     {
         secs[i].id += 2;
 
-            shiftLanes(secs[i], laneId, 1, false);
+            shiftLanes(secs[i], laneId, 1, false, false);
             if (abs(l.id) <= abs(laneId))
                 l.rm.type = "broken";
             it->lanes.push_back(l);
@@ -217,8 +217,18 @@ int addLaneDrop(vector<laneSection> &secs, int dropLaneID, double s, double ds)
     id = findLane(adLaneSec, l, 0);
     adLaneSec.lanes[id].rm.type = "solid";
 
+
+
+
     it++;
     it = secs.insert(it, adLaneSec);
+
+    //adjust the successor links
+    for(lane &l: it->lanes)
+    {
+        if(sgn(l.id) == sgn(dropLaneID) && abs(l.id) > abs(dropLaneID))
+        l.sucId -= sgn(dropLaneID);
+    }
 
     // --- adjust the section after the laneDropping
     adLaneSec.id++;
@@ -229,7 +239,7 @@ int addLaneDrop(vector<laneSection> &secs, int dropLaneID, double s, double ds)
     id = findLane(adLaneSec, l, laneId);
     int idTmp = findLane(adLaneSec, l, laneId - sgn(laneId));
 
-    shiftLanes(adLaneSec, laneId, -1);
+    shiftLanes(adLaneSec, laneId, -1, false, false);
 
     // adjust the correct lane type
     adLaneSec.lanes[idTmp].rm.type = adLaneSec.lanes[id].rm.type;
@@ -247,7 +257,7 @@ int addLaneDrop(vector<laneSection> &secs, int dropLaneID, double s, double ds)
     {
         int id = findLane(*it, l, laneId);
 
-        shiftLanes(*it, laneId, -1);
+        shiftLanes(*it, laneId, -1, true);
 
         itt = it->lanes.begin() + id;
         it->lanes.erase(itt);
