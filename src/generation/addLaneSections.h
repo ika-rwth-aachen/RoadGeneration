@@ -218,8 +218,6 @@ int addLaneDrop(vector<laneSection> &secs, int dropLaneID, double s, double ds)
     adLaneSec.lanes[id].rm.type = "solid";
 
 
-
-
     it++;
     it = secs.insert(it, adLaneSec);
 
@@ -230,6 +228,10 @@ int addLaneDrop(vector<laneSection> &secs, int dropLaneID, double s, double ds)
             if(abs(l.id) > abs(dropLaneID))
             {
                 l.sucId = l.id - sgn(dropLaneID);
+            }
+            else if(abs(l.id) == abs(dropLaneID))
+            {
+                l.sucId = 0;
             }
             else{
                  l.sucId = l.id;
