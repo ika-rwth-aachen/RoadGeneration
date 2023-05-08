@@ -226,8 +226,15 @@ int addLaneDrop(vector<laneSection> &secs, int dropLaneID, double s, double ds)
     //adjust the successor links
     for(lane &l: it->lanes)
     {
-        if(sgn(l.id) == sgn(dropLaneID) && abs(l.id) > abs(dropLaneID))
-        l.sucId -= sgn(dropLaneID);
+        if(sgn(l.id) == sgn(dropLaneID))
+            if(abs(l.id) > abs(dropLaneID))
+            {
+                l.sucId = l.id - sgn(dropLaneID);
+            }
+            else{
+                 l.sucId = l.id;
+            }
+        l.preId = l.id;
     }
 
     // --- adjust the section after the laneDropping
@@ -239,8 +246,9 @@ int addLaneDrop(vector<laneSection> &secs, int dropLaneID, double s, double ds)
     id = findLane(adLaneSec, l, laneId);
     int idTmp = findLane(adLaneSec, l, laneId - sgn(laneId));
 
-    shiftLanes(adLaneSec, laneId, -1, true, false);
+    shiftLanes(adLaneSec, laneId, -1, false, false);
 
+   
     // adjust the correct lane type
     adLaneSec.lanes[idTmp].rm.type = adLaneSec.lanes[id].rm.type;
 
@@ -249,10 +257,26 @@ int addLaneDrop(vector<laneSection> &secs, int dropLaneID, double s, double ds)
 
     it++;
     it = secs.insert(it, adLaneSec);
+     //adjust the pred links
+    for(lane &l: it->lanes)
+    {
+        if(sgn(l.id) == sgn(dropLaneID))
+        {
+            if(abs(l.id) >= abs(dropLaneID))
+            {
+                l.preId = l.id + sgn(dropLaneID);
+            }
+            else
+            {
+                l.preId = l.id;
+            }
+        }
+    }
 
     it++;
 
     // --- shift all lanes in following lane sections --------------------------
+    //This routine might never get called
     for (; it != secs.end(); ++it)
     {
         int id = findLane(*it, l, laneId);
