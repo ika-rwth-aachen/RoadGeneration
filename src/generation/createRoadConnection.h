@@ -117,15 +117,6 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
         fixAngle(hdg2);
     }
 
-    // connection between current road and ending road
-    connection con2;
-    con2.id = junc.connections.size() + 1;
-    con2.contactPoint = startType; //Switched this from endpoint to startpoint!
-    con2.from = r2.id; //switched r to r2 here to be consistent with the user guide. 
-    con2.to = r.id;    //switched r2 to r
-    con2.fromLane = sgn(toId);
-    con2.toLane = toId;
-    junc.connections.push_back(con2); // might cause unintended linkage. 
 
     // --- correct laneOffset --------------------------------------------------
     double w1 = lS1.o.a + s1 * lS1.o.b + s1 * s1 * lS1.o.c + s1 * s1 * s1 * lS.o.d;

@@ -19,16 +19,17 @@
  * @brief function adds a laneSection with laneWideing to a given lanesection set
  * 
  * @param secs          vector of all lanesections of a road
- * @param side          determines the road's side of the widening
+ * @param addLaneId          determines the road's side of the widening
  * @param s             position of lane widening
  * @param ds            length of lane widening
  * @param addouterLane  specifies if additional lane is on the outer side or not
  * @return int          error code
  */
-int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bool addOuterLane)
+int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double ds, bool addOuterLane)
 {
     std::vector<laneSection>::iterator it;
     int i = 0;
+
 
     // search corresponding lane Section
     bool found = false;
@@ -49,24 +50,23 @@ int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bo
     }
 
     laneSection adLaneSec = *it;
-
-    int laneId = 0;
-
-    if (addOuterLane)
+    //Adjust the succ lane connection of predecessor
+    for(lane &l: it->lanes)
     {
-        if (side > 0)
-            laneId = findMaxLaneId(adLaneSec);
-        if (side < 0)
-            laneId = findMinLaneId(adLaneSec);
+        if(sgn(l.id) == sgn(addLaneId) && abs(l.id) >= abs(addLaneId))
+        {
+            l.sucId += sgn(addLaneId);
+        }
     }
-    else
-    {
-        laneId = sgn(side);
-    }
+
+   
+    //int laneId = sgn(addLaneId);
+    int laneId = addLaneId; //changed this so the user can define the exact position where a new lane should get added!
 
     if (laneId == 0 || abs(laneId) >= 100)
     {
         cerr << "ERR: lane widening can not be performed" << endl;
+        return 1;
     }
 
     adLaneSec.id = it->id + 1;
@@ -74,6 +74,8 @@ int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bo
 
     // find current lane in adLaneSec
     lane l;
+    l.id = laneId;
+
     int id = findLane(adLaneSec, l, laneId);
 
     // adjust new width
@@ -84,21 +86,13 @@ int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bo
     l.w.a = 0;
 
     // shift other lanes and add additional lane
-    if (addOuterLane)
-    {
-        l.id = laneId + sgn(side);
-        shiftLanes(adLaneSec, l.id, 1);
+    shiftLanes(adLaneSec, laneId, 1, false, false);
+    
+    l.preId = 0;
+    l.sucId = l.id;
 
-        adLaneSec.lanes.push_back(l);
-        adLaneSec.lanes[id].rm.type = "broken";
-    }
-    else
-    {
-        shiftLanes(adLaneSec, laneId, 1);
-
-        l.rm.type = "broken";
-        adLaneSec.lanes.push_back(l);
-    }
+    l.rm.type = "broken";
+    adLaneSec.lanes.push_back(l);
 
     // center line solid in laneWidening part
     lane tmp;
@@ -107,12 +101,25 @@ int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bo
 
     it++;
     i++;
+
     it = secs.insert(it, adLaneSec);
+
+    //adjust all predecessor links for outer lanes in the lane section with the actual widthchange
+    for(lane &l: it->lanes)
+    {
+        if(sgn(l.id) == sgn(addLaneId) && abs(l.id) > abs(addLaneId))
+        {
+            l.preId -= sgn(addLaneId);
+        }
+    }
+
 
     // --- adjust the section after the laneWidening ---------------------------
     l.w.d = 0;
     l.w.c = 0;
     l.w.a = w;
+    l.preId = l.id;
+
     adLaneSec.lanes.back() = l;
 
     adLaneSec.id++;
@@ -129,26 +136,16 @@ int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bo
     it++;
     i++;
 
+
     // --- shift all lanes in following lane sections --------------------------
     for (; it != secs.end(); ++it)
     {
         secs[i].id += 2;
 
-        if (addOuterLane)
-        {
-            shiftLanes(secs[i], laneId + sgn(laneId), 1);
-
-            if (abs(l.id) <= abs(laneId + sgn(laneId)))
-                l.rm.type = "broken";
-            it->lanes.push_back(l);
-        }
-        else
-        {
-            shiftLanes(secs[i], laneId, 1);
+            shiftLanes(secs[i], laneId, 1, false, false);
             if (abs(l.id) <= abs(laneId))
                 l.rm.type = "broken";
             it->lanes.push_back(l);
-        }
         i++;
     }
 
@@ -158,13 +155,13 @@ int addLaneWidening(vector<laneSection> &secs, int side, double s, double ds, bo
 /**
  * @brief function adds a laneSection with laneDrop to a given lanesection set
  * 
- * @param secs      vector of all lanesections of a road
- * @param side      determines the road's side of the drop
- * @param s         position of laneDrop
- * @param ds        length of laneDrop
- * @return int      error code
+ * @param secs          vector of all lanesections of a road
+ * @param dropLaneID    determines the lane id of the drop
+ * @param s             position of laneDrop
+ * @param ds            length of laneDrop
+ * @return int          error code
  */
-int addLaneDrop(vector<laneSection> &secs, int side, double s, double ds)
+int addLaneDrop(vector<laneSection> &secs, int dropLaneID, double s, double ds)
 {
     std::vector<laneSection>::iterator it;
     std::vector<lane>::iterator itt;
@@ -190,13 +187,10 @@ int addLaneDrop(vector<laneSection> &secs, int side, double s, double ds)
 
     laneSection adLaneSec = *it;
 
-    int laneId = 0;
-    if (side > 0)
-        laneId = findMaxLaneId(adLaneSec);
-    if (side < 0)
-        laneId = findMinLaneId(adLaneSec);
+    int laneId = dropLaneID;
+    
 
-    if (laneId == 0 || abs(laneId) >= 100)
+    if (dropLaneID == 0 || abs(laneId) >= 100)
     {
         cerr << "ERR: lane drop can not be performed" << endl;
     }
@@ -216,15 +210,34 @@ int addLaneDrop(vector<laneSection> &secs, int side, double s, double ds)
     l.w.c = -3 * w / pow(ds, 2);
     l.w.b = 0;
     l.w.a = w;
-
+    l.sucId = 0; //Changed
     adLaneSec.lanes[id] = l;
 
     // center line solid in laneDropping part
     id = findLane(adLaneSec, l, 0);
     adLaneSec.lanes[id].rm.type = "solid";
 
+
     it++;
     it = secs.insert(it, adLaneSec);
+
+    //adjust the successor links
+    for(lane &l: it->lanes)
+    {
+        if(sgn(l.id) == sgn(dropLaneID))
+            if(abs(l.id) > abs(dropLaneID))
+            {
+                l.sucId = l.id - sgn(dropLaneID);
+            }
+            else if(abs(l.id) == abs(dropLaneID))
+            {
+                l.sucId = 0;
+            }
+            else{
+                 l.sucId = l.id;
+            }
+        l.preId = l.id;
+    }
 
     // --- adjust the section after the laneDropping
     adLaneSec.id++;
@@ -235,8 +248,9 @@ int addLaneDrop(vector<laneSection> &secs, int side, double s, double ds)
     id = findLane(adLaneSec, l, laneId);
     int idTmp = findLane(adLaneSec, l, laneId - sgn(laneId));
 
-    shiftLanes(adLaneSec, laneId, -1);
+    shiftLanes(adLaneSec, laneId, -1, false, false);
 
+   
     // adjust the correct lane type
     adLaneSec.lanes[idTmp].rm.type = adLaneSec.lanes[id].rm.type;
 
@@ -245,15 +259,31 @@ int addLaneDrop(vector<laneSection> &secs, int side, double s, double ds)
 
     it++;
     it = secs.insert(it, adLaneSec);
+     //adjust the pred links
+    for(lane &l: it->lanes)
+    {
+        if(sgn(l.id) == sgn(dropLaneID))
+        {
+            if(abs(l.id) >= abs(dropLaneID))
+            {
+                l.preId = l.id + sgn(dropLaneID);
+            }
+            else
+            {
+                l.preId = l.id;
+            }
+        }
+    }
 
     it++;
 
     // --- shift all lanes in following lane sections --------------------------
+    //This routine might never get called
     for (; it != secs.end(); ++it)
     {
         int id = findLane(*it, l, laneId);
 
-        shiftLanes(*it, laneId, -1);
+        shiftLanes(*it, laneId, -1, false);
 
         itt = it->lanes.begin() + id;
         it->lanes.erase(itt);

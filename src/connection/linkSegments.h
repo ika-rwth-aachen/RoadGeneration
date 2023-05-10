@@ -20,7 +20,137 @@
 
 
 /**
- * @brief Transforms one toSegments position according to the from segment and the semgment link data to the coordinate system of the reference segment
+ * @brief Resolves conflicts that occur when segments are linked end to end or start to start
+ * 
+ * @param data road network data
+ * @return int error code
+ */
+int resolveAlignmentConflicts(roadNetwork &data)
+{
+	//assumption that all user provided segments are linked by now.
+	for(road &r: data.roads)
+	{
+
+		if(r.successor.id != -1)
+		{
+			road *suc;
+			for(road &rr: data.roads)
+			{
+				if(rr.id == r.successor.id)
+				{
+					suc = &rr;
+				}
+			}
+
+			if(isJunction(data, r.id) || isJunction(data, suc->id))
+			{
+				continue;
+			}
+
+			if(r.successor.contactPoint == suc->predecessor.contactPoint)
+			{
+				int borderingLaneSection = 0; 
+				if(r.successor.contactPoint == endType)
+					borderingLaneSection = r.laneSections.size() - 1;
+				vector<int> laneIds;
+				for(lane &l: r.laneSections.at(borderingLaneSection).lanes)
+				{
+					laneIds.insert(laneIds.begin(), l.id);
+				}
+
+				//switch all lane links
+				for(int i = 0; i < r.laneSections.at(borderingLaneSection).lanes.size(); i ++)
+				{
+					r.laneSections.at(borderingLaneSection).lanes[i].sucId = laneIds[i];
+				}
+		
+				// switch everything for the successor aswell
+				if(suc->predecessor.contactPoint == endType)
+					borderingLaneSection = suc->laneSections.size() - 1;
+
+				laneIds.clear();
+				for(lane &l: suc->laneSections.at(borderingLaneSection).lanes)
+				{
+					laneIds.insert(laneIds.begin(), l.id);
+				}
+
+				//switch all lane links
+				for(int i = 0; i < suc->laneSections.at(borderingLaneSection).lanes.size(); i ++)
+				{
+					suc->laneSections.at(borderingLaneSection).lanes[i].preId = laneIds[i];
+				}
+				cout << "switched road " << r.id << " and succ " <<suc->id << endl;
+
+			}
+		}
+	}
+	return 0;
+}
+
+/**
+ * @brief Removes lane links to junctions or empty roads
+ * 
+ * @param data 
+ * @return int error code
+ */
+int resolveIllegalLinkConflcits(roadNetwork &data)
+{
+	
+	for(road &r: data.roads)
+	{
+		if(isJunction(data, r.id))
+			continue;
+		
+		if(isJunction(data, r.successor.id) || r.successor.id == -1)
+		{
+			int lsId = 0;
+			if(r.successor.contactPoint == endType)
+				lsId = r.laneSections.size() -1;
+			for(lane & l: r.laneSections.at(lsId).lanes)
+			{
+				l.sucId = UNASSIGNED;
+			}
+		}
+
+		if(isJunction(data, r.predecessor.id) || r.predecessor.id == -1)
+		{
+			int lsId = 0;
+			if(r.predecessor.contactPoint == endType)
+				lsId = r.laneSections.size() -1;
+			for(lane & l: r.laneSections.at(lsId).lanes)
+			{
+				l.preId = UNASSIGNED;
+			}
+		}
+
+		
+
+	}
+	return 0;
+}
+/**
+ * @brief Resolves lane linking conflicts that result from segments being linked start to start or end to end
+ * 
+ * @return int 
+ */
+int resolveLaneLinkConflicts(roadNetwork &data)
+{	
+	if(resolveAlignmentConflicts(data))
+	{
+		throwError("Could not resolve Alignment conflicts");
+		return 1;
+	}
+	if (resolveIllegalLinkConflcits(data))
+	{
+		throwError("Could not remove lane links to junctions");
+		return 1;
+	}
+	
+	return 0;
+}
+
+/**
+ * @brief Transforms toSegments position according to the from segment and the semgment link data to the coordinate system of the reference segment
  * 
  * @param segmentLink segment to link
  * @param data road network data
@@ -71,7 +201,6 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 		if (j.id == toSegment)
 			toIsJunction = true;
 
-	
 
 	/*check if either one of the segments is a roundabout*/
 
@@ -89,7 +218,6 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 			fromIsRoundabout= true;
 
 		}
-		
 	}
 	//-------------------END roundabout namespace fix---------------------------------
 
@@ -222,14 +350,29 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 
 	for (auto &&r : data.roads)
 	{
-		if (r.id == toRoadId){
-			r.predecessor.id = fromRoadId;
-			r.predecessor.contactPoint = (fromPos == "start") ? startType : endType;
+		if(!swap)
+		{
+			if (r.id == toRoadId){
+				r.predecessor.id = fromRoadId;
+				r.predecessor.contactPoint = (fromPos == "start") ? startType : endType;
+			}
+			
+			if (r.id == fromRoadId){
+				r.successor.id = toRoadId;
+				r.successor.contactPoint = (toPos == "start") ? startType : endType;
+			}
 		}
-		
-		if (r.id == fromRoadId){
-			r.successor.id = toRoadId;
-			r.successor.contactPoint = (toPos == "start") ? startType : endType;
+		else
+		{
+			if (r.id == toRoadId){
+				r.successor.id = fromRoadId;
+				r.successor.contactPoint = (fromPos == "start") ? startType : endType;
+			}
+			
+			if (r.id == fromRoadId){
+				r.predecessor.id = toRoadId;
+				r.predecessor.contactPoint = (toPos == "start") ? startType : endType;
+			}
 		}
 	}
 	//mark every road that belongs to the from- or toSegment as linked
@@ -268,6 +411,8 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 	if (links == NULL)
 	{
 		throwWarning("'links' are not specified in input file.\n\t -> skip segment linking", true);
+
+		resolveLaneLinkConflicts(data);
 		return 0;
 	}
 
@@ -296,7 +441,7 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 		}
 	}
 
-	//generate a map to store all the outgoing links of each segment
+	//generate a map to store all outgoing links of each segment
 	std::map<int, vector<int>> outgoing_connections;
 	std::map<int, vector<int>> incoming_connections;
 
@@ -313,7 +458,7 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 
 	}
 
-	queue<int> toDo = queue<int>();
+	queue<int> toDo = queue<int>(); //remaining segments
 	vector<int> transformedIds;
 	toDo.push(refId);
 
@@ -380,6 +525,9 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 
 
 	}
+
+	resolveLaneLinkConflicts(data);
+
 	return 0;
 }
 

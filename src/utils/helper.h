@@ -189,9 +189,10 @@ double findTOffset(laneSection sec, int id, double s)
  * @param sec   lanesection which should be shifted
  * @param id    lane which is the start of the shift; all outer lanes are shifted
  * @param dir   dir = 1 shift to outer side, die = -1 shift to inner side
+ * @param keepPre decides whether or not the pre links should be kept.
  * @return int  error code 
  */
-int shiftLanes(laneSection &sec, int id, int dir)
+int shiftLanes(laneSection &sec, int id, int dir, bool keepPre = false, bool keepSuc = false)
 {
     int side = sgn(id);
     int start, end;
@@ -229,8 +230,14 @@ int shiftLanes(laneSection &sec, int id, int dir)
                 /*
                     Below is a fix that adjusts the linkage of the shifted lanes according to their id.
                 */
-                sec.lanes[i].preId += dir * side; 
-                sec.lanes[i].sucId += dir * side;
+                if(!keepPre)
+                {
+                    sec.lanes[i].preId += dir * side; 
+                }
+                if(!keepSuc)
+                {
+                    sec.lanes[i].sucId += dir * side;
+                }
             }
         }
         start -= dir * side;
@@ -742,6 +749,28 @@ bool isIn(vector<int> &v, int &i)
     }
     return false;
 }
+
+/**
+ * @brief Return true if the specified road it (not input id) is a junction
+ * 
+ * @param data road network data
+ * @param roadID road id (in the road network)
+ * @return true 
+ * @return false 
+ */
+bool isJunction(roadNetwork data, int roadID)
+{
+    for (auto &&j : data.junctions)
+    {
+		if (j.id == roadID)
+        {
+        	return true;
+        }
+    }
+    return false;
+}
+
+
 
 void throwWarning(string msg, string origin, bool mute = false)
 {
