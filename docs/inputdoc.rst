@@ -621,7 +621,7 @@ If the user wants to expand or shrink the road's lane count during its course, t
     :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
-    side, int , '-1' '1' , side of the lane that will be added/dropped , yes
+    side, int , 'int' , position of the lane that will be added/dropped. Side of lane is implied by sign , yes
     s, double , positive , starting position of the lane widening/drop , yes
     length, double , positive , length of the laneDrop , no
 
