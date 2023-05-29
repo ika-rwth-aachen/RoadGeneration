@@ -141,6 +141,9 @@ EXPORTED int executePipeline(char* file)
 		cerr << "ERR: error in closeRoadNetwork" << endl;
 		return -1;
 	}
+
+	//resolveLaneLinkConflicts(data);
+
 	if (createXMLXercesC(data))
 	{
 		cerr << "ERR: error during createXML" << endl;

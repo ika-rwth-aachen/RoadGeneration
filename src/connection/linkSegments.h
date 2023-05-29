@@ -95,7 +95,6 @@ int resolveAlignmentConflicts(roadNetwork &data)
  */
 int resolveIllegalLinkConflcits(roadNetwork &data)
 {
-	
 	for(road &r: data.roads)
 	{
 		if(isJunction(data, r.id))
