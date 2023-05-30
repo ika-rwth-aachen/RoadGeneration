@@ -284,6 +284,19 @@ struct road
     vector<laneSection> laneSections;
     vector<object> objects;
     vector<sign> signs;
+
+    /**
+     * @brief Helper function to get the adjacent road with desired id
+     * 
+     * @param id 
+     * @return int -1 if predecessor has the id. 1 if successor has the id and 0 if none has the id
+     */
+    int getAdjacentRoadWithId(int id)
+    {
+        if(predecessor.id == id) return -1;
+        if(successor.id == id) return 1;
+        return 0;
+    }
 };
 
 
