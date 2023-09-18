@@ -144,9 +144,41 @@
         <xs:element name="referenceLine" type="referenceLineType"/>
         <xs:element name="lanes" type="lanesType" minOccurs="0"/>
         <xs:element name="objects" type="objectsType" minOccurs="0" />
+        <xs:element name="elevationProfile" type="elevationProfileType" minOccurs="0" />
     </xs:sequence>
     <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
     <xs:attribute name="classification" type="classificationType" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="elevationProfileType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: elevation profile
+
+                - elevationpoint: holds the elevation points
+
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="elevationPoint" type="elevationPointType" minOccurs="2" maxOccurs="unbounded" />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="elevationPointType">
+    <xs:annotation>
+        <xs:documentation>
+            Element: elevationpoint
+
+                - id: identifier of the road 
+                - s: position of the elevation point along the s axis
+                - height: height of the elevation point in meters
+                - r : radius of the elevation "mountain" or "valley" in meters
+        </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="s" type="positiveDouble" use="required"/>
+    <xs:attribute name="height" type="xs:double" use="required"/>
+    <xs:attribute name="r" type="xs:double" use="required"/>
 </xs:complexType>
 
 <xs:complexType name="roadTypeRoundAbout">

@@ -74,7 +74,7 @@ struct settings
 
     std::string xmlSchemaLocation; //this has to be set to the xml schema input path
 
-    bool silentMode = false; //silent mode disables console outputs
+    bool suppressOutput = false; //silent mode disables console outputs
     bool overwriteLog = true;
     int warnings = 0; // counts number of warnings
 

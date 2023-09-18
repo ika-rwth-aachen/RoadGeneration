@@ -771,30 +771,62 @@ bool isJunction(roadNetwork data, int roadID)
 }
 
 
-
+/**
+ * @brief Throws a warning that is printed to cout (if mute = false) and cerr.
+ * 
+ * @param msg 
+ * @param origin 
+ * @param mute 
+ */
 void throwWarning(string msg, string origin, bool mute = false)
 {
     setting.warnings ++;
-    if(!setting.silentMode && !mute)
+    if(!setting.suppressOutput && !mute)
         cout <<"WARNING: " << msg << "\n\tin " << origin << endl;
     cerr << "WARNING: " << msg << "\n\tin " << origin << endl;
 }
+
+
+/**
+ * @brief Throws a warning that is printed to cout (if mute = false) and cerr.
+ * 
+ * @param msg 
+ * @param origin 
+ * @param mute 
+ */
 void throwWarning(string msg, bool mute = false)
 {
     setting.warnings ++;
-    if(!setting.silentMode && !mute)
+    if(!setting.suppressOutput && !mute)
         cout << "WARNING: " <<msg << endl;
     cerr << "WARNING: "<< msg << endl;
 }
+
+
+/**
+ * @brief Throws an error that is printed to cout (if mute = false) and cerr.
+ * 
+ * @param msg 
+ * @param origin 
+ * @param mute 
+ */
 void throwError(string msg, string origin)
 {
-    if(!setting.silentMode)
+    if(!setting.suppressOutput)
         cout << "ERR: " << msg << "\n\tin " << origin << endl;
     cerr << "ERR: " << msg << "\n\tin " << origin << endl;
 }
+
+/**
+ * @brief Throws an error that is printed to cout (if mute = false) and cerr.
+ * 
+ * @param msg 
+ * @param origin 
+ * @param mute 
+ */
 void throwError(string msg)
 {
-    if(!setting.silentMode)
+    if(!setting.suppressOutput)
         cout << "ERR: "<< msg << endl;
     cerr << "ERR: "<< msg << endl;
 }

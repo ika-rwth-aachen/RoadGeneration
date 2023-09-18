@@ -28,7 +28,7 @@ extern settings setting;
  */
 int closeRoadNetwork(const DOMElement* rootNode, roadNetwork &data)
 {
-	if(!setting.silentMode)
+	if(!setting.suppressOutput)
 		cout << "Processing closeRoadNetwork" << endl;
 
 	DOMElement* closeRoad = getChildWithName(rootNode, "closeRoads"); 

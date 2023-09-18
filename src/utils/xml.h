@@ -53,7 +53,7 @@ int validateInput(char *file, xmlTree &xmlInput)
     xmlInput.parseDocument(xml_file);
 
     if (xmlInput.getErrorCount() == 0){
-        if(!setting.silentMode)
+        if(!setting.suppressOutput)
         cout << "XML input file validated against the schema successfully" << endl;
     }
     else
@@ -106,7 +106,7 @@ int validateOutput(roadNetwork &data)
 
     domParser.parse(xml_file);
     if (domParser.getErrorCount() == 0){
-        if(!setting.silentMode)
+        if(!setting.suppressOutput)
             cout << "XML output file validated against the schema successfully" << endl;
     }
     else
@@ -239,6 +239,30 @@ int createXMLXercesC(roadNetwork &data)
                 arc.appendToNode(geo);
 
             }
+        }
+
+        //--- write elevation --------------------------------------------------
+        //first write elevation profile
+        if(it->elevationProfiles.size() > 0)
+        {
+            nodeElement evProfile("elevationProfile");
+            evProfile.appendToNode(road);
+
+            for (elevationProfile &epr:  it->elevationProfiles)
+            {
+                for(elevationPolynom ep: epr.outputElevation)
+                {
+                    nodeElement elevation("elevation");
+                    elevation.appendToNode(evProfile);
+
+                    elevation.addAttribute("s", ep.s);
+                    elevation.addAttribute("a", ep.a);
+                    elevation.addAttribute("b", ep.b);
+                    elevation.addAttribute("c", ep.c);
+                    elevation.addAttribute("d", ep.d);
+                }
+            }
+
         }
 
         // --- write lanes -----------------------------------------------------

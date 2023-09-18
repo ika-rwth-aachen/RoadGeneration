@@ -54,7 +54,7 @@ int buildSegments(const DOMElement* rootNode, roadNetwork &data)
 	{
 		if (readNameFromNode(em) == "junction")
 		{
-			if(!setting.silentMode)
+			if(!setting.suppressOutput)
 				cout << "Processing junction" << endl;
 			if (junctionWrapper(em, data))
 			{
@@ -65,7 +65,7 @@ int buildSegments(const DOMElement* rootNode, roadNetwork &data)
 
 		if (readNameFromNode(em) == "roundabout")
 		{	
-			if(!setting.silentMode)
+			if(!setting.suppressOutput)
 				cout << "Processing roundabout" << endl;
 			if (roundAbout(em, data))
 			{
@@ -76,7 +76,7 @@ int buildSegments(const DOMElement* rootNode, roadNetwork &data)
 
 		if (readNameFromNode(em) == "connectingRoad" )
 		{
-			if(!setting.silentMode)
+			if(!setting.suppressOutput)
 				cout << "Processing connectingRoad" << endl;
 			if (connectingRoad(em, data))
 			{
