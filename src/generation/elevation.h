@@ -131,8 +131,20 @@ int generateElevationProfile(vector<elevationProfile> &eps)
     return 0;
 }
 
+
+
 int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
 {
+    //this helper struct stores information that about the parent object that is required to process the elevation of each road. 
+    //Since (for instance) the successor of the successor of a road can be the same road again, we need to keep book of what road we were coming from
+    struct elevationLinkInformation
+    {
+        road*   curRoad;                //road that needs processing
+        road*   parentRoad;             //road that put curRoad in the processing queue. This can be successor or predecessor
+        int     parentLinkingPoint = 0; //-1: curRoad was linked as predecessor. 1:road was linked as successor
+        double  offsetHeightAtLink = 0; //height at linking point
+
+    };
 
     //sanity checks
     for(road &r: data.roads)
@@ -157,7 +169,7 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
     //--------------
 
     queue<road*> remaining = queue<road*>();
-    queue<contactPointType> remainingDirections = queue<contactPointType>(); 
+    queue<int> remainingDirections = queue<int>(); 
     vector<int> completededIds = vector<int>();
 
     if(!setting.suppressOutput)
@@ -190,6 +202,8 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
     {
         road suc;
         findRoad(data.roads, suc, ref->successor.id);
+        
+        //when processing an element, adjust the next roads elevation offset. This way we dont need to keep the current offset stored
         if(ref->elevationProfiles.size() > 0)
             suc.elevationOffset = ref->elevationProfiles.back().tOffset + data.refElev;
         else
@@ -198,7 +212,7 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
         if(suc.isLinkedToNetwork)
         {
             remaining.push(&suc);
-            remainingDirections.push(ref->successor.contactPoint);
+            remainingDirections.push(1); //1 means the element was linked as the successor
         }
         completededIds.push_back(ref->id);
 
@@ -206,6 +220,20 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
 
     while(remaining.size() > 0)
     {
+        int currContact = remainingDirections.front();
+        remainingDirections.pop();
+        road* cur = remaining.front();
+        remaining.pop();
+        
+        if(currContact == 1)//the current element was linked as a successor.
+        {
+            
+        }
+
+        else if(currContact == -1)
+        {
+
+        }
 
     }
 
