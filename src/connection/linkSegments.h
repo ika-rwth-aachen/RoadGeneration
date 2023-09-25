@@ -47,7 +47,9 @@ int resolveAlignmentConflicts(roadNetwork &data)
 				continue;
 			}
 
-			if(r.successor.contactPoint == suc->predecessor.contactPoint)
+			int sucOrPre = suc->getAdjacentRoadWithId(r.id);
+			if( (sucOrPre == -1 && r.successor.contactPoint == suc->predecessor.contactPoint) 
+			|| 	 sucOrPre == 1  && r.successor.contactPoint == suc->successor.contactPoint)
 			{
 				int borderingLaneSection = 0; 
 				if(r.successor.contactPoint == endType)
@@ -64,22 +66,47 @@ int resolveAlignmentConflicts(roadNetwork &data)
 					r.laneSections.at(borderingLaneSection).lanes[i].sucId = laneIds[i];
 				}
 		
-				// switch everything for the successor aswell
-				if(suc->predecessor.contactPoint == endType)
-					borderingLaneSection = suc->laneSections.size() - 1;
+				cout << "switched road " << r.id << " and succ " <<suc->id << endl;
 
-				laneIds.clear();
-				for(lane &l: suc->laneSections.at(borderingLaneSection).lanes)
+			}
+		}
+		//repeat for predecessors
+		if(r.predecessor.id != -1)
+		{
+			road *pre;
+			for(road &rr: data.roads)
+			{
+				if(rr.id == r.predecessor.id)
+				{
+					pre = &rr;
+				}
+			}
+
+			if(isJunction(data, r.id) || r.predecessor.elementType == junctionType || isJunction(data, pre->id))
+			{
+				continue;
+			}
+			int sucOrPre = pre->getAdjacentRoadWithId(r.id);
+			if( (sucOrPre == -1  && r.predecessor.contactPoint == pre->predecessor.contactPoint) 
+			|| 	 sucOrPre ==  1  && r.predecessor.contactPoint == pre->successor.contactPoint)
+			{
+
+				int borderingLaneSection = 0; 
+				if(r.predecessor.contactPoint == endType)
+					borderingLaneSection = r.laneSections.size() - 1;
+				vector<int> laneIds;
+				for(lane &l: r.laneSections.at(borderingLaneSection).lanes)
 				{
 					laneIds.insert(laneIds.begin(), l.id);
 				}
 
 				//switch all lane links
-				for(int i = 0; i < suc->laneSections.at(borderingLaneSection).lanes.size(); i ++)
+				for(int i = 0; i < r.laneSections.at(borderingLaneSection).lanes.size(); i ++)
 				{
-					suc->laneSections.at(borderingLaneSection).lanes[i].preId = laneIds[i];
+					r.laneSections.at(borderingLaneSection).lanes[i].preId = laneIds[i];
 				}
-				cout << "switched road " << r.id << " and succ " <<suc->id << endl;
+		
+				cout << "switched road " << r.id << " and pre " <<pre->id << endl;
 
 			}
 		}
@@ -95,7 +122,6 @@ int resolveAlignmentConflicts(roadNetwork &data)
  */
 int resolveIllegalLinkConflcits(roadNetwork &data)
 {
-	
 	for(road &r: data.roads)
 	{
 		if(isJunction(data, r.id))
@@ -177,8 +203,8 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 		fromPos = readStrAttrFromNode(segmentLink, "toPos");
 		toPos = readStrAttrFromNode(segmentLink, "fromPos");
 	}
-	road fromRoad;
-	road toRoad;
+	road *fromRoad;
+	road *toRoad;
 
 
 
@@ -231,7 +257,7 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 			continue;
 
 
-		fromRoad = r;
+		fromRoad = &r;
 		fromRoadId = r.id;
 		// if junction, the contact point is always at "end" of a road
 		if (fromIsJunction || fromIsRoundabout)
@@ -269,7 +295,7 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 		{
 			continue;
 		}
-		toRoad = r;
+		toRoad = &r;
 		toRoadId = r.id;
 
 
@@ -313,12 +339,12 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 	// if toPos is end, the actual toPos has to be computed
 	if (toPos == "end")
 	{
-		if(toRoad.id == -1){
+		if(toRoad->id == -1){
 			std::cerr << "ERR: 'Road linking is wrong!'" << std::endl;
 			std::cerr << "    couldn't find toSegment " << toSegment << " or toRoadID " << toRoadId << std::endl;
 			return -1;
 		}
-		geometry g = toRoad.geometries.back();
+		geometry g = toRoad->geometries.back();
 		toX = g.x * cos(dPhi) - g.y * sin(dPhi);
 		toY = g.x * sin(dPhi) + g.y * cos(dPhi);
 		toHdg = g.hdg + dPhi;
@@ -348,36 +374,57 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 		}
 	}
 
-	for (auto &&r : data.roads)
+	cout << "here" << endl;
+	if(!swap)
 	{
-		if(!swap)
+		if(toPos == "start")
 		{
-			if (r.id == toRoadId){
-				r.predecessor.id = fromRoadId;
-				r.predecessor.contactPoint = (fromPos == "start") ? startType : endType;
-			}
-			
-			if (r.id == fromRoadId){
-				r.successor.id = toRoadId;
-				r.successor.contactPoint = (toPos == "start") ? startType : endType;
-			}
+			toRoad->predecessor.id = fromRoadId;
+			toRoad->predecessor.contactPoint = startType ;
+		} else
+		{
+			toRoad->successor.id = fromRoadId;
+			toRoad->successor.contactPoint = endType ;
 		}
-		else
+
+		if(fromPos == "start")
 		{
-			if (r.id == toRoadId){
-				r.successor.id = fromRoadId;
-				r.successor.contactPoint = (fromPos == "start") ? startType : endType;
-			}
-			
-			if (r.id == fromRoadId){
-				r.predecessor.id = toRoadId;
-				r.predecessor.contactPoint = (toPos == "start") ? startType : endType;
-			}
+			fromRoad->predecessor.id = toRoadId;
+			fromRoad->predecessor.contactPoint = startType ;
+		} else
+		{
+			fromRoad->successor.id = toRoadId;
+			fromRoad->successor.contactPoint = endType ;
+		}
+
+
+	}else
+	{
+		if(toPos == "start")
+		{
+			toRoad->successor.id = fromRoadId;
+			toRoad->successor.contactPoint = startType ;
+		} else
+		{
+			toRoad->predecessor.id = fromRoadId;
+			toRoad->predecessor.contactPoint = endType ;
+		}
+
+		if(fromPos == "start")
+		{
+			fromRoad->successor.id = toRoadId;
+			fromRoad->successor.contactPoint = startType ;
+		} else
+		{
+			fromRoad->predecessor.id = toRoadId;
+			fromRoad->predecessor.contactPoint = endType ;
 		}
 	}
+	
 	//mark every road that belongs to the from- or toSegment as linked
 	for(auto &r: data.roads)
 	{
+
 		if(r.junction == toSegment || r.roundAboutInputSegment == toSegment || r.junction == fromSegment || r.roundAboutInputSegment == fromSegment)
 		{
 			r.isLinkedToNetwork = true;
@@ -466,7 +513,6 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 	{
 		int fromSegment = readIntAttrFromNode(segmentLink, "fromSegment");
 		int toSegment = readIntAttrFromNode(segmentLink, "toSegment");
-
 		if(!isIn(outgoing_connections[fromSegment], toSegment))
 			outgoing_connections[fromSegment].push_back(toSegment);
 
@@ -495,7 +541,10 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 			{
 				if(curId != readIntAttrFromNode(segmentLink, "fromSegment") || e != readIntAttrFromNode(segmentLink, "toSegment")) continue;
 				//process the element------------------
+				cout << "Transforming roads" << endl;
+
 				transformRoad(segmentLink, data);
+				
 				//end processessing the element--------
 				break; //prevents multiple processing steps if they are defined in the xml (they shouldn't be)
 
