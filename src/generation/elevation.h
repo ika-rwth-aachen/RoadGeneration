@@ -139,10 +139,10 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
     //Since (for instance) the successor of the successor of a road can be the same road again, we need to keep book of what road we were coming from
     struct elevationLinkInformation
     {
-        road*   curRoad;                //road that needs processing
-        road*   parentRoad;             //road that put curRoad in the processing queue. This can be successor or predecessor
-        int     parentLinkingPoint = 0; //-1: curRoad was linked as predecessor. 1:road was linked as successor
-        double  offsetHeightAtLink = 0; //height at linking point
+        road*               curRoad;                //road that needs processing
+        road*               parentRoad;             //road that put curRoad in the processing queue. This can be successor or predecessor
+        int                 parentLinkingPoint = 0; //-1: curRoad was linked as predecessor. 1:road was linked as successor
+        double              offsetHeightAtLink = 0; //height at linking point
 
     };
 
@@ -164,12 +164,9 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
         }
     }
 
-    
-
     //--------------
 
-    queue<road*> remaining = queue<road*>();
-    queue<int> remainingDirections = queue<int>(); 
+    queue<elevationLinkInformation> remaining = queue<elevationLinkInformation>();
     vector<int> completededIds = vector<int>();
 
     if(!setting.suppressOutput)
@@ -204,33 +201,46 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
         findRoad(data.roads, suc, ref->successor.id);
         
         //when processing an element, adjust the next roads elevation offset. This way we dont need to keep the current offset stored
-        if(ref->elevationProfiles.size() > 0)
-            suc.elevationOffset = ref->elevationProfiles.back().tOffset + data.refElev;
-        else
-            suc.elevationOffset = data.refElev;
+       
         
         if(suc.isLinkedToNetwork)
         {
-            remaining.push(&suc);
-            remainingDirections.push(1); //1 means the element was linked as the successor
+            elevationLinkInformation eli;
+            eli.curRoad = &suc;
+            eli.parentRoad = ref;
+            eli.parentLinkingPoint = ref->successor.contactPoint;
+            eli.offsetHeightAtLink = ref->getRelativeElevationAt(1);
+
+            remaining.push(eli);
         }
         completededIds.push_back(ref->id);
 
     }
+    else
+    {
+        throwError("Could not find reference road in elevation generation");
+        return -1;
+    }
 
     while(remaining.size() > 0)
     {
-        int currContact = remainingDirections.front();
-        remainingDirections.pop();
-        road* cur = remaining.front();
+        elevationLinkInformation curEli = remaining.front();
         remaining.pop();
         
-        if(currContact == 1)//the current element was linked as a successor.
+        if(curEli.parentLinkingPoint == 1) //element is successor
         {
-            
+            if(curEli.parentRoad->successor.contactPoint == startType)
+            {
+                curEli.curRoad->elevationOffset = curEli.parentRoad->elevationOffset + curEli.parentRoad->getRelativeElevationAt(1);
+            }
+
+            if(curEli.parentRoad->successor.contactPoint == endType)
+            {
+                
+            }
         }
 
-        else if(currContact == -1)
+        else if(curEli.parentLinkingPoint == -1)
         {
 
         }

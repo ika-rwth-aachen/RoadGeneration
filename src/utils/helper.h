@@ -770,6 +770,27 @@ bool isJunction(roadNetwork data, int roadID)
     return false;
 }
 
+/**
+ * @brief Get the Relative Elevation From Predecessor at the contact point to given road
+ * 
+ * @param r 
+ * @return double 
+ */
+double getRelativeElevationFromPredecessor(road &r)
+{
+    if(r.predecessor.contactPoint == startType)
+    {
+        return 0;
+    }
+
+    if(r.predecessor.contactPoint == endType)
+    {
+        return r.getRelativeElevationAt(1);
+    }
+
+    return 0;
+}
+
 
 /**
  * @brief Throws a warning that is printed to cout (if mute = false) and cerr.

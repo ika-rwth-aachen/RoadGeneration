@@ -306,7 +306,7 @@ struct road
     bool elevationIntegrated = false; //flag to check if the elevation is calculated properly in the elevation profile calculation
 
     double length = 0;
-    double elevationOffset = 0;
+    double elevationOffset = 0;//absolute elevation offset
 
     int id = -1;
     int inputSegmentId = -1;
@@ -327,6 +327,27 @@ struct road
     vector<object> objects;
     vector<sign> signs;
     vector<elevationProfile> elevationProfiles;
+
+    /**
+     * @brief Get the Relative Elevation At road at start or end position TODO: replace this method with getRelativeElevationAtEnd()
+     * 
+     * @param pos -1: elevation at s = 0. 1: elevation at s = max
+     * @return double relative elevation
+     */
+    double getRelativeElevationAt(int pos)
+    {
+        if(pos == -1)
+        {
+            return 0; //this should always be 0
+        }
+        else if(pos == 1)
+        {
+            if(elevationProfiles.size() > 0)
+                return elevationProfiles.back().tOffset;
+            return 0;
+        }
+        return 0;
+    }
 };
 
 

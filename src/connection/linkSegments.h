@@ -527,7 +527,6 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 	}
 
 	resolveLaneLinkConflicts(data);
-
 	return 0;
 }
 
