@@ -135,6 +135,8 @@ int generateElevationProfile(vector<elevationProfile> &eps)
 
 int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
 {
+    cout << "Generating Elevation Profiles TODO: DELETE THIS" << endl;
+
     //this helper struct stores information that about the parent object that is required to process the elevation of each road. 
     //Since (for instance) the successor of the successor of a road can be the same road again, we need to keep book of what road we were coming from
     struct elevationLinkInformation
@@ -194,7 +196,8 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
     }
 
     data.refElev = readIntAttrFromNode(links, "reElev"); // This tag is not yet defined. TODO: add this tag to xml scheme
-    
+    completededIds.push_back(ref->id);
+
     if(ref->successor.id > -1)
     {
         road suc;
@@ -209,7 +212,6 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
             eli.curRoad = &suc;
             eli.parentRoad = ref;
             eli.parentLinkingPoint = ref->successor.contactPoint;
-            eli.offsetHeightAtLink = ref->getRelativeElevationAt(1);
 
             remaining.push(eli);
         }
@@ -229,14 +231,40 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
         
         if(curEli.parentLinkingPoint == 1) //element is successor
         {
-            if(curEli.parentRoad->successor.contactPoint == startType)
+            if(curEli.curRoad->predecessor.contactPoint == endType)
             {
+                double elevationOffsetAtLink = curEli.parentRoad->getRelativeElevationAt(1) + curEli.parentRoad->elevationOffset;
+                if(curEli.parentRoad->successor.contactPoint == startType)
+                {
+                    // |pre>  |suc>
+                    curEli.curRoad->elevationOffset = elevationOffsetAtLink;
+                }
+
+                else if(curEli.parentRoad->successor.contactPoint == endType)
+                {
+                     // |pre>  |suc>
+                    curEli.curRoad->elevationOffset = elevationOffsetAtLink - curEli.curRoad->getRelativeElevationAt(1);
+                }
+
                 curEli.curRoad->elevationOffset = curEli.parentRoad->elevationOffset + curEli.parentRoad->getRelativeElevationAt(1);
             }
 
-            if(curEli.parentRoad->successor.contactPoint == endType)
+            if(curEli.parentRoad->successor.contactPoint == startType)
             {
                 
+            }
+
+            completededIds.push_back(curEli.curRoad->id);
+            if(curEli.curRoad->successor.id > -1 && isIn(completededIds, curEli.curRoad->successor.id))
+            {
+                elevationLinkInformation newEli;
+                road ssuc;
+                findRoad(data.roads, ssuc, curEli.curRoad->successor.id);
+                newEli.curRoad = &ssuc;
+                newEli.parentRoad = curEli.curRoad;
+                newEli.parentLinkingPoint = 1;
+                
+                remaining.push(newEli);
             }
         }
 

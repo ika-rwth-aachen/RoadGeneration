@@ -137,11 +137,11 @@ EXPORTED int executePipeline(char* file)
 		return -1;
 	}
 
-	//if (generateElevationProfiles(inputxml.getRootElement(), data))
-	//{
-	//	cerr << "ERR: error in generateElevationPforiles" << endl;
-	//	return -1;
-	//}
+	if (generateElevationProfiles(inputxml.getRootElement(), data))
+	{
+		cerr << "ERR: error in generateElevationPforiles" << endl;
+		return -1;
+	}
 	
 	if (closeRoadNetwork(inputxml.getRootElement(), data))
 	{
