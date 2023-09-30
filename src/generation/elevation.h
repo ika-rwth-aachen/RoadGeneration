@@ -151,17 +151,22 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
     //sanity checks
     for(road &r: data.roads)
     {
+        //check if s bounds are violated
         if(r.elevationProfiles[0].sOffset < 0 || r.elevationProfiles[r.elevationProfiles.size() -1].sOffset > r.length)
         {
             throwError("invalid elevation profile in segment " + to_string(r.inputSegmentId) + " road " + to_string(r.inputId));
             return 1;
         }
 
-        for(int i = 0; i < r.elevationProfiles.size() -2; i++)
+        //check if multiple elevation poitns occur at the same s
+        if(r.elevationProfiles.size() > 1)
         {
-            if(r.elevationProfiles[i].sOffset == r.elevationProfiles[i+1].sOffset)
+            for(int i = 0; i < r.elevationProfiles.size() -2; i++)
             {
-                throwWarning("multiple elevation points are defined for one s offset in segment " + to_string(r.inputSegmentId) + " road " + to_string(r.inputId));
+                if(r.elevationProfiles[i].sOffset == r.elevationProfiles[i+1].sOffset)
+                {
+                    throwWarning("multiple elevation points are defined for one s offset in segment " + to_string(r.inputSegmentId) + " road " + to_string(r.inputId));
+                }
             }
         }
     }

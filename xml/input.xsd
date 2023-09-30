@@ -160,8 +160,11 @@
         </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-        <xs:element name="elevationPoint" type="elevationPointType" minOccurs="2" maxOccurs="unbounded" />
+        <xs:element name="elevationPoint" type="elevationPointType" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+    <xs:attribute name="startR" type="positiveDouble" use="required"/>
+    <xs:attribute name="endElevation" type="xs:double" use="required"/>
+    <xs:attribute name="endR" type="positiveDouble" use="required"/>
 </xs:complexType>
 
 <xs:complexType name="elevationPointType">
