@@ -132,13 +132,13 @@ int findLane(laneSection sec, lane &l, int id)
  * @param id    roadId of the lane to find
  * @return int  position in road vector
  */
-int findRoad(vector<road> roads, road &r, int id)
+int findRoad(vector<road> &roads, road *&r, int id)
 {
     for (int i = 0; i < roads.size(); i++)
     {
         if (roads[i].id == id)
         {
-            r = roads[i];
+            r = &roads[i];
             return i;
         }
     }

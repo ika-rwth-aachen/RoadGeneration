@@ -281,7 +281,7 @@ int closeRoadNetwork(const DOMElement* rootNode, roadNetwork &data)
 			secs.back().lanes[j] = curLane;
 		}
 
-		road tmpRoad;
+		road *tmpRoad;
 		int fr = findRoad(data.roads, tmpRoad, fromRoadId);
 		int tr = findRoad(data.roads, tmpRoad, toRoadId);
 

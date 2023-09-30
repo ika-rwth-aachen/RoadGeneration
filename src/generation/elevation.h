@@ -197,16 +197,17 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
 
     if(ref->successor.id > -1)
     {
-        road suc;
+        road *suc;
         findRoad(data.roads, suc, ref->successor.id);
-        
+        cout << " ROAD ADDR " << suc << endl; 
+
         //when processing an element, adjust the next roads elevation offset. This way we dont need to keep the current offset stored
        
         
-        if(suc.isLinkedToNetwork)
+        if(suc->isLinkedToNetwork)
         {
             elevationLinkInformation eli;
-            eli.curRoad = &suc;
+            eli.curRoad = suc;
             eli.parentRoad = ref;
             eli.parentLinkingPoint = endType;
 
@@ -234,7 +235,8 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
                 if(curEli.parentRoad->successor.contactPoint == startType)
                 {
                     // |pre>  |suc>
-                    curEli.curRoad->elevationOffset = elevationOffsetAtLink; //this writes to the wrong adress for some reason..
+                    curEli.curRoad->elevationOffset = curEli.parentRoad->elevationOffset + curEli.parentRoad->getRelativeElevationAt(1);
+
                 }
 
                 else if(curEli.parentRoad->successor.contactPoint == endType)
@@ -243,7 +245,6 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
                     curEli.curRoad->elevationOffset = elevationOffsetAtLink - curEli.curRoad->getRelativeElevationAt(1);
                 }
 
-                curEli.curRoad->elevationOffset = curEli.parentRoad->elevationOffset + curEli.parentRoad->getRelativeElevationAt(1);
             }
 
             if(curEli.parentRoad->successor.contactPoint == startType)
@@ -255,9 +256,9 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
             if(curEli.curRoad->successor.id > -1 && isIn(completededIds, curEli.curRoad->successor.id))
             {
                 elevationLinkInformation newEli;
-                road ssuc;
+                road *ssuc;
                 findRoad(data.roads, ssuc, curEli.curRoad->successor.id);
-                newEli.curRoad = &ssuc;
+                newEli.curRoad = ssuc;
                 newEli.parentRoad = curEli.curRoad;
                 newEli.parentLinkingPoint = endType;
                 
@@ -275,6 +276,7 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
 
     for(road &r:data.roads)
     {
+        cout <<"Road " <<r.id << " has elevation offset " << r.elevationOffset << " at ADDR: " << &r <<endl;
         for(elevationProfile &p: r.elevationProfiles)
         {
             p.tOffset += r.elevationOffset; //converts relative offset to absolute offset
