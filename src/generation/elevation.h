@@ -151,6 +151,21 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
     //sanity checks
     for(road &r: data.roads)
     {
+        //fill in missing elevation data
+        if(r.elevationProfiles.size() == 0)
+        {
+            elevationProfile ep1, ep2;
+            ep1.radius = 10;
+            ep1.sOffset = 0;
+            ep1.tOffset = 0;
+            ep2.radius = 10;
+            ep2.sOffset = r.length;
+            ep2.tOffset = 0;
+
+            r.elevationProfiles.push_back(ep1);
+            r.elevationProfiles.push_back(ep2);
+        }
+
         //check if s bounds are violated
         if(r.elevationProfiles[0].sOffset < 0 || r.elevationProfiles[r.elevationProfiles.size() -1].sOffset > r.length)
         {
