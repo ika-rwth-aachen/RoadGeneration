@@ -203,7 +203,7 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
 	// define reference system
     
     //find ref road
-    road* ref;
+    road* ref = NULL;
     for(road &r: data.roads)
     {
         if(r.inputSegmentId == data.refRoad)
@@ -211,15 +211,19 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
             ref = &r;
         }
     }
+    if(NULL == ref)
+    {
+        throwError("Could not find reference road in elevation generation");
+        return -1;
+    }
 
     data.refElev = readIntAttrFromNode(links, "reElev"); // This tag is not yet defined. TODO: add this tag to xml scheme
     completededIds.push_back(ref->id);
-
+    //handle successors of root
     if(ref->successor.id > -1)
     {
         road *suc;
         findRoad(data.roads, suc, ref->successor.id);
-        cout << " ROAD ADDR " << suc << endl; 
 
         //when processing an element, adjust the next roads elevation offset. This way we dont need to keep the current offset stored
        
@@ -236,17 +240,13 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
         completededIds.push_back(ref->id);
 
     }
-    else
-    {
-        throwError("Could not find reference road in elevation generation");
-        return -1;
-    }
+   
 
+  
     while(remaining.size() > 0)
     {
         elevationLinkInformation curEli = remaining.front();
         remaining.pop();
-        cout << "DEBUG: processing " << curEli.curRoad->id << " in elevation while loop" << endl;
 
         if(curEli.curRoad->predecessor.contactPoint == endType)
         {
@@ -297,7 +297,79 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
         }
 
     }
-    //----------------------------------------
+    //----handle predecessors of root-----------------------------------
+
+    if(ref->predecessor.id > -1)
+    {
+        road *pre;
+        findRoad(data.roads, pre, ref->predecessor.id);
+
+        //when processing an element, adjust the next roads elevation offset. This way we dont need to keep the current offset stored
+        
+        if(pre->isLinkedToNetwork)
+        {
+            elevationLinkInformation eli;
+            eli.curRoad = pre;
+            eli.parentRoad = ref;
+            eli.parentLinkingPoint = endType;
+
+            remaining.push(eli);
+        }
+        completededIds.push_back(ref->id);
+
+    }
+  
+    while(remaining.size() > 0)
+    {
+        elevationLinkInformation curEli = remaining.front();
+        remaining.pop();
+
+        if(curEli.curRoad->successor.contactPoint == startType)
+        {
+            double elevationOffsetAtLink = curEli.parentRoad->getRelativeElevationAt(0) + curEli.parentRoad->elevationOffset;
+            if(curEli.parentRoad->predecessor.contactPoint == endType)
+            {
+                curEli.curRoad->elevationOffset = elevationOffsetAtLink - curEli.curRoad->getRelativeElevationAt(1);
+
+            }
+
+            else if(curEli.parentRoad->predecessor.contactPoint == startType)
+            {
+                curEli.curRoad->elevationOffset = elevationOffsetAtLink;
+            }
+
+        }
+
+        else if(curEli.curRoad->successor.contactPoint == endType)
+        {
+            double elevationOffsetAtLink = curEli.parentRoad->getRelativeElevationAt(1) + curEli.parentRoad->elevationOffset;
+            if(curEli.parentRoad->predecessor.contactPoint == startType)
+            {
+                curEli.curRoad->elevationOffset = elevationOffsetAtLink;
+            }
+
+            else if(curEli.parentRoad->predecessor.contactPoint == endType)
+            {
+                curEli.curRoad->elevationOffset = elevationOffsetAtLink - curEli.curRoad->getRelativeElevationAt(1);
+
+            }
+
+        }
+
+        completededIds.push_back(curEli.curRoad->id);
+        if(curEli.curRoad->predecessor.id > -1 && !isIn(completededIds, curEli.curRoad->predecessor.id))
+        {
+            elevationLinkInformation newEli;
+            road *ppre;
+            findRoad(data.roads, ppre, curEli.curRoad->predecessor.id);
+            newEli.curRoad = ppre;
+            newEli.parentRoad = curEli.curRoad;
+            newEli.parentLinkingPoint = startType;
+            
+            remaining.push(newEli);
+        }
+
+    }
 
     for(road &r:data.roads)
     {
