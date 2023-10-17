@@ -245,6 +245,7 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
   
     while(remaining.size() > 0)
     {
+        cout << "iterating loop\n";
         elevationLinkInformation curEli = remaining.front();
         remaining.pop();
 
@@ -321,8 +322,11 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
   
     while(remaining.size() > 0)
     {
+        cout << "iterating second loop\n";
         elevationLinkInformation curEli = remaining.front();
         remaining.pop();
+
+        cout << "Junction" << findJunction(data, *curEli.curRoad) << endl;
 
         if(curEli.curRoad->successor.contactPoint == startType)
         {
@@ -361,12 +365,20 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
         {
             elevationLinkInformation newEli;
             road *ppre;
-            findRoad(data.roads, ppre, curEli.curRoad->predecessor.id);
-            newEli.curRoad = ppre;
-            newEli.parentRoad = curEli.curRoad;
-            newEli.parentLinkingPoint = startType;
-            
-            remaining.push(newEli);
+            if(curEli.curRoad->predecessor.elementType == roadType)
+            {
+                findRoad(data.roads, ppre, curEli.curRoad->predecessor.id);
+                newEli.curRoad = ppre;
+                newEli.parentRoad = curEli.curRoad;
+                newEli.parentLinkingPoint = startType;
+
+                remaining.push(newEli);
+            }
+            else //TODO:linking to junction
+            {
+                
+            }
+         
         }
 
     }
