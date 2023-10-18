@@ -14,7 +14,7 @@
  * Contact: jannik.busse@rwth-aachen.de, christian.geller@rwth-aachen.de
  *
  */
-
+#pragma once
 #include <stdio.h>
 #include <string.h>
 
