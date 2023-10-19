@@ -80,6 +80,7 @@ struct junction
     int id = -1;
     vector<connection> connections;
 
+
     string to_string()
     {
         string res = 
