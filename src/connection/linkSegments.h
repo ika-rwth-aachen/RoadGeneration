@@ -372,51 +372,51 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 		}
 	}
 
-	if(!swap)
+	// if(!swap) //this case distinction led to wrong linkings for all successors of ref segment
+	// {
+	if(toPos == "start")
 	{
-		if(toPos == "start")
-		{
-			toRoad->predecessor.id = fromRoadId;
-			toRoad->predecessor.contactPoint = startType ;
-		} else
-		{
-			toRoad->successor.id = fromRoadId;
-			toRoad->successor.contactPoint = endType ;
-		}
-
-		if(fromPos == "start")
-		{
-			fromRoad->predecessor.id = toRoadId;
-			fromRoad->predecessor.contactPoint = startType ;
-		} else
-		{
-			fromRoad->successor.id = toRoadId;
-			fromRoad->successor.contactPoint = endType ;
-		}
-
-
-	}else
+		toRoad->predecessor.id = fromRoadId;
+		toRoad->predecessor.contactPoint = startType ;
+	} else
 	{
-		if(toPos == "start")
-		{
-			toRoad->successor.id = fromRoadId;
-			toRoad->successor.contactPoint = startType ;
-		} else
-		{
-			toRoad->predecessor.id = fromRoadId;
-			toRoad->predecessor.contactPoint = endType ;
-		}
-
-		if(fromPos == "start")
-		{
-			fromRoad->successor.id = toRoadId;
-			fromRoad->successor.contactPoint = startType ;
-		} else
-		{
-			fromRoad->predecessor.id = toRoadId;
-			fromRoad->predecessor.contactPoint = endType ;
-		}
+		toRoad->successor.id = fromRoadId;
+		toRoad->successor.contactPoint = endType ;
 	}
+
+	if(fromPos == "start")
+	{
+		fromRoad->predecessor.id = toRoadId;
+		fromRoad->predecessor.contactPoint = startType ;
+	} else
+	{
+		fromRoad->successor.id = toRoadId;
+		fromRoad->successor.contactPoint = endType ;
+	}
+
+	//this case distinction led to wrong linkings for all successors of ref segment
+	// }else
+	// {
+	// 	if(toPos == "start")
+	// 	{
+	// 		toRoad->successor.id = fromRoadId;
+	// 		toRoad->successor.contactPoint = startType ;
+	// 	} else
+	// 	{
+	// 		toRoad->predecessor.id = fromRoadId;
+	// 		toRoad->predecessor.contactPoint = endType ;
+	// 	}
+
+	// 	if(fromPos == "start")
+	// 	{
+	// 		fromRoad->successor.id = toRoadId;
+	// 		fromRoad->successor.contactPoint = startType ;
+	// 	} else
+	// 	{
+	// 		fromRoad->predecessor.id = toRoadId;
+	// 		fromRoad->predecessor.contactPoint = endType ;
+	// 	}
+	// }
 	
 	//mark every road that belongs to the from- or toSegment as linked
 	for(auto &r: data.roads)
