@@ -500,12 +500,12 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 
 	if(linkcount <= 0 && !setting.silentMode)
 	{
-		cout << "\tNo links were defined" << endl;
+		cout << "\tNo links are defined" << endl;
 		return 0;
 	}
 	else if(!setting.silentMode)
 	{
-		cout << "\t"<< linkcount  << " links were defined" << endl;
+		cout << "\t"<< linkcount  << " links are defined" << endl;
 	}
 
 	for (DOMElement *segmentLink = links->getFirstElementChild();segmentLink != NULL; segmentLink = segmentLink->getNextElementSibling())
