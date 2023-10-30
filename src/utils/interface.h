@@ -14,6 +14,8 @@
  * Contact: jannik.busse@rwth-aachen.de, christian.geller@rwth-aachen.de
  *
  */
+#pragma once
+
 
 #define UNASSIGNED 0
 
@@ -77,6 +79,7 @@ struct junction
 {
     int id = -1;
     vector<connection> connections;
+
 
     string to_string()
     {
@@ -257,6 +260,43 @@ struct control
 };
 
 /**
+ * @brief Holds the output elevation polynom
+ * 
+ */
+struct elevationPolynom
+{
+    double a = 0; //unit m, elevation at @s (ds=0)
+    double b = 0; //unit 1
+    double c = 0; //unit 1/m
+    double d = 0; //unit 1/m^2
+    double s = 0; //unit m
+};
+
+/**
+ * @brief stores the elevation data for each road segment along the s coordinate as a 3rd deg. polynomial
+ * elev(ds) = a + b * ds + c * ds^2 + d*ds^3
+ * elev = elevation at given pos
+ * ds   = distance along s, restarts at each new element
+ *  
+ */
+struct elevationProfile
+{
+    
+    vector<elevationPolynom> outputElevation; //these are the polynoms that are generated from this elevationprofile
+    //these are the raw input format values s equals x coordinate and t equals y.
+    int inputId    = -1;
+    double radius  = 0;
+    double sOffset = 0;
+    double tOffset = 0;
+
+    bool operator<(const struct elevationProfile& other) const
+    {
+        return sOffset < other.sOffset;
+    };
+};
+
+
+/**
  * @brief road holding all properties of a road
  * 
  */
@@ -264,7 +304,10 @@ struct road
 {
     bool isConnectingRoad = false; // this variable fixes the problem that junction is used in linkSegments as placeholder for "inputSegmentId". 
     bool isLinkedToNetwork = false; //stores if the road is linked to the reference network
+    bool elevationIntegrated = false; //flag to check if the elevation is calculated properly in the elevation profile calculation
+
     double length = 0;
+    double elevationOffset = 0;//absolute elevation offset
 
     int id = -1;
     int inputSegmentId = -1;
@@ -285,6 +328,7 @@ struct road
     vector<object> objects;
     vector<sign> signs;
 
+
     /**
      * @brief Helper function to get the adjacent road with desired id
      * 
@@ -295,6 +339,30 @@ struct road
     {
         if(predecessor.id == id) return -1;
         if(successor.id == id) return 1;
+        return 0;
+        }
+    };
+
+    vector<elevationProfile> elevationProfiles;
+
+    /**
+     * @brief Get the Relative Elevation At road at start or end position TODO: replace this method with getRelativeElevationAtEnd()
+     * 
+     * @param pos -1: elevation at s = 0. 1: elevation at s = max
+     * @return double relative elevation
+     */
+    double getRelativeElevationAt(int pos)
+    {
+        if(pos == -1)
+        {
+            return 0; //this should always be 0
+        }
+        else if(pos == 1)
+        {
+            if(elevationProfiles.size() > 0)
+                return elevationProfiles.back().tOffset;
+            return 0;
+        }
         return 0;
     }
 };
@@ -339,6 +407,9 @@ struct roadNetwork
     vector<junction> junctions;
     vector<control> controller;
     vector<junctionGroup> juncGroups;
+
+    int refRoad = -1; //store reference road id as input it
+    int refElev = 0;  //store road elevation
 
     // global counters
     int nSignal = 0;

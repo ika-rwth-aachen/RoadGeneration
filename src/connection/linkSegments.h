@@ -18,7 +18,6 @@
 #include<map>
 #include<queue>
 
-
 /**
  * @brief Resolves conflicts that occur when segments are linked end to end or start to start
  * 
@@ -205,7 +204,6 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 	}
 	road *fromRoad;
 	road *toRoad;
-
 
 
 	// assumption is that "fromSegement" is already linked to reference frame
@@ -449,7 +447,7 @@ extern settings setting;
  */
 int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 {
-	if(!setting.silentMode)
+	if(!setting.suppressOutput)
 		cout << "Processing linkSegments" << endl;
 
 
@@ -467,7 +465,9 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 	}
 
 	// define reference system
-	int refId = readIntAttrFromNode(links, "refId");
+	data.refRoad = readIntAttrFromNode(links, "refId");
+
+
 	double hdgOffset = readDoubleAttrFromNode(links, "hdgOffset");
 	double xOffset = readDoubleAttrFromNode(links, "xOffset");
 	double yOffset = readDoubleAttrFromNode(links, "yOffset");
@@ -475,7 +475,7 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 
 	for (auto &&r : data.roads)
 	{
-		if (r.junction != refId)
+		if (r.junction != data.refRoad)
 			continue;
 
 		for (auto &&g : r.geometries)
@@ -522,7 +522,7 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 
 	queue<int> toDo = queue<int>(); //remaining segments
 	vector<int> transformedIds;
-	toDo.push(refId);
+	toDo.push(data.refRoad);
 
 	while(!toDo.empty())
 	{
@@ -583,16 +583,16 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 		throwWarning("'Not all roads are connected to the road network!'");
 		for(road* p: v)
 		{
+
 			if(!setting.silentMode)
 				cout << "\tRoad " << p->inputId << " in segment " << p->inputSegmentId << " is not linked"<< endl;
-			std::cerr << "\tRoad " << p->inputSegmentId << " is not linked"<< endl;
+
 		}
 
 
 	}
 
 	resolveLaneLinkConflicts(data);
-
 	return 0;
 }
 

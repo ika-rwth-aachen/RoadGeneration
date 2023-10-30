@@ -69,7 +69,7 @@ EXPORTED int execPipeline(){
 }
 
 EXPORTED void setSilentMode(bool sMode){
-	setting.silentMode = sMode;
+	setting.suppressOutput = sMode;
 }
 
 
@@ -101,7 +101,7 @@ EXPORTED int executePipeline(char* file)
 		return -1;
 	}
 
-	if(!setting.silentMode){
+	if(!setting.suppressOutput){
 		cout << file << endl;
 		printLogo();
 	}
@@ -136,6 +136,13 @@ EXPORTED int executePipeline(char* file)
 		cerr << "ERR: error in linkSegments" << endl;
 		return -1;
 	}
+
+	if (generateElevationProfiles(inputxml.getRootElement(), data))
+	{
+		cerr << "ERR: error in generateElevationPforiles" << endl;
+		return -1;
+	}
+	
 	if (closeRoadNetwork(inputxml.getRootElement(), data))
 	{
 		cerr << "ERR: error in closeRoadNetwork" << endl;

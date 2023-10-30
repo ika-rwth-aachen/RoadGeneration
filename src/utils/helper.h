@@ -14,7 +14,7 @@
  * Contact: jannik.busse@rwth-aachen.de, christian.geller@rwth-aachen.de
  *
  */
-
+#pragma once
 #include <stdio.h>
 #include <string.h>
 
@@ -128,17 +128,18 @@ int findLane(laneSection sec, lane &l, int id)
  * @brief function returns the road with the given id
  * 
  * @param roads road vector in which the road is stored
- * @param l     road which has the roadId id
+ * @param r     road which has the roadId id
  * @param id    roadId of the lane to find
  * @return int  position in road vector
  */
-int findRoad(vector<road> roads, road &r, int id)
+int findRoad(vector<road> &roads, road *&r, int id)
 {
+    
     for (int i = 0; i < roads.size(); i++)
     {
         if (roads[i].id == id)
         {
-            r = roads[i];
+            r = &roads[i];
             return i;
         }
     }
@@ -751,7 +752,7 @@ bool isIn(vector<int> &v, int &i)
 }
 
 /**
- * @brief Return true if the specified road it (not input id) is a junction
+ * @brief DEPRECATED. Use findJunction instead. Return true if the specified road it (not input id) is a junction
  * 
  * @param data road network data
  * @param roadID road id (in the road network)
@@ -770,31 +771,105 @@ bool isJunction(roadNetwork data, int roadID)
     return false;
 }
 
+/**
+ * @brief Gets back INDEX of junction in the junction vector of road in data. -1 if its not a junction road
+ * 
+ * @param data road network data
+ * @param roadID 
+ * @return int 
+ */
+int findJunction(const roadNetwork &data, const road &road)
+{
+    if(road.isConnectingRoad) return -1;
+
+    for(int i = 0; i < data.junctions.size(); i ++)
+    {
+		if (data.junctions[i].id == road.junction)
+        {
+        	return i;
+        }
+    }
+    return -1;
+}
+
+/**
+ * @brief Get the Relative Elevation From Predecessor at the contact point to given road
+ * 
+ * @param r 
+ * @return double 
+ */
+double getRelativeElevationFromPredecessor(road &r)
+{
+    if(r.predecessor.contactPoint == startType)
+    {
+        return 0;
+    }
+
+    if(r.predecessor.contactPoint == endType)
+    {
+        return r.getRelativeElevationAt(1);
+    }
+
+    return 0;
+}
 
 
+/**
+ * @brief Throws a warning that is printed to cout (if mute = false) and cerr.
+ * 
+ * @param msg 
+ * @param origin 
+ * @param mute 
+ */
 void throwWarning(string msg, string origin, bool mute = false)
 {
     setting.warnings ++;
-    if(!setting.silentMode && !mute)
+    if(!setting.suppressOutput && !mute)
         cout <<"WARNING: " << msg << "\n\tin " << origin << endl;
     cerr << "WARNING: " << msg << "\n\tin " << origin << endl;
 }
+
+
+/**
+ * @brief Throws a warning that is printed to cout (if mute = false) and cerr.
+ * 
+ * @param msg 
+ * @param origin 
+ * @param mute 
+ */
 void throwWarning(string msg, bool mute = false)
 {
     setting.warnings ++;
-    if(!setting.silentMode && !mute)
+    if(!setting.suppressOutput && !mute)
         cout << "WARNING: " <<msg << endl;
     cerr << "WARNING: "<< msg << endl;
 }
+
+
+/**
+ * @brief Throws an error that is printed to cout (if mute = false) and cerr.
+ * 
+ * @param msg 
+ * @param origin 
+ * @param mute 
+ */
 void throwError(string msg, string origin)
 {
-    if(!setting.silentMode)
+    if(!setting.suppressOutput)
         cout << "ERR: " << msg << "\n\tin " << origin << endl;
     cerr << "ERR: " << msg << "\n\tin " << origin << endl;
 }
+
+/**
+ * @brief Throws an error that is printed to cout (if mute = false) and cerr.
+ * 
+ * @param msg 
+ * @param origin 
+ * @param mute 
+ */
 void throwError(string msg)
 {
-    if(!setting.silentMode)
+    if(!setting.suppressOutput)
         cout << "ERR: "<< msg << endl;
     cerr << "ERR: "<< msg << endl;
 }

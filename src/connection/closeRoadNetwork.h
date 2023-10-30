@@ -28,7 +28,7 @@ extern settings setting;
  */
 int closeRoadNetwork(const DOMElement* rootNode, roadNetwork &data)
 {
-	if(!setting.silentMode)
+	if(!setting.suppressOutput)
 		cout << "Processing closeRoadNetwork" << endl;
 
 	DOMElement* closeRoad = getChildWithName(rootNode, "closeRoads"); 
@@ -280,7 +280,7 @@ int closeRoadNetwork(const DOMElement* rootNode, roadNetwork &data)
 			secs.back().lanes[j] = curLane;
 		}
 
-		road tmpRoad;
+		road *tmpRoad;
 		int fr = findRoad(data.roads, tmpRoad, fromRoadId);
 		int tr = findRoad(data.roads, tmpRoad, toRoadId);
 
