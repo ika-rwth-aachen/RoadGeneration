@@ -42,7 +42,6 @@ int closeRoadNetwork(const DOMElement* rootNode, roadNetwork &data)
 
 	// assumption is that all segments are already linked
 
-	//for (pugi::xml_node segmentLink : closeRoad.children("segmentLink"))
 	for (DOMElement *segmentLink = closeRoad->getFirstElementChild();segmentLink != NULL; segmentLink = segmentLink->getNextElementSibling())
 	{
 		if(readNameFromNode(segmentLink) != "segmentLink") continue;
@@ -289,6 +288,8 @@ int closeRoadNetwork(const DOMElement* rootNode, roadNetwork &data)
 		for (int j = 0; j < secs.front().lanes.size(); j++)
 		{
 			secs.front().lanes[j].preId = secs.front().lanes[j].id;
+			data.roads[fr].laneSections.front().lanes[j].sucId = secs.front().lanes[j].id;
+
 			if (fromPos == "start")
 			{
 				secs.front().lanes[j].preId *= -1;
@@ -299,12 +300,15 @@ int closeRoadNetwork(const DOMElement* rootNode, roadNetwork &data)
 		for (int j = 0; j < secs.back().lanes.size(); j++)
 		{
 			secs.back().lanes[j].sucId = secs.back().lanes[j].id;
+			data.roads[tr].laneSections.back().lanes[j].sucId = secs.back().lanes[j].id;
+
 			if (toPos == "end")
 			{
 				secs.back().lanes[j].sucId *= -1;
 				data.roads[tr].laneSections.back().lanes[j].sucId *= -1;
 			}
 		}
+		
 
 		rConnection.laneSections = secs;
 
