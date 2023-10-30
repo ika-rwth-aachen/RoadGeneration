@@ -43,7 +43,7 @@ int main(int argc, char** argv){
     setXMLSchemaLocation(&schemaLocation[0]);
     setOverwriteLog(settings.overwriteLog);
     setOutputName(settings.outputName);
-    setSilentMode(settings.silentMode);
+    setSilentMode(settings.suppressOutput);
     execPipeline();
 
     return 0;

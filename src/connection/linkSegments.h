@@ -454,7 +454,7 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 	DOMElement *links = getChildWithName(rootNode, "links");
 	if (links == NULL)
 	{
-		if(!setting.silentMode)
+		if(!setting.suppressOutput)
 		{
 			cout << "\tLinks are not specified -> skip segment linking" << endl;
 		}
@@ -498,12 +498,12 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 
 	int linkcount = links->getChildElementCount();
 
-	if(linkcount <= 0 && !setting.silentMode)
+	if(linkcount <= 0 && !setting.suppressOutput)
 	{
 		cout << "\tNo links are defined" << endl;
 		return 0;
 	}
-	else if(!setting.silentMode)
+	else if(!setting.suppressOutput)
 	{
 		cout << "\t"<< linkcount  << " links are defined" << endl;
 	}
@@ -584,7 +584,7 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 		for(road* p: v)
 		{
 
-			if(!setting.silentMode)
+			if(!setting.suppressOutput)
 				cout << "\tRoad " << p->inputId << " in segment " << p->inputSegmentId << " is not linked"<< endl;
 
 		}

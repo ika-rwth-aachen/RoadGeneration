@@ -327,7 +327,8 @@ struct road
     vector<laneSection> laneSections;
     vector<object> objects;
     vector<sign> signs;
-
+    vector<elevationProfile> elevationProfiles;
+    
 
     /**
      * @brief Helper function to get the adjacent road with desired id
@@ -340,10 +341,8 @@ struct road
         if(predecessor.id == id) return -1;
         if(successor.id == id) return 1;
         return 0;
-        }
-    };
+    }
 
-    vector<elevationProfile> elevationProfiles;
 
     /**
      * @brief Get the Relative Elevation At road at start or end position TODO: replace this method with getRelativeElevationAtEnd()

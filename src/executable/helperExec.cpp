@@ -78,7 +78,7 @@ int parseArgs(int argc, char **argv, settingsExec &settings) {
                     return 1;
                 
                 case 's':
-                    settings.silentMode = true;
+                    settings.suppressOutput = true;
                 break;
 
                 case 'k':

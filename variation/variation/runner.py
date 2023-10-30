@@ -155,7 +155,6 @@ def executePipeline(tree, inpDir, varDict):
             argName = (inpDir+filename)        
             argFilename = c_char_p(argName.encode('utf-8')) #execute "main" function from lib 
                
-            roadgen.setSilentMode(c_bool(args.s))
             roadgen.setFileName(argFilename)
             roadgen.setXMLSchemaLocation(argXMLPath)
             if args.o:
