@@ -66,7 +66,7 @@ int resolveAlignmentConflicts(roadNetwork &data)
 					r.laneSections.at(borderingLaneSection).lanes[i].sucId = laneIds[i];
 				}
 		
-				cout << "switched road " << r.id << " and succ " <<suc->id << endl;
+				cerr << "switched road " << r.id << " and succ " <<suc->id << endl;
 
 			}
 		}
@@ -106,7 +106,7 @@ int resolveAlignmentConflicts(roadNetwork &data)
 					r.laneSections.at(borderingLaneSection).lanes[i].preId = laneIds[i];
 				}
 		
-				cout << "switched road " << r.id << " and pre " <<pre->id << endl;
+				cerr << "switched road " << r.id << " and pre " <<pre->id << endl;
 
 			}
 		}
@@ -374,7 +374,6 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 		}
 	}
 
-	cout << "here" << endl;
 	if(!swap)
 	{
 		if(toPos == "start")
@@ -541,7 +540,7 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 			{
 				if(curId != readIntAttrFromNode(segmentLink, "fromSegment") || e != readIntAttrFromNode(segmentLink, "toSegment")) continue;
 				//process the element------------------
-				cout << "Transforming roads" << endl;
+				//cout << "Transforming roads" << endl;
 
 				transformRoad(segmentLink, data);
 				
