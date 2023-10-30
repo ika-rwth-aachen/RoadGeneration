@@ -1,0 +1,94 @@
+<roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+	<segments>
+	<connectingRoad id="1">
+            <road id="1" classification="main" >	
+                <referenceLine>
+                     <line length="100"/>
+                </referenceLine>
+            </road>
+        </connectingRoad>
+        <connectingRoad id="2">
+            <road id="1" classification="main" >	
+               <referenceLine>
+                     <spiral length="800"  Rs="-150" Re="0"/>
+                </referenceLine>
+            </road>
+        </connectingRoad>
+        <connectingRoad id="3">
+            <road id="1" classification="main" >	
+                <referenceLine>
+                     <arc length="100" R="-200"/>
+                </referenceLine>
+            </road>
+        </connectingRoad>
+        
+        <junction id="4" type="3A">
+            <road id="1" classification="access" >	
+                <referenceLine>
+                    <spiral length="100"  Rs="-150" Re="0"/>
+                </referenceLine>
+            </road>
+            <road id="2" classification="access" >	
+                <referenceLine>
+                    <arc length="100"  R="-100"/>
+                </referenceLine>
+            </road>
+            <road id="3" classification="access" >	
+                <referenceLine>
+                    <arc length="100"  R="-100"/>
+                </referenceLine>
+            </road>
+            <intersectionPoint refRoad="1" s="100">
+                <adRoad id="2" s="0" angle="3.14"/>
+                <adRoad id="3" s="0" angle="1.57079632679"/>
+            </intersectionPoint>
+            <coupler>
+                <junctionArea gap="10">
+                    <roadGap id="2" gap="15"/>
+                </junctionArea>
+                <connection type="all"/>
+            </coupler>
+        </junction>
+        
+        
+      	<junction id="5" type="MA">
+            <road id="1" classification="main" >	
+                <referenceLine>
+                    <line length="100"/>
+                </referenceLine>
+            </road>
+            <road id="2" classification="access" >	
+                <referenceLine>
+                    <arc length="100"  R="120"/>
+                </referenceLine>
+            </road>
+            <intersectionPoint refRoad="1" s="30">
+                <adRoad id="2" s="0" angle="-1.57"/>
+            </intersectionPoint>
+            <coupler>
+                <junctionArea gap="10">
+                    <roadGap id="2" gap="15"/>
+                </junctionArea>
+            </coupler>
+        </junction>
+        
+  
+	</segments>
+	
+    <links refId="1" hdgOffset="0.0" xOffset="0" yOffset="0">
+        <segmentLink fromSegment="4" toSegment="1" fromRoad="1" toRoad="1" fromPos="end" toPos="start" />
+        <segmentLink fromSegment="4" toSegment="2" fromRoad="2" toRoad="1" fromPos="end" toPos="start" />
+        <segmentLink fromSegment="3" toSegment="2" fromRoad="1" toRoad="1" fromPos="start" toPos="end" />
+
+        <segmentLink fromSegment="5" toSegment="4" fromRoad="1" toRoad="1" fromPos="end" toPos="end" />
+    </links>
+    
+     <closeRoads>
+        <segmentLink fromSegment="5" toSegment="3" fromRoad="1" toRoad="1" fromPos="start" toPos="end" />
+        <segmentLink fromSegment="4" toSegment="5" fromRoad="3" toRoad="2" fromPos="end" toPos="end" />
+    </closeRoads>
+
+   
+</roadNetwork>
+
+
