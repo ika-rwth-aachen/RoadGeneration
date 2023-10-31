@@ -143,8 +143,9 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
     {
         road*               curRoad;                //road that needs processing
         road*               parentRoad;             //road that put curRoad in the processing queue. This can be successor or predecessor
-        contactPointType    parentLinkingPoint = noneType; //-1: curRoad was linked as predecessor. 1:road was linked as successor
-        double              offsetHeightAtLink = 0; //height at linking point
+        contactPointType    parentLinkingPoint      = noneType; //point where parent is linked to cur 
+        contactPointType    curLinkPointToparent    = noneType; //point where cur is linked to parent
+        double              offsetHeightAtLink      = 0; //height at linking point
 
     };
 
@@ -200,7 +201,6 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
 		return 0;
 	}
 
-	// define reference system
     
     //find ref road
     road* ref = NULL;
@@ -225,7 +225,6 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
         road *suc;
         findRoad(data.roads, suc, ref->successor.id);
 
-        //when processing an element, adjust the next roads elevation offset. This way we dont need to keep the current offset stored
        
         
         if(suc->isLinkedToNetwork)
@@ -233,29 +232,39 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
             elevationLinkInformation eli;
             eli.curRoad = suc;
             eli.parentRoad = ref;
-            eli.parentLinkingPoint = startType;
-
+            eli.parentLinkingPoint = endType;
+            if(eli.curRoad->predecessor.id == eli.parentRoad->id)
+            {
+                eli.curLinkPointToparent = startType;
+            }
+            else{
+                eli.curLinkPointToparent = endType;
+            }
             remaining.push(eli);
         }
         completededIds.push_back(ref->id);
 
     }
-     //----handle predecessors of root-----------------------------------
-
+    //----handle predecessors of root-----------------------------------
     if(ref->predecessor.id > -1)
     {
         road *pre;
         findRoad(data.roads, pre, ref->predecessor.id);
 
-        //when processing an element, adjust the next roads elevation offset. This way we dont need to keep the current offset stored
         
         if(pre->isLinkedToNetwork)
         {
             elevationLinkInformation eli;
             eli.curRoad = pre;
             eli.parentRoad = ref;
-            eli.parentLinkingPoint = endType;
-
+            eli.parentLinkingPoint = startType;
+            if(eli.curRoad->predecessor.id == eli.parentRoad->id)
+            {
+                eli.curLinkPointToparent = startType;
+            }
+            else{
+                eli.curLinkPointToparent = endType;
+            }
             remaining.push(eli);
         }
         completededIds.push_back(ref->id);
@@ -271,12 +280,7 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
         remaining.pop();
         if(isIn(completededIds, curEli.curRoad->id))
             continue;
-        cout << "iterating loop with id " << curEli.curRoad->id << "and pre " << curEli.parentRoad->id << "\n";
 
-        if(curEli.curRoad->id == 1004)
-        {
-            cout <<endl;
-        }
         if(curEli.parentLinkingPoint == noneType)//when linked from junction
         {
             curEli.curRoad->elevationOffset = curEli.parentRoad->elevationOffset;
@@ -293,134 +297,111 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
             }
 
         }
-        else if(curEli.parentLinkingPoint == startType)
+        else if(curEli.parentLinkingPoint == startType) // linked as predecessor in parent road
         {
-            if(curEli.curRoad->predecessor.contactPoint == endType)
+            cout << "iterating loop with id " << curEli.curRoad->id << " and pre " << curEli.parentRoad->id << "\n";
+            if(curEli.curLinkPointToparent == endType) // parent is successor in cur road
             {
-                double elevationOffsetAtLink = curEli.parentRoad->getRelativeElevationAt(1) + curEli.parentRoad->elevationOffset;
-                if(curEli.parentRoad->successor.contactPoint == startType)
-                {
-                    // |pre>  |suc>
-                    curEli.curRoad->elevationOffset = elevationOffsetAtLink;
-
-                }
-
-                else if(curEli.parentRoad->successor.contactPoint == endType)
-                {
-                        // |pre>  <suc|
-                    curEli.curRoad->elevationOffset = elevationOffsetAtLink - curEli.curRoad->getRelativeElevationAt(1);
-                }
+                double elevationOffsetAtLink = curEli.parentRoad->getRelativeElevationAt(0) + curEli.parentRoad->elevationOffset;
+                curEli.curRoad->elevationOffset = elevationOffsetAtLink - curEli.curRoad->getRelativeElevationAt(1);
 
             }
 
-            else if(curEli.curRoad->predecessor.contactPoint == startType)
+            else if(curEli.curLinkPointToparent == startType) //parent is predecessor
             {
                 double elevationOffsetAtLink = curEli.parentRoad->getRelativeElevationAt(0) + curEli.parentRoad->elevationOffset;
-                if(curEli.parentRoad->successor.contactPoint == startType)
-                {
-                    // <pre|  |suc>
-                    curEli.curRoad->elevationOffset = elevationOffsetAtLink;
-                }
-
-                else if(curEli.parentRoad->successor.contactPoint == endType)
-                {
-                    // <pre|  <suc|
-                    curEli.curRoad->elevationOffset = elevationOffsetAtLink - curEli.curRoad->getRelativeElevationAt(1);
-                }
-
+                // <pre|  |suc>
+                curEli.curRoad->elevationOffset = elevationOffsetAtLink;
             }
 
             completededIds.push_back(curEli.curRoad->id);
-            if(curEli.curRoad->successor.id > -1 && !isIn(completededIds, curEli.curRoad->successor.id))
+            
+        }
+        else if(curEli.parentLinkingPoint == endType) //linked as successor in parent road
+        {
+            cout << "iterating loop with id " << curEli.curRoad->id << " and suc " << curEli.parentRoad->id << "\n";
+            if(curEli.curLinkPointToparent == endType ) //parent is successor in cur road
             {
-                elevationLinkInformation newEli;
-                road *ssuc;
-                findRoad(data.roads, ssuc, curEli.curRoad->successor.id);
-                newEli.curRoad = ssuc;
+                double elevationOffsetAtLink = curEli.parentRoad->getRelativeElevationAt(1) + curEli.parentRoad->elevationOffset;
+                curEli.curRoad->elevationOffset = elevationOffsetAtLink - curEli.curRoad->getRelativeElevationAt(1);
+
+
+            }
+            else if(curEli.curLinkPointToparent == startType) //parent is predecessor in cur road
+            {
+                double elevationOffsetAtLink = curEli.parentRoad->getRelativeElevationAt(1) + curEli.parentRoad->elevationOffset;
+                curEli.curRoad->elevationOffset = elevationOffsetAtLink;
+            }
+
+            completededIds.push_back(curEli.curRoad->id);
+           
+        }
+        //Add the next road to the remaining queue
+        if(curEli.curRoad->isConnectingRoad && curEli.curRoad->predecessor.id > -1 && curEli.curRoad->predecessor.id != curEli.parentRoad->id && !isIn(completededIds, curEli.curRoad->predecessor.id))
+        {
+            elevationLinkInformation newEli;
+            road *ppre;
+            if(curEli.curRoad->predecessor.elementType == roadType)
+            {
+                findRoad(data.roads, ppre, curEli.curRoad->predecessor.id);
+                newEli.curRoad = ppre;
                 newEli.parentRoad = curEli.curRoad;
                 newEli.parentLinkingPoint = startType;
-                
+                if(newEli.curRoad->predecessor.id == newEli.parentRoad->id)
+                {
+                    newEli.curLinkPointToparent = startType;
+                }
+                else{
+                    newEli.curLinkPointToparent = endType;
+                }
                 remaining.push(newEli);
             }
         }
-        else if(curEli.parentLinkingPoint == endType)
+        if(curEli.curRoad->isConnectingRoad && curEli.curRoad->successor.id > -1 && curEli.curRoad->successor.id != curEli.parentRoad->id &&  !isIn(completededIds, curEli.curRoad->successor.id))
         {
-            cout << "iterating second loop\n";
-
-           
-
-            if(curEli.curRoad->successor.contactPoint == startType )
+            elevationLinkInformation newEli;
+            road *ssuc;
+            findRoad(data.roads, ssuc, curEli.curRoad->successor.id);
+            newEli.curRoad = ssuc;
+            newEli.parentRoad = curEli.curRoad;
+            newEli.parentLinkingPoint = endType;
+            if(newEli.curRoad->predecessor.id == newEli.parentRoad->id)
             {
-                double elevationOffsetAtLink = curEli.parentRoad->getRelativeElevationAt(0) + curEli.parentRoad->elevationOffset;
-                if(curEli.parentRoad->predecessor.contactPoint == endType)
-                {
-                    curEli.curRoad->elevationOffset = elevationOffsetAtLink - curEli.curRoad->getRelativeElevationAt(1);
-
-                }
-
-                else if(curEli.parentRoad->predecessor.contactPoint == startType)
-                {
-                    curEli.curRoad->elevationOffset = elevationOffsetAtLink;
-                }
-
+                newEli.curLinkPointToparent = startType;
             }
-
-            else if(curEli.curRoad->successor.contactPoint == endType)
-            {
-                double elevationOffsetAtLink = curEli.parentRoad->getRelativeElevationAt(1) + curEli.parentRoad->elevationOffset;
-                if(curEli.parentRoad->predecessor.contactPoint == startType)
-                {
-                    curEli.curRoad->elevationOffset = elevationOffsetAtLink;
-                }
-
-                else if(curEli.parentRoad->predecessor.contactPoint == endType)
-                {
-                    curEli.curRoad->elevationOffset = elevationOffsetAtLink - curEli.curRoad->getRelativeElevationAt(1);
-
-                }
-
+            else{
+                newEli.curLinkPointToparent = endType;
             }
+            remaining.push(newEli);
+        }
 
-            completededIds.push_back(curEli.curRoad->id);
-            if(curEli.curRoad->isConnectingRoad && curEli.curRoad->predecessor.id > -1 && !isIn(completededIds, curEli.curRoad->predecessor.id))
+        else //TODO: linking to junction
+        {
+            continue;
+            cout << "linking to junction\n";
+            elevationLinkInformation newEli;
+            road *ppre;
+            findRoad(data.roads, ppre, curEli.curRoad->predecessor.id);
+            //process all in junction
+            for(road &r: data.roads)
             {
-                elevationLinkInformation newEli;
-                road *ppre;
-                if(curEli.curRoad->predecessor.elementType == roadType)
+                if(!r.isConnectingRoad && r.junction == curEli.curRoad->predecessor.id && !isIn(completededIds, r.id))
                 {
-                    findRoad(data.roads, ppre, curEli.curRoad->predecessor.id);
-                    newEli.curRoad = ppre;
-                    newEli.parentRoad = curEli.curRoad;
-                    newEli.parentLinkingPoint = endType;
-
-                    remaining.push(newEli);
+                    r.elevationOffset = curEli.curRoad->elevationOffset;
+                    completededIds.push_back(r.id);
                 }
-                else //TODO: linking to junction
+                if(r.isConnectingRoad && r.predecessor.id == curEli.curRoad->predecessor.id)//this is a connecting road that is generated by the junction as has the junction as predecessor
                 {
-                    cout << "linking to junction\n";
-                    findRoad(data.roads, ppre, curEli.curRoad->predecessor.id);
-                    //process all in junction
-                    for(road &r: data.roads)
-                    {
-                        if(!r.isConnectingRoad && r.junction == curEli.curRoad->predecessor.id && !isIn(completededIds, r.id))
-                        {
-                            r.elevationOffset = curEli.curRoad->elevationOffset;
-                            completededIds.push_back(r.id);
-                        }
-                        if(r.isConnectingRoad && r.predecessor.id == curEli.curRoad->predecessor.id)//this is a connecting road that is generated by the junction as has the junction as predecessor
-                        {
-                            elevationLinkInformation junEli;
-                            junEli.curRoad = &r;
-                            junEli.parentRoad = curEli.curRoad;
-                            junEli.parentLinkingPoint = noneType;
-                            remaining.push(junEli);
-                        }
-
-                    }
+                    elevationLinkInformation junEli;
+                    junEli.curRoad = &r;
+                    junEli.parentRoad = curEli.curRoad;
+                    junEli.parentLinkingPoint = noneType;
+                    remaining.push(junEli);
                 }
-            
+
             }
         }
+        
 
     }
    
