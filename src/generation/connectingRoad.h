@@ -67,7 +67,7 @@ int connectingRoad(DOMElement *node, roadNetwork &data)
         return 1;
     }
 
-        // read in elevation data---------------------------------
+    // read elevation data---------------------------------
     DOMElement* elevationProfileNode    = getChildWithName(node, "elevationProfile");
     if(NULL != elevationProfileNode)
     {

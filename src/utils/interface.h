@@ -364,6 +364,28 @@ struct road
         }
         return 0;
     }
+    /**
+     * @brief Get the Absolute Elevation At road at start or end position
+     * 
+     * @param pos -1: elevation at s = 0. 1: elevation at s = max
+     * @return double relative elevation
+     */
+    double getAbsoluteElevationAt(int pos)
+    {
+        if(pos == -1)
+        {
+             if(elevationProfiles.size() > 0)
+                return elevationProfiles.front().tOffset;
+            return 0;
+        }
+        else if(pos == 1)
+        {
+            if(elevationProfiles.size() > 0)
+                return elevationProfiles.back().tOffset;
+            return 0;
+        }
+        return 0;
+    }
 };
 
 

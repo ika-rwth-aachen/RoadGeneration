@@ -253,9 +253,6 @@ int closeRoadNetwork(const DOMElement* rootNode, roadNetwork &data)
 			dNeg++;
 		}
 
-		
-
-
 		// --- adjust lanewidth of last section to be equal to lS2 -------------
 		for (int j = 0; j < secs.back().lanes.size(); j++)
 		{
@@ -311,6 +308,40 @@ int closeRoadNetwork(const DOMElement* rootNode, roadNetwork &data)
 		
 
 		rConnection.laneSections = secs;
+
+		//Calculate elevation
+
+		cout << "calculate elevation for " << rConnection.id << "\n";
+
+		double startElevationHeight 		= fromRoad.getAbsoluteElevationAt(-1);
+		if(fromPos == "end")
+			startElevationHeight = fromRoad.getAbsoluteElevationAt(1);
+
+        double endElevationHeight           = toRoad.getAbsoluteElevationAt(-1);
+		if(toPos == "end")
+			endElevationHeight = toRoad.getAbsoluteElevationAt(1);
+
+        double endR                         = 10; //TODO calculate proper R
+		double startR                       = 10; //TODO calculate proper R
+
+
+        elevationProfile sEp; //TODO: check why this is not destructed when leaving scope
+        sEp.sOffset = 0;
+        sEp.tOffset = startElevationHeight;
+        sEp.radius  = startR;
+        rConnection.elevationProfiles.push_back(sEp);
+        elevationProfile eEp; //TODO: check why this is not destructed when leaving scope
+        eEp.sOffset = rConnection.length;
+        eEp.tOffset = endElevationHeight;
+        eEp.radius  = endR;
+        rConnection.elevationProfiles.push_back(eEp);
+
+
+		if (generateElevationProfile(rConnection.elevationProfiles))
+        {
+            cerr << "ERR: error in generateElevationProfile" << endl;
+            return 1;
+        }
 
 		data.roads.push_back(rConnection);
 	}

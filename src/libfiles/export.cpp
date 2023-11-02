@@ -163,7 +163,6 @@ EXPORTED int executePipeline(char* file)
 		return -1;
 	}
 
-	//warning handling
 	if(setting.warnings > 0)
 	{
 		cout << "\nFinished with " << setting.warnings << " warning(s), check out the error log for more information." << endl;
@@ -172,7 +171,6 @@ EXPORTED int executePipeline(char* file)
 	}
 
 	//Cleanup ----------------
-
 	terminateXMLUtils();
 
 	return 0;
