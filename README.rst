@@ -46,6 +46,35 @@ tool.
 
 Fig.1: Possible workflow for the presend road variation tool.
 
+Documentation
+-------------
+
+A simple but well designed C++ reference
+`documentation <https://ika-rwth-aachen.github.io/RoadGeneration/index.html>`__
+is provided.
+
+Variation tool
+--------------
+
+The Variation tool is used to generate a variety of different scenarios
+based on the same general road network. A template file is provided to
+specify variables as well as the general road network structure. A more
+thorough documentation can be found in the `variation
+subdirectory <variation/>`__.
+
+.. _installation-1:
+
+Installation
+~~~~~~~~~~~~
+
+You can run the code from the ``variation`` subfolder, however, the
+variation tool can be installed system wide by using the install script
+in the root directory.
+
+.. code:: bash
+
+   sh install-variation.sh
+
 Repository Overview
 -------------------
 
@@ -122,34 +151,6 @@ flag of the tool.
 
    ./road-generation_executable -h
 
-Documentation
--------------
-
-A simple but well designed C++ reference
-`documentation <https://ika-rwth-aachen.github.io/RoadGeneration/index.html>`__
-is provided.
-
-Variation tool
---------------
-
-The Variation tool is used to generate a variety of different scenarios
-based on the same general road network. A template file is provided to
-specify variables as well as the general road network structure. A more
-thorough documentation can be found in the `variation
-subdirectory <variation/>`__.
-
-.. _installation-1:
-
-Installation
-~~~~~~~~~~~~
-
-You can run the code from the ``variation`` subfolder, however, the
-variation tool can be installed system wide by using the install script
-in the root directory.
-
-.. code:: bash
-
-   sh install-variation.sh
 
 Licenses
 --------
