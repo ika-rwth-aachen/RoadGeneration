@@ -83,8 +83,8 @@ Here, the main folders are named:
 Installation
 ------------
 
-.. _Road Generation-1:
-
+Road Generation
+^^^^^^^^^^^^^^^
 
 The following **requirements** have to be satisfied:
 
@@ -127,7 +127,8 @@ Alternatively you can **build the project manually**:
 *Note:* In principal, it is possible to compile and use the tool in
 Windows operating systems. However, this is experimental.
 
-.. _Variation tool-1:
+Variation tool
+^^^^^^^^^^^^^^
 
 You can run the code from the ``variation`` subfolder, however, the
 variation tool can be installed system wide by using the install script
