@@ -65,7 +65,11 @@ subdirectory <variation/>`__.
 
 
 
+.. collapse:: A Different Label
+    :class: custom-summary
+    :name: summary0
 
+    Something else that might escape notice.
 
 
 Repository Overview
