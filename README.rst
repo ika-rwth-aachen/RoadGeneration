@@ -64,16 +64,8 @@ subdirectory <variation/>`__.
 
 .. _installation-1:
 
-Installation
-~~~~~~~~~~~~
 
-You can run the code from the ``variation`` subfolder, however, the
-variation tool can be installed system wide by using the install script
-in the root directory.
 
-.. code:: bash
-
-   sh install-variation.sh
 
 Repository Overview
 -------------------
@@ -90,6 +82,9 @@ Here, the main folders are named:
 
 Installation
 ------------
+
+Road Generation
+---------------
 
 The following **requirements** have to be satisfied:
 
@@ -131,6 +126,17 @@ Alternatively you can **build the project manually**:
 
 *Note:* In principal, it is possible to compile and use the tool in
 Windows operating systems. However, this is experimental.
+
+Variation tool
+--------------
+
+You can run the code from the ``variation`` subfolder, however, the
+variation tool can be installed system wide by using the install script
+in the root directory.
+
+.. code:: bash
+
+   sh install-variation.sh
 
 Usage
 -----
