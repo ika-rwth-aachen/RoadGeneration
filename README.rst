@@ -85,7 +85,7 @@ Installation
 ------------
 
 Road Generation
-
+---------------
 
 The following **requirements** have to be satisfied:
 
@@ -129,7 +129,7 @@ Alternatively you can **build the project manually**:
 Windows operating systems. However, this is experimental.
 
 Variation tool
-
+--------------
 
 You can run the code from the ``variation`` subfolder, however, the
 variation tool can be installed system wide by using the install script
