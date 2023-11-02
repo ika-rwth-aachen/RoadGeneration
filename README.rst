@@ -62,7 +62,7 @@ specify variables as well as the general road network structure. A more
 thorough documentation can be found in the `variation
 subdirectory <variation/>`__.
 
-.. _installation-1:
+
 
 
 
@@ -83,8 +83,8 @@ Here, the main folders are named:
 Installation
 ------------
 
-Road Generation
----------------
+.. _Road Generation-1:
+
 
 The following **requirements** have to be satisfied:
 
@@ -127,8 +127,7 @@ Alternatively you can **build the project manually**:
 *Note:* In principal, it is possible to compile and use the tool in
 Windows operating systems. However, this is experimental.
 
-Variation tool
---------------
+.. _Variation tool-1:
 
 You can run the code from the ``variation`` subfolder, however, the
 variation tool can be installed system wide by using the install script
