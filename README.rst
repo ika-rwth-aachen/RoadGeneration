@@ -81,7 +81,7 @@ Here, the main folders are named:
 Installation
 ------------
 
-*Road Generation
+* Road Generation
 
 
    The following **requirements** have to be satisfied:
