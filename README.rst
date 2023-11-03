@@ -10,6 +10,18 @@ Road Generation Tool for Basic OpenDRIVE Road Networks
 About
 -----
 
+<details>
+  <summary>Click me</summary>
+  
+  ### Heading
+  1. Foo
+  2. Bar
+     * Baz
+     * Qux
+
+  ### Some Javascript
+
+</details>
 
 Simulation is a valuable building block for the verification and
 validation of automated driving functions (ADF). When simulating urban
