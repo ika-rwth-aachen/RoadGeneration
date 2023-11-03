@@ -84,57 +84,57 @@ Installation
 Road Generation
 ~~~~~~~~~~~~~~~
 
- The following **requirements** have to be satisfied:
- 
- -  ``C++11``
- -  ``CMake 2.6 or higher``
- -  ``Python 3.6``
- -  ``xercesC``
- 
- **Download** the repository as a zip-file and un-zip, or use git with
- 
- .. code:: bash
- 
-    # Clone Repository and open main folder
-    git clone git@github.com:ika-rwth-aachen/RoadGeneration.git
-    cd RoadGeneration
- 
- A build script for Linux systems is provided and can be executed from
- the root directory with
- 
- .. code:: bash
- 
-    sh buildScript.sh
- 
- Alternatively you can **build the project manually**:
- 
- 1. Install `XercesC <https://xerces.apache.org/xerces-c>`_ via a
-    package manager, e.g.:
- 
- .. code:: bash
- 
-     $ sudo apt install libxerces-c-dev
- 
- 2. Build the Road-generation tool with standard cmake commands, e.g.:
- 
- .. code:: bash
- 
-     $ mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
-     $ cmake --build .
- 
- *Note:* In principal, it is possible to compile and use the tool in
- Windows operating systems. However, this is experimental.
+The following **requirements** have to be satisfied:
+
+-  ``C++11``
+-  ``CMake 2.6 or higher``
+-  ``Python 3.6``
+-  ``xercesC``
+
+**Download** the repository as a zip-file and un-zip, or use git with
+
+.. code:: bash
+
+ # Clone Repository and open main folder
+ git clone git@github.com:ika-rwth-aachen/RoadGeneration.git
+ cd RoadGeneration
+
+A build script for Linux systems is provided and can be executed from
+the root directory with
+
+.. code:: bash
+
+ sh buildScript.sh
+
+Alternatively you can **build the project manually**:
+
+1. Install `XercesC <https://xerces.apache.org/xerces-c>`_ via a
+ package manager, e.g.:
+
+.. code:: bash
+
+  $ sudo apt install libxerces-c-dev
+
+2. Build the Road-generation tool with standard cmake commands, e.g.:
+
+.. code:: bash
+
+  $ mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
+  $ cmake --build .
+
+*Note:* In principal, it is possible to compile and use the tool in
+Windows operating systems. However, this is experimental.
 
 Variation tool
 ~~~~~~~~~~~~~~
 
- You can run the code from the ``variation`` subfolder, however, the
- variation tool can be installed system wide by using the install script
- in the root directory.
- 
- .. code:: bash
- 
-    sh install-variation.sh
+You can run the code from the ``variation`` subfolder, however, the
+variation tool can be installed system wide by using the install script
+in the root directory.
+
+.. code:: bash
+
+ sh install-variation.sh
 
 Usage
 -----
