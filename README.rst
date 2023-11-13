@@ -52,7 +52,7 @@ Documentation
 
 A simple but well designed C++ reference
 `documentation <https://ika-rwth-aachen.github.io/RoadGeneration/index.html>`__
-is provided.
+is provided. The input file format specification can be found `here <https://ika-rwth-aachen.github.io/RoadGeneration/inputdoc.html>`_
 
 Variation tool
 --------------
