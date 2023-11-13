@@ -4,8 +4,6 @@
    contain the root `toctree` directive.
 
 
-Welcome to Road's documentation!
-================================
 
 .. include:: ../README.rst
 
@@ -17,8 +15,6 @@ Welcome to Road's documentation!
     Road Generation <readmelink>
     Variation <variationlink>
 
-* :ref:`genindex`
-* :ref:`search`
 
 .. toctree::
     :maxdepth: 3

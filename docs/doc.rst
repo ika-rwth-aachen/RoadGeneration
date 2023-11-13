@@ -1,8 +1,8 @@
 ***************
-Documentation
+Class reference
 ***************
 
-This is the documentation for the Road Generation tool.
+This is the class reference for the Road Generation tool.
 
 interface.h
 ==============
