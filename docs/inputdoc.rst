@@ -719,6 +719,8 @@ Key points
 Example
 '''''''
 
+**Example linking**
+
 .. code-block:: xml
 
     <links refId="1" hdgOffset="0.0" xOffset="0" yOffset="0">
@@ -729,6 +731,39 @@ Example
         <segmentLink fromSegment="6" toSegment="1" fromRoad="2" toRoad="1" fromPos="end" toPos="start" />
     </links>
 
+
+**Complete input file**
+
+.. figure:: _static/link.png
+    :class: align-right
+    :width: 470
+
+.. code-block:: xml
+
+    <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+        <segments>
+        <connectingRoad id="1">
+                <road id="1" classification="main" >	
+                    <referenceLine>
+                        <line length="100"/>
+                    </referenceLine>
+                </road>
+            </connectingRoad>
+            <connectingRoad id="2">
+                <road id="1" classification="main" >	
+                <referenceLine>
+                        <spiral length="100"  Rs="-150" Re="0"/>
+                    </referenceLine>
+                </road>
+            </connectingRoad>
+
+        </segments>
+        
+        <links refId="1" hdgOffset="0.0" xOffset="0" yOffset="0">
+            <segmentLink fromSegment="1" toSegment="2" fromRoad="1" toRoad="1" fromPos="end" toPos="start" />
+        </links>
+
+    </roadNetwork>
 
 CloseRoads
 ----------
@@ -749,6 +784,7 @@ To smoothly close open connections, roads and their respective linkage informati
 
 Example
 '''''''
+**Example linking**
 
 .. code-block:: xml
 
@@ -759,3 +795,38 @@ Example
             <segmentLink fromSegment="7" toSegment="1" fromRoad="4" toRoad="1" fromPos="end" toPos="start" />
             <segmentLink fromSegment="7" toSegment="7" fromRoad="2" toRoad="3" fromPos="end" toPos="end" />
     </closeRoads>
+
+
+**Complete input file**
+
+.. figure:: _static/close.png
+    :class: align-right
+    :width: 470
+
+.. code-block:: xml
+
+    <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+        <segments>
+        <connectingRoad id="1">
+                <road id="1" classification="main" >	
+                    <referenceLine>
+                        <line length="100"/>
+                    </referenceLine>
+                </road>
+            </connectingRoad>
+            <connectingRoad id="2">
+                <road id="1" classification="main" >	
+                <referenceLine>
+                        <spiral length="100"  Rs="-150" Re="0"/>
+                    </referenceLine>
+                </road>
+            </connectingRoad>
+        </segments>
+        <links refId="1" hdgOffset="0.0" xOffset="0" yOffset="0">
+            <segmentLink fromSegment="1" toSegment="2" fromRoad="1" toRoad="1" fromPos="end" toPos="start" />
+        </links>
+        <closeRoads>
+            <segmentLink fromSegment="2" toSegment="1" fromRoad="1" toRoad="1" fromPos="end" toPos="start" />
+        </closeRoads>
+    </roadNetwork>
+

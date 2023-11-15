@@ -50,9 +50,9 @@ Fig.1: Possible workflow for the presend road variation tool.
 Documentation
 -------------
 
-A simple but well designed C++ reference
-`documentation <https://ika-rwth-aachen.github.io/RoadGeneration/index.html>`__
-is provided. The input file format specification can be found `here <https://ika-rwth-aachen.github.io/RoadGeneration/inputdoc.html>`_
+If you want to include the library in your project, a simple but well designed C++ reference
+`documentation <https://ika-rwth-aachen.github.io/RoadGeneration/index.html>`__ is provided.
+The input file format specification can be found `here <https://ika-rwth-aachen.github.io/RoadGeneration/inputdoc.html>`_.
 
 Variation tool
 --------------
