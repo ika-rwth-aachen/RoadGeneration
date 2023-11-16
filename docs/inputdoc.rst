@@ -719,6 +719,8 @@ Key points
 Example
 '''''''
 
+You can find a example of the linking tag, as well as a minimal working example below.
+
 **Example linking**
 
 .. code-block:: xml
@@ -784,6 +786,9 @@ To smoothly close open connections, roads and their respective linkage informati
 
 Example
 '''''''
+
+Below is an example of the close road tag and a minimal working example.
+
 **Example linking**
 
 .. code-block:: xml
@@ -830,3 +835,53 @@ Example
         </closeRoads>
     </roadNetwork>
 
+
+Elevation
+----------
+
+Elevation is not currently supported in the road generation tool. However, the input format does support it for connecting roads.
+
+
+elevationProfile
+''''''''''''''''''
+
+An elevation profile can be specified for each connecting road segment. A simple ramp or slope can be achieved by specifying the attributes listed below.
+
+.. csv-table::
+    :widths: 100 100 100 100 50
+
+    **Name** , **Type** , **Range** , **Description** , **Required**
+    sR , double , positive , radius of curvature at the start of segment, yes
+    relEndHeight , double , all , relative end height of segment , yes
+    eR , double , positive  , radius of curvature at the end of segment , yes
+
+
+elevationPoint
+''''''''''''''''
+
+If a more complex height profile is required, additional elevation points can be specified.
+
+.. csv-table::
+    :widths: 100 100 100 100 50
+
+    **Name** , **Type** , **Range** , **Description** , **Required**
+    s , double , positive , s offset of the elevation point, yes
+    height , double , all , height of elevation point , yes
+    r , double , positive  , radius of curvature on elevation point , yes
+
+
+
+**Example elevation profile**
+
+.. code-block:: xml
+
+    <connectingRoad id="1">
+        <road id="1" classification="main" >	
+            <referenceLine>
+                    <line length="100"/>
+            </referenceLine>
+            <elevationProfile sR="20" relEndHeight="20" eR="15"> 
+                <elevationPoint s="40" height="10" r="10" />
+            </elevationProfile>
+        </road>
+    </connectingRoad>
