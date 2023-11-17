@@ -148,8 +148,7 @@ The compiled application can be called from the root folder:
 This generates the output OpenDRIVE file next to the input file. The
 provided input file is checked against ``input.xsd``. Analogous the
 output file is checked against the ``output.xsd`` file which specifies
-the openDRIVE 1.5 standard. For a list of all parameters use the help
-flag of the tool.
+the openDRIVE standard. For a list of all parameters use:
 
 .. code:: bash
 
