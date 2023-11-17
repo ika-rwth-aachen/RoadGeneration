@@ -240,7 +240,6 @@ def run_variation(fname, n=20, s=False, k=False, o=None, e=False):
     cfg.k = k
     cfg.o = o
 
-    fname = fname
     nwName = str.split(str.split(fname,'/')[-1],'.')[0]
     inpDir = os.path.join(os.path.dirname(fname), "variation_output/")
 
