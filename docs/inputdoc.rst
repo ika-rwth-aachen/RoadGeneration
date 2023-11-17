@@ -708,6 +708,7 @@ SegmentLink
     fromPos, string , 'start' 'end' , specifies if the fromSegment should be linked at its beginning or end , yes
     toPos, string , 'start' 'end' , specifies if the toSegment should be linked at its beginning or end , yes
 
+
 Key points
 ^^^^^^^^^^
 
@@ -716,8 +717,8 @@ Key points
 * Segments have a seperate namespace from Roads, i.e. multiple roads with the ID 1 can exist under differen segments
 
 
-Example
-'''''''
+Examples
+''''''''
 
 You can find a example of the linking tag, as well as a minimal working example below.
 
