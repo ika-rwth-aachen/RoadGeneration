@@ -4,11 +4,13 @@ Road Generation Tool for Basic OpenDRIVE Road Networks
 .. image:: https://camo.githubusercontent.com/83d3746e5881c1867665223424263d8e604df233d0a11aae0813e0414d433943/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c6963656e73652d4d49542d626c75652e737667
 
 
-.. inclusion-marker
+
 
 
 About
 -----
+
+.. inclusion-marker
 
 
 Simulation is a valuable building block for the verification and
@@ -50,7 +52,7 @@ Fig.1: Possible workflow for the presend road variation tool.
 Documentation
 -------------
 
-If you want to include the library in your project, a simple but well designed C++ reference
+If you want to include the library in a project, a simple but well designed C++ reference
 `documentation <https://ika-rwth-aachen.github.io/RoadGeneration/index.html>`__ is provided.
 The input file format specification can be found `here <https://ika-rwth-aachen.github.io/RoadGeneration/inputdoc.html>`_.
 
