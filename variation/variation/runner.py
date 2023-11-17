@@ -11,9 +11,58 @@ from variation import dependencySolver as ds
 from ctypes import *
 
 
-args = None #global args object
+class config:
+    fname: str
+    o: str
+    n: int = 20
+    s: bool = True
+    e: bool = True
+    k: bool = True
+    inputDir: str
+    newName: str
 
-def is_var(arg): #method just checks if the string validates against the RE
+def parse_args():
+    #parsing args-------------------------------------
+    cfg = config()
+
+    print("-- Let's start the road network variation")
+    argParse = argparse.ArgumentParser()
+    argParse.add_argument('-fname', help='path to template file', metavar='<TemplateFilename>')
+    argParse.add_argument('-o', help='set output name', metavar='<out filename>')
+    argParse.add_argument('-n', help='number of variations', metavar='<int>', type=int, default=20)
+    argParse.add_argument('-e', help='generate example template', action='store_true')
+    argParse.add_argument('-k', help='keep xml files', action='store_true')
+    argParse.add_argument('-s', help='suppress console output', action='store_true')
+    args = argParse.parse_args()    
+
+    
+    if args.e:
+            copyTemplate()
+            print("copied tmpl file!")
+            exit(0)
+
+    if args.fname == None:
+        if args.e == None:
+            print("Error:\n-fname <FileName> required.\nUse -h for further help.")
+        return
+
+    fname = args.fname
+    nwName = str.split(str.split(fname,'/')[-1],'.')[0]
+    inpDir = os.path.join(os.path.dirname(fname), "variation_output/")
+
+    cfg.s = args.s
+    cfg.e = args.e
+    cfg.n = args.n
+    cfg.k = args.k
+    cfg.o = args.o
+    cfg.inputDir = inpDir
+    cfg.newName = nwName
+    cfg.fname = args.fname
+
+    print(cfg)
+    return cfg
+
+def is_var(arg): #method checks if the string validates against the RE
     m = re.search('\$\{.*\}', arg)
     if m==None:
         return False
@@ -21,7 +70,7 @@ def is_var(arg): #method just checks if the string validates against the RE
         return True
 
 def get_var_val(key, ii, varDict):
-    """Gets an input in the likes of ${var} and returns the corresponding var value from the dict
+    """Gets an input in form of ${var} and returns the corresponding var value from the dict
 
     Parameters
     ----------
@@ -93,7 +142,7 @@ def generateVar(var, n):
     return val
 
 
-def writeTreesToXML(n, tree, inpDir, nwName, varDict):
+def writeTreesToXML(cfg, tree, varDict):
     """Saves n revs of the tree to the inpDir as an xml file
 
     Parameters
@@ -110,18 +159,18 @@ def writeTreesToXML(n, tree, inpDir, nwName, varDict):
         dict containing array of vars
     """
   
-    for i in range(n):
+    for i in range(cfg.n):
         cpTree = copy.deepcopy(tree)
 
         if not cpTree.getroot().find('vars') == None:
             cpTree.getroot().remove(cpTree.getroot().find('vars'))
 
         find_var(cpTree.getroot(), i, varDict)        
-        tmpName = inpDir+ nwName + '_rev' + str(i) + '.xml'               
+        tmpName = cfg.inputDir+ cfg.newName + '_rev' + str(i) + '.xml'               
         cpTree.write(tmpName)
 
 
-def executePipeline(tree, inpDir, varDict):
+def executePipeline(cfg, tree, varDict):
     """This method calls the roadGen Lib function for every xml file in the input dir
 
     Parameters
@@ -149,32 +198,32 @@ def executePipeline(tree, inpDir, varDict):
     xml_path = os.path.join(os.path.dirname(__file__), "resources/xml")#xml path argument for lib
     argXMLPath = c_char_p(xml_path.encode('utf-8'))
 
-    for filename in os.listdir(inpDir):
+    for filename in os.listdir(cfg.inputDir):
         if filename.endswith(".xml"): 
             
-            argName = (inpDir+filename)        
+            argName = (cfg.inputDir+filename)        
             argFilename = c_char_p(argName.encode('utf-8')) #execute "main" function from lib 
                
-            roadgen.setSilentMode(c_bool(args.s))
+            roadgen.setSilentMode(c_bool(cfg.s))
             roadgen.setFileName(argFilename)
             roadgen.setXMLSchemaLocation(argXMLPath)
-            if args.o:
-                outArgs = c_char_p((inpDir + args.o+"_rev"+str(c)).encode('utf-8'))
+            if cfg.o:
+                outArgs = c_char_p((cfg.inputDir + cfg.o+"_rev"+str(c)).encode('utf-8'))
                 roadgen.setOutputName(outArgs)
             roadgen.execPipeline()
             c += 1
             
 
-def initDirectories(inpDir):
-    """This method inits the input directory
+def initDirectories(cfg):
+    """This method creates the input directory
 
     Parameters
     ----------    
     inpDir: str
         input directory that will be created
     """
-    if not os.path.exists(inpDir ):
-        os.makedirs(inpDir )
+    if not os.path.exists(cfg.inputDir):
+        os.makedirs(cfg.inputDir)
 
 
 def copyTemplate():
@@ -182,66 +231,69 @@ def copyTemplate():
     """
     shutil.copy(os.path.join(os.path.dirname(__file__), "resources/network.tmpl"), "network_example.tmpl")
 
-def run():
-    #parsing args-------------------------------------
-    global args
-    print("-- Let's start the road network variation")
-    argParse = argparse.ArgumentParser()
-    argParse.add_argument('-fname', help='path to template file', metavar='<TemplateFilename>')
-    argParse.add_argument('-o', help='set output name', metavar='<out filename>')
-    argParse.add_argument('-n', help='number of variations', metavar='<int>', type=int, default=20)
-    argParse.add_argument('-e', help='generate example template', action='store_true')
-    argParse.add_argument('-k', help='keep xml files', action='store_false')
-    argParse.add_argument('-s', help='suppress console output', action='store_true')
-    args = argParse.parse_args()    
 
-    
-    if args.e:
-            copyTemplate()
-            print("copied tmpl file!")
+def run_variation(fname, n=20, s=False, k=False, o=None, e=False):
+    cfg = config()
+    cfg.s = s
+    cfg.e = e
+    cfg.n = n
+    cfg.k = k
+    cfg.o = o
 
-    if args.fname == None:
-        if args.e == None:
-            print("Error:\n-fname <FileName> required.\nUse -h for further help.")
-        return
-
-    n = args.n
-    clearOutputFolder = args.k   
-    fname = args.fname
+    fname = fname
     nwName = str.split(str.split(fname,'/')[-1],'.')[0]
     inpDir = os.path.join(os.path.dirname(fname), "variation_output/")
-    initDirectories(inpDir)  
+
+    cfg.inputDir = inpDir
+    cfg.newName = nwName
+    print(cfg.inputDir)
+    print(cfg.newName)
+    cfg.fname = fname
+    if cfg.e:
+        copyTemplate()
+        print("copied tmpl file!")
+        exit(0)
+
+    execute(cfg)
+
+def execute(cfg):
+    print(cfg.inputDir)
+    initDirectories(cfg)  
 
     #init --------------------------------------------
-    tree = ET.parse(args.fname)
+    tree = ET.parse(cfg.fname)
     vars = tree.getroot().find('vars')
     varDict = {}
     #reading values-----------------------------------
     if not vars == None:
         for var in vars:
-            val = generateVar(var, n)
+            val = generateVar(var, cfg.n)
             varDict.update({var.get('id'): val})
 
     #solving equations------------------------------------
 
-        varList = ds.getVarLists(varDict, n)
-        varDict = ds.solveEQ(varList, n)
+        varList = ds.getVarLists(varDict, cfg.n)
+        varDict = ds.solveEQ(varList, cfg.n)
     else:
         print("No variables declared. Running only one iteration!")
         n = 1
     #clear input folder
-    files = glob.glob(inpDir+'*')
+    files = glob.glob(cfg.inputDir+'*')
     for f in files:
         os.remove(f)
 
-    writeTreesToXML(n, tree, inpDir, nwName, varDict)
-    executePipeline(tree, inpDir, varDict)
+    writeTreesToXML(cfg, tree, varDict)
+    executePipeline(cfg, tree, varDict)
 
     #clear input folder (again)
-    if clearOutputFolder :
-        files = glob.glob(inpDir+'*.xml')
+    if not cfg.k:
+        files = glob.glob(cfg.inputDir+'*.xml')
         for f in files:
             os.remove(f)
+
+def run():
+    cfg = parse_args()
+    execute(cfg)
 
 if __name__ == '__main__':
     run()
