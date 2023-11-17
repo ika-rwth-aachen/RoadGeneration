@@ -232,7 +232,7 @@ def copyTemplate():
     shutil.copy(os.path.join(os.path.dirname(__file__), "resources/network.tmpl"), "network_example.tmpl")
 
 
-def run_variation(fname, n=20, s=False, k=False, o=None, e=False):
+def run_variation(fname, n=20, s=True, k=False, o=None, e=False):
     cfg = config()
     cfg.s = s
     cfg.e = e
