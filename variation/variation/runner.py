@@ -251,7 +251,6 @@ def run_variation(fname, n=20, s=False, k=False, o=None, e=False):
     if cfg.e:
         copyTemplate()
         print("copied tmpl file!")
-        exit(0)
 
     execute(cfg)
 
