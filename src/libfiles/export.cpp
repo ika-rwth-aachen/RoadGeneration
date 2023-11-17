@@ -157,11 +157,14 @@ EXPORTED int executePipeline(char* file)
 	}
 
 	//warning handling
-	if(setting.warnings > 0)
+	if(!setting.silentMode)
 	{
-		cout << "\nFinished with " << setting.warnings << " warning(s), check out the error log for more information." << endl;
-	}else{
-		cout <<"\nFinished successfully" << endl;
+		if(setting.warnings > 0)
+		{	
+				cout << "\nFinished with " << setting.warnings << " warning(s), check out the error log for more information." << endl;
+		}else{
+			cout <<"\nFinished successfully" << endl;
+		}
 	}
 
 	//Cleanup ----------------

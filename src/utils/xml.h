@@ -73,7 +73,8 @@ int validateInput(char *file, xmlTree &xmlInput)
  */
 int validateOutput(roadNetwork &data)
 {
-    cout << "Validating output" << endl;
+    if(!setting.silentMode)
+        cout << "Validating output" << endl;
     // setup file
     string file = data.outputFile;
     file.append(".xodr");
