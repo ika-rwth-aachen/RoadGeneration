@@ -72,9 +72,9 @@ int connectingRoad(DOMElement *node, roadNetwork &data)
     if(NULL != elevationProfileNode)
     {
 
-        double startR                       = readDoubleAttrFromNode(elevationProfileNode, "startR");
-        double endElevationHeight           = readDoubleAttrFromNode(elevationProfileNode, "endElevation");
-        double endR                         = readDoubleAttrFromNode(elevationProfileNode, "endR");
+        double startR                       = readDoubleAttrFromNode(elevationProfileNode, "startRadius");
+        double endElevationHeight           = readDoubleAttrFromNode(elevationProfileNode, "heightDifference");
+        double endR                         = readDoubleAttrFromNode(elevationProfileNode, "endRadius");
 
         elevationProfile sEp; //TODO: check why this is not destructed when leaving scope
         sEp.sOffset = 0;
@@ -89,7 +89,7 @@ int connectingRoad(DOMElement *node, roadNetwork &data)
             elevationProfile ep; //TODO: check why this is not destructed when leaving scope
             ep.sOffset = readDoubleAttrFromNode(itt, "s");
             ep.tOffset = readDoubleAttrFromNode(itt, "height");
-            ep.radius  = readDoubleAttrFromNode(itt, "r");
+            ep.radius  = readDoubleAttrFromNode(itt, "R");
             cout << "found elevation point " << ep.inputId << " " << ep.sOffset << " " << ep.tOffset << " " << ep.radius << endl;
             r.elevationProfiles.push_back(ep);
         }

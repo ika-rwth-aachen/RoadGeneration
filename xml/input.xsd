@@ -162,9 +162,9 @@
     <xs:sequence>
         <xs:element name="elevationPoint" type="elevationPointType" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
-    <xs:attribute name="sR" type="positiveDouble" use="required"/>
-    <xs:attribute name="relEndHeight" type="xs:double" use="required"/>
-    <xs:attribute name="eR" type="positiveDouble" use="required"/>
+    <xs:attribute name="startRadius" type="positiveDouble" use="required"/>
+    <xs:attribute name="heightDifference" type="xs:double" use="required"/>
+    <xs:attribute name="endRadius" type="positiveDouble" use="required"/>
 </xs:complexType>
 
 <xs:complexType name="elevationPointType">
@@ -179,7 +179,7 @@
     </xs:annotation>
     <xs:attribute name="s" type="positiveDouble" use="required"/>
     <xs:attribute name="height" type="xs:double" use="required"/>
-    <xs:attribute name="r" type="xs:double" use="required"/>
+    <xs:attribute name="R" type="xs:double" use="required"/>
 </xs:complexType>
 
 <xs:complexType name="roadTypeRoundAbout">
