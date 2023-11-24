@@ -846,7 +846,7 @@ Elevation is not currently supported in the road generation tool. However, the i
 elevationProfile
 ''''''''''''''''''
 
-An elevation profile can be specified for each connecting road segment with an `elevationPoint` tag. A simple ramp or slope can be achieved by specifying the attributes listed below.
+An elevation profile can be specified for each connecting road segment with an `elevationPoint` tag. A simple ramp or slope can be achieved by specifying the attributes listed below. The `heightDifference` is relative to the height of the segment start (at `s=0`).
 
 .. csv-table::
     :widths: 100 100 100 100 50
@@ -860,7 +860,7 @@ An elevation profile can be specified for each connecting road segment with an `
 elevationPoint
 ''''''''''''''''
 
-If a more complex height profile is required, additional elevation points can be specified with the `elevationPoint` tag.
+If a more complex height profile is required, additional elevation points can be specified with the `elevationPoint` tag. Elevation points are specified relative to the height of the segment start (at `s=0`).
 
 .. csv-table::
     :widths: 100 100 100 100 50
