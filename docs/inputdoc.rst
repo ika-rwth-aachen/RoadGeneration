@@ -852,9 +852,9 @@ An elevation profile can be specified for each connecting road segment with an `
     :widths: 100 100 100 100 50
 
     **Name** , **Type** , **Range** , **Description** , **Required**
-    sR , double , positive , radius of curvature at the start of segment, yes
-    relEndHeight , double , all , relative end height of segment , yes
-    eR , double , positive  , radius of curvature at the end of segment , yes
+    startRadius , double , positive , radius of curvature at the start of segment, yes
+    heightDifference , double , all , relative end height of segment , yes
+    endRadius , double , positive  , radius of curvature at the end of segment , yes
 
 
 elevationPoint
@@ -868,7 +868,7 @@ If a more complex height profile is required, additional elevation points can be
     **Name** , **Type** , **Range** , **Description** , **Required**
     s , double , positive , s offset of the elevation point, yes
     height , double , all , height of elevation point , yes
-    r , double , positive  , radius of curvature on elevation point , yes
+    R , double , positive  , radius of curvature on elevation point , yes
 
 
 
@@ -881,8 +881,8 @@ If a more complex height profile is required, additional elevation points can be
             <referenceLine>
                     <line length="100"/>
             </referenceLine>
-            <elevationProfile sR="20" relEndHeight="20" eR="15"> 
-                <elevationPoint s="40" height="-10" r="10" />
+            <elevationProfile startRadius="20" heightDifference="20" endRadius="15"> 
+                <elevationPoint s="40" height="-10" R="10" />
             </elevationProfile>
         </road>
     </connectingRoad>
