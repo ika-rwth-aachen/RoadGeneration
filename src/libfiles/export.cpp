@@ -48,12 +48,9 @@ using namespace std;
 settings setting;
 
 EXPORTED void setFileName(char* file){
-	_fileName = file;
+	_filename = file;
 }
 
-EXPORTED void setOverwriteLog(bool b){
-	setting.overwriteLog = b;
-}
 
 EXPORTED void setLogFile(char* file){
 	_logfile = file;
@@ -65,7 +62,7 @@ EXPORTED void setOutputName(char* outName){
 }
 
 EXPORTED int execPipeline(){
-	return executePipeline(_fileName);
+	return executePipeline(_filename);
 }
 
 EXPORTED void setSilentMode(bool sMode){
@@ -90,7 +87,7 @@ EXPORTED int executePipeline(char* file)
 		_outName = file;
 	}
 
-	(void)! freopen(_logfile.c_str(), (setting.overwriteLog)? "w":"a", stderr); //(void)! suppresses the unused return warning..
+	(void)! freopen(_logfile.c_str(), "a", stderr); //(void)! suppresses the unused return warning..
 
 	char dt[100];
 	getTimeStamp(dt);
@@ -171,5 +168,16 @@ EXPORTED int executePipeline(char* file)
 
 	terminateXMLUtils();
 
+	return 0;
+}
+
+EXPORTED int executePipelineCfg(r_config cfg)
+{
+	setting.silentMode = cfg.silentMode;
+	setting.xmlSchemaLocation = cfg.xmlSchemeLocation;
+	setFileName(cfg.filename);
+	//if(cfg.outputName != "")
+	//	setOutputName(cfg.outputName);
+	execPipeline();
 	return 0;
 }

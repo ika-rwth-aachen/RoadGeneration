@@ -25,10 +25,19 @@
 
 #include<string>
 
-bool _setOutput = false;
-char* _fileName;
-std::string _outName = "";
+struct r_config{
+    bool silentMode = false;
+    char* filename;
+    char* outputName;
+    char *xmlSchemeLocation;
+};
+
+
 std::string _logfile = "log.txt";
+bool _setOutput = false;
+char* _filename;
+std::string _outName = "";
+
 
 /**
  * @brief Sets the filename of the input file
@@ -49,16 +58,21 @@ extern "C" EXPORTED void setXMLSchemaLocation(char* file);
 extern "C" EXPORTED void setLogFile(char* file);
 
 /**
- * @brief execute the pippeline on fileName that is stored in settings
+ * @brief execute the pippeline on filename that is stored in settings
  * 
  */
 extern "C" EXPORTED int execPipeline();
 
 /**
- * @brief execute the pipeline on given fileName
+ * @brief execute the pipeline on given filename
  * @param file filename to run the pipeline on
  */
 extern "C" EXPORTED int executePipeline(char* file);
+/**
+ * @brief execute the pipeline on given filename provided a config file
+ * @param file filename to run the pipeline on
+ */
+extern "C" EXPORTED int executePipelineCfg(r_config cfg);
 
 /**
  * @brief set the output file name
@@ -71,13 +85,6 @@ extern "C" EXPORTED void setOutputName(char* file);
  * @param sMode sets silent mode to True or False
  */
 extern "C" EXPORTED void setSilentMode(bool sMode);
-
-/**
- * @brief set overwriting the error log to ture or false
- *  @param b true if errorlog should be overwritten
- */
-extern "C" EXPORTED void setOverwriteLog(bool b);
-
 
 
 #endif

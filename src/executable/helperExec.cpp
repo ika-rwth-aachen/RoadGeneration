@@ -16,18 +16,16 @@
  */
 #include "helperExec.h"
 
-using namespace std;
 
 const char *HELP_MESSAGE =
   "\nRoad Generation \n\n"
   "Usage: \n"
-  "    road-generation <fileName>       Generates a .xodr file from input file.\n"
+  "    road-generation <filename>       Generates a .xodr file from input file.\n"
   "\nOptions:\n"
   "    -h                               Display help message.\n"
   "    -s                               Disable console output.\n"
   "    -d <fileDir>                     Specify output file directory.\n"
-  "    -o <fileName>                    Specify output file name.\n"
-  "    -k                               Keep logfile. Log will be overwritten if this is not set.\n\n";
+  "    -o <filename>                    Specify output file name.\n";
 
 
 /**
@@ -47,7 +45,7 @@ void printHelpMessage()
  * @param settings setting struct to store the parsed parameter
  * @return int error code
  */
-int parseArgs(int argc, char **argv, settingsExec &settings) {
+int parseArgs(int argc, char **argv, config &settings) {
     bool foundFile = false, setOutputName = false;
     char defaultPath[]="";
     settings.outputName = defaultPath;    
@@ -81,10 +79,6 @@ int parseArgs(int argc, char **argv, settingsExec &settings) {
                     settings.silentMode = true;
                 break;
 
-                case 'k':
-                    settings.overwriteLog = false;
-                break;
-
                 default:
                     std::cout << "ERR: invalid arguments!" << std::endl;
                     return -1;
@@ -92,7 +86,7 @@ int parseArgs(int argc, char **argv, settingsExec &settings) {
         }
         else{
             foundFile = true;
-            settings.fileName = argv[i];
+            settings.filename = argv[i];
         }
     }
 
@@ -101,7 +95,7 @@ int parseArgs(int argc, char **argv, settingsExec &settings) {
         return -1;
     }
 
-    if(!setOutputName) settings.outputName = settings.fileName;
+    if(!setOutputName) settings.outputName = settings.filename;
     
 
     return 0;
