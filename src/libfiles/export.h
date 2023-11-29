@@ -33,10 +33,7 @@ struct r_config{
 };
 
 
-std::string _logfile = "log.txt";
-bool _setOutput = false;
-char* _filename;
-std::string _outName = "";
+
 
 
 /**

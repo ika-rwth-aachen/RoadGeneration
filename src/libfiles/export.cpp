@@ -47,21 +47,21 @@ using namespace std;
 settings setting;
 
 EXPORTED void setFileName(char* file){
-	_filename = file;
+	setting.filename = file;
 }
 
 
 EXPORTED void setLogFile(char* file){
-	_logfile = file;
+	setting.logfile = file;
 }
 
 EXPORTED void setOutputName(char* outName){
-	_outName = outName;
-	_setOutput = true;
+	setting.outname = outName;
+	setting.outputNameSet = true;
 }
 
 EXPORTED int execPipeline(){
-	return executePipeline(_filename);
+	return executePipeline(setting.filename);
 }
 
 EXPORTED void setSilentMode(bool sMode){
@@ -77,18 +77,20 @@ EXPORTED void setXMLSchemaLocation(char* file){
 EXPORTED int executePipeline(char* file)
 {
 
+	char dt[100];//stores timestamp as string
+
 	if (file == NULL){
 		cout << "ERR: no file has been provided!" << endl;
 		return -1;
 	}
 
-	if(!_setOutput){
-		_outName = file;
+	if(!setting.outputNameSet){
+		setting.outname = file;
 	}
 
-	(void)! freopen(_logfile.c_str(), "a", stderr); //(void)! suppresses the unused return warning..
+	(void)! freopen(setting.logfile.c_str(), "a", stderr); //(void)! suppresses the unused return warning..
 
-	char dt[100];
+
 	getTimeStamp(dt);
 	cerr << "\n" << dt << " Error log for run with attribute: " << file << endl;
 
@@ -107,7 +109,7 @@ EXPORTED int executePipeline(char* file)
 	xmlTree inputxml;
 
 	roadNetwork data;
-	string outputFile = _outName;
+	string outputFile = setting.outname;
 	data.outputFile = outputFile.substr(0, outputFile.find(".xml"));
     data.outputFile = data.outputFile.substr(0, outputFile.find(".xodr"));
 

@@ -185,7 +185,7 @@ public:
         }
         catch (const XMLException &toCatch)
         {
-            cout << "something wrong in xmlreader" << endl;
+            cout << "ERR: in initializing xml Tree" << endl;
             return;
         }
     }
