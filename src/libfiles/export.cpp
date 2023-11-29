@@ -34,7 +34,6 @@
 #endif
 #endif
 
-std::string::size_type st;
 using namespace std;
 
 #include "utils/settings.h"

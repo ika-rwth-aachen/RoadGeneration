@@ -103,8 +103,9 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     // calculate offsets
     double sOffset = 0;
     if (cA)
-        sOffset = stod(readStrAttrFromNode(cA, "gap"), &st);
-
+    {
+        sOffset = stod(readStrAttrFromNode(cA, "gap"), nullptr);
+    }
     sOffMain = sOffset;
     sOffAdd1 = sOffset;
     sOffAdd2 = sOffset;
