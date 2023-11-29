@@ -22,6 +22,8 @@
 using namespace std;
 std::string _logfile = "log.txt";
 
+r_config cfg;
+
 
 /**
  * @brief main function that calls the roadgeneration library functions
@@ -39,12 +41,16 @@ int main(int argc, char** argv){
     if (parseArgs(argc, argv, settings)){
         return -1;
     }
-
-    setFileName(settings.filename);
-    setXMLSchemaLocation(&schemaLocation[0]);
-    setOutputName(settings.outputName);
-    setSilentMode(settings.silentMode);
-    execPipeline();
+    cfg.silentMode = settings.silentMode;
+    cfg.filename = settings.filename;
+    cfg.xmlSchemeLocation = &schemaLocation[0];
+    cfg.outputName = settings.outputName;
+    cout << cfg.outputName << endl;
+    //setFileName(settings.filename);
+    //setXMLSchemaLocation(&schemaLocation[0]);
+    //setOutputName(settings.outputName);
+    //setSilentMode(settings.silentMode);
+    executePipelineCfg(cfg);
 
     return 0;
 }

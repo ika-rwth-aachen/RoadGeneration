@@ -25,16 +25,14 @@
 
 #include<string>
 
+
+
 struct r_config{
     bool silentMode = false;
     char* filename;
     char* outputName;
     char *xmlSchemeLocation;
 };
-
-
-
-
 
 /**
  * @brief Sets the filename of the input file

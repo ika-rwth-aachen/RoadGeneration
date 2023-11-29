@@ -46,6 +46,7 @@ void printHelpMessage()
  * @return int error code
  */
 int parseArgs(int argc, char **argv, config &settings) {
+    
     bool foundFile = false, setOutputName = false;
     char defaultPath[]="";
     settings.outputName = defaultPath;    

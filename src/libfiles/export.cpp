@@ -77,12 +77,23 @@ EXPORTED void setXMLSchemaLocation(char* file){
 EXPORTED int executePipeline(char* file)
 {
 
-	char dt[100];//stores timestamp as string
-
 	if (file == NULL){
 		cout << "ERR: no file has been provided!" << endl;
 		return -1;
 	}
+
+	
+	// --- initialization ------------------------------------------------------
+
+	xmlTree inputxml;
+	roadNetwork data;
+	string outputFile = setting.outname;
+	char dt[100];//stores timestamp as string
+
+	data.outputFile = outputFile.substr(0, outputFile.find(".xml"));
+    data.outputFile = data.outputFile.substr(0, outputFile.find(".xodr"));
+	
+	setting.warnings = 0;
 
 	if(!setting.outputNameSet){
 		setting.outname = file;
@@ -104,16 +115,6 @@ EXPORTED int executePipeline(char* file)
 		printLogo();
 	}
 
-	// --- initialization ------------------------------------------------------
-
-	xmlTree inputxml;
-
-	roadNetwork data;
-	string outputFile = setting.outname;
-	data.outputFile = outputFile.substr(0, outputFile.find(".xml"));
-    data.outputFile = data.outputFile.substr(0, outputFile.find(".xodr"));
-
-	setting.warnings = 0;
 	
 	// --- pipeline ------------------------------------------------------------
 
@@ -140,8 +141,6 @@ EXPORTED int executePipeline(char* file)
 		return -1;
 	}
 
-	//resolveLaneLinkConflicts(data);
-
 	if (createXMLXercesC(data))
 	{
 		cerr << "ERR: error during createXML" << endl;
@@ -154,7 +153,7 @@ EXPORTED int executePipeline(char* file)
 		return -1;
 	}
 
-	//warning handling
+	//handle warnings
 	if(!setting.silentMode)
 	{
 		if(setting.warnings > 0)
@@ -174,11 +173,10 @@ EXPORTED int executePipeline(char* file)
 
 EXPORTED int executePipelineCfg(r_config cfg)
 {
+	setOutputName(cfg.outputName);
 	setting.silentMode = cfg.silentMode;
 	setting.xmlSchemaLocation = cfg.xmlSchemeLocation;
 	setFileName(cfg.filename);
-	//if(cfg.outputName != "")
-	//	setOutputName(cfg.outputName);
 	execPipeline();
 	return 0;
 }
