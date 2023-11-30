@@ -74,9 +74,9 @@ This repository provides a tool for the generation of road networks.
 Here, the main folders are named:
 
 -  ``doc``: Resources for documentation
--  ``io``: Sample input files
+-  ``examples``: Examlpe and Template files that showcase minimal working input networks
 -  ``src``: Source code
--  ``test``: Test files and their desired OpenDRIVE outputs
+-  ``test``: Test file .xml and .xodr pairs
 -  ``xml``: Contains the XSD validation files
 -  ``variation``: Python based variation tool for the road generator
 
