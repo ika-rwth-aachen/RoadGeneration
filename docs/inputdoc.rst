@@ -1,4 +1,4 @@
-Input file format
+Input File Format
 =================
 
 This section explains the input format and provides examples for basic usecases. Furthermore a variety of template files can be found in `io/Templates`. If the input `xsd` scheme was subject to change, this documentation needs to be updated.

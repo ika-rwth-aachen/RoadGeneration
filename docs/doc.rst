@@ -1,5 +1,5 @@
 ***************
-Class reference
+Class Reference
 ***************
 
 This is the class reference for the Road Generation tool.
