@@ -34,7 +34,6 @@
 #endif
 #endif
 
-using namespace std;
 
 #include "utils/settings.h"
 #include "utils/interface.h"
