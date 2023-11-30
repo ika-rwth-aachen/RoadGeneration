@@ -45,7 +45,6 @@ int main(int argc, char** argv){
     cfg.filename = settings.filename;
     cfg.xmlSchemeLocation = &schemaLocation[0];
     cfg.outputName = settings.outputName;
-    cout << cfg.outputName << endl;
     //setFileName(settings.filename);
     //setXMLSchemaLocation(&schemaLocation[0]);
     //setOutputName(settings.outputName);
