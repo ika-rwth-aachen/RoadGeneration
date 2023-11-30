@@ -74,7 +74,7 @@ This repository provides a tool for the generation of road networks.
 Here, the main folders are named:
 
 -  ``doc``: Resources for documentation
--  ``examples``: Examlpe and Template files that showcase minimal working input networks
+-  ``examples``: Examlpe and Template files that showcase minimal working inputs
 -  ``src``: Source code
 -  ``test``: Test file .xml and .xodr pairs
 -  ``xml``: Contains the XSD validation files
