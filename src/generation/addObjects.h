@@ -178,7 +178,7 @@ int addRoadWork(object o, road &r, int laneId)
     }
     else
     {
-        cerr << "ERR: Length of roadwork is longer than  laneSection." << endl;
+        std::cerr << "ERR: Length of roadwork is longer than  laneSection." << std::endl;
         return 1;
     }
 
@@ -258,12 +258,12 @@ int addBusStop(object o, road &r)
 
     if (addLaneWidening(r.laneSections, side, o.s - length / 2 - widening, widening, true))
         {
-            cerr << "ERR: error in addLaneWidening" << endl;
+            std::cerr << "ERR: error in addLaneWidening" << std::endl;
             return 1;
         }
     if (addLaneDrop(r.laneSections, side, o.s + length / 2, widening))
     {
-        cerr << "ERR: error in addLaneDrop" << endl;
+        std::cerr << "ERR: error in addLaneDrop" << std::endl;
         return 1;
     }
 
@@ -411,7 +411,7 @@ int addObjects(DOMElement* inRoad, road &r, roadNetwork &data)
  * @param controller    controllerof signal
  * @return int          error code
  */
-int addSignal(road &r, roadNetwork &data, double s, double t, string type, string subtype, int controller)
+int addSignal(road &r, roadNetwork &data, double s, double t, std::string type, std::string subtype, int controller)
 {
     if (controller == -1)
         controller = 1000 + r.junction * 100;

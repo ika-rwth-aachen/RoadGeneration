@@ -77,7 +77,7 @@ EXPORTED int executePipeline(char* file)
 {
 
 	if (file == NULL){
-		cout << "ERR: no file has been provided!" << endl;
+		std::cout << "ERR: no file has been provided!" << std::endl;
 		return -1;
 	}
 
@@ -86,7 +86,7 @@ EXPORTED int executePipeline(char* file)
 
 	xmlTree inputxml;
 	roadNetwork data;
-	string outputFile = setting.outname;
+	std::string outputFile = setting.outname;
 	char dt[100];//stores timestamp as string
 
 	data.outputFile = outputFile.substr(0, outputFile.find(".xml"));
@@ -102,15 +102,15 @@ EXPORTED int executePipeline(char* file)
 
 
 	getTimeStamp(dt);
-	cerr << "\n" << dt << " Error log for run with attribute: " << file << endl;
+	std::cerr << "\n" << dt << " Error log for run with attribute: " << file << std::endl;
 
 	if (setting.xmlSchemaLocation == ""){
-		cerr << "ERR: xml scheme  NOT SET" << endl;
+		std::cerr << "ERR: xml scheme  NOT SET" << std::endl;
 		return -1;
 	}
 
 	if(!setting.silentMode){
-		cout << file << endl;
+		std::cout << file << std::endl;
 		printLogo();
 	}
 
@@ -120,35 +120,35 @@ EXPORTED int executePipeline(char* file)
 
 	if (validateInput(file, inputxml))
 	{
-		cerr << "ERR: error in validateInput" << endl;
+		std::cerr << "ERR: error in validateInput" << std::endl;
 		return -1;
 	}
 
 	if (buildSegments(inputxml.getRootElement(), data))
 	{
-		cerr << "ERR: error in buildSegments" << endl;
+		std::cerr << "ERR: error in buildSegments" << std::endl;
 		return -1;
 	}
 	if (linkSegments(inputxml.getRootElement(), data))
 	{
-		cerr << "ERR: error in linkSegments" << endl;
+		std::cerr << "ERR: error in linkSegments" << std::endl;
 		return -1;
 	}
 	if (closeRoadNetwork(inputxml.getRootElement(), data))
 	{
-		cerr << "ERR: error in closeRoadNetwork" << endl;
+		std::cerr << "ERR: error in closeRoadNetwork" << std::endl;
 		return -1;
 	}
 
 	if (createXMLXercesC(data))
 	{
-		cerr << "ERR: error during createXML" << endl;
+		std::cerr << "ERR: error during createXML" << std::endl;
 		return -1;
 	}
 
 	if (validateOutput(data))
 	{
-		cerr << "ERR: error in validateOutput" << endl;
+		std::cerr << "ERR: error in validateOutput" << std::endl;
 		return -1;
 	}
 
@@ -157,9 +157,9 @@ EXPORTED int executePipeline(char* file)
 	{
 		if(setting.warnings > 0)
 		{	
-				cout << "\nFinished with " << setting.warnings << " warning(s), check out the error log for more information." << endl;
+				std::cout << "\nFinished with " << setting.warnings << " warning(s), check out the error log for more information." << std::endl;
 		}else{
-			cout <<"\nFinished successfully" << endl;
+			std::cout <<"\nFinished successfully" << std::endl;
 		}
 	}
 

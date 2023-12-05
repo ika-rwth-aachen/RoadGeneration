@@ -41,11 +41,11 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 {
     // create segment
     data.nSegment++;
-    vector<junction> junctions;
+    std::vector<junction> junctions;
     junctionGroup juncGroup;
 
     juncGroup.id = readIntAttrFromNode(node, "id"); 
-    juncGroup.name = "jg" + to_string(juncGroup.id);
+    juncGroup.name = "jg" + std::to_string(juncGroup.id);
 
     int inputSegmentId = readIntAttrFromNode(node, "id");
 
@@ -55,14 +55,14 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
     if (!circleRoad)
     {
-        cerr << "ERR: circleRoad is not found.";
+        std::cerr << "ERR: circleRoad is not found.\n";
         return 1;
     }
 
     // store properties of circleRoad
     double length = readDoubleAttrFromNode(getChildWithName(getChildWithName(circleRoad, "referenceLine"), "circle"),"length") ;
     double R = length / (2 * M_PI);
-    getChildWithName(getChildWithName(circleRoad, "referenceLine"), "circle")->setAttribute(X("R"), X(to_string(R).c_str()));
+    getChildWithName(getChildWithName(circleRoad, "referenceLine"), "circle")->setAttribute(X("R"), X(std::to_string(R).c_str()));
     
 
     double sOld;
@@ -75,7 +75,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         clockwise = true;
     if (abs(R) < 3)
     {
-        cerr << "ERR: radius of reference road in a roundabout have to be larger than 3.";
+        std::cerr << "ERR: radius of reference road in a roundabout have to be larger than 3.\n";
         return 1;
     }
 
@@ -138,7 +138,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         if (additionalRoad == NULL)
         {
-            cerr << "ERR: specified road in intersection" << cc << " is not found.";
+            std::cerr << "ERR: specified road in intersection" << cc << " is not found.\n";
             return 1;
         }
 
@@ -172,12 +172,12 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         road helpAdd;
         if (buildRoad(circleRoad, helpMain, 0, INFINITY, dummy, 0, 0, 0, 0))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         if (buildRoad(additionalRoad, helpAdd, 0, INFINITY, dummy, 0, 0, 0, 0))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
 
@@ -207,7 +207,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         if (sOffMain * 2 > length / nIp)
         {
-            cerr << "Length of roundabout is too short, overlapping roads." << endl;
+            std::cerr << "Length of roundabout is too short, overlapping roads." << std::endl;
             return 1;
         }
 
@@ -219,8 +219,8 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         //sanity checks
         if(sMain > length)
         {
-            throwError("Interesection point s from ref road "+ to_string(refId)  
-                + " to add road " + to_string(adId) + " is larger than the ref road's length");
+            throwError("Interesection point s from ref road "+ std::to_string(refId)  
+                + " to add road " + std::to_string(adId) + " is larger than the ref road's length");
             return 1;
         }
         //fint the length of the add road
@@ -235,8 +235,8 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         if(sAdd > adLength)
         {
-            throwError("Interesection point s from adRoad "+ to_string(adId)  
-                + " to ref road " + to_string(refId) + " is larger than the add road's length");
+            throwError("Interesection point s from adRoad "+ std::to_string(adId)  
+                + " to ref road " + std::to_string(refId) + " is larger than the add road's length");
             return 1;
         }
         //------end sanity checks
@@ -249,7 +249,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         // --- generate roads --------------------------------------------------
         if(!setting.silentMode)
-            cout << "\tGenerating roads for Roundabout" << endl;
+            std::cout << "\tGenerating roads for Roundabout" << std::endl;
         /*           
                     \___       ____/
                  id: 1         id: helper
@@ -280,7 +280,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         if (buildRoad(circleRoad, r1, sOld, sMain - sOffMain, dummy, sMain, iPx, iPy, iPhdg))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         nCount++;
@@ -300,12 +300,12 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         r2.isConnectingRoad = true;
         if (buildRoad(additionalRoad, r2, sAdd + sOffAdd, INFINITY, dummy, sAdd, iPx, iPy, iPhdg + phi))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         if (addObjects(additionalRoad, r2, data))
         {
-            cerr << "ERR: error in addObjects" << endl;
+            std::cerr << "ERR: error in addObjects" << std::endl;
             return 1;
         }
         nCount++;
@@ -320,7 +320,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
         {
             if (buildRoad(circleRoad, helper, sMain + sOffMain, sMain + 2 * sOffMain, dummy, sMain, iPx, iPy, iPhdg))
             {
-                cerr << "ERR: error in buildRoad" << endl;
+                std::cerr << "ERR: error in buildRoad" << std::endl;
                 return 1;
             }
         }
@@ -340,7 +340,7 @@ int roundAbout(const DOMElement* node, roadNetwork &data)
 
         // ---Generating Connecting Lanes ---------------------------------------
         if(!setting.silentMode)
-            cout << "\tGenerating Connecting Lanes" << endl;
+            std::cout << "\tGenerating Connecting Lanes" << std::endl;
 
         // max and min id's of laneSections
         int inner1, outer1, outer2, inner2, nLane;

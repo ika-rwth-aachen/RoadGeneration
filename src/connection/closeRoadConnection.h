@@ -34,7 +34,7 @@
  * @param phi2  angle of end point
  * @return int  error code
  */
-int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1, double x2, double y2, double phi2)
+int closeRoadConnection(std::vector<geometry> &geo, double x1, double y1, double phi1, double x2, double y2, double phi2)
 {
     // goal: compute new road from point 1 to point 2, preserving angles
 
@@ -85,12 +85,12 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
             double phiTmp = phi1 + M_PI / 2;
             if (addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp))
             {
-                cerr << "ERR: error in addArc function." << endl;
+                std::cerr << "ERR: error in addArc function." << std::endl;
                 return 1;
             }
             if (closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2))
             {
-                cerr << "ERR: error in closeRoadConnection function." << endl;
+                std::cerr << "ERR: error in closeRoadConnection function." << std::endl;
                 return 1;
             }
         }
@@ -111,12 +111,12 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
                 double phiTmp = phi1 + M_PI / 2;
                 if (addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp))
                 {
-                    cerr << "ERR: error in addArc function." << std::endl;
+                    std::cerr << "ERR: error in addArc function." << std::endl;
                     return 1;
                 }
                 if (closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2))
                 {
-                    cerr << "ERR: error in closeRoadConnection function." << endl;
+                    std::cerr << "ERR: error in closeRoadConnection function." << std::endl;
                     return 1;
                 }
             }
@@ -152,12 +152,12 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
                 double phiTmp = phi1 + M_PI / 2;
                 if (addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp))
                 {
-                    cerr << "ERR: error in addArc function." << endl;
+                    std::cerr << "ERR: error in addArc function." << std::endl;
                     return 1;
                 }
                 if (closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2))
                 {
-                    cerr << "ERR: error in closeRoadConnection function." << endl;
+                    std::cerr << "ERR: error in closeRoadConnection function." << std::endl;
                     return 1;
                 }
             }
@@ -169,7 +169,7 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
                 addLine(geo, x1, y1, phi1, iPx, iPy, phi1);
                 if (closeRoadConnection(geo, iPx, iPy, phi1, x2, y2, phi2))
                 {
-                    cerr << "ERR: error in closeRoadConnection function." << endl;
+                    std::cerr << "ERR: error in closeRoadConnection function." << std::endl;
                     return 1;
                 }
             }
@@ -190,12 +190,12 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
                 double phiTmp = phi1 + M_PI / 2;
                 if (addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp))
                 {
-                    cerr << "ERR: error in addArc function." << endl;
+                    std::cerr << "ERR: error in addArc function." << std::endl;
                     return 1;
                 }
                 if (closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2))
                 {
-                    cerr << "ERR: error in closeRoadConnection function." << endl;
+                    std::cerr << "ERR: error in closeRoadConnection function." << std::endl;
                     return 1;
                 }
             }
@@ -207,12 +207,12 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
                 double phiTmp = phi1 - M_PI / 2;
                 if (addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp))
                 {
-                    cerr << "ERR: error in addArc function." << endl;
+                    std::cerr << "ERR: error in addArc function." << std::endl;
                     return 1;
                 }
                 if (closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2))
                 {
-                    cerr << "ERR: error in closeRoadConnection function." << endl;
+                    std::cerr << "ERR: error in closeRoadConnection function." << std::endl;
                     return 1;
                 }
             }
@@ -229,7 +229,7 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
             addLine(geo, x1, y1, phi1, xTmp, yTmp, phi1);
             if (addArc(geo, xTmp, yTmp, phi1, x2, y2, phi2))
             {
-                cerr << "ERR: error in addArc function." << endl;
+                std::cerr << "ERR: error in addArc function." << std::endl;
                 return 1;
             }
         }
@@ -240,12 +240,12 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
             double yTmp = y2 - sin(phi2) * (d2 - d1);
             if (addArc(geo, x1, y1, phi1, xTmp, yTmp, phi2))
             {
-                cerr << "ERR: error in addArc function." << endl;
+                std::cerr << "ERR: error in addArc function." << std::endl;
                 return 1;
             }
             if (addLine(geo, xTmp, yTmp, phi2, x2, y2, phi2))
             {
-                cerr << "ERR: error in addLine function." << endl;
+                std::cerr << "ERR: error in addLine function." << std::endl;
                 return 1;
             }
         }
@@ -254,7 +254,7 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
         {
             if (addArc(geo, x1, y1, phi1, x2, y2, phi2))
             {
-                cerr << "ERR: error in addArc function." << endl;
+                std::cerr << "ERR: error in addArc function." << std::endl;
                 return 1;
             }
         }
@@ -265,7 +265,7 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
         // almost nothing to be done
         if (addLine(geo, x1, y1, phi1, x2, y2, phi2))
         {
-            cerr << "ERR: error in addLine function." << endl;
+            std::cerr << "ERR: error in addLine function." << std::endl;
             return 1;
         }
     }
@@ -290,12 +290,12 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
         double phiTmp = phi1 + 2 * alpha;
         if (addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp))
         {
-            cerr << "ERR: error in addArc function." << endl;
+            std::cerr << "ERR: error in addArc function." << std::endl;
             return 1;
         }
         if (closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2))
         {
-            cerr << "ERR: error in closeRoadConnection function." << endl;
+            std::cerr << "ERR: error in closeRoadConnection function." << std::endl;
             return 1;
         }
     }
@@ -317,12 +317,12 @@ int closeRoadConnection(vector<geometry> &geo, double x1, double y1, double phi1
         double phiTmp = phi1 + 2 * beta;
         if (addArc(geo, x1, y1, phi1, xTmp, yTmp, phiTmp))
         {
-            cerr << "ERR: error in addArc function." << endl;
+            std::cerr << "ERR: error in addArc function." << std::endl;
             return 1;
         }
         if (closeRoadConnection(geo, xTmp, yTmp, phiTmp, x2, y2, phi2))
         {
-            cerr << "ERR: error in closeRoadConnection function." << endl;
+            std::cerr << "ERR: error in closeRoadConnection function." << std::endl;
             return 1;
         }
     }

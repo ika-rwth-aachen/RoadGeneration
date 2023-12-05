@@ -540,7 +540,7 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
 
                 if (side == 0)
                 {
-                    cerr << "ERR: laneWidening with side = 0" << endl;
+                     std::cerr << "ERR: laneWidening with side = 0" <<  std::endl;
                     return 1;
                 }
 
@@ -556,7 +556,7 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
 
                 if (addLaneWidening(r.laneSections, side, s, ds, false))
                 {
-                    cerr << "ERR: error in addLaneWidening";
+                     std::cerr << "ERR: error in addLaneWidening";
                     return 1;
                 }
 
@@ -569,7 +569,7 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
 
                     if (addRestrictedAreaWidening(r.laneSections, side, s, ds, ds2))
                     {
-                        cerr << "ERR: error in addRestrictedAreaWidening" << endl;
+                         std::cerr << "ERR: error in addRestrictedAreaWidening" <<  std::endl;
                         return 1;
                     }
                 }
@@ -580,7 +580,7 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
 
                 if (side == 0)
                 {
-                    cerr << "ERR: laneWidening with side = 0" << endl;
+                     std::cerr << "ERR: laneWidening with side = 0" <<  std::endl;
                     return 1;
                 }
 
@@ -596,7 +596,7 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
 
                 if (addLaneDrop(r.laneSections, side, s, ds))
                 {
-                    cerr << "ERR: error in addLaneDrop";
+                     std::cerr << "ERR: error in addLaneDrop";
                     return 1;
                 }
 
@@ -609,7 +609,7 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
 
                     if (addRestrictedAreaDrop(r.laneSections, side, s, ds, ds2))
                     {
-                        cerr << "ERR: error in addRestrictedAreaDrop";
+                         std::cerr << "ERR: error in addRestrictedAreaDrop";
                         return 1;
                     }
                 }
@@ -621,7 +621,7 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
 
     double widening_s = setting.laneChange.s;
     double widening_ds = setting.laneChange.ds;
-    string active = "main";
+    std::string active = "main";
 
     if (automaticWidening != NULL)
     {
@@ -644,7 +644,7 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
         {
             if (laneWideningJunction(r, widening_s, widening_ds, 1, true, restricted))
             {
-                cerr << "ERR: error in laneWideningJunction";
+                 std::cerr << "ERR: error in laneWideningJunction\n";
                 return 1;
             }
         }
@@ -653,7 +653,7 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
 
             if (laneWideningJunction(r, widening_s, widening_ds, 1, true, restricted))
             {
-                cerr << "ERR: error in laneWideningJunction";
+                 std::cerr << "ERR: error in laneWideningJunction\n";
                 return 1;
             }
         }
@@ -661,7 +661,7 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
         {
             if (laneWideningJunction(r, widening_s, widening_ds, 1, true, restricted))
             {
-                cerr << "ERR: error in laneWideningJunction";
+                 std::cerr << "ERR: error in laneWideningJunction\n";
                 return 1;
             }
         }
@@ -713,14 +713,14 @@ int buildRoad(DOMElement* roadIn, road &r, double sStart, double sEnd, DOMElemen
     // generate geometries
     if (generateGeometries(roadIn, r, sStart, sEnd))
     {
-        cerr << "ERR: error in generateGeometries";
+         std::cerr << "ERR: error in generateGeometries";
         return 1;
     }
 
     // shift geometries
     if (shiftGeometries(r, sStart, sEnd, s0, x0, y0, phi0))
     {
-        cerr << "ERR: error in shiftGeometries";
+         std::cerr << "ERR: error in shiftGeometries";
         return 1;
     }
 
@@ -729,21 +729,21 @@ int buildRoad(DOMElement* roadIn, road &r, double sStart, double sEnd, DOMElemen
     {
         if (flipGeometries(r))
         {
-            cerr << "ERR: error in flipGeometries";
+             std::cerr << "ERR: error in flipGeometries";
             return 1;
         }
     }
     // add lanes
     if (addLanes(roadIn, r, mode))
     {
-        cerr << "ERR: error in addLanes";
+         std::cerr << "ERR: error in addLanes";
         return 1;
     }
 
     // // add lane section changes
     if (addLaneSectionChanges(roadIn, r, automaticWidening))
     {
-        cerr << "ERR: error in addLaneSectionChanges";
+         std::cerr << "ERR: error in addLaneSectionChanges";
         return 1;
     }
 

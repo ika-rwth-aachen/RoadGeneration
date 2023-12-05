@@ -29,7 +29,7 @@ extern settings setting;
 int closeRoadNetwork(const DOMElement* rootNode, roadNetwork &data)
 {
 	if(!setting.silentMode)
-		cout << "Processing closeRoadNetwork" << endl;
+		std::cout << "Processing closeRoadNetwork" << std::endl;
 
 	DOMElement* closeRoad = getChildWithName(rootNode, "closeRoads"); 
 	
@@ -55,8 +55,8 @@ int closeRoadNetwork(const DOMElement* rootNode, roadNetwork &data)
 		int toSegment = readIntAttrFromNode(segmentLink, "toSegment");
 		int fromRoadId = readIntAttrFromNode(segmentLink, "fromRoad");
 		int toRoadId = readIntAttrFromNode(segmentLink, "toRoad");
-		string fromPos = readStrAttrFromNode(segmentLink, "fromPos");
-		string toPos = readStrAttrFromNode(segmentLink, "toPos");
+		std::string fromPos = readStrAttrFromNode(segmentLink, "fromPos");
+		std::string toPos = readStrAttrFromNode(segmentLink, "toPos");
 		road fromRoad;
 		road toRoad;
 
@@ -122,14 +122,14 @@ int closeRoadNetwork(const DOMElement* rootNode, roadNetwork &data)
 			}
 			else
 			{
-				cerr << "ERR: wrong position for fromPos is specified." << endl;
-				cerr << "\t -> use 'start' or 'end'" << endl;
+				std::cerr << "ERR: wrong position for fromPos is specified." << std::endl;
+				std::cerr << "\t -> use 'start' or 'end'" << std::endl;
 				return 1;
 			}
 		}
 		if (!found)
 		{
-			cerr << "ERR: from road not found." << endl;
+			std::cerr << "ERR: from road not found." << std::endl;
 			return 1;
 		}
 
@@ -176,14 +176,14 @@ int closeRoadNetwork(const DOMElement* rootNode, roadNetwork &data)
 			}
 			else
 			{
-				cerr << "ERR: wrong position for toPos is specified." << endl;
-				cerr << "\t -> use 'start' or 'end'" << endl;
+				std::cerr << "ERR: wrong position for toPos is specified." << std::endl;
+				std::cerr << "\t -> use 'start' or 'end'" << std::endl;
 				return 1;
 			}
 		}
 		if (!found)
 		{
-			cerr << "ERR: to road not found." << endl;
+			std::cerr << "ERR: to road not found." << std::endl;
 			return 1;
 		}
 
@@ -195,7 +195,7 @@ int closeRoadNetwork(const DOMElement* rootNode, roadNetwork &data)
 		// --- build new geometry ----------------------------------------------
 		if (closeRoadConnection(rConnection.geometries, fromX, fromY, fromHdg, toX, toY, toHdg)) //the tohdg angle is wrong some of the time
 		{
-			cerr << "ERR: error in closeRoadConnection function." << endl;
+			std::cerr << "ERR: error in closeRoadConnection function." << std::endl;
 			return 1;
 		}
 
@@ -208,7 +208,7 @@ int closeRoadNetwork(const DOMElement* rootNode, roadNetwork &data)
 		}
 
 		// --- add lanes -------------------------------------------------------
-		vector<laneSection> secs;
+		std::vector<laneSection> secs;
 
 		// flip lanes if in false direction
 		if (fromPos == "start")
