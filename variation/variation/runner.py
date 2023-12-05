@@ -24,7 +24,7 @@ class config:
     fname: str
     o: str
     n: int = 20
-    s: bool = True
+    v: bool = True
     e: bool = True
     k: bool = True
     inputDir: str
@@ -41,7 +41,7 @@ def parse_args():
     argParse.add_argument('-n', help='number of variations', metavar='<int>', type=int, default=20)
     argParse.add_argument('-e', help='generate example template', action='store_true')
     argParse.add_argument('-k', help='keep xml files', action='store_true')
-    argParse.add_argument('-s', help='suppress console output', action='store_true')
+    argParse.add_argument('-v', help='print console output', action='store_false')
     args = argParse.parse_args()    
 
     
@@ -59,7 +59,7 @@ def parse_args():
     nwName = str.split(str.split(fname,'/')[-1],'.')[0]
     inpDir = os.path.join(os.path.dirname(fname), "variation_output/")
 
-    cfg.s = args.s
+    cfg.v = args.v
     cfg.e = args.e
     cfg.n = args.n
     cfg.k = args.k
@@ -118,8 +118,6 @@ def find_var(item, idx, varDict):
             if is_var(val):
                 child.attrib[key] = get_var_val(val, idx, varDict)
 
-def hasValue(key, varDict):
-    return key in varDict
 
 def generateVar(var, n):    
     """Generates a value for a given var node
@@ -179,18 +177,13 @@ def writeTreesToXML(cfg, tree, varDict):
         cpTree.write(tmpName)
 
 
-def executePipeline(cfg, tree, varDict):
+def executePipeline(cfg):
     """This method calls the roadGen Lib function for every xml file in the input dir
 
     Parameters
     ----------
-    tree: ElementTree
-        the tree struct generated from input
-    inpDir: str
-        input dir which contains the xml files
-    varDict: dict
-        dict containing array of vars
-    
+    cfg: config
+        Config struct
     """
 
     libpath = ""
@@ -213,23 +206,13 @@ def executePipeline(cfg, tree, varDict):
             argName = (cfg.inputDir+filename)        
             argFilename = c_char_p(argName.encode('utf-8')) #execute "main" function from lib 
                
-            #roadgen.setSilentMode(c_bool(cfg.s))
-            #roadgen.setFileName(argFilename)
-            #roadgen.setXMLSchemaLocation(argXMLPath)
-            #if cfg.o:
-            #    outArgs = c_char_p((cfg.inputDir + cfg.o+"_rev"+str(c)).encode('utf-8'))
-            #    roadgen.setOutputName(outArgs)
             rcfg = roadConfig()
-            rcfg.verbose = True
+            rcfg.verbose = cfg.v
             rcfg.filename = argFilename
             rcfg.outname = c_char_p("".encode('utf-8'))
             rcfg.xmllocation = argXMLPath
             roadgen.executePipelineCfg(rcfg)
             c += 1
-            
-
-
-
 
 def initDirectories(cfg):
     """This method creates the input directory
@@ -249,9 +232,9 @@ def copyTemplate():
     shutil.copy(os.path.join(os.path.dirname(__file__), "resources/network.tmpl"), "network_example.tmpl")
 
 
-def run_variation(fname, n=20, s=True, k=False, o=None, e=False):
+def run_variation(fname, n=20, v=True, k=False, o=None, e=False):
     cfg = config()
-    cfg.s = s
+    cfg.v = v
     cfg.e = e
     cfg.n = n
     cfg.k = k
@@ -267,7 +250,7 @@ def run_variation(fname, n=20, s=True, k=False, o=None, e=False):
     cfg.fname = fname
     if cfg.e:
         copyTemplate()
-        print("copied tmpl file!")
+        print("copied .tmpl file!")
 
     execute(cfg)
 
@@ -298,7 +281,7 @@ def execute(cfg):
         os.remove(f)
 
     writeTreesToXML(cfg, tree, varDict)
-    executePipeline(cfg, tree, varDict)
+    executePipeline(cfg)
 
     #clear input folder (again)
     if not cfg.k:
