@@ -676,21 +676,20 @@ int serialize(const char *outname)
 {
     DOMLSSerializer *domSerializer = impl->createLSSerializer();
 
-    DOMLSOutput *theOutputDesc = ((DOMImplementationLS *)impl)->createLSOutput();
-    XMLFormatTarget *myFormTarget = new LocalFileFormatTarget(XMLString::transcode(outname));
-    theOutputDesc->setByteStream(myFormTarget);
-    theOutputDesc->setEncoding(XMLString::transcode("ISO-8859-1"));
+    DOMLSOutput *outputDesc = ((DOMImplementationLS *)impl)->createLSOutput();
+    XMLFormatTarget *formTarget = new LocalFileFormatTarget(XMLString::transcode(outname));
+    outputDesc->setByteStream(formTarget);
+    outputDesc->setEncoding(XMLString::transcode("ISO-8859-1"));
 
     domSerializer->getDomConfig()->setParameter(XMLUni::fgDOMXMLDeclaration, true);
-
     domSerializer->getDomConfig()->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
-    domSerializer->write(doc, theOutputDesc);
+    domSerializer->write(doc, outputDesc);
 
-    myFormTarget->flush();
+    formTarget->flush();
 
-    delete myFormTarget;
+    delete formTarget;
 
-    theOutputDesc->release();
+    outputDesc->release();
     domSerializer->release();
 
     doc->release();
