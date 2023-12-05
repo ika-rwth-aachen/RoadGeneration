@@ -11,6 +11,15 @@ from variation import dependencySolver as ds
 from ctypes import *
 
 
+class roadConfig(Structure):
+    """Config struct which is passed to the road-generation library
+    """
+    _fields_ = [("verbose", c_bool),
+                ("filename", c_char_p),
+                ("outname", c_char_p),
+                ("xmllocation", c_char_p)]
+
+
 class config:
     fname: str
     o: str
@@ -204,15 +213,23 @@ def executePipeline(cfg, tree, varDict):
             argName = (cfg.inputDir+filename)        
             argFilename = c_char_p(argName.encode('utf-8')) #execute "main" function from lib 
                
-            roadgen.setSilentMode(c_bool(cfg.s))
-            roadgen.setFileName(argFilename)
-            roadgen.setXMLSchemaLocation(argXMLPath)
-            if cfg.o:
-                outArgs = c_char_p((cfg.inputDir + cfg.o+"_rev"+str(c)).encode('utf-8'))
-                roadgen.setOutputName(outArgs)
-            roadgen.execPipeline()
+            #roadgen.setSilentMode(c_bool(cfg.s))
+            #roadgen.setFileName(argFilename)
+            #roadgen.setXMLSchemaLocation(argXMLPath)
+            #if cfg.o:
+            #    outArgs = c_char_p((cfg.inputDir + cfg.o+"_rev"+str(c)).encode('utf-8'))
+            #    roadgen.setOutputName(outArgs)
+            rcfg = roadConfig()
+            rcfg.verbose = True
+            rcfg.filename = argFilename
+            rcfg.outname = c_char_p("".encode('utf-8'))
+            rcfg.xmllocation = argXMLPath
+            roadgen.executePipelineCfg(rcfg)
             c += 1
             
+
+
+
 
 def initDirectories(cfg):
     """This method creates the input directory

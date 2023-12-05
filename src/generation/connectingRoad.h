@@ -34,13 +34,13 @@ int connectingRoad(DOMElement *node, roadNetwork &data)
 
     if (!mainRoad)
     {
-        cerr << "ERR: specified road is not found.";
+        std::cerr << "ERR: specified road is not found.\n";
         return 1;
     }
 
     //--- generate roads ------------------------------------------------------
     if(!setting.silentMode)
-        cout << "\tGenerating roads" << endl;
+        std::cout << "\tGenerating roads" << std::endl;
 
     road r;
     int id = readIntAttrFromNode(mainRoad, "id");
@@ -55,12 +55,12 @@ int connectingRoad(DOMElement *node, roadNetwork &data)
 
     if (buildRoad(mainRoad, r, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
-        cerr << "ERR: error in buildRoad" << endl;
+        std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
     if (addObjects(mainRoad, r, data))
     {
-        cerr << "ERR: error in addObjects" << endl;
+        std::cerr << "ERR: error in addObjects" << std::endl;
         return 1;
     }
 

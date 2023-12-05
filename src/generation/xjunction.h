@@ -28,7 +28,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 {
     // check type of the junction (here: M = mainroad, A = accessroad)
     int mode = 0;
-    string type = readStrAttrFromNode(domNode, "type");
+    std::string type = readStrAttrFromNode(domNode, "type");
     if (type == "2M")
         mode = 1;
     if (type == "M2A")
@@ -37,7 +37,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         mode = 3;
     if (mode == 0)
     {
-        cerr << "ERR: junction type is not defined correct." << endl;
+        std::cerr << "ERR: junction type is not defined correct." << std::endl;
         return 1;
     }
 
@@ -56,7 +56,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     DOMElement* iP =  getChildWithName(domNode, "intersectionPoint");
     if (iP == NULL)
     {
-        cerr << "ERR: intersection point is not defined correct.";
+        std::cerr << "ERR: intersection point is not defined correct.";
         return 1;
     }
     DOMElement* cA = getChildWithName(getChildWithName(domNode, "coupler"), "junctionArea");
@@ -94,7 +94,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
     if (!refRoad || (mode >= 1 && !additionalRoad1) || (mode >= 2 && !additionalRoad2) || (mode >= 3 && !additionalRoad3))
     {
-        cerr << "ERR: specified roads in intersection are not found." << endl;
+        std::cerr << "ERR: specified roads in intersection are not found." << std::endl;
         return 1;
     }
 
@@ -103,8 +103,9 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     // calculate offsets
     double sOffset = 0;
     if (cA)
-        sOffset = stod(readStrAttrFromNode(cA, "gap"), &st);
-
+    {
+        sOffset = stod(readStrAttrFromNode(cA, "gap"), nullptr);
+    }
     sOffMain = sOffset;
     sOffAdd1 = sOffset;
     sOffAdd2 = sOffset;
@@ -133,7 +134,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     road help1;
     if (buildRoad(refRoad, help1, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
-        cerr << "ERR: error in buildRoad" << endl;
+        std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
 
@@ -141,21 +142,21 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     road help2;
     if (buildRoad(additionalRoad1, help2, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
-        cerr << "ERR: error in buildRoad" << endl;
+        std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
 
     road help3;
     if (buildRoad(additionalRoad2, help3, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
-        cerr << "ERR: error in buildRoad" << endl;
+        std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
 
     road help4;
     if (buildRoad(additionalRoad3, help4, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
-        cerr << "ERR: error in buildRoad" << endl;
+        std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
 
@@ -173,10 +174,10 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     double width4 = abs(findTOffset(lS4, findMinLaneId(lS4), 0)) + abs(findTOffset(lS4, findMaxLaneId(lS4), 0));
 
     // check offsets and adjust them if necessary (here: 4 is safty factor)
-    double w1 = max(width2 / 2, max(width3 / 2, width4 / 2)) * 4;
-    double w2 = max(width1 / 2, max(width3 / 2, width4 / 2)) * 4;
-    double w3 = max(width1 / 2, max(width2 / 2, width4 / 2)) * 4;
-    double w4 = max(width1 / 2, max(width2 / 2, width3 / 2)) * 4;
+    double w1 = std::max(width2 / 2, std::max(width3 / 2, width4 / 2)) * 4;
+    double w2 = std::max(width1 / 2, std::max(width3 / 2, width4 / 2)) * 4;
+    double w3 = std::max(width1 / 2, std::max(width2 / 2, width4 / 2)) * 4;
+    double w4 = std::max(width1 / 2, std::max(width2 / 2, width3 / 2)) * 4;
 
     bool changed = false;
     if (sOffMain < w1)
@@ -202,7 +203,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
     if (changed)
     {
-        cerr << "!!! sOffset of at least one road was changed, due to feasible road structure !!!" << endl;
+        std::cerr << "!!! sOffset of at least one road was changed, due to feasible road structure !!!" << std::endl;
     }
 
     // calculate s and phi at intersection
@@ -213,7 +214,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         tmpNode = getChildWithName(iP, "adRoad");
         if (tmpNode == NULL)
         {
-            cerr << "ERR: first 'adRoad' is missing." << endl;
+            std::cerr << "ERR: first 'adRoad' is missing." << std::endl;
             return 1;
         }
         sAdd1 = readDoubleAttrFromNode(tmpNode, "s");
@@ -224,30 +225,30 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         //some sanity checks---
         if (tmpNode == NULL && mode != 1) //2M (=mode1) does not contain adRoads
         {
-            cerr << "ERR: error in generating junction road (mode 1). AdRoad is missing in intersection point" << endl;
+            std::cerr << "ERR: error in generating junction road (mode 1). AdRoad is missing in intersection point" << std::endl;
             return 1;
         }
 
         if(sAdd1 - sOffAdd1 <= 0)
         {
-            cerr << "ERR: error in generating junction road. Intersection point is too close to add. road start" << endl;
+            std::cerr << "ERR: error in generating junction road. Intersection point is too close to add. road start" << std::endl;
             return 1;
         }
 
         if(sAdd1 >  help2.length)
         {
-            cerr << "ERR: error in generating junction road. Intersection point is too close to add. road end " << endl;
+            std::cerr << "ERR: error in generating junction road. Intersection point is too close to add. road end " << std::endl;
             return 1;
         }
 
         if(sMain > help1.length)
         {
-            cerr << "ERR: error in generating junction road. Intersection point is too close to main road end " << endl;
+            std::cerr << "ERR: error in generating junction road. Intersection point is too close to main road end " << std::endl;
             return 1;
         }
         if(sMain <= sOffMain)
         {
-            cerr << "ERR: error in generating junction road. Intersection point is too close to main road start " << endl;
+            std::cerr << "ERR: error in generating junction road. Intersection point is too close to main road start " << std::endl;
             return 1;
         }
 
@@ -257,7 +258,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     {
         if (tmpNode == NULL)
         {
-            cerr << "ERR: second 'adRoad' is missing." << endl;
+            std::cerr << "ERR: second 'adRoad' is missing." << std::endl;
             return 1;
         }
 
@@ -271,7 +272,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     {
         if (!tmpNode)
         {
-            cerr << "ERR: third 'adRoad' is missing." << endl;
+            std::cerr << "ERR: third 'adRoad' is missing." << std::endl;
             return 1;
         }
         sAdd3 = readDoubleAttrFromNode(tmpNode, "s");
@@ -297,7 +298,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
                        |      |
     */
     if(!setting.silentMode)
-        cout << "\tGenerating roads" << endl;
+        std::cout << "\tGenerating roads" << std::endl;
 
     road r1;
     r1.id = 100 * junc.id + 1;
@@ -311,7 +312,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     {
         if (buildRoad(refRoad, r1, sMain - sOffMain, 0, automaticWidening, sMain, iPx, iPy, iPhdg))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
     }
@@ -319,14 +320,14 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     {
         if (buildRoad(refRoad, r1, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
     }
     
     if (addObjects(refRoad, r1, data))
     {
-        cerr << "ERR: error in addObjects" << endl;
+        std::cerr << "ERR: error in addObjects" << std::endl;
         return 1;
     }
 
@@ -342,7 +343,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         
         if (buildRoad(additionalRoad1, r2, sAdd1 - sOffAdd1, 0, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
     }
@@ -350,14 +351,14 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     {
         if (buildRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
     }
 
     if (addObjects(additionalRoad1, r2, data))
     {
-        cerr << "ERR: error in addObjects" << endl;
+        std::cerr << "ERR: error in addObjects" << std::endl;
         return 1;
     }
 
@@ -373,12 +374,12 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     {
         if (buildRoad(refRoad, r3, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         if (addObjects(refRoad, r3, data))
         {
-            cerr << "ERR: error in addObjects" << endl;
+            std::cerr << "ERR: error in addObjects" << std::endl;
             return 1;
         }
     }
@@ -386,12 +387,12 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     {
         if (buildRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         if (addObjects(additionalRoad2, r3, data))
         {
-            cerr << "ERR: error in addObjects" << endl;
+            std::cerr << "ERR: error in addObjects" << std::endl;
             return 1;
         }
     }
@@ -414,12 +415,12 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     {
         if (buildRoad(additionalRoad1, r4, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         if (addObjects(additionalRoad1, r4, data))
         {
-            cerr << "ERR: error in addObjects" << endl;
+            std::cerr << "ERR: error in addObjects" << std::endl;
             return 1;
         }
     }
@@ -427,12 +428,12 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     {
         if (buildRoad(additionalRoad2, r4, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         if (addObjects(additionalRoad2, r4, data))
         {
-            cerr << "ERR: error in addObjects" << endl;
+            std::cerr << "ERR: error in addObjects" << std::endl;
             return 1;
         }
     }
@@ -440,12 +441,12 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
     {
         if (buildRoad(additionalRoad3, r4, sAdd3 + sOffAdd3, INFINITY, automaticWidening, sAdd3, iPx, iPy, iPhdg + phi3))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         if (addObjects(additionalRoad3, r4, data))
         {
-            cerr << "ERR: error in addObjects" << endl;
+            std::cerr << "ERR: error in addObjects" << std::endl;
             return 1;
         }
     }
@@ -476,7 +477,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
                 length = readDoubleAttrFromNode(addLane, "ds");
 
             int type;
-            string tmpType = readStrAttrFromNode(addLane, "type");
+            std::string tmpType = readStrAttrFromNode(addLane, "type");
             if (tmpType == "left")
                 type = 1;
             if (tmpType == "right")
@@ -493,7 +494,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
             int inputId = readIntAttrFromNode(addLane, "roadId");
 
-            string inputPos = "end";
+            std::string inputPos = "end";
             if (attributeExits(addLane, "roadPos"))
                 inputPos = readStrAttrFromNode(addLane, "roadPos");
 
@@ -564,7 +565,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
     // ---Generating Connecting Lanes -------------------------------------------
     if(!setting.silentMode)
-        cout << "\tGenerating Connecting Lanes" << endl;
+        std::cout << "\tGenerating Connecting Lanes" << std::endl;
 
     // generate user-defined connecting lanes
     if (con != NULL && readStrAttrFromNode(con, "type") == "single")
@@ -579,11 +580,11 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
             int fromId = readIntAttrFromNode(roadLink, "fromId");
             int toId = readIntAttrFromNode(roadLink, "toId");
 
-            string fromPos = "end";
+            std::string fromPos = "end";
             if (attributeExits(roadLink, "fromPos"))
                 fromPos = readIntAttrFromNode(roadLink, "fromPos");
 
-            string toPos = "end";
+            std::string toPos = "end";
             if (attributeExits(roadLink, "toPos"))
                 toPos = readIntAttrFromNode(roadLink, "toPos");
 
@@ -598,8 +599,8 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
             }
             if (r1.id == -1 || r2.id == -1)
             {
-                cerr << "ERR: error in user-defined lane connecting:" << endl;
-                cerr << "\t road to 'fromId' or 'toId' can not be found" << endl;
+                std::cerr << "ERR: error in user-defined lane connecting:" << std::endl;
+                std::cerr << "\t road to 'fromId' or 'toId' can not be found" << std::endl;
                 return 1;
             }
 
@@ -619,8 +620,8 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
                 if (toPos == "end")
                     to *= -1;
 
-                string left = non;
-                string right = non;
+                std::string left = non;
+                std::string right = non;
 
                 if (attributeExits(laneLink, "left"))
                     left = readStrAttrFromNode(laneLink, "left");
@@ -642,7 +643,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
         // switch roads if necessary, so that the angle to refRoad increases
         if (sortRoads(r1, r2, r3, r4))
         {
-            cerr << "ERR: roads can not be sorted." << endl;
+            std::cerr << "ERR: roads can not be sorted." << std::endl;
             return 1;
         }
 
@@ -654,7 +655,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
         calcFromTo(r1, r3, from, to, nF, nT, 0);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;
@@ -676,7 +677,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
         calcFromTo(r2, r4, from, to, nF, nT, 0);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;
@@ -695,7 +696,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
         calcFromTo(r3, r1, from, to, nF, nT, 0);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;
@@ -717,7 +718,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
         calcFromTo(r4, r2, from, to, nF, nT, 0);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;
@@ -736,7 +737,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
         calcFromTo(r1, r2, from, to, nF, nT, -1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;
@@ -758,7 +759,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
         calcFromTo(r2, r1, from, to, nF, nT, 1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;
@@ -777,7 +778,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
         calcFromTo(r2, r3, from, to, nF, nT, -1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;
@@ -799,7 +800,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
         calcFromTo(r3, r2, from, to, nF, nT, 1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;
@@ -818,7 +819,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
         calcFromTo(r3, r4, from, to, nF, nT, -1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;
@@ -840,7 +841,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
         calcFromTo(r4, r3, from, to, nF, nT, 1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;
@@ -859,7 +860,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
         calcFromTo(r4, r1, from, to, nF, nT, -1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;
@@ -881,7 +882,7 @@ int xjunction(const DOMElement* domNode, roadNetwork &data)
 
         calcFromTo(r1, r4, from, to, nF, nT, 1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;

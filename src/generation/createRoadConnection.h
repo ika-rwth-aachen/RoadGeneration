@@ -28,7 +28,7 @@ extern settings setting;
  * @param laneMarkRight     right roadmarking
  * @return int              error code
  */
-int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, int toId, string laneMarkLeft, string laneMarkRight)
+int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, int toId, std::string laneMarkLeft, std::string laneMarkRight)
 {
     laneSection lS;
     if (r.laneSections.size() == 0)
@@ -268,7 +268,7 @@ int createRoadConnection(road r1, road r2, road &r, junction &junc, int fromId, 
     // --- lanemarkings in crossing section ------------------------------------
     if (createLaneConnection(r, lS1, lS2, fromId, toId, laneMarkLeft, laneMarkRight))
     {
-        cerr << "Error in createLaneConnection" << endl;
+        std::cerr << "Error in createLaneConnection" << std::endl;
         exit(0);
         return 1;
     }

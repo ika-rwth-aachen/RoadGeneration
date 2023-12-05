@@ -54,7 +54,7 @@ int resolveAlignmentConflicts(roadNetwork &data)
 				int borderingLaneSection = 0; 
 				if(r.successor.contactPoint == endType)
 					borderingLaneSection = r.laneSections.size() - 1;
-				vector<int> laneIds;
+				std::vector<int> laneIds;
 				for(lane &l: r.laneSections.at(borderingLaneSection).lanes)
 				{
 					laneIds.insert(laneIds.begin(), l.id);
@@ -66,7 +66,7 @@ int resolveAlignmentConflicts(roadNetwork &data)
 					r.laneSections.at(borderingLaneSection).lanes[i].sucId = laneIds[i];
 				}
 		
-				cerr << "switched road " << r.id << " and succ " <<suc->id << endl;
+				std::cerr << "switched road " << r.id << " and succ " <<suc->id << std::endl;
 
 			}
 		}
@@ -94,7 +94,7 @@ int resolveAlignmentConflicts(roadNetwork &data)
 				int borderingLaneSection = 0; 
 				if(r.predecessor.contactPoint == endType)
 					borderingLaneSection = r.laneSections.size() - 1;
-				vector<int> laneIds;
+				std::vector<int> laneIds;
 				for(lane &l: r.laneSections.at(borderingLaneSection).lanes)
 				{
 					laneIds.insert(laneIds.begin(), l.id);
@@ -106,7 +106,7 @@ int resolveAlignmentConflicts(roadNetwork &data)
 					r.laneSections.at(borderingLaneSection).lanes[i].preId = laneIds[i];
 				}
 		
-				cerr << "switched road " << r.id << " and pre " <<pre->id << endl;
+				std::cerr << "switched road " << r.id << " and pre " <<pre->id << std::endl;
 
 			}
 		}
@@ -192,8 +192,8 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 	int toSegment = readIntAttrFromNode(segmentLink, "toSegment");
 	int fromRoadId = readIntAttrFromNode(segmentLink, "fromRoad");
 	int toRoadId = readIntAttrFromNode(segmentLink, "toRoad");
-	string fromPos = readStrAttrFromNode(segmentLink, "fromPos");
-	string toPos = readStrAttrFromNode(segmentLink, "toPos");
+	std::string fromPos = readStrAttrFromNode(segmentLink, "fromPos");
+	std::string toPos = readStrAttrFromNode(segmentLink, "toPos");
 	if(swap) 
 	{
 		fromSegment = readIntAttrFromNode(segmentLink, "toSegment");
@@ -450,7 +450,7 @@ extern settings setting;
 int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 {
 	if(!setting.silentMode)
-		cout << "Processing linkSegments" << endl;
+		std::cout << "Processing linkSegments" << std::endl;
 
 
 	DOMElement *links = getChildWithName(rootNode, "links");
@@ -458,7 +458,7 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 	{
 		if(!setting.silentMode)
 		{
-			cout << "\tLinks are not specified -> skip segment linking" << endl;
+			std::cout << "\tLinks are not specified -> skip segment linking" << std::endl;
 		}
 		throwWarning("'links' are not specified in input file.\n\t -> skip segment linking", true);
 
@@ -492,20 +492,20 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 	}
 
 	//generate a map to store all outgoing links of each segment
-	std::map<int, vector<int>> outgoing_connections;
-	std::map<int, vector<int>> incoming_connections;
+	std::map<int, std::vector<int>> outgoing_connections;
+	std::map<int, std::vector<int>> incoming_connections;
 
 
 	int linkcount = links->getChildElementCount();
 
 	if(linkcount <= 0 && !setting.silentMode)
 	{
-		cout << "\tNo links are defined" << endl;
+		std::cout << "\tNo links are defined" << std::endl;
 		return 0;
 	}
 	else if(!setting.silentMode)
 	{
-		cout << "\t"<< linkcount  << " links are defined" << endl;
+		std::cout << "\t"<< linkcount  << " links are defined" << std::endl;
 	}
 
 	for (DOMElement *segmentLink = links->getFirstElementChild();segmentLink != NULL; segmentLink = segmentLink->getNextElementSibling())
@@ -520,8 +520,8 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 
 	}
 
-	queue<int> toDo = queue<int>(); //remaining segments
-	vector<int> transformedIds;
+	std::queue<int> toDo = std::queue<int>(); //remaining segments
+	std::vector<int> transformedIds;
 	toDo.push(refId);
 
 	while(!toDo.empty())
@@ -570,7 +570,7 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 	}
 
 	//check if all roads are connected to the network
-	vector<road*> v;
+	std::vector<road*> v;
 	for(road &r: data.roads)
 	{
 		if(!r.isLinkedToNetwork)
@@ -584,8 +584,8 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 		for(road* p: v)
 		{
 			if(!setting.silentMode)
-				cout << "\tRoad " << p->inputId << " in segment " << p->inputSegmentId << " is not linked"<< endl;
-			std::cerr << "\tRoad " << p->inputSegmentId << " is not linked"<< endl;
+				std::cout << "\tRoad " << p->inputId << " in segment " << p->inputSegmentId << " is not linked"<< std::endl;
+			std::cerr << "\tRoad " << p->inputSegmentId << " is not linked"<< std::endl;
 		}
 
 

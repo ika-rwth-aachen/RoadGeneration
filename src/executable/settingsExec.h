@@ -1,3 +1,4 @@
+#pragma once
 /**
  * Road-Generation
  * --------------------------------------------------------
@@ -7,8 +8,7 @@
  * This library is distributed under the MIT License.
  */
 
-#ifndef SETTINGS
-#define SETTINGS
+
 
 #include <string.h>
 #include <stdio.h>
@@ -20,12 +20,12 @@
  * @brief A helper struct that stores the command line arguments for the executable.
  * 
  */
-struct settingsExec{
-    char* fileName;
+struct config{
+    char* filename;
     char* outputName;
     bool silentMode = false;
-    bool overwriteLog = true;
-
+    char *xmlSchemeLocation;
 };
 
-#endif
+
+extern std::string _logfile;
