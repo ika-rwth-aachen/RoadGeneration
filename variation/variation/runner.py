@@ -34,7 +34,6 @@ def parse_args():
     #parsing args-------------------------------------
     cfg = config()
 
-    print("-- Let's start the road network variation")
     argParse = argparse.ArgumentParser()
     argParse.add_argument('-fname', help='path to template file', metavar='<TemplateFilename>')
     argParse.add_argument('-o', help='set output name', metavar='<out filename>')
@@ -68,7 +67,6 @@ def parse_args():
     cfg.newName = nwName
     cfg.fname = args.fname
 
-    print(cfg)
     return cfg
 
 def is_var(arg): #method checks if the string validates against the RE
@@ -158,10 +156,6 @@ def writeTreesToXML(cfg, tree, varDict):
         number of revs that will be saved
     tree: ElementTree
         the tree struct generated from input
-    inpDir: str
-        input dir which contains the xml files
-    nwName: str
-        name of the output xml file
     varDict: dict
         dict containing array of vars
     """
@@ -200,16 +194,21 @@ def executePipeline(cfg):
     xml_path = os.path.join(os.path.dirname(__file__), "resources/xml")#xml path argument for lib
     argXMLPath = c_char_p(xml_path.encode('utf-8'))
 
+
     for filename in os.listdir(cfg.inputDir):
         if filename.endswith(".xml"): 
             
             argName = (cfg.inputDir+filename)        
             argFilename = c_char_p(argName.encode('utf-8')) #execute "main" function from lib 
-               
+            outname = f"{cfg.inputDir}{filename[:-4]}"
+            if cfg.o != None:
+                outname = f"{cfg.o}{c}"
+
+
             rcfg = roadConfig()
             rcfg.verbose = cfg.v
             rcfg.filename = argFilename
-            rcfg.outname = c_char_p("".encode('utf-8'))
+            rcfg.outname = c_char_p(outname.encode('utf-8'))
             rcfg.xmllocation = argXMLPath
             roadgen.executePipelineCfg(rcfg)
             c += 1
@@ -245,8 +244,6 @@ def run_variation(fname, n=20, v=True, k=False, o=None, e=False):
 
     cfg.inputDir = inpDir
     cfg.newName = nwName
-    print(cfg.inputDir)
-    print(cfg.newName)
     cfg.fname = fname
     if cfg.e:
         copyTemplate()
@@ -255,7 +252,6 @@ def run_variation(fname, n=20, v=True, k=False, o=None, e=False):
     execute(cfg)
 
 def execute(cfg):
-    print(cfg.inputDir)
     initDirectories(cfg)  
 
     #init --------------------------------------------
@@ -290,8 +286,10 @@ def execute(cfg):
             os.remove(f)
 
 def run():
+    print("-- Let's start the road network variation")
     cfg = parse_args()
     execute(cfg)
+    print("done!")
 
 if __name__ == '__main__':
     run()

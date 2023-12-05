@@ -485,8 +485,6 @@ int createXMLXercesC(roadNetwork &data)
             juncRef.addAttribute("junction", *itt);
         }
     }
-
-
     serialize((data.outputFile + ".xodr").c_str());
 
     return 0;

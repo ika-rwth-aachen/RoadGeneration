@@ -177,6 +177,5 @@ EXPORTED int executePipelineCfg(r_config cfg)
 	setting.xmlSchemaLocation = cfg.xmlSchemeLocation;
 	setFileName(cfg.filename);
 	execPipeline();
-	std::cout << "DELETE me! Executed pipeline " << std::endl;
 	return 0;
 }
