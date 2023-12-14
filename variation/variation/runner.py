@@ -22,13 +22,15 @@ class roadConfig(Structure):
 
 class config:
     fname: str
+    outputFilePath: str
     o: str
     n: int = 20
     v: bool = True
     e: bool = True
     k: bool = True
+    writtenFiles: list = []
     inputDir: str
-    newName: str
+    filenameRaw: str
 
 def parse_args():
     #parsing args-------------------------------------
@@ -51,21 +53,18 @@ def parse_args():
 
     if args.fname == None:
         if args.e == None:
-            print("Error:\n-fname <FileName> required.\nUse -h for further help.")
+            print("Error:\n-fname <FileName> required.\nUse -h for help.")
         return
 
-    fname = args.fname
-    nwName = str.split(str.split(fname,'/')[-1],'.')[0]
-    inpDir = os.path.join(os.path.dirname(fname), "variation_output/")
-
+    cfg.fname = args.fname
     cfg.v = args.v
     cfg.e = args.e
     cfg.n = args.n
     cfg.k = args.k
     cfg.o = args.o
-    cfg.inputDir = inpDir
-    cfg.newName = nwName
-    cfg.fname = args.fname
+    cfg.inputDir = os.path.dirname(cfg.fname)
+    cfg.filenameRaw = str.split(str.split(cfg.fname,'/')[-1],'.')[0]
+
 
     return cfg
 
@@ -167,8 +166,9 @@ def writeTreesToXML(cfg, tree, varDict):
             cpTree.getroot().remove(cpTree.getroot().find('vars'))
 
         find_var(cpTree.getroot(), i, varDict)        
-        tmpName = cfg.inputDir+ cfg.newName + '_rev' + str(i) + '.xml'               
+        tmpName = f"{cfg.outputFilePath}_rev{i}.xml"
         cpTree.write(tmpName)
+        cfg.writtenFiles.append(tmpName)
 
 
 def executePipeline(cfg):
@@ -195,34 +195,18 @@ def executePipeline(cfg):
     argXMLPath = c_char_p(xml_path.encode('utf-8'))
 
 
-    for filename in os.listdir(cfg.inputDir):
+    for filename in os.listdir(os.path.dirname(cfg.outputFilePath)):
         if filename.endswith(".xml"): 
-            
-            argName = (cfg.inputDir+filename)        
-            argFilename = c_char_p(argName.encode('utf-8')) #execute "main" function from lib 
-            outname = f"{cfg.inputDir}{filename[:-4]}"
-            if cfg.o != None:
-                outname = f"{cfg.o}{c}"
-
+            filenamearg = os.path.join(os.path.dirname(cfg.outputFilePath), filename)
 
             rcfg = roadConfig()
             rcfg.verbose = cfg.v
-            rcfg.filename = argFilename
-            rcfg.outname = c_char_p(outname.encode('utf-8'))
+            rcfg.filename =  c_char_p(filenamearg.encode('utf-8'))
+            rcfg.outname = c_char_p(filenamearg[:-4].encode('utf-8'))
             rcfg.xmllocation = argXMLPath
             roadgen.executePipelineCfg(rcfg)
             c += 1
 
-def initDirectories(cfg):
-    """This method creates the input directory
-
-    Parameters
-    ----------    
-    inpDir: str
-        input directory that will be created
-    """
-    if not os.path.exists(cfg.inputDir):
-        os.makedirs(cfg.inputDir)
 
 
 def copyTemplate():
@@ -239,11 +223,9 @@ def run_variation(fname, n=20, v=True, k=False, o=None, e=False):
     cfg.k = k
     cfg.o = o
 
-    nwName = str.split(str.split(fname,'/')[-1],'.')[0]
-    inpDir = os.path.join(os.path.dirname(fname), "variation_output/")
 
-    cfg.inputDir = inpDir
-    cfg.newName = nwName
+    cfg.inputDir =  os.path.dirname(fname)
+    cfg.filenameRaw =  str.split(str.split(fname,'/')[-1],'.')[0]
     cfg.fname = fname
     if cfg.e:
         copyTemplate()
@@ -252,12 +234,27 @@ def run_variation(fname, n=20, v=True, k=False, o=None, e=False):
     execute(cfg)
 
 def execute(cfg):
-    initDirectories(cfg)  
 
     #init --------------------------------------------
     tree = ET.parse(cfg.fname)
     vars = tree.getroot().find('vars')
     varDict = {}
+
+    #handle file and output names
+    if cfg.o == None:
+        cfg.outputFilePath =  os.path.join(os.path.join(cfg.inputDir, "variation_output/"), cfg.filenameRaw)       
+
+    else: 
+        if cfg.o[-1] == "/":
+            cfg.o = os.path.join(cfg.o, cfg.filenameRaw)
+
+        cfg.outputFilePath = cfg.o
+
+
+    if not os.path.exists(os.path.dirname(cfg.outputFilePath)) and os.path.dirname(cfg.outputFilePath) != "":
+        os.makedirs(os.path.dirname(cfg.outputFilePath))
+        print(f"directory created: {os.path.dirname(cfg.outputFilePath)}")
+
     #reading values-----------------------------------
     if not vars == None:
         for var in vars:
@@ -271,18 +268,18 @@ def execute(cfg):
     else:
         print("No variables declared. Running only one iteration!")
         n = 1
-    #clear input folder
-    files = glob.glob(cfg.inputDir+'*')
-    for f in files:
-        os.remove(f)
+    #clear input folder only if its default folder
+    if cfg.o == None:
+        files = glob.glob(os.path.dirname(cfg.outputFilePath)+ "/*.xodr")
+        for f in files:
+            os.remove(f)
 
     writeTreesToXML(cfg, tree, varDict)
     executePipeline(cfg)
 
     #clear input folder (again)
     if not cfg.k:
-        files = glob.glob(cfg.inputDir+'*.xml')
-        for f in files:
+        for f in cfg.writtenFiles:
             os.remove(f)
 
 def run():
