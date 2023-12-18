@@ -42,8 +42,8 @@ int buildSegments(const DOMElement* rootNode, roadNetwork &data)
 	DOMElement *roadNode = getChildWithName(rootNode, "segments");
 	if (roadNode == NULL)
 	{
-		cerr << "ERR: 'segments' not found in input file." << endl;
-		cout << "ERR: 'segments' not found in input file." << endl;
+		std::cerr << "ERR: 'segments' not found in input file." << std::endl;
+		std::cout << "ERR: 'segments' not found in input file." << std::endl;
 		return 1;
 	}
 
@@ -55,10 +55,10 @@ int buildSegments(const DOMElement* rootNode, roadNetwork &data)
 		if (readNameFromNode(em) == "junction")
 		{
 			if(!setting.silentMode)
-				cout << "Processing junction" << endl;
+				std::cout << "Processing junction" << std::endl;
 			if (junctionWrapper(em, data))
 			{
-		    		cerr << "ERR: error in junction." << endl;
+		    		std::cerr << "ERR: error in junction." << std::endl;
 					return 1;
 			}
 		}
@@ -66,10 +66,10 @@ int buildSegments(const DOMElement* rootNode, roadNetwork &data)
 		if (readNameFromNode(em) == "roundabout")
 		{	
 			if(!setting.silentMode)
-				cout << "Processing roundabout" << endl;
+				std::cout << "Processing roundabout" << std::endl;
 			if (roundAbout(em, data))
 			{
-				cerr << "ERR: error in roundabout." << endl;
+				std::cerr << "ERR: error in roundabout." << std::endl;
 				return 1;
 			}
 		}
@@ -77,10 +77,10 @@ int buildSegments(const DOMElement* rootNode, roadNetwork &data)
 		if (readNameFromNode(em) == "connectingRoad" )
 		{
 			if(!setting.silentMode)
-				cout << "Processing connectingRoad" << endl;
+				std::cout << "Processing connectingRoad" << std::endl;
 			if (connectingRoad(em, data))
 			{
-				cerr << "ERR: error in connectingRoad." << endl;
+				std::cerr << "ERR: error in connectingRoad." << std::endl;
 				return 1;
 			}
 		}

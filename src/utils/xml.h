@@ -26,7 +26,6 @@
 #include "xmlParser.h"
 
 using namespace XERCES_CPP_NAMESPACE;
-using namespace std;
 using namespace xercesc;
 
 extern settings setting;
@@ -40,13 +39,13 @@ extern settings setting;
 int validateInput(char *file, xmlTree &xmlInput)
 {
 
-    string schema = string_format("%s/xml/input.xsd", PROJ_DIR);
+    std::string schema = string_format("%s/xml/input.xsd", PROJ_DIR);
     const char *schema_file = schema.c_str();
     const char *xml_file = file;
 
     if (xmlInput.loadGrammar(schema_file) == NULL)
     {
-        cerr << "ERR: couldn't load schema" << endl;
+        std::cerr << "ERR: couldn't load schema" << std::endl;
         return 1;
     }
 
@@ -54,11 +53,11 @@ int validateInput(char *file, xmlTree &xmlInput)
 
     if (xmlInput.getErrorCount() == 0){
         if(!setting.silentMode)
-        cout << "XML input file validated against the schema successfully" << endl;
+        std::cout << "XML input file validated against the schema successfully" << std::endl;
     }
     else
     {
-        cerr << "ERR: XML input file doesn't conform to the schema" << endl;
+        std::cerr << "ERR: XML input file doesn't conform to the schema" << std::endl;
         return 1;
     }
 
@@ -73,22 +72,23 @@ int validateInput(char *file, xmlTree &xmlInput)
  */
 int validateOutput(roadNetwork &data)
 {
-    cout << "Validating output" << endl;
+    if(!setting.silentMode)
+        std::cout << "Validating output" << std::endl;
     // setup file
-    string file = data.outputFile;
+    std::string file = data.outputFile;
     file.append(".xodr");
     const char *xml_file = file.c_str();
 
     XMLPlatformUtils::Initialize();
 
-    string schema = string_format("%s/xml/output.xsd", PROJ_DIR);
+    std::string schema = string_format("%s/xml/output.xsd", PROJ_DIR);
     const char *schema_path = schema.c_str();
 
     // load output file
     XercesDOMParser domParser;
     if (domParser.loadGrammar(schema_path, Grammar::SchemaGrammarType) == NULL)
     {
-        cerr << "ERR: couldn't load schema" << endl;
+        std::cerr << "ERR: couldn't load schema" << std::endl;
         return 1;
     }
     //create error handler from custom error handler class
@@ -107,11 +107,11 @@ int validateOutput(roadNetwork &data)
     domParser.parse(xml_file);
     if (domParser.getErrorCount() == 0){
         if(!setting.silentMode)
-            cout << "XML output file validated against the schema successfully" << endl;
+            std::cout << "XML output file validated against the schema successfully" << std::endl;
     }
     else
     {
-        cerr << "ERR: XML output file doesn't conform to the schema" << endl;
+        std::cerr << "ERR: XML output file doesn't conform to the schema" << std::endl;
         return 1;
     }
     
@@ -162,19 +162,19 @@ int createXMLXercesC(roadNetwork &data)
 
     nodeElement header("header");
 
-    header.addAttribute("revMajor", to_string(setting.versionMajor).c_str());
-    header.addAttribute("revMinor", to_string(setting.versionMinor).c_str());
-    header.addAttribute("north", to_string(setting.north).c_str());
-    header.addAttribute("south", to_string(setting.south).c_str());
-    header.addAttribute("west", to_string(setting.west).c_str());
-    header.addAttribute("east", to_string(setting.east).c_str());
+    header.addAttribute("revMajor", std::to_string(setting.versionMajor).c_str());
+    header.addAttribute("revMinor", std::to_string(setting.versionMinor).c_str());
+    header.addAttribute("north", std::to_string(setting.north).c_str());
+    header.addAttribute("south", std::to_string(setting.south).c_str());
+    header.addAttribute("west", std::to_string(setting.west).c_str());
+    header.addAttribute("east", std::to_string(setting.east).c_str());
     header.appendToNode(root);
 
     // geoReference tag
     nodeElement geoReference("geoReference");
 
     DOMCDATASection *cdata;
-    generateCDATA("+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs", &cdata);
+    generateCDATA("+proj=tmerc +lat_0=0 +lon_0=0 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +geoidgrids=egm96_15.gtx +vunits=m +no_defs", &cdata);
     geoReference.domelement->appendChild(cdata);
     geoReference.appendToNode(header);
 
@@ -485,8 +485,6 @@ int createXMLXercesC(roadNetwork &data)
             juncRef.addAttribute("junction", *itt);
         }
     }
-
-
     serialize((data.outputFile + ".xodr").c_str());
 
     return 0;
@@ -498,10 +496,10 @@ int createXMLXercesC(roadNetwork &data)
  */
 int printLogo()
 {
-    cout << "|‾\\  /‾\\  |‾‾| |‾\\       /‾‾  |‾‾  |\\  | |‾‾ |‾\\ |‾‾| ‾|‾ |  /‾\\  |\\  |" << endl;
-    cout << "|_/ |   | |--| |  |  -  |  _  |--  | | | |-- |_/ |--|  |  | |   | | | |" << endl;
-    cout << "| \\  \\_/  |  | |_/       \\_/  |__  |  \\| |__ | \\ |  |  |  |  \\_/  |  \\|" << endl;
-    cout << "=======================================================================" << endl;
+    std::cout << "|‾\\  /‾\\  |‾‾| |‾\\       /‾‾  |‾‾  |\\  | |‾‾ |‾\\ |‾‾| ‾|‾ |  /‾\\  |\\  |" << std::endl;
+    std::cout << "|_/ |   | |--| |  |  -  |  _  |--  | | | |-- |_/ |--|  |  | |   | | | |" << std::endl;
+    std::cout << "| \\  \\_/  |  | |_/       \\_/  |__  |  \\| |__ | \\ |  |  |  |  \\_/  |  \\|" << std::endl;
+    std::cout << "=======================================================================" << std::endl;
 
     return 0;
 }

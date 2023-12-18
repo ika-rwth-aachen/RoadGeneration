@@ -132,7 +132,7 @@ int findLane(laneSection sec, lane &l, int id)
  * @param id    roadId of the lane to find
  * @return int  position in road vector
  */
-int findRoad(vector<road> roads, road &r, int id)
+int findRoad(std::vector<road> roads, road &r, int id)
 {
     for (int i = 0; i < roads.size(); i++)
     {
@@ -533,7 +533,7 @@ int sortRoads(road r1, road &r2, road &r3, road &r4)
     }
     else
     {
-        cerr << "ERR: angles at intersection point are not defined correct.";
+        std::cerr << "ERR: angles at intersection point are not defined correct.\n";
         return 1;
     }
     return 0;
@@ -569,7 +569,7 @@ int sortRoads(road r1, road &r2, road &r3)
     }
     else
     {
-        cerr << "ERR: angles at intersection point are not defined correct.";
+        std::cerr << "ERR: angles at intersection point are not defined correctly.\n";
         return 1;
     }
     return 0;
@@ -741,7 +741,7 @@ bool compareLanes(const lane &a, const lane &b)
  * @return true int is in vector
  * @return false int is not in vector
  */
-bool isIn(vector<int> &v, int &i)
+bool isIn(std::vector<int> &v, int &i)
 {
     for(auto e: v)
     {
@@ -772,29 +772,29 @@ bool isJunction(roadNetwork data, int roadID)
 
 
 
-void throwWarning(string msg, string origin, bool mute = false)
+void throwWarning(std::string msg, std::string origin, bool mute = false)
 {
     setting.warnings ++;
     if(!setting.silentMode && !mute)
-        cout <<"WARNING: " << msg << "\n\tin " << origin << endl;
-    cerr << "WARNING: " << msg << "\n\tin " << origin << endl;
+        std::cout <<"WARNING: " << msg << "\n\tin " << origin << std::endl;
+    std::cerr << "WARNING: " << msg << "\n\tin " << origin << std::endl;
 }
-void throwWarning(string msg, bool mute = false)
+void throwWarning(std::string msg, bool mute = false)
 {
     setting.warnings ++;
     if(!setting.silentMode && !mute)
-        cout << "WARNING: " <<msg << endl;
-    cerr << "WARNING: "<< msg << endl;
+        std::cout << "WARNING: " <<msg << std::endl;
+    std::cerr << "WARNING: "<< msg << std::endl;
 }
-void throwError(string msg, string origin)
+void throwError(std::string msg, std::string origin)
 {
     if(!setting.silentMode)
-        cout << "ERR: " << msg << "\n\tin " << origin << endl;
-    cerr << "ERR: " << msg << "\n\tin " << origin << endl;
+        std::cout << "ERR: " << msg << "\n\tin " << origin << std::endl;
+    std::cerr << "ERR: " << msg << "\n\tin " << origin << std::endl;
 }
-void throwError(string msg)
+void throwError(std::string msg)
 {
     if(!setting.silentMode)
-        cout << "ERR: "<< msg << endl;
-    cerr << "ERR: "<< msg << endl;
+        std::cout << "ERR: "<< msg << std::endl;
+    std::cerr << "ERR: "<< msg << std::endl;
 }

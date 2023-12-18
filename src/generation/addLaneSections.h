@@ -25,7 +25,7 @@
  * @param addouterLane  specifies if additional lane is on the outer side or not
  * @return int          error code
  */
-int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double ds, bool addOuterLane)
+int addLaneWidening(std::vector<laneSection> &secs, int addLaneId, double s, double ds, bool addOuterLane)
 {
     std::vector<laneSection>::iterator it;
     int i = 0;
@@ -65,7 +65,7 @@ int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double d
 
     if (laneId == 0 || abs(laneId) >= 100)
     {
-        cerr << "ERR: lane widening can not be performed" << endl;
+        std::cerr << "ERR: lane widening can not be performed" << std::endl;
         return 1;
     }
 
@@ -161,7 +161,7 @@ int addLaneWidening(vector<laneSection> &secs, int addLaneId, double s, double d
  * @param ds            length of laneDrop
  * @return int          error code
  */
-int addLaneDrop(vector<laneSection> &secs, int dropLaneID, double s, double ds)
+int addLaneDrop(std::vector<laneSection> &secs, int dropLaneID, double s, double ds)
 {
     std::vector<laneSection>::iterator it;
     std::vector<lane>::iterator itt;
@@ -192,7 +192,7 @@ int addLaneDrop(vector<laneSection> &secs, int dropLaneID, double s, double ds)
 
     if (dropLaneID == 0 || abs(laneId) >= 100)
     {
-        cerr << "ERR: lane drop can not be performed" << endl;
+        std::cerr << "ERR: lane drop can not be performed" << std::endl;
     }
 
     adLaneSec.id = it->id + 1;
@@ -302,14 +302,14 @@ int addLaneDrop(vector<laneSection> &secs, int dropLaneID, double s, double ds)
  * @param ds2       length of restricted areay (always lager than ds1)
  * @return int      error code
  */
-int addRestrictedAreaWidening(vector<laneSection> &secs, int side, double s, double ds1, double ds2)
+int addRestrictedAreaWidening(std::vector<laneSection> &secs, int side, double s, double ds1, double ds2)
 {
     std::vector<laneSection>::iterator it;
     std::vector<lane>::iterator itt;
 
     if (ds1 >= ds2)
     {
-        cerr << "ERR: length in restricted area is to short." << endl;
+        std::cerr << "ERR: length in restricted area is to short." << std::endl;
         return 1;
     }
 
@@ -341,7 +341,7 @@ int addRestrictedAreaWidening(vector<laneSection> &secs, int side, double s, dou
 
     if (laneId == 0 || abs(laneId) >= 100)
     {
-        cerr << "ERR: restricted area widening can not be performed" << endl;
+        std::cerr << "ERR: restricted area widening can not be performed" << std::endl;
     }
 
     lane l, lTmp;
@@ -418,14 +418,14 @@ int addRestrictedAreaWidening(vector<laneSection> &secs, int side, double s, dou
  * @param ds2       length of restricted areay (always lager than ds1)
  * @return int      error code
  */
-int addRestrictedAreaDrop(vector<laneSection> &secs, int side, double s, double ds1, double ds2)
+int addRestrictedAreaDrop(std::vector<laneSection> &secs, int side, double s, double ds1, double ds2)
 {
     std::vector<laneSection>::iterator it;
     std::vector<lane>::iterator itt;
 
     if (ds1 >= ds2)
     {
-        cerr << "ERR: length in restricted area is to short." << endl;
+        std::cerr << "ERR: length in restricted area is to short." << std::endl;
         return 1;
     }
 
@@ -457,7 +457,7 @@ int addRestrictedAreaDrop(vector<laneSection> &secs, int side, double s, double 
 
     if (laneId == 0 || abs(laneId) >= 100)
     {
-        cerr << "ERR: restriced area drop can not be performed" << endl;
+        std::cerr << "ERR: restriced area drop can not be performed" << std::endl;
     }
 
     lane l, lTmp;
@@ -581,7 +581,7 @@ int laneWideningJunction(road &r, double s, double ds, int turn, bool verschwenk
     if (restricted)
         turn = 1;
 
-    vector<laneSection>::iterator it = r.laneSections.begin();
+    std::vector<laneSection>::iterator it = r.laneSections.begin();
 
     laneSection adLaneSec = *it;
     adLaneSec.s = 0;
