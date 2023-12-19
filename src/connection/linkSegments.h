@@ -508,6 +508,7 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 		std::cout << "\t"<< linkcount  << " links are defined" << std::endl;
 	}
 
+	//iterate over all links
 	for (DOMElement *segmentLink = links->getFirstElementChild();segmentLink != NULL; segmentLink = segmentLink->getNextElementSibling())
 	{
 		int fromSegment = readIntAttrFromNode(segmentLink, "fromSegment");

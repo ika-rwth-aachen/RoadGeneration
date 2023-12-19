@@ -45,10 +45,6 @@ int main(int argc, char** argv){
     cfg.filename = settings.filename;
     cfg.xmlSchemeLocation = &schemaLocation[0];
     cfg.outputName = settings.outputName;
-    //setFileName(settings.filename);
-    //setXMLSchemaLocation(&schemaLocation[0]);
-    //setOutputName(settings.outputName);
-    //setSilentMode(settings.silentMode);
     executePipelineCfg(cfg);
 
     return 0;

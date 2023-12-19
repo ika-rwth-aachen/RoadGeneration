@@ -181,7 +181,6 @@ def executePipeline(cfg):
     """
 
     libpath = ""
-    c = 0
         
     if os.name == "posix":  # if MacOS
         libpath = os.path.join(os.path.dirname(__file__), "resources/libroad-generation.so")          
@@ -205,7 +204,6 @@ def executePipeline(cfg):
             rcfg.outname = c_char_p(filenamearg[:-4].encode('utf-8'))
             rcfg.xmllocation = argXMLPath
             roadgen.executePipelineCfg(rcfg)
-            c += 1
 
 
 

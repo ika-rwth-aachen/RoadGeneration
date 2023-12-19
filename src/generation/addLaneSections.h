@@ -15,6 +15,8 @@
  *
  */
 
+#include <string.h>
+
 /**
  * @brief function adds a laneSection with laneWideing to a given lanesection set
  * 
@@ -23,10 +25,19 @@
  * @param s             position of lane widening
  * @param ds            length of lane widening
  * @param addouterLane  specifies if additional lane is on the outer side or not
+ * @param rroad          road to which lane widening is applied. This is used only for sanity chekcs
  * @return int          error code
  */
-int addLaneWidening(std::vector<laneSection> &secs, int addLaneId, double s, double ds, bool addOuterLane)
+int addLaneWidening(std::vector<laneSection> &secs, int addLaneId, double s, double ds, bool addOuterLane, const road* rroad = nullptr)
 {
+
+    if(rroad  && s + ds >= rroad->length)
+    {
+        std::string err = "Lane Widening length exceeds total road length in seg " + std::to_string(rroad->inputSegmentId) + " road "  + std::to_string(rroad->inputId);
+        throwError(err);
+        return -1;
+    }
+
     std::vector<laneSection>::iterator it;
     int i = 0;
 
@@ -159,10 +170,18 @@ int addLaneWidening(std::vector<laneSection> &secs, int addLaneId, double s, dou
  * @param dropLaneID    determines the lane id of the drop
  * @param s             position of laneDrop
  * @param ds            length of laneDrop
+ * @param rroad         road to which the lanedrop is applied to, is only used for sanity checks
  * @return int          error code
  */
-int addLaneDrop(std::vector<laneSection> &secs, int dropLaneID, double s, double ds)
+int addLaneDrop(std::vector<laneSection> &secs, int dropLaneID, double s, double ds, const road* rroad = nullptr)
 {
+    if(rroad  && s + ds >= rroad->length)
+    {
+        std::string err = "Lane Drop length exceeds total road length in seg " + std::to_string(rroad->inputSegmentId) + " road "  + std::to_string(rroad->inputId);
+        throwError(err);
+        return -1;
+    }
+
     std::vector<laneSection>::iterator it;
     std::vector<lane>::iterator itt;
 

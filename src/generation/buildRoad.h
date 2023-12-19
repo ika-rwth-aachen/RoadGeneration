@@ -418,6 +418,7 @@ int addLanes(DOMElement* roadIn, road &r, int mode)
     lane l2;
     l2.id = 0;
     l2.rm.type = "broken";
+    l2.type = "none";
     l2.w.a = 0;
     l2.turnStraight = false;
     laneSec.lanes.push_back(l2);
@@ -554,7 +555,7 @@ int addLaneSectionChanges(DOMElement* roadIn, road &r, DOMElement* automaticWide
                 if (s > r.length)
                     continue;
 
-                if (addLaneWidening(r.laneSections, side, s, ds, false))
+                if (addLaneWidening(r.laneSections, side, s, ds, false, &r))
                 {
                      std::cerr << "ERR: error in addLaneWidening";
                     return 1;

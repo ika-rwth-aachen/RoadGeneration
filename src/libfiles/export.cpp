@@ -81,7 +81,6 @@ EXPORTED int executePipeline(char* file)
 		return -1;
 	}
 
-	
 	// --- initialization ------------------------------------------------------
 
 	xmlTree inputxml;
