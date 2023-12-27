@@ -183,30 +183,26 @@ int resolveLaneLinkConflicts(roadNetwork &data)
  * @param swap if true the from and toSegment and road are swapped
  * @return int error code
  */
-int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
+int transformRoad(int fromSegment, int toSegment, int fromRoadId, int toRoadId, std::string fromPos, std::string toPos, roadNetwork &data, bool swap = false)
 {
 
 	// get properties
 	
-	int fromSegment = readIntAttrFromNode(segmentLink, "fromSegment");
-	int toSegment = readIntAttrFromNode(segmentLink, "toSegment");
-	int fromRoadId = readIntAttrFromNode(segmentLink, "fromRoad");
-	int toRoadId = readIntAttrFromNode(segmentLink, "toRoad");
-	std::string fromPos = readStrAttrFromNode(segmentLink, "fromPos");
-	std::string toPos = readStrAttrFromNode(segmentLink, "toPos");
 	if(swap) 
 	{
-		fromSegment = readIntAttrFromNode(segmentLink, "toSegment");
-		toSegment = readIntAttrFromNode(segmentLink, "fromSegment");
-		fromRoadId = readIntAttrFromNode(segmentLink, "toRoad");
-		toRoadId = readIntAttrFromNode(segmentLink, "fromRoad");
-		fromPos = readStrAttrFromNode(segmentLink, "toPos");
-		toPos = readStrAttrFromNode(segmentLink, "fromPos");
+		int tmp = fromSegment;
+		fromSegment = toSegment;
+		toSegment = tmp;
+		tmp = fromRoadId;
+		fromRoadId = toRoadId;
+		toRoadId = tmp;
+		std::string tmpString = fromPos;
+		fromPos = toPos;
+		toPos = tmpString;
+
 	}
 	road *fromRoad;
 	road *toRoad;
-
-
 
 	// assumption is that "fromSegement" is already linked to reference frame
 
@@ -396,29 +392,6 @@ int transformRoad(DOMElement *segmentLink, roadNetwork &data, bool swap = false)
 		fromRoad->successor.contactPoint = endType ;
 	}
 
-	//this case distinction led to wrong linkings for all successors of ref segment
-	// }else
-	// {
-	// 	if(toPos == "start")
-	// 	{
-	// 		toRoad->successor.id = fromRoadId;
-	// 		toRoad->successor.contactPoint = startType ;
-	// 	} else
-	// 	{
-	// 		toRoad->predecessor.id = fromRoadId;
-	// 		toRoad->predecessor.contactPoint = endType ;
-	// 	}
-
-	// 	if(fromPos == "start")
-	// 	{
-	// 		fromRoad->successor.id = toRoadId;
-	// 		fromRoad->successor.contactPoint = startType ;
-	// 	} else
-	// 	{
-	// 		fromRoad->predecessor.id = toRoadId;
-	// 		fromRoad->predecessor.contactPoint = endType ;
-	// 	}
-	// }
 	
 	//mark every road that belongs to the from- or toSegment as linked
 	for(auto &r: data.roads)
@@ -513,12 +486,115 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 	{
 		int fromSegment = readIntAttrFromNode(segmentLink, "fromSegment");
 		int toSegment = readIntAttrFromNode(segmentLink, "toSegment");
+
+		//create instances that are not in the road network yet-------------------------------------------
+		int toSegInstance = readIntAttrFromNode(segmentLink, "toSegmentInstance");
+		int fromSegInstance = readIntAttrFromNode(segmentLink, "fromSegmentInstance");
+		std::map<int, int> instances; //map<input id, max instance id>
+
+		//to seg instance
+		if(toSegInstance > 1)
+		{
+			if(instances[toSegment] < toSegInstance -1)
+			{
+				std::cout << "DEBUG: created new instance of (to)segment" << toSegment << std::endl;
+				instances[toSegment] ++;
+				//Create new instance 
+				for(road r: data.roads)
+				{
+					if(r.inputId == toSegment)
+					{
+						road* cpyToRoad = (road*)malloc(sizeof(road));
+						memcpy(cpyToRoad, &r, sizeof(road));
+						cpyToRoad->id *= toSegInstance *100;
+						cpyToRoad->inputSegmentId *= toSegInstance *100;
+						
+						cpyToRoad->junction *= toSegInstance *100;
+						if(!cpyToRoad->isConnectingRoad && cpyToRoad->roundAboutInputSegment > -1) //update junction
+						{
+							std::cout << cpyToRoad->junction << std::endl;
+							junction* j = nullptr;
+							for(junction jIterator: data.junctions)
+							{
+								if(jIterator.id == cpyToRoad->junction)
+								{
+									j = &jIterator;
+								}
+							}
+							if(j == nullptr)
+							{
+								throwError("Something went wrong trying to create junction instance");
+								return -1;
+							}
+							//TODO: Junction copy logic
+							//
+						}
+						data.roads. push_back(*cpyToRoad);
+						free(cpyToRoad);
+						break;
+
+					}
+				}
+				
+			}
+			toSegment *= toSegInstance *100;
+
+		}
+		if(fromSegInstance > 1)
+		{
+			if(instances[fromSegment] < fromSegInstance -1)
+			{
+				std::cout << "DEBUG: created new instance of (from)segment" << fromSegment << std::endl;
+				instances[fromSegment] ++;
+				//Create new instance 
+				for(road r: data.roads)
+				{
+					if(r.inputId == fromSegment)
+					{
+						road* cpyToRoad = (road*)malloc(sizeof(road));
+						memcpy(cpyToRoad, &r, sizeof(road));
+						cpyToRoad->id *= fromSegInstance *100;
+						cpyToRoad->inputSegmentId *= fromSegInstance *100;
+						
+						cpyToRoad->junction *= fromSegInstance *100;
+						if(!cpyToRoad->isConnectingRoad && cpyToRoad->roundAboutInputSegment > -1) //update junction
+						{
+							std::cout << cpyToRoad->junction << std::endl;
+							junction* j = nullptr;
+							for(junction jIterator: data.junctions)
+							{
+								if(jIterator.id == cpyToRoad->junction)
+								{
+									j = &jIterator;
+								}
+							}
+							if(j == nullptr)
+							{
+								throwError("Something went wrong trying to create junction instance");
+								return -1;
+							}
+							//TODO: Junction copy logic
+							//
+						}
+						data.roads. push_back(*cpyToRoad);
+						free(cpyToRoad);
+						break;
+
+					}
+				}
+				
+			}
+			fromSegment *= fromSegInstance *100;
+
+		}
+
+		//------------------------------------------------------------------------------------------------
+
 		if(!isIn(outgoing_connections[fromSegment], toSegment))
 			outgoing_connections[fromSegment].push_back(toSegment);
 
 		if(!isIn(incoming_connections[toSegment], fromSegment))
 			incoming_connections[toSegment].push_back(fromSegment);
-
 	}
 
 	std::queue<int> toDo = std::queue<int>(); //remaining segments
@@ -539,11 +615,34 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 		
 			for (DOMElement *segmentLink = links->getFirstElementChild();segmentLink != NULL; segmentLink = segmentLink->getNextElementSibling())
 			{
-				if(curId != readIntAttrFromNode(segmentLink, "fromSegment") || e != readIntAttrFromNode(segmentLink, "toSegment")) continue;
+				int toSegment = readIntAttrFromNode(segmentLink, "toSegment");
+				int fromSegment = readIntAttrFromNode(segmentLink, "fromSegment");
+
+				//Adjust segment ids if an instance of the segment is linked
+				int toInstance = readIntAttrFromNode(segmentLink, "toSegmentInstance");
+				int fromInstance = readIntAttrFromNode(segmentLink, "fromSegmentInstance");
+
+				int fromRoad = readIntAttrFromNode(segmentLink, "fromRoad");
+				int toRoad = readIntAttrFromNode(segmentLink, "toRoad");
+
+				std::string fromPos = readStrAttrFromNode(segmentLink, "fromPos");
+				std::string toPos = readStrAttrFromNode(segmentLink, "toPos");
+
+				if(fromInstance > 1)
+				{
+					fromSegment *= fromInstance * 100;
+				}
+				if(toInstance > 1)
+				{
+					toSegment *= toInstance * 100;
+				}
+
+
+				if(curId != fromSegment || e != toSegment) continue;
 				//process the element------------------
 				//cout << "Transforming roads" << endl;
 
-				transformRoad(segmentLink, data);
+				transformRoad(fromSegment, toSegment, fromRoad, toRoad, fromPos, toPos, data);
 				
 				//end processessing the element--------
 				break; //prevents multiple processing steps if they are defined in the xml (they shouldn't be)
@@ -560,9 +659,31 @@ int linkSegments(const DOMElement* rootNode, roadNetwork &data)
 
 			for (DOMElement *segmentLink = links->getFirstElementChild(); segmentLink != NULL; segmentLink = segmentLink->getNextElementSibling())
 			{
-				if(curId != readIntAttrFromNode(segmentLink, "toSegment") || incoming_id != readIntAttrFromNode(segmentLink, "fromSegment")) continue;
+				int toSegment = readIntAttrFromNode(segmentLink, "toSegment");
+				int fromSegment = readIntAttrFromNode(segmentLink, "fromSegment");
+
+				//Adjust segment ids if an instance of the segment is linked
+				int toInstance = readIntAttrFromNode(segmentLink, "toSegmentInstance");
+				int fromInstance = readIntAttrFromNode(segmentLink, "fromSegmentInstance");
+
+				int fromRoad = readIntAttrFromNode(segmentLink, "fromRoad");
+				int toRoad = readIntAttrFromNode(segmentLink, "toRoad");
+
+				std::string fromPos = readStrAttrFromNode(segmentLink, "fromPos");
+				std::string toPos = readStrAttrFromNode(segmentLink, "toPos");
+
+				if(fromInstance > 1)
+				{
+					fromSegment *= fromInstance * 100;
+				}
+				if(toInstance > 1)
+				{
+					toSegment *= toInstance * 100;
+				}
+
+				if(curId != toSegment || incoming_id != fromSegment) continue;
 				//process the element------------------
-				transformRoad(segmentLink, data, true);
+				transformRoad(fromSegment, toSegment, fromRoad, toRoad, fromPos, toPos, data, true);
 				break; //prevents multiple processing steps if they are defined in the xml (they shouldn't be)
 
 			}

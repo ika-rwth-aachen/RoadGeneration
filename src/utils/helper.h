@@ -128,7 +128,7 @@ int findLane(laneSection sec, lane &l, int id)
  * @brief function returns the road with the given id
  * 
  * @param roads road vector in which the road is stored
- * @param l     road which has the roadId id
+ * @param r     road which has the roadId id
  * @param id    roadId of the lane to find
  * @return int  position in road vector
  */

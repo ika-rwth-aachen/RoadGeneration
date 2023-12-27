@@ -891,7 +891,9 @@
         </xs:documentation>
     </xs:annotation>
     <xs:attribute name="fromSegment" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="fromSegmentInstance" type="xs:positiveInteger" use="optional"/>
     <xs:attribute name="toSegment" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="toSegmentInstance" type="xs:positiveInteger" use="optional"/>
     <xs:attribute name="fromRoad" type="xs:positiveInteger" use="required"/>
     <xs:attribute name="toRoad" type="xs:positiveInteger" use="required"/>
     <xs:attribute name="fromPos" type="posType" use="required"/>
