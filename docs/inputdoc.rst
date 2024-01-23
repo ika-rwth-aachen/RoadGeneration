@@ -1,4 +1,4 @@
-Input file format
+Input File Format
 =================
 
 This section explains the input format and provides examples for basic usecases. Furthermore a variety of template files can be found in `io/Templates`. If the input `xsd` scheme was subject to change, this documentation needs to be updated.
@@ -708,6 +708,7 @@ SegmentLink
     fromPos, string , 'start' 'end' , specifies if the fromSegment should be linked at its beginning or end , yes
     toPos, string , 'start' 'end' , specifies if the toSegment should be linked at its beginning or end , yes
 
+
 Key points
 ^^^^^^^^^^
 
@@ -716,8 +717,12 @@ Key points
 * Segments have a seperate namespace from Roads, i.e. multiple roads with the ID 1 can exist under differen segments
 
 
-Example
-'''''''
+Examples
+''''''''
+
+You can find a example of the linking tag, as well as a minimal working example below.
+
+**Example linking**
 
 .. code-block:: xml
 
@@ -729,6 +734,39 @@ Example
         <segmentLink fromSegment="6" toSegment="1" fromRoad="2" toRoad="1" fromPos="end" toPos="start" />
     </links>
 
+
+**Complete input file**
+
+.. figure:: _static/link.png
+    :class: align-right
+    :width: 470
+
+.. code-block:: xml
+
+    <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+        <segments>
+        <connectingRoad id="1">
+                <road id="1" classification="main" >	
+                    <referenceLine>
+                        <line length="100"/>
+                    </referenceLine>
+                </road>
+            </connectingRoad>
+            <connectingRoad id="2">
+                <road id="1" classification="main" >	
+                <referenceLine>
+                        <spiral length="100"  Rs="-150" Re="0"/>
+                    </referenceLine>
+                </road>
+            </connectingRoad>
+
+        </segments>
+        
+        <links refId="1" hdgOffset="0.0" xOffset="0" yOffset="0">
+            <segmentLink fromSegment="1" toSegment="2" fromRoad="1" toRoad="1" fromPos="end" toPos="start" />
+        </links>
+
+    </roadNetwork>
 
 CloseRoads
 ----------
@@ -750,6 +788,10 @@ To smoothly close open connections, roads and their respective linkage informati
 Example
 '''''''
 
+Below is an example of the close road tag and a minimal working example.
+
+**Example linking**
+
 .. code-block:: xml
 
     <closeRoads>
@@ -759,3 +801,88 @@ Example
             <segmentLink fromSegment="7" toSegment="1" fromRoad="4" toRoad="1" fromPos="end" toPos="start" />
             <segmentLink fromSegment="7" toSegment="7" fromRoad="2" toRoad="3" fromPos="end" toPos="end" />
     </closeRoads>
+
+
+**Complete input file**
+
+.. figure:: _static/close.png
+    :class: align-right
+    :width: 470
+
+.. code-block:: xml
+
+    <roadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xml/input.xsd">
+        <segments>
+        <connectingRoad id="1">
+                <road id="1" classification="main" >	
+                    <referenceLine>
+                        <line length="100"/>
+                    </referenceLine>
+                </road>
+            </connectingRoad>
+            <connectingRoad id="2">
+                <road id="1" classification="main" >	
+                <referenceLine>
+                        <spiral length="100"  Rs="-150" Re="0"/>
+                    </referenceLine>
+                </road>
+            </connectingRoad>
+        </segments>
+        <links refId="1" hdgOffset="0.0" xOffset="0" yOffset="0">
+            <segmentLink fromSegment="1" toSegment="2" fromRoad="1" toRoad="1" fromPos="end" toPos="start" />
+        </links>
+        <closeRoads>
+            <segmentLink fromSegment="2" toSegment="1" fromRoad="1" toRoad="1" fromPos="end" toPos="start" />
+        </closeRoads>
+    </roadNetwork>
+
+
+Elevation
+----------
+
+Elevation is not currently supported in the road generation tool. However, the input format does support it for connecting roads.
+
+
+elevationProfile
+''''''''''''''''''
+
+An elevation profile can be specified for each connecting road segment with an `elevationPoint` tag. A simple ramp or slope can be achieved by specifying the attributes listed below. The `heightDifference` is relative to the height of the segment start (at `s=0`).
+
+.. csv-table::
+    :widths: 100 100 100 100 50
+
+    **Name** , **Type** , **Range** , **Description** , **Required**
+    startRadius , double , positive , radius of curvature at the start of segment, yes
+    heightDifference , double , all , relative end height of segment , yes
+    endRadius , double , positive  , radius of curvature at the end of segment , yes
+
+
+elevationPoint
+''''''''''''''''
+
+If a more complex height profile is required, additional elevation points can be specified with the `elevationPoint` tag. Elevation points are specified relative to the height of the segment start (at `s=0`).
+
+.. csv-table::
+    :widths: 100 100 100 100 50
+
+    **Name** , **Type** , **Range** , **Description** , **Required**
+    s , double , positive , s offset of the elevation point, yes
+    height , double , all , height of elevation point , yes
+    R , double , positive  , radius of curvature on elevation point , yes
+
+
+
+**Example elevation profile**
+
+.. code-block:: xml
+
+    <connectingRoad id="1">
+        <road id="1" classification="main" >	
+            <referenceLine>
+                    <line length="100"/>
+            </referenceLine>
+            <elevationProfile startRadius="20" heightDifference="20" endRadius="15"> 
+                <elevationPoint s="40" height="-10" R="10" />
+            </elevationProfile>
+        </road>
+    </connectingRoad>
