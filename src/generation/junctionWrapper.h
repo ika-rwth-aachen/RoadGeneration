@@ -47,7 +47,7 @@ int junctionWrapper(const DOMElement* node, roadNetwork &data)
     {
         if (xjunction(node, data))
         {
-            cerr << "ERR: error in xjunction." << endl;
+            std::cerr << "ERR: error in xjunction." << std::endl;
             return 1;
         }
     }
@@ -56,14 +56,14 @@ int junctionWrapper(const DOMElement* node, roadNetwork &data)
 
         if (tjunction(node, data))
         {
-            cerr << "ERR: error in tjunction." << endl;
+            std::cerr << "ERR: error in tjunction." << std::endl;
             return 1;
         }
     }
 
     if (mode == 0)
     {
-        cerr << "ERR: junction type is not defined correct." << endl;
+        std::cerr << "ERR: junction type is not defined correct." << std::endl;
         return 1;
     }
     return 0;
