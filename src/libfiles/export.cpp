@@ -26,7 +26,9 @@
 #include <ctime>
 
 #ifdef _WIN32
+#ifndef NOMINMAX
 #define NOMINMAX
+#endif
 #include <windows.h>
 #include <algorithm>
 #ifndef M_PI
@@ -133,6 +135,13 @@ EXPORTED int executePipeline(char* file)
 		std::cerr << "ERR: error in linkSegments" << std::endl;
 		return -1;
 	}
+
+	if (generateElevationProfiles(inputxml.getRootElement(), data))
+	{
+		std::cerr << "ERR: error in generateElevationPforiles" << std::endl;
+		return -1;
+	}
+	
 	if (closeRoadNetwork(inputxml.getRootElement(), data))
 	{
 		std::cerr << "ERR: error in closeRoadNetwork" << std::endl;

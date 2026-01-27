@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 4.0)
 project(road-generation)
 
 
@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR})
 
 find_package(XercesC REQUIRED)
-
+ 
 include_directories(src)
 include_directories(${XercesC_INCLUDE_DIR})
 

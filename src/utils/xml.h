@@ -241,6 +241,30 @@ int createXMLXercesC(roadNetwork &data)
             }
         }
 
+        //--- write elevation --------------------------------------------------
+        //first write elevation profile
+        if(it->elevationProfiles.size() > 0)
+        {
+            nodeElement evProfile("elevationProfile");
+            evProfile.appendToNode(road);
+
+            for (elevationProfile &epr:  it->elevationProfiles)
+            {
+                for(elevationPolynom ep: epr.outputElevation)
+                {
+                    nodeElement elevation("elevation");
+                    elevation.appendToNode(evProfile);
+
+                    elevation.addAttribute("s", ep.s);
+                    elevation.addAttribute("a", ep.a);
+                    elevation.addAttribute("b", ep.b);
+                    elevation.addAttribute("c", ep.c);
+                    elevation.addAttribute("d", ep.d);
+                }
+            }
+
+        }
+
         // --- write lanes -----------------------------------------------------
         nodeElement lanes("lanes");
         lanes.appendToNode(road);

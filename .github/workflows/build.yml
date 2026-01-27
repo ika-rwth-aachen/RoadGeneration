@@ -28,7 +28,7 @@ jobs:
            echo Compiled!
            
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v6
       with:
           name: road-generation
           path: |
@@ -38,8 +38,8 @@ jobs:
     needs: [Build]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/download-artifact@v2
+    - uses: actions/checkout@v6
+    - uses: actions/download-artifact@v7
       with:
          name: road-generation
     - name: Prep test

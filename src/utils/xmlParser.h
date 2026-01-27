@@ -28,8 +28,8 @@
 
 using namespace XERCES_CPP_NAMESPACE;
 
-DOMImplementation *impl;
-DOMDocument *doc;
+xercesc::DOMImplementation *impl;
+xercesc::DOMDocument *doc;
 
 bool initialized = false;
 
@@ -152,7 +152,7 @@ struct xmlTree
 
 private:
     XercesDOMParser *parser;
-    DOMDocument *doc;
+    xercesc::DOMDocument *doc;
     ValidationErrorHandler *inputHandler;
 
 public:
@@ -189,7 +189,7 @@ public:
         }
     }
 
-    DOMImplementation *getDocImpl()
+    xercesc::DOMImplementation *getDocImpl()
     {
         return doc->getImplementation();
     }
@@ -207,7 +207,7 @@ public:
         }
     }
 
-    DOMDocument *getDoc()
+    xercesc::DOMDocument *getDoc()
     {
         return doc;
     }
@@ -232,7 +232,7 @@ public:
         return parser->getErrorCount();
     }
 
-    xercesc_3_2::Grammar *loadGrammar(const char *const schema_file)
+    xercesc::Grammar *loadGrammar(const char *const schema_file)
     {
         return parser->loadGrammar(schema_file, Grammar::SchemaGrammarType);
     }
