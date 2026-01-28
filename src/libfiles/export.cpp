@@ -66,7 +66,7 @@ EXPORTED int execPipeline(){
 }
 
 EXPORTED void setSilentMode(bool sMode){
-	setting.suppressOutput = sMode;
+	setting.silentMode = sMode;
 }
 
 

@@ -311,7 +311,7 @@ int closeRoadNetwork(const DOMElement* rootNode, roadNetwork &data)
 
 		//Calculate elevation
 
-		cout << "calculate elevation for " << rConnection.id << "\n";
+		std::cout << "calculate elevation for " << rConnection.id << "\n";
 
 		double startElevationHeight 		= fromRoad.getAbsoluteElevationAt(-1);
 		if(fromPos == "end")
@@ -321,25 +321,25 @@ int closeRoadNetwork(const DOMElement* rootNode, roadNetwork &data)
 		if(toPos == "end")
 			endElevationHeight = toRoad.getAbsoluteElevationAt(1);
 
-        double endR                         = 10; //TODO calculate proper R
+		double endR                         = 10; //TODO calculate proper R
 		double startR                       = 10; //TODO calculate proper R
 
 
-        elevationProfile sEp; //TODO: check why this is not destructed when leaving scope
-        sEp.sOffset = 0;
-        sEp.tOffset = startElevationHeight;
-        sEp.radius  = startR;
-        rConnection.elevationProfiles.push_back(sEp);
-        elevationProfile eEp; //TODO: check why this is not destructed when leaving scope
-        eEp.sOffset = rConnection.length;
-        eEp.tOffset = endElevationHeight;
-        eEp.radius  = endR;
-        rConnection.elevationProfiles.push_back(eEp);
+		elevationProfile sEp; //TODO: check why this is not destructed when leaving scope
+		sEp.sOffset = 0;
+		sEp.tOffset = startElevationHeight;
+		sEp.radius  = startR;
+		rConnection.elevationProfiles.push_back(sEp);
+		elevationProfile eEp; //TODO: check why this is not destructed when leaving scope
+		eEp.sOffset = rConnection.length;
+		eEp.tOffset = endElevationHeight;
+		eEp.radius  = endR;
+		rConnection.elevationProfiles.push_back(eEp);
 
 
 		if (generateElevationProfile(rConnection.elevationProfiles))
         {
-            cerr << "ERR: error in generateElevationProfile" << endl;
+						std::cerr << "ERR: error in generateElevationProfile" << std::endl;
             return 1;
         }
 
