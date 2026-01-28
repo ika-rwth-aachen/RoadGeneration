@@ -34,7 +34,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
         mode = 2;
     if (mode == 0)
     {
-        cerr << "ERR: junction type is not defined correctly." << endl;
+        std::cerr << "ERR: junction type is not defined correctly." << std::endl;
         return 1;
     }
 
@@ -58,7 +58,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     DOMElement* iP = getChildWithName(node, "intersectionPoint");
     if (iP == NULL)
     {
-        cerr << "ERR: intersection point is not defined correct." << endl;
+        std::cerr << "ERR: intersection point is not defined correct." << std::endl;
         return 1;
     }
     DOMElement* cA = getChildWithName(getChildWithName(node, "coupler"), "junctionArea");
@@ -92,7 +92,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
 
     if (mainRoad == NULL || additionalRoad1 == NULL || (mode == 2 && additionalRoad2 == NULL))
     {
-        cerr << "ERR: specified roads in intersection are not found.";
+        std::cerr << "ERR: specified roads in intersection are not found.\n";
         return 1;
     }
 
@@ -125,21 +125,21 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     road help1;
     if (buildRoad(mainRoad, help1, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
-        cerr << "ERR: error in buildRoad" << endl;
+        std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
     
     road help2;
     if (buildRoad(additionalRoad1, help2, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
-        cerr << "ERR: error in buildRoad" << endl;
+        std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
     
     road help3;
     if (buildRoad(additionalRoad2, help3, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
-        cerr << "ERR: error in buildRoad" << endl;
+        std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
 
@@ -154,9 +154,9 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     double width3 = abs(findTOffset(lS3, findMinLaneId(lS3), 0)) + abs(findTOffset(lS3, findMaxLaneId(lS3), 0));
 
     // check offsets and adjust them if necessary (here: 4 is safty factor)
-    double w1 = max(width2 / 2, width3 / 2) * 4;
-    double w2 = max(width1 / 2, width3 / 2) * 4;
-    double w3 = max(width1 / 2, width2 / 2) * 4;
+    double w1 = std::max(width2 / 2, width3 / 2) * 4;
+    double w2 = std::max(width1 / 2, width3 / 2) * 4;
+    double w3 = std::max(width1 / 2, width2 / 2) * 4;
 
     bool changed = false;
     if (sOffMain < w1)
@@ -177,7 +177,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
 
     if (changed)
     {
-        cerr << "!!! sOffset of at least one road was changed, due to feasible road structure !!!" << endl;
+        std::cerr << "!!! sOffset of at least one road was changed, due to feasible road structure !!!" << std::endl;
     }
 
     // calculate s and phi at intersection
@@ -188,7 +188,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
         tmpNode = getChildWithName(iP, "adRoad");
         if (tmpNode == NULL)
         {
-            cerr << "ERR: first 'adRoad' is missing." << endl;
+            std::cerr << "ERR: first 'adRoad' is missing." << std::endl;
             return 1;
         }
         sAdd1 = readDoubleAttrFromNode(tmpNode, "s");
@@ -202,7 +202,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
 
         if (tmpNode == NULL)
         {
-            cerr << "ERR: second 'adRoad' is missing." << endl;
+            std::cerr << "ERR: second 'adRoad' is missing." << std::endl;
             return 1;
         }
         sAdd2 = readDoubleAttrFromNode(tmpNode, "s");
@@ -221,8 +221,8 @@ int tjunction(const DOMElement* node, roadNetwork &data)
         id: 1               id: 2
         __________        ___________    
      */
-    if(!setting.suppressOutput)
-        cout << "\tGenerating roads" << endl;
+    if(!setting.silentMode)
+        std::cout << "\tGenerating roads" << std::endl;
     laneSection lS;
     double t;
 
@@ -242,14 +242,14 @@ int tjunction(const DOMElement* node, roadNetwork &data)
         if (phi > 0)
             if (buildRoad(mainRoad, r1, sMain - sOffMain, 0, automaticWidening, sMain, iPx, iPy, iPhdg))
             {
-                cerr << "ERR: error in buildRoad" << endl;
+                std::cerr << "ERR: error in buildRoad" << std::endl;
                 return 1;
             }
         // add street is right from road 1
         if (phi < 0)
             if (buildRoad(mainRoad, r1, sMain - sOffMain, 0, automaticRestricted, sMain, iPx, iPy, iPhdg))
             {
-                cerr << "ERR: error in buildRoad" << endl;
+                std::cerr << "ERR: error in buildRoad" << std::endl;
                 return 1;
             }
     }
@@ -257,14 +257,14 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     {
         if (buildRoad(mainRoad, r1, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
             {
-                cerr << "ERR: error in buildRoad" << endl;
+                std::cerr << "ERR: error in buildRoad" << std::endl;
                 return 1;
             }
     }
     
     if (addObjects(mainRoad, r1, data))
     {
-        cerr << "ERR: error in addObjects" << endl;
+        std::cerr << "ERR: error in addObjects" << std::endl;
         return 1;
     }
 
@@ -284,19 +284,19 @@ int tjunction(const DOMElement* node, roadNetwork &data)
         if (phi > 0)
             if (buildRoad(mainRoad, r2, sMain + sOffMain, INFINITY, automaticRestricted, sMain, iPx, iPy, iPhdg))
             {
-                cerr << "ERR: error in buildRoad" << endl;
+                std::cerr << "ERR: error in buildRoad" << std::endl;
                 return 1;
             }
         // add street is right from road 1
         if (phi < 0)
             if (buildRoad(mainRoad, r2, sMain + sOffMain, INFINITY, automaticWidening, sMain, iPx, iPy, iPhdg))
             {
-                cerr << "ERR: error in buildRoad" << endl;
+                std::cerr << "ERR: error in buildRoad" << std::endl;
                 return 1;
             }
         if (addObjects(mainRoad, r2, data))
         {
-            cerr << "ERR: error in addObjects" << endl;
+            std::cerr << "ERR: error in addObjects" << std::endl;
             return 1;
         }
     }
@@ -304,12 +304,12 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     {
         if (buildRoad(additionalRoad1, r2, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         if (addObjects(additionalRoad1, r2, data))
         {
-            cerr << "ERR: error in addObjects" << endl;
+            std::cerr << "ERR: error in addObjects" << std::endl;
             return 1;
         }
     }
@@ -325,12 +325,12 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     {
         if (buildRoad(additionalRoad1, r3, sAdd1 + sOffAdd1, INFINITY, automaticWidening, sAdd1, iPx, iPy, iPhdg + phi1))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         if (addObjects(additionalRoad1, r3, data))
         {
-            cerr << "ERR: error in addObjects" << endl;
+            std::cerr << "ERR: error in addObjects" << std::endl;
             return 1;
         }
     }
@@ -338,12 +338,12 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     {
         if (buildRoad(additionalRoad2, r3, sAdd2 + sOffAdd2, INFINITY, automaticWidening, sAdd2, iPx, iPy, iPhdg + phi2))
         {
-            cerr << "ERR: error in buildRoad" << endl;
+            std::cerr << "ERR: error in buildRoad" << std::endl;
             return 1;
         }
         if (addObjects(additionalRoad2, r3, data))
         {
-            cerr << "ERR: error in addObjects" << endl;
+            std::cerr << "ERR: error in addObjects" << std::endl;
             return 1;
         }
     }    
@@ -372,7 +372,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
                 length = readDoubleAttrFromNode(addLane, "ds");
 
             int type;
-            string tmpType = readStrAttrFromNode(addLane, "type");
+            std::string tmpType = readStrAttrFromNode(addLane, "type");
             if (tmpType == "left")
                 type = 1;
             if (tmpType == "right")
@@ -389,7 +389,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
 
             int inputId = readIntAttrFromNode(addLane, "roadId");
 
-            string inputPos = "end";
+            std::string inputPos = "end";
             if (attributeExits(addLane, "roadPos"))
                 inputPos = readStrAttrFromNode(addLane, "roadPos");
 
@@ -445,8 +445,8 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     data.roads.push_back(r3);
 
     // ---Generating Connecting Lanes -------------------------------------------
-    if(!setting.suppressOutput)
-        cout << "\tGenerating Connecting Lanes" << endl;
+    if(!setting.silentMode)
+        std::cout << "\tGenerating Connecting Lanes" << std::endl;
 
     // --- generate user-defined connecting lanes
     if (con != NULL && readStrAttrFromNode(con, "type") == "single")
@@ -458,11 +458,11 @@ int tjunction(const DOMElement* node, roadNetwork &data)
             int fromId = readIntAttrFromNode(roadLink, "fromId");
             int toId = readIntAttrFromNode(roadLink, "toId");
 
-            string fromPos = "end";
+            std::string fromPos = "end";
             if (attributeExits(roadLink, "fromPos"))
                 fromPos = readStrAttrFromNode(roadLink, "fromPos");
 
-            string toPos = "end";
+            std::string toPos = "end";
             if (attributeExits(roadLink,"toPos"))
                 toPos = readStrAttrFromNode(roadLink, "toPos");
 
@@ -477,8 +477,8 @@ int tjunction(const DOMElement* node, roadNetwork &data)
             }
             if (r1.id == -1 || r2.id == -1)
             {
-                cerr << "ERR: error in user-defined lane connecting:" << endl;
-                cerr << "\t road to 'fromId' or 'toId' can not be found" << endl;
+                std::cerr << "ERR: error in user-defined lane connecting:" << std::endl;
+                std::cerr << "\t road to 'fromId' or 'toId' can not be found" << std::endl;
                 return 1;
             }
 
@@ -494,8 +494,8 @@ int tjunction(const DOMElement* node, roadNetwork &data)
                 if (toPos == "end")
                     to *= -1;
 
-                string left = sol;
-                string right = sol;
+                std::string left = sol;
+                std::string right = sol;
 
                 if (attributeExits(laneLink, "left"))
                     left = readStrAttrFromNode(laneLink, "left");
@@ -515,10 +515,10 @@ int tjunction(const DOMElement* node, roadNetwork &data)
     // generate automatic connecting lanes
     else
     {
-        // switch roads if necessary, so that
+        // switch roads if necessary
         if (sortRoads(r1, r2, r3))
         {
-            cerr << "ERR: roads can not be sorted." << endl;
+            std::cerr << "ERR: roads can not be sorted." << std::endl;
             return 1;
         }
 
@@ -529,7 +529,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
         // 1) PART from R1 To R2 -> Right to Right (if exist)
 
         calcFromTo(r1, r2, from, to, nF, nT, -1);
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;
@@ -559,7 +559,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
 
         calcFromTo(r2, r1, from, to, nF, nT, 1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;
@@ -584,7 +584,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
 
         calcFromTo(r2, r3, from, to, nF, nT, -1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;
@@ -607,7 +607,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
 
         calcFromTo(r3, r2, from, to, nF, nT, 1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;
@@ -626,7 +626,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
 
         calcFromTo(r3, r1, from, to, nF, nT, -1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;
@@ -656,7 +656,7 @@ int tjunction(const DOMElement* node, roadNetwork &data)
 
         calcFromTo(r1, r3, from, to, nF, nT, 1);
 
-        for (int i = 0; i < min(nF, nT); i++)
+        for (int i = 0; i < std::min(nF, nT); i++)
         {
             road r;
             r.inputSegmentId = inputSegmentId;

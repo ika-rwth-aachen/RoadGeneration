@@ -58,9 +58,9 @@ struct connection
     int fromLane = -1;
     int toLane = -1;
 
-    string to_string()
+    std::string to_string()
     {
-        string res = 
+        std::string res = 
         "connection:      " + std::to_string(id) + "\n"
         "from:            " + std::to_string(from) + "\n"
         "to:              " + std::to_string(to) + "\n"
@@ -78,12 +78,11 @@ struct connection
 struct junction
 {
     int id = -1;
-    vector<connection> connections;
+    std::vector<connection> connections;
 
-
-    string to_string()
+    std::string to_string()
     {
-        string res = 
+        std::string res = 
         "junction " + std::to_string(id) + "\n";
         for(connection c: connections)
         {
@@ -101,9 +100,9 @@ struct junction
 struct roadmark
 {
     double s = 0;
-    string type = "solid";
-    string weight = "standard";
-    string color = "white";
+    std::string type = "solid";
+    std::string weight = "standard";
+    std::string color = "white";
     double width = 0.15;
 };
 
@@ -139,7 +138,7 @@ struct offset
 struct material
 {
     double s = 0;
-    string surface = "asphalt";
+    std::string surface = "asphalt";
     double friction = 0.8;
     double roughness = 0.015;
 };
@@ -151,7 +150,7 @@ struct material
 struct lane
 {
     int id = -1;
-    string type = "driving";
+    std::string type = "driving";
     bool turnLeft = false;    // determine if lane is special left turn lane
     bool turnStraight = true; // determine if lane is normal lane
     bool turnRight = false;   // determine if lane is special right turn lane
@@ -173,7 +172,7 @@ struct laneSection
 {
     int id = -1;
     double s = 0;
-    vector<lane> lanes;
+    std::vector<lane> lanes;
     offset o;
 };
 
@@ -212,12 +211,12 @@ struct link
 struct object
 {
     int id = -1;
-    string type = ""; // special OpenDRIVE code to define type
+    std::string type = ""; // special OpenDRIVE code to define type
     double s = 0;
     double t = 0;
     double z = 0;
     double hdg = 0;
-    string orientation = "none";
+    std::string orientation = "none";
     double length = 0;
     double width = 0;
     double height = 0;
@@ -235,18 +234,18 @@ struct object
 struct sign
 {
     int id = -1;
-    string type = ""; // special OpenDRIVE code to define type
-    string subtype = "-1";
+    std::string type = ""; // special OpenDRIVE code to define type
+    std::string subtype = "-1";
     int rule = -1;
     double value = -1;
     double s = 0;
     double t = 0;
     double z = 0;
-    string orientation = "none";
+    std::string orientation = "none";
     double width = 0.4;
     double height = 2;
     bool dynamic = false;
-    string country = "OpenDRIVE";
+    std::string country = "OpenDRIVE";
 };
 
 /**
@@ -256,8 +255,45 @@ struct sign
 struct control
 {
     int id = -1;
-    vector<sign> signs;
+    std::vector<sign> signs;
 };
+
+/**
+ * @brief Holds the output elevation polynom
+ * 
+ */
+struct elevationPolynom
+{
+    double a = 0; //unit m, elevation at @s (ds=0)
+    double b = 0; //unit 1
+    double c = 0; //unit 1/m
+    double d = 0; //unit 1/m^2
+    double s = 0; //unit m
+};
+
+/**
+ * @brief stores the elevation data for each road segment along the s coordinate as a 3rd deg. polynomial
+ * elev(ds) = a + b * ds + c * ds^2 + d*ds^3
+ * elev = elevation at given pos
+ * ds   = distance along s, restarts at each new element
+ *  
+ */
+struct elevationProfile
+{
+    
+    std::vector<elevationPolynom> outputElevation; //these are the polynoms that are generated from this elevationprofile
+    //these are the raw input format values s equals x coordinate and t equals y.
+    int inputId    = -1;
+    double radius  = 0;
+    double sOffset = 0;
+    double tOffset = 0;
+
+    bool operator<(const struct elevationProfile& other) const
+    {
+        return sOffset < other.sOffset;
+    };
+};
+
 
 /**
  * @brief Holds the output elevation polynom
@@ -316,19 +352,19 @@ struct road
     int junction = -1;
     
     //inputid has to be set to another value for roundabout roads so that ids dont clash in the linking segment
-    string inputPos = ""; // specifying part of original road from input file
-    string type = "town";
-    string classification = ""; // either 'main' or 'access'
+    std::string inputPos = ""; // specifying part of original road from input file
+    std::string type = "town";
+    std::string classification = ""; // either 'main' or 'access'
 
     link predecessor;
     link successor;
 
-    vector<geometry> geometries;
-    vector<laneSection> laneSections;
-    vector<object> objects;
-    vector<sign> signs;
-    vector<elevationProfile> elevationProfiles;
-    
+    std::vector<geometry> geometries;
+    std::vector<laneSection> laneSections;
+    std::vector<object> objects;
+    std::vector<sign> signs;
+    std::vector<elevationProfile> elevationProfiles;
+
 
     /**
      * @brief Helper function to get the adjacent road with desired id
@@ -393,9 +429,9 @@ struct junctionGroup
 {
 
     int id;
-    string name;
+    std::string name;
+    std::vector<int> juncIds; 
     junctionGroupType type = roundaboutType;
-    vector<int> juncIds; 
 
     junctionGroup()
     {
@@ -421,13 +457,16 @@ struct roadNetwork
     {
     }
 
-    string file;
-    string outputFile;
+    std::string file;
+    std::string outputFile;
     // main data properties
-    vector<road> roads;
-    vector<junction> junctions;
-    vector<control> controller;
-    vector<junctionGroup> juncGroups;
+    std::vector<road> roads;
+    std::vector<junction> junctions;
+    std::vector<control> controller;
+    std::vector<junctionGroup> juncGroups;
+
+    int refRoad = -1; //store reference road id as input it
+    int refElev = 0;  //store road elevation
 
     int refRoad = -1; //store reference road id as input it
     int refElev = 0;  //store road elevation

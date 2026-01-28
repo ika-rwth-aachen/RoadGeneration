@@ -72,9 +72,13 @@ struct settings
     laneChanges laneChange;
     busStops busStop;
 
+    char* filename;
+    std::string outname;
     std::string xmlSchemaLocation; //this has to be set to the xml schema input path
+    std::string logfile = "log.txt"; //stores the location fo the logfile
 
-    bool suppressOutput = false; //silent mode disables console outputs
+    bool outputNameSet = false;
+    bool silentMode = false; //silent mode disables console outputs
     bool overwriteLog = true;
     int warnings = 0; // counts number of warnings
 

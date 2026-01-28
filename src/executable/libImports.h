@@ -10,12 +10,16 @@
 #ifndef EXPORT_H
 #define EXPORT_H
 
-#include<string>
+#include <string>
+#include "settingsExec.h"
 
-
-char* _fileName;
-char* _outName;
-std::string _logfile = "log.txt";
+//use struct from lib instead.
+struct r_config{
+    bool silentMode = false;
+    char* filename;
+    char* outputName;
+    char *xmlSchemeLocation;
+};
 
 
 extern "C" void setFileName(char* file);
@@ -25,7 +29,8 @@ extern "C" int executePipeline(char* file);
 extern "C" void setOutputName(char* file);
 extern "C" void setSilentMode(bool sMode);
 extern "C" void setXMLSchemaLocation(char* file);
-extern "C" void setOverwriteLog(bool b);
+extern "C"  int executePipelineCfg(r_config cfg);
+
 
 
 #endif

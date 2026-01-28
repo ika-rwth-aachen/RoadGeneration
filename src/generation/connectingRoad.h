@@ -36,13 +36,13 @@ int connectingRoad(DOMElement *node, roadNetwork &data)
 
     if (!mainRoad)
     {
-        cerr << "ERR: specified road is not found.";
+        std::cerr << "ERR: specified road is not found.\n";
         return 1;
     }
 
     //--- generate roads ------------------------------------------------------
-    if(!setting.suppressOutput)
-        cout << "\tGenerating roads" << endl;
+    if(!setting.silentMode)
+        std::cout << "\tGenerating roads" << std::endl;
 
     road r;
     int id = readIntAttrFromNode(mainRoad, "id");
@@ -58,16 +58,16 @@ int connectingRoad(DOMElement *node, roadNetwork &data)
 
     if (buildRoad(mainRoad, r, 0, INFINITY, dummy, 0, 0, 0, 0))
     {
-        cerr << "ERR: error in buildRoad" << endl;
+        std::cerr << "ERR: error in buildRoad" << std::endl;
         return 1;
     }
     if (addObjects(mainRoad, r, data))
     {
-        cerr << "ERR: error in addObjects" << endl;
+        std::cerr << "ERR: error in addObjects" << std::endl;
         return 1;
     }
 
-    // read elevation data---------------------------------
+    // read in elevation data---------------------------------
     DOMElement* elevationProfileNode    = getChildWithName(node, "elevationProfile");
     if(NULL != elevationProfileNode)
     {
@@ -89,8 +89,8 @@ int connectingRoad(DOMElement *node, roadNetwork &data)
             elevationProfile ep; //TODO: check why this is not destructed when leaving scope
             ep.sOffset = readDoubleAttrFromNode(itt, "s");
             ep.tOffset = readDoubleAttrFromNode(itt, "height");
-            ep.radius  = readDoubleAttrFromNode(itt, "R");
-            cout << "found elevation point " << ep.inputId << " " << ep.sOffset << " " << ep.tOffset << " " << ep.radius << endl;
+            ep.radius  = readDoubleAttrFromNode(itt, "r");
+            std::cout << "found elevation point " << ep.inputId << " " << ep.sOffset << " " << ep.tOffset << " " << ep.radius << std::endl;
             r.elevationProfiles.push_back(ep);
         }
 

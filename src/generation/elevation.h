@@ -18,7 +18,8 @@
 #include "utils/interface.h"
 #include "utils/helper.h"
 #include <vector>
-#include<queue>
+#include <queue>
+#include <iostream>
 
 /**
  * @brief Gets the x offset of the LEFT polynomial of the cuttofpoint where the connecting line will be. This is in reference to the apex of the polynomial
@@ -74,7 +75,7 @@ double poly3Derivation(double x, double b, double c, double d)
     return b + 2*c*x + 3*d*x*x;
 }
 
-int generateElevationProfile(vector<elevationProfile> &eps)
+int generateElevationProfile(std::vector<elevationProfile> &eps)
 {
 
     for(int i = 0; i < eps.size() - 1; i ++)
@@ -135,7 +136,7 @@ int generateElevationProfile(vector<elevationProfile> &eps)
 
 int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
 {
-    cout << "Generating Elevation Profiles TODO: DELETE THIS" << endl;
+    std::cout << "Generating Elevation Profiles TODO: DELETE THIS" << std::endl;
 
     //this helper struct stores information that about the parent object that is required to process the elevation of each road. 
     //Since (for instance) the successor of the successor of a road can be the same road again, we need to keep book of what road we were coming from
@@ -170,7 +171,7 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
         //check if s bounds are violated
         if(r.elevationProfiles[0].sOffset < 0 || r.elevationProfiles[r.elevationProfiles.size() -1].sOffset > r.length)
         {
-            throwError("invalid elevation profile in segment " + to_string(r.inputSegmentId) + " road " + to_string(r.inputId));
+            throwError("invalid elevation profile in segment " + std::to_string(r.inputSegmentId) + " road " + std::to_string(r.inputId));
             return 1;
         }
 
@@ -181,7 +182,7 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
             {
                 if(r.elevationProfiles[i].sOffset == r.elevationProfiles[i+1].sOffset)
                 {
-                    throwWarning("multiple elevation points are defined for one s offset in segment " + to_string(r.inputSegmentId) + " road " + to_string(r.inputId));
+                    throwWarning("multiple elevation points are defined for one s offset in segment " + std::to_string(r.inputSegmentId) + " road " + std::to_string(r.inputId));
                 }
             }
         }
@@ -189,8 +190,8 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
 
     //--------------
 
-    queue<elevationLinkInformation> remaining = queue<elevationLinkInformation>();
-    vector<int> completededIds = vector<int>();
+    std::queue<elevationLinkInformation> remaining = std::queue<elevationLinkInformation>();
+    std::vector<int> completededIds = std::vector<int>();
 
 
 	DOMElement *links = getChildWithName(rootNode, "links");
@@ -201,6 +202,7 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
 		return 0;
 	}
 
+	// define reference system
     
     //find ref road
     road* ref = NULL;
@@ -219,6 +221,7 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
 
     data.refElev = readIntAttrFromNode(links, "reElev"); // This tag is not yet defined. TODO: add this tag to xml scheme
     completededIds.push_back(ref->id);
+    
     //handle successors of root
     if(ref->successor.id > -1)
     {
@@ -245,6 +248,7 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
         completededIds.push_back(ref->id);
 
     }
+    
     //----handle predecessors of root-----------------------------------
     if(ref->predecessor.id > -1)
     {
@@ -269,8 +273,7 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
         }
         completededIds.push_back(ref->id);
 
-    }
-   
+    }  
 
   
     while(remaining.size() > 0)
@@ -285,12 +288,12 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
         {
             curEli.curRoad->elevationOffset = curEli.parentRoad->elevationOffset;     
             completededIds.push_back(curEli.curRoad->id);
-            cout << "processed " << curEli.curRoad->id << "and parent " << curEli.parentRoad->id << endl; 
+            std::cout << "processed " << curEli.curRoad->id << "and parent " << curEli.parentRoad->id << std::endl; 
 
         }
         else if(curEli.parentLinkingPoint == startType) // linked as predecessor in parent road
         {
-            cout << "iterating loop with id " << curEli.curRoad->id << " and pre " << curEli.parentRoad->id << "\n";
+            std::cout << "iterating loop with id " << curEli.curRoad->id << " and pre " << curEli.parentRoad->id << "\n";
             if(curEli.curLinkPointToparent == endType) // parent is successor in cur road
             {
                 double elevationOffsetAtLink = curEli.parentRoad->getRelativeElevationAt(0) + curEli.parentRoad->elevationOffset;
@@ -310,7 +313,7 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
         }
         else if(curEli.parentLinkingPoint == endType) //linked as successor in parent road
         {
-            cout << "iterating loop with id " << curEli.curRoad->id << " and suc " << curEli.parentRoad->id << "\n";
+            std::cout << "iterating loop with id " << curEli.curRoad->id << " and suc " << curEli.parentRoad->id << "\n";
             if(curEli.curLinkPointToparent == endType ) //parent is successor in cur road
             {
                 double elevationOffsetAtLink = curEli.parentRoad->getRelativeElevationAt(1) + curEli.parentRoad->elevationOffset;
@@ -368,7 +371,7 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
 
         else if(curEli.curRoad->predecessor.elementType == junctionType)//TODO: linking to junction
         {
-            cout << "linking to junction\n";
+            std::cout << "linking to junction\n";
             elevationLinkInformation newEli;
             road *ppre;
             findRoad(data.roads, ppre, curEli.curRoad->predecessor.id);
@@ -404,7 +407,7 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
         }
         if (generateElevationProfile(r.elevationProfiles))
         {
-            cerr << "ERR: error in generateElevationProfile" << endl;
+            std::cerr << "ERR: error in generateElevationProfile" << std::endl;
             return 1;
         }
     }

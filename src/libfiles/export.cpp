@@ -26,7 +26,9 @@
 #include <ctime>
 
 #ifdef _WIN32
+#ifndef NOMINMAX
 #define NOMINMAX
+#endif
 #include <windows.h>
 #include <algorithm>
 #ifndef M_PI
@@ -34,8 +36,6 @@
 #endif
 #endif
 
-std::string::size_type st;
-using namespace std;
 
 #include "utils/settings.h"
 #include "utils/interface.h"
@@ -48,24 +48,21 @@ using namespace std;
 settings setting;
 
 EXPORTED void setFileName(char* file){
-	_fileName = file;
+	setting.filename = file;
 }
 
-EXPORTED void setOverwriteLog(bool b){
-	setting.overwriteLog = b;
-}
 
 EXPORTED void setLogFile(char* file){
-	_logfile = file;
+	setting.logfile = file;
 }
 
 EXPORTED void setOutputName(char* outName){
-	_outName = outName;
-	_setOutput = true;
+	setting.outname = outName;
+	setting.outputNameSet = true;
 }
 
 EXPORTED int execPipeline(){
-	return executePipeline(_fileName);
+	return executePipeline(setting.filename);
 }
 
 EXPORTED void setSilentMode(bool sMode){
@@ -82,96 +79,116 @@ EXPORTED int executePipeline(char* file)
 {
 
 	if (file == NULL){
-		cout << "ERR: no file has been provided!" << endl;
+		std::cout << "ERR: no file has been provided!" << std::endl;
 		return -1;
-	}
-
-	if(!_setOutput){
-		_outName = file;
-	}
-
-	(void)! freopen(_logfile.c_str(), (setting.overwriteLog)? "w":"a", stderr); //(void)! suppresses the unused return warning..
-
-	char dt[100];
-	getTimeStamp(dt);
-	cerr << "\n" << dt << " Error log for run with attribute: " << file << endl;
-
-	if (setting.xmlSchemaLocation == ""){
-		cerr << "ERR: xml scheme  NOT SET" << endl;
-		return -1;
-	}
-
-	if(!setting.suppressOutput){
-		cout << file << endl;
-		printLogo();
 	}
 
 	// --- initialization ------------------------------------------------------
 
 	xmlTree inputxml;
-
 	roadNetwork data;
-	string outputFile = _outName;
+	std::string outputFile = setting.outname;
+	char dt[100];//stores timestamp as string
+
 	data.outputFile = outputFile.substr(0, outputFile.find(".xml"));
     data.outputFile = data.outputFile.substr(0, outputFile.find(".xodr"));
-
+	
 	setting.warnings = 0;
+
+	if(!setting.outputNameSet){
+		setting.outname = file;
+	}
+
+	(void)! freopen(setting.logfile.c_str(), "a", stderr); //(void)! suppresses the unused return warning..
+
+
+	getTimeStamp(dt);
+	std::cerr << "\n" << dt << " Error log for run with attribute: " << file << std::endl;
+
+	if (setting.xmlSchemaLocation == ""){
+		std::cerr << "ERR: xml scheme  NOT SET" << std::endl;
+		return -1;
+	}
+
+	if(!setting.silentMode){
+		std::cout << file << std::endl;
+		printLogo();
+	}
+
 	
 	// --- pipeline ------------------------------------------------------------
 
 
 	if (validateInput(file, inputxml))
 	{
-		cerr << "ERR: error in validateInput" << endl;
+		std::cerr << "ERR: error in validateInput" << std::endl;
 		return -1;
 	}
 
 	if (buildSegments(inputxml.getRootElement(), data))
 	{
-		cerr << "ERR: error in buildSegments" << endl;
+		std::cerr << "ERR: error in buildSegments" << std::endl;
 		return -1;
 	}
 	if (linkSegments(inputxml.getRootElement(), data))
 	{
-		cerr << "ERR: error in linkSegments" << endl;
+		std::cerr << "ERR: error in linkSegments" << std::endl;
 		return -1;
 	}
 
 	if (generateElevationProfiles(inputxml.getRootElement(), data))
 	{
-		cerr << "ERR: error in generateElevationPforiles" << endl;
+		std::cerr << "ERR: error in generateElevationPforiles" << std::endl;
+		return -1;
+	}
+
+	if (generateElevationProfiles(inputxml.getRootElement(), data))
+	{
+		std::cerr << "ERR: error in generateElevationPforiles" << std::endl;
 		return -1;
 	}
 	
 	if (closeRoadNetwork(inputxml.getRootElement(), data))
 	{
-		cerr << "ERR: error in closeRoadNetwork" << endl;
+		std::cerr << "ERR: error in closeRoadNetwork" << std::endl;
 		return -1;
 	}
 
-	//resolveLaneLinkConflicts(data);
-
 	if (createXMLXercesC(data))
 	{
-		cerr << "ERR: error during createXML" << endl;
+		std::cerr << "ERR: error during createXML" << std::endl;
 		return -1;
 	}
 
 	if (validateOutput(data))
 	{
-		cerr << "ERR: error in validateOutput" << endl;
+		std::cerr << "ERR: error in validateOutput" << std::endl;
 		return -1;
 	}
 
-	if(setting.warnings > 0)
+	//handle warnings
+	if(!setting.silentMode)
 	{
-		cout << "\nFinished with " << setting.warnings << " warning(s), check out the error log for more information." << endl;
-	}else{
-		cout <<"\nFinished successfully" << endl;
+		if(setting.warnings > 0)
+		{	
+				std::cout << "\nFinished with " << setting.warnings << " warning(s), check out the error log for more information." << std::endl;
+		}else{
+			std::cout <<"\nFinished successfully" << std::endl;
+		}
 	}
 
 	//Cleanup ----------------
 	terminateXMLUtils();
 
+	return 0;
+}
+
+EXPORTED int executePipelineCfg(r_config cfg)
+{
+	setOutputName(cfg.outputName);
+	setting.silentMode = cfg.silentMode;
+	setting.xmlSchemaLocation = cfg.xmlSchemeLocation;
+	setFileName(cfg.filename);
+	execPipeline();
 	return 0;
 }

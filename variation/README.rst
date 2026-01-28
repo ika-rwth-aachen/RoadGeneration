@@ -37,7 +37,7 @@ A variety of parameters and flaggs can be specified:
 -  ``-e`` ``<file path>`` generate an example template file to location
 -  ``-h --help`` display the help message
 -  ``-k`` keep ``.xml`` files with the logical road description
--  ``-s`` suppress most console output
+-  ``-v`` print console output
 
 Template File
 -------------

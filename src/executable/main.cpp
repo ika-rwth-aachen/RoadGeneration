@@ -17,10 +17,13 @@
 #include <iostream>
 #include "libImports.h"
 #include "helperExec.h"
-#include "settingsExec.h"
 #include <string>
 
 using namespace std;
+std::string _logfile = "log.txt";
+
+r_config cfg;
+
 
 /**
  * @brief main function that calls the roadgeneration library functions
@@ -34,17 +37,15 @@ int main(int argc, char** argv){
     string schemaLocation = PROJ_DIR;
     schemaLocation += "/xml";    
 
-    settingsExec settings;
+    config settings;
     if (parseArgs(argc, argv, settings)){
         return -1;
     }
-
-    setFileName(settings.fileName);
-    setXMLSchemaLocation(&schemaLocation[0]);
-    setOverwriteLog(settings.overwriteLog);
-    setOutputName(settings.outputName);
-    setSilentMode(settings.suppressOutput);
-    execPipeline();
+    cfg.silentMode = settings.silentMode;
+    cfg.filename = settings.filename;
+    cfg.xmlSchemeLocation = &schemaLocation[0];
+    cfg.outputName = settings.outputName;
+    executePipelineCfg(cfg);
 
     return 0;
 }

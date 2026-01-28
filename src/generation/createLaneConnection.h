@@ -29,23 +29,23 @@ extern settings setting;
  * @param right     right roadmarking
  * @return int      error code
  */
-int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, int to, string left, string right)
+int createLaneConnection(road &r, laneSection lS1, laneSection lS2, int from, int to, std::string left, std::string right)
 {
     if (from == 0 || to == 0)
     {
-        cerr << "ERR: cannot connect lane Id 0." << endl;
+        std::cerr << "ERR: cannot connect lane Id 0." << std::endl;
         return 1;
     }
 
     if (from > findMaxLaneId(lS1) || from < findMinLaneId(lS1))
     {
-        cerr << "ERR: cannot connect lane Id from:" << from << endl;
+        std::cerr << "ERR: cannot connect lane Id from:" << from << std::endl;
         return 1;
     }
 
     if (to > findMaxLaneId(lS2) || to < findMinLaneId(lS2))
     {
-        cerr << "ERR: cannot connect lane Id to:" << to << endl;
+        std::cerr << "ERR: cannot connect lane Id to:" << to << std::endl;
         return 1;
     }
 

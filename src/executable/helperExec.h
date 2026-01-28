@@ -1,3 +1,4 @@
+#pragma once
 /**
  * Road-Generation
  * --------------------------------------------------------
@@ -15,8 +16,7 @@
  *
  */
 
-#ifndef HELPER
-#define HELPER
+
 
 #include <iostream>
 #include <string.h>
@@ -35,8 +35,4 @@ void printHelpMessage();
  * @param settings  settings struct to store settings 
  * @return int  error code
  */
-int parseArgs(int argc, char** argv, settingsExec& settings);
-
-
-
-#endif
+int parseArgs(int argc, char** argv, config& settings);

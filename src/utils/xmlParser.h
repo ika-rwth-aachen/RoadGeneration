@@ -27,10 +27,9 @@
 #include <iostream>
 
 using namespace XERCES_CPP_NAMESPACE;
-using namespace std;
 
-DOMImplementation *impl;
-DOMDocument *doc;
+xercesc::DOMImplementation *impl;
+xercesc::DOMDocument *doc;
 
 bool initialized = false;
 
@@ -105,7 +104,7 @@ public:
         XMLString::release(&fUnicodeForm);
     }
 
-    operator string()
+    operator std::string()
     {
         char *c_type = XMLString::transcode(fUnicodeForm);
         std::string res(c_type);
@@ -153,7 +152,7 @@ struct xmlTree
 
 private:
     XercesDOMParser *parser;
-    DOMDocument *doc;
+    xercesc::DOMDocument *doc;
     ValidationErrorHandler *inputHandler;
 
 public:
@@ -168,7 +167,7 @@ public:
                 initialized = true;
             }
             
-            string schema = string_format("%s/xml/input.xsd", PROJ_DIR);
+            std::string schema = string_format("%s/xml/input.xsd", PROJ_DIR);
             const char *schema_path = schema.c_str();
 
             parser = new XercesDOMParser;
@@ -185,12 +184,12 @@ public:
         }
         catch (const XMLException &toCatch)
         {
-            cout << "something wrong in xmlreader" << endl;
+            std::cout << "ERR: in initializing xml Tree" << std::endl;
             return;
         }
     }
 
-    DOMImplementation *getDocImpl()
+    xercesc::DOMImplementation *getDocImpl()
     {
         return doc->getImplementation();
     }
@@ -203,12 +202,12 @@ public:
         }
         else
         {
-            cerr << "ERR: in getRootElement(). xml document not parsed" << endl;
+            std::cerr << "ERR: in getRootElement(). xml document not parsed" << std::endl;
             return NULL;
         }
     }
 
-    DOMDocument *getDoc()
+    xercesc::DOMDocument *getDoc()
     {
         return doc;
     }
@@ -233,7 +232,7 @@ public:
         return parser->getErrorCount();
     }
 
-    xercesc_3_2::Grammar *loadGrammar(const char *const schema_file)
+    xercesc::Grammar *loadGrammar(const char *const schema_file)
     {
         return parser->loadGrammar(schema_file, Grammar::SchemaGrammarType);
     }
@@ -243,12 +242,12 @@ public:
     }
 };
 
-string readNameFromNode(const DOMElement *node)
+std::string readNameFromNode(const DOMElement *node)
 {
     if (node == NULL)
     {
-        cout << "ERR in readNameFromNode; dom node does not exists!" << endl;
-        cerr << "ERR in readNameFromNode; dom node does not exists!" << endl;
+        std::cout << "ERR in readNameFromNode; dom node does not exists!" << std::endl;
+        std::cerr << "ERR in readNameFromNode; dom node does not exists!" << std::endl;
         return "";
     }
 
@@ -268,15 +267,15 @@ string readNameFromNode(const DOMElement *node)
  * @param suppressOutput suppress output if the attribute is not found.
  * @return string returns a string value. Returns an empty string if no attribute with the given name is found.
  */
-string readStrAttrFromNode(const DOMElement *node, const char *attribute, bool suppressOutput = false)
+std::string readStrAttrFromNode(const DOMElement *node, const char *attribute, bool suppressOutput = false)
 {
 
     if (node == NULL)
     {
         if (!suppressOutput)
         {
-            cout << "ERR: in readStrAttriValueFromNode; dom node does not exists!" << endl;
-            cerr << "ERR: in readStrAttriValueFromNode; dom node does not exists!" << endl;
+            std::cout << "ERR: in readStrAttriValueFromNode; dom node does not exists!" << std::endl;
+            std::cerr << "ERR: in readStrAttriValueFromNode; dom node does not exists!" << std::endl;
         }
         return "";
     }
@@ -300,7 +299,7 @@ string readStrAttrFromNode(const DOMElement *node, const char *attribute, bool s
 
 int readIntAttrFromNode(const DOMElement *node, const char *attribute, bool suppress = false)
 {
-    string res = readStrAttrFromNode(node, attribute, suppress);
+    std::string res = readStrAttrFromNode(node, attribute, suppress);
     if (res == "")
         return -1;
     return stoi(res);
@@ -308,7 +307,7 @@ int readIntAttrFromNode(const DOMElement *node, const char *attribute, bool supp
 
 double readDoubleAttrFromNode(const DOMElement *node, const char *attribute)
 {
-    string res = readStrAttrFromNode(node, attribute);
+    std::string res = readStrAttrFromNode(node, attribute);
     if (res == "")
         return -1;
     return stod(res);
@@ -316,7 +315,7 @@ double readDoubleAttrFromNode(const DOMElement *node, const char *attribute)
 
 bool readBoolAttrFromNode(const DOMElement *node, const char *attribute)
 {
-    string str = readStrAttrFromNode(node, attribute);
+    std::string str = readStrAttrFromNode(node, attribute);
     if (str == "")
         return NULL;
     return str == "1" || str == "True" || str == "true";
@@ -395,7 +394,7 @@ DOMElement *getFirstChildFromNode(const DOMElement *node)
  * @param attr name of the attribute
  * @return string value of the attribute
  */
-string readAttributeFromChildren(DOMElement *node, const char *firstchild, const char *attr)
+std::string readAttributeFromChildren(DOMElement *node, const char *firstchild, const char *attr)
 {
     return readStrAttrFromNode(getChildWithName(node, firstchild), attr);
 }
@@ -409,7 +408,7 @@ string readAttributeFromChildren(DOMElement *node, const char *firstchild, const
  * @param attr name of the attribute
  * @return string value of the attribute
  */
-string readAttributeFromChildren(DOMElement *node, const char *firstchild, const char *secondchild, const char *attr)
+std::string readAttributeFromChildren(DOMElement *node, const char *firstchild, const char *secondchild, const char *attr)
 {
     return readStrAttrFromNode(getChildWithName(getChildWithName(node, firstchild), secondchild), attr);
 }
@@ -440,7 +439,7 @@ struct nodeElement
     {
         if (!initialized)
         {
-            cout << "error, xml parser not initialized" << endl;
+            std::cout << "error, xml parser not initialized" << std::endl;
             return 1;
         }
         int errorCode = 0;
@@ -493,7 +492,7 @@ struct nodeElement
         return errorCode;
     }
 
-    int addAttribute(const char *key, string value)
+    int addAttribute(const char *key, std::string value)
     {
         return addAttribute(key, value.c_str());
     }
@@ -508,18 +507,18 @@ struct nodeElement
 
     int addAttribute(const char *key, int value)
     {
-        return addAttribute(key, to_string(value));
+        return addAttribute(key, std::to_string(value));
     }
 
     int addAttribute(const char *key, float value)
     {
-        return addAttribute(key, to_string(value));
+        return addAttribute(key, std::to_string(value));
     }
 
     int addAttribute(const char *key, double value)
     {
 
-        ostringstream strobj;
+        std::ostringstream strobj;
         strobj << value;
         return addAttribute(key, strobj.str());
     }
@@ -677,21 +676,20 @@ int serialize(const char *outname)
 {
     DOMLSSerializer *domSerializer = impl->createLSSerializer();
 
-    DOMLSOutput *theOutputDesc = ((DOMImplementationLS *)impl)->createLSOutput();
-    XMLFormatTarget *myFormTarget = new LocalFileFormatTarget(XMLString::transcode(outname));
-    theOutputDesc->setByteStream(myFormTarget);
-    theOutputDesc->setEncoding(XMLString::transcode("ISO-8859-1"));
+    DOMLSOutput *outputDesc = ((DOMImplementationLS *)impl)->createLSOutput();
+    XMLFormatTarget *formTarget = new LocalFileFormatTarget(XMLString::transcode(outname));
+    outputDesc->setByteStream(formTarget);
+    outputDesc->setEncoding(XMLString::transcode("ISO-8859-1"));
 
     domSerializer->getDomConfig()->setParameter(XMLUni::fgDOMXMLDeclaration, true);
-
     domSerializer->getDomConfig()->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
-    domSerializer->write(doc, theOutputDesc);
+    domSerializer->write(doc, outputDesc);
 
-    myFormTarget->flush();
+    formTarget->flush();
 
-    delete myFormTarget;
+    delete formTarget;
 
-    theOutputDesc->release();
+    outputDesc->release();
     domSerializer->release();
 
     doc->release();
