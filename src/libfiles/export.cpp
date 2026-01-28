@@ -141,12 +141,6 @@ EXPORTED int executePipeline(char* file)
 		std::cerr << "ERR: error in generateElevationPforiles" << std::endl;
 		return -1;
 	}
-
-	if (generateElevationProfiles(inputxml.getRootElement(), data))
-	{
-		std::cerr << "ERR: error in generateElevationPforiles" << std::endl;
-		return -1;
-	}
 	
 	if (closeRoadNetwork(inputxml.getRootElement(), data))
 	{

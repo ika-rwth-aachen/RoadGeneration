@@ -27,8 +27,17 @@
  */
 int junctionWrapper(const DOMElement* node, roadNetwork &data)
 {   
-
-    std::string type = X(node->getAttributeNode(X("type"))->getValue());
+    if (node == NULL)
+    {
+        std::cerr << "ERR: junction node is null." << std::endl;
+        return 1;
+    }
+    std::string type = readStrAttrFromNode(node, "type", true);
+    if (type.empty())
+    {
+        std::cerr << "ERR: junction type is missing. Expected attribute 'type' on <junction>." << std::endl;
+        return 1;
+    }
 
     // check type of the junction (M = mainroad, A = accessroad)
     int mode = 0;

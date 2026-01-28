@@ -412,5 +412,6 @@ int generateElevationProfiles(const DOMElement* rootNode, roadNetwork &data)
         }
     }
 
+    return 0;
 }
 

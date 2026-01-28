@@ -90,6 +90,15 @@ int connectingRoad(DOMElement *node, roadNetwork &data)
             ep.sOffset = readDoubleAttrFromNode(itt, "s");
             ep.tOffset = readDoubleAttrFromNode(itt, "height");
             ep.radius  = readDoubleAttrFromNode(itt, "r");
+            if (ep.radius <= 0)
+            {
+                ep.radius = readDoubleAttrFromNode(itt, "R");
+            }
+            if (ep.radius <= 0)
+            {
+                throwError("elevationPoint is missing radius 'r'/'R' or has invalid radius.");
+                return 1;
+            }
             std::cout << "found elevation point " << ep.inputId << " " << ep.sOffset << " " << ep.tOffset << " " << ep.radius << std::endl;
             r.elevationProfiles.push_back(ep);
         }
