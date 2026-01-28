@@ -66,7 +66,7 @@ EXPORTED int execPipeline(){
 }
 
 EXPORTED void setSilentMode(bool sMode){
-	setting.silentMode = sMode;
+	setting.suppressOutput = sMode;
 }
 
 
@@ -141,6 +141,12 @@ EXPORTED int executePipeline(char* file)
 		std::cerr << "ERR: error in generateElevationPforiles" << std::endl;
 		return -1;
 	}
+
+	if (generateElevationProfiles(inputxml.getRootElement(), data))
+	{
+		std::cerr << "ERR: error in generateElevationPforiles" << std::endl;
+		return -1;
+	}
 	
 	if (closeRoadNetwork(inputxml.getRootElement(), data))
 	{
@@ -172,7 +178,6 @@ EXPORTED int executePipeline(char* file)
 	}
 
 	//Cleanup ----------------
-
 	terminateXMLUtils();
 
 	return 0;

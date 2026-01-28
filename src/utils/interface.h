@@ -296,6 +296,43 @@ struct elevationProfile
 
 
 /**
+ * @brief Holds the output elevation polynom
+ * 
+ */
+struct elevationPolynom
+{
+    double a = 0; //unit m, elevation at @s (ds=0)
+    double b = 0; //unit 1
+    double c = 0; //unit 1/m
+    double d = 0; //unit 1/m^2
+    double s = 0; //unit m
+};
+
+/**
+ * @brief stores the elevation data for each road segment along the s coordinate as a 3rd deg. polynomial
+ * elev(ds) = a + b * ds + c * ds^2 + d*ds^3
+ * elev = elevation at given pos
+ * ds   = distance along s, restarts at each new element
+ *  
+ */
+struct elevationProfile
+{
+    
+    vector<elevationPolynom> outputElevation; //these are the polynoms that are generated from this elevationprofile
+    //these are the raw input format values s equals x coordinate and t equals y.
+    int inputId    = -1;
+    double radius  = 0;
+    double sOffset = 0;
+    double tOffset = 0;
+
+    bool operator<(const struct elevationProfile& other) const
+    {
+        return sOffset < other.sOffset;
+    };
+};
+
+
+/**
  * @brief road holding all properties of a road
  * 
  */
@@ -326,6 +363,7 @@ struct road
     std::vector<laneSection> laneSections;
     std::vector<object> objects;
     std::vector<sign> signs;
+    std::vector<elevationProfile> elevationProfiles;
 
 
     /**
@@ -340,8 +378,7 @@ struct road
         if(successor.id == id) return 1;
         return 0;
     }
-    
-    std::vector<elevationProfile> elevationProfiles;
+
 
     /**
      * @brief Get the Relative Elevation At road at start or end position TODO: replace this method with getRelativeElevationAtEnd()
@@ -354,6 +391,28 @@ struct road
         if(pos == -1)
         {
             return 0; //this should always be 0
+        }
+        else if(pos == 1)
+        {
+            if(elevationProfiles.size() > 0)
+                return elevationProfiles.back().tOffset;
+            return 0;
+        }
+        return 0;
+    }
+    /**
+     * @brief Get the Absolute Elevation At road at start or end position
+     * 
+     * @param pos -1: elevation at s = 0. 1: elevation at s = max
+     * @return double relative elevation
+     */
+    double getAbsoluteElevationAt(int pos)
+    {
+        if(pos == -1)
+        {
+             if(elevationProfiles.size() > 0)
+                return elevationProfiles.front().tOffset;
+            return 0;
         }
         else if(pos == 1)
         {
@@ -405,6 +464,9 @@ struct roadNetwork
     std::vector<junction> junctions;
     std::vector<control> controller;
     std::vector<junctionGroup> juncGroups;
+
+    int refRoad = -1; //store reference road id as input it
+    int refElev = 0;  //store road elevation
 
     int refRoad = -1; //store reference road id as input it
     int refElev = 0;  //store road elevation

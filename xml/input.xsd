@@ -162,9 +162,9 @@
     <xs:sequence>
         <xs:element name="elevationPoint" type="elevationPointType" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
-    <xs:attribute name="startR" type="positiveDouble" use="required"/>
-    <xs:attribute name="endElevation" type="xs:double" use="required"/>
-    <xs:attribute name="endR" type="positiveDouble" use="required"/>
+    <xs:attribute name="startRadius" type="positiveDouble" use="required"/>
+    <xs:attribute name="heightDifference" type="xs:double" use="required"/>
+    <xs:attribute name="endRadius" type="positiveDouble" use="required"/>
 </xs:complexType>
 
 <xs:complexType name="elevationPointType">
@@ -172,16 +172,14 @@
         <xs:documentation>
             Element: elevationpoint
 
-                - id: identifier of the road 
                 - s: position of the elevation point along the s axis
                 - height: height of the elevation point in meters
                 - r : radius of the elevation "mountain" or "valley" in meters
         </xs:documentation>
     </xs:annotation>
-    <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
     <xs:attribute name="s" type="positiveDouble" use="required"/>
     <xs:attribute name="height" type="xs:double" use="required"/>
-    <xs:attribute name="r" type="xs:double" use="required"/>
+    <xs:attribute name="R" type="xs:double" use="required"/>
 </xs:complexType>
 
 <xs:complexType name="roadTypeRoundAbout">

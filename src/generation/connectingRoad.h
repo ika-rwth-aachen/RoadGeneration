@@ -67,14 +67,14 @@ int connectingRoad(DOMElement *node, roadNetwork &data)
         return 1;
     }
 
-        // read in elevation data---------------------------------
+    // read in elevation data---------------------------------
     DOMElement* elevationProfileNode    = getChildWithName(node, "elevationProfile");
     if(NULL != elevationProfileNode)
     {
 
-        double startR                       = readDoubleAttrFromNode(elevationProfileNode, "startR");
-        double endElevationHeight           = readDoubleAttrFromNode(elevationProfileNode, "endElevation");
-        double endR                         = readDoubleAttrFromNode(elevationProfileNode, "endR");
+        double startR                       = readDoubleAttrFromNode(elevationProfileNode, "startRadius");
+        double endElevationHeight           = readDoubleAttrFromNode(elevationProfileNode, "heightDifference");
+        double endR                         = readDoubleAttrFromNode(elevationProfileNode, "endRadius");
 
         elevationProfile sEp; //TODO: check why this is not destructed when leaving scope
         sEp.sOffset = 0;
