@@ -4,10 +4,21 @@
    contain the root `toctree` directive.
 
 
-Welcome to Road's documentation!
-================================
 
-.. include:: ../README.rst
+Road Generation Documentation
+=============================
+
+Welcome to the documentation for `Road Generation <https://github.com/ika-rwth-aachen/RoadGeneration>`_! If you intend to use the tool, please follow the `Installation instructions <https://ika-rwth-aachen.github.io/RoadGeneration/readmelink.html#installation>`_.
+If you have questions about the input format, it is recommended to refer to the `Input Documentation <https://ika-rwth-aachen.github.io/RoadGeneration/inputdoc.html>`_. 
+
+Content
+^^^^^^^
+
+#. `Road Generation <https://ika-rwth-aachen.github.io/RoadGeneration/readmelink.html#>`_
+#. `Variation Tool Documentation <https://ika-rwth-aachen.github.io/RoadGeneration/variationlink.html>`_
+#. `Input Documentation <https://ika-rwth-aachen.github.io/RoadGeneration/inputdoc.html>`_  
+
+
 
 .. toctree::
     :maxdepth: 3
@@ -17,8 +28,6 @@ Welcome to Road's documentation!
     Road Generation <readmelink>
     Variation <variationlink>
 
-* :ref:`genindex`
-* :ref:`search`
 
 .. toctree::
     :maxdepth: 3

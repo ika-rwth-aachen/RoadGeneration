@@ -4,11 +4,14 @@ Road Generation Tool for Basic OpenDRIVE Road Networks
 .. image:: https://camo.githubusercontent.com/83d3746e5881c1867665223424263d8e604df233d0a11aae0813e0414d433943/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c6963656e73652d4d49542d626c75652e737667
 
 
-.. inclusion-marker
+
 
 
 About
 -----
+
+.. inclusion-marker
+
 
 Simulation is a valuable building block for the verification and
 validation of automated driving functions (ADF). When simulating urban
@@ -46,6 +49,24 @@ tool.
 
 Fig.1: Possible workflow for the presend road variation tool.
 
+Documentation
+-------------
+
+If you want to include the library in a project, a simple but well designed C++ reference
+`documentation <https://ika-rwth-aachen.github.io/RoadGeneration/index.html>`__ is provided.
+The input file format specification can be found `here <https://ika-rwth-aachen.github.io/RoadGeneration/inputdoc.html>`_.
+
+Variation tool
+--------------
+
+The Variation tool is used to generate a variety of different scenarios
+based on the same general road network. A template file is provided to
+specify variables as well as the general road network structure. A more
+thorough documentation can be found in the `variation
+subdirectory <variation/>`__.
+
+
+
 Repository Overview
 -------------------
 
@@ -53,14 +74,17 @@ This repository provides a tool for the generation of road networks.
 Here, the main folders are named:
 
 -  ``doc``: Resources for documentation
--  ``io``: Sample input files
+-  ``examples``: Examlpe and Template files that showcase minimal working inputs
 -  ``src``: Source code
--  ``test``: Test files and their desired OpenDRIVE outputs
+-  ``test``: Test file .xml and .xodr pairs
 -  ``xml``: Contains the XSD validation files
 -  ``variation``: Python based variation tool for the road generator
 
 Installation
 ------------
+
+Road Generation
+~~~~~~~~~~~~~~~
 
 The following **requirements** have to be satisfied:
 
@@ -73,35 +97,46 @@ The following **requirements** have to be satisfied:
 
 .. code:: bash
 
-   # Clone Repository and open main folder
-   git clone git@github.com:ika-rwth-aachen/RoadGeneration.git
-   cd RoadGeneration
+ # Clone Repository and open main folder
+ git clone git@github.com:ika-rwth-aachen/RoadGeneration.git
+ cd RoadGeneration
 
 A build script for Linux systems is provided and can be executed from
 the root directory with
 
 .. code:: bash
 
-   sh buildScript.sh
+ sh buildScript.sh
 
 Alternatively you can **build the project manually**:
 
 1. Install `XercesC <https://xerces.apache.org/xerces-c>`_ via a
-   package manager, e.g.:
+ package manager, e.g.:
 
 .. code:: bash
 
-    $ sudo apt install libxerces-c-dev
+  $ sudo apt install libxerces-c-dev
 
 2. Build the Road-generation tool with standard cmake commands, e.g.:
 
 .. code:: bash
 
-    $ mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
-    $ cmake --build .
+  $ mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../bin ..
+  $ cmake --build .
 
 *Note:* In principal, it is possible to compile and use the tool in
 Windows operating systems. However, this is experimental.
+
+Variation tool
+~~~~~~~~~~~~~~
+
+You can run the code from the ``variation`` subfolder, however, the
+variation tool can be installed system wide by using the install script
+in the root directory.
+
+.. code:: bash
+
+ sh install-variation.sh
 
 Usage
 -----
@@ -115,41 +150,12 @@ The compiled application can be called from the root folder:
 This generates the output OpenDRIVE file next to the input file. The
 provided input file is checked against ``input.xsd``. Analogous the
 output file is checked against the ``output.xsd`` file which specifies
-the openDRIVE 1.5 standard. For a list of all parameters use the help
-flag of the tool.
+the openDRIVE standard. For a list of all parameters use:
 
 .. code:: bash
 
    ./road-generation_executable -h
 
-Documentation
--------------
-
-A simple but well designed C++ reference
-`documentation <https://ika-rwth-aachen.github.io/RoadGeneration/index.html>`__
-is provided.
-
-Variation tool
---------------
-
-The Variation tool is used to generate a variety of different scenarios
-based on the same general road network. A template file is provided to
-specify variables as well as the general road network structure. A more
-thorough documentation can be found in the `variation
-subdirectory <variation/>`__.
-
-.. _installation-1:
-
-Installation
-~~~~~~~~~~~~
-
-You can run the code from the ``variation`` subfolder, however, the
-variation tool can be installed system wide by using the install script
-in the root directory.
-
-.. code:: bash
-
-   sh install-variation.sh
 
 Licenses
 --------
